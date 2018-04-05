@@ -6,8 +6,10 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project.
 
 This project contains the code for starting the entire Alfresco Content Services product **with docker or kubernetes**.
 
-For the Community eddition go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
-The only difference in the community chart is that they reference ACS community released docker images from docker hub.
+For the Community edition go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
+The only two differences:
+* in the community chart ACS community released docker images from docker hub are referenced.
+* in the enterprise (this project) chart the transformers images are used, instead of the included binaries.
 
 ## Docker-compose & Kubernetes
 Start Alfresco Content Services  using docker-compose or Kubernetes, containing:
@@ -37,7 +39,7 @@ Start Alfresco Content Services  using docker-compose or Kubernetes, containing:
 
 #### Assumptions
 
-We will be using minikube to demonstrate how you can deploy the Alfresco Content Services helm charts. We will assume that you are familiar with the Kubernetes technology - at least basic knowledge, and there is also the assumption that you have a working minikube setup that you can use. Running some kind of [hello-wold application](https://github.com/kubernetes/helm/blob/master/docs/chart_template_guide/getting_started.md) in your minikube cluster usually proves that it is set up correctly.
+We will be using minikube to demonstrate how you can deploy the Alfresco Content Services helm charts. We will assume that you are familiar with the Kubernetes technology - at least basic knowledge, and there is also the assumption that you have a working minikube setup that you can use. Running some kind of [hello-world application](https://github.com/kubernetes/helm/blob/master/docs/chart_template_guide/getting_started.md) in your minikube cluster usually proves that it is set up correctly.
 
 If you are not familiar with [Kubernetes](https://kubernetes.io/) (also written as k8s), there are a lot of tutorials and guides online to get you started. Here are some starting points:
 * https://github.com/kubernetes/kubernetes -> this has a section [To start using kubernetes](https://github.com/kubernetes/kubernetes#to-start-using-kubernetes) with some hands on tutorials.
