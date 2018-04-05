@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.fullname" . }}-alfrescopdfrenderer
+  labels:
+    app: {{ template "content-services.fullname" . }}-alfrescopdfrenderer
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.alfrescopdfrenderer.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "content-services.fullname" . }}-alfrescopdfrenderer
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.alfrescopdfrenderer.image.repository }}:{{ .Values.alfrescopdfrenderer.image.tag }}"
+          imagePullPolicy: {{ .Values.alfrescopdfrenderer.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.alfrescopdfrenderer.image.internalPort }}
+          resources:
+{{ toYaml .Values.alfrescopdfrenderer.resources | indent 12 }}

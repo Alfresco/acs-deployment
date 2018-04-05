@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.fullname" . }}-libreoffice
+  labels:
+    app: {{ template "content-services.fullname" . }}-libreoffice
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.libreoffice.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "content-services.fullname" . }}-libreoffice
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.libreoffice.image.repository }}:{{ .Values.libreoffice.image.tag }}"
+          imagePullPolicy: {{ .Values.libreoffice.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.libreoffice.image.internalPort }}
+          resources:
+{{ toYaml .Values.libreoffice.resources | indent 12 }}

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "content-services.fullname" . }}-imagemagick
+  labels:
+    app: {{ template "content-services.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.imagemagick.service.type }}
+  ports:
+    - port: {{ .Values.imagemagick.service.externalPort }}
+      targetPort: {{ .Values.imagemagick.image.internalPort }}
+      name: {{ .Values.imagemagick.service.name }}
+  selector:
+    app: {{ template "content-services.fullname" . }}-imagemagick
+    release: {{ .Release.Name }}

@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.fullname" . }}-imagemagick
+  labels:
+    app: {{ template "content-services.fullname" . }}-imagemagick
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.imagemagick.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "content-services.fullname" . }}-imagemagick
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.imagemagick.image.repository }}:{{ .Values.imagemagick.image.tag }}"
+          imagePullPolicy: {{ .Values.imagemagick.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.imagemagick.image.internalPort }}
+          resources:
+{{ toYaml .Values.imagemagick.resources | indent 12 }}
