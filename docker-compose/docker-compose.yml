@@ -22,17 +22,17 @@ services:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-docker-alfresco-pdf-renderer:${TRANSFORMERS_TAG}
+        image: alfresco/alfresco-pdf-renderer:${TRANSFORMERS_TAG}
         ports:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-docker-imagemagick:${TRANSFORMERS_TAG}
+        image: alfresco/alfresco-imagemagick:${TRANSFORMERS_TAG}
         ports:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-docker-libreoffice:${TRANSFORMERS_TAG}
+        image: alfresco/alfresco-libreoffice:${TRANSFORMERS_TAG}
         ports:
             - 8092:8090
 

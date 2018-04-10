@@ -30,7 +30,7 @@ repository:
 alfrescopdfrenderer:
   replicaCount: 1
   image:
-    repository: quay.io/alfresco/alfresco-docker-alfresco-pdf-renderer
+    repository: alfresco/alfresco-pdf-renderer
     tag: "latest"
     pullPolicy: Always
     internalPort: 8090
@@ -47,7 +47,7 @@ alfrescopdfrenderer:
 imagemagick:
   replicaCount: 1
   image:
-    repository: quay.io/alfresco/alfresco-docker-imagemagick
+    repository: alfresco/alfresco-imagemagick
     tag: "latest"
     pullPolicy: Always
     internalPort: 8090
@@ -64,7 +64,7 @@ imagemagick:
 libreoffice:
   replicaCount: 1
   image:
-    repository: quay.io/alfresco/alfresco-docker-libreoffice
+    repository: alfresco/alfresco-libreoffice
     tag: "latest"
     pullPolicy: Always
     internalPort: 8090
