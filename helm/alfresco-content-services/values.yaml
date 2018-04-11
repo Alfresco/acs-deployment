@@ -30,7 +30,7 @@ repository:
     requests:
       memory: "1000Mi"
     limits:
-      memory: "3000Mi"
+      memory: "4000Mi"
 
 # Declares the alfresco-pdf-renderer service used but content-repository to do transformations for pdf files
 # Note: this is a ClusterIP type service that is not exposed/accessible outside the cluster
