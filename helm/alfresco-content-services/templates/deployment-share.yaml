@@ -1,3 +1,4 @@
+# Defines the deployment for the alfresco share app
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:

@@ -1,3 +1,4 @@
+# Defines the properties required by the share app
 apiVersion: v1
 kind: ConfigMap
 metadata:

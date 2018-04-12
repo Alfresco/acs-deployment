@@ -8,5 +8,5 @@ keywords:
 - alfresco content services
 home: https://www.alfresco.com
 sources:
-- https://git.alfresco.com/Repository/acs-packaging/tree/master/helm
+- https://github.com/Alfresco/acs-deployment
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

@@ -1,3 +1,4 @@
+# Defines the service for the imagemagick transformer app
 apiVersion: v1
 kind: Service
 metadata:
