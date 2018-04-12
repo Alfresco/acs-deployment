@@ -16,8 +16,11 @@ spec:
         app: {{ template "content-services.fullname" . }}-repository
         release: {{ .Release.Name }}
     spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
         - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
