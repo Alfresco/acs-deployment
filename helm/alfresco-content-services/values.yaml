@@ -1,10 +1,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Define the secret to use in order to access docker images published in quay.io
-# for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
-registryPullSecrets: quay-registry-secret
-
 # Define the alfresco-content-repository properties to use in the k8s cluster
 # two content repository nodes are started in a cluster by default
 repository:
@@ -195,4 +191,9 @@ postgresql:
       memory: "500Mi"
   driver: org.postgresql.Driver
 
-
+# If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
+# to the install command:
+# e.g.: helm install alfresco-content-services --set registryPullSecrets=private-repo-registry-secret
+# or uncomment the following line if you don't want/need to pass it as a parameter on every install command :
+# registryPullSecrets: private-repo-registry-secret
+# for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
