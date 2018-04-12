@@ -1,5 +1,5 @@
 name: alfresco-content-services
-version: 0.0.1-REPO-3338
+version: 0.0.1
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
 - content
