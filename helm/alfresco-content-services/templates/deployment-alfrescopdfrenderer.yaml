@@ -1,3 +1,5 @@
+# Defines the deployment for the alfrescopdfrenderer transformer app
+# Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:

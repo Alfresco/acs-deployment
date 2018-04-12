@@ -1,12 +1,15 @@
+# Defines the properties required by the content repository
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  # the name of the config map
   name: {{ template "content-services.fullname" . }}-repository-configmap
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 data:
+  # The JAVA_OPTS defined in the values.yaml file for the "repository" are set here using proper quotes
   {{- if .Values.repository.environment }}
   {{- range $key, $val := .Values.repository.environment }}
   {{ $key }}: {{ $val | quote }}

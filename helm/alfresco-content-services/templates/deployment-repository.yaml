@@ -1,3 +1,4 @@
+# Defines the deployment for the alfresco content repository app
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -23,8 +24,10 @@ spec:
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
           envFrom:
           - configMapRef:
+              # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.fullname" . }}-repository-configmap
           ports:
+            # internal port and the hazelcast port used for clustering
             - containerPort: {{ .Values.repository.image.internalPort }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
@@ -33,6 +36,7 @@ spec:
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
       initContainers:
+        # wait for the DB to startup before this deployment can start
         - name: init-db
           image: busybox
           command: ['sh', '-c', 'until nc -w1 {{ template "database.hostname" . }} {{ template "database.port" . }}; do echo "waiting for {{ .Values.database.type }}"; sleep 2; done;']

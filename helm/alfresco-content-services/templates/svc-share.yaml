@@ -1,3 +1,4 @@
+# Defines the service for the alfresco share app
 apiVersion: v1
 kind: Service
 metadata:

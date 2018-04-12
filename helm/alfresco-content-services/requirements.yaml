@@ -1,4 +1,9 @@
-
+# Defines the list of dependent charts required by this chart
+# Alfresco Content Services product requires
+# - a postgres DB
+# - the alfresco-infrastructure chart; Details here: https://github.com/Alfresco/alfresco-infrastructure-deployment
+#       currently only the pvc (https://github.com/Alfresco/alfresco-infrastructure-deployment/blob/master/charts/incubator/alfresco-infrastructure/templates/pvc.yaml)
+#       is really required from the alfresco-infrastructure to start up the Alfresco Content Services product
 dependencies:
 - name: postgresql
   version: 0.9.3
