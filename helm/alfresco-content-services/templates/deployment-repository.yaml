@@ -26,6 +26,7 @@ spec:
               name: {{ template "content-services.fullname" . }}-repository-configmap
           ports:
             - containerPort: {{ .Values.repository.image.internalPort }}
+            - containerPort: {{ .Values.repository.image.hazelcastPort }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
           volumeMounts:

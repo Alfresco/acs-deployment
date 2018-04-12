@@ -5,6 +5,6 @@ dependencies:
   repository: https://kubernetes-charts.storage.googleapis.com/
   condition: postgresql.enabled
 - name: alfresco-infrastructure
-  version: 0.1.0-DEPLOY-426
+  version: 0.1.0
   condition: alfresco-content-services.alfresco-infrastructure.enabled
   repository: http://kubernetes-charts.alfresco.com/incubator

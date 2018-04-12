@@ -1,16 +1,20 @@
-# Default values for alfresco-acs.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Define the secret to use in order to access docker images published in quay.io
+# for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
 registryPullSecrets: quay-registry-secret
 
+# Define the alfresco-content-repository properties to use in the k8s cluster
+# two content repository nodes are started in a cluster by default
 repository:
-  replicaCount: 1
+  replicaCount: 2
   image:
-    repository: quay.io/alfresco/alfresco-content-repository
-    tag: "master-6.0.0-SNAPSHOT"
+    repository: alfresco/alfresco-content-repository
+    tag: "latest"
     pullPolicy: Always
     internalPort: 8080
+    hazelcastPort: 5701
   service:
     name: alfresco
     type: NodePort
@@ -20,13 +24,16 @@ repository:
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
-      -Dindex.subsystem.name=solr6"
+      -Dindex.subsystem.name=solr6
+      -Dalfresco.cluster.enabled=true"
   resources:
     requests:
       memory: "1000Mi"
     limits:
       memory: "4000Mi"
 
+# Declares the alfresco-pdf-renderer service used but content-repository to do transformations for pdf files
+# Note: this is a ClusterIP type service that is not exposed/accessible outside the cluster
 alfrescopdfrenderer:
   replicaCount: 1
   image:
@@ -44,6 +51,8 @@ alfrescopdfrenderer:
     limits:
       memory: "512Mi"
 
+# Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
+# Note: this is a ClusterIP type service that is not exposed/accessible outside the cluster
 imagemagick:
   replicaCount: 1
   image:
@@ -61,6 +70,8 @@ imagemagick:
     limits:
       memory: "512Mi"
 
+# Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
+# Note: this is a ClusterIP type service that is not exposed/accessible outside the cluster
 libreoffice:
   replicaCount: 1
   image:
@@ -78,6 +89,8 @@ libreoffice:
     limits:
       memory: "1024Mi"
 
+# Define the alfresco-share properties to use in the k8s cluster
+# This is the default presentation layer(UI) of the Alfresco Content Services product
 share:
   replicaCount: 1
   image:
@@ -97,11 +110,13 @@ share:
     limits:
       memory: "1600Mi"
 
+# Define the search-services properties to use in the k8s cluster
+# This is the search service provider used by alfresco-content-repository
 solr:
   replicaCount: 1
   image:
-    repository: quay.io/alfresco/search-services
-    tag: "1.2.0-SNAPSHOT"
+    repository: alfresco/alfresco-search-services
+    tag: "1.1.0"
     pullPolicy: Always
     internalPort: 8983
   service:
@@ -119,6 +134,9 @@ solr:
     limits:
       memory: "1024Mi"
 
+# Defines the mounting points for the persistence required by the apps in the cluster
+# the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data
+# the solr data folder containing the indexes for the search-services is mapped to alfresco-content-services/solr-data
 persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
@@ -130,10 +148,17 @@ persistence:
       mountPath: "/opt/alfresco-search-services/data"
       subPath: "alfresco-content-services/solr-data"
 
+# Settings that define that alfresco-content-services (this helm chart) is dependent of alfresco-infrastructure chart
+# alfresco-infrastructure is defined here: https://github.com/Alfresco/alfresco-infrastructure-deployment/tree/master/charts/incubator/alfresco-infrastructure
+# This dependency is needed because the alfresco-infrastructure is meant to provide common tools and frameworks to be used
+# by all the components in the DBP (https://www.alfresco.com/platform)
+# Currently the Alfresco Content Services product helm chart (this chart) only needs
+# the persistent volume claim (pvc) definition defined in the infrastructure
 alfresco-content-services:
   alfresco-infrastructure:
     enabled: true
-
+# All the components from the alfresco-infrastructure are disabled, because Alfresco Content Services product helm chart
+# only needs the pvc defined in the dependency alfresco-infrastructure
 alfresco-infrastructure:
   rabbitmq-ha:
     enabled: false
@@ -149,7 +174,10 @@ alfresco-infrastructure:
 database:
   type: postgresql
 
+# Defines the properties to be used for the required postgres DB
+# Note: the database (tables) information is also saved in the persistent volume claim
 postgresql:
+  replicaCount: 1
   ## If true, install the postgresql chart alongside Alfresco Content Services
   enabled: true
   nameOverride: postgresql-acs
@@ -167,4 +195,4 @@ postgresql:
       memory: "500Mi"
   driver: org.postgresql.Driver
 
-replicaCount: 1
+
