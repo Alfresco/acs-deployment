@@ -1,4 +1,4 @@
-# Defines the service for the alfresco content services app
+# Defines the service for the alfresco content repository app
 apiVersion: v1
 kind: Service
 metadata:
