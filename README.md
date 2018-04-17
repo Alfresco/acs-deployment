@@ -8,8 +8,8 @@ This project contains the code for starting the entire Alfresco Content Services
 
 For the Community edition go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
 The only two differences:
-* in the community chart ACS community released docker images from docker hub are referenced.
 * in the enterprise (this project) chart the transformers images are used, instead of the included binaries.
+* in the enterprise (this project) chart a cluster of two alfresco-content-repositories are started by default
 
 ## Docker-compose & Kubernetes
 Start Alfresco Content Services  using docker-compose or Kubernetes, containing:
@@ -52,13 +52,13 @@ For these examples, we assume that we will use the default namespace. The profes
 
 Setting up and starting up minikube may be a little bit different depending on the environment you are working with. Setting up, usually, involves just downloading the **minikube**, **kubectl** and **helm** binaries and adding them to the PATH system variable. 
 
-**Resource requirement for testing**: allocate at least 6GB or RAM, 4 CPU cores and 20GB disk space to your minikube VM.
+**Resource requirement for testing**: allocate at least 8GB or RAM, 4 CPU cores and 20GB disk space to your minikube VM.
 
 ##### minikube
 
 Example of start up command on windows (you need to have the "My_Virtual_Switch" set up before this first command - see [blog](https://blogs.msdn.microsoft.com/wasimbloch/2017/01/23/setting-up-kubernetes-on-windows10-laptop-with-minikube/)):
 ```bash
-minikube start --vm-driver="hyperv" --cpus=4 --memory=6000 --hyperv-virtual-switch="My_Virtual_Switch" --v=7 --alsologtostderr
+minikube start --vm-driver="hyperv" --cpus=4 --memory=8000 --hyperv-virtual-switch="My_Virtual_Switch" --v=7 --alsologtostderr
 ```
 This will download a linux iso and install it in your Hyper V Manager - you should see a **minikube** VM, after it is installed. It also installs all the needed software in that VM, to simulate a kubernetes cluster.  
 **Note:** you may need to add ```--extra-config=kubelet.ImagePullProgressDeadline=30m0s``` parameter to your start command, as the docker images are rather big.  
