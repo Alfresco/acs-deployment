@@ -7,7 +7,7 @@ repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "latest"
+    tag: "6.0.0-RC3"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -91,7 +91,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.0.a"
+    tag: "6.0.0-rc1"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -112,7 +112,7 @@ solr:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-search-services
-    tag: "1.1.0"
+    tag: "1.1.1"
     pullPolicy: Always
     internalPort: 8983
   service:
