@@ -51,6 +51,7 @@ For these examples, we assume that we will use the default namespace. The profes
 #### Step 1: Make sure your minikube is setup, started and running fine
 
 Setting up and starting up minikube may be a little bit different depending on the environment you are working with. Setting up, usually, involves just downloading the **minikube**, **kubectl** and **helm** binaries and adding them to the PATH system variable. 
+Please use the versions specified here https://github.com/Alfresco/alfresco-infrastructure-deployment .
 
 **Resource requirement for testing**: allocate at least 8GB or RAM, 4 CPU cores and 20GB disk space to your minikube VM.
 
