@@ -106,43 +106,14 @@ share:
     limits:
       memory: "2500Mi"
 
-# Define the search-services properties to use in the k8s cluster
-# This is the search service provider used by alfresco-content-repository
-solr:
-  replicaCount: 1
-  image:
-    repository: alfresco/alfresco-search-services
-    tag: "1.1.1"
-    pullPolicy: Always
-    internalPort: 8983
-  service:
-    name: solr
-    type: NodePort
-    externalPort: 80
-  ingress:
-    path: /solr
-  environment:
-    SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
-    SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore"
-  resources:
-    requests:
-      memory: "250Mi"
-    limits:
-      memory: "1024Mi"
-
 # Defines the mounting points for the persistence required by the apps in the cluster
 # the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data
-# the solr data folder containing the indexes for the search-services is mapped to alfresco-content-services/solr-data
 persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
     data:
       mountPath: "/usr/local/tomcat/alf_data"
       subPath: "alfresco-content-services/repository-data"
-  solr:
-    data:
-      mountPath: "/opt/alfresco-search-services/data"
-      subPath: "alfresco-content-services/solr-data"
 
 # Settings that define that alfresco-content-services (this helm chart) is dependent of alfresco-infrastructure chart
 # alfresco-infrastructure is defined here: https://github.com/Alfresco/alfresco-infrastructure-deployment/tree/master/charts/incubator/alfresco-infrastructure
@@ -166,6 +137,9 @@ alfresco-infrastructure:
     enabled: false
   alfresco-api-gateway:
     enabled: false
+
+search:
+  enabled: true
 
 database:
   type: postgresql

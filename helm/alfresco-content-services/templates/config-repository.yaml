@@ -24,8 +24,8 @@ data:
       -Ddb.username={{ template "database.user" . }}
       -Ddb.password={{ template "database.password" . }}
       -Ddb.url=jdbc:{{ .Values.database.type }}://{{ template "database.hostname" . }}:{{ template "database.port" . }}/{{ .Values.postgresql.postgresDatabase }}
-      -Dsolr.host={{ template "content-services.fullname" . }}-solr
-      -Dsolr.port={{ .Values.solr.service.externalPort }}
+      -Dsolr.host={{ .Release.Name }}-alfresco-search-services-solr
+      -Dsolr.port={{ index .Values "alfresco-search-services" "search" "service" "externalPort" }}
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.fullname" . }}-alfrescopdfrenderer
       -Dimg.url=http://{{ template "content-services.fullname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.fullname" . }}-libreoffice"
