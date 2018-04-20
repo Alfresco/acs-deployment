@@ -102,9 +102,9 @@ share:
     path: /share
   resources:
     requests:
-      memory: "500Mi"
+      memory: "1000Mi"
     limits:
-      memory: "1600Mi"
+      memory: "2500Mi"
 
 # Define the search-services properties to use in the k8s cluster
 # This is the search service provider used by alfresco-content-repository
