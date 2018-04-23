@@ -46,8 +46,22 @@ Get the Database user depending on the Database type
 {{/*
 Get the Database password depending on the Database type
 */}}
-{{- define "database.password" }}
+{{- define "database.password" -}}
 {{- if eq ( .Values.database.type | toString ) "postgresql" -}}
 {{- print .Values.postgresql.postgresPassword -}}
 {{- end }}
+{{- end -}}
+
+{{/*
+Get Alfresco Search Services host - "alfresco-search-services" is the chart name
+*/}}
+{{- define "search.host" -}}
+{{- printf "%s-%s-%s" .Release.Name "alfresco-search-services" "solr" -}}
+{{- end -}}
+
+{{/*
+Get Alfresco Search Services port - "alfresco-search-services" is the chart name
+*/}}
+{{- define "search.port" -}}
+{{- print (index .Values "alfresco-search-services" "service" "externalPort") -}}
 {{- end -}}
