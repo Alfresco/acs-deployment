@@ -12,7 +12,7 @@ dependencies:
 - name: alfresco-search-services
   version: 0.0.1
   repository: http://kubernetes-charts.alfresco.com/incubator
-  condition: search.enabled
+  condition: alfresco-search-services.enabled
 - name: alfresco-infrastructure
   version: 0.1.0
   condition: alfresco-content-services.alfresco-infrastructure.enabled

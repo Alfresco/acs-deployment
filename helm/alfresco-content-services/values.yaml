@@ -14,7 +14,7 @@ repository:
   service:
     name: alfresco
     type: NodePort
-    externalPort: 80
+    externalPort: &repositoryExternalPort 80
   ingress:
     path: /alfresco
   environment:
@@ -138,8 +138,12 @@ alfresco-infrastructure:
   alfresco-api-gateway:
     enabled: false
 
-search:
+alfresco-search-services:
   enabled: true
+  repository:
+    # The value for host is the name of this chart 
+    host: alfresco-content-services
+    port: *repositoryExternalPort
 
 database:
   type: postgresql
