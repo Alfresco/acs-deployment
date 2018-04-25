@@ -1,160 +1,77 @@
 {
 	"info": {
+		"_postman_id": "b1031dff-157f-44cf-9775-ce772c68209c",
 		"name": "acs-validate-volume",
-		"_postman_id": "da17ad38-1347-44e6-a4d9-f37f7f4697b0",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "key cloak token",
+			"name": "google-docs-DummyTest",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "7f98812c-e8cd-4794-8e41-a3b91c959525",
-						"type": "text/javascript",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
-							"var tokens=JSON.parse(responseBody); ",
-							"postman.setGlobalVariable(\"kcAccessToken\", tokens.access_token); ",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
+							"pm.test(\"validateGoogleDocsImage\", function () ",
+							"{",
 							"    pm.response.to.have.status(200);",
-							"});"
-						]
+							"});",
+							""
+						],
+						"id": "93bc0117-c1b8-4cbf-98b2-307154bacf24",
+						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "client_id",
-							"value": "activiti",
-							"type": "text"
-						},
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
-						},
+				"auth": {
+					"type": "basic",
+					"basic": [
 						{
 							"key": "username",
-							"value": "hruser",
-							"type": "text"
+							"value": "admin",
+							"type": "string"
 						},
 						{
 							"key": "password",
-							"value": "password",
-							"type": "text"
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
 						}
 					]
 				},
-				"url": {
-					"raw": "http://{{url}}/auth/realms/springboot/protocol/openid-connect/token",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"auth",
-						"realms",
-						"springboot",
-						"protocol",
-						"openid-connect",
-						"token"
-					]
-				},
-				"description": null
-			},
-			"response": []
-		},
-		{
-			"name": "Retrieve HR User Files using token",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "ac8db113-7bc5-4583-8d2a-8134719547b2",
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 200\", function() {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.test(\"validateid\", function() {",
-							"    var jsonData = pm.response.json();",
-							"    var modulesArray = jsonData.list.source.properties;",
-							"    for (var key in modulesArray) {",
-							"        var obj = modulesArray[key];",
-							"        var id = obj.id;",
-							"        pm.expect(id).to.be.eql(\"hruser\");",
-							"    }",
-							"",
-							"});",
-							"",
-							"pm.test(\"validateFile\", function() {",
-							"    var jsonData = pm.response.json();",
-							"    var userName = jsonData.list.entries.properties;",
-							"    for (var key in userName) {",
-							"        var obj = modulesArray[key];",
-							"        var id = obj.name;",
-							"        pm.expect(id).to.be.eql(\"hrusertestfile.txt\");",
-							"    }",
-							"});"
-						]
-					}
-				}
-			],
-			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{kcAccessToken}}"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children?includeSource=true",
+					"raw": "http://{{url}}/share/res/components/documentlibrary/actions/google-edit-flat-16.png",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"alfresco",
-						"api",
-						"-default-",
-						"public",
-						"alfresco",
-						"versions",
-						"1",
-						"nodes",
-						"-my-",
-						"children"
-					],
-					"query": [
-						{
-							"key": "includeSource",
-							"value": "true",
-							"equals": true
-						}
+						"share",
+						"res",
+						"components",
+						"documentlibrary",
+						"actions",
+						"google-edit-flat-16.png"
 					]
-				},
-				"description": null
+				}
 			},
 			"response": []
 		}
