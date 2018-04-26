@@ -1,28 +1,28 @@
 {
 	"info": {
 		"_postman_id": "b1031dff-157f-44cf-9775-ce772c68209c",
-		"name": "acs-validate-volume",
+		"name": "ACS-validate-volume",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "google-docs-DummyTest",
+			"name": "folder is still there",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "338aa76b-be0b-4d6d-a413-66801f857c2c",
+						"type": "text/javascript",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
-							"pm.test(\"validateGoogleDocsImage\", function () ",
-							"{",
-							"    pm.response.to.have.status(200);",
+							"",
+							"pm.test(\"fileNameListedInResponse\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"MyFunkyNameForTestingPersistency\");",
 							"});",
 							""
-						],
-						"id": "93bc0117-c1b8-4cbf-98b2-307154bacf24",
-						"type": "text/javascript"
+						]
 					}
 				}
 			],
@@ -58,18 +58,32 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{url}}/share/res/components/documentlibrary/actions/google-edit-flat-16.png",
+					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children?skipCount=0&maxItems=100",
 					"protocol": "http",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"share",
-						"res",
-						"components",
-						"documentlibrary",
-						"actions",
-						"google-edit-flat-16.png"
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"alfresco",
+						"versions",
+						"1",
+						"nodes",
+						"-my-",
+						"children"
+					],
+					"query": [
+						{
+							"key": "skipCount",
+							"value": "0"
+						},
+						{
+							"key": "maxItems",
+							"value": "100"
+						}
 					]
 				}
 			},
