@@ -21,7 +21,8 @@ repository:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
       -Dindex.subsystem.name=solr6
-      -Dalfresco.cluster.enabled=true"
+      -Dalfresco.cluster.enabled=true
+      -Ddeployment.method=HELM_CHART"
   resources:
     requests:
       memory: "1000Mi"
@@ -34,7 +35,7 @@ alfrescopdfrenderer:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "0.9"
+    tag: "0.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -53,7 +54,7 @@ imagemagick:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "0.9"
+    tag: "0.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -72,7 +73,7 @@ libreoffice:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "0.9"
+    tag: "0.10"
     pullPolicy: Always
     internalPort: 8090
   service:

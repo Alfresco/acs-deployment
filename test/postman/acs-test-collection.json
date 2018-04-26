@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "aee10792-2828-4729-aa4d-b52d38bdcd86",
+		"name": "ACS Deployment Test",
+		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01 ACS-basic-auth",
+			"description": null,
+			"item": [
+				{
+					"name": "repo-discovery with amps",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64bdcb73-89bf-4a90-ac75-382cbdd0be61",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"pm.globals.get(\"url\");",
+									"",
+									"",
+									"pm.test(\"validateStatusCodeTest\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"validateLicenseTest\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"ENTERPRISE\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"validateModuleTest\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var modulesArray= jsonData.entry.repository.modules;",
+									"    for(var key in modulesArray)",
+									"    {",
+									"        var obj = modulesArray[key];",
+									"        var id = obj.id;",
+									"        if(\"alfresco-aos-module\" === id)",
+									"        {",
+									"            pm.expect(obj.version).to.eql(\"1.2.0-RC2\");",
+									"        }",
+									"        if(\"org.alfresco.integrations.google.docs\" === id)",
+									"        {",
+									"             pm.expect(obj.version).to.eql(\"3.1.0-RC1\");",
+									"        }",
+									"        if(\"alfresco-share-services\" === id)",
+									"        {",
+									"            pm.expect(obj.version).to.eql(\"6.0.0\");",
+									"        }",
+									"    }",
+									"});",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/api/discovery",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"api",
+								"discovery"
+							]
+						},
+						"description": "This request will validate whether the repo is set up correctly "
+					},
+					"response": []
+				},
+				{
+					"name": "Validate-share and rm module",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8dcec1dc-4dbb-492f-a0bf-3c30274cc650",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"share is up and running\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"/* Disabled for DEPLOY-401",
+									"pm.test(\"rm is installed part of share\", function () {",
+									"pm.expect(pm.response.text()).to.include(\"Alfresco :: Records Management Global Customization - Enterprise\");",
+									"});",
+									"*/"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/share/page/modules/deploy",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"share",
+								"page",
+								"modules",
+								"deploy"
+							]
+						},
+						"description": "Validate Share is deployed correctly"
+					},
+					"response": []
+				},
+				{
+					"name": "google-docs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"validateGoogleDocsImage\", function () ",
+									"{",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"id": "93bc0117-c1b8-4cbf-98b2-307154bacf24",
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/share/res/components/documentlibrary/actions/google-edit-flat-16.png",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"share",
+								"res",
+								"components",
+								"documentlibrary",
+								"actions",
+								"google-edit-flat-16.png"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "solr-validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"solr status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"solr response test\", function() {",
+									"   var jsonData = pm.response.json();",
+									"    var modulesArray= jsonData.resultset.queryInfo;",
+									"    for(var key in modulesArray)",
+									"    {",
+									"        var obj = modulesArray[key];",
+									"        var id = obj.numberFound;",
+									"        console.log(id);",
+									"        pm.expect(id).to.be.eql(\"199\");",
+									"    }    ",
+									"});"
+								],
+								"id": "42c706d8-c92f-49dd-884d-8eb47f6ac808",
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/s/api/solrstats",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"s",
+								"api",
+								"solrstats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d3d29c75-6249-47a2-a5a4-6c565d86521b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c685c9b9-3ef9-47df-9308-e1001365c38c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

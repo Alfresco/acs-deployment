@@ -17,22 +17,23 @@ services:
                 -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
                 -Djodconverter.url=http://libreoffice:8090/
                 -Dimg.url=http://imagemagick:8090/
+                -Ddeployment.method=DOCKER_COMPOSE
                 "
         ports:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:0.9
+        image: alfresco/alfresco-pdf-renderer:0.10
         ports:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-imagemagick:0.9
+        image: alfresco/alfresco-imagemagick:0.10
         ports:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-libreoffice:0.9
+        image: alfresco/alfresco-libreoffice:0.10
         ports:
             - 8092:8090
 

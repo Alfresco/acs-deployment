@@ -11,8 +11,7 @@ dependencies:
   condition: postgresql.enabled
 - name: alfresco-search
   version: 0.0.1
-  #repository: http://kubernetes-charts.alfresco.com/incubator
-  repository: http://127.0.0.1:8879
+  repository: http://kubernetes-charts.alfresco.com/incubator
   condition: alfresco-search.enabled
 - name: alfresco-infrastructure
   version: 0.1.0
