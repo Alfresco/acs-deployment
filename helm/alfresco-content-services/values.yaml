@@ -138,7 +138,7 @@ alfresco-infrastructure:
   alfresco-api-gateway:
     enabled: false
 
-alfresco-search-services:
+alfresco-search:
   enabled: true
   repository:
     # The value for "host" is the name of this chart 
