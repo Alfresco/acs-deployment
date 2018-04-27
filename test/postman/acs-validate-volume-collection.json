@@ -12,13 +12,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "338aa76b-be0b-4d6d-a413-66801f857c2c",
+						"id": "a4d726b1-b084-48e9-b07f-4732b749a8c0",
 						"type": "text/javascript",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
 							"",
-							"pm.test(\"fileNameListedInResponse\", function () {",
+							"pm.test(\"fileNameListedInResponseTest\", function () {",
 							"    pm.expect(pm.response.text()).to.include(\"MyFunkyNameForTestingPersistency\");",
 							"});",
 							""
@@ -86,6 +86,97 @@
 						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate cluster after restart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "785e0c5b-78fa-40d4-b100-10d82b937627",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.globals.get(\"url\");",
+							"",
+							"",
+							"pm.test(\"callToTestWasOKTest\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"validateClusterTest\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    ",
+							"    var nodeNamesArray = jsonData.nodeNames;",
+							"",
+							"    console.log(nodeNamesArray);",
+							"    pm.expect(nodeNamesArray.length).to.eq(2);",
+							"    ",
+							"    var tableDataArray= jsonData.tableData;",
+							"    console.log(tableDataArray[0][0]);",
+							"    console.log(tableDataArray[0][1]);",
+							"    console.log(tableDataArray[1][0]);",
+							"    console.log(tableDataArray[1][1]);",
+							"    ",
+							"    pm.expect(tableDataArray[0][1]).to.contain(\"success\");",
+							"    pm.expect(tableDataArray[1][0]).to.contain(\"success\");",
+							"    ",
+							"    ",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"s",
+						"enterprise",
+						"admin",
+						"admin-clustering-test"
+					]
+				},
+				"description": "This request will validate whether the repo is set up correctly "
 			},
 			"response": []
 		}

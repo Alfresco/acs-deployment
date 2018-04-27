@@ -114,14 +114,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1de09cc7-d7b3-4979-8d15-d74b11fb1ed6",
+								"id": "375bc7a7-48a8-4afe-b26f-dcfad2b64d07",
 								"type": "text/javascript",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
 									"",
 									"",
-									"pm.test(\"canCreateANode\", function () {",
+									"pm.test(\"canCreateANodeTest\", function () {",
 									"    pm.response.to.have.status(201);",
 									"});",
 									"",
@@ -192,18 +192,109 @@
 					"response": []
 				},
 				{
-					"name": "Validate-share module",
+					"name": "validate cluster",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "8dcec1dc-4dbb-492f-a0bf-3c30274cc650",
+								"id": "785e0c5b-78fa-40d4-b100-10d82b937627",
 								"type": "text/javascript",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
 									"",
-									"pm.test(\"share is up and running\", function () {",
+									"",
+									"pm.test(\"callToTestWasOKTest\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"validateClusterTest\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    ",
+									"    var nodeNamesArray = jsonData.nodeNames;",
+									"",
+									"    console.log(nodeNamesArray);",
+									"    pm.expect(nodeNamesArray.length).to.eq(2);",
+									"    ",
+									"    var tableDataArray= jsonData.tableData;",
+									"    console.log(tableDataArray[0][0]);",
+									"    console.log(tableDataArray[0][1]);",
+									"    console.log(tableDataArray[1][0]);",
+									"    console.log(tableDataArray[1][1]);",
+									"    ",
+									"    pm.expect(tableDataArray[0][1]).to.contain(\"success\");",
+									"    pm.expect(tableDataArray[1][0]).to.contain(\"success\");",
+									"    ",
+									"    ",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"s",
+								"enterprise",
+								"admin",
+								"admin-clustering-test"
+							]
+						},
+						"description": "This request will validate whether the repo is set up correctly "
+					},
+					"response": []
+				},
+				{
+					"name": "Validate-share module",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8d10443d-f20c-4b9a-936e-bd08308c8683",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"shareIsUpAndRunningTest\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
@@ -270,17 +361,17 @@
 						{
 							"listen": "test",
 							"script": {
+								"id": "67b4ade6-51d1-4549-9091-ec8c1f2f005d",
+								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
-									"pm.test(\"validateGoogleDocsImage\", function () ",
+									"pm.test(\"validateGoogleDocsImageTest\", function () ",
 									"{",
 									"    pm.response.to.have.status(200);",
 									"});",
 									""
-								],
-								"id": "93bc0117-c1b8-4cbf-98b2-307154bacf24",
-								"type": "text/javascript"
+								]
 							}
 						}
 					],
@@ -339,7 +430,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8868439c-afdd-4aac-8b41-3f1c7f22338e",
+								"id": "96f54e8e-a8bd-4d66-94e5-94e925d8ba6b",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -348,11 +439,12 @@
 									"the following failed while they worked on the insight-engine integration",
 									"*/",
 									"",
-									"pm.test(\"solr status code\", function () {",
+									" ",
+									"pm.test(\"solrStatusCodeTest\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"solr response test\", function() {",
+									"pm.test(\"solrResponseTest\", function() {",
 									"   var jsonData = pm.response.json();",
 									"    var modulesArray= jsonData.resultset.queryInfo;",
 									"    for(var key in modulesArray)",
@@ -363,6 +455,7 @@
 									"        pm.expect(id).to.be.eql(\"189\");",
 									"    }    ",
 									"});",
+									"",
 									""
 								]
 							}
