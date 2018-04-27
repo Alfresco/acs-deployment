@@ -90,6 +90,77 @@
 			"response": []
 		},
 		{
+			"name": "validate cluster get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9205cbfa-253f-432a-8ebe-2ed280b88f23",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.get(\"url\");",
+							"",
+							"/*",
+							"if you don't call this method first, the POST alfresco/s/enterprise/admin/admin-clustering-test fails",
+							"*/",
+							"pm.test(\"callGetValidateClusterForInitializationTest\", function () ",
+							"{",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"s",
+						"enterprise",
+						"admin",
+						"admin-clustering-test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "validate cluster after restart",
 			"event": [
 				{
