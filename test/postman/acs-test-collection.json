@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "aee10792-2828-4729-aa4d-b52d38bdcd86",
-		"name": "ACS Deployment Test",
+		"_postman_id": "29d12558-b5b9-43dd-8dd9-1a58c5d4a993",
+		"name": "acs-test-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -16,7 +16,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "af119935-c840-436f-bd4d-e00116cab960",
+								"id": "ff6d951d-2281-47e7-9bd0-602550700b53",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -109,24 +109,25 @@
 					"response": []
 				},
 				{
-					"name": "create a node",
+					"name": "create a folder",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "375bc7a7-48a8-4afe-b26f-dcfad2b64d07",
+								"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
 								"type": "text/javascript",
 								"exec": [
-									"",
 									"pm.globals.get(\"url\");",
 									"",
-									"",
-									"pm.test(\"canCreateANodeTest\", function () {",
+									"pm.test(\"canCreateAFolderTest\", function () {",
 									"    pm.response.to.have.status(201);",
 									"});",
 									"",
+									"pm.environment.set(\"folderId\", pm.response.json().entry.id);",
+									"pm.environment.set(\"folderName\", pm.response.json().entry.name);",
 									"",
-									""
+									"console.log(\"folderId:\"+pm.environment.get(\"folderId\"));",
+									"console.log(\"folderName:\"+pm.environment.get(\"folderName\"));"
 								]
 							}
 						}
@@ -188,6 +189,266 @@
 							]
 						},
 						"description": "This request will validate whether the repo is set up correctly "
+					},
+					"response": []
+				},
+				{
+					"name": "create content in folder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "deddc0d6-1e30-46fb-be62-c2a4426f8bde",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"check number created\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.count).to.eql(2);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"folderPath\":\"{{folderName}}\",\r\n  \"fileCount\":\"2\",\r\n  \"forceBinaryStorage\":\"true\",\r\n  \"minFileSize\":\"22\",\r\n  \"maxFileSize\":\"42\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/s/api/model/filefolder/load",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"s",
+								"api",
+								"model",
+								"filefolder",
+								"load"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list content in folder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3fab222a-0b9e-481b-a0b6-6610f4686083",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"check number created\", function () {",
+									"    pm.expect(jsonData.list.pagination.count).to.eql(2);",
+									"});",
+									"",
+									"var entry = jsonData.list.entries[0].entry;",
+									"pm.environment.set(\"contentId\", entry.id);",
+									"pm.environment.set(\"contentName\", entry.name);",
+									"pm.environment.set(\"contentLength\", entry.content.sizeInBytes);",
+									"",
+									"console.log(\"contentId:\"+pm.environment.get(\"contentId\"));",
+									"console.log(\"contentName:\"+pm.environment.get(\"contentName\"));",
+									"console.log(\"contentLength:\"+pm.environment.get(\"contentLength\"));"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"api",
+								"-default-",
+								"public",
+								"alfresco",
+								"versions",
+								"1",
+								"nodes",
+								"{{folderId}}",
+								"children"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set content",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5c288f73-709e-4911-b747-2248233c58a6",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "Thanks for all the fish!"
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"api",
+								"-default-",
+								"public",
+								"alfresco",
+								"versions",
+								"1",
+								"nodes",
+								"{{contentId}}",
+								"content"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get content",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "07c370e3-8c90-4c2c-9c75-a5677312ec72",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Content is correct\", function () {",
+									"    pm.response.to.have.body(\"Thanks for all the fish!\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"api",
+								"-default-",
+								"public",
+								"alfresco",
+								"versions",
+								"1",
+								"nodes",
+								"{{contentId}}",
+								"content"
+							]
+						}
 					},
 					"response": []
 				},
@@ -576,6 +837,109 @@
 								"s",
 								"api",
 								"solrstats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "webdav-validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00be9c05-0609-4e20-bc1f-55e41082ff10",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Directory listing for /\");",
+									"    pm.expect(pm.response.text()).to.include(\"Shared\");",
+									"    pm.expect(pm.response.text()).to.include(\"Sites\");",
+									"    pm.expect(pm.response.text()).to.include(\"Data Dictionary\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/webdav",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"webdav"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aos-validation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"/alfresco/aos\");",
+									"    pm.expect(pm.response.text()).to.include(\"Shared\");",
+									"    pm.expect(pm.response.text()).to.include(\"Sites\");",
+									"    pm.expect(pm.response.text()).to.include(\"Data Dictionary\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/alfresco/aos",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"aos"
 							]
 						}
 					},

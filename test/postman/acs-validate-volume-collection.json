@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "b1031dff-157f-44cf-9775-ce772c68209c",
-		"name": "ACS-validate-volume",
+		"_postman_id": "e2886aaf-c5e1-4bcc-aca9-605e011d03c1",
+		"name": "acs-validate-volume-collection",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -250,6 +250,93 @@
 				"description": "This request will validate whether the repo is set up correctly "
 			},
 			"response": []
+		},
+		{
+			"name": "get content after restart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dffc50b6-bd62-4219-8628-4982bf52dd07",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content is correct\", function () {",
+							"    pm.response.to.have.body(\"Thanks for all the fish!\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"alfresco",
+						"versions",
+						"1",
+						"nodes",
+						"{{contentId}}",
+						"content"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f55b06ae-44bf-42c8-874c-20fdc4ae60fe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0ddef90c-3288-4ac8-b4cf-cc1603ddf758",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
