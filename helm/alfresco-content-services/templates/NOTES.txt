@@ -1,16 +1,16 @@
 
-{{ if .Values.dnsaddress }}
+{{ if .Values.externalHost }}
 
 You can access all components of Alfresco Content Services using the same root address, but different paths as follows:
 
-  Content: {{ .Values.dnsaddress }}/alfresco
-  Share: {{ .Values.dnsaddress }}/share
-  Solr: {{ .Values.dnsaddress }}/solr
+  Content: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}/alfresco
+  Share: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}/share
+  Solr: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}/solr
 
 {{ else }}
 
-If you have a specific DNS address for the cluster please run the following commands to get the application paths:
+If you have a specific DNS address for the cluster please run the following commands to get the application paths and configure ACS:
 
-helm upgrade --reuse-values {{ .Release.Name }} --set dnsaddress="Your DNS address ex: http://myenv.com" alfresco-incubator/alfresco-content-services
+helm upgrade --reuse-values {{ .Release.Name }} --set externalProtocol="http" --set externalHost="domain.com" --set externalPort="80" alfresco-incubator/alfresco-content-services
 
 {{ end }}
