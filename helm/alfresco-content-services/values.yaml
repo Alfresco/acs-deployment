@@ -6,8 +6,8 @@
 repository:
   replicaCount: 2
   image:
-    repository: quay.io/alfresco/alfresco-content-repository
-    tag: "feature-repo-3465-reenable-csrf-6.0.0-SNAPSHOT"
+    repository: alfresco/alfresco-content-repository
+    tag: "6.0.0-RC3"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
