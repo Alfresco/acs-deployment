@@ -11,12 +11,12 @@
 			"description": null,
 			"item": [
 				{
-					"name": "repo-discovery with amps",
+					"name": "repo-discovery",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "ff6d951d-2281-47e7-9bd0-602550700b53",
+								"id": "585e1183-573a-4966-86f0-739a8d0b9707",
 								"type": "text/javascript",
 								"exec": [
 									"",
@@ -31,31 +31,6 @@
 									"pm.test(\"validateLicenseTest\", function () {",
 									"    pm.expect(pm.response.text()).to.include(\"ENTERPRISE\");",
 									"});",
-									"",
-									"",
-									"pm.test(\"validateModuleTest\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    var modulesArray= jsonData.entry.repository.modules;",
-									"    for(var key in modulesArray)",
-									"    {",
-									"        var obj = modulesArray[key];",
-									"        var id = obj.id;",
-									"        if(\"alfresco-aos-module\" === id)",
-									"        {",
-									"            pm.expect(obj.version).to.eql(\"1.2.0-RC2\");",
-									"        }",
-									"        if(\"org.alfresco.integrations.google.docs\" === id)",
-									"        {",
-									"             pm.expect(obj.version).to.eql(\"3.1.0-RC1\");",
-									"        }",
-									"        if(\"alfresco-share-services\" === id)",
-									"        {",
-									"            pm.expect(obj.version).to.eql(\"6.0.0\");",
-									"        }",
-									"    }",
-									"});",
-									"",
-									"",
 									""
 								]
 							}
@@ -364,7 +339,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "Thanks for all the fish!"
+							"raw": "So Long, and Thanks for All the Fish"
 						},
 						"url": {
 							"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",

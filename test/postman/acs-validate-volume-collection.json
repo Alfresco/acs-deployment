@@ -7,89 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "folder is still there",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a4d726b1-b084-48e9-b07f-4732b749a8c0",
-						"type": "text/javascript",
-						"exec": [
-							"pm.globals.get(\"url\");",
-							"",
-							"",
-							"pm.test(\"fileNameListedInResponseTest\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"MyFunkyNameForTestingPersistency\");",
-							"});",
-							""
-						]
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "string"
-						},
-						{
-							"key": "saveHelperData",
-							"type": "any"
-						},
-						{
-							"key": "showPassword",
-							"value": false,
-							"type": "boolean"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children?skipCount=0&maxItems=100",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"alfresco",
-						"api",
-						"-default-",
-						"public",
-						"alfresco",
-						"versions",
-						"1",
-						"nodes",
-						"-my-",
-						"children"
-					],
-					"query": [
-						{
-							"key": "skipCount",
-							"value": "0"
-						},
-						{
-							"key": "maxItems",
-							"value": "100"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "validate cluster get",
 			"event": [
 				{
@@ -252,12 +169,82 @@
 			"response": []
 		},
 		{
+			"name": "get folder after restart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8a7ff6d0-6e96-4bfa-b706-d4136d09a04b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var folderId=\"MyFunkyNameForTestingPersistency folder does not exist\";",
+							"for(var entry in pm.response.json().list.entries.entry)",
+							"{",
+							"    if(entry.name === \"MyFunkyNameForTestingPersistency\")",
+							"    {",
+							"        pm.environment.set(\"folderId\", entry.id);",
+							"    }",
+							"}",
+							"",
+							"pm.test(\"folderFoundTest\", function () {",
+							"    pm.expect(pm.environment.get(\"folderId\")).to.not.eq(\"MyFunkyNameForTestingPersistency folder does not exist\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"alfresco",
+						"versions",
+						"1",
+						"nodes",
+						"-my-",
+						"children"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "get content after restart",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "dffc50b6-bd62-4219-8628-4982bf52dd07",
+						"id": "eb8f59fe-1940-450a-b77b-10717a0cbfc7",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -265,7 +252,7 @@
 							"});",
 							"",
 							"pm.test(\"Content is correct\", function () {",
-							"    pm.response.to.have.body(\"Thanks for all the fish!\");",
+							"    pm.response.to.have.body(\"So Long, and Thanks for All the Fish!\");",
 							"});",
 							""
 						]
