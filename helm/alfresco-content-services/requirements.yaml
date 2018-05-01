@@ -10,7 +10,7 @@ dependencies:
   repository: https://kubernetes-charts.storage.googleapis.com/
   condition: postgresql.enabled
 - name: alfresco-search
-  version: 0.0.1
+  version: 0.0.2
   repository: http://kubernetes-charts.alfresco.com/incubator
   condition: alfresco-search.enabled
 - name: alfresco-infrastructure
