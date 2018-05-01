@@ -16,4 +16,4 @@ spec:
       - path: {{ .Values.repository.ingress.path }}
         backend:
           serviceName: {{ template "content-services.fullname" . }}-repository
-          servicePort: {{ .Values.externalPort | default .Values.repository.service.externalPort }}
+          servicePort: {{ .Values.repository.service.externalPort }}

@@ -13,4 +13,4 @@ spec:
       - path: {{ .Values.share.ingress.path }}
         backend:
           serviceName: {{ template "content-services.fullname" . }}-share
-          servicePort: {{ .Values.externalPort | default .Values.share.service.externalPort }}
+          servicePort: {{ .Values.share.service.externalPort }}
