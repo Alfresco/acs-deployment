@@ -339,7 +339,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "So Long, and Thanks for All the Fish"
+							"raw": "So Long, and Thanks for All the Fish!"
 						},
 						"url": {
 							"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
@@ -369,7 +369,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "07c370e3-8c90-4c2c-9c75-a5677312ec72",
+								"id": "d69c78e3-28d5-4679-8da9-37be961ede6b",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -377,7 +377,7 @@
 									"});",
 									"",
 									"pm.test(\"Content is correct\", function () {",
-									"    pm.response.to.have.body(\"Thanks for all the fish!\");",
+									"    pm.response.to.have.body(\"So Long, and Thanks for All the Fish!\");",
 									"});"
 								]
 							}

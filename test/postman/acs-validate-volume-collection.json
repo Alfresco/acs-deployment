@@ -174,21 +174,27 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8a7ff6d0-6e96-4bfa-b706-d4136d09a04b",
+						"id": "620777fd-a195-4a09-b9b7-205d7acef201",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"var folderId=\"MyFunkyNameForTestingPersistency folder does not exist\";",
-							"for(var entry in pm.response.json().list.entries.entry)",
+							"pm.environment.set(\"folderId\", \"MyFunkyNameForTestingPersistency folder does not exist\");",
+							"var entries=pm.response.json().list.entries;",
+							"for (i in entries)",
 							"{",
+							"    var entry=entries[i].entry;",
+							"    console.log(\"entry \"+entry.id+\" \"+entry.name);",
 							"    if(entry.name === \"MyFunkyNameForTestingPersistency\")",
 							"    {",
+							"        console.log(\"folderId SET \"+entry.id);",
 							"        pm.environment.set(\"folderId\", entry.id);",
 							"    }",
 							"}",
+							"",
+							"console.log(\"folderId=\"+pm.environment.get(\"folderId\"));",
 							"",
 							"pm.test(\"folderFoundTest\", function () {",
 							"    pm.expect(pm.environment.get(\"folderId\")).to.not.eq(\"MyFunkyNameForTestingPersistency folder does not exist\");",
@@ -232,6 +238,78 @@
 						"1",
 						"nodes",
 						"-my-",
+						"children"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list content in folder after restart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f26f5a18-c12d-479f-88c8-de7555190df2",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"check number created\", function () {",
+							"    pm.expect(jsonData.list.pagination.count).to.eql(2);",
+							"});",
+							"",
+							"var entry = jsonData.list.entries[0].entry;",
+							"pm.environment.set(\"contentId\", entry.id);",
+							"pm.environment.set(\"contentName\", entry.name);",
+							"pm.environment.set(\"contentLength\", entry.content.sizeInBytes);",
+							"",
+							"console.log(\"contentId:\"+pm.environment.get(\"contentId\"));",
+							"console.log(\"contentName:\"+pm.environment.get(\"contentName\"));",
+							"console.log(\"contentLength:\"+pm.environment.get(\"contentLength\"));"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"alfresco",
+						"versions",
+						"1",
+						"nodes",
+						"{{folderId}}",
 						"children"
 					]
 				}
