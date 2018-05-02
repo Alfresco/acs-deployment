@@ -2,7 +2,7 @@ version: "3"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.0.0-RC3
+        image: alfresco/alfresco-content-repository:6.0.0-RC4
         environment:
             JAVA_OPTS : "
                 -Ddb.driver=org.postgresql.Driver
