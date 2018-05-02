@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "29d12558-b5b9-43dd-8dd9-1a58c5d4a993",
+		"_postman_id": "33a9f6b4-dfe2-4e7b-b016-ad94f8258c86",
 		"name": "acs-test-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -433,7 +433,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9205cbfa-253f-432a-8ebe-2ed280b88f23",
+								"id": "d3c53ffc-ceb0-456d-875d-936587ed644e",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -445,6 +445,8 @@
 									"{",
 									"    pm.response.to.have.status(200);",
 									"});",
+									"",
+									"pm.globals.set(\"alf-csrftoken\", pm.cookies.get(\"alf-csrftoken\"));",
 									""
 								]
 							}
@@ -568,7 +570,12 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "alf-csrftoken",
+								"value": "{{alf-csrftoken}} "
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
