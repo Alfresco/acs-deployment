@@ -57,10 +57,16 @@ Please use the versions specified here https://github.com/Alfresco/alfresco-infr
 
 ##### minikube
 
-Example of start up command on windows (you need to have the "My_Virtual_Switch" set up before this first command - see [blog](https://blogs.msdn.microsoft.com/wasimbloch/2017/01/23/setting-up-kubernetes-on-windows10-laptop-with-minikube/)):
+Start minikube VM
+```bash
+minikube start --cpus=4 --memory=8000 
+```
+**Note**
+Start up command for Windows 10 (you need to have the "My_Virtual_Switch" set up before this first command - see [blog](https://blogs.msdn.microsoft.com/wasimbloch/2017/01/23/setting-up-kubernetes-on-windows10-laptop-with-minikube/)):
 ```bash
 minikube start --vm-driver="hyperv" --cpus=4 --memory=8000 --hyperv-virtual-switch="My_Virtual_Switch" --v=7 --alsologtostderr
 ```
+
 This will download a linux iso and install it in your Hyper V Manager - you should see a **minikube** VM, after it is installed. It also installs all the needed software in that VM, to simulate a kubernetes cluster.  
 **Note:** you may need to add ```--extra-config=kubelet.ImagePullProgressDeadline=30m0s``` parameter to your start command, as the docker images are rather big.  
 
