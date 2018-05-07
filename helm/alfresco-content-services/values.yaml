@@ -13,7 +13,7 @@ repository:
     hazelcastPort: 5701
   service:
     name: alfresco
-    type: NodePort
+    type: ClusterIP
     externalPort: &repositoryExternalPort 80
   ingress:
     path: /alfresco
@@ -30,7 +30,6 @@ repository:
       memory: "4000Mi"
 
 # Declares the alfresco-pdf-renderer service used but content-repository to do transformations for pdf files
-# Note: this is a ClusterIP type service that is not exposed/accessible outside the cluster
 alfrescopdfrenderer:
   replicaCount: 1
   image:
@@ -49,7 +48,6 @@ alfrescopdfrenderer:
       memory: "512Mi"
 
 # Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
-# Note: this is a ClusterIP type service that is not exposed/accessible outside the cluster
 imagemagick:
   replicaCount: 1
   image:
@@ -68,7 +66,6 @@ imagemagick:
       memory: "512Mi"
 
 # Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
-# Note: this is a ClusterIP type service that is not exposed/accessible outside the cluster
 libreoffice:
   replicaCount: 1
   image:
@@ -97,7 +94,7 @@ share:
     internalPort: 8080
   service:
     name: share
-    type: NodePort
+    type: ClusterIP
     externalPort: 80
   ingress:
     path: /share
