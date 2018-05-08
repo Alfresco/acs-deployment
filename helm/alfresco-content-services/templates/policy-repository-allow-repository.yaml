@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: repository-allow-repository
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "content-services.fullname" . }}-repository
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-repository
+      ports:
+        - protocol: TCP
+          port: 5701

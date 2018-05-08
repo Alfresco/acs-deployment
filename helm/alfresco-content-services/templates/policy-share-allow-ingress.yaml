@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: share-allow-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "content-services.fullname" . }}-share
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: nginx-ingress
+      ports:
+        - protocol: TCP
+          port: 8080

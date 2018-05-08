@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: repository-allow-search
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "content-services.fullname" . }}-repository
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco-search.host" . }}
+      ports:
+        - protocol: TCP
+          port: 8080
