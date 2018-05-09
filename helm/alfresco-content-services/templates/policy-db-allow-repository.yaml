@@ -5,7 +5,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app:{{ template "database.hostname" . }}
+      app: {{ template "database.hostname" . }}
   ingress:
     - from:
       - podSelector:
