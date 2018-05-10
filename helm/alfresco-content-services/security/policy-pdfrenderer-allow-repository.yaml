@@ -1,11 +1,12 @@
+{{- if .Values.networkPolicy.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: db-allow-repository
+  name: pdfrenderer-allow-repository
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "database.hostname" . }}
+      app: {{ template "content-services.fullname" . }}-alfrescopdfrenderer
   ingress:
     - from:
       - podSelector:
@@ -13,4 +14,5 @@ spec:
             app: {{ template "content-services.fullname" . }}-repository
       ports:
         - protocol: TCP
-          port: {{ template "database.port" . }}
+          port: 8090
+{{- end }}

@@ -1,7 +1,8 @@
+{{- if .Values.networkPolicy.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: repository-allow-repository
+  name: repository-allow-share
 spec:
   podSelector:
     matchLabels:
@@ -10,7 +11,10 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            app: {{ template "content-services.fullname" . }}-repository
+            app: {{ template "content-services.fullname" . }}-share
       ports:
         - protocol: TCP
-          port: 5701
+          port: 8080
+        - protocol: TCP
+          port: 80
+{{- end }}

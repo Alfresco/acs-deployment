@@ -1,11 +1,12 @@
+{{- if .Values.networkPolicy.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: search-allow-ingress
+  name: share-allow-ingress
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "alfresco-search.host" . }}
+      app: {{ template "content-services.fullname" . }}-share
   ingress:
     - from:
       - podSelector:
@@ -13,4 +14,5 @@ spec:
             app: nginx-ingress
       ports:
         - protocol: TCP
-          port: 8983
+          port: 8080
+{{- end }}

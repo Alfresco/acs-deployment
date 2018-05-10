@@ -1,11 +1,12 @@
+{{- if .Values.networkPolicy.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: libreoffice-allow-repository
+  name: imagemagick-allow-repository
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "content-services.fullname" . }}-libreoffice
+      app: {{ template "content-services.fullname" . }}-imagemagick
   ingress:
     - from:
       - podSelector:
@@ -14,3 +15,4 @@ spec:
       ports:
         - protocol: TCP
           port: 8090
+{{- end }}
