@@ -2,7 +2,7 @@
 
 Alfresco Content Services is an Enterprise Content Management (ECM) system that is used for document and case management, project collaboration, web content publishing, and compliant records management.  The flexible compute, storage, and database services that Kubernetes offers make it an ideal platform for Alfresco Content Services. This helm chart presents an enterprise-grade Alfresco Content Services configuration that you can adapt to virtually any scenario, and scale up, down, or out, depending on your use case.
 
-To use, add the `http://kubernetes-charts.alfresco.com/incubator` annotation to your helm repository.
+To use, add the `http://kubernetes-charts.alfresco.com/incubator` to your helm repository.
 ```console
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
 ```
