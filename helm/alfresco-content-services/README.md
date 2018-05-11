@@ -7,7 +7,7 @@ To use, add the `http://kubernetes-charts.alfresco.com/incubator` to your helm r
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
 ```
 
-## TL;DR;
+## To install ACS;
 
 ```console
 $ helm install alfresco-incubator/alfresco-content-services
@@ -22,7 +22,7 @@ This chart bootstraps an ACS deployment on a [Kubernetes](http://kubernetes.io) 
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`:
+To install the chart with the release name `my-acs`:
 
 ```console
 # Alfresco Admin password should be encoded in MD5 Hash
@@ -31,7 +31,7 @@ export ALF_ADMIN_PWD=$(printf %s 'MyAdminPwd' | iconv -t UTF-16LE | openssl md4 
 # Alfresco Database (Postgresql) password
 export ALF_DB_PWD='MyDbPwd'
 
-$ helm install --name my-release alfresco-incubator/alfresco-content-services \
+$ helm install --name my-acs alfresco-incubator/alfresco-content-services \
                --set repository.adminPassword="$ALF_ADMIN_PWD" \
                --set postgresql.postgresPassword="$ALF_DB_PWD"
 ```
@@ -42,10 +42,10 @@ The command deploys ACS Cluster on the Kubernetes cluster in the default configu
 
 ## Uninstalling the Chart
 
-To uninstall/delete the `my-release` deployment:
+To uninstall/delete the `my-acs` deployment:
 
 ```console
-$ helm delete my-release
+$ helm delete my-acs
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
