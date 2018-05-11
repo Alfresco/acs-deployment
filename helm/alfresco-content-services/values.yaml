@@ -129,7 +129,7 @@ alfresco-infrastructure:
     enabled: false
   activemq:
     enabled: false
-  alfresco-keycloak:
+  alfresco-identity-service:
     enabled: false
   alfresco-activiti-cloud-registry:
     enabled: false
