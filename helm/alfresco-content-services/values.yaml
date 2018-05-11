@@ -129,7 +129,7 @@ alfresco-infrastructure:
     enabled: false
   activemq:
     enabled: false
-  alfresco-identity-service:
+  alfresco-keycloak:
     enabled: false
   alfresco-activiti-cloud-registry:
     enabled: false
@@ -144,7 +144,7 @@ alfresco-search:
     port: *repositoryExternalPort
 
 # choose if you want network policy enabled
-network-policy:
+networkPolicy:
   enabled: true
 
 database:
