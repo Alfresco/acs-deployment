@@ -7,7 +7,7 @@ To use, add the `http://kubernetes-charts.alfresco.com/incubator` to your helm r
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
 ```
 
-## To install ACS;
+## To install the ACS cluster
 
 ```console
 $ helm install alfresco-incubator/alfresco-content-services
