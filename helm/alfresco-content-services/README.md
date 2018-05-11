@@ -56,7 +56,7 @@ The following table lists the configurable parameters of the ACS chart and their
 
 Parameter | Description | Default
 --- | --- | ---
-`repository.adminPassword` | Administrator password for ACS in md5 hash format | md5: `209c6174da490caeb422f3fa5a7ae634` (or) `admin`
+`repository.adminPassword` | Administrator password for ACS in md5 hash format | md5: `209c6174da490caeb422f3fa5a7ae634` (of string `admin`)
 `postgresql.postgresUser` | postgresql database user | `alfresco`
 `postgresql.postgresPassword` | postgresql database password | `alfresco`
 `postgresql.postgresDatabase` | postgresql database name | `alfresco`
