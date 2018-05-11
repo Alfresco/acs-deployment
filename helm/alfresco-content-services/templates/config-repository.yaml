@@ -25,6 +25,7 @@ data:
       -Dshare.protocol={{ .Values.externalProtocol | default "http"}}
       -Dshare.host={{ .Values.externalHost | default (printf "%s-share" (include "content-services.fullname" .)) }}
       -Dshare.port={{ .Values.externalPort | default .Values.share.service.externalPort }}
+      -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
       -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*
       -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*
       -Ddb.driver={{ template "database.driver" . }}
