@@ -14,7 +14,7 @@ spec:
             app: {{ template "content-services.fullname" . }}-share
       ports:
         - protocol: TCP
-          port: 8080
-        - protocol: TCP
           port: 80
+        - protocol: TCP
+          port: 8080
 {{- end }}
