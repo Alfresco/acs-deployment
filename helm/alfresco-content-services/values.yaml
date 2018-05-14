@@ -144,7 +144,7 @@ alfresco-search:
     port: *repositoryExternalPort
 
 # choose if you want network policy enabled
-networkPolicy:
+networkpolicysetting:
   enabled: true
 
 database:
