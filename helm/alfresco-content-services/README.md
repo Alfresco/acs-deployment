@@ -45,7 +45,7 @@ The command deploys ACS Cluster on the Kubernetes cluster in the default configu
 To uninstall/delete the `my-acs` deployment:
 
 ```console
-$ helm delete my-acs
+$ helm delete my-acs --purge
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
