@@ -1,0 +1,9 @@
+{{- if .Values.networkpolicysetting.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+spec:
+  podSelector: {}
+  ingress: []
+{{- end }}

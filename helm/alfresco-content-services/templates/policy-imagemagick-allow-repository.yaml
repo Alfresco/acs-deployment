@@ -1,0 +1,20 @@
+{{- if .Values.networkpolicysetting.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: imagemagick-allow-repository
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "content-services.fullname" . }}-imagemagick
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-repository
+      ports:
+        - protocol: TCP
+          port: 8090
+        - protocol: TCP
+          port: 80
+{{- end }}

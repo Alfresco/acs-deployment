@@ -143,6 +143,10 @@ alfresco-search:
     host: alfresco-content-services
     port: *repositoryExternalPort
 
+# choose if you want network policy enabled
+networkpolicysetting:
+  enabled: true
+
 database:
   type: postgresql
 

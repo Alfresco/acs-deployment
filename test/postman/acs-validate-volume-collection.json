@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e2886aaf-c5e1-4bcc-aca9-605e011d03c1",
+		"_postman_id": "ec9190a4-0b4b-499c-9f1d-c094c6cfffc0",
 		"name": "acs-validate-volume-collection",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "9205cbfa-253f-432a-8ebe-2ed280b88f23",
+						"id": "7dbd42b3-8436-4dd0-be64-14236fbfc003",
 						"type": "text/javascript",
 						"exec": [
 							"pm.globals.get(\"url\");",
@@ -24,6 +24,8 @@
 							"{",
 							"    pm.response.to.have.status(200);",
 							"});",
+							"",
+							"pm.globals.set(\"alf-csrftoken\", pm.cookies.get(\"alf-csrftoken\"));",
 							""
 						]
 					}
@@ -78,18 +80,20 @@
 			"response": []
 		},
 		{
-			"name": "validate cluster after restart",
+			"name": "validate cluster after cluster restart",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "785e0c5b-78fa-40d4-b100-10d82b937627",
+						"id": "e7bafe63-7b54-4f24-8833-f36dadfb0a10",
 						"type": "text/javascript",
 						"exec": [
 							"",
 							"pm.globals.get(\"url\");",
 							"",
-							"",
+							"/*",
+							" this will fail if you don't call GET /alfresco/s/enterprise/admin/admin-clustering-test before this POST call",
+							"*/",
 							"pm.test(\"callToTestWasOKTest\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
@@ -145,7 +149,12 @@
 					]
 				},
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "alf-csrftoken",
+						"value": "{{alf-csrftoken}} "
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -221,7 +230,10 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children",
 					"protocol": "http",
@@ -293,7 +305,10 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
 					"protocol": "http",
