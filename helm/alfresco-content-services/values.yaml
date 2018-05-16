@@ -23,10 +23,10 @@ repository:
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
-      -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms1000M"
+      -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx3700M"
   resources:
     requests:
-      memory: "1000Mi"
+      memory: "3700Mi"
     limits:
       memory: "4000Mi"
 
@@ -44,11 +44,11 @@ alfrescopdfrenderer:
     externalPort: 80
   resources:
     requests:
-      memory: "256Mi"
+      memory: "500Mi"
     limits:
       memory: "512Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256M"
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx500M"
 
 # Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
 imagemagick:
@@ -64,11 +64,11 @@ imagemagick:
     externalPort: 80
   resources:
     requests:
-      memory: "256Mi"
+      memory: "500Mi"
     limits:
       memory: "512Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256M"
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx500M"
 
 # Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
 libreoffice:
@@ -84,11 +84,11 @@ libreoffice:
     externalPort: 80
   resources:
     requests:
-      memory: "256Mi"
+      memory: "1000Mi"
     limits:
       memory: "1024Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256M"
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx1000M"
 
 # Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of the Alfresco Content Services product
@@ -107,11 +107,11 @@ share:
     path: /share
   resources:
     requests:
-      memory: "1000Mi"
+      memory: "2400Mi"
     limits:
       memory: "2500Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms1000M"
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx2400M"
 
 # Defines the mounting points for the persistence required by the apps in the cluster
 # the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data
@@ -175,12 +175,12 @@ postgresql:
     subPath: "alfresco-content-services/database-data"
   resources:
     requests:
-      memory: "250Mi"
-    limits:
       memory: "500Mi"
+    limits:
+      memory: "512Mi"
   driver: org.postgresql.Driver
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms250M"
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx500M"
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
