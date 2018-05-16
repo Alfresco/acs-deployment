@@ -22,7 +22,8 @@ repository:
       -Dsolr.secureComms=none
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
-      -Ddeployment.method=HELM_CHART"
+      -Ddeployment.method=HELM_CHART
+      -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms1000M"
   resources:
     requests:
       memory: "1000Mi"
@@ -46,6 +47,8 @@ alfrescopdfrenderer:
       memory: "256Mi"
     limits:
       memory: "512Mi"
+  environment:
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256M"
 
 # Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
 imagemagick:
@@ -64,6 +67,8 @@ imagemagick:
       memory: "256Mi"
     limits:
       memory: "512Mi"
+  environment:
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256M"
 
 # Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
 libreoffice:
@@ -82,6 +87,8 @@ libreoffice:
       memory: "256Mi"
     limits:
       memory: "1024Mi"
+  environment:
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms256M"
 
 # Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of the Alfresco Content Services product
@@ -103,6 +110,8 @@ share:
       memory: "1000Mi"
     limits:
       memory: "2500Mi"
+  environment:
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms1000M"
 
 # Defines the mounting points for the persistence required by the apps in the cluster
 # the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data
@@ -170,6 +179,8 @@ postgresql:
     limits:
       memory: "500Mi"
   driver: org.postgresql.Driver
+  environment:
+    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xms250M"
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
