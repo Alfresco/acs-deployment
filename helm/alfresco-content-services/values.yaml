@@ -162,6 +162,7 @@ postgresql:
   postgresPassword: alfresco
   postgresDatabase: alfresco
   postgresConfig:
+    max_connections: 300
     log_min_messages: LOG
   persistence:
     existingClaim: "alfresco-volume-claim"
