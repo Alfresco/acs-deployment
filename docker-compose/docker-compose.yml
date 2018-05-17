@@ -51,6 +51,7 @@ services:
             - POSTGRES_PASSWORD=alfresco
             - POSTGRES_USER=alfresco
             - POSTGRES_DB=alfresco
+        command: postgres -c log_min_messages=LOG
         ports:
             - 5432:5432
 

@@ -161,6 +161,8 @@ postgresql:
   postgresUser: alfresco
   postgresPassword: alfresco
   postgresDatabase: alfresco
+  postgresConfig:
+    log_min_messages: LOG
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-content-services/database-data"
