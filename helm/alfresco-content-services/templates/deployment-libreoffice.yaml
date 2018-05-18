@@ -29,4 +29,19 @@ spec:
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.libreoffice.image.internalPort }}
+            initialDelaySeconds: {{ .Values.libreoffice.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.libreoffice.readiness.periodSeconds }}
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.libreoffice.image.internalPort }}
+            initialDelaySeconds: {{ .Values.libreoffice.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.libreoffice.liveness.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: 5
 {{ toYaml .Values.libreoffice.resources | indent 12 }}

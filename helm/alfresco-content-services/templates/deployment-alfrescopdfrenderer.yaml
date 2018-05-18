@@ -29,4 +29,19 @@ spec:
           ports:
             - containerPort: {{ .Values.alfrescopdfrenderer.image.internalPort }}
           resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.alfrescopdfrenderer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.alfrescopdfrenderer.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.alfrescopdfrenderer.readiness.periodSeconds }}
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.alfrescopdfrenderer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.alfrescopdfrenderer.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.alfrescopdfrenderer.liveness.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: 5
 {{ toYaml .Values.alfrescopdfrenderer.resources | indent 12 }}

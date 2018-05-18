@@ -1,0 +1,13 @@
+# Defines the properties required by the share app
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.fullname" . }}-imagemagick-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+data:
+  livenessPercent: "{{ .Values.imagemagick.liveness.livenessPercent }}"
+  maxTransforms: "{{ .Values.imagemagick.liveness.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.imagemagick.liveness.maxTransformSeconds }}""
