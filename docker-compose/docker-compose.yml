@@ -2,7 +2,7 @@ version: "3"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.0.0-RC4
+        image: alfresco/alfresco-content-repository:6.0.0-RC5
         environment:
             JAVA_OPTS : "
                 -Ddb.driver=org.postgresql.Driver
@@ -51,6 +51,7 @@ services:
             - POSTGRES_PASSWORD=alfresco
             - POSTGRES_USER=alfresco
             - POSTGRES_DB=alfresco
+        command: postgres -c max_connections=300 -c log_min_messages=LOG
         ports:
             - 5432:5432
 
