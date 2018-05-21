@@ -36,6 +36,7 @@ Alfresco Content Services deployed via docker-compose or Kubernetes contains the
 * http://<machine_ip>:8082/alfresco
 * http://<machine_ip>:8080/share
 * http://<machine_ip>:8083/solr
+
 Please note: If you are re-running ```docker-compose up``` after destroying a previous docker compose cluster then please
 use the command: ```docker-compose down && docker-compose build --no-cache && docker-compose up``` at Step-3 above.
 
