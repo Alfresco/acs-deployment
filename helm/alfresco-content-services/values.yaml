@@ -1,8 +1,14 @@
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# This is a YAML-formatted file.  Declare variables to be passed into your templates.
 
-# Define the alfresco-content-repository properties to use in the k8s cluster
-# two content repository nodes are started in a cluster by default
+# ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
+# 2 x repository, 1 x share, 1 x transformers (alfrescopdfrenderer, imagemagick, libreoffice) and 1 x postgresql
+
+# Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
+# For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
+# But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
+# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal. 
+# Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
+
 repository:
   replicaCount: 2
   image:
@@ -23,12 +29,12 @@ repository:
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
-      -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx3700M"
+      -Xms2000M -Xmx2000M"
   resources:
     requests:
-      memory: "3700Mi"
+      memory: "3000Mi"
     limits:
-      memory: "4000Mi"
+      memory: "3000Mi"
 
 # Declares the alfresco-pdf-renderer service used but content-repository to do transformations for pdf files
 alfrescopdfrenderer:
@@ -44,11 +50,11 @@ alfrescopdfrenderer:
     externalPort: 80
   resources:
     requests:
-      memory: "500Mi"
+      memory: "1000Mi"
     limits:
-      memory: "512Mi"
+      memory: "1000Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx500M"
+    JAVA_OPTS: "$JAVA_OPTS -Xms256M -Xmx256M"
 
 # Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
 imagemagick:
@@ -64,11 +70,11 @@ imagemagick:
     externalPort: 80
   resources:
     requests:
-      memory: "500Mi"
+      memory: "1000Mi"
     limits:
-      memory: "512Mi"
+      memory: "1000Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx500M"
+    JAVA_OPTS: "$JAVA_OPTS -Xms256M -Xmx256M"
 
 # Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
 libreoffice:
@@ -86,9 +92,9 @@ libreoffice:
     requests:
       memory: "1000Mi"
     limits:
-      memory: "1024Mi"
+      memory: "1000Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx1000M"
+    JAVA_OPTS: "$JAVA_OPTS -Xms256M -Xmx256M"
 
 # Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of the Alfresco Content Services product
@@ -107,11 +113,11 @@ share:
     path: /share
   resources:
     requests:
-      memory: "2400Mi"
+      memory: "2000Mi"
     limits:
-      memory: "2500Mi"
+      memory: "2000Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx2400M"
+    JAVA_OPTS: "$JAVA_OPTS -Xms1000M -Xmx1000M"
 
 # Defines the mounting points for the persistence required by the apps in the cluster
 # the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data
@@ -178,12 +184,10 @@ postgresql:
     subPath: "alfresco-content-services/database-data"
   resources:
     requests:
-      memory: "500Mi"
+      memory: "1500Mi"
     limits:
-      memory: "512Mi"
+      memory: "1500Mi"
   driver: org.postgresql.Driver
-  environment:
-    JAVA_OPTS: "$JAVA_OPTS -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx500M"
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
