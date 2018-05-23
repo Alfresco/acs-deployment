@@ -23,17 +23,17 @@ services:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:0.10
+        image: alfresco/alfresco-pdf-renderer:1.0
         ports:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-imagemagick:0.10
+        image: alfresco/alfresco-imagemagick:1.0
         ports:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-libreoffice:0.10
+        image: alfresco/alfresco-libreoffice:1.0
         ports:
             - 8092:8090
 
