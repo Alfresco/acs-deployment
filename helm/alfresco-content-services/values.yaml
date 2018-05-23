@@ -34,7 +34,7 @@ alfrescopdfrenderer:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "0.10"
+    tag: "1.0"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -46,13 +46,25 @@ alfrescopdfrenderer:
       memory: "256Mi"
     limits:
       memory: "512Mi"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 150
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 10000
+    maxTransformSeconds: 1200
 
 # Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
 imagemagick:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "0.10"
+    tag: "1.0"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -64,13 +76,25 @@ imagemagick:
       memory: "256Mi"
     limits:
       memory: "512Mi"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 150
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 10000
+    maxTransformSeconds: 900
 
 # Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
 libreoffice:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "0.10"
+    tag: "1.0"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -82,6 +106,18 @@ libreoffice:
       memory: "256Mi"
     limits:
       memory: "1024Mi"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 250
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 99999
+    maxTransformSeconds: 1800
 
 # Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of the Alfresco Content Services product

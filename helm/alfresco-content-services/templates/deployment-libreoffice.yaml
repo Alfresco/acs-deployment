@@ -26,7 +26,26 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.libreoffice.image.repository }}:{{ .Values.libreoffice.image.tag }}"
           imagePullPolicy: {{ .Values.libreoffice.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-libreoffice.yaml
+              name: {{ template "content-services.fullname" . }}-libreoffice-configmap
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.libreoffice.image.internalPort }}
+            initialDelaySeconds: {{ .Values.libreoffice.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.libreoffice.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.libreoffice.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.libreoffice.image.internalPort }}
+            initialDelaySeconds: {{ .Values.libreoffice.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.libreoffice.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.libreoffice.livenessProbe.timeoutSeconds }}
 {{ toYaml .Values.libreoffice.resources | indent 12 }}

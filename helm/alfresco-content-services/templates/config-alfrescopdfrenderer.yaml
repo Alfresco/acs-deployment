@@ -1,0 +1,14 @@
+# Defines the properties required by the alfresco-pdf-renderer container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.fullname" . }}-alfrescopdfrenderer-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+data:
+  livenessPercent: "{{ .Values.alfrescopdfrenderer.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.alfrescopdfrenderer.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.alfrescopdfrenderer.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.alfrescopdfrenderer.livenessProbe.maxTransformSeconds }}"

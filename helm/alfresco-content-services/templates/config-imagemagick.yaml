@@ -1,0 +1,14 @@
+# Defines the properties required by the imagemagick container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.fullname" . }}-imagemagick-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+data:
+  livenessPercent: "{{ .Values.imagemagick.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.imagemagick.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.imagemagick.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.imagemagick.livenessProbe.maxTransformSeconds }}"

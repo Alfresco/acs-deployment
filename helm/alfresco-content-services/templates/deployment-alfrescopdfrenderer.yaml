@@ -26,7 +26,26 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.alfrescopdfrenderer.image.repository }}:{{ .Values.alfrescopdfrenderer.image.tag }}"
           imagePullPolicy: {{ .Values.alfrescopdfrenderer.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-alfrescopdfrenderer.yaml
+              name: {{ template "content-services.fullname" . }}-alfrescopdfrenderer-configmap
           ports:
             - containerPort: {{ .Values.alfrescopdfrenderer.image.internalPort }}
           resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.alfrescopdfrenderer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.alfrescopdfrenderer.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.alfrescopdfrenderer.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.alfrescopdfrenderer.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.alfrescopdfrenderer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.alfrescopdfrenderer.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.alfrescopdfrenderer.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.alfrescopdfrenderer.livenessProbe.timeoutSeconds }}
 {{ toYaml .Values.alfrescopdfrenderer.resources | indent 12 }}
