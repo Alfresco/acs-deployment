@@ -47,12 +47,15 @@ alfrescopdfrenderer:
     limits:
       memory: "512Mi"
   readinessProbe:
-    initialDelaySeconds: 7
-    periodSeconds: 10
-  liveness:
-    initialDelaySeconds: 60
-    periodSeconds: 900
-    livenessPercent: 200
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 150
+    livenessTransformPeriodSeconds: 600
     maxTransforms: 1000
     maxTransformSeconds: 1200
 
@@ -74,12 +77,15 @@ imagemagick:
     limits:
       memory: "512Mi"
   readinessProbe:
-    initialDelaySeconds: 7
-    periodSeconds: 10
-  liveness:
-    initialDelaySeconds: 60
-    periodSeconds: 900
-    livenessPercent: 200
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 150
+    livenessTransformPeriodSeconds: 600
     maxTransforms: 1000
     maxTransformSeconds: 900
 
@@ -101,12 +107,15 @@ libreoffice:
     limits:
       memory: "1024Mi"
   readinessProbe:
-    initialDelaySeconds: 7
-    periodSeconds: 10
-  liveness:
-    initialDelaySeconds: 60
-    periodSeconds: 900
-    livenessPercent: 200
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 250
+    livenessTransformPeriodSeconds: 600
     maxTransforms: 9999
     maxTransformSeconds: 1800
 

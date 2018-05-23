@@ -26,6 +26,10 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.imagemagick.image.repository }}:{{ .Values.imagemagick.image.tag }}"
           imagePullPolicy: {{ .Values.imagemagick.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-imagemagick.yaml
+              name: {{ template "content-services.fullname" . }}-imagemagick-configmap
           ports:
             - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources:
@@ -33,15 +37,15 @@ spec:
             httpGet:
               path: /ready
               port: {{ .Values.imagemagick.image.internalPort }}
-            initialDelaySeconds: {{ .Values.imagemagick.readiness.initialDelaySeconds }}
-            periodSeconds: {{ .Values.imagemagick.readiness.periodSeconds }}
-            timeoutSeconds: 5
+            initialDelaySeconds: {{ .Values.imagemagick.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.imagemagick.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.imagemagick.readinessProbe.timeoutSeconds }}
           livenessProbe:
             httpGet:
               path: /live
               port: {{ .Values.imagemagick.image.internalPort }}
-            initialDelaySeconds: {{ .Values.imagemagick.liveness.initialDelaySeconds }}
-            periodSeconds: {{ .Values.imagemagick.liveness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.imagemagick.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.imagemagick.livenessProbe.periodSeconds }}
             failureThreshold: 1
-            timeoutSeconds: 5
+            timeoutSeconds: {{ .Values.imagemagick.livenessProbe.timeoutSeconds }}
 {{ toYaml .Values.imagemagick.resources | indent 12 }}

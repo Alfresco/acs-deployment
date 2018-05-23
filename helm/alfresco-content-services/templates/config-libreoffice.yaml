@@ -1,13 +1,14 @@
-# Defines the properties required by the share app
+# Defines the properties required by the libreoffice container
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.fullname" . }}-imagemagick-configmap
+  name: {{ template "content-services.fullname" . }}-libreoffice-configmap
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 data:
-  livenessPercent: "{{ .Values.imagemagick.liveness.livenessPercent }}"
-  maxTransforms: "{{ .Values.imagemagick.liveness.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.imagemagick.liveness.maxTransformSeconds }}""
+  livenessPercent: "{{ .Values.libreoffice.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.libreoffice.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.libreoffice.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.libreoffice.livenessProbe.maxTransformSeconds }}"
