@@ -1,0 +1,16 @@
+# Defines the properties required by the alfrescopdfrenderer app
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.fullname" . }}-alfrescopdfrenderer-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+data:
+  # The JAVA_OPTS defined in the values.yaml file for the "alfrescopdfrenderer" are set here using proper quotes
+  {{- if .Values.alfrescopdfrenderer.environment }}
+  {{- range $key, $val := .Values.alfrescopdfrenderer.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}

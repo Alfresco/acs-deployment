@@ -1,0 +1,17 @@
+# Defines the properties required by the libreoffice app
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.fullname" . }}-libreoffice-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+data:
+  # The JAVA_OPTS defined in the values.yaml file for the "libreoffice" are set here using proper quotes
+  {{- if .Values.libreoffice.environment }}
+  {{- range $key, $val := .Values.libreoffice.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
+  

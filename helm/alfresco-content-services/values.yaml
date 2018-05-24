@@ -117,7 +117,7 @@ share:
     limits:
       memory: "2000Mi"
   environment:
-    JAVA_OPTS: "$JAVA_OPTS -Xms1000M -Xmx1000M"
+    CATALINA_OPTS: " -Xms1000M -Xmx1000M"
 
 # Defines the mounting points for the persistence required by the apps in the cluster
 # the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data

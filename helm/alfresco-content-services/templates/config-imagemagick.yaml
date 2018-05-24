@@ -1,0 +1,16 @@
+# Defines the properties required by the imagemagick app
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.fullname" . }}-imagemagick-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+data:
+  # The JAVA_OPTS defined in the values.yaml file for the "imagemagick" are set here using proper quotes
+  {{- if .Values.imagemagick.environment }}
+  {{- range $key, $val := .Values.imagemagick.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}

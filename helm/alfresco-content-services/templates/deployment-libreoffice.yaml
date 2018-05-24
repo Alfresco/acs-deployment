@@ -26,6 +26,10 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.libreoffice.image.repository }}:{{ .Values.libreoffice.image.tag }}"
           imagePullPolicy: {{ .Values.libreoffice.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-libreoffice.yaml
+              name: {{ template "content-services.fullname" . }}-libreoffice-configmap
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:
