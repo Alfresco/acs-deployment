@@ -33,7 +33,7 @@ services:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:1.0
+        image: alfresco/alfresco-pdf-renderer:1.1
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
