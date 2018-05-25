@@ -8,6 +8,12 @@ metadata:
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 data:
+  # The JAVA_OPTS defined in the values.yaml file for the "imagemagick" are set here using proper quotes
+  {{- if .Values.imagemagick.environment }}
+  {{- range $key, $val := .Values.imagemagick.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
   livenessPercent: "{{ .Values.imagemagick.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.imagemagick.livenessProbe.livenessTransformPeriodSeconds }}"
   maxTransforms: "{{ .Values.imagemagick.livenessProbe.maxTransforms }}"

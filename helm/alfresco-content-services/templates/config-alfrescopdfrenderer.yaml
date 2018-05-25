@@ -8,6 +8,12 @@ metadata:
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 data:
+  # The JAVA_OPTS defined in the values.yaml file for the "alfrescopdfrenderer" are set here using proper quotes
+  {{- if .Values.alfrescopdfrenderer.environment }}
+  {{- range $key, $val := .Values.alfrescopdfrenderer.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
   livenessPercent: "{{ .Values.alfrescopdfrenderer.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.alfrescopdfrenderer.livenessProbe.livenessTransformPeriodSeconds }}"
   maxTransforms: "{{ .Values.alfrescopdfrenderer.livenessProbe.maxTransforms }}"

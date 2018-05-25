@@ -30,9 +30,9 @@ Alfresco Content Services deployed via docker-compose or Kubernetes contains the
 
 #### Run ACS
 1. Clone this repository or download single [docker-compose](docker-compose/docker-compose.yml).
-1. Navigate to the folder where the _docker-compose.yml_ file is located.
-2. Run ```docker-compose up```
-3. Check that everything starts up by checking the following URLs in the browser:
+2. Navigate to the folder where the _docker-compose.yml_ file is located.
+3. Run ```docker-compose up```
+4. Check that everything starts up by checking the following URLs in the browser:
 * http://<machine_ip>:8082/alfresco
 * http://<machine_ip>:8080/share
 * http://<machine_ip>:8083/solr
@@ -40,6 +40,7 @@ Alfresco Content Services deployed via docker-compose or Kubernetes contains the
 #### Notes:
 * Make sure the machine has open ports (5432, 8080, 8082, 8083), see the _docker-compose.yml_ for details.
 * If the Docker is running on your local machine the ip address will be just _localhost_. If you are using [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows) the ip address can be found by running ```docker-machine ip```
+* If you are re-running ```docker-compose up``` after destroying a previous docker compose cluster then please use the command: ```docker-compose down && docker-compose build --no-cache && docker-compose up``` at Step-3 above.
 
 ## Running with Kubernetes
 ### Minikube
