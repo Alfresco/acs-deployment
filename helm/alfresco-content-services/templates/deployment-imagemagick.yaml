@@ -33,4 +33,19 @@ spec:
           ports:
             - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.imagemagick.image.internalPort }}
+            initialDelaySeconds: {{ .Values.imagemagick.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.imagemagick.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.imagemagick.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.imagemagick.image.internalPort }}
+            initialDelaySeconds: {{ .Values.imagemagick.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.imagemagick.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.imagemagick.livenessProbe.timeoutSeconds }}
 {{ toYaml .Values.imagemagick.resources | indent 12 }}

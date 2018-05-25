@@ -1,4 +1,4 @@
-# Defines the properties required by the alfrescopdfrenderer app
+# Defines the properties required by the alfresco-pdf-renderer container
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,3 +14,7 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
+  livenessPercent: "{{ .Values.alfrescopdfrenderer.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.alfrescopdfrenderer.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.alfrescopdfrenderer.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.alfrescopdfrenderer.livenessProbe.maxTransformSeconds }}"

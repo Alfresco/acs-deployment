@@ -1,4 +1,4 @@
-# Defines the properties required by the libreoffice app
+# Defines the properties required by the libreoffice container
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,4 +14,7 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  
+  livenessPercent: "{{ .Values.libreoffice.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.libreoffice.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.libreoffice.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.libreoffice.livenessProbe.maxTransformSeconds }}"

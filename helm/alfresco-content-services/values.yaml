@@ -55,6 +55,18 @@ alfrescopdfrenderer:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: "$JAVA_OPTS -Xms256M -Xmx256M"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 150
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 10000
+    maxTransformSeconds: 1200
 
 # Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
 imagemagick:
@@ -75,6 +87,18 @@ imagemagick:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: "$JAVA_OPTS -Xms256M -Xmx256M"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 150
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 10000
+    maxTransformSeconds: 900
 
 # Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
 libreoffice:
@@ -95,6 +119,18 @@ libreoffice:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: "$JAVA_OPTS -Xms256M -Xmx256M"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 250
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 99999
+    maxTransformSeconds: 1800
 
 # Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of the Alfresco Content Services product

@@ -1,4 +1,4 @@
-# Defines the properties required by the imagemagick app
+# Defines the properties required by the imagemagick container
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,3 +14,7 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
+  livenessPercent: "{{ .Values.imagemagick.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.imagemagick.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.imagemagick.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.imagemagick.livenessProbe.maxTransformSeconds }}"

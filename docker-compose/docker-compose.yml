@@ -33,7 +33,7 @@ services:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:0.10
+        image: alfresco/alfresco-pdf-renderer:1.0
         mem_limit: 1g
         environment:
             JAVA_OPTS: "$JAVA_OPTS -Xms256m -Xmx256m"
@@ -41,7 +41,7 @@ services:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-imagemagick:0.10
+        image: alfresco/alfresco-imagemagick:1.1
         mem_limit: 1g
         environment:
             JAVA_OPTS: "$JAVA_OPTS -Xms256m -Xmx256m"
@@ -49,7 +49,7 @@ services:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-libreoffice:0.10
+        image: alfresco/alfresco-libreoffice:1.1
         mem_limit: 1g
         environment:
             JAVA_OPTS: "$JAVA_OPTS -Xms256m -Xmx256m"
@@ -62,7 +62,7 @@ services:
         environment:
             - REPO_HOST=alfresco
             - REPO_PORT=8080
-            - "JAVA_OPTS=$JAVA_OPTS -Xms500m -Xmx500m"
+            - "CATALINA_OPTS= -Xms500m -Xmx500m"
         ports:
             - 8080:8080
 
@@ -89,6 +89,6 @@ services:
             - SOLR_SOLR_PORT=8983
             #Create the default alfresco and archive cores
             - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
-            - "JAVA_OPTS=$JAVA_OPTS -Xms2g -Xmx2g"
+            - "SOLR_JAVA_MEM=-Xms2g -Xmx2g"
         ports:
             - 8083:8983 #Browser port
