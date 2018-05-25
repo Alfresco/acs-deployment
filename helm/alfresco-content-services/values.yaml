@@ -41,7 +41,7 @@ alfrescopdfrenderer:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "0.10"
+    tag: "1.1"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -61,7 +61,7 @@ imagemagick:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "0.10"
+    tag: "1.1"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -81,7 +81,7 @@ libreoffice:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "0.10"
+    tag: "1.1"
     pullPolicy: Always
     internalPort: 8090
   service:
