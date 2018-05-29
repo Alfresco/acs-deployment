@@ -138,7 +138,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.0.0-rc1"
+    tag: "6.0.0-rc4"
     pullPolicy: Always
     internalPort: 8080
   service:
