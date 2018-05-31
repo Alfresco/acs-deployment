@@ -7,6 +7,9 @@ spec:
   podSelector:
     matchLabels:
       app: {{ template "content-services.fullname" . }}-alfrescopdfrenderer
+  policyTypes:
+  - Ingress
+  - Egress
   ingress:
     - from:
       - podSelector:
@@ -17,4 +20,14 @@ spec:
           port: 8090
         - protocol: TCP
           port: 80
+  egress:
+    - ports:
+      - port: 53
+        protocol: UDP
+      - port: 53
+        protocol: TCP
+    - to:
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-alfrescopdfrenderer
 {{- end }}

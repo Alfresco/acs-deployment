@@ -7,6 +7,9 @@ spec:
   podSelector:
     matchLabels:
       app: {{ template "database.hostname" . }}
+  policyTypes:
+  - Ingress
+  - Egress
   ingress:
     - from:
       - podSelector:
@@ -15,4 +18,14 @@ spec:
       ports:
         - protocol: TCP
           port: {{ template "database.port" . }}
+  egress:
+    - ports:
+      - port: 53
+        protocol: UDP
+      - port: 53
+        protocol: TCP
+    - to:
+      - podSelector:
+          matchLabels:
+            app: {{ template "database.hostname" . }}
 {{- end }}
