@@ -23,6 +23,10 @@ Alfresco Content Services deployed via docker-compose or Kubernetes contains the
 3. A Postgres DB  
 4. Alfresco Solr6  
 
+## Deployment options
+* [Deploying on AWS with Kubernetes](docs/helm-deploy-aws_cloud.md)
+* [Deploying with Helm on a local host](docs/helm-deployment-localhost.md)
+
 ## Running with Docker Compose
 #### Prerequisites
 * Docker
@@ -53,7 +57,7 @@ Alfresco Content Services deployed via docker-compose or Kubernetes contains the
 #### Start minikube VM
 Allocate at least 8GB of RAM, 2 CPU cores and 20GB disk space to minikube VM.
 ```bash
-minikube start --cpus=4 --memory=8000 
+minikube start --cpus=4 --memory=8000
 ```
 Check that the minikube is running
 ```bash
@@ -183,4 +187,3 @@ project
 Alternative commands and start up [tutorial with AWS support](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/running-a-cluster.md)
 
 [Tips and tricks](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/tips-and-tricks.md) for working with kubernetes and ACS.
-
