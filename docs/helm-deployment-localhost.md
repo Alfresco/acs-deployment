@@ -3,55 +3,116 @@
 
 ## Prerequisites
 
-The Alfresco Content Services (ACS) deployment with Kubernetes requires:
+To run the Alfresco Content Services (ACS) deployment on a local host with Kubernetes requires:
 
-  - Kubernetes 1.4+ with Beta APIs enabled
-  - Minimum of 16 GB Memory to distribute among the ACS cluster nodes
+| Component   | Recommended version | Getting Started Guide |
+| ------------|:-----------: | ---------------------- |
+| Minikube    | 0.25.0       | https://docs.docker.com/ |
+| Kubectl     | 1.8.4        | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
+| Helm        | 2.8.2        | https://docs.helm.sh/using_helm/#quickstart-guide |
 
+### Starting minikube VM
 
-## Adding Alfresco Helm repository
+* Allocate at least 16GB RAM (to distribute among the Alfresco Content Services cluster nodes), 2 CPU cores, and 20GB disk space to the minikube VM:
+```bash
+minikube start --cpus=4 --memory=16000
+```
+* Check that minikube is running:
+```bash
+minikube version
+minikube ip
+```
+* Start the Dashboard to see a web-based user interface of the minikube cluster:
+```bash
+minikube dashboard
+```
 
-Add `http://kubernetes-charts.alfresco.com/incubator` to your helm repository.
-```console
+**Note:**
+Here's the start up command for Windows 10 (you need to have the "My_Virtual_Switch" set up before this first command - see [blog](https://blogs.msdn.microsoft.com/wasimbloch/2017/01/23/setting-up-kubernetes-on-windows10-laptop-with-minikube/)):
+```bash
+minikube start --vm-driver="hyperv" --cpus=4 --memory=8000 --hyperv-virtual-switch="My_Virtual_Switch" --v=7 --alsologtostderr
+```
+This will download a Linux ISO and install it in your Hyper V Manager. You should see a _minikube_ VM, after it is installed. It also installs all the required software in that VM, to simulate a Kubernetes cluster.  
+You may need to add the ```--extra-config=kubelet.ImagePullProgressDeadline=30m0s``` parameter to your start command, as the docker images are rather big.  
+
+#### Initializing Helm
+
+```bash
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+helm init --service-account tiller
+```
+
+## Adding Alfresco incubator Helm repository
+
+* Add `http://kubernetes-charts.alfresco.com/incubator` to your helm repository.
+```bash
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
 ```
 
-## Installing the ACS cluster
-
-```console
-$ helm install alfresco-incubator/alfresco-content-services
+* Update the repository indexes:
+```bash
+helm repo update
 ```
 
-This chart bootstraps an ACS deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
-
-
-## Installing the chart
-
-Install the chart with the release name `my-acs`:
-
-```console
-# Alfresco Admin password should be encoded in MD5 Hash
-export ALF_ADMIN_PWD=$(printf %s 'MyAdminPwd' | iconv -t UTF-16LE | openssl md4 | awk '{ print $1}')
-
-# Alfresco Database (Postgresql) password
-export ALF_DB_PWD='MyDbPwd'
-
-$ helm install --name my-acs alfresco-incubator/alfresco-content-services \
-               --set repository.adminPassword="$ALF_ADMIN_PWD" \
-               --set postgresql.postgresPassword="$ALF_DB_PWD"
+* Check that the repository was added:
+```bash
+helm repo list
 ```
 
-This deploys the ACS cluster on the Kubernetes cluster using the default configuration (but with your chosen Alfresco administrator & database passwords). See the [configuration](#configuration) section for a list of the parameters you can configure during installation.
+## Installing the ingress service
 
-> **Tip**: List all releases using `helm list`
-
-
-## Uninstalling the chart
-
-To uninstall or delete the `my-acs` deployment:
-
-```console
-$ helm delete my-acs --purge
+* Deploy nginx:
+```bash
+helm install stable/nginx-ingress --set rbac.create=true
 ```
 
-The command removes all the Kubernetes components associated with the chart and deletes the release.
+After running this command remember the name of the ingress deployment, for example: "singed-chipmunk"
+
+
+## Deploying Alfresco Content Services using a Helm chart
+
+When you install Alfresco Content Services from the Alfresco Helm repository, you don't need to download any code locally. All the charts will be picked up from the helm repository.  You also have the option to install from the source code, which you'll need to download and modify.  Before starting the deployment, gather the required configuration.
+
+* Get the IP and port of the ingress controller
+```bash
+minikube ip
+# It will print something like: 172.31.147.123
+kubectl get service singed-chipmunk-nginx-ingress-controller -o jsonpath={.spec.ports[0].nodePort}
+# This will print a port like: 30917
+```
+
+### Option 1: Deploying Alfresco Content Services from the incubator Helm chart
+
+* Run the following command to install ACS using the `alfresco-incubator` chart:
+```bash
+helm install alfresco-incubator/alfresco-content-services --set externalProtocol="http" --set externalHost="172.31.147.123" --set externalPort="30917"
+```
+
+### Option 2: Deploying Alfresco Content Services from the source code
+
+If you want to modify the deployment and test it, the best option is to run the deployment from the source code.
+
+* Clone this repository (https://github.com/Alfresco/acs-deployment) and modify it (if required):
+```bash
+git clone git@github.com:Alfresco/acs-deployment.git
+cd acs-deployment
+```
+* Update the dependencies required:
+
+```bash
+cd helm/alfresco-content-services
+helm dependency update
+cd ..
+```
+**Note:** Make sure you run the command from the correct directory.
+
+## Checking your deployment
+
+After installing Alfresco Content Services, the following URLs are displayed in the terminal:
+```
+  Content: http://172.31.147.123:30917/alfresco
+  Share: http://172.31.147.123:30917/share
+  Solr: http://172.31.147.123:30917/solr
+```
+You'll need to wait for some time for the deployment to start up. Use the minikube dashboard to track the state of the deployment.

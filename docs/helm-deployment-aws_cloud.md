@@ -1,8 +1,9 @@
-# Alfresco Content Services Deployment on AWS with Kubernetes
+# Alfresco Content Services Deployment with Helm on AWS
+
 
 ## Prerequisites
 
-The Alfresco Content Services (ACS) deployment on AWS with Kubernetes requires:
+To run the Alfresco Content Services (ACS) deployment on AWS with Kubernetes requires:
 
 | Component   | Recommended version | Getting Started Guide |
 | ------------|:-----------: | ---------------------- |
@@ -15,7 +16,7 @@ The Alfresco Content Services (ACS) deployment on AWS with Kubernetes requires:
 
 Any variation from these technologies and versions may affect the end result.
 
-*Note:* You do not need to clone this repository to deploy ACS.
+**Note:** You don't need to clone this repository to deploy ACS.
 
 
 ### Setting up Kubernetes cluster on AWS
@@ -25,7 +26,7 @@ Any variation from these technologies and versions may affect the end result.
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
 ```
 
-* Export the AWS credentials of the user:
+* Export the AWS user credentials:
 ```bash
 # Access Key & Secret
 export AWS_ACCESS_KEY_ID=XXXXXXXXXXXXXXXXXXXXXXXX
@@ -42,7 +43,7 @@ export AWS_DEFAULT_REGION="<region-name>"
 export KOPS_NAME="myacs.example.com"
 ```
 
-* Provide an S3 bucket name to store cluster configuration used by `kops`.  This bucket needs to be created beforehand:
+* Provide an S3 bucket name to store the cluster configuration used by `kops`.  This bucket needs to be created first:
 ```bash
 # If s3 bucket is not already created
 $ aws s3 mb s3://my-bucket-kops-store
@@ -50,7 +51,7 @@ $ aws s3 mb s3://my-bucket-kops-store
 export KOPS_STATE_STORE="s3://my-bucket-kops-store"
 ```
 
-* Create Kubernetes cluster using `kops` utility:
+* Create a Kubernetes cluster using the `kops` utility:
 ```bash
 kops create cluster \
   --ssh-public-key <SSH-PUBLIC-KEY> \
@@ -69,8 +70,8 @@ kops create cluster \
   --networking weave \
   --yes
 ```
-Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` etc.)
-Note: The default bastion user name is `admin` accessible via the Bastion ELB (and not the EC2 host where the bastion is running).
+Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` etc.).
+**Note:** The default bastion user name is `admin` accessible via the Bastion ELB (and not the EC2 host where the bastion is running).
 
 ### Add-ons to manage Kubernetes cluster via Kubernetes dashboard
 
@@ -86,7 +87,8 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/s
 kubectl create -f dashboard-admin.yaml
 ```
 
-<details><summary>Click here to see example `dashboard-admin.yaml`</summary>
+<details><summary>
+See example file: _dashboard-admin.yaml_</summary>
 <p>
 
 ```bash
@@ -125,7 +127,7 @@ kubectl proxy &
 
 Once the platform for Kubernetes is set up on AWS, you can install ACS.
 
-* Create a namespace to host the ACS application inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and prodution):
+* Create a namespace to host the ACS application inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
 ```bash
 export DESIREDNAMESPACE=dev-myacs-namespace
 kubectl create namespace $DESIREDNAMESPACE
@@ -138,7 +140,8 @@ kubectl create namespace $DESIREDNAMESPACE
 kubectl create -f tiller-rbac-config.yaml
 ```
 
-<details><summary>Click here to see example `tiller-rbac-config.yaml`</summary>
+<details><summary>
+See example file: _tiller-rbac-config.yaml_</summary>
 <p>
 
 ```bash
@@ -188,7 +191,8 @@ helm install stable/nginx-ingress \
 --namespace $DESIREDNAMESPACE
 ```
 
-<details><summary>Click here to see example `ingressvalues.yaml`</summary>
+<details><summary>
+See example file: _ingressvalues.yaml_</summary>
 <p>
 
 ```bash
@@ -249,7 +253,8 @@ echo $ELBADDRESS
 
 * Create an EFS storage on AWS and make sure it's in the same VPC as your cluster by following this [guide](https://github.com/Alfresco/alfresco-dbp-deployment#6-efs-storage-note-only-for-aws).  Make sure you open inbound traffic in the security group to allow NFS traffic.  Below is an example of how to create it with the AWS Cli.
 
-<details><summary>Click here to see an example</summary>
+<details><summary>
+See EFS storage example</summary>
 <p>
 
 ```bash
@@ -292,9 +297,9 @@ export EFS_SERVER=$EFS_FS_ID.efs.$AWS_DEFAULT_REGION.amazonaws.com
 export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
 
-## Deploying ACS
+## Deploying Alfresco Content Services
 
-* Deploy ACS:
+* Deploy Alfresco Content Services using the following set of commands:
 ```bash
 # DNS name of the ACS cluster
 export EXTERNALHOST="myacs.example.com"
@@ -322,9 +327,9 @@ helm install alfresco-incubator/alfresco-content-services \
 --namespace=$DESIREDNAMESPACE
 ```
 
-For more parameter options, see [acs-deployment](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
+For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
 
-You can set ACS stack configuration attributes above accordingly.  By default the ACS chart will deploy using default values (Ex: `postgresPassword = "alfresco"`).
+You can set the Alfresco Content Services stack configuration attributes above accordingly.  Note that the `alfresco-incubator/alfresco-content-services` chart will deploy using default values (Ex: `postgresPassword = "alfresco"`).
 
 ```bash
 # Example: For a hardened DB password:
@@ -379,7 +384,7 @@ aws efs delete-file-system --file-system-id $EFS_FS_ID
 kops delete cluster --name=$KOPS_NAME --yes
 ```
 
-Depending on your cluster type, you should be able to also delete it if you want.
+Depending on your cluster type, you should also be able to delete it if you want.
 For minikube you can just run delete the whole minikube vm:
 ```bash
 minikube delete
@@ -401,7 +406,7 @@ spec:
   maxPrice: "0.07"
 ```
 
-* (Optional) Enable the required admission controllers, for example Pod Security Policy, see [these instructions](Apply-PSP).
+* (Optional) Enable the required admission controllers, for example, by applying a [Pod Security Policy](https://github.com/Alfresco/acs-deployment/wiki/Apply-PSP).
 
 * Update the cluster:
 ```
