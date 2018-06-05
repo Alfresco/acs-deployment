@@ -48,39 +48,6 @@ spec:
         - protocol: TCP
           port: 5701
 
-    # # Allow traffic from search
-    # - from:
-    #   - podSelector:
-    #       matchLabels:
-    #         app: {{ template "alfresco-search.host" . }}
-    #   ports:
-    #     - protocol: TCP
-    #       port: 8080
-    #     - protocol: TCP
-    #       port: 80
-
-    # Allow traffic from share
-    # - from:
-    #   - podSelector:
-    #       matchLabels:
-    #         app: {{ template "content-services.fullname" . }}-share
-    #   ports:
-    #     - protocol: TCP
-    #       port: 8080
-    #     - protocol: TCP
-    #       port: 80
-
-    # Allow traffic from transformers
-    # - from:
-    #   - podSelector:
-    #       matchLabels:
-    #         component: transformers
-    #   ports:
-    #     - protocol: TCP
-    #       port: 8080
-    #     - protocol: TCP
-    #       port: 80
-
   egress:
     # Allow inter repo communication for clustering
     - to:

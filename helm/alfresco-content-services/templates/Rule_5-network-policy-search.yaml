@@ -27,13 +27,4 @@ spec:
         - protocol: TCP
           port: 8983
 
-    # # Allow nginx-ingress to access search
-    # - from:
-    #   - podSelector:
-    #       matchLabels:
-    #         app: nginx-ingress
-    #   ports:
-    #     - protocol: TCP
-    #       port: 8983
-
 {{- end }}
