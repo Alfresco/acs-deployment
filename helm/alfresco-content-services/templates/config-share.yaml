@@ -7,6 +7,7 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: share
 data:
   {{ $alfhost := (.Values.externalHost | default (printf "%s-share" (include "content-services.fullname" .))) }}
   {{ $alfprotocol := (.Values.externalProtocol | default "http") }}

@@ -1,12 +1,17 @@
 {{- if .Values.networkpolicysetting.enabled }}
+# Allow nginx-ingress in-bound traffic
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: ingress-allow-all
+  name: nginx-ingress
 spec:
   podSelector:
     matchLabels:
       app: nginx-ingress
+  policyTypes:
+  - Ingress
+  # - Egress
   ingress:
     - {}
+
 {{- end }}

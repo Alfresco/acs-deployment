@@ -8,6 +8,7 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: repository
 data:
   # The JAVA_OPTS defined in the values.yaml file for the "repository" are set here using proper quotes
   {{- if .Values.repository.environment }}

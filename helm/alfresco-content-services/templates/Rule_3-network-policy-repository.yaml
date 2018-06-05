@@ -1,0 +1,94 @@
+{{- if .Values.networkpolicysetting.enabled }}
+# Allow repository inbound traffic from other services
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: repository
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "content-services.fullname" . }}-repository
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    - from:
+      # Allow traffic from nginx-ingress
+      - podSelector:
+          matchLabels:
+            app: nginx-ingress
+
+      # Allow traffic from search
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco-search.host" . }}
+
+      # Allow traffic from share
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-share
+
+      # Allow traffic from transformers
+      - podSelector:
+          matchLabels:
+            component: transformers
+
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 80
+
+    # Allow traffic between repository members 
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-repository
+      ports:
+        - protocol: TCP
+          port: 5701
+
+    # # Allow traffic from search
+    # - from:
+    #   - podSelector:
+    #       matchLabels:
+    #         app: {{ template "alfresco-search.host" . }}
+    #   ports:
+    #     - protocol: TCP
+    #       port: 8080
+    #     - protocol: TCP
+    #       port: 80
+
+    # Allow traffic from share
+    # - from:
+    #   - podSelector:
+    #       matchLabels:
+    #         app: {{ template "content-services.fullname" . }}-share
+    #   ports:
+    #     - protocol: TCP
+    #       port: 8080
+    #     - protocol: TCP
+    #       port: 80
+
+    # Allow traffic from transformers
+    # - from:
+    #   - podSelector:
+    #       matchLabels:
+    #         component: transformers
+    #   ports:
+    #     - protocol: TCP
+    #       port: 8080
+    #     - protocol: TCP
+    #       port: 80
+
+  egress:
+    # Allow inter repo communication for clustering
+    - to:
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-repository
+    - ports:
+      - port: 5701
+        protocol: TCP  
+
+{{- end }}

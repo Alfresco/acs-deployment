@@ -1,12 +1,15 @@
 {{- if .Values.networkpolicysetting.enabled }}
+# Allow only repository to connect database
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: repository-allow-repository
+  name: database
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "content-services.fullname" . }}-repository
+      app: {{ template "database.hostname" . }}
+  policyTypes:
+  - Ingress
   ingress:
     - from:
       - podSelector:
@@ -14,5 +17,5 @@ spec:
             app: {{ template "content-services.fullname" . }}-repository
       ports:
         - protocol: TCP
-          port: 5701
+          port: {{ template "database.port" . }}
 {{- end }}
