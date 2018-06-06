@@ -19,6 +19,7 @@ This chart bootstraps an ACS deployment on a [Kubernetes](http://kubernetes.io) 
 
 ## Prerequisites
   - Kubernetes 1.4+ with Beta APIs enabled
+  - Minimum of 16GB Memory to distribute among ACS Cluster nodes
 
 ## Installing the Chart
 
@@ -60,3 +61,4 @@ Parameter | Description | Default
 `postgresql.postgresUser` | postgresql database user | `alfresco`
 `postgresql.postgresPassword` | postgresql database password | `alfresco`
 `postgresql.postgresDatabase` | postgresql database name | `alfresco`
+`alfresco-search.resources.requests.memory` | alfresco search service requests memory | `250Mi`
