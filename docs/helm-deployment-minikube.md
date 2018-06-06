@@ -5,7 +5,7 @@
 To run the Alfresco Content Services (ACS) deployment using Minikube requires:
 
 | Component   | Getting Started Guide |
-| ------------|:-----------: | ---------------------- |
+| ------------| --------------------- |
 | Minikube    | https://github.com/kubernetes/minikube |
 | Kubectl     | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
 | Helm        | https://docs.helm.sh/using_helm/#quickstart-guide |
