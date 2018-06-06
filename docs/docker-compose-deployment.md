@@ -1,17 +1,17 @@
-# Running Alfresco Content Services using Docker Compose
+# Deploying Alfresco Content Services using Docker Compose
 
 Use this information to quickly start up Alfresco Content Services (ACS) using Docker Compose.
 
 ## Prerequisites
 
-To deploy and run ACS using _docker-compose_, you'll need to install the following software:
+To deploy Alfresco Content Services using _docker-compose_, you'll need to install the following software:
 
-| Component   | Recommended version | Installation guide |
-| ------------|:-----------: | ---------------------- |
-| Docker      | 17.0.9.1     | https://docs.docker.com/ |
-| Docker Compose      |     | https://docs.docker.com/compose/install/ |
+| Component      | Installation Guide |
+| ---------------| ------------------ |
+| Docker         | https://docs.docker.com/ |
+| Docker Compose | https://docs.docker.com/compose/install/ |
 
-## Running Alfresco Content Services
+## Deploying Alfresco Content Services
 1. Clone this repository or download a single file - [docker-compose](docker-compose/docker-compose.yml).
 2. Navigate to the folder where the _docker-compose.yml_ file is located.
 3. Run ```docker-compose up```
@@ -27,7 +27,7 @@ To deploy and run ACS using _docker-compose_, you'll need to install the followi
 ```bash
 docker-machine ip
 ```
-* If you run ```docker-compose up``` after deleting a previous docker compose cluster, then replace step 3 with the following command:
+* If you run ```docker-compose up``` after deleting a previous Docker Compose cluster, then replace step 3 with the following command:
 ```bash
 docker-compose down && docker-compose build --no-cache && docker-compose up
 ```

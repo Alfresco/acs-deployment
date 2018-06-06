@@ -5,18 +5,16 @@
 
 To run the Alfresco Content Services (ACS) deployment on AWS with Kubernetes requires:
 
-| Component   | Recommended version | Getting Started Guide |
-| ------------|:-----------: | ---------------------- |
-| Docker      | 17.0.9.1     | https://docs.docker.com/ |
-| Kubernetes  | 1.8.4        | https://kubernetes.io/docs/tutorials/kubernetes-basics/ |
-| Kubectl     | 1.8.4        | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
-| Helm        | 2.8.2        | https://docs.helm.sh/using_helm/#quickstart-guide |
-| Kops        | 1.8.1        | https://github.com/kubernetes/kops/blob/master/docs/aws.md |
-| AWS Cli     | 1.11.190      | https://github.com/aws/aws-cli#installation |
+| Component   | Getting Started Guide |
+| ------------| --------------------- |
+| Docker      | https://docs.docker.com/ |
+| Kubernetes  | https://kubernetes.io/docs/tutorials/kubernetes-basics/ |
+| Kubectl     | https://kubernetes.io/docs/tasks/tools/install-kubectl/ |
+| Helm        | https://docs.helm.sh/using_helm/#quickstart-guide |
+| Kops        | https://github.com/kubernetes/kops/blob/master/docs/aws.md |
+| AWS Cli     | https://github.com/aws/aws-cli#installation |
 
-Any variation from these technologies and versions may affect the end result.
-
-**Note:** You don't need to clone this repository to deploy ACS.
+**Note:** You don't need to clone this repository to deploy Alfresco Content Services.
 
 
 ### Setting up Kubernetes cluster on AWS
@@ -38,7 +36,7 @@ export AWS_PROFILE="<profile-name>"
 export AWS_DEFAULT_REGION="<region-name>"
 ```
 
-* Name the ACS environment:
+* Name the Alfresco Content Services environment:
 ```bash
 export KOPS_NAME="myacs.example.com"
 ```
@@ -73,9 +71,30 @@ kops create cluster \
 Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` etc.).
 **Note:** The default bastion user name is `admin` accessible via the Bastion ELB (and not the EC2 host where the bastion is running).
 
-### Add-ons to manage Kubernetes cluster via Kubernetes dashboard
+### Upgrading a cluster (optional)
 
-* Install the [Kubernetes dashboard](https://github.com/kubernetes/dashboard).  This dashboard helps to view and manage the cluster from your localhost (Ex: Work laptop):
+* Edit the worker nodes configuration to include spot price:
+```
+kops edit ig nodes
+```
+
+Include the following in the configuration:
+```
+spec:
+  maxPrice: "0.07"
+```
+
+* (Optional) Enable the required admission controllers, for example, by applying a [Pod Security Policy](https://github.com/Alfresco/acs-deployment/wiki/Apply-PSP).
+
+* Update the cluster:
+```
+kops update cluster --yes
+kops rolling-update cluster --yes
+```
+
+### Add-ons to manage Kubernetes cluster via Kubernetes Dashboard
+
+* Install the [Kubernetes dashboard](https://github.com/kubernetes/dashboard).  This Dashboard helps to view and manage the cluster from your localhost (Ex: Work laptop):
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
@@ -88,7 +107,7 @@ kubectl create -f dashboard-admin.yaml
 ```
 
 <details><summary>
-See example file: _dashboard-admin.yaml_</summary>
+See example file: dashboard-admin.yaml</summary>
 <p>
 
 ```bash
@@ -121,13 +140,13 @@ kubectl proxy &
 # To use a custom port: `kubectl proxy --port=8002 &`
 ```
 
-* To access the cluster locally go to: http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ and then press 'skip' in auth page.
+* To access the cluster locally, go to: http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ and then press 'skip' in auth page.
 
-### Setting up ACS cluster on Kubernetes cluster
+### Setting up Alfresco Content Services cluster on Kubernetes cluster
 
-Once the platform for Kubernetes is set up on AWS, you can install ACS.
+Once the platform for Kubernetes is set up on AWS, you can install Alfresco Content Services.
 
-* Create a namespace to host the ACS application inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
+* Create a namespace to host Alfresco Content Services inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
 ```bash
 export DESIREDNAMESPACE=dev-myacs-namespace
 kubectl create namespace $DESIREDNAMESPACE
@@ -135,13 +154,12 @@ kubectl create namespace $DESIREDNAMESPACE
 
 * Create tiller (cluster wide) and add the cluster admin role to tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md]:
 
-
 ```bash
 kubectl create -f tiller-rbac-config.yaml
 ```
 
 <details><summary>
-See example file: _tiller-rbac-config.yaml_</summary>
+See example file: tiller-rbac-config.yaml</summary>
 <p>
 
 ```bash
@@ -170,13 +188,13 @@ EOF
 </p>
 </details>
 
-* Initialise tiller:
+* Initialize tiller:
 ```bash
 helm init --service-account tiller
 ```
-The above step may not even be needed as, by default, `kubectl` will create and initialise the service.
+The above step may not even be needed as, by default, `kubectl` will create and initialize the service.
 
-* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve the ACS application. you have the option to either create an `ingressvalues.yaml` file, or write the arguments in full:
+* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file, or write the arguments in full:
 
 Option 1:
 
@@ -192,7 +210,7 @@ helm install stable/nginx-ingress \
 ```
 
 <details><summary>
-See example file: _ingressvalues.yaml_</summary>
+See example file: ingressvalues.yaml</summary>
 <p>
 
 ```bash
@@ -244,7 +262,7 @@ helm install stable/nginx-ingress \
 ```
 Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
-* To view the AWS ELB DNS name, note down the `nginx-ingress` release from the output of the above command.  It should be something like (Ex: `NAME:  knobby-wolf`)
+* To view the AWS ELB DNS name, note down the `nginx-ingress` release from the output of the above command. (for example, `NAME:  knobby-wolf`):
 ```bash
 export INGRESSRELEASE=knobby-wolf
 export ELBADDRESS=$(kubectl get services $INGRESSRELEASE-nginx-ingress-controller --namespace=$DESIREDNAMESPACE -o jsonpath={.status.loadBalancer.ingress[0].hostname})
@@ -369,7 +387,7 @@ helm get values -a $ACSRELEASE
 ## Cleaning up your deployment
 
 ```bash
-# Delete helm charts: Nginx-ingress & ACS
+# Delete Helm charts: Nginx-ingress & ACS
 helm delete --purge $INGRESSRELEASE
 helm delete --purge $ACSRELEASE
 
@@ -385,31 +403,9 @@ kops delete cluster --name=$KOPS_NAME --yes
 ```
 
 Depending on your cluster type, you should also be able to delete it if you want.
-For minikube you can just run delete the whole minikube vm:
+For Minikube, you can just delete the whole Minikube VM:
 ```bash
 minikube delete
 ```
 
 For more information on running and tearing down Kubernetes environments, follow this [guide](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/running-a-cluster.md).
-
-
-## Upgrading a cluster
-
-* (Optional) Edit worker nodes configuration to include spot price:
-```
-kops edit ig nodes
-```
-
-Include the following in the configuration:
-```
-spec:
-  maxPrice: "0.07"
-```
-
-* (Optional) Enable the required admission controllers, for example, by applying a [Pod Security Policy](https://github.com/Alfresco/acs-deployment/wiki/Apply-PSP).
-
-* Update the cluster:
-```
-kops update cluster --yes
-kops rolling-update cluster --yes
-```

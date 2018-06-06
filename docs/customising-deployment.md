@@ -10,9 +10,9 @@ Alfresco Content Services is composed of the following images:
 6. alfresco-search-services | [tags](https://hub.docker.com/r/alfresco/alfresco-search-services/tags/)
 7. postgres | [tags](https://hub.docker.com/r/library/postgres/tags/)
 
-For docker-compose usage, edit the image tags in the [docker-compose.yml](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/docker-compose.yml) file.  
+For Docker Compose usage, edit the image tags in the [docker-compose.yml](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/docker-compose.yml) file.  
 
-For helm charts usage, edit the image tags in the  [values.yaml](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) file.  
+For Helm charts usage, edit the image tags in the  [values.yaml](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) file.  
 
 ```
 project
@@ -30,5 +30,8 @@ project
 
 **Note:**
 * Use the recommended image tags, as not all combinations may work.
-* You can modify the values provided in [values.yaml](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) when deploying the Helm chart. For example, you can run: ```helm install alfresco-incubator/alfresco-content-services --set repository.image.tag="yourTag" --set share.image.tag="yourTag"```.
-* You can run  ```eval $(minikube docker-env)``` to switch to your minikube docker environment on Mac OS X.
+* You can modify the values provided in [values.yaml](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) when deploying the Helm chart. For example, you can run:
+```bash
+helm install alfresco-incubator/alfresco-content-services --set repository.image.tag="yourTag" --set share.image.tag="yourTag"
+```
+* You can run ```eval $(minikube docker-env)``` to switch to your Minikube Docker environment on Mac OS X.
