@@ -6,7 +6,7 @@
 # Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
 # For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
 # But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
-# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal. 
+# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
 repository:
@@ -180,7 +180,7 @@ alfresco-infrastructure:
     enabled: false
   activemq:
     enabled: false
-  alfresco-keycloak:
+  alfresco-identity-service:
     enabled: false
   alfresco-activiti-cloud-registry:
     enabled: false
