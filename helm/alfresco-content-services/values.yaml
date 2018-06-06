@@ -28,8 +28,20 @@ repository:
       memory: "1000Mi"
     limits:
       memory: "4000Mi"
+  # The repository readiness probe is used to check startup only as a failure
+  # of the liveness probe later will result in the pod being restarted.
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 10
+    failureThreshold: 6
+  livenessProbe:
+    initialDelaySeconds: 130
+    periodSeconds: 20
+    timeoutSeconds: 10
 
-# Declares the alfresco-pdf-renderer service used but content-repository to do transformations for pdf files
+# Declares the alfresco-pdf-renderer service used by the content repository
+# to transform pdf files
 alfrescopdfrenderer:
   replicaCount: 1
   image:
@@ -59,7 +71,8 @@ alfrescopdfrenderer:
     maxTransforms: 10000
     maxTransformSeconds: 1200
 
-# Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
+# Declares the alfresco-imagemagick service used by the content repository
+# to transform image files
 imagemagick:
   replicaCount: 1
   image:
@@ -89,7 +102,8 @@ imagemagick:
     maxTransforms: 10000
     maxTransformSeconds: 900
 
-# Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
+# Declares the alfresco-libreoffice service used by the content repository
+# to transform office files
 libreoffice:
   replicaCount: 1
   image:
@@ -120,7 +134,7 @@ libreoffice:
     maxTransformSeconds: 1800
 
 # Define the alfresco-share properties to use in the k8s cluster
-# This is the default presentation layer(UI) of the Alfresco Content Services product
+# This is the default presentation layer(UI) of Alfresco Content Services
 share:
   replicaCount: 1
   image:
@@ -139,9 +153,18 @@ share:
       memory: "1000Mi"
     limits:
       memory: "2500Mi"
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 130
+    periodSeconds: 20
+    timeoutSeconds: 10
 
-# Defines the mounting points for the persistence required by the apps in the cluster
-# the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data
+# Defines the mounting points for the persistence required by the apps in the
+# cluster the alf_data folder from alfresco-content-repository app is mapped to
+# alfresco-content-services/repository-data
 persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
