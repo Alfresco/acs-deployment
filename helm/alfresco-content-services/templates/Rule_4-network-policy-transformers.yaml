@@ -10,7 +10,7 @@ spec:
       component: transformers
   policyTypes:
   - Ingress
-  # - Egress
+  - Egress
   ingress:
     - from:
       - podSelector:
@@ -21,5 +21,4 @@ spec:
           port: 8090
         - protocol: TCP
           port: 80
-
 {{- end }}

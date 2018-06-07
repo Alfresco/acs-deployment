@@ -10,6 +10,7 @@ spec:
       app: {{ template "database.hostname" . }}
   policyTypes:
   - Ingress
+  - Egress
   ingress:
     - from:
       - podSelector:

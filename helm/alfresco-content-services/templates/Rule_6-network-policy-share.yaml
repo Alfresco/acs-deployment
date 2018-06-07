@@ -10,7 +10,7 @@ spec:
       app: {{ template "content-services.fullname" . }}-share
   policyTypes:
   - Ingress
-  # - Egress
+  - Egress
   ingress:
     - from:
       # Allow nginx-ingress to access search
@@ -22,5 +22,4 @@ spec:
           port: 8080
         - protocol: TCP
           port: 80
-
 {{- end }}

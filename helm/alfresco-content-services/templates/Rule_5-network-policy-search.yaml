@@ -10,7 +10,7 @@ spec:
       app: {{ template "alfresco-search.host" . }}
   policyTypes:
   - Ingress
-  # - Egress
+  - Egress
   ingress:
     - from:
       # Allow repository to access search
