@@ -49,13 +49,34 @@ spec:
           port: 5701
 
   egress:
-    # Allow inter repo communication for clustering
+    # Allow repo to communicate back with other components
     - to:
+      # Database
+      - podSelector:
+          matchLabels:
+             app: {{ template "database.hostname" . }}
+      # Repo (clustering)
       - podSelector:
           matchLabels:
              app: {{ template "content-services.fullname" . }}-repository
-    - ports:
-      - port: 5701
-        protocol: TCP  
+      
+      # Search (solr)
+      - podSelector:
+          matchLabels:
+             app: {{ template "alfresco-search.host" . }}
 
+      # Share
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-share
+
+      # Transformers
+      - podSelector:
+          matchLabels:
+             component: transformers
+
+      # nginx-ingress
+      - podSelector:
+          matchLabels:
+             app: nginx-ingress
 {{- end }}

@@ -1,5 +1,5 @@
 {{- if .Values.networkpolicysetting.enabled }}
-# Allow search in-bound traffic
+# Allow search communication with other components
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -26,5 +26,25 @@ spec:
       ports:
         - protocol: TCP
           port: 8983
+  egress:
+    # Allow search to communicate back with other components
+    - to:
+      # Repo
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-repository
+      
+      # nginx-ingress
+      - podSelector:
+          matchLabels:
+             app: nginx-ingress
+
+    # Allow DB to communicate with EFS
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 2049
 
 {{- end }}

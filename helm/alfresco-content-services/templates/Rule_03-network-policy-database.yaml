@@ -1,5 +1,5 @@
 {{- if .Values.networkpolicysetting.enabled }}
-# Allow only repository to connect database
+# Allow communication between database & repository
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -19,4 +19,18 @@ spec:
       ports:
         - protocol: TCP
           port: {{ template "database.port" . }}
+  egress:
+    # Allow DB to communicate back with repo
+    - to:
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-repository
+
+    # Allow DB to communicate with EFS
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 2049
 {{- end }}
