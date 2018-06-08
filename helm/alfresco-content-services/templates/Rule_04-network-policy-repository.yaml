@@ -80,4 +80,14 @@ spec:
       - podSelector:
           matchLabels:
              app: nginx-ingress
+
+    # Allow repo to connect HeartBeat (https://hbrx.alfresco.com)
+    - to:
+      - ipBlock:
+          # AWS CloudFront CIDR range '52.84.0.0/15' is GLOBAL: https://ip-ranges.amazonaws.com/ip-ranges.json 
+          # As of now there is no selector to specify a DNS name of a host (https://github.com/kubernetes/kubernetes/issues/50453)
+          cidr: 52.84.0.0/15 
+      ports:
+      - protocol: TCP
+        port: 443
 {{- end }}
