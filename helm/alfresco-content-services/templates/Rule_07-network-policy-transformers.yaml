@@ -31,8 +31,8 @@ spec:
           matchLabels:
              app: {{ template "content-services.fullname" . }}-repository
       
-      # # nginx-ingress
-      # - podSelector:
-      #     matchLabels:
-      #        app: nginx-ingress
+      # nginx-ingress
+      - podSelector:
+          matchLabels:
+             app: nginx-ingress
 {{- end }}

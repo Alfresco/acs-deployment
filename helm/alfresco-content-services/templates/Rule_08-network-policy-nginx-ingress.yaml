@@ -13,4 +13,6 @@ spec:
   - Egress
   ingress:
     - {}
+  egress:
+    - {}
 {{- end }}

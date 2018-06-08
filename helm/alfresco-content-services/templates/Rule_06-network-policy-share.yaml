@@ -26,9 +26,13 @@ spec:
   egress:
     # Allow share to communicate back with other components
     - to:
-      
       # nginx-ingress
       - podSelector:
           matchLabels:
              app: nginx-ingress
+
+      # repository
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-repository
 {{- end }}

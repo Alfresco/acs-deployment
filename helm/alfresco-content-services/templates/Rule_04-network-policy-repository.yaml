@@ -1,5 +1,5 @@
 {{- if .Values.networkpolicysetting.enabled }}
-# Allow repository inbound traffic from other services
+# Allow repository communication with other components
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -55,6 +55,7 @@ spec:
       - podSelector:
           matchLabels:
              app: {{ template "database.hostname" . }}
+
       # Repo (clustering)
       - podSelector:
           matchLabels:
