@@ -14,5 +14,10 @@ spec:
   ingress:
     - {}
   egress:
-    - {}
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        # Block accessing EC2 metadata
+        - 169.254.169.254/32
 {{- end }}
