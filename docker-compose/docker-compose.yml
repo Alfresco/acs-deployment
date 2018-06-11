@@ -27,6 +27,7 @@ services:
                 -Djodconverter.url=http://libreoffice:8090/
                 -Dimg.url=http://imagemagick:8090/
                 -Ddeployment.method=DOCKER_COMPOSE
+                -Dcsrf.filter.enabled=false
                 -Xms1g -Xmx1g
                 "
         ports:
