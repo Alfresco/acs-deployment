@@ -90,4 +90,12 @@ spec:
       ports:
       - protocol: TCP
         port: 443
+
+    # Allow repository to communicate with EFS
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+      - protocol: TCP
+        port: 2049
 {{- end }}
