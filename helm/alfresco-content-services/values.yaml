@@ -6,14 +6,14 @@
 # Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
 # For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
 # But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
-# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal. 
+# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
 repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.0.0-RC5"
+    tag: "latest"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -35,8 +35,20 @@ repository:
       memory: "3000Mi"
     limits:
       memory: "3000Mi"
+  # The repository readiness probe is used to check startup only as a failure
+  # of the liveness probe later will result in the pod being restarted.
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 10
+    failureThreshold: 6
+  livenessProbe:
+    initialDelaySeconds: 130
+    periodSeconds: 20
+    timeoutSeconds: 10
 
-# Declares the alfresco-pdf-renderer service used but content-repository to do transformations for pdf files
+# Declares the alfresco-pdf-renderer service used by the content repository
+# to transform pdf files
 alfrescopdfrenderer:
   replicaCount: 1
   image:
@@ -68,7 +80,8 @@ alfrescopdfrenderer:
     maxTransforms: 10000
     maxTransformSeconds: 1200
 
-# Declares the alfresco-imagemagick service used but content-repository to do transformations for image files
+# Declares the alfresco-imagemagick service used by the content repository
+# to transform image files
 imagemagick:
   replicaCount: 1
   image:
@@ -100,7 +113,8 @@ imagemagick:
     maxTransforms: 10000
     maxTransformSeconds: 900
 
-# Declares the alfresco-libreoffice service used but content-repository to do transformations for office files
+# Declares the alfresco-libreoffice service used by the content repository
+# to transform office files
 libreoffice:
   replicaCount: 1
   image:
@@ -133,7 +147,7 @@ libreoffice:
     maxTransformSeconds: 1800
 
 # Define the alfresco-share properties to use in the k8s cluster
-# This is the default presentation layer(UI) of the Alfresco Content Services product
+# This is the default presentation layer(UI) of Alfresco Content Services
 share:
   replicaCount: 1
   image:
@@ -154,9 +168,18 @@ share:
       memory: "2000Mi"
   environment:
     CATALINA_OPTS: " -Xms1000M -Xmx1000M"
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 130
+    periodSeconds: 20
+    timeoutSeconds: 10
 
-# Defines the mounting points for the persistence required by the apps in the cluster
-# the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data
+# Defines the mounting points for the persistence required by the apps in the
+# cluster the alf_data folder from alfresco-content-repository app is mapped to
+# alfresco-content-services/repository-data
 persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
@@ -180,7 +203,7 @@ alfresco-infrastructure:
     enabled: false
   activemq:
     enabled: false
-  alfresco-keycloak:
+  alfresco-identity-service:
     enabled: false
   alfresco-activiti-cloud-registry:
     enabled: false

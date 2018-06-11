@@ -41,6 +41,22 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+          readinessProbe:
+            httpGet:
+              path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+              port: {{ .Values.repository.image.internalPort }}
+            initialDelaySeconds: {{ .Values.repository.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.repository.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.repository.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.repository.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
+              port: {{ .Values.repository.image.internalPort }}
+            initialDelaySeconds: {{ .Values.repository.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.repository.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.repository.livenessProbe.timeoutSeconds }}
       initContainers:
         # wait for the DB to startup before this deployment can start
         - name: init-db

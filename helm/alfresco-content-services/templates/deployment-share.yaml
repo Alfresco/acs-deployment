@@ -34,3 +34,18 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "content-services.fullname" . }}-share-configmap
+          readinessProbe:
+            httpGet:
+              path: /share
+              port: {{ .Values.share.image.internalPort }}
+            initialDelaySeconds: {{ .Values.share.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.share.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.share.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /share
+              port: {{ .Values.share.image.internalPort }}
+            initialDelaySeconds: {{ .Values.share.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.share.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.share.livenessProbe.timeoutSeconds }}
