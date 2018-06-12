@@ -1,0 +1,101 @@
+{{- if .Values.networkpolicysetting.enabled }}
+# Allow repository communication with other components
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: repository
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "content-services.fullname" . }}-repository
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    - from:
+      # Allow traffic from nginx-ingress
+      - podSelector:
+          matchLabels:
+            app: nginx-ingress
+
+      # Allow traffic from search
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco-search.host" . }}
+
+      # Allow traffic from share
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-share
+
+      # Allow traffic from transformers
+      - podSelector:
+          matchLabels:
+            component: transformers
+
+      ports:
+        - protocol: TCP
+          port: 8080
+        - protocol: TCP
+          port: 80
+
+    # Allow traffic between repository members 
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-repository
+      ports:
+        - protocol: TCP
+          port: 5701
+
+  egress:
+    # Allow repo to communicate back with other components
+    - to:
+      # Database
+      - podSelector:
+          matchLabels:
+             app: {{ template "database.hostname" . }}
+
+      # Repo (clustering)
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-repository
+      
+      # Search (solr)
+      - podSelector:
+          matchLabels:
+             app: {{ template "alfresco-search.host" . }}
+
+      # Share
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-share
+
+      # Transformers
+      - podSelector:
+          matchLabels:
+             component: transformers
+
+      # nginx-ingress
+      - podSelector:
+          matchLabels:
+             app: nginx-ingress
+
+    # Allow repo to connect HeartBeat (https://hbrx.alfresco.com)
+    - to:
+      - ipBlock:
+          # AWS CloudFront CIDR range '52.84.0.0/15' is GLOBAL: https://ip-ranges.amazonaws.com/ip-ranges.json 
+          # As of now there is no selector to specify a DNS name of a host (https://github.com/kubernetes/kubernetes/issues/50453)
+          cidr: 52.84.0.0/15 
+      ports:
+      - protocol: TCP
+        port: 443
+
+    # Allow repository to communicate with EFS
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+      - protocol: TCP
+        port: 2049
+{{- end }}

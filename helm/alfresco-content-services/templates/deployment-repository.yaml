@@ -8,6 +8,7 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    component: repository
 spec:
   replicas: {{ .Values.repository.replicaCount }}
   template:
@@ -15,6 +16,7 @@ spec:
       labels:
         app: {{ template "content-services.fullname" . }}-repository
         release: {{ .Release.Name }}
+        component: repository
     spec:
       {{- if .Values.registryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

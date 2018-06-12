@@ -1,0 +1,38 @@
+{{- if .Values.networkpolicysetting.enabled }}
+# Allow transformers to communicate with other components
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: transformers
+spec:
+  podSelector:
+    matchLabels:
+      component: transformers
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.fullname" . }}-repository
+      ports:
+        - protocol: TCP
+          port: 8090
+        - protocol: TCP
+          port: 80
+
+  egress:
+    # Allow transformers to communicate back with other components
+    - to:
+
+      # Repo
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.fullname" . }}-repository
+      
+      # nginx-ingress
+      - podSelector:
+          matchLabels:
+             app: nginx-ingress
+{{- end }}

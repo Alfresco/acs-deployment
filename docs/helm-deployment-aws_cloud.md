@@ -65,7 +65,7 @@ kops create cluster \
   --kubernetes-version "1.10.1" \
   --bastion \
   --topology private \
-  --networking weave \
+  --networking calico \
   --yes
 ```
 Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` etc.).
