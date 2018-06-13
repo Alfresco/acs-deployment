@@ -193,7 +193,7 @@ export DESIREDNAMESPACE=dev-myacs-namespace
 kubectl create namespace $DESIREDNAMESPACE
 ```
 
-### Deploy the Ingress for Alfresco Content Services
+### Deploying the Ingress for Alfresco Content Services
 
 * Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file, or write the arguments in full:
 
