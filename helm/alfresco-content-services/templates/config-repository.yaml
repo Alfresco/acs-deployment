@@ -35,6 +35,6 @@ data:
       -Ddb.url=jdbc:{{ .Values.database.type }}://{{ template "database.hostname" . }}:{{ template "database.port" . }}/{{ .Values.postgresql.postgresDatabase }}
       -Dsolr.host={{ template "alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
-      -Dalfresco-pdf-renderer.url=http://{{ template "content-services.fullname" . }}-alfrescopdfrenderer
+      -Dalfresco-pdf-renderer.url=http://{{ template "content-services.fullname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.fullname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.fullname" . }}-libreoffice"
