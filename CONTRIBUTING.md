@@ -9,13 +9,13 @@ Read an [overview on how this project is goverened](https://community.alfresco.c
 
 You can also perform the following:
 
-- Report and add issues in the JIRA of ALF project of the [Alfresco issue tracker](http://issues.alfresco.com).
+- Report and add issues in the ALF JIRA project of the [Alfresco issue tracker](http://issues.alfresco.com).
 
-- Raise issues directly against the project (GitHub bug).  Please read [instructions for a good issue report](https://community.alfresco.com/docs/DOC-6263-reporting-an-issue).
+- Raise issues directly against the project (GitHub bug).  Please read the [instructions for a good issue report](https://community.alfresco.com/docs/DOC-6263-reporting-an-issue).
 
-- Supply Pull requests.  Please read [instructions for making a contribution](https://community.alfresco.com/docs/DOC-6269-submitting-contributions).
+- Supply pull requests.  Please read the [instructions for making a contribution](https://community.alfresco.com/docs/DOC-6269-submitting-contributions).
 
-Please follow [the coding standards](https://community.alfresco.com/docs/DOC-4658-coding-standards).
+Please follow the [coding standards](https://community.alfresco.com/docs/DOC-4658-coding-standards).
 
 Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
 available at [http://contributor-covenant.org/version/1/4][version]
