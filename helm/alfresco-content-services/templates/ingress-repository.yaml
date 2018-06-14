@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "content-services.fullname" . }}-repository
+  name: {{ template "content-services.shortname" . }}-repository
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -15,5 +15,5 @@ spec:
       paths:
       - path: {{ .Values.repository.ingress.path }}
         backend:
-          serviceName: {{ template "content-services.fullname" . }}-repository
+          serviceName: {{ template "content-services.shortname" . }}-repository
           servicePort: {{ .Values.repository.service.externalPort }}

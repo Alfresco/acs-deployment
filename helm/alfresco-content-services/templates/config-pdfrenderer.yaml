@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.fullname" . }}-pdfrenderer-configmap
+  name: {{ template "content-services.shortname" . }}-pdfrenderer-configmap
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}

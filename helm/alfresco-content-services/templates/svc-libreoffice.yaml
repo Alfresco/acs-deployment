@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "content-services.fullname" . }}-libreoffice
+  name: {{ template "content-services.shortname" . }}-libreoffice
   labels:
-    app: {{ template "content-services.fullname" . }}
+    app: {{ template "content-services.shortname" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -16,5 +16,5 @@ spec:
       targetPort: {{ .Values.libreoffice.image.internalPort }}
       name: {{ .Values.libreoffice.service.name }}
   selector:
-    app: {{ template "content-services.fullname" . }}-libreoffice
+    app: {{ template "content-services.shortname" . }}-libreoffice
     release: {{ .Release.Name }}

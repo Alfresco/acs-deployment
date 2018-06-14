@@ -15,7 +15,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            app: {{ template "content-services.fullname" . }}-repository
+            app: {{ template "content-services.shortname" . }}-repository
       ports:
         - protocol: TCP
           port: {{ template "database.port" . }}
@@ -24,7 +24,7 @@ spec:
     - to:
       - podSelector:
           matchLabels:
-             app: {{ template "content-services.fullname" . }}-repository
+             app: {{ template "content-services.shortname" . }}-repository
 
     # Allow DB to communicate with EFS
     - to:
