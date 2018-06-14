@@ -17,12 +17,7 @@ To run the Alfresco Content Services (ACS) deployment on AWS with Kubernetes req
 **Note:** You don't need to clone this repository to deploy Alfresco Content Services.
 
 
-### Setting up Kubernetes cluster on AWS
-
-* Add the Alfresco Helm charts repository:
-```bash
-helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
-```
+### Setting up Kubernetes cluster on AWS with Kops
 
 * Export the AWS user credentials:
 ```bash
@@ -92,7 +87,7 @@ kops update cluster --yes
 kops rolling-update cluster --yes
 ```
 
-### Add-ons to manage Kubernetes cluster via Kubernetes Dashboard
+### Deploying the Kubernetes Dashboard
 
 * Install the [Kubernetes dashboard](https://github.com/kubernetes/dashboard).  This Dashboard helps to view and manage the cluster from your localhost (Ex: Work laptop):
 
@@ -142,15 +137,9 @@ kubectl proxy &
 
 * To access the cluster locally, go to: http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ and then press 'skip' in auth page.
 
-### Setting up Alfresco Content Services cluster on Kubernetes cluster
+### Deploying Helm
 
-Once the platform for Kubernetes is set up on AWS, you can install Alfresco Content Services.
-
-* Create a namespace to host Alfresco Content Services inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
-```bash
-export DESIREDNAMESPACE=dev-myacs-namespace
-kubectl create namespace $DESIREDNAMESPACE
-```
+Helm is used to deploy the Alfresco Content Services into the Kubernetes cluster.
 
 * Create tiller (cluster wide) and add the cluster admin role to tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md]:
 
@@ -193,6 +182,18 @@ EOF
 helm init --service-account tiller
 ```
 The above step may not even be needed as, by default, `kubectl` will create and initialize the service.
+
+## Setting up Alfresco Content Services
+
+Once the platform for Kubernetes is set up on AWS, you can set up the Alfresco Content Services.
+
+* Create a namespace to host Alfresco Content Services inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
+```bash
+export DESIREDNAMESPACE=dev-myacs-namespace
+kubectl create namespace $DESIREDNAMESPACE
+```
+
+### Deploying the Ingress for Alfresco Content Services
 
 * Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file, or write the arguments in full:
 
@@ -269,6 +270,8 @@ export ELBADDRESS=$(kubectl get services $INGRESSRELEASE-nginx-ingress-controlle
 echo $ELBADDRESS
 ```
 
+### Creating File Storage for the Alfresco Content Services
+
 * Create an EFS storage on AWS and make sure it's in the same VPC as your cluster by following this [guide](https://github.com/Alfresco/alfresco-dbp-deployment#6-efs-storage-note-only-for-aws).  Make sure you open inbound traffic in the security group to allow NFS traffic.  Below is an example of how to create it with the AWS Cli.
 
 <details><summary>
@@ -315,7 +318,12 @@ export EFS_SERVER=$EFS_FS_ID.efs.$AWS_DEFAULT_REGION.amazonaws.com
 export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
 
-## Deploying Alfresco Content Services
+### Deploying Alfresco Content Services
+
+* Add the Alfresco Helm charts repository:
+```bash
+helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
+```
 
 * Deploy Alfresco Content Services using the following set of commands:
 ```bash
@@ -400,12 +408,6 @@ aws efs delete-file-system --file-system-id $EFS_FS_ID
 
 # Delete Kops cluster
 kops delete cluster --name=$KOPS_NAME --yes
-```
-
-Depending on your cluster type, you should also be able to delete it if you want.
-For Minikube, you can just delete the whole Minikube VM:
-```bash
-minikube delete
 ```
 
 For more information on running and tearing down Kubernetes environments, follow this [guide](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/running-a-cluster.md).
