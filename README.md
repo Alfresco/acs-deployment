@@ -6,10 +6,10 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 
 This project contains the code for starting the entire Alfresco Content Services (Enterprise) product with **Docker** or **Kubernetes**.
 
-The **master** branch of this repository will endeavour to support below deployments:
-- [Docker Compose](docker-compose/docker-compose.yml) (latest)
-- MiniKube (latest)
-- [Helm - AWS Cloud with Kubernetes](helm/alfresco-content-services) (latest)
+The **master** branch of this repository will endeavour to support the following deployments:
+- [Docker Compose](docker-compose/docker-compose.yml) (latest): For development and trials
+- MiniKube (latest): For development and POCs
+- [Helm - AWS Cloud with Kubernetes](helm/alfresco-content-services) (latest): For production or as a basis of production deployments
 
 For the Community edition, go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
 The only differences between these projects are:
