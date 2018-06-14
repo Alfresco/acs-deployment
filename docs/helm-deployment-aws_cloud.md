@@ -185,7 +185,7 @@ The above step may not even be needed as, by default, `kubectl` will create and 
 
 ## Setting up Alfresco Content Services
 
-Once the platform for Kubernetes is set up on AWS, you can setup the Alfresco Content Services.
+Once the platform for Kubernetes is set up on AWS, you can set up the Alfresco Content Services.
 
 * Create a namespace to host Alfresco Content Services inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
 ```bash

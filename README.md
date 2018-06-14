@@ -24,7 +24,8 @@ Alfresco Content Services deployed via `docker-compose` or Kubernetes contains t
 4. Alfresco Search Services (Solr6)
 
 ## Deployment options
-* [Deploying with Helm charts on AWS](docs/helm-deployment-aws_cloud.md)
+* [Deploying with Helm charts on AWS using Kops](docs/helm-deployment-aws_cloud.md)
+* [Deploying with Helm charts on AWS using EKS](docs/helm-deployment-aws_eks.md)
 * [Deploying with Helm charts using Minikube](docs/helm-deployment-minikube.md)
 * [Deploying using Docker Compose](docs/docker-compose-deployment.md)
 * [Customizing your deployment](docs/customising-deployment.md)
