@@ -3,9 +3,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.fullname" . }}-libreoffice
+  name: {{ template "content-services.shortname" . }}-libreoffice
   labels:
-    app: {{ template "content-services.fullname" . }}-libreoffice
+    app: {{ template "content-services.shortname" . }}-libreoffice
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "content-services.fullname" . }}-libreoffice
+        app: {{ template "content-services.shortname" . }}-libreoffice
         release: {{ .Release.Name }}
         component: transformers
     spec:
@@ -31,7 +31,7 @@ spec:
           envFrom:
           - configMapRef:
               # config map to use, defined in config-libreoffice.yaml
-              name: {{ template "content-services.fullname" . }}-libreoffice-configmap
+              name: {{ template "content-services.shortname" . }}-libreoffice-configmap
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:

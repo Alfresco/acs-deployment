@@ -16,7 +16,7 @@ spec:
       # Allow repository to access search
       - podSelector:
           matchLabels:
-            app: {{ template "content-services.fullname" . }}-repository
+            app: {{ template "content-services.shortname" . }}-repository
 
       # Allow nginx-ingress to access search
       - podSelector:
@@ -32,7 +32,7 @@ spec:
       # Repo
       - podSelector:
           matchLabels:
-             app: {{ template "content-services.fullname" . }}-repository
+             app: {{ template "content-services.shortname" . }}-repository
       
       # nginx-ingress
       - podSelector:

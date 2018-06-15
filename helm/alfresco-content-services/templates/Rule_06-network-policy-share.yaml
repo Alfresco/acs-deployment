@@ -7,7 +7,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "content-services.fullname" . }}-share
+      app: {{ template "content-services.shortname" . }}-share
   policyTypes:
   - Ingress
   - Egress
@@ -34,5 +34,5 @@ spec:
       # repository
       - podSelector:
           matchLabels:
-             app: {{ template "content-services.fullname" . }}-repository
+             app: {{ template "content-services.shortname" . }}-repository
 {{- end }}
