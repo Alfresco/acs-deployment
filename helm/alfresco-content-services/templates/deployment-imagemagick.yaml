@@ -3,9 +3,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.fullname" . }}-imagemagick
+  name: {{ template "content-services.shortname" . }}-imagemagick
   labels:
-    app: {{ template "content-services.fullname" . }}-imagemagick
+    app: {{ template "content-services.shortname" . }}-imagemagick
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "content-services.fullname" . }}-imagemagick
+        app: {{ template "content-services.shortname" . }}-imagemagick
         release: {{ .Release.Name }}
         component: transformers
     spec:
@@ -31,7 +31,7 @@ spec:
           envFrom:
           - configMapRef:
               # config map to use, defined in config-imagemagick.yaml
-              name: {{ template "content-services.fullname" . }}-imagemagick-configmap
+              name: {{ template "content-services.shortname" . }}-imagemagick-configmap
           ports:
             - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources:

@@ -1,0 +1,53 @@
+# Defines the deployment for the pdfrenderer transformer app
+# Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.shortname" . }}-pdfrenderer
+  labels:
+    app: {{ template "content-services.shortname" . }}-pdfrenderer
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  replicas: {{ .Values.pdfrenderer.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "content-services.shortname" . }}-pdfrenderer
+        release: {{ .Release.Name }}
+        component: transformers
+    spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.pdfrenderer.image.repository }}:{{ .Values.pdfrenderer.image.tag }}"
+          imagePullPolicy: {{ .Values.pdfrenderer.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-pdfrenderer.yaml
+              name: {{ template "content-services.shortname" . }}-pdfrenderer-configmap
+          ports:
+            - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
+          resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.pdfrenderer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.pdfrenderer.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.pdfrenderer.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.pdfrenderer.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.pdfrenderer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.pdfrenderer.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.pdfrenderer.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.pdfrenderer.livenessProbe.timeoutSeconds }}
+{{ toYaml .Values.pdfrenderer.resources | indent 12 }}

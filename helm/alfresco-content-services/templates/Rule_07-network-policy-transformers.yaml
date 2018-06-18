@@ -15,7 +15,7 @@ spec:
     - from:
       - podSelector:
           matchLabels:
-            app: {{ template "content-services.fullname" . }}-repository
+            app: {{ template "content-services.shortname" . }}-repository
       ports:
         - protocol: TCP
           port: 8090
@@ -29,7 +29,7 @@ spec:
       # Repo
       - podSelector:
           matchLabels:
-             app: {{ template "content-services.fullname" . }}-repository
+             app: {{ template "content-services.shortname" . }}-repository
       
       # nginx-ingress
       - podSelector:

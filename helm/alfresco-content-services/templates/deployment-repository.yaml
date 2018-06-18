@@ -2,9 +2,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.fullname" . }}-repository
+  name: {{ template "content-services.shortname" . }}-repository
   labels:
-    app: {{ template "content-services.fullname" . }}-repository
+    app: {{ template "content-services.shortname" . }}-repository
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "content-services.fullname" . }}-repository
+        app: {{ template "content-services.shortname" . }}-repository
         release: {{ .Release.Name }}
         component: repository
     spec:
@@ -30,7 +30,7 @@ spec:
           envFrom:
           - configMapRef:
               # config map to use, defined in config-repository.yaml
-              name: {{ template "content-services.fullname" . }}-repository-configmap
+              name: {{ template "content-services.shortname" . }}-repository-configmap
           ports:
             # internal port and the hazelcast port used for clustering
             - containerPort: {{ .Values.repository.image.internalPort }}
