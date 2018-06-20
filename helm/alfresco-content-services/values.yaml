@@ -214,7 +214,7 @@ alfresco-search:
   enabled: true
   repository:
     # The value for "host" is the name of this chart
-    host: alfresco-content-services
+    host: alfresco-cs
     port: *repositoryExternalPort
 
 # choose if you want network policy enabled
