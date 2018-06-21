@@ -21,6 +21,10 @@ This chart bootstraps an ACS deployment on a [Kubernetes](http://kubernetes.io) 
   - Kubernetes 1.4+ with Beta APIs enabled
   - Minimum of 16GB Memory to distribute among ACS Cluster nodes
 
+## Structure
+
+![Helm Deployment Components](../../docs/diagrams/helm-chart/helm-components.png)
+
 ## Installing the Chart
 
 To install the chart with the release name `my-acs`:
