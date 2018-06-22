@@ -45,9 +45,10 @@ helm init --service-account tiller
 
 ## Adding Alfresco incubator Helm repository
 
-* Add `http://kubernetes-charts.alfresco.com/incubator` to your Helm repository.
+* Add `incubator` or `stable` repository to your local Helm.
 ```bash
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
+helm repo add alfresco-stable http://kubernetes-charts.alfresco.com/stable
 ```
 
 * Update the repository indexes:
@@ -82,9 +83,9 @@ kubectl get service singed-chipmunk-nginx-ingress-controller -o jsonpath={.spec.
 # This will print a port like: 30917
 ```
 
-### Option 1: Deploying Alfresco Content Services from the incubator Helm chart
+### Option 1: Deploying Alfresco Content Services from the chart repository
 
-* Run the following command to deploy Alfresco Content Services using the `alfresco-incubator` chart:
+* Run the following command to deploy Alfresco Content Services using the `incubator` or `stable` chart (add the corresponding Helm repository as per [this section](#adding-alfresco-incubator-helm-repository)):
 ```bash
 helm install alfresco-incubator/alfresco-content-services --set externalProtocol="http" --set externalHost="172.31.147.123" --set externalPort="30917"
 ```
