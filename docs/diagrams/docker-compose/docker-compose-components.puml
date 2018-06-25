@@ -1,0 +1,33 @@
+@startuml
+
+Title: Docker Compose Deployment Overview
+
+skinparam componentStyle uml2
+skinparam linetype ortho
+
+actor Client
+
+node "Docker Compose" {
+    component "Alfresco Content Services" as acs #lightgrey
+    component "Alfresco Search Services" as ass #lightgrey
+    component "PostgreSQL" as psql #lightgrey
+    component "Alfresco PDF Renderer" as pdfr #lightgrey
+    component "LibreOffice" as libr #lightgrey
+    component "ImageMagick" as img #lightgrey
+    component "Alfresco Share" as share #lightgrey
+}
+
+Client --> acs
+Client --> ass
+Client --> share
+
+ass --> acs
+acs --> psql
+acs --> pdfr
+acs --> libr
+acs --> img
+share --> acs
+
+center footer Copyright 2018 Alfresco Software Inc
+
+@enduml

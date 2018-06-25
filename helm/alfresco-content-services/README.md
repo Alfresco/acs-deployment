@@ -2,10 +2,16 @@
 
 Alfresco Content Services is an Enterprise Content Management (ECM) system that is used for document and case management, project collaboration, web content publishing, and compliant records management.  The flexible compute, storage, and database services that Kubernetes offers make it an ideal platform for Alfresco Content Services. This helm chart presents an enterprise-grade Alfresco Content Services configuration that you can adapt to virtually any scenario, and scale up, down, or out, depending on your use case.
 
-To use, add the `http://kubernetes-charts.alfresco.com/incubator` to your helm repository.
+To use, add the `incubator` or `stable` repository to your local Helm.
 ```console
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
+helm repo add alfresco-stable http://kubernetes-charts.alfresco.com/stable
 ```
+## Versioning
+
+The versioning of the Helm Chart is based on [SemVer](https://semver.org/) as it is [supported by Helm](https://docs.helm.sh/developing_charts/#charts-and-versioning). There are a few ACS specific extensions to the rules. Please refer to [Helm versioning guide](../../docs/helm-versioning.md).
+
+Stable charts are published in [stable repository](http://kubernetes-charts.alfresco.com/stable). Once a stable chart is published, an entry will be added to [releases table](../../docs/helm-chart-releases.md).
 
 ## To install the ACS cluster
 
@@ -20,6 +26,10 @@ This chart bootstraps an ACS deployment on a [Kubernetes](http://kubernetes.io) 
 ## Prerequisites
   - Kubernetes 1.4+ with Beta APIs enabled
   - Minimum of 16GB Memory to distribute among ACS Cluster nodes
+
+## Structure
+
+![Helm Deployment Components](../../docs/diagrams/helm-chart/helm-components.png)
 
 ## Installing the Chart
 

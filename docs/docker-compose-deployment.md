@@ -11,6 +11,10 @@ To deploy Alfresco Content Services using _docker-compose_, you'll need to insta
 | Docker         | https://docs.docker.com/ |
 | Docker Compose | https://docs.docker.com/compose/install/ |
 
+## Structure
+
+![Docker Compose Deployment Components](./diagrams/docker-compose/docker-compose-components.png)
+
 ## Deploying Alfresco Content Services
 1. Clone this repository or download a single file - [docker-compose](../docker-compose/docker-compose.yml).
 2. Navigate to the folder where the _docker-compose.yml_ file is located.
