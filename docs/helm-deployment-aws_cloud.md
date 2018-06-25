@@ -323,6 +323,7 @@ export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 * Add the Alfresco Helm charts repository:
 ```bash
 helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
+helm repo add alfresco-stable http://kubernetes-charts.alfresco.com/stable
 ```
 
 * Deploy Alfresco Content Services using the following set of commands:
