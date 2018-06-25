@@ -62,3 +62,7 @@ Parameter | Description | Default
 `postgresql.postgresPassword` | postgresql database password | `alfresco`
 `postgresql.postgresDatabase` | postgresql database name | `alfresco`
 `alfresco-search.resources.requests.memory` | alfresco search service requests memory | `250Mi`
+`alfresco-search.ingress.enabled` | Enable external access for alfresco search service | `false`
+`alfresco-search.ingress.basicAuth` | If `alfresco-search.ingress.enabled` is `true`, user need to provide a `base64` encoded `htpasswd` format user name & password (ex: `echo -n "$(htpasswd -nbm solradmin somepassword) where `solradmin` is username and `somepassword` is the password" | base64` | None
+`alfresco-search.ingress.whitelist_ips` | If `alfresco-search.ingress.enabled` is `true`, user can restrict `/solr` to a list of IP addresses of CIDR notation | `0.0.0.0/0`
+

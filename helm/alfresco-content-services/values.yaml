@@ -216,6 +216,10 @@ alfresco-search:
     # The value for "host" is the name of this chart
     host: alfresco-cs
     port: *repositoryExternalPort
+  ingress:
+    # Alfresco Search services endpoint ('/solr') is disabled by default
+    # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
+    enabled: false
 
 # choose if you want network policy enabled
 networkpolicysetting:

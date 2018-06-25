@@ -251,7 +251,6 @@ helm install stable/nginx-ingress \
 --set controller.scope.namespace=$DESIREDNAMESPACE \
 --set rbac.create=true \
 --set controller.config."force-ssl-redirect"=\"true\" \
---set controller.config."proxy-body-size"="100m" \
 --set controller.service.targetPorts.https=80 \
 --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
 --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
@@ -353,7 +352,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --namespace=$DESIREDNAMESPACE
 ```
 
-For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
+**Note:**: By default the Alfresco Search services `/solr` endpoint is disabled for external access.  To enable it, please adjust the settings as per [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
 
 You can set the Alfresco Content Services stack configuration attributes above accordingly.  Note that the `alfresco-incubator/alfresco-content-services` chart will deploy using default values (Ex: `postgresPassword = "alfresco"`).
 
@@ -361,6 +360,8 @@ You can set the Alfresco Content Services stack configuration attributes above a
 # Example: For a hardened DB password:
  --set postgresql.postgresPassword="bLah!"
 ```
+
+For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
 
 ### Creating a Route 53 Record Set in your Hosted Zone
 
