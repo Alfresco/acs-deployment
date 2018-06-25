@@ -9,7 +9,7 @@ helm repo add alfresco-stable http://kubernetes-charts.alfresco.com/stable
 ```
 ## Versioning
 
-The versioning of the Helm Chart is based on [SemVer](https://semver.org/) as it is [supported by Helm](https://docs.helm.sh/developing_charts/#charts-and-versioning). There are a few ACS specific extensions to the rules. Please refer to [helm versioning guide](../../docs/helm-versioning.md).
+The versioning of the Helm Chart is based on [SemVer](https://semver.org/) as it is [supported by Helm](https://docs.helm.sh/developing_charts/#charts-and-versioning). There are a few ACS specific extensions to the rules. Please refer to [Helm versioning guide](../../docs/helm-versioning.md).
 
 Stable charts are published in [stable repository](http://kubernetes-charts.alfresco.com/stable). Once a stable chart is published, an entry will be added to [releases table](../../docs/helm-chart-releases.md).
 
