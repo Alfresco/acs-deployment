@@ -328,7 +328,8 @@ helm repo add alfresco-stable http://kubernetes-charts.alfresco.com/stable
 
 * Deploy Alfresco Content Services using the following set of commands:
 ```bash
-# DNS name of the ACS cluster
+# DNS name of the ACS cluster or the AWS ELB DNS name if you do not intend to create one.
+#export EXTERNALHOST="$ELBADDRESS"
 export EXTERNALHOST="myacs.example.com"
 
 # Alfresco Admin password should be encoded in MD5 Hash
