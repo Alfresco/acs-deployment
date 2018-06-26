@@ -1,0 +1,53 @@
+# Defines the deployment for the tika transformer app
+# Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.shortname" . }}-tika
+  labels:
+    app: {{ template "content-services.shortname" . }}-tika
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  replicas: {{ .Values.tika.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "content-services.shortname" . }}-tika
+        release: {{ .Release.Name }}
+        component: transformers
+    spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.tika.image.repository }}:{{ .Values.tika.image.tag }}"
+          imagePullPolicy: {{ .Values.tika.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-tika.yaml
+              name: {{ template "content-services.shortname" . }}-tika-configmap
+          ports:
+            - containerPort: {{ .Values.tika.image.internalPort }}
+          resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.tika.image.internalPort }}
+            initialDelaySeconds: {{ .Values.tika.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.tika.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.tika.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.tika.image.internalPort }}
+            initialDelaySeconds: {{ .Values.tika.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.tika.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.tika.livenessProbe.timeoutSeconds }}
+{{ toYaml .Values.tika.resources | indent 12 }}

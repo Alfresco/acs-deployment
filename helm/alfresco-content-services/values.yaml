@@ -1,7 +1,7 @@
 # This is a YAML-formatted file.  Declare variables to be passed into your templates.
 
 # ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
-# 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice) and 1 x postgresql
+# 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika) and 1 x postgresql
 
 # Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
 # For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
