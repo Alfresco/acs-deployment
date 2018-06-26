@@ -2,16 +2,16 @@
 # Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
 # For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
 # But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
-# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal. 
+# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
-# Using version 2 as 3 does not support resource constraint options (cpu_*, mem_* limits) for non swarm mode in Compose  
+# Using version 2 as 3 does not support resource constraint options (cpu_*, mem_* limits) for non swarm mode in Compose
 version: "2"
 
 services:
     alfresco:
         image: alfresco/alfresco-content-repository:6.0.0-RC5
-        mem_limit: 1500m 
+        mem_limit: 1500m
         environment:
             JAVA_OPTS: "
                 -Ddb.driver=org.postgresql.Driver
@@ -26,6 +26,8 @@ services:
                 -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
                 -Djodconverter.url=http://libreoffice:8090/
                 -Dimg.url=http://imagemagick:8090/
+                -Dtika.url=http://tika:8090/
+                -Dshare.host=localhost
                 -Ddeployment.method=DOCKER_COMPOSE
                 -Dcsrf.filter.enabled=false
                 -Xms1g -Xmx1g
@@ -34,7 +36,7 @@ services:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:1.1
+        image: alfresco/alfresco-pdf-renderer:1.2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -42,7 +44,7 @@ services:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-imagemagick:1.1
+        image: alfresco/alfresco-imagemagick:1.2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -50,12 +52,20 @@ services:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-libreoffice:1.1
+        image: alfresco/alfresco-libreoffice:1.2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
         ports:
             - 8092:8090
+
+    tika:
+        image: alfresco/alfresco-tika:1.2
+        mem_limit: 1g
+        environment:
+            JAVA_OPTS: " -Xms256m -Xmx256m"
+        ports:
+            - 8093:8090
 
     share:
         image: alfresco/alfresco-share:6.0.b
