@@ -1,5 +1,5 @@
-# Enable Alfresco Search Services (`/solr`) External Access
-This example demonstrates how to enable Alfresco Search Services for external access.
+# Enable Alfresco Search Services External Access
+This example demonstrates how to enable Alfresco Search Services (`/solr`) for external access.
 
 ## Prerequisites
 
