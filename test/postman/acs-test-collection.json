@@ -825,6 +825,49 @@
 					"response": []
 				},
 				{
+					"name": "solr-external-access",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e870463c-cd73-4ce1-ac6f-4c56e9aedfa3",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"solrStatusCodeTest\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/solr",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"solr"
+							]
+						},
+						"description": "Check to confirm `/solr` endpoint is disabled."
+					},
+					"response": []
+				},
+				{
 					"name": "webdav-validation",
 					"event": [
 						{
