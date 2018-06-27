@@ -825,17 +825,97 @@
 					"response": []
 				},
 				{
+					"name": "share-alfresco-proxy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e0ea8602-4fb5-4378-9eea-ddb04934654b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoProxyStatusCodeTest\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "myadmin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{url}}/share/service/proxy/alfresco/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"share",
+								"service",
+								"proxy",
+								"alfresco",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Check share access to alfresco via proxy is forbidden for some regex patterns"
+					},
+					"response": []
+				},
+				{
 					"name": "solr-external-access",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "e870463c-cd73-4ce1-ac6f-4c56e9aedfa3",
+								"id": "7d0719d6-94f4-4515-bd67-cf2856866fde",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
-									"pm.test(\"solrStatusCodeTest\", function () {",
+									"pm.test(\"solrExternalAccessStatusCodeTest\", function () {",
 									"    pm.response.to.have.status(404);",
 									"});",
 									""
