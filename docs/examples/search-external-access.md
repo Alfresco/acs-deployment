@@ -55,7 +55,7 @@ $ACSRELEASE alfresco-incubator/alfresco-content-services
 - https://github.com/kubernetes/helm/issues/1193
 - https://github.com/kubernetes/helm/pull/4146
 
-If your `helm upgrade` fails due to any of below example errors:
+If your `helm upgrade` fails due to any of these example errors:
 ```bash
 Error: UPGRADE FAILED: no Secret with the name "nosy-tapir-alfresco-search-solr" found
 (or)
