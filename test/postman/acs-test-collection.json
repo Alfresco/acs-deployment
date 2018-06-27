@@ -849,7 +849,7 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "myadmin",
+									"value": "admin",
 									"type": "string"
 								},
 								{
