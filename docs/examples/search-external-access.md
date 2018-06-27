@@ -11,7 +11,6 @@ By default, the Alfresco Search Services endpoint (`/solr`) is disabled for exte
 
 See [ACS Deployment](../helm-deployment-aws_cloud.md#deploying-alfresco-content-services) for full reference to ENVIRONMENT variables used in below snippets.
 
-
 ### Install ACS Helm Chart with Search external access
 
 Below is the snippet for installing ACS with Search external access.
