@@ -50,7 +50,7 @@ helm upgrade \
 $ACSRELEASE alfresco-incubator/alfresco-content-services
 ```
 
-**Please note:** There are known issues when upgrading a Helm chart relating to Helm cache.  Please see this:
+**Note:** There are known issues when upgrading a Helm chart relating to Helm cache.
 - https://github.com/kubernetes/helm/issues/3275
 - https://github.com/kubernetes/helm/issues/1193
 - https://github.com/kubernetes/helm/pull/4146
