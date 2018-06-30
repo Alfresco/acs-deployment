@@ -146,7 +146,7 @@ libreoffice:
     maxTransforms: 99999
     maxTransformSeconds: 1800
 
-# Declares the alfresco-libreoffice service used by the content repository
+# Declares the alfresco-tika service used by the content repository
 # to transform office files
 tika:
   replicaCount: 1
