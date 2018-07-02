@@ -289,5 +289,5 @@ postgresql:
 # to the install command:
 # e.g.: helm install alfresco-content-services --set registryPullSecrets=private-repo-registry-secret
 # or uncomment the following line if you don't want/need to pass it as a parameter on every install command :
-# registryPullSecrets: private-repo-registry-secret
+registryPullSecrets: quay-registry-secret
 # for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
