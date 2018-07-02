@@ -354,7 +354,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --namespace=$DESIREDNAMESPACE
 ```
 
-**Note:**: By default the Alfresco Search services `/solr` endpoint is disabled for external access.  To enable it, please adjust the settings as per [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
+**Note:** By default the Alfresco Search Services `/solr` endpoint is disabled for external access.  To enable it, see example [search-external-access](examples/search-external-access.md).
 
 You can set the Alfresco Content Services stack configuration attributes above accordingly.  Note that the `alfresco-incubator/alfresco-content-services` chart will deploy using default values (Ex: `postgresPassword = "alfresco"`).
 
