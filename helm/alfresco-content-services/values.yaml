@@ -12,8 +12,8 @@
 repository:
   replicaCount: 2
   image:
-    repository: quay.io/alfresco/alfresco-content-repository
-    tag: feature-repo-3425_tika-6.1.0-SNAPSHOT
+    repository: alfresco/alfresco-content-repository
+    tag: 6.1.0-EA1
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -289,5 +289,5 @@ postgresql:
 # to the install command:
 # e.g.: helm install alfresco-content-services --set registryPullSecrets=private-repo-registry-secret
 # or uncomment the following line if you don't want/need to pass it as a parameter on every install command :
-registryPullSecrets: quay-registry-secret
+# registryPullSecrets: private-repo-registry-secret
 # for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md

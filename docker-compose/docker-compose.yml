@@ -10,7 +10,7 @@ version: "2"
 
 services:
     alfresco:
-        image: quay.io/alfresco/alfresco-content-repository:feature-repo-3425_tika-6.1.0-SNAPSHOT
+        image: alfresco/alfresco-content-repository:6.1.0-EA1
         mem_limit: 1500m
         environment:
             JAVA_OPTS: "
