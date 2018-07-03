@@ -385,15 +385,50 @@ helm status $ACSRELEASE
 
 * You can access all components of Alfresco Content Services using the same root address, but different paths:
 ```bash
-  Content: https://$EXTERNALHOST/alfresco
   Share: https://$EXTERNALHOST/share
-  Solr: https://$EXTERNALHOST/solr
+  Content: https://$EXTERNALHOST/alfresco
 ```
 
 To see the full list of values that were applied to the deployment, run:
 ```bash
 helm get values -a $ACSRELEASE
 ```
+
+### Network Hardening
+
+* The `kops` utility will setup platform for setting up ACS cluster, but with some extra steps the networking on AWS infrastructure can be hardened.  Below are some recommended modifications to Security Groups that manage Inbound and Outbound traffic.
+
+## Lockdown Bastion 
+
+By default, SSH access to bastion host is open from everywhere for Inbound and Outbound traffic.  You may want it to lock down to a specific IP address(es).
+
+<details><summary>
+Below is an example of how to modify Bastion traffic with the AWS Cli.</summary>
+<p>
+
+```bash
+# Get Bastion Host Security Group
+export BASTION_HOST_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$VPC_ID" "Name=group-name,Values=bastion.$KOPS_NAME" --output text --query "SecurityGroups[].GroupId")
+
+# Get Bastion ELB Security Group
+export BASTION_ELB_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$VPC_ID" "Name=group-name,Values=bastion.$KOPS_NAME" --output text --query "SecurityGroups[].IpPermissions[].UserIdGroupPairs[].GroupId")
+
+# Revoke default Bastion Host Egress which is open for everything
+aws ec2 revoke-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": -1, "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
+
+# Limit Bastion Host Egress to only Port 22 of Bastion ELB SG
+aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$BASTION_ELB_SG\"', "Description": "Bastion host outbound traffic limited to Bastion ELB"}]}]'
+
+# Revoke default Bastion ELB Egress which is open for everything
+aws ec2 revoke-security-group-egress --group-id $BASTION_ELB_SG --ip-permissions '[{"IpProtocol": -1, "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
+
+# Limit Bastion ELB Egress to only Port 22 of Bastion Host SG (please replace "0.0.0.0/0" with your CIDR block)
+aws ec2 authorize-security-group-ingress --group-id $BASTION_ELB_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "IpRanges": [{"CidrIp": "0.0.0.0/0", "Description": "Allow SSH inbound communication to ACS Bastion"}]}]'
+```
+
+</p>
+</details>
+
 
 ## Cleaning up your deployment
 
