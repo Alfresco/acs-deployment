@@ -539,6 +539,26 @@ aws ec2 revoke-security-group-egress --group-id $API_ELB_SG --ip-permissions '[{
 </details>
 
 
+#### Restrict K8S ELB Outbound traffic
+
+By default, Outbound traffic is allowed from K8S ELB Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to the ELB Instances.
+
+<details><summary>
+Below is an example of how to modify K8S ELB SG Outbound traffic with the AWS Cli.</summary>
+<p>
+
+```bash
+# Allow Outbound traffic between K8S ELB and Instances that it is listening to
+aws ec2 authorize-security-group-egress --group-id $K8S_ELB_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "UserIdGroupPairs": [{"GroupId": '\"$NODES_HOST_SG\"', "Description": "HTTP Outbound traffic between K8S ELB and instances it is listening to"}]}]'
+
+# Once Outbound rules are in place, revoke default Outbound rule which is open for everything
+aws ec2 revoke-security-group-egress --group-id $K8S_ELB_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
+```
+
+</p>
+</details>
+
+
 ## Cleaning up your deployment
 
 ```bash
