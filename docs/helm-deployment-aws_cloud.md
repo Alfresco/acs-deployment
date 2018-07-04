@@ -511,6 +511,9 @@ aws ec2 authorize-security-group-egress --group-id $NODES_HOST_SG --ip-permissio
 # Allow Outbound traffic between Node(s) and Bastion Host
 aws ec2 authorize-security-group-egress --group-id $NODES_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$BASTION_HOST_SG\"', "Description": "Outbound traffic between Node(s) & Bastion Host"}]}]'
 
+# Allow Outbound traffic between Node(s) and DockerHub to pull images
+aws ec2 authorize-security-group-egress --group-id $NODES_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 443, "ToPort": 443, "IpRanges": [{"CidrIp": "0.0.0.0/0", "Description": "Allow Nodes to pull images from DockerHub"}]}]'
+
 # Once Outbound rules are in place, revoke default Outbound rule which is open for everything
 aws ec2 revoke-security-group-egress --group-id $NODES_HOST_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
 ```
@@ -553,6 +556,30 @@ aws ec2 authorize-security-group-egress --group-id $K8S_ELB_SG --ip-permissions 
 
 # Once Outbound rules are in place, revoke default Outbound rule which is open for everything
 aws ec2 revoke-security-group-egress --group-id $K8S_ELB_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
+```
+
+</p>
+</details>
+
+
+#### Restrict Default SG Outbound traffic
+
+By default, Outbound traffic is allowed from default Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
+
+<details><summary>
+Below is an example of how to modify default SG Outbound traffic with the AWS Cli.</summary>
+<p>
+
+```bash
+# Allow Outbound traffic between default SG
+aws ec2 authorize-security-group-egress --group-id $DEFAULT_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "UserIdGroupPairs": [{"GroupId": '\"$DEFAULT_SG\"', "Description": "Outbound traffic among default SG"}]}]'
+
+# Allow Outbound traffic for EFS for IPv4 & IPv6
+aws ec2 authorize-security-group-egress --group-id $DEFAULT_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 2049, "ToPort": 2049, "IpRanges": [{"CidrIp": "0.0.0.0/0", "Description": "IPv4 Outbound traffic for EFS Mount point"}]}]'
+aws ec2 authorize-security-group-egress --group-id $DEFAULT_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 2049, "ToPort": 2049, "Ipv6Ranges": [{"CidrIpv6": "::/0", "Description": "IPv6 Outbound traffic for EFS Mount point"}]}]'
+
+# Once Outbound rules are in place, revoke default Outbound rule which is open for everything
+aws ec2 revoke-security-group-egress --group-id $DEFAULT_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
 ```
 
 </p>
