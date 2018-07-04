@@ -413,17 +413,29 @@ export BASTION_HOST_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id
 # Get Bastion ELB Security Group
 export BASTION_ELB_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$VPC_ID" "Name=group-name,Values=bastion.$KOPS_NAME" --output text --query "SecurityGroups[].IpPermissions[].UserIdGroupPairs[].GroupId")
 
+# Get Masters Host Security Group
+export MASTERS_HOST_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$VPC_ID" "Name=group-name,Values=masters.$KOPS_NAME" --output text --query "SecurityGroups[].GroupId")
+
+# Get Nodes Host Security Group
+export NODES_HOST_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$VPC_ID" "Name=group-name,Values=nodes.$KOPS_NAME" --output text --query "SecurityGroups[].GroupId")
+
 # Revoke default Bastion Host Egress which is open for everything
 aws ec2 revoke-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": -1, "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
-
-# Limit Bastion Host Egress to only Port 22 of Bastion ELB SG
-aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$BASTION_ELB_SG\"', "Description": "Bastion host outbound traffic limited to Bastion ELB"}]}]'
 
 # Revoke default Bastion ELB Egress which is open for everything
 aws ec2 revoke-security-group-egress --group-id $BASTION_ELB_SG --ip-permissions '[{"IpProtocol": -1, "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
 
+# Limit Bastion Host Egress to only Port 22 of Bastion ELB SG
+aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$BASTION_ELB_SG\"', "Description": "Bastion host outbound traffic limited to Bastion ELB"}]}]'
+
 # Limit Bastion ELB Egress to only Port 22 of Bastion Host SG (please replace "0.0.0.0/0" with your CIDR block)
 aws ec2 authorize-security-group-ingress --group-id $BASTION_ELB_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "IpRanges": [{"CidrIp": "0.0.0.0/0", "Description": "Allow SSH inbound communication to ACS Bastion"}]}]'
+
+# Allow Bastion to grant SSH access to Master(s) Host
+aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$MASTERS_HOST_SG\"', "Description": "Allow Bastion host to make SSH connection with Kubernetes Master nodes"}]}]'
+
+# Allow Bastion to grant SSH access to Node(s) Host
+aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$NODES_HOST_SG\"', "Description": "Allow Bastion host to make SSH connection with Kubernetes worker Nodes"}]}]'
 ```
 
 </p>
