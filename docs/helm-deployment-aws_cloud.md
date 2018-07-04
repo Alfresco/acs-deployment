@@ -396,9 +396,13 @@ helm get values -a $ACSRELEASE
 
 ### Network Hardening
 
-* The `kops` utility will setup platform for setting up ACS cluster, but with some extra steps the networking on AWS infrastructure can be hardened.  Below are some recommended modifications to Security Groups that manage Inbound and Outbound traffic.
+* The `kops` utility will setup platform for setting up ACS cluster, but with some extra steps the networking on AWS infrastructure can be hardened.  
 
-## Lockdown Bastion 
+See AWS documentation: https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html
+
+Below are some recommended modifications to Security Groups that manage Inbound and Outbound traffic.
+
+#### Lockdown Bastion 
 
 By default, SSH access to bastion host is open from everywhere for Inbound and Outbound traffic.  You may want it to lock down to a specific IP address(es).
 
@@ -420,10 +424,10 @@ export MASTERS_HOST_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id
 export NODES_HOST_SG=$(aws ec2 describe-security-groups --filters "Name=vpc-id,Values=$VPC_ID" "Name=group-name,Values=nodes.$KOPS_NAME" --output text --query "SecurityGroups[].GroupId")
 
 # Revoke default Bastion Host Egress which is open for everything
-aws ec2 revoke-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": -1, "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
+aws ec2 revoke-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
 
 # Revoke default Bastion ELB Egress which is open for everything
-aws ec2 revoke-security-group-egress --group-id $BASTION_ELB_SG --ip-permissions '[{"IpProtocol": -1, "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
+aws ec2 revoke-security-group-egress --group-id $BASTION_ELB_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
 
 # Limit Bastion Host Egress to only Port 22 of Bastion ELB SG
 aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$BASTION_ELB_SG\"', "Description": "Bastion host outbound traffic limited to Bastion ELB"}]}]'
@@ -436,6 +440,34 @@ aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permiss
 
 # Allow Bastion to grant SSH access to Node(s) Host
 aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$NODES_HOST_SG\"', "Description": "Allow Bastion host to make SSH connection with Kubernetes worker Nodes"}]}]'
+```
+
+</p>
+</details>
+
+#### Restrict k8s Master(s) Outbound traffic 
+
+By default, `kops` will allow all Outbound traffic from Master nodes Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be equal to Inbound.
+
+<details><summary>
+Below is an example of how to modify Master SG Outbound traffic with the AWS Cli.</summary>
+<p>
+
+```bash
+# Allow Outbound traffic among Master(s) nodes
+aws ec2 authorize-security-group-egress --group-id $MASTERS_HOST_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "UserIdGroupPairs": [{"GroupId": '\"$MASTERS_HOST_SG\"', "Description": "Outbound traffic among Master(s) nodes"}]}]'
+
+# Allow Outbound traffic between Master(s) and Node(s) Host
+aws ec2 authorize-security-group-egress --group-id $MASTERS_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 1, "ToPort": 2379, "UserIdGroupPairs": [{"GroupId": '\"$NODES_HOST_SG\"', "Description": "TCP Outbound traffic between Master(s) & Node(s)"}]}]'
+
+aws ec2 authorize-security-group-egress --group-id $MASTERS_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 4003, "ToPort": 65535, "UserIdGroupPairs": [{"GroupId": '\"$NODES_HOST_SG\"', "Description": "TCP Outbound traffic between Master(s) & Node(s)"}]}]'
+
+aws ec2 authorize-security-group-egress --group-id $MASTERS_HOST_SG --ip-permissions '[{"IpProtocol": "udp", "FromPort": 1, "ToPort": 65535, "UserIdGroupPairs": [{"GroupId": '\"$NODES_HOST_SG\"', "Description": "UDP Outbound traffic between Master(s) & Node(s)"}]}]'
+
+aws ec2 authorize-security-group-egress --group-id $MASTERS_HOST_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "UserIdGroupPairs": [{"GroupId": '\"$BASTION_HOST_SG\"', "Description": "SSH Connection to Bastion Host SG"}]}]'
+
+# Once Outbound rules are in place, revoke default Outbound rule which is open for everything
+aws ec2 revoke-security-group-egress --group-id $MASTERS_HOST_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
 ```
 
 </p>
