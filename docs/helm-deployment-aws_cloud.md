@@ -396,11 +396,12 @@ helm get values -a $ACSRELEASE
 
 ### Network Hardening
 
-* The `kops` utility will setup platform for setting up ACS cluster, but with some extra steps the networking on AWS infrastructure can be hardened.  
+The `kops` utility will setup platform for setting up ACS cluster, but with some extra steps the networking on AWS infrastructure can be hardened.  
 
 See AWS documentation: https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html
 
 Below are some recommended modifications to Security Groups that manage Inbound and Outbound traffic.
+
 
 #### Lockdown Bastion 
 
@@ -451,9 +452,10 @@ aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permiss
 </p>
 </details>
 
+
 #### Restrict k8s Master(s) Outbound traffic 
 
-By default, `kops` will allow all Outbound traffic from Master nodes Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
+By default, Outbound traffic is allowed from Master Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
 
 <details><summary>
 Below is an example of how to modify Master SG Outbound traffic with the AWS Cli.</summary>
@@ -490,7 +492,7 @@ aws ec2 revoke-security-group-egress --group-id $MASTERS_HOST_SG --ip-permission
 
 #### Restrict k8s Node(s) Outbound traffic 
 
-By default `kops` will allow all Outbound traffic from Node Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
+By default, Outbound traffic is allowed from Node Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
 
 <details><summary>
 Below is an example of how to modify Node SG Outbound traffic with the AWS Cli.</summary>
@@ -511,6 +513,26 @@ aws ec2 authorize-security-group-egress --group-id $NODES_HOST_SG --ip-permissio
 
 # Once Outbound rules are in place, revoke default Outbound rule which is open for everything
 aws ec2 revoke-security-group-egress --group-id $NODES_HOST_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
+```
+
+</p>
+</details>
+
+
+#### Restrict API ELB Outbound traffic 
+
+By default, Outbound traffic is allowed from API ELB Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to the ELB Instances.
+
+<details><summary>
+Below is an example of how to modify API ELB SG Outbound traffic with the AWS Cli.</summary>
+<p>
+
+```bash
+# Allow Outbound traffic between API ELB and Instances that it is listening to
+aws ec2 authorize-security-group-egress --group-id $API_ELB_SG --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 443, "ToPort": 443, "UserIdGroupPairs": [{"GroupId": '\"$MASTERS_HOST_SG\"', "Description": "Outbound traffic between API ELB and instances it is listening to"}]}]'
+
+# Once Outbound rules are in place, revoke default Outbound rule which is open for everything
+aws ec2 revoke-security-group-egress --group-id $API_ELB_SG --ip-permissions '[{"IpProtocol": "-1", "FromPort": -1, "ToPort": -1, "IpRanges": [{"CidrIp": "0.0.0.0/0"}]}]'
 ```
 
 </p>
