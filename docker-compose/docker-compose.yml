@@ -10,8 +10,8 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.1.0-EA1
-        mem_limit: 1500m
+        image: alfresco/alfresco-content-repository:6.0.0
+        mem_limit: 1500m 
         environment:
             JAVA_OPTS: "
                 -Ddb.driver=org.postgresql.Driver
@@ -36,7 +36,7 @@ services:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:1.1
+        image: alfresco/alfresco-pdf-renderer:1.2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -44,7 +44,7 @@ services:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-imagemagick:1.1
+        image: alfresco/alfresco-imagemagick:1.2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -52,7 +52,7 @@ services:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-libreoffice:1.1
+        image: alfresco/alfresco-libreoffice:1.2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -68,7 +68,7 @@ services:
             - 8093:8090
 
     share:
-        image: alfresco/alfresco-share:6.0.b
+        image: alfresco/alfresco-share:6.0
         mem_limit: 1g
         environment:
             - REPO_HOST=alfresco

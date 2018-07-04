@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.1.0-EA1"
+    tag: "6.0.0"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -53,7 +53,7 @@ pdfrenderer:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "1.1"
+    tag: "1.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -86,7 +86,7 @@ imagemagick:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "1.1"
+    tag: "1.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -119,7 +119,7 @@ libreoffice:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "1.1"
+    tag: "1.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -185,7 +185,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.0.b"
+    tag: "6.0"
     pullPolicy: Always
     internalPort: 8080
   service:
