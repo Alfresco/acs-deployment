@@ -396,19 +396,19 @@ helm get values -a $ACSRELEASE
 
 ### Network Hardening
 
-The `kops` utility will setup platform for setting up ACS cluster, but with some extra steps the networking on AWS infrastructure can be hardened.  
+The `kops` utility sets up a platform for the ACS cluster, but with some extra steps you can harden the networking on your AWS infrastructure.  
 
 See AWS documentation: https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html
 
-Below are some recommended modifications to Security Groups that manage Inbound and Outbound traffic.
+Below are some recommended modifications to Security Groups (SG) that manage Inbound and Outbound traffic.
 
 
 #### Lockdown Bastion 
 
-By default, SSH access to bastion host is open from everywhere for Inbound and Outbound traffic.  You may want it to lock down to a specific IP address(es).
+By default, SSH access to the bastion host is open from everywhere for Inbound and Outbound traffic.  You may want to lock it down to a specific IP address(es).
 
 <details><summary>
-Below is an example of how to modify Bastion traffic with the AWS Cli.</summary>
+Below is an example of how to modify the Bastion traffic with the AWS Cli.</summary>
 <p>
 
 ```bash
@@ -455,7 +455,7 @@ aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permiss
 
 #### Restrict k8s Master(s) Outbound traffic 
 
-By default, Outbound traffic is allowed from Master Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
+By default, Outbound traffic is allowed from Master Security Group to everywhere.  This can be restricted by allowing explicit Outbound to be same as Inbound.
 
 <details><summary>
 Below is an example of how to modify Master SG Outbound traffic with the AWS Cli.</summary>
@@ -492,7 +492,7 @@ aws ec2 revoke-security-group-egress --group-id $MASTERS_HOST_SG --ip-permission
 
 #### Restrict k8s Node(s) Outbound traffic 
 
-By default, Outbound traffic is allowed from Node Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
+By default, Outbound traffic is allowed from Node Security Group to everywhere.  This can be restricted by allowing explicit Outbound to be same as Inbound.
 
 <details><summary>
 Below is an example of how to modify Node SG Outbound traffic with the AWS Cli.</summary>
@@ -524,7 +524,7 @@ aws ec2 revoke-security-group-egress --group-id $NODES_HOST_SG --ip-permissions 
 
 #### Restrict API ELB Outbound traffic 
 
-By default, Outbound traffic is allowed from API ELB Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to the ELB Instances.
+By default, Outbound traffic is allowed from API ELB Security Group to everywhere.  This can be restricted by allowing explicit Outbound to the ELB Instances.
 
 <details><summary>
 Below is an example of how to modify API ELB SG Outbound traffic with the AWS Cli.</summary>
@@ -544,7 +544,7 @@ aws ec2 revoke-security-group-egress --group-id $API_ELB_SG --ip-permissions '[{
 
 #### Restrict K8S ELB Outbound traffic
 
-By default, Outbound traffic is allowed from K8S ELB Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to the ELB Instances.
+By default, Outbound traffic is allowed from K8S ELB Security Group to everywhere.  This can be restricted by allowing explicit Outbound to the ELB Instances.
 
 <details><summary>
 Below is an example of how to modify K8S ELB SG Outbound traffic with the AWS Cli.</summary>
@@ -564,7 +564,7 @@ aws ec2 revoke-security-group-egress --group-id $K8S_ELB_SG --ip-permissions '[{
 
 #### Restrict Default SG Outbound traffic
 
-By default, Outbound traffic is allowed from default Security Group to everywhere.  This can be restricted too by allowing explicit Outbound to be same as Inbound.
+By default, Outbound traffic is allowed from default Security Group to everywhere.  This can be restricted by allowing explicit Outbound to be same as Inbound.
 
 <details><summary>
 Below is an example of how to modify default SG Outbound traffic with the AWS Cli.</summary>
