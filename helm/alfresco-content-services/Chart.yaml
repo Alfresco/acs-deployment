@@ -1,6 +1,6 @@
 name: alfresco-content-services
-version: 1.0.0
-appVersion: 6.0.0-RC5
+version: 1.1.0
+appVersion: 6.0.0
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
 - content
