@@ -23,6 +23,11 @@ spec:
           matchLabels:
             app: nginx-ingress
 
+      # Allow Search to access itself
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco-search.host" . }}
+
       ports:
         - protocol: TCP
           port: 8983
@@ -38,6 +43,11 @@ spec:
       - podSelector:
           matchLabels:
              app: nginx-ingress
+
+      # Allow Search to access itself
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco-search.host" . }}
 
     # Allow DB to communicate with EFS
     - to:

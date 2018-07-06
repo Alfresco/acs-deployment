@@ -33,6 +33,11 @@ spec:
           matchLabels:
             component: transformers
 
+      # Allow traffic from Zeppelin
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco-insight-zeppelin.host" . }}
+
       ports:
         - protocol: TCP
           port: 8080
