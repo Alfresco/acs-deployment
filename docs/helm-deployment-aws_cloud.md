@@ -79,7 +79,7 @@ spec:
   maxPrice: "0.07"
 ```
 
-* (Optional) Enable the required admission controllers, for example, by applying a [Pod Security Policy](https://github.com/Alfresco/acs-deployment/wiki/Apply-PSP).
+* (Optional) Enable the required admission controllers, for example, by applying a [Pod Security Policy](k8s-pod-security-policies.md).
 
 * Update the cluster:
 ```
