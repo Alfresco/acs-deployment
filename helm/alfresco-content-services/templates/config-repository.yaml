@@ -37,4 +37,5 @@ data:
       -Dsolr.port={{ template "alfresco-search.port" . }}
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
-      -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice"
+      -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
+      -Dtika.url=http://{{ template "content-services.shortname" . }}-tika"

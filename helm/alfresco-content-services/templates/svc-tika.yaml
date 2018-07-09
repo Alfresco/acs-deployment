@@ -1,0 +1,20 @@
+# Defines the service for the tika transformer app
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "content-services.shortname" . }}-tika
+  labels:
+    app: {{ template "content-services.shortname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  type: {{ .Values.tika.service.type }}
+  ports:
+    - port: {{ .Values.tika.service.externalPort }}
+      targetPort: {{ .Values.tika.image.internalPort }}
+      name: {{ .Values.tika.service.name }}
+  selector:
+    app: {{ template "content-services.shortname" . }}-tika
+    release: {{ .Release.Name }}

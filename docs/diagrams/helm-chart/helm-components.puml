@@ -15,6 +15,7 @@ node "Helm Chart" {
     component "Alfresco PDF Renderer" as pdfr #lightgrey
     component "LibreOffice" as libr #lightgrey
     component "ImageMagick" as img #lightgrey
+    component "Tika" as tika #lightgrey
     component "Alfresco Share" as share #lightgrey
     database "Volume Claim" as vc
 }
@@ -34,6 +35,7 @@ acs --> psql
 acs --> pdfr
 acs --> libr
 acs --> img
+acs --> tika
 share --> acs
 
 center footer Copyright 2018 Alfresco Software Inc

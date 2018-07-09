@@ -1,0 +1,21 @@
+# Defines the properties required by the alfresco-tika container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.shortname" . }}-tika-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: transformers
+data:
+  # The JAVA_OPTS defined in the values.yaml file for "tika" are set here using proper quotes
+  {{- if .Values.tika.environment }}
+  {{- range $key, $val := .Values.tika.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
+  livenessPercent: "{{ .Values.tika.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.tika.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.tika.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.tika.livenessProbe.maxTransformSeconds }}"
