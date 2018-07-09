@@ -33,10 +33,14 @@ spec:
           matchLabels:
             component: transformers
 
+      {{ if (index .Values "alfresco-insight-zeppelin") }}
+      {{ if (index .Values "alfresco-insight-zeppelin" "enabled") }}
       # Allow traffic from Zeppelin
       - podSelector:
           matchLabels:
             app: {{ template "alfresco-insight-zeppelin.host" . }}
+      {{ end }}
+      {{ end }}
 
       ports:
         - protocol: TCP
