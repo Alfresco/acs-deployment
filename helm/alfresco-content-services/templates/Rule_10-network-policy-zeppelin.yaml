@@ -1,0 +1,44 @@
+{{- if .Values.networkpolicysetting.enabled }}
+{{- if (index .Values "alfresco-insight-zeppelin") }}
+{{- if (index .Values "alfresco-insight-zeppelin" "enabled") }}
+# Allow Zeppelin to communicate with other components
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: zeppelin
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "alfresco-insight-zeppelin.host" . }}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    - from:
+      # Allow repository to access Zeppelin
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.shortname" . }}-repository
+      # Allow nginx-ingress to access Zeppelin
+      - podSelector:
+          matchLabels:
+            app: nginx-ingress
+      ports:
+        - protocol: TCP
+          port: 9090
+        - protocol: TCP
+          port: 80
+  egress:
+    # Allow Zeppelin to communicate back with other components
+    - to:
+      # Repo
+      - podSelector:
+          matchLabels:
+             app: {{ template "content-services.shortname" . }}-repository
+      # nginx-ingress
+      - podSelector:
+          matchLabels:
+             app: nginx-ingress
+{{- end }}
+{{- end }}
+{{- end }}
