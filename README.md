@@ -9,7 +9,7 @@ This project contains the code for starting the entire Alfresco Content Services
 The **master** branch of this repository will endeavour to support the following deployments:
 - [Docker Compose](docs/docker-compose-deployment.md) (latest): For development and trials
 - [MiniKube](docs/helm-deployment-minikube.md) (latest): For development and POCs
-- [Helm - AWS Cloud with Kubernetes](docs/helm-deployment-aws_cloud.md) (latest): For production or as a basis of production deployments
+- [Helm - AWS Cloud with Kubernetes](docs/helm-deployment-aws_cloud.md) (latest): As a reference or basis of production deployments
 
 For the Community edition, go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
 The only differences between these projects are:
