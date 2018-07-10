@@ -108,6 +108,11 @@ cd ..
 ```
 **Note:** Make sure you run the command from the correct directory.
 
+* Run the following command to deploy Alfresco Content Services:
+```bash
+helm install alfresco-content-services --set externalProtocol="http" --set externalHost="172.31.147.123" --set externalPort="30917"
+```
+
 ## Checking your deployment
 
 After installing Alfresco Content Services, the following URLs are displayed in the terminal:
