@@ -4,6 +4,7 @@ You can access all components of Alfresco Content Services using the same root a
 
   Share: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}/share
   Content: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}/alfresco
+  Api-Explorer: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}/api-explorer
 {{ if index .Values "alfresco-search" "ingress" "enabled" }}  Solr: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}/solr {{ end }}
 {{ else }}
 If you have a specific DNS address for the cluster please run the following commands to get the application paths and configure ACS:

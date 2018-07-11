@@ -23,6 +23,7 @@ repository:
     externalPort: &repositoryExternalPort 80
   ingress:
     path: /alfresco
+    maxUploadSize: "5g"
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
@@ -46,6 +47,11 @@ repository:
     initialDelaySeconds: 130
     periodSeconds: 20
     timeoutSeconds: 10
+
+# Declares the api-explorer service used by the content repository
+apiexplorer:
+  ingress:
+    path: /api-explorer
 
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -223,7 +229,7 @@ alfresco-search:
 
 # choose if you want network policy enabled
 networkpolicysetting:
-  enabled: true
+  enabled: false
 
 database:
   type: postgresql
