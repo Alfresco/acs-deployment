@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     # Default limit is 1m, document(s) above this size will throw 413 (Request Entity Too Large) error
-    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.repository.ingress.maxUploadSize }}
     nginx.ingress.kubernetes.io/configuration-snippet: |
       location ~ ^(/.*/proxy/alfresco/api/solr/.*)$ {return 403 ;}
                   location ~ ^(/.*/-default-/proxy/alfresco/api/.*)$ {return 403;}
