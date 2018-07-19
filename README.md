@@ -35,6 +35,15 @@ Alfresco Content Services deployed via `docker-compose` or Kubernetes contains t
 * [Deploying using Docker Compose](docs/docker-compose-deployment.md)
 * [Customizing your deployment](docs/customising-deployment.md)
 
+## Production environments
+The HELM charts in this repository provide a PostgreSQL database in a docker container and do not configure
+any logging. This design has been choosen so that they can be installed in a Kubernetes cluster without
+changes and are still flexible to be adopted to your actual environment.   
+For your environment, you should use these charts as starting point and modify them so that ACS integrates
+into your infrastructure. You typically want to remove the PostgreSQL container and connect the cs-repository
+directly to your database (might require custom images to get the required JDBC driver in the container).
+Another typical change would be the integration of your company wide monitoring and logging tools.
+
 ## Other information
 * See alternative commands and start up [tutorial with AWS support](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/running-a-cluster.md)
 * [Tips and tricks](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/tips-and-tricks.md) for working with Kubernetes and Alfresco Content Services.
