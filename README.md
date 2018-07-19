@@ -36,7 +36,7 @@ Alfresco Content Services deployed via `docker-compose` or Kubernetes contains t
 * [Customizing your deployment](docs/customising-deployment.md)
 
 ## Production environments
-The HELm charts in this repository provide a PostgreSQL database in a docker container and do not configure
+The HELM charts in this repository provide a PostgreSQL database in a docker container and do not configure
 any logging. This design has been choosen so that they can be installed in a Kubernetes cluster without
 changes and are still flexible to be adopted to your actual environment.   
 For your environment, you should use these charts as starting point and modify them so that ACS integrates
