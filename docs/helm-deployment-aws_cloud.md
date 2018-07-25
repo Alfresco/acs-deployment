@@ -20,9 +20,9 @@ To run the Alfresco Content Services (ACS) deployment on AWS in a Kops provided 
 
 ### Prepare and configure Kops
 
-Kops requires certain configurations on your AWS account. Please follow the guide
-[here](https://github.com/kubernetes/kops/blob/master/docs/aws.md#setup-your-environment)
-through "Creating your first cluster". The cluster for ACS will be created in the next step.
+Kops requires certain configurations on your AWS account. Please follow the Kops guide to 
+[set up your environment](https://github.com/kubernetes/kops/blob/master/docs/aws.md#setup-your-environment)
+through to "Creating your first cluster". The cluster for ACS will be created in the next step.
 
 ### Setting up Kubernetes cluster on AWS with Kops
 
