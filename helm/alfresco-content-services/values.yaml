@@ -182,6 +182,8 @@ tika:
     timeoutSeconds: 10
     livenessPercent: 400
     livenessTransformPeriodSeconds: 600
+    maxTransforms: 10000
+    maxTransformSeconds: 1800
 
 # Declares the alfresco-shared-file-store used by the content repository
 # and transform service
