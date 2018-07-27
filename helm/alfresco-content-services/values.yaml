@@ -182,8 +182,37 @@ tika:
     timeoutSeconds: 10
     livenessPercent: 400
     livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1800
+
+# Declares the alfresco-shared-file-store used by the content repository
+# and transform service
+filestore:
+  replicaCount: 1
+  image:
+    repository: alfresco/alfresco-shared-file-store
+    tag: "latest"
+    pullPolicy: Always
+    internalPort: 8099
+  service:
+    name: filestore
+    type: ClusterIP
+    externalPort: 80
+  resources:
+    requests:
+      memory: "1000Mi"
+    limits:
+      memory: "1000Mi"
+  environment:
+    JAVA_OPTS: " -Xms256M -Xmx256M"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 150
+    livenessSavePeriodSeconds: 600
 
 # Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services

@@ -1,0 +1,19 @@
+# Defines the properties required by the shared file store container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco.shortname" . }}-filestore-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: transformers
+data:
+  # The JAVA_OPTS defined in the values.yaml file for "shared file store" are set here using proper quotes
+  {{- if .Values.filestore.environment }}
+  {{- range $key, $val := .Values.filestore.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
+  livenessPercent: "{{ .Values.filestore.livenessProbe.livenessPercent }}"
+  livenessSavePeriodSeconds: "{{ .Values.filestore.livenessProbe.livenessSavePeriodSeconds }}"

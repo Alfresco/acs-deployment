@@ -1,0 +1,53 @@
+# Defines the deployment for the shared file store
+# Details: https://git.alfresco.com/Repository/alfresco-shared file store
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco.shortname" . }}-filestore
+  labels:
+    app: {{ template "alfresco.shortname" . }}-filestore
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  replicas: {{ .Values.filestore.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "alfresco.shortname" . }}-filestore
+        release: {{ .Release.Name }}
+        component: transformers
+    spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.filestore.image.repository }}:{{ .Values.filestore.image.tag }}"
+          imagePullPolicy: {{ .Values.filestore.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-filestore.yaml
+              name: {{ template "alfresco.shortname" . }}-filestore-configmap
+          ports:
+            - containerPort: {{ .Values.filestore.image.internalPort }}
+          resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.filestore.image.internalPort }}
+            initialDelaySeconds: {{ .Values.filestore.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.filestore.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.filestore.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.filestore.image.internalPort }}
+            initialDelaySeconds: {{ .Values.filestore.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.filestore.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
+{{ toYaml .Values.filestore.resources | indent 12 }}

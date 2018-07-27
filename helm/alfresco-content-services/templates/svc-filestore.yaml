@@ -1,0 +1,20 @@
+# Defines the service for the shared file store
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco.shortname" . }}-filestore
+  labels:
+    app: {{ template "alfresco.shortname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  type: {{ .Values.filestore.service.type }}
+  ports:
+    - port: {{ .Values.filestore.service.externalPort }}
+      targetPort: {{ .Values.filestore.image.internalPort }}
+      name: {{ .Values.filestore.service.name }}
+  selector:
+    app: {{ template "alfresco.shortname" . }}-filestore
+    release: {{ .Release.Name }}

@@ -27,6 +27,7 @@ services:
                 -Djodconverter.url=http://libreoffice:8090/
                 -Dimg.url=http://imagemagick:8090/
                 -Dtika.url=http://tika:8090/
+                -Dsfs.url=http://shared-file-store:8099/
                 -Dshare.host=localhost
                 -Ddeployment.method=DOCKER_COMPOSE
                 -Dcsrf.filter.enabled=false
@@ -66,6 +67,13 @@ services:
             JAVA_OPTS: " -Xms256m -Xmx256m"
         ports:
             - 8093:8090
+
+    shared-file-store:
+        image: alfresco/alfresco-shared-file-store:latest
+        environment:
+            JAVA_OPTS: " -Xms256m -Xmx256m"
+        ports:
+            - 8099:8099
 
     share:
         image: alfresco/alfresco-share:6.0
