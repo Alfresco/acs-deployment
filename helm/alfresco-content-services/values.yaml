@@ -191,7 +191,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "latest"
+    tag: "0.1"
     pullPolicy: Always
     internalPort: 8099
   service:
