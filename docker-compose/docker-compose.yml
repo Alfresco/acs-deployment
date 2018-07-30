@@ -69,7 +69,7 @@ services:
             - 8093:8090
 
     shared-file-store:
-        image: alfresco/alfresco-shared-file-store:latest
+        image: alfresco/alfresco-shared-file-store:0.1
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
         ports:
