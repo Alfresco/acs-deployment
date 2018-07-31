@@ -1,9 +1,11 @@
 # Alfresco Content Services Deployment with Helm on AWS
 
+**Hint:** Consider [deploying ACS into EKS](./helm-deployment-aws_eks.md) instead of setting
+up a cluster with Kops.
 
 ## Prerequisites
 
-To run the Alfresco Content Services (ACS) deployment on AWS with Kubernetes requires:
+To run the Alfresco Content Services (ACS) deployment on AWS in a Kops provided Kubernetes cluster requires:
 
 | Component   | Getting Started Guide |
 | ------------| --------------------- |
@@ -16,6 +18,11 @@ To run the Alfresco Content Services (ACS) deployment on AWS with Kubernetes req
 
 **Note:** You don't need to clone this repository to deploy Alfresco Content Services.
 
+### Prepare and configure Kops
+
+Kops requires certain configurations on your AWS account. Please follow the Kops guide to 
+[set up your environment](https://github.com/kubernetes/kops/blob/master/docs/aws.md#setup-your-environment)
+through to "Creating your first cluster". The cluster for ACS will be created in the next step.
 
 ### Setting up Kubernetes cluster on AWS with Kops
 
