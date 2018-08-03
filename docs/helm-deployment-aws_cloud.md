@@ -350,14 +350,14 @@ helm install alfresco-incubator/alfresco-content-services \
 --set externalHost="$EXTERNALHOST" \
 --set externalPort="443" \
 --set repository.adminPassword="$ALF_ADMIN_PWD" \
---set postgresql.postgresPassword="$ALF_DB_PWD" \
 --set alfresco-infrastructure.persistence.efs.enabled=true \
 --set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
 --set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
 --set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
---set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
 --set persistence.repository.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/repository-data" \
 --set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
+--set postgresql.postgresPassword="$ALF_DB_PWD" \
+--set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -371,6 +371,36 @@ You can set the Alfresco Content Services stack configuration attributes above a
 ```
 
 For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
+
+### Using and external Database Instance
+
+* You will need to deploy the helm repository using the following values:
+
+```
+# Install ACS
+helm install alfresco-incubator/alfresco-content-services \
+--set externalProtocol="https" \
+--set externalHost="$EXTERNALHOST" \
+--set externalPort="443" \
+--set repository.adminPassword="$ALF_ADMIN_PWD" \
+--set alfresco-infrastructure.persistence.efs.enabled=true \
+--set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
+--set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
+--set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
+--set persistence.repository.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/repository-data" \
+--set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
+--set postgresql.enabled=false \
+--set database.external=true \
+--set database.driver="org.postgresql.Driver" \
+--set database.user="myuser" \
+--set database.password="mypass" \
+--set database.url="jdbc:postgresql://mydb.eu-west-1.rds.amazonaws.com:5432/mydb" \
+--namespace=$DESIREDNAMESPACE
+```
+
+**Note:** If you want to connect to a different database type you will first need to rebuild the docker image with the additional driver in /usr/local/tomcat/libs
+
+**Note:** When using an external database you will have to make sure that the Database is reachable by the K8S nodes and is up and ready.
 
 ### Creating a Route 53 Record Set in your Hosted Zone
 

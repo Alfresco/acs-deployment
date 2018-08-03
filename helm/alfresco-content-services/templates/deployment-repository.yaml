@@ -28,6 +28,8 @@ spec:
           image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
           envFrom:
+          - secretRef: 
+              name: {{ template "content-services.shortname" . }}-dbsecret
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap
@@ -57,11 +59,13 @@ spec:
             periodSeconds: {{ .Values.repository.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.repository.livenessProbe.timeoutSeconds }}
+      {{- if eq .Values.database.external false }}
       initContainers:
         # wait for the DB to startup before this deployment can start
         - name: init-db
           image: busybox
-          command: ['sh', '-c', 'until nc -w1 {{ template "database.hostname" . }} {{ template "database.port" . }}; do echo "waiting for {{ .Values.database.type }}"; sleep 2; done;']
+          command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
+      {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:

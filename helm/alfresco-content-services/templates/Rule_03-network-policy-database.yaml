@@ -1,5 +1,6 @@
 {{- if .Values.networkpolicysetting.enabled }}
-# Allow communication between database & repository
+{{- if eq .Values.database.external false }}
+# Allow communication in and out of the DB
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -7,18 +8,19 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "database.hostname" . }}
+      app: {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}
   policyTypes:
   - Ingress
   - Egress
   ingress:
+    # Allow REPO to communicate with DB
     - from:
       - podSelector:
           matchLabels:
             app: {{ template "content-services.shortname" . }}-repository
       ports:
         - protocol: TCP
-          port: {{ template "database.port" . }}
+          port: {{ .Values.postgresql.service.port  }}
   egress:
     # Allow DB to communicate back with repo
     - to:
@@ -33,4 +35,5 @@ spec:
       ports:
       - protocol: TCP
         port: 2049
+{{- end }}
 {{- end }}

@@ -17,47 +17,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Get the Database hostname depending on the Database type
-*/}}
-{{- define "database.hostname" -}}
-{{- if eq ( .Values.database.type | toString ) "postgresql" }}
-{{- printf "%s-%s" .Release.Name .Values.postgresql.nameOverride -}}
-{{- end }}
-{{- end -}}
-
-{{/*
-Get the Database port depending on the Database type
-*/}}
-{{- define "database.port" -}}
-{{- if eq ( .Values.database.type | toString ) "postgresql" }}
-{{- print .Values.postgresql.service.port -}}
-{{- end }}
-{{- end -}}
-
-{{/*
-Create the Database driver depending on the Database type
-*/}}
-{{- define "database.driver" -}}
-{{- if eq ( .Values.database.type | toString ) "postgresql" }}
-{{- print .Values.postgresql.driver -}}
-{{- end }}
-{{- end -}}
-
-{{/*
-Get the Database user depending on the Database type
-*/}}
-{{- define "database.user" -}}
-{{- if eq ( .Values.database.type | toString ) "postgresql" }}
-{{- print .Values.postgresql.postgresUser -}}
-{{- end }}
-{{- end -}}
-
-{{/*
-Get the Database password depending on the Database type
-*/}}
-{{- define "database.password" }}
-{{- if eq ( .Values.database.type | toString ) "postgresql" -}}
-{{- print .Values.postgresql.postgresPassword -}}
+{{- define "database.jdbcurl" -}}
+{{- if (.Values.database.url) }}
+{{- printf "%s" .Values.database.url -}}
+{{- else }}
+{{- $host := (printf "%s-%s" .Release.Name .Values.postgresql.nameOverride . ) -}}
+{{- printf "jdbc:postgresql://%s:%s/%s" $host .Values.postgresql.service.port .Values.postgresql.postgresDatabase -}}
 {{- end }}
 {{- end -}}
