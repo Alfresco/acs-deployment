@@ -16,12 +16,3 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- $name := (.Values.nameOverride | default (printf "%s" "alfresco-")) -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{- define "database.jdbcurl" -}}
-{{- if (.Values.database.url) }}
-{{- printf "%s" .Values.database.url -}}
-{{- else }}
-{{- $host := (printf "%s-%s" .Release.Name .Values.postgresql.nameOverride . ) -}}
-{{- printf "jdbc:postgresql://%s:%s/%s" $host .Values.postgresql.service.port .Values.postgresql.postgresDatabase -}}
-{{- end }}
-{{- end -}}
