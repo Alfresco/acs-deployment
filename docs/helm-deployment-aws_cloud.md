@@ -372,9 +372,9 @@ You can set the Alfresco Content Services stack configuration attributes above a
 
 For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
 
-### Using and external Database Instance
+### Using an external database instance
 
-* You will need to deploy the helm repository using the following values:
+* Deploy the helm repository using the following values:
 
 ```
 # Install ACS
@@ -398,9 +398,9 @@ helm install alfresco-incubator/alfresco-content-services \
 --namespace=$DESIREDNAMESPACE
 ```
 
-**Note:** If you want to connect to a different database type you will first need to rebuild the docker image with the additional driver in /usr/local/tomcat/libs
+**Note:** If you want to connect to a different database type, you'll first need to rebuild the docker image with the additional driver in `/usr/local/tomcat/libs`.
 
-**Note:** When using an external database you will have to make sure that the Database is reachable by the K8S nodes and is up and ready.
+**Note:** When using an external database, make sure that the database is reachable by the K8S nodes and is up and ready.
 
 ### Creating a Route 53 Record Set in your Hosted Zone
 
