@@ -68,16 +68,16 @@ The following table lists the configurable parameters of the ACS chart and their
 Parameter | Description | Default
 --- | --- | ---
 `repository.adminPassword` | Administrator password for ACS in md5 hash format | md5: `209c6174da490caeb422f3fa5a7ae634` (of string `admin`)
-`postgresql.enabled` | enable the use of the postgres chart in the deployment | `true`
-`postgresql.postgresUser` | postgresql database user | `alfresco`
-`postgresql.postgresPassword` | postgresql database password | `alfresco`
-`postgresql.postgresDatabase` | postgresql database name | `alfresco`
-`database.external` | enable the use of an externally provisioned database | `false`
-`database.driver` | external database driver | ``
-`database.user` | external database user | ``
-`database.password` | external database password | ``
-`database.url` | external database jdbc url | ``
-`alfresco-search.resources.requests.memory` | alfresco search service requests memory | `250Mi`
-`alfresco-search.ingress.enabled` | Enable external access for alfresco search service | `false`
+`postgresql.enabled` | Enable the use of the postgres chart in the deployment | `true`
+`postgresql.postgresUser` | Postgresql database user | `alfresco`
+`postgresql.postgresPassword` | Postgresql database password | `alfresco`
+`postgresql.postgresDatabase` | Postgresql database name | `alfresco`
+`database.external` | Enable the use of an externally provisioned database | `false`
+`database.driver` | External database driver | ``
+`database.user` | External database user | ``
+`database.password` | External database password | ``
+`database.url` | External database jdbc url | ``
+`alfresco-search.resources.requests.memory` | Alfresco Search Service requests memory | `250Mi`
+`alfresco-search.ingress.enabled` | Enable external access for Alfresco Search Service | `false`
 `alfresco-search.ingress.basicAuth` | If `alfresco-search.ingress.enabled` is `true`, user need to provide a `base64` encoded `htpasswd` format user name & password (ex: `echo -n "$(htpasswd -nbm solradmin somepassword)"` where `solradmin` is username and `somepassword` is the password) | None
 `alfresco-search.ingress.whitelist_ips` | If `alfresco-search.ingress.enabled` is `true`, user can restrict `/solr` to a list of IP addresses of CIDR notation | `0.0.0.0/0`
