@@ -60,11 +60,12 @@ spec:
   egress:
     # Allow repo to communicate back with other components
     - to:
+      {{- if eq .Values.database.external false }}
       # Database
       - podSelector:
           matchLabels:
-             app: {{ template "database.hostname" . }}
-
+             app: {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}
+      {{- end }}
       # Repo (clustering)
       - podSelector:
           matchLabels:

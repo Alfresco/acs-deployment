@@ -20,7 +20,7 @@ data:
   {{ $alfhost := (.Values.externalHost | default (printf "%s-repository" (include "content-services.shortname" .))) }}
   {{ $alfprotocol := (.Values.externalProtocol | default "http") }}
   {{ $alfport := (.Values.externalPort | default .Values.repository.service.externalPort) }}
-  CATALINA_OPTS: "-Dalfresco.host={{ $alfhost }}
+  ALFRESCO_OPTS: " -Dalfresco.host={{ $alfhost }}
       -Dalfresco.protocol={{ $alfprotocol }}
       -Dalfresco.port={{ $alfport }}
       -Dshare.protocol={{ .Values.externalProtocol | default "http"}}
@@ -29,13 +29,18 @@ data:
       -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
       -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}
       -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}/.*
-      -Ddb.driver={{ template "database.driver" . }}
-      -Ddb.username={{ template "database.user" . }}
-      -Ddb.password={{ template "database.password" . }}
-      -Ddb.url=jdbc:{{ .Values.database.type }}://{{ template "database.hostname" . }}:{{ template "database.port" . }}/{{ .Values.postgresql.postgresDatabase }}
       -Dsolr.host={{ template "alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
       -Dtika.url=http://{{ template "content-services.shortname" . }}-tika"
+  CATALINA_OPTS: " $ALFRESCO_OPTS 
+      -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
+      {{- if eq .Values.database.external false }}
+      -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
+      {{- else }}
+      -Ddb.url={{ .Values.database.url }}
+      {{- end }}
+      -Ddb.username=$DATABASE_USERNAME
+      -Ddb.password=$DATABASE_PASSWORD"
