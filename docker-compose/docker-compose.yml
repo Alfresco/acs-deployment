@@ -111,3 +111,12 @@ services:
             - "SOLR_JAVA_MEM=-Xms2g -Xmx2g"
         ports:
             - 8083:8983 #Browser port
+
+    activemq:
+        image: webcenter/activemq:5.14.3
+        mem_limit: 2048m
+        ports:
+            - 8161:8161 # Web Console
+            - 5672:5672 # AMQP
+            - 61616:61616 # OpenWire
+            - 61613:61613 # STOMP
