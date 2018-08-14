@@ -331,6 +331,19 @@ postgresql:
     limits:
       memory: "1500Mi"
 
+# Defines the properties to be used for the S3 Connector
+s3connector:
+  enabled: false
+  # bucketName: 
+  # bucketLocation: 
+  # flatRoot:
+  # maxErrorRetries:
+  # useTenantDomainInPath:
+  # autoLowerCaseBucketName:
+  # accessKey:
+  # secretKey:
+  # encryption:
+  # kmsKeyId:
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:

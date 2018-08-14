@@ -30,6 +30,11 @@ spec:
           envFrom:
           - secretRef: 
               name: {{ template "content-services.shortname" . }}-dbsecret
+          {{- if .Values.s3connector.enabled }}
+          - secretRef:
+              # s3 connector secret keys
+              name: {{ template "content-services.shortname" . }}-s3secret
+          {{- end }}
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap
@@ -39,10 +44,12 @@ spec:
             - containerPort: {{ .Values.repository.image.hazelcastPort }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
+          {{- if not .Values.s3connector.enabled }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
@@ -66,7 +73,9 @@ spec:
           image: busybox
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
+      {{- if not .Values.s3connector.enabled }}
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
+      {{- end }}
