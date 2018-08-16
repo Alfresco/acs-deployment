@@ -34,24 +34,13 @@ data:
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
-      -Dtika.url=http://{{ template "content-services.shortname" . }}-tika"
-  {{- if .Values.s3connector.enabled }}
-  S3_OPTS: " -Ds3.bucketName={{ .Values.s3connector.bucketName }}
-      -Ds3.bucketLocation={{ .Values.s3connector.bucketLocation }}
-      {{- if .Values.s3connector.flatRoot }}
-      -Ds3.flatRoot={{ .Values.s3connector.flatRoot }}
-      {{- end }} 
-      {{- if .Values.s3connector.maxErrorRetries }}
-      -Ds3.maxErrorRetries={{ .Values.s3connector.maxErrorRetries }}
-      {{- end }} 
-      {{- if .Values.s3connector.useTenantDomainInPath }}
-      -Ds3.useTenantDomainInPath={{ .Values.s3connector.useTenantDomainInPath }}
-      {{- end }} 
-      {{- if .Values.s3connector.autoLowerCaseBucketName }}
-      -Ds3.autoLowerCaseBucketName={{ .Values.s3connector.autoLowerCaseBucketName }}
+      -Dtika.url=http://{{ template "content-services.shortname" . }}-tika
+      {{- if .Values.s3connector.enabled }}
+      {{- range $key, $val := .Values.s3connector.config }}
+      -Ds3.{{ $key }}={{ $val }}
+      {{- end }}
       {{- end }}"
-  {{- end }}
-  CATALINA_OPTS: " $ALFRESCO_OPTS $S3_OPTS  
+  CATALINA_OPTS: " $ALFRESCO_OPTS  
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
       {{- if eq .Values.database.external false }}
       -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}

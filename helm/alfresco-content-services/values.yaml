@@ -334,16 +334,16 @@ postgresql:
 # Defines the properties to be used for the S3 Connector
 s3connector:
   enabled: false
-  # bucketName: 
-  # bucketLocation: 
-  # flatRoot:
-  # maxErrorRetries:
-  # useTenantDomainInPath:
-  # autoLowerCaseBucketName:
-  # accessKey:
-  # secretKey:
-  # encryption:
-  # awsKmsKeyId:
+  # config:
+  #   bucketName:
+  #   bucketLocation:  
+  ##   Additional properties can be defined here.
+  ##   For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
+  # secrets:
+  #   accessKey:
+  #   secretKey:
+  #   encryption:
+  #   awsKmsKeyId:
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:

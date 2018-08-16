@@ -402,6 +402,30 @@ helm install alfresco-incubator/alfresco-content-services \
 
 **Note:** When using an external database, make sure that the database is reachable by the K8S nodes and is up and ready.
 
+### Using the Alfresco S3 Connector
+
+If you have the S3 connector amp applyed to your docker image then you could enable it in kubernetes by setting the following values:
+
+```
+helm install alfresco-incubator/alfresco-content-services \
+--set externalProtocol="https" \
+--set externalHost="$EXTERNALHOST" \
+--set externalPort="443" \
+--set repository.adminPassword="$ALF_ADMIN_PWD" \
+--set alfresco-infrastructure.persistence.efs.enabled=true \
+--set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
+--set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
+--set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
+--set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
+--set s3connector.enabled=true \
+--set s3connector.config.bucketName=myBucket \
+--set s3connector.secrets.encryption=kms \
+--set s3connector.secrets.awsKmsKeyId=Your KMS Key ID \
+--namespace=$DESIREDNAMESPACE
+```
+
+**Note:** For additional information on the S3 Connector Benefits, Installation and Configuration please access  [https://docs.alfresco.com/s3connector/concepts/s3-contentstore-overview.html](https://docs.alfresco.com/s3connector/concepts/s3-contentstore-overview.html)
+
 ### Creating a Route 53 Record Set in your Hosted Zone
 
 * Go to **AWS Management Console** and open the **Route 53** console.
