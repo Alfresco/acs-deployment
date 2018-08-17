@@ -417,6 +417,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
 --set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
 --set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
+--set persistence.repository.enabled=false \
 --set s3connector.enabled=true \
 --set s3connector.config.bucketName=myBucket \
 --set s3connector.secrets.encryption=kms \

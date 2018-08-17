@@ -253,6 +253,7 @@ share:
 persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
+    enabled: true
     data:
       mountPath: "/usr/local/tomcat/alf_data"
       subPath: "alfresco-content-services/repository-data"

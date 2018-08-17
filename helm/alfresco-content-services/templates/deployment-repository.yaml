@@ -44,7 +44,7 @@ spec:
             - containerPort: {{ .Values.repository.image.hazelcastPort }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
-          {{- if not .Values.s3connector.enabled }}
+          {{- if .Values.persistence.repository.enabled }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
@@ -73,7 +73,7 @@ spec:
           image: busybox
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
-      {{- if not .Values.s3connector.enabled }}
+      {{- if .Values.persistence.repository.enabled }}
       volumes:
       - name: data
         persistentVolumeClaim:
