@@ -404,7 +404,7 @@ helm install alfresco-incubator/alfresco-content-services \
 
 ### Using the Alfresco S3 Connector
 
-If you have the S3 connector amp applyed to your docker image then you could enable it in kubernetes by setting the following values:
+If you have the S3 connector amp applied to your docker image then you could enable it in kubernetes by setting the following values:
 
 ```
 helm install alfresco-incubator/alfresco-content-services \
