@@ -34,8 +34,13 @@ data:
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
-      -Dtika.url=http://{{ template "content-services.shortname" . }}-tika"
-  CATALINA_OPTS: " $ALFRESCO_OPTS 
+      -Dtika.url=http://{{ template "content-services.shortname" . }}-tika
+      {{- if .Values.s3connector.enabled }}
+      {{- range $key, $val := .Values.s3connector.config }}
+      -Ds3.{{ $key }}={{ $val }}
+      {{- end }}
+      {{- end }}"
+  CATALINA_OPTS: " $ALFRESCO_OPTS  
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
       {{- if eq .Values.database.external false }}
       -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
@@ -43,4 +48,8 @@ data:
       -Ddb.url={{ .Values.database.url }}
       {{- end }}
       -Ddb.username=$DATABASE_USERNAME
-      -Ddb.password=$DATABASE_PASSWORD"
+      -Ddb.password=$DATABASE_PASSWORD
+      -Ds3.accessKey=$ACCESSKEY
+      -Ds3.secretKey=$SECRETKEY
+      -Ds3.encryption=$ENCRYPTION
+      -Ds3.awsKmsKeyId=$KMSKEYID"

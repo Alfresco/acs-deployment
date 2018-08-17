@@ -79,5 +79,19 @@ Parameter | Description | Default
 `database.url` | External database jdbc url | ``
 `alfresco-search.resources.requests.memory` | Alfresco Search Services requests memory | `250Mi`
 `alfresco-search.ingress.enabled` | Enable external access for Alfresco Search Services | `false`
-`alfresco-search.ingress.basicAuth` | If `alfresco-search.ingress.enabled` is `true`, user need to provide a `base64` encoded `htpasswd` format user name & password (ex: `echo -n "$(htpasswd -nbm solradmin somepassword)"` where `solradmin` is username and `somepassword` is the password) | None
+`alfresco-search.ingress.basicAuth` | If `alfresco-search.ingress.enabled` is `true`, user needs to provide a `base64` encoded `htpasswd` format user name & password (ex: `echo -n "$(htpasswd -nbm solradmin somepassword)"` where `solradmin` is username and `somepassword` is the password) | None
 `alfresco-search.ingress.whitelist_ips` | If `alfresco-search.ingress.enabled` is `true`, user can restrict `/solr` to a list of IP addresses of CIDR notation | `0.0.0.0/0`
+`persistence.repository.enabled` | Enable Volume Persistence on repository. | `true`
+`s3connector.enabled` | Switch this to `true` if you have access to the S3 Connector AMP | `false`
+`s3connector.config` | S3 configuration - see [S3 Connector properties reference](https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html). Example: `s3connector.config.bucketName: myS3Bucket` | `{}`
+`s3connector.secrets` | S3 secrets configuration - see [S3 Connector properties reference](https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html). Example: `s3connector.secrets.accessKey: AJJJJJJJJ` | `{}`
+
+
+
+
+
+
+
+
+
+
