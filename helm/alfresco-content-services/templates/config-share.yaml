@@ -21,3 +21,4 @@ data:
   REPO_PORT: "{{ .Values.repository.service.externalPort }}"
   CSRF_FILTER_REFERER: "{{ $alfprotocol }}://{{ $alfhost }}/.*"
   CSRF_FILTER_ORIGIN: "{{ $alfprotocol }}://{{ $alfhost }}"
+  JAVA_OPTS: "-Dalfresco.proxy={{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.repository.service.externalPort }}"
