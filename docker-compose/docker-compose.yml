@@ -110,7 +110,7 @@ services:
             - 5432:5432
 
     solr6:
-        image: alfresco/alfresco-search-services:1.1.1
+        image: alfresco/alfresco-search-services:1.2.0
         mem_limit: 2500m
         environment:
             #Solr needs to know how to register itself with Alfresco
