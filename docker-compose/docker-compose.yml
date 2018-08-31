@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.0.0
+        image: alfresco/alfresco-content-repository:6.0.0.1
         mem_limit: 1500m 
         environment:
             JAVA_OPTS: "
