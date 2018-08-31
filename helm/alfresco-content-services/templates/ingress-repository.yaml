@@ -8,6 +8,9 @@ metadata:
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-name: "alf_affinity_route"
     nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      location ~ ^(/alfresco/s/api/solr/.*)$ {return 403;}
+
 spec:
   rules:
   - http:
