@@ -905,7 +905,7 @@
 					"response": []
 				},
 				{
-					"name": "share-alfresco /.*/service/api/solr/.*",
+					"name": "alfresco-solr /.*/service/api/solr/.*",
 					"event": [
 						{
 							"listen": "test",
@@ -983,7 +983,7 @@
 					"response": []
 				},
 				{
-					"name": "share-alfresco s",
+					"name": "alfresco-solr s",
 					"event": [
 						{
 							"listen": "test",
@@ -1061,7 +1061,7 @@
 					"response": []
 				},
 				{
-					"name": "share-alfresco wcservice",
+					"name": "alfresco-solr wcservice",
 					"event": [
 						{
 							"listen": "test",
@@ -1139,7 +1139,7 @@
 					"response": []
 				},
 				{
-					"name": "share-alfresco wcs",
+					"name": "alfresco-solr wcs",
 					"event": [
 						{
 							"listen": "test",
