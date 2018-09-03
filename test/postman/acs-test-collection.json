@@ -905,6 +905,318 @@
 					"response": []
 				},
 				{
+					"name": "share-alfresco /.*/service/api/solr/.*",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "58b7f241-9e60-466c-ad99-fcd03b4b97de",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoProxyCodeTest_service\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{url}}/alfresco/service/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"service",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Check share access to alfresco via proxy is forbidden for some regex patterns"
+					},
+					"response": []
+				},
+				{
+					"name": "share-alfresco /.*/s/api/solr/.*",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4e881da1-632d-425f-88de-583cc9268f3b",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoStatusCodeTest_s\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{url}}/alfresco/s/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"s",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Check share access to alfresco via proxy is forbidden for some regex patterns"
+					},
+					"response": []
+				},
+				{
+					"name": "share-alfresco /.*/wcservice/api/solr/.*",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5dd10088-8d35-4ad6-ab12-b525121fc84d",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoStatusCodeTest_wcservice\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{url}}/alfresco/wcservice/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"wcservice",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Check share access to alfresco via proxy is forbidden for some regex patterns"
+					},
+					"response": []
+				},
+				{
+					"name": "share-alfresco /.*/wcs/api/solr/.*",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2fcb1ff7-40e3-4d94-ad34-ddfe1bd6441a",
+								"type": "text/javascript",
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoStatusCodeTest_wcs\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{url}}/alfresco/wcs/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"wcs",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Check share access to alfresco via proxy is forbidden for some regex patterns"
+					},
+					"response": []
+				},
+				{
 					"name": "solr-external-access",
 					"event": [
 						{
