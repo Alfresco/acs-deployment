@@ -905,7 +905,7 @@
 					"response": []
 				},
 				{
-					"name": "alfresco-solr /.*/service/api/solr/.*",
+					"name": "alfresco-solr service",
 					"event": [
 						{
 							"listen": "test",
