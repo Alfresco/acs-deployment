@@ -5,7 +5,7 @@
 # If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
-# Note: The docker-compose file from github.com is a limited trial that goes into read-only mode after 2-days.
+# Note: The docker-compose file from github.com is a limited trial that goes into read-only mode after 2 days.
 # Get the latest docker-compose.yml file with a 30-day trial license by accessing the Alfresco Content Services trial download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 
