@@ -39,6 +39,6 @@ Alfresco Content Services deployed via `docker-compose` or Kubernetes contains t
 * See alternative commands and start up [tutorial with AWS support](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/running-a-cluster.md)
 * [Tips and tricks](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/tips-and-tricks.md) for working with Kubernetes and Alfresco Content Services.
 * The Docker Compose and Helm charts downloaded directly from here (github.com) are for
- a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2-days. 
+ a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. 
  Request an extended 30-day trial at 
  https://www.alfresco.com/platform/content-services-ecm/trial/docker
