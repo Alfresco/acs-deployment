@@ -14,6 +14,6 @@ dependencies:
   repository: http://kubernetes-charts.alfresco.com/stable
   condition: alfresco-search.enabled
 - name: alfresco-infrastructure
-  version: 1.0.0
+  version: 2.0.0-SNAPSHOT
   condition: alfresco-content-services.alfresco-infrastructure.enabled
-  repository: http://kubernetes-charts.alfresco.com/stable
+  repository: http://kubernetes-charts.alfresco.com/incubator

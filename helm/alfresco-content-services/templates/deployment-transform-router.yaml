@@ -7,7 +7,7 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    component: transformers
+    component: transformrouter
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
   template:
@@ -15,7 +15,7 @@ spec:
       labels:
         app: {{ template "alfresco.shortname" . }}-router
         release: {{ .Release.Name }}
-        component: transformers
+        component: transformrouter
     spec:
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
@@ -24,6 +24,15 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.transformrouter.image.repository }}:{{ .Values.transformrouter.image.tag }}"
           imagePullPolicy: {{ .Values.transformrouter.image.pullPolicy }}
+          initContainers:
+          - name: init-activemq
+            image: busybox
+            env:
+            - name: ACTIVEMQ_HOST
+              value: {{ .Release.Name }}-activemq-broker
+            - name: ACTIVEMQ_PORT
+              value: 61616
+            command: ['sh', '-c', 'until nc -w1 $ACTIVEMQ_HOST $ACTIVEMQ_PORT; do echo "waiting for activemq"; sleep 5; done;']
           envFrom:
           - configMapRef:
               # config map to use, defined in config-transform-router.yaml

@@ -42,8 +42,8 @@ services:
         ports:
             - 8082:8080 #Browser port
 
-    router:
-        image: quay.io/alfresco/alfresco-transform-router:0.0.10
+    transform-router:
+        image: alfresco/alfresco-transform-router:0.0.11-EA
         environment:
           ACTIVEMQ_URL: "nio://activemq:61616"
           IMAGEMAGICK_URL: "http://imagemagick:8090"
@@ -54,7 +54,7 @@ services:
           - activemq
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:2.0.0-RC1
+        image: alfresco/alfresco-pdf-renderer:2.0.0-RC2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -63,7 +63,7 @@ services:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-imagemagick:2.0.0-RC1
+        image: alfresco/alfresco-imagemagick:2.0.0-RC2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -72,7 +72,7 @@ services:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-libreoffice:2.0.0-RC1
+        image: alfresco/alfresco-libreoffice:2.0.0-RC2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -81,7 +81,7 @@ services:
             - 8092:8090
 
     tika:
-        image: alfresco/alfresco-tika:2.0.0-RC1
+        image: alfresco/alfresco-tika:2.0.0-RC2
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -90,13 +90,13 @@ services:
             - 8093:8090
 
     shared-file-store:
-        image: quay.io/alfresco/alfresco-shared-file-store:ATS-94-1.0-SNAPSHOT
+        image: alfresco/alfresco-shared-file-store:0.2
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
         ports:
             - 8099:8099
         volumes:
-            - shared-file-store-volume:/tmp/Alfresco
+            - shared-file-store-volume:/tmp/Alfresco/sfs
 
     share:
         image: alfresco/alfresco-share:6.0

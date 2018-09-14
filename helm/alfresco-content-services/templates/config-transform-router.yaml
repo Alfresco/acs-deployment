@@ -7,11 +7,14 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: transformers
+    component: transformrouter
 data:
-  ACTIVEMQ_URL: {{ .Values.messageBroker.url}}
-  ACTIVEMQ_USER: {{ .Values.messageBroker.user}}
-  ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password}}
+  {{- if ( index .Values "alfresco-infrastructure" "activemq" "enabled" ) }}
+  ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
+  {{- else }}
+  ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
+  ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
+  {{- end }}
   IMAGEMAGICK_URL: http://{{ template "content-services.shortname" . }}-imagemagick:80
   PDF_RENDERER_URL: http://{{ template "content-services.shortname" . }}-pdfrenderer:80
   LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80

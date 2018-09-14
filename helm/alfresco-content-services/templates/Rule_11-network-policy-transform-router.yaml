@@ -1,0 +1,29 @@
+{{- if .Values.networkpolicysetting.enabled }}
+  # Allow router to communicate with the transformers and activemq
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: transformrouter
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "alfresco.shortname" . }}-router
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            component: transformers
+  egress:
+    # Allow router to communicate with transformers
+    - to:
+      - podSelector:
+          matchLabels:
+            component: transformers
+    # Allow router to communicate with activemq
+      - podSelector:
+          matchLabels:
+            app: {{ printf "%s-%s" .Release.Name "activemq" }}
+{{- end }}
