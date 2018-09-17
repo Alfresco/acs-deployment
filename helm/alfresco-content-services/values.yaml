@@ -298,7 +298,7 @@ alfresco-infrastructure:
   rabbitmq-ha:
     enabled: false
   activemq:
-    enabled: true
+    enabled: false
   alfresco-identity-service:
     enabled: false
   alfresco-activiti-cloud-registry:

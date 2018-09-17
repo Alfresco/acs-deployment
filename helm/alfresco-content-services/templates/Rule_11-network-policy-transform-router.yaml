@@ -20,4 +20,12 @@ spec:
       - podSelector:
           matchLabels:
             app: {{ printf "%s-%s" .Release.Name "activemq" }}
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+      - protocol: TCP
+        port: 61617
+      - protocol: TCP
+        port: 61616
 {{- end }}
