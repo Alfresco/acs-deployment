@@ -305,8 +305,6 @@ alfresco-infrastructure:
     enabled: false
   alfresco-api-gateway:
     enabled: false
-  nginx-ingress:
-    enabled: false
 
 alfresco-search:
   enabled: true

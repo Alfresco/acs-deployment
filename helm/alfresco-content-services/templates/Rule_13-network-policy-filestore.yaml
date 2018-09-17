@@ -1,5 +1,5 @@
 {{- if .Values.networkpolicysetting.enabled }}
-# Allow transformers and shared file store to communicate with the repository
+# Allow transformers to communicate with filestore
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
