@@ -323,6 +323,28 @@ export EFS_SERVER=$EFS_FS_ID.efs.$AWS_DEFAULT_REGION.amazonaws.com
 # Publish EFS Volume's DNS name (if not already done)
 export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
+### Creating a message broker for Alfresco Content Services
+
+* One option would be to deploy an activemq into the cluster. To do this, you can use the activemq from alfresco-incubator:
+
+```bash
+helm install alfresco-incubator/activemq \
+--namespace=$DESIREDNAMESPACE
+
+# Publish Message broker details
+export MESSAGE_BROKER_URL="nio://activemq_broker_service_name:61616"
+export MESSAGE_BROKER_USER="admin"
+export MESSAGE_BROKER_PASSWORD="admin"
+export MESSAGE_BROKER_LABEL="app: example-activemq"
+```
+
+* Or you can use an Amazon MQ broker, which can be created and configured by following this [guide](https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/amazon-mq-creating-configuring-broker.html).
+```bash
+# Publish Message broker details
+export MESSAGE_BROKER_URL="nio+ssl://<BROKER_ID>.mq.<AWS-REGION>.amazonaws.com:61617"
+export MESSAGE_BROKER_USER="user_for_this_broker"
+export MESSAGE_BROKER_PASSWORD="password_for_this_broker"
+```
 
 ### Deploying Alfresco Content Services
 
@@ -358,12 +380,15 @@ helm install alfresco-incubator/alfresco-content-services \
 --set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
 --set postgresql.postgresPassword="$ALF_DB_PWD" \
 --set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
---set messageBroker.url=<messageBrokerUrl> \
---set messageBroker.user=<messageBrokerUsername> \
---set messageBroker.password=<messageBrokerPassword> \
+--set messageBroker.url="$MESSAGE_BROKER_URL" \
+--set messageBroker.user="$MESSAGE_BROKER_USER" \
+--set messageBroker.password="$MESSAGE_BROKER_PASSWORD" \
 --namespace=$DESIREDNAMESPACE
 ```
-**Note:** The message broker could be an Amazon MQ instance. Create it by following this [guide](https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/amazon-mq-creating-configuring-broker.html).
+**Note:** If you have deployed a message broker into your cluster, make sure you add the following argument to the install command:
+```bash
+--set messageBroker.labelSelector="$MESSAGE_BROKER_LABEL"
+```
 
 **Note:** By default the Alfresco Search Services `/solr` endpoint is disabled for external access.  To enable it, see example [search-external-access](examples/search-external-access.md).
 
