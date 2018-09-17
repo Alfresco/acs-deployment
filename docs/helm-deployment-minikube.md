@@ -87,9 +87,8 @@ kubectl get service singed-chipmunk-nginx-ingress-controller -o jsonpath={.spec.
 
 * Run the following command to deploy Alfresco Content Services using the `incubator` or `stable` chart (add the corresponding Helm repository as per [this section](#adding-alfresco-incubator-helm-repository)):
 ```bash
-helm install alfresco-incubator/alfresco-content-services --set externalProtocol="http" --set externalHost="172.31.147.123" --set externalPort="30917" --set messageBroker.url="nio://example:61616" --set messageBroker.user="user_example" --set messageBroker.password="password_example"
+helm install alfresco-incubator/alfresco-content-services --set externalProtocol="http" --set externalHost="172.31.147.123" --set externalPort="30917"
 ```
-**Note:** Please find details on how to setup a message broker [here](helm-deployment-aws_cloud.md#creating-a-message-broker-for-alfresco-content-services).
 
 ### Option 2: Deploying Alfresco Content Services from the source code
 

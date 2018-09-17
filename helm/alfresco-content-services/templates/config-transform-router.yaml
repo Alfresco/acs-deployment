@@ -9,7 +9,7 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: transformrouter
 data:
-  {{- if ( index .Values "alfresco-infrastructure" "activemq" "enabled" ) }}
+  {{- if .Values.activemq.enabled }}
   ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
   {{- else }}
   ACTIVEMQ_URL: {{ .Values.messageBroker.url }}

@@ -19,7 +19,7 @@ spec:
     # Allow router to communicate with activemq
       - podSelector:
           matchLabels:
-            {{ .Values.messageBroker.labelSelector }}
+            app: {{ printf "%s-%s" .Release.Name "activemq" }}
     - to:
       - ipBlock:
           cidr: 0.0.0.0/0

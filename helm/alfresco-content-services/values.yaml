@@ -371,6 +371,10 @@ s3connector:
   #   encryption:
   #   awsKmsKeyId:
 
+activemq:
+  enabled: true
+  config: true
+
 # If using a broker deployed into current cluster, configure messageBroker.labelSelector by passing the argument to the helm install command:
 # e.g.: helm install alfresco-content-services --set messageBroker.labelSelector="app: example-activemq"
 # Find details (including labels) of a pod by running: kubectl describe pod my-pod
