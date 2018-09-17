@@ -34,6 +34,9 @@ spec:
       - podSelector:
           matchLabels:
             app: {{ template "content-services.shortname" . }}-repository
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco.shortname" . }}-filestore
       # nginx-ingress
       - podSelector:
           matchLabels:
