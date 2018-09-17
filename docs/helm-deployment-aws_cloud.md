@@ -358,8 +358,12 @@ helm install alfresco-incubator/alfresco-content-services \
 --set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
 --set postgresql.postgresPassword="$ALF_DB_PWD" \
 --set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
+--set messageBroker.url=<messageBrokerUrl> \
+--set messageBroker.user=<messageBrokerUsername> \
+--set messageBroker.password=<messageBrokerPassword> \
 --namespace=$DESIREDNAMESPACE
 ```
+**Note:** The message broker could be an Amazon MQ instance. Create it by following this [guide](https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/amazon-mq-creating-configuring-broker.html).
 
 **Note:** By default the Alfresco Search Services `/solr` endpoint is disabled for external access.  To enable it, see example [search-external-access](examples/search-external-access.md).
 

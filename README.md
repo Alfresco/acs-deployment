@@ -27,6 +27,7 @@ Alfresco Content Services deployed via `docker-compose` or Kubernetes contains t
 2.1 Alfresco Google Docs Share AMP  
 3. A Postgres DB  
 4. Alfresco Search Services (Solr6)
+5. Alfresco Transform Service
 
 ## Deployment options
 * [Deploying with Helm charts on AWS using Kops](docs/helm-deployment-aws_cloud.md)
