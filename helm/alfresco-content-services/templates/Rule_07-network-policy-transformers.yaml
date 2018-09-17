@@ -34,10 +34,6 @@ spec:
       - podSelector:
           matchLabels:
             app: {{ template "content-services.shortname" . }}-repository
-      # transform-router
-      - podSelector:
-          matchLabels:
-            app: {{ template "alfresco.shortname" . }}-router
       # nginx-ingress
       - podSelector:
           matchLabels:

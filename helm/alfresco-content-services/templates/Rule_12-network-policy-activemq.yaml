@@ -10,16 +10,9 @@ spec:
       app: {{ printf "%s-%s" .Release.Name "activemq" }}
   policyTypes:
   - Ingress
-  - Egress
   ingress:
     # Allow router to communicate with activemq
     - from:
-      - podSelector:
-          matchLabels:
-            app: {{ template "alfresco.shortname" . }}-router
-  egress:
-    - to:
-    # transform-router
       - podSelector:
           matchLabels:
             app: {{ template "alfresco.shortname" . }}-router
