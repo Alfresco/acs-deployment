@@ -43,7 +43,7 @@ services:
             - 8082:8080 #Browser port
 
     transform-router:
-        image: alfresco/alfresco-transform-router:0.0.11-EA
+        image: quay.io/alfresco/alfresco-transform-router:0.0.12-SNAPSHOT
         environment:
           ACTIVEMQ_URL: "nio://activemq:61616"
           IMAGEMAGICK_URL: "http://imagemagick:8090"
