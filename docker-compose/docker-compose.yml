@@ -15,7 +15,7 @@ version: "2"
 services:
     alfresco:
         image: alfresco/alfresco-content-repository:6.1.0-EA1
-        mem_limit: 1500m 
+        mem_limit: 1500m
         environment:
             JAVA_OPTS: "
                 -Ddb.driver=org.postgresql.Driver
@@ -143,7 +143,7 @@ services:
             - 8083:8983 #Browser port
 
     activemq:
-        image: webcenter/activemq:5.14.3
+        image: alfresco/alfresco-activemq:5.15.6
         mem_limit: 2048m
         ports:
             - 8161:8161 # Web Console
