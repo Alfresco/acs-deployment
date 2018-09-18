@@ -415,7 +415,7 @@ If you want to use an external messaging broker ( such as Amazon MQ), you can di
 Also, you will need to specify the URL for this broker, an user and a password, as shown below:
 
 ```bash
-# Publish Message broker details
+# Publish messaging broker details (example for Amazon MQ)
 export MESSAGE_BROKER_URL="nio+ssl://<BROKER_ID>.mq.<AWS-REGION>.amazonaws.com:61617"
 export MESSAGE_BROKER_USER="user_for_this_broker"
 export MESSAGE_BROKER_PASSWORD="password_for_this_broker"

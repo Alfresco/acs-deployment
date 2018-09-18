@@ -374,10 +374,6 @@ s3connector:
 activemq:
   enabled: true
 
-# If using a broker deployed into current cluster, configure messageBroker.labelSelector by passing the argument to the helm install command:
-# e.g.: helm install alfresco-content-services --set messageBroker.labelSelector="app: example-activemq"
-# Find details (including labels) of a pod by running: kubectl describe pod my-pod
-
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set registryPullSecrets=private-repo-registry-secret
