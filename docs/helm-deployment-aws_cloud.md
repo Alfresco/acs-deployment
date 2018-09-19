@@ -207,6 +207,30 @@ kubectl create namespace $DESIREDNAMESPACE
 Option 1:
 
 ```bash
+# Helm install nginx-ingress along with args
+export AWS_CERT_ARN="arn:aws:acm:<AWS-REGION>:<AWS-AccountID>:certificate/<CertificateId>"
+export AWS_CERT_POLICY="ELBSecurityPolicy-TLS-1-2-2017-01"
+
+helm install stable/nginx-ingress \
+--version 0.14.0 \
+--set controller.scope.enabled=true \
+--set controller.scope.namespace=$DESIREDNAMESPACE \
+--set rbac.create=true \
+--set controller.config."force-ssl-redirect"=\"true\" \
+--set controller.service.targetPorts.https=80 \
+--set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
+--set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
+--set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"=$AWS_CERT_ARN \
+--set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$DESIREDNAMESPACE.dev.alfresco.me" \
+--set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"=$AWS_CERT_POLICY \
+--set controller.publishService.enabled=true \
+--namespace $DESIREDNAMESPACE
+```
+
+
+Option 2:
+
+```bash
 # Helm install nginx-ingress with args in ingressvalues.yaml file
 helm install stable/nginx-ingress \
 --version 0.14.0 \
@@ -245,31 +269,10 @@ EOF
 </p>
 </details>
 
-Option 2:
 
-```bash
-# Helm install nginx-ingress along with args
-export AWS_CERT_ARN="arn:aws:acm:<AWS-REGION>:<AWS-AccountID>:certificate/<CertificateId>"
-export AWS_CERT_POLICY="ELBSecurityPolicy-TLS-1-2-2017-01"
-
-helm install stable/nginx-ingress \
---version 0.14.0 \
---set controller.scope.enabled=true \
---set controller.scope.namespace=$DESIREDNAMESPACE \
---set rbac.create=true \
---set controller.config."force-ssl-redirect"=\"true\" \
---set controller.service.targetPorts.https=80 \
---set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
---set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
---set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"=$AWS_CERT_ARN \
---set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$DESIREDNAMESPACE.dev.alfresco.me" \
---set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"=$AWS_CERT_POLICY \
---set controller.publishService.enabled=true \
---namespace $DESIREDNAMESPACE
-```
 Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
-Please note that the ACS Docker image is running Tomcat in secure mode (see the [Dockerfile](https://github.com/Alfresco/alfresco-docker-base-tomcat/blob/master/Dockerfile)). It implies that Tomcat will only send cookies via an HTTPS connection. **Deploying the ingress without HTTPS (Option 1) is not recommended,** as some of the functionality will not work.
+**Note:** The ACS Docker image is running Tomcat in secure mode (see the [Dockerfile](https://github.com/Alfresco/alfresco-docker-base-tomcat/blob/master/Dockerfile)). This implies that Tomcat will only send cookies via an HTTPS connection. Deploying the ingress without HTTPS (Option 2) is not recommended, as some of the functionality will not work.
 
 * To view the AWS ELB DNS name, note down the `nginx-ingress` release from the output of the above command. (for example, `NAME:  knobby-wolf`):
 ```bash
