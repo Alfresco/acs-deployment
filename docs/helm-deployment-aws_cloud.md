@@ -269,7 +269,7 @@ helm install stable/nginx-ingress \
 ```
 Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
-Please note that ACS Docker image is running Tomcat in secure mode (see the [Dockerfile](https://github.com/Alfresco/alfresco-docker-base-tomcat/blob/master/Dockerfile)). It implies that Tomcat will only send cookies via HTTPS connection. **Deploying the ingress without HTTPS (Option 1) is not recommended,** as some of the functionality will not work.
+Please note that the ACS Docker image is running Tomcat in secure mode (see the [Dockerfile](https://github.com/Alfresco/alfresco-docker-base-tomcat/blob/master/Dockerfile)). It implies that Tomcat will only send cookies via an HTTPS connection. **Deploying the ingress without HTTPS (Option 1) is not recommended,** as some of the functionality will not work.
 
 * To view the AWS ELB DNS name, note down the `nginx-ingress` release from the output of the above command. (for example, `NAME:  knobby-wolf`):
 ```bash
