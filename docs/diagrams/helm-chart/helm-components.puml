@@ -4,22 +4,30 @@ Title: Helm Deployment Overview
 
 skinparam componentStyle uml2
 skinparam linetype ortho
+skinparam rectangle {
+    BorderStyle dashed
+    FontSize 15
+    FontStyle none
+}
 
 actor Client
 
 node "Helm Chart" {
     component "NGINX proxy" as nginx #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
-    component "Transform Router" as trouter #lightgrey
-    component "Shared File Store" as sfs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "PostgreSQL" as psql #lightgrey
-    component "Alfresco PDF Renderer" as pdfr #lightgrey
-    component "LibreOffice" as libr #lightgrey
-    component "ImageMagick" as img #lightgrey
-    component "Tika" as tika #lightgrey
     component "Alfresco Share" as share #lightgrey
     database "Volume Claim" as vc
+    rectangle "Alfresco Transform Service" {
+        component "Transform Router" as tr #lightgrey
+        component "Shared File Store" as sfs #lightgrey
+        component "ActiveMQ" as amq #lightgrey
+        component "Alfresco PDF Renderer" as pdfr #lightgrey
+        component "LibreOffice" as libr #lightgrey
+        component "ImageMagick" as img #lightgrey
+        component "Tika" as tika #lightgrey
+    }
 }
 
 Client --> nginx
@@ -39,12 +47,14 @@ acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
-acs --> trouter
+acs --> tr
 acs --> sfs
-trouter --> pdfr
-trouter --> libr
-trouter --> img
-trouter --> tika
+acs <--> amq
+tr --> pdfr
+tr --> libr
+tr --> img
+tr --> tika
+tr <-up-> amq
 pdfr --> sfs
 libr --> sfs
 img --> sfs
