@@ -47,7 +47,6 @@ acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
-acs --> tr
 acs --> sfs
 acs <--> amq
 tr --> pdfr
