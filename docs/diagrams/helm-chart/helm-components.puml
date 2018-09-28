@@ -10,6 +10,8 @@ actor Client
 node "Helm Chart" {
     component "NGINX proxy" as nginx #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
+    component "Transform Router" as trouter #lightgrey
+    component "Shared File Store" as sfs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "PostgreSQL" as psql #lightgrey
     component "Alfresco PDF Renderer" as pdfr #lightgrey
@@ -29,6 +31,7 @@ nginx --> share
 acs --> vc
 ass --> vc
 psql --> vc
+sfs --> vc
 
 ass --> acs
 acs --> psql
@@ -36,6 +39,16 @@ acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
+acs --> trouter
+acs --> sfs
+trouter --> pdfr
+trouter --> libr
+trouter --> img
+trouter --> tika
+pdfr --> sfs
+libr --> sfs
+img --> sfs
+tika --> sfs
 share --> acs
 
 center footer Copyright 2018 Alfresco Software Inc
