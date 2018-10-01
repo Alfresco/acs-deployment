@@ -20,4 +20,4 @@ dependencies:
 - name: activemq
   version: 0.1.0
   condition: activemq.enabled
-  repository: http://kubernetes-charts.alfresco.com/incubator
+  repository: https://kubernetes-charts.alfresco.com/incubator
