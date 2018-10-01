@@ -409,9 +409,9 @@ helm install alfresco-incubator/alfresco-content-services \
 
 ### Using an external messaging broker
 
-By default, Alfresco Content Services deployment is using the activemq from alfresco-infrastructure-deployment. 
+By default, Alfresco Content Services deployment uses the ActiveMQ from alfresco-infrastructure-deployment. 
 
-If you want to use an external messaging broker ( such as Amazon MQ), you can disable the default option by passing the following argument to the helm install command:
+If you want to use an external messaging broker (such as Amazon MQ), you can disable the default option by passing the following argument to the `helm install` command:
 
 ```bash
 --set activemq.enabled=false
