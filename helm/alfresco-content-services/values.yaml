@@ -282,17 +282,18 @@ alfresco-infrastructure:
     enabled: false
 
 alfresco-search:
-  enabled: true
-  repository: &repositoryHostPort 
-    # The value for "host" is the name of this chart
-    host: alfresco-cs
-    port: *repositoryExternalPort
-  alfresco-insight-zeppelin:
-    repository: *repositoryHostPort
-  ingress:
-    # Alfresco Search services endpoint ('/solr') is disabled by default
-    # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
-    enabled: false
+  common:
+    enabled: true
+    repository: &repositoryHostPort
+      # The value for "host" is the name of this chart
+      host: alfresco-cs
+      port: *repositoryExternalPort
+    alfresco-insight-zeppelin:
+      repository: *repositoryHostPort
+    ingress:
+      # Alfresco Search services endpoint ('/solr') is disabled by default
+      # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
+      enabled: false
 
 # choose if you want network policy enabled
 networkpolicysetting:
