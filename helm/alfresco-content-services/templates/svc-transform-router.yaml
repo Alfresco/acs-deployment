@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco.shortname" . }}-router
+  labels:
+    app: {{ template "alfresco.shortname" . }}-router
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformrouter
+spec:
+  type: {{ .Values.transformrouter.service.type }}
+  ports:
+    - port: {{ .Values.transformrouter.service.externalPort }}
+      targetPort: {{ .Values.transformrouter.image.internalPort }}
+      protocol: TCP
+      name: {{ .Values.transformrouter.service.name }}
+  selector:
+    app: {{ template "alfresco.shortname" . }}-router
+    release: {{ .Release.Name }}

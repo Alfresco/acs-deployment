@@ -16,6 +16,10 @@ spec:
       - podSelector:
           matchLabels:
             app: {{ template "content-services.shortname" . }}-repository
+      # Allow transform-router to access the transformers
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco.shortname" . }}-router
       ports:
         - protocol: TCP
           port: 8090
@@ -29,8 +33,10 @@ spec:
       # Repo
       - podSelector:
           matchLabels:
-             app: {{ template "content-services.shortname" . }}-repository
-      
+            app: {{ template "content-services.shortname" . }}-repository
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco.shortname" . }}-filestore
       # nginx-ingress
       - podSelector:
           matchLabels:

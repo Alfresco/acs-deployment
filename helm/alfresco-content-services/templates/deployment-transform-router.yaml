@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco.shortname" . }}-router
+  labels:
+    app: {{ template "alfresco.shortname" . }}-router
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformrouter
+spec:
+  replicas: {{ .Values.transformrouter.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "alfresco.shortname" . }}-router
+        release: {{ .Release.Name }}
+        component: transformrouter
+    spec:
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.transformrouter.image.repository }}:{{ .Values.transformrouter.image.tag }}"
+          imagePullPolicy: {{ .Values.transformrouter.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-transform-router.yaml
+              name: {{ template "alfresco.shortname" . }}-router-configmap
+          ports:
+            - containerPort: {{ .Values.transformrouter.image.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.transformrouter.image.internalPort }}
+              initialDelaySeconds: {{ .Values.transformrouter.livenessProbe.initialDelaySeconds }}
+              periodSeconds: {{ .Values.transformrouter.livenessProbe.periodSeconds }}
+              failureThreshold: 1
+              timeoutSeconds: {{ .Values.transformrouter.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: {{ .Values.transformrouter.image.internalPort }}
+              initialDelaySeconds: {{ .Values.transformrouter.readinessProbe.initialDelaySeconds }}
+              periodSeconds: {{ .Values.transformrouter.readinessProbe.periodSeconds }}
+              timeoutSeconds: {{ .Values.transformrouter.readinessProbe.timeoutSeconds }}

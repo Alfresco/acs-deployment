@@ -51,3 +51,15 @@ spec:
             failureThreshold: 1
             timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
 {{ toYaml .Values.filestore.resources | indent 12 }}
+          {{- if .Values.persistence.filestore.enabled }}
+          volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.filestore.data.mountPath }}
+            subPath: {{ .Values.persistence.filestore.data.subPath }}
+          {{- end }}
+      {{- if .Values.persistence.filestore.enabled }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim }}
+      {{- end }}

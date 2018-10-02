@@ -53,13 +53,33 @@ apiexplorer:
   ingress:
     path: /api-explorer
 
+transformrouter:
+  replicaCount: 1
+  image:
+    repository: quay.io/alfresco/alfresco-transform-router
+    tag: "0.1.0-EA"
+    pullPolicy: Always
+    internalPort: 8095
+  service:
+    name: transform-router
+    type: ClusterIP
+    externalPort: 80
+  readinessProbe:
+    initialDelaySeconds: 140
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 140
+    periodSeconds: 120
+    timeoutSeconds: 60
+
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
   replicaCount: 1
   image:
-    repository: alfresco/alfresco-pdf-renderer
-    tag: "1.2"
+    repository: quay.io/alfresco/alfresco-pdf-renderer
+    tag: "2.0.0-EA"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -91,8 +111,8 @@ pdfrenderer:
 imagemagick:
   replicaCount: 1
   image:
-    repository: alfresco/alfresco-imagemagick
-    tag: "1.2"
+    repository: quay.io/alfresco/alfresco-imagemagick
+    tag: "2.0.0-EA"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -124,8 +144,8 @@ imagemagick:
 libreoffice:
   replicaCount: 1
   image:
-    repository: alfresco/alfresco-libreoffice
-    tag: "1.2"
+    repository: quay.io/alfresco/alfresco-libreoffice
+    tag: "2.0.0-EA"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -157,8 +177,8 @@ libreoffice:
 tika:
   replicaCount: 1
   image:
-    repository: alfresco/alfresco-tika
-    tag: "1.2"
+    repository: quay.io/alfresco/alfresco-tika
+    tag: "2.0.0-EA"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -191,7 +211,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.1"
+    tag: "0.2"
     pullPolicy: Always
     internalPort: 8099
   service:
@@ -257,6 +277,11 @@ persistence:
     data:
       mountPath: "/usr/local/tomcat/alf_data"
       subPath: "alfresco-content-services/repository-data"
+  filestore:
+    enabled: true
+    data:
+      mountPath: "/tmp/Alfresco"
+      subPath: "alfresco-content-services/filestore-data"
 
 # Settings that define that alfresco-content-services (this helm chart) is dependent of alfresco-infrastructure chart
 # alfresco-infrastructure is defined here: https://github.com/Alfresco/alfresco-infrastructure-deployment/tree/master/charts/incubator/alfresco-infrastructure
@@ -345,6 +370,9 @@ s3connector:
   #   secretKey:
   #   encryption:
   #   awsKmsKeyId:
+
+activemq:
+  enabled: true
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:

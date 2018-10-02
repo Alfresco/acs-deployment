@@ -1,0 +1,22 @@
+# Defines the properties required by the transform router container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco.shortname" . }}-router-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: transformrouter
+data:
+  {{- if .Values.activemq.enabled }}
+  ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
+  {{- else }}
+  ACTIVEMQ_URL: {{ .Values.messageBroker.url }}
+  ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
+  ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
+  {{- end }}
+  IMAGEMAGICK_URL: http://{{ template "content-services.shortname" . }}-imagemagick:80
+  PDF_RENDERER_URL: http://{{ template "content-services.shortname" . }}-pdfrenderer:80
+  LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
+  TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80

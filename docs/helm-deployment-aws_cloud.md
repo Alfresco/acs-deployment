@@ -407,6 +407,44 @@ helm install alfresco-incubator/alfresco-content-services \
 
 **Note:** When using an external database, make sure that the database is reachable by the K8S nodes and is up and ready.
 
+### Using an external messaging broker
+
+By default, Alfresco Content Services deployment uses the ActiveMQ from alfresco-infrastructure-deployment. 
+
+If you want to use an external messaging broker (such as Amazon MQ), you can disable the default option by passing the following argument to the `helm install` command:
+
+```bash
+--set activemq.enabled=false
+```
+
+Also, you will need to specify the URL for this broker, an user and a password, as shown below:
+
+```bash
+# Publish messaging broker details (example for Amazon MQ)
+export MESSAGE_BROKER_URL="nio+ssl://<BROKER_ID>.mq.<AWS-REGION>.amazonaws.com:61617"
+export MESSAGE_BROKER_USER="user_for_this_broker"
+export MESSAGE_BROKER_PASSWORD="password_for_this_broker"
+
+# Install ACS
+helm install alfresco-incubator/alfresco-content-services \
+--set externalProtocol="https" \
+--set externalHost="$EXTERNALHOST" \
+--set externalPort="443" \
+--set repository.adminPassword="$ALF_ADMIN_PWD" \
+--set alfresco-infrastructure.persistence.efs.enabled=true \
+--set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
+--set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
+--set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
+--set persistence.repository.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/repository-data" \
+--set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
+--set postgresql.postgresPassword="$ALF_DB_PWD" \
+--set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
+--set messageBroker.url="$MESSAGE_BROKER_URL" \
+--set messageBroker.user="$MESSAGE_BROKER_USER" \
+--set messageBroker.password="$MESSAGE_BROKER_PASSWORD" \
+--namespace=$DESIREDNAMESPACE
+```
+
 ### Using the Alfresco S3 Connector
 
 If you have the S3 Connector AMP applied to your docker image, then you can enable it in Kubernetes by setting the following values:

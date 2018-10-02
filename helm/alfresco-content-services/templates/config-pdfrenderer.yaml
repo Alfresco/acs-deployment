@@ -15,6 +15,7 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
+  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   livenessPercent: "{{ .Values.pdfrenderer.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.pdfrenderer.livenessProbe.livenessTransformPeriodSeconds }}"
   maxTransforms: "{{ .Values.pdfrenderer.livenessProbe.maxTransforms }}"
