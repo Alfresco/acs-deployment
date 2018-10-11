@@ -12,8 +12,8 @@
 repository:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-content-repository
-    tag: "6.1.0-EA2"
+    repository: quay.io/alfresco/alfresco-content-repository
+    tag: "feature-REPO-3867-yourkit-6.1.0-SNAPSHOT"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
