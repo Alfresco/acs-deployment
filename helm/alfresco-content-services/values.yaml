@@ -12,8 +12,10 @@
 repository:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-content-repository
-    tag: "6.1.0-EA2"
+#    repository: alfresco/alfresco-content-repository
+#    tag: "6.1.0-EA3"
+    repository: quay.io/alfresco/alfresco-content-repository
+    tag: "latest"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701

@@ -18,6 +18,6 @@ dependencies:
   condition: alfresco-content-services.alfresco-infrastructure.enabled
   repository: https://kubernetes-charts.alfresco.com/stable
 - name: activemq
-  version: 0.1.0
+  version: 0.1.1
   condition: activemq.enabled
   repository: https://kubernetes-charts.alfresco.com/incubator

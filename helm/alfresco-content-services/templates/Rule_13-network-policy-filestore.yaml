@@ -15,6 +15,10 @@ spec:
       - podSelector:
           matchLabels:
             component: transformers
+      # Repo
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.shortname" . }}-repository
       ports:
         - protocol: TCP
           port: 8099
