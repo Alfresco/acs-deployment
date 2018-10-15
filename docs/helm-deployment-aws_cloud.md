@@ -337,11 +337,19 @@ Since we need to use protected Docker images from Quay.io, you need access to a 
 docker login quay.io
 ```
 
-* Generate a base64 value for your dockercfg. This will allow Kubernetes to access Quay.io:
+* Generate a base64 value for your dockercfg using one of the following methods. This will allow Kubernetes to access Quay.io:
+
 ```bash
-cat ~/.docker/config.json | base64 (Linux)
-base64 -w 0 ~/.docker/config.json  (Windows)
+# Linux
+cat ~/.docker/config.json | base64
 ```
+
+```bash
+# Windows
+base64 -w 0 ~/.docker/config.json
+```
+
+You can also generate your pull secret and download it from your Quay.io account. Select **Account Settings** > **Generate Encrypted Password** > **Kubernetes Secret**.
 
 * Create a file `secrets.yaml` file and insert the following content:
 ```bash
