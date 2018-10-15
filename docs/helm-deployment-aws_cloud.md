@@ -328,9 +328,9 @@ export EFS_SERVER=$EFS_FS_ID.efs.$AWS_DEFAULT_REGION.amazonaws.com
 # Publish EFS Volume's DNS name (if not already done)
 export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
-### Create a Docker registry pull secret
+### Creating a Docker registry pull secret
 
-Since we need to use protected Docker images from Quay.io, you need to access to a secret with credentials to be able to pull those images.
+Since we need to use protected Docker images from Quay.io, you need access to a secret with credentials to be able to pull those images.
 
 * Log in to Quay.io with your credentials:
 ```bash
@@ -351,26 +351,25 @@ metadata:
   name: quay-registry-secret
 type: kubernetes.io/dockerconfigjson
 data:
-# Docker registries config json in base64 to do this just run:
+# Docker registries config json in base64 - to do this, run:
 # cat ~/.docker/config.json | base64
   .dockerconfigjson: add-your-base64-string
 ```
 
 * Add the base64 string generated in the previous step to ``.dockerconfigjson``.
 
-* Deploy the secret into the kubernetes cluster
+* Deploy the secret into the Kubernetes cluster:
 ```bash
 kubectl create -f secrets.yaml --namespace $DESIREDNAMESPACE
 ```
+**Note:** Make sure that the `$DESIREDNAMESPACE` variable has been set (see [Setting up Alfresco Content Services](#setting-up-alfresco-content-services)), so that the secret is created in the same namespace.
+
 * You should see the following output:
 ```bash
 secret "quay-registry-secret" created
 ```
 
-* When installing the ACS Helm chart, add a variable:
-```bash
---set registryPullSecrets=quay-registry-secret
-```
+**Note:** When installing the ACS Helm chart, we'll add the variable ```--set registryPullSecrets=quay-registry-secret```.
 
 ### Deploying Alfresco Content Services
 
@@ -406,6 +405,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
 --set postgresql.postgresPassword="$ALF_DB_PWD" \
 --set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -443,6 +443,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set database.user="myuser" \
 --set database.password="mypass" \
 --set database.url="jdbc:postgresql://mydb.eu-west-1.rds.amazonaws.com:5432/mydb" \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -485,6 +486,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set messageBroker.url="$MESSAGE_BROKER_URL" \
 --set messageBroker.user="$MESSAGE_BROKER_USER" \
 --set messageBroker.password="$MESSAGE_BROKER_PASSWORD" \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -508,6 +510,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set s3connector.config.bucketName=myBucket \
 --set s3connector.secrets.encryption=kms \
 --set s3connector.secrets.awsKmsKeyId=Your KMS Key ID \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
