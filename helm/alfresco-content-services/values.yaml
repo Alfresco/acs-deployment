@@ -267,6 +267,35 @@ share:
     periodSeconds: 20
     timeoutSeconds: 10
 
+yourkit:
+  replicaCount: 1
+  image:
+    repository: nginx
+    tag: 1.11.0
+    pullPolicy: IfNotPresent
+    internalPort: 8080
+  service:
+    name: yourkit
+    type: ClusterIP
+    externalPort: 80
+  ingress:
+    path: /yourkit
+  resources:
+    requests:
+      memory: "2000Mi"
+    limits:
+      memory: "2000Mi"
+  environment:
+    CATALINA_OPTS: " -Xms1000M -Xmx1000M"
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 130
+    periodSeconds: 20
+    timeoutSeconds: 10
+
 # Defines the mounting points for the persistence required by the apps in the
 # cluster the alf_data folder from alfresco-content-repository app is mapped to
 # alfresco-content-services/repository-data
@@ -277,6 +306,11 @@ persistence:
     data:
       mountPath: "/usr/local/tomcat/alf_data"
       subPath: "alfresco-content-services/repository-data"
+  yourkit:
+    enabled: true
+    data:
+      mountPath: "/tmp/Alfresco-YourKit"
+      subPath: "alfresco-content-services/filestore-yourkit"
   filestore:
     enabled: true
     data:
