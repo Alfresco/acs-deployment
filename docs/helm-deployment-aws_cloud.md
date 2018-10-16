@@ -349,8 +349,6 @@ cat ~/.docker/config.json | base64
 base64 -w 0 ~/.docker/config.json
 ```
 
-You can also generate your pull secret and download it from your Quay.io account. Select **Account Settings** > **Generate Encrypted Password** > **Kubernetes Secret**.
-
 * Create a file `secrets.yaml` file and insert the following content:
 ```bash
 apiVersion: v1
