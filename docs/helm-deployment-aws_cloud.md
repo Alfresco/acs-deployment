@@ -20,7 +20,7 @@ To run the Alfresco Content Services (ACS) deployment on AWS in a Kops provided 
 
 ### Prepare and configure Kops
 
-Kops requires certain configurations on your AWS account. Please follow the Kops guide to 
+Kops requires certain configurations on your AWS account. Please follow the Kops guide to
 [set up your environment](https://github.com/kubernetes/kops/blob/master/docs/aws.md#setup-your-environment)
 through to "Creating your first cluster". The cluster for ACS will be created in the next step.
 
@@ -328,6 +328,54 @@ export EFS_SERVER=$EFS_FS_ID.efs.$AWS_DEFAULT_REGION.amazonaws.com
 # Publish EFS Volume's DNS name (if not already done)
 export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
+### Creating a Docker registry pull secret
+
+Since we need to use protected Docker images from Quay.io, you need access to a secret with credentials to be able to pull those images.
+
+* Log in to Quay.io with your credentials:
+```bash
+docker login quay.io
+```
+
+* Generate a base64 value for your dockercfg using one of the following methods. This will allow Kubernetes to access Quay.io:
+
+```bash
+# Linux
+cat ~/.docker/config.json | base64
+```
+
+```bash
+# Windows
+base64 -w 0 ~/.docker/config.json
+```
+
+* Create a file `secrets.yaml` file and insert the following content:
+```bash
+apiVersion: v1
+kind: Secret
+metadata:
+  name: quay-registry-secret
+type: kubernetes.io/dockerconfigjson
+data:
+# Docker registries config json in base64 - to do this, run:
+# cat ~/.docker/config.json | base64
+  .dockerconfigjson: add-your-base64-string
+```
+
+* Add the base64 string generated in the previous step to ``.dockerconfigjson``.
+
+* Deploy the secret into the Kubernetes cluster:
+```bash
+kubectl create -f secrets.yaml --namespace $DESIREDNAMESPACE
+```
+**Note:** Make sure that the `$DESIREDNAMESPACE` variable has been set (see [Setting up Alfresco Content Services](#setting-up-alfresco-content-services)), so that the secret is created in the same namespace.
+
+* You should see the following output:
+```bash
+secret "quay-registry-secret" created
+```
+
+**Note:** When installing the ACS Helm chart, we'll add the variable ```--set registryPullSecrets=quay-registry-secret```.
 
 ### Deploying Alfresco Content Services
 
@@ -363,6 +411,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
 --set postgresql.postgresPassword="$ALF_DB_PWD" \
 --set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -400,6 +449,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set database.user="myuser" \
 --set database.password="mypass" \
 --set database.url="jdbc:postgresql://mydb.eu-west-1.rds.amazonaws.com:5432/mydb" \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -409,7 +459,7 @@ helm install alfresco-incubator/alfresco-content-services \
 
 ### Using an external messaging broker
 
-By default, Alfresco Content Services deployment uses the ActiveMQ from alfresco-infrastructure-deployment. 
+By default, Alfresco Content Services deployment uses the ActiveMQ from alfresco-infrastructure-deployment.
 
 If you want to use an external messaging broker (such as Amazon MQ), you can disable the default option by passing the following argument to the `helm install` command:
 
@@ -442,6 +492,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set messageBroker.url="$MESSAGE_BROKER_URL" \
 --set messageBroker.user="$MESSAGE_BROKER_USER" \
 --set messageBroker.password="$MESSAGE_BROKER_PASSWORD" \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -465,6 +516,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set s3connector.config.bucketName=myBucket \
 --set s3connector.secrets.encryption=kms \
 --set s3connector.secrets.awsKmsKeyId=Your KMS Key ID \
+--set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -508,7 +560,7 @@ See AWS documentation: https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VP
 Below are some recommended modifications to Security Groups (SG) that manage Inbound and Outbound traffic.
 
 
-#### Lockdown Bastion 
+#### Lockdown Bastion
 
 By default, SSH access to the bastion host is open from everywhere for Inbound and Outbound traffic.  You may want to lock it down to a specific IP address(es).
 
@@ -558,7 +610,7 @@ aws ec2 authorize-security-group-egress --group-id $BASTION_HOST_SG --ip-permiss
 </details>
 
 
-#### Restrict k8s Master(s) Outbound traffic 
+#### Restrict k8s Master(s) Outbound traffic
 
 By default, Outbound traffic is allowed from Master Security Group to everywhere.  This can be restricted by allowing explicit Outbound to be same as Inbound.
 
@@ -595,7 +647,7 @@ aws ec2 revoke-security-group-egress --group-id $MASTERS_HOST_SG --ip-permission
 </details>
 
 
-#### Restrict k8s Node(s) Outbound traffic 
+#### Restrict k8s Node(s) Outbound traffic
 
 By default, Outbound traffic is allowed from Node Security Group to everywhere.  This can be restricted by allowing explicit Outbound to be same as Inbound.
 
@@ -627,7 +679,7 @@ aws ec2 revoke-security-group-egress --group-id $NODES_HOST_SG --ip-permissions 
 </details>
 
 
-#### Restrict API ELB Outbound traffic 
+#### Restrict API ELB Outbound traffic
 
 By default, Outbound traffic is allowed from API ELB Security Group to everywhere.  This can be restricted by allowing explicit Outbound to the ELB Instances.
 
