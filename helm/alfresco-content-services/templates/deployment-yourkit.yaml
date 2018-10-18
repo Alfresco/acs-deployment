@@ -16,7 +16,7 @@ spec:
       labels:
         app: {{ template "alfresco.shortname" . }}-yourkit
         release: {{ .Release.Name }}
-        component: transformers
+        component: yourkit
     spec:
       {{- if .Values.registryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

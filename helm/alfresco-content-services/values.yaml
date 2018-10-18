@@ -256,8 +256,8 @@ share:
       memory: "2000Mi"
     limits:
       memory: "2000Mi"
-  # environment:
-  #   CATALINA_OPTS: " -Xms1000M -Xmx1000M"
+  environment:
+    CATALINA_OPTS: " -Xms1000M -Xmx1000M"
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
@@ -269,9 +269,9 @@ share:
 
 yourkit:
   replicaCount: 1
-  index: >-
-    <h1>Hello</h1>
-    <p>This is a test</p>
+  # index: >-
+  #   <h1>Hello</h1>
+  #   <p>This is a test</p>
   image:
     repository: nginx
     tag: 1.11.0
@@ -288,8 +288,8 @@ yourkit:
       memory: "2000Mi"
     limits:
       memory: "2000Mi"
-  environment:
-    CATALINA_OPTS: " -Xms1000M -Xmx1000M"
+  # environment:
+  #   CATALINA_OPTS: " -Xms1000M -Xmx1000M"
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
