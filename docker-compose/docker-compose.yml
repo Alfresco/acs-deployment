@@ -113,7 +113,7 @@ services:
                 -Dalfresco.protocol=http
                 "
         ports:
-            - 8084:8080
+            - 8080:8080
 
     postgres:
         image: postgres:10.1
@@ -165,7 +165,7 @@ services:
         volumes:
             - ./nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
-            - 8080:80
+            - 8084:80
 
 volumes:
     shared-file-store-volume:
