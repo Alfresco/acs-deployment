@@ -1,0 +1,19 @@
+# Defines the properties required by the yourkit container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco.shortname" . }}-yourkit-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: yourkit
+data:
+  # The JAVA_OPTS defined in the values.yaml file for "yourkit" are set here using proper quotes
+  {{- if .Values.yourkit.environment }}
+  {{- range $key, $val := .Values.yourkit.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
+  livenessPercent: "{{ .Values.yourkit.livenessProbe.livenessPercent }}"
+  livenessSavePeriodSeconds: "{{ .Values.yourkit.livenessProbe.livenessSavePeriodSeconds }}"

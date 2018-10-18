@@ -1,0 +1,64 @@
+# Defines the deployment for the yourkit
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco.shortname" . }}-yourkit
+  labels:
+    app: {{ template "alfresco.shortname" . }}-yourkit
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: yourkit
+spec:
+  replicas: {{ .Values.yourkit.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "alfresco.shortname" . }}-yourkit
+        release: {{ .Release.Name }}
+        component: transformers
+    spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.yourkit.image.repository }}:{{ .Values.yourkit.image.tag }}"
+          imagePullPolicy: {{ .Values.yourkit.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-yourkit.yaml
+              name: {{ template "alfresco.shortname" . }}-yourkit-configmap
+          ports:
+            - containerPort: {{ .Values.yourkit.image.internalPort }}
+          resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.yourkit.image.internalPort }}
+            initialDelaySeconds: {{ .Values.yourkit.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.yourkit.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.yourkit.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.yourkit.image.internalPort }}
+            initialDelaySeconds: {{ .Values.yourkit.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.yourkit.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.yourkit.livenessProbe.timeoutSeconds }}
+{{ toYaml .Values.yourkit.resources | indent 12 }}
+          {{- if .Values.persistence.yourkit.enabled }}
+          volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.yourkit.data.mountPath }}
+            subPath: {{ .Values.persistence.yourkit.data.subPath }}
+          {{- end }}
+      {{- if .Values.persistence.yourkit.enabled }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim }}
+      {{- end }}
