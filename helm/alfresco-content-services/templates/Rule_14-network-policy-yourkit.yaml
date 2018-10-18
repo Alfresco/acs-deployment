@@ -1,0 +1,35 @@
+{{- if .Values.networkpolicysetting.enabled }}
+# Allow yourkit communication with ingress
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: yourkit
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ template "alfresco.shortname" . }}-yourkit
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    - from:
+      # Allow traffic from nginx-ingress
+      - podSelector:
+          matchLabels:
+            app: nginx-ingress
+
+      ports:
+        - protocol: TCP
+          port: 80
+        - protocol: TCP
+          port: 80
+
+  egress:
+    # Allow repo to communicate back with other components
+    - to:
+      # nginx-ingress
+      - podSelector:
+          matchLabels:
+             app: nginx-ingress
+
+{{- end }}

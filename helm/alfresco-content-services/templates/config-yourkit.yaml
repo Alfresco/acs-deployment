@@ -15,5 +15,3 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  livenessPercent: "{{ .Values.yourkit.livenessProbe.livenessPercent }}"
-  livenessSavePeriodSeconds: "{{ .Values.yourkit.livenessProbe.livenessSavePeriodSeconds }}"

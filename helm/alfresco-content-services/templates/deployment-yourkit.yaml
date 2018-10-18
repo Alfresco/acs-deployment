@@ -33,17 +33,19 @@ spec:
               name: {{ template "alfresco.shortname" . }}-yourkit-configmap
           ports:
             - containerPort: {{ .Values.yourkit.image.internalPort }}
+              name: http
+              protocol: TCP
           resources:
           readinessProbe:
             httpGet:
-              path: /ready
+              path: /
               port: {{ .Values.yourkit.image.internalPort }}
             initialDelaySeconds: {{ .Values.yourkit.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.yourkit.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.yourkit.readinessProbe.timeoutSeconds }}
           livenessProbe:
             httpGet:
-              path: /live
+              path: /
               port: {{ .Values.yourkit.image.internalPort }}
             initialDelaySeconds: {{ .Values.yourkit.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.yourkit.livenessProbe.periodSeconds }}
