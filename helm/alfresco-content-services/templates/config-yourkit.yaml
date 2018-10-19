@@ -9,9 +9,10 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: yourkit
 data:
-  # The JAVA_OPTS defined in the values.yaml file for "yourkit" are set here using proper quotes
+  # The ENVs defined in the values.yaml file for "yourkit" are set here using proper quotes
   {{- if .Values.yourkit.environment }}
   {{- range $key, $val := .Values.yourkit.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
+  default.conf: {{ .Values.yourkit.nginx_conf | quote }}

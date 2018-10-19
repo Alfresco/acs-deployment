@@ -269,9 +269,15 @@ share:
 
 yourkit:
   replicaCount: 1
-  # index: >-
-  #   <h1>Hello</h1>
-  #   <p>This is a test</p>
+  nginx_conf: >-
+    server {
+        listen       80;
+        server_name  localhost;
+        root   /usr/share/nginx/html;
+        location /yourkit/ {
+            autoindex on;
+        }
+    }
   image:
     repository: nginx
     tag: 1.11.0
@@ -288,8 +294,8 @@ yourkit:
       memory: "2000Mi"
     limits:
       memory: "2000Mi"
-  # environment:
-  #   CATALINA_OPTS: " -Xms1000M -Xmx1000M"
+  environment:
+  #   SOME_KEY: "ITS_VALUE"
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
@@ -312,7 +318,7 @@ persistence:
   yourkit:
     enabled: true
     data:
-      mountPath: "/tmp/Alfresco-YourKit"
+      mountPath: "/usr/share/nginx/html/yourkit"
       subPath: "alfresco-content-services/filestore-yourkit"
   filestore:
     enabled: true

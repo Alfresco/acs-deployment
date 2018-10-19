@@ -57,10 +57,15 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.yourkit.data.mountPath }}
             subPath: {{ .Values.persistence.yourkit.data.subPath }}
+          - mountPath: /etc/nginx/conf.d/
+            name: nginxconf
           {{- end }}
       {{- if .Values.persistence.yourkit.enabled }}
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
+      - name: nginxconf
+        configMap:
+          name: {{ template "alfresco.shortname" . }}-yourkit-configmap
       {{- end }}
