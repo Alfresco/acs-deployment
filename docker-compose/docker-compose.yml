@@ -9,6 +9,9 @@
 # Get the latest docker-compose.yml file with a 30-day trial license by accessing the Alfresco Content Services trial download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 
+# Add the following environment variable to CATALINA_OPTS on alfresco service to activate YourKit profiling agent on tomcat
+#-agentpath:/usr/local/YourKit-JavaProfiler-2018.04/bin/linux-x86-64/libyjpagent.so=delay=200000,listen=all,sessionname=$$HOSTNAME,dir=/tmp/Alfresco/yourkit,onexit=snapshot,periodicperf=600,periodicmem=600
+
 # Using version 2 as 3 does not support resource constraint options (cpu_*, mem_* limits) for non swarm mode in Compose
 version: "2"
 
@@ -41,6 +44,8 @@ services:
                 "
         ports:
             - 8082:8080 #Browser port
+        volumes:
+            - yourkit-snapshots-volume:/tmp/Alfresco/yourkit
 
     transform-router:
         image: quay.io/alfresco/alfresco-transform-router:0.1.1-EA
@@ -153,6 +158,10 @@ services:
 
 volumes:
     shared-file-store-volume:
+        driver_opts:
+            type: tmpfs
+            device: tmpfs
+    yourkit-snapshots-volume:
         driver_opts:
             type: tmpfs
             device: tmpfs
