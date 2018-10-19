@@ -226,8 +226,8 @@ filestore:
     limits:
       memory: "1000Mi"
   environment:
-    scheduler.content.age.millis: 86400000
-    scheduler.cleanup.interval: 86400000
+    scheduler.content.age.millis: "86400000"
+    scheduler.cleanup.interval: "86400000"
     JAVA_OPTS: " -Xms256M -Xmx256M"
   readinessProbe:
     initialDelaySeconds: 20
