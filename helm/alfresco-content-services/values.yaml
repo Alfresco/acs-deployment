@@ -213,7 +213,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.3"
+    tag: "0.4"
     pullPolicy: Always
     internalPort: 8099
   service:
@@ -226,6 +226,8 @@ filestore:
     limits:
       memory: "1000Mi"
   environment:
+    scheduler.content.age.millis: 86400000
+    scheduler.cleanup.interval: 86400000
     JAVA_OPTS: " -Xms256M -Xmx256M"
   readinessProbe:
     initialDelaySeconds: 20

@@ -92,8 +92,10 @@ services:
             - 8093:8090
 
     shared-file-store:
-        image: alfresco/alfresco-shared-file-store:0.3
+        image: alfresco/alfresco-shared-file-store:0.4
         environment:
+            scheduler.content.age.millis: 86400000
+            scheduler.cleanup.interval: 86400000
             JAVA_OPTS: " -Xms256m -Xmx256m"
         ports:
             - 8099:8099
