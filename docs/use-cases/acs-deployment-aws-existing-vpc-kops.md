@@ -217,4 +217,24 @@ ip-172-30-6-50.us-east-1.compute.internal	master	True
 Your cluster sharedvpc.mydomain.com is ready
 ```
 
-Rest of the deployment can be followed accordingly for [helm ACS deployment](../helm-deployment-aws_kops.md#deploying-the-kubernetes-dashboard)
+## Configure Nginx-Ingress controller
+
+[Deploying the Ingress for Alfresco Content Services](../helm-deployment-aws_kops.md#deploying-the-ingress-for-alfresco-content-services)
+
+
+## Allow ALL Traffic of Ingress ELB Security Group in Kubernetes Nodes Security Group
+
+The k8s Nodes security group should be added with a TCP rule to allow ALL traffic from k8s ELB (created by nginx-ingress controller)
+
+From the AWS Console -> Services -> VPC Dashboard -> Security -> Security Groups -> search for your VPC SGs
+
+There should be a security group starting with `k8s-elb-<ELB-Address>` which is the ingress controller security group.  Note down the security group id of this.
+
+There should be another security group starting with `nodes.*` which is the kubernetes nodes security group.  Edit the `Inbound Rules` and add a new rule as:
+
+Type: `ALL Traffic`
+Protocol: `ALL`
+Port Range: `ALL`
+Source: `sg-<k8s-elb-sg-id>`
+
+Rest of the deployment can be followed accordingly for [ACS Helm deployment kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services)

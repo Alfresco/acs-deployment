@@ -17,7 +17,7 @@ export CLUSTER_NAME="myacs.mydomain.com"
 
 ## Create Kubernetes Cluster with Kops
 
-[Kubernetes cluster on aws with kops](../helm-deployment-aws_cloud.md#setting-up-kubernetes-cluster-on-aws-with-kops)
+[Kubernetes cluster on aws with kops](../helm-deployment-aws_kops.md#setting-up-kubernetes-cluster-on-aws-with-kops)
 
 Once the kubernetes cluster is up and running with nginx-ingress controller an S3 bucket is required for ACS Deployment with S3 connector module.
 
@@ -117,7 +117,7 @@ In order for kubernetes pods to use the s3 buckets for writing contents, the nod
 
 ## Deploy ACS Helm Chart with S3 connector module
 
-Refer [helm deployment aws with kops](../helm-deployment-aws_cloud.md#deploying-alfresco-content-services) for full `helm install` reference.  Below example is to enable s3 connector and pass s3 bucket configuration.
+Refer [helm deployment aws with kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  Below example is to enable s3 connector and pass s3 bucket configuration.
 
 ```bash
 export ACS_S3_BUCKET="unique-acs-s3-bucket"

@@ -17,7 +17,7 @@ export CLUSTER_NAME="myacs.mydomain.com"
 
 ## Create Kubernetes Cluster with Kops
 
-[Kubernetes cluster on aws with kops](../helm-deployment-aws_cloud.md#setting-up-kubernetes-cluster-on-aws-with-kops)
+[Kubernetes cluster on aws with kops](../helm-deployment-aws_kops.md#setting-up-kubernetes-cluster-on-aws-with-kops)
 
 Once the kubernetes cluster is up and running with nginx-ingress controller, an AWS Aurora RDS Database cluster is required for ACS Deployment.
 
@@ -31,14 +31,21 @@ The cluster creation may take some minutes before the status of cluster and it's
 
 ## Allow Kubernetes Nodes Security Group to communicate with Database cluster
 
-....work in progress...
-From the AWS Console -> Services -> RDS -> Clusters -> 
-....work in progress... 
+From the AWS Console -> Services -> RDS -> Clusters -> <Select Cluster> -> DB Cluster Members
+Select the db instance with role `writer`.
 
+In the `Security group rules` edit and add a new rule for as:
+
+Type: `MYSQL/Aurora`
+Protocol: `TCP`
+Port Range: `3306`
+Source: `sg-<k8s-nodes-sg-id>`
+
+This will allow the pods running on Kubernetes nodes to access the external database service.
 
 ## Deploy ACS Helm Chart with External Database service
 
-Refer [helm deployment aws with kops](../helm-deployment-aws_cloud.md#deploying-alfresco-content-services) for full `helm install` reference.  Below is an example is to use the external database service.
+Refer [helm deployment aws with kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  Below is an example is to use the external database service.
 
 ```bash
 export RDS_ENDPOINT="my-acs-database.cluster-chc1vvifzyjv.us-east-1.rds.amazonaws.com"
@@ -63,4 +70,4 @@ helm install alfresco-incubator/alfresco-content-services \
 --set database.password="$DATABASE_PASSWORD" \
 --namespace=$DESIREDNAMESPACE
 ```
-*Note*: There are specific alfresco repository docker images that support particular database driver. In the above snippet a specific `repository.image.tag="0.1.3-repo-6.0.0.3"` is set for `database.driver="org.mariadb.jdbc.Driver"`
+**Note**: There are specific alfresco repository docker images that support particular database driver. In the above snippet a specific `repository.image.tag="0.1.3-repo-6.0.0.3"` is set for `database.driver="org.mariadb.jdbc.Driver"`

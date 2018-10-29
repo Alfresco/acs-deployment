@@ -431,6 +431,8 @@ You can set the Alfresco Content Services stack configuration attributes above a
 ```bash
 # Example: For a hardened DB password:
  --set postgresql.postgresPassword="bLah!"
+# To setup repository cluster with 5 pods
+ --set repository.replicaCount=5
 ```
 
 For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
