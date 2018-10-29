@@ -36,10 +36,12 @@ Select the db instance with role `writer`.
 
 In the `Security group rules` edit and add a new rule for as:
 
+```
 Type: `MYSQL/Aurora`
 Protocol: `TCP`
 Port Range: `3306`
 Source: `sg-<k8s-nodes-sg-id>`
+```
 
 This will allow the pods running on Kubernetes nodes to access the external database service.
 

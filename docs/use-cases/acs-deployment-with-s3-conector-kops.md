@@ -24,8 +24,10 @@ Once the kubernetes cluster is up and running with nginx-ingress controller an S
 ## Create an S3 bucket for ACS contents storage
 
 From the AWS Console -> Services -> S3 -> Create bucket -> 
+```
 `Bucket Name`: `unique-acs-s3-bucket`
 `Region`: `us-east-1`
+```
 
 ### Enable Versioning
 
@@ -40,8 +42,10 @@ This will encrypt data written by the pods in the s3 bucket using AWS-KMS (for e
 First, create an AWS-KMS Encryption key (if it is not available)
 
 From the AWS Console -> Services -> IAM -> Encryption keys -> Create key -> Region: `US East (N.Virginia)`
+```
 `Alias (required)`: `alias/mykms-acs-s3`
 `Description`: `Some description`
+```
 click `Next Step` for `Add Tags` to tag the encryption key.
 
 `Name`: `mykms-acs-s3`

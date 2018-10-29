@@ -31,40 +31,52 @@ For example, if the Kubernetes cluster is intended to run in US-East-1 with 3 AZ
 From the AWS Console -> Services -> VPC Dashboard -> Subnets -> Create Subnet ->
 
 Utility subnet in AZ-1:
+```
 `Name tag` : `utility-us-east-1a.sharedvpc.mydomain.com`
 `VPC`: `vpc-12345678`
 `Availability Zone`: `us-east-1a`
 `IPv4 CIDR block`: `172.30.3.0/24`
+```
 
 Utility subnet in AZ-2:
+```
 `Name tag` : `utility-us-east-1b.sharedvpc.mydomain.com`
 `VPC`: `vpc-12345678`
 `Availability Zone`: `us-east-1b`
 `IPv4 CIDR block`: `172.30.4.0/24`
+```
 
 Utility subnet in AZ-3:
+```
 `Name tag` : `utility-us-east-1c.sharedvpc.mydomain.com`
 `VPC`: `vpc-12345678`
 `Availability Zone`: `us-east-1c`
 `IPv4 CIDR block`: `172.30.5.0/24`
+```
 
 Private subnet in AZ-1:
+```
 `Name tag` : `us-east-1a.sharedvpc.mydomain.com`
 `VPC`: `vpc-12345678`
 `Availability Zone`: `us-east-1a`
 `IPv4 CIDR block`: `172.30.6.0/24`
+```
 
 Private subnet in AZ-2:
+```
 `Name tag` : `us-east-1b.sharedvpc.mydomain.com`
 `VPC`: `vpc-12345678`
 `Availability Zone`: `us-east-1b`
 `IPv4 CIDR block`: `172.30.7.0/24`
+```
 
 Private subnet in AZ-3:
+```
 `Name tag` : `us-east-1c.sharedvpc.mydomain.com`
 `VPC`: `vpc-12345678`
 `Availability Zone`: `us-east-1c`
 `IPv4 CIDR block`: `172.30.8.0/24`
+```
 
 ## Tagging the subnets
 
@@ -73,16 +85,20 @@ It is important to tag the above subnets to enable kops setup a cluster in a sha
 Select each of the above subnet and add below tags:
 
 For Utility Subnets:
+```
 `KubernetesCluster`: `sharedvpc.mydomain.com`
 `SubnetType`: `Utility`
 `kubernetes.io/cluster/sharedvpc.mydomain.com`: `shared`
 `kubernetes.io/role/elb`: `1`
+```
 
 For Private Subnets:
+```
 `KubernetesCluster`: `sharedvpc.mydomain.com`
 `SubnetType`: `Private`
 `kubernetes.io/cluster/sharedvpc.mydomain.com`: `shared`
 `kubernetes.io/role/internal-elb`: `1`
+```
 
 ## Export the subnets as environment variables
 
@@ -130,19 +146,24 @@ This is an expected error and it just means the kops cluster was created but not
 
 To fix this below steps are required.
 
+
 ## Create a NAT Gateway in the existing VPC
 
 Kops require a NAT gateway to route traffic to enable Kubernetes API ELB to talk with Kubernetes Master node(s).
 
 From the AWS Console -> Services -> VPC Dashboard -> NAT Gateways -> Create NAT Gateway ->
+```
 `Subnet`: `Select on of the Utility subnet (us-east-1a subnet Id)`
 `Elastic IP Allocation ID`: `Create New EIP`
+```
 and click `Create a NAT Gateway` and wait for NAT Gateway to become available.
 
 Tag the above NAT Gateway as:
+```
 `KubernetesCluster`: `sharedvpc.mydomain.com`
 `Name`: `us-east-1a.sharedvpc.mydomain.com`
 `kubernetes.io/cluster/sharedvpc.mydomain.com`: `owned`
+```
 
 ## Create Route Tables in the existing VPC
 
@@ -151,48 +172,64 @@ Kops require creation of new routes for Utility and Private subnets to route tra
 From the AWS Console -> Services -> VPC Dashboard -> Route Tables -> Create Route Table
 
 Create a Utility subnet route:
+```
 `Name tag`: `sharedvpc.mydomain.com`
 `VPC`: `Select the VPC`
+```
 and click `Yes, Create` to create the route.
 
 Create a Private subnet route:
+```
 `Name tag`: `private-us-east-1a-sharedvpc.mydomain.com`
 `VPC`: `Select the VPC`
 and click `Yes, Create` to create the route.
+```
 
 ### Tag Route Tables
 
 For Utility subnet route
+```
 `KubernetesCluster`: `sharedvpc.mydomain.com`
 `kubernetes.io/cluster/sharedvpc.mydomain.com`: `owned`
 `kubernetes.io/kops/role`: `public`
+```
 
 For Private subnet route
+```
 `KubernetesCluster`: `sharedvpc.mydomain.com`
 `kubernetes.io/cluster/sharedvpc.mydomain.com`: `owned`
 `kubernetes.io/kops/role`: `private-us-east-1a`
+```
 
 ### Route Tables subnet association
 
 For Utility subnet route add all the `Utility` subnets in `Subnet Associations` of the route table
+```
 `subnet-xxxxx | utility-us-east-1a.sharedvpc.mydomain.com`
 `subnet-xxxxx | utility-us-east-1b.sharedvpc.mydomain.com`
 `subnet-xxxxx | utility-us-east-1c.sharedvpc.mydomain.com`
+```
 
 For Private subnet route add all the `Private` subnets in `Subnet Associations` of the route table
+```
 `subnet-xxxxx | us-east-1a.sharedvpc.mydomain.com`
 `subnet-xxxxx | us-east-1b.sharedvpc.mydomain.com`
 `subnet-xxxxx | us-east-1c.sharedvpc.mydomain.com`
+```
 
 ### Route Tables Add Routes
 
 For Utility subnet route table edit and add a new route with internet gateway id.
+```
 `Destination`: `0.0.0.0/0`
 `Target`: `igw-xxxxxx` (This Internet Gateway is created by kops while creating the cluster) 
+```
 
 For Private subnet route table edit and add a new route with nat gateway id.
+```
 `Destination`: `0.0.0.0/0`
 `Target`: `nat-xxxxxx` (This NAT Gateway was created manually above to fix kops validate cluster error) 
+```
 
 ## Re-run the kops validate cluster
 
@@ -232,9 +269,11 @@ There should be a security group starting with `k8s-elb-<ELB-Address>` which is 
 
 There should be another security group starting with `nodes.*` which is the kubernetes nodes security group.  Edit the `Inbound Rules` and add a new rule as:
 
+```
 Type: `ALL Traffic`
 Protocol: `ALL`
 Port Range: `ALL`
 Source: `sg-<k8s-elb-sg-id>`
+```
 
 Rest of the deployment can be followed accordingly for [ACS Helm deployment kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services)
