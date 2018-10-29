@@ -25,8 +25,8 @@ Once the kubernetes cluster is up and running with nginx-ingress controller an S
 
 From the AWS Console -> Services -> S3 -> Create bucket -> 
 ```
-`Bucket Name`: `unique-acs-s3-bucket`
-`Region`: `us-east-1`
+Bucket Name: unique-acs-s3-bucket
+Region: us-east-1
 ```
 
 ### Enable Versioning
@@ -43,8 +43,8 @@ First, create an AWS-KMS Encryption key (if it is not available)
 
 From the AWS Console -> Services -> IAM -> Encryption keys -> Create key -> Region: `US East (N.Virginia)`
 ```
-`Alias (required)`: `alias/mykms-acs-s3`
-`Description`: `Some description`
+Alias (required): alias/mykms-acs-s3
+Description: Some description
 ```
 click `Next Step` for `Add Tags` to tag the encryption key.
 
