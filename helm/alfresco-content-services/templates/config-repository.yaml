@@ -39,6 +39,16 @@ data:
       {{- range $key, $val := .Values.s3connector.config }}
       -Ds3.{{ $key }}={{ $val }}
       {{- end }}
+      {{- end }}
+      -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
+      {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
+      -Dmessaging.broker.url=failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+      -Dmessaging.broker.username={{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
+      -Dmessaging.broker.password={{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
+      {{- else }}
+      -Dmessaging.broker.url={{ .Values.messageBroker.url }}
+      -Dmessaging.broker.username={{ .Values.messageBroker.user }}
+      -Dmessaging.broker.password={{ .Values.messageBroker.password }}
       {{- end }}"
   CATALINA_OPTS: " $ALFRESCO_OPTS  
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}

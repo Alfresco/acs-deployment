@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.1.0-EA2
+        image: alfresco/alfresco-content-repository:6.1.0-EA3
         mem_limit: 1500m
         environment:
             JAVA_OPTS: "
@@ -35,7 +35,10 @@ services:
                 -Dshare.host=localhost
                 -Dalfresco.host=localhost
                 -Dalfresco.port=8082
+                -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
                 -Ddeployment.method=DOCKER_COMPOSE
+                -Dlocal.transform.service.enabled=true
+                -Dtransform.service.enabled=true
                 -Dcsrf.filter.enabled=false
                 -Xms1g -Xmx1g
                 "
@@ -90,8 +93,10 @@ services:
             - 8093:8090
 
     shared-file-store:
-        image: alfresco/alfresco-shared-file-store:0.3
+        image: alfresco/alfresco-shared-file-store:0.4
         environment:
+            scheduler.content.age.millis: 86400000
+            scheduler.cleanup.interval: 86400000
             JAVA_OPTS: " -Xms256m -Xmx256m"
         ports:
             - 8099:8099
