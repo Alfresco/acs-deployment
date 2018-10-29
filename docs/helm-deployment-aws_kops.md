@@ -1,4 +1,4 @@
-# Alfresco Content Services Deployment with Helm on AWS
+# Alfresco Content Services Deployment with Helm on AWS using Kops
 
 **Hint:** Consider [deploying ACS into EKS](./helm-deployment-aws_eks.md) instead of setting
 up a cluster with Kops.

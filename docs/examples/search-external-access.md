@@ -3,13 +3,13 @@ This example demonstrates how to enable Alfresco Search Services (`/solr`) for e
 
 ## Prerequisites
 
-You will need to make sure the [ACS Ingress controller](../helm-deployment-aws_cloud.md#deploying-the-ingress-for-alfresco-content-services) is installed.
+You will need to make sure the [ACS Ingress controller](../helm-deployment-aws_kops.md#deploying-the-ingress-for-alfresco-content-services) is installed.
 
 ## Deployment
 
 By default, the Alfresco Search Services endpoint (`/solr`) is disabled for external access due to security reasons.  But, this can be enabled should you wish.  You may need to adjust the configuration settings as per [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
 
-See [ACS Deployment](../helm-deployment-aws_cloud.md#deploying-alfresco-content-services) for full reference to ENVIRONMENT variables used in below snippets.
+See [ACS Deployment](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full reference to ENVIRONMENT variables used in below snippets.
 
 ### Install ACS Helm Chart with Search external access
 

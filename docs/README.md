@@ -3,7 +3,7 @@
 * **[Docker compose](./docker-compose-deployment.md)**
 
 * **Helm**
-   * [ACS deployment on AWS](./helm-deployment-aws_cloud.md)
+   * [ACS deployment on AWS using Kops](./helm-deployment-aws_kops.md)
    * [ACS deployment with AWS EKS](./helm-deployment-aws_eks.md)
    * [ACS deployment using Minikube](./helm-deployment-minikube.md)
 
