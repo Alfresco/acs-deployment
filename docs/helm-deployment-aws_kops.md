@@ -73,6 +73,15 @@ kops create cluster \
 Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` etc.).
 **Note:** The default bastion user name is `admin` accessible via the Bastion ELB (and not the EC2 host where the bastion is running).
 
+### Validate cluster
+
+It is important to confirm the status of kops creation of a kubernetes cluster before it can be utilised.
+
+```bash
+kops get cluster
+kops validate cluster
+```
+
 ### Upgrading a cluster (optional)
 
 * Edit the worker nodes configuration to include spot price:
