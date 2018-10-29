@@ -123,7 +123,7 @@ In order for Kubernetes pods to use the S3 buckets for writing content, the node
 
 ## Deploy ACS Helm chart with S3 Connector module
 
-Refer to [ACS deployment with on AWS using Kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  The example below enables the S3 Connector and passes the S3 bucket configuration.
+Refer to [ACS deployment with Helm on AWS using Kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  The example below enables the S3 Connector and passes the S3 bucket configuration.
 
 ```bash
 export ACS_S3_BUCKET="unique-acs-s3-bucket"
