@@ -85,7 +85,17 @@ spec:
       - podSelector:
           matchLabels:
              component: transformers
-
+      
+      # Activemq
+      - podSelector:
+          matchLabels:
+            app: {{ printf "%s-%s" .Release.Name "activemq" }}
+      
+      # SFS
+      - podSelector:
+          matchLabels:
+            app: {{ template "alfresco.shortname" . }}-filestore
+                  
       # nginx-ingress
       - podSelector:
           matchLabels:
@@ -108,4 +118,8 @@ spec:
       ports:
       - protocol: TCP
         port: 2049
+      - protocol: TCP
+        port: 61617
+      - protocol: TCP
+        port: 61616
 {{- end }}

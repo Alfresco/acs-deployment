@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.1.0-EA2"
+    tag: "6.1.0-EA3"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -30,6 +30,8 @@ repository:
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
+      -Dlocal.transform.service.enabled=true
+      -Dtransform.service.enabled=true
       -Xms2000M -Xmx2000M"
   resources:
     requests:
@@ -211,7 +213,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.3"
+    tag: "0.4"
     pullPolicy: Always
     internalPort: 8099
   service:
@@ -224,6 +226,8 @@ filestore:
     limits:
       memory: "1000Mi"
   environment:
+    scheduler.content.age.millis: "86400000"
+    scheduler.cleanup.interval: "86400000"
     JAVA_OPTS: " -Xms256M -Xmx256M"
   readinessProbe:
     initialDelaySeconds: 20
@@ -295,15 +299,9 @@ alfresco-content-services:
 # All the components from the alfresco-infrastructure are disabled, because Alfresco Content Services product helm chart
 # only needs the pvc defined in the dependency alfresco-infrastructure
 alfresco-infrastructure:
-  rabbitmq-ha:
-    enabled: false
   activemq:
-    enabled: false
+    enabled: true
   alfresco-identity-service:
-    enabled: false
-  alfresco-activiti-cloud-registry:
-    enabled: false
-  alfresco-api-gateway:
     enabled: false
 
 alfresco-search:
@@ -370,9 +368,6 @@ s3connector:
   #   secretKey:
   #   encryption:
   #   awsKmsKeyId:
-
-activemq:
-  enabled: true
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:

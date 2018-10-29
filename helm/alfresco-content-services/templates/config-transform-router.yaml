@@ -9,8 +9,10 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: transformrouter
 data:
-  {{- if .Values.activemq.enabled }}
+  {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
   ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
+  ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
+  ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
   {{- else }}
   ACTIVEMQ_URL: {{ .Values.messageBroker.url }}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
