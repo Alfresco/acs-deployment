@@ -1,6 +1,6 @@
 @startuml
 
-Title: ACS Helm Deployment Overview
+Title: ACS on AWS Helm Deployment Overview
 
 skinparam componentStyle uml2
 skinparam linetype ortho
@@ -20,7 +20,7 @@ node "ACS namespace" {
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "Alfresco Share" as share #lightgrey
-    database "Volume Claim" as vc
+    database "EFS Volume Claim" as vc
     rectangle "Alfresco Transform Service" {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
@@ -32,7 +32,8 @@ node "ACS namespace" {
     }
 }
 
-database "Database" as db
+database "Aurora RDS" as db
+database "S3" as s3
 
 Client --> nginx
 
@@ -42,6 +43,7 @@ nginx --> share
 acs --> vc
 ass --> vc
 sfs --> vc
+acs --> s3
 
 ass <--> acs
 acs --> db
