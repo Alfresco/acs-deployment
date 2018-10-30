@@ -31,7 +31,7 @@ The cluster creation may take some minutes before the status of cluster and it's
 
 ## Allow Kubernetes Nodes Security Group to communicate with Database cluster
 
-From the AWS Console -> Services -> RDS -> Clusters -> <Select Cluster> -> DB Cluster Members
+From the AWS Console -> Services -> RDS -> Clusters -> Select Cluster -> DB Cluster Members
 Select the db instance with role `writer`.
 
 In the `Security group rules` edit and add a new rule for as:
