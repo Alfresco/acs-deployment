@@ -18,7 +18,7 @@ export CLUSTER_NAME="sharedvpc.mydomain.com"
 ```bash
 export VPC_ID=vpc-12345678 # replace with your VPC id
 export NETWORK_CIDR=172.30.0.0/16 # replace with the cidr for the VPC ${VPC_ID}
-``` 
+```
 
 ## Create new Utility and Private subnets inside the VPC
 
@@ -142,9 +142,9 @@ Validating cluster sharedvpc.mydomain.com
 unexpected error during validation: error listing nodes: Get https://api.sharedvpc.mydomain.com/api/v1/nodes: EOF
 ```
 
-This is an expected error and it just means the kops cluster was created but not successful due to missing dependencies to make the cluster working.
+This is an expected error and it just means the kops cluster was created, but not successful due to missing dependencies to make the cluster work.
 
-To fix this below steps are required.
+To fix this, follow the remaining steps in this guide.
 
 
 ## Create a NAT Gateway in the existing VPC
@@ -168,7 +168,7 @@ kubernetes.io/cluster/sharedvpc.mydomain.com: owned
 
 ## Create Route Tables in the existing VPC
 
-Kops require creation of new routes for Utility and Private subnets to route traffic
+Kops requires creation of new routes for Utility and Private subnets to route traffic.
 
 * From the **AWS Console**, select **Services** -> **VPC Dashboard** -> **Route Tables** -> **Create Route Table**.
 
@@ -225,13 +225,13 @@ subnet-xxxxx | us-east-1c.sharedvpc.mydomain.com
 For Utility subnet route table, edit and add a new route with internet gateway ID.
 ```
 Destination: 0.0.0.0/0
-Target: igw-xxxxxx` (This Internet Gateway is created by kops while creating the cluster) 
+Target: igw-xxxxxx` (This Internet Gateway is created by kops while creating the cluster)
 ```
 
 For Private subnet route table, edit and add a new route with nat gateway ID.
 ```
 Destination: 0.0.0.0/0
-Target: nat-xxxxxx (This NAT Gateway was created manually above to fix kops validate cluster error) 
+Target: nat-xxxxxx (This NAT Gateway was created manually above to fix kops validate cluster error)
 ```
 
 ## Re-run the kops validate cluster
@@ -279,4 +279,4 @@ Port Range: ALL
 Source: sg-<k8s-elb-sg-id>
 ```
 
-Follow the rest of the deployment steps in [ACS deployment with Helm using Kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services)
+Follow the rest of the deployment steps in [Deploying Alfresco Content Services](../helm-deployment-aws_kops.md#deploying-alfresco-content-services).
