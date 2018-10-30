@@ -72,4 +72,5 @@ helm install alfresco-incubator/alfresco-content-services \
 --set database.password="$DATABASE_PASSWORD" \
 --namespace=$DESIREDNAMESPACE
 ```
+
 **Note**: There are specific alfresco repository docker images that support particular database driver. In the above snippet a specific `repository.image.tag="0.1.3-repo-6.0.0.3"` is set for `database.driver="org.mariadb.jdbc.Driver"`
