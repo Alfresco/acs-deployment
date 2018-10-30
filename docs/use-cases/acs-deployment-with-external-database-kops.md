@@ -34,7 +34,7 @@ The cluster creation may take some minutes before the status of cluster and it's
 From the AWS Console -> Services -> RDS -> Clusters -> Select Cluster -> DB Cluster Members
 Select the db instance with role `writer`.
 
-In the `Security group rules` edit and add a new rule for as:
+In the `Details` -> `Security groups` -> select the security group which is `(active)`.  This will re-direct to the Security Groups console.  In the `Inbound` tab of the security group `Edit` and add a new rule for Kubernetes Nodes Security Group and `Save` it:
 
 ```
 Type: MYSQL/Aurora
@@ -53,6 +53,7 @@ Refer [helm deployment aws with kops](../helm-deployment-aws_kops.md#deploying-a
 export RDS_ENDPOINT="my-acs-database.cluster-chc1vvifzyjv.us-east-1.rds.amazonaws.com"
 export DATABASE_USER="alfresco"
 export DATABASE_PASSWORD="someRdsPwd"
+
 helm install alfresco-incubator/alfresco-content-services \
 --version 1.1.3 \
 --name my-acs \
