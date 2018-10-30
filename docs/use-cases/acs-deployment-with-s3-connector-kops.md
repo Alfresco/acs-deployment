@@ -1,8 +1,8 @@
 # Alfresco Content Services Deployment with S3 Connector module for content storage with encryption
 
-This documentation demonstrates on use of an AWS S3 bucket for content storage along with encryption using AWS KMS (Key Management Service) with Alfresco S3 Connector module.
+This documentation demonstrates how to use an AWS S3 bucket for content storage, along with encryption using AWS KMS (Key Management Service) with the Alfresco Content Connector for AWS S3 module (S3 Connector).
 
-Below is an example of setting up in US-East-1 (N.Virginia) region.
+Below is an example set up in the US-East-1 (N.Virginia) region.
 
 ## Export Kops setup environment variables
 
@@ -15,54 +15,56 @@ export KOPS_STATE_STORE=s3://<somes3bucket>
 export CLUSTER_NAME="myacs.mydomain.com"
 ```
 
-## Create Kubernetes Cluster with Kops
+## Create Kubernetes cluster with Kops
 
-[Kubernetes cluster on aws with kops](../helm-deployment-aws_kops.md#setting-up-kubernetes-cluster-on-aws-with-kops)
+Follow the steps outlined in [Setting up a Kubernetes cluster on AWS with Kops](../helm-deployment-aws_kops.md#setting-up-kubernetes-cluster-on-aws-with-kops)
 
-Once the kubernetes cluster is up and running with nginx-ingress controller an S3 bucket is required for ACS Deployment with S3 connector module.
+Once the Kubernetes cluster is up and running with an nginx-ingress controller, an S3 bucket is required for ACS Deployment with the S3 Connector module.
 
-## Create an S3 bucket for ACS contents storage
+## Create an S3 bucket for ACS content storage
 
-From the AWS Console -> Services -> S3 -> Create bucket -> 
+From the **AWS Console**, select **Services** -> **S3** -> **Create bucket** -> 
 ```
 Bucket Name: unique-acs-s3-bucket
 Region: us-east-1
 ```
 
-### Enable Versioning
+### Enable versioning
 
-It is highly recommended to enable versioning on the s3 bucket
+It is highly recommended that versioning is enabled on the S3 bucket.
 
-From the AWS Console -> Services -> S3 -> `unique-acs-s3-bucket` -> Properties -> Versioning -> Enabled
+From the **AWS Console**, select **Services** -> **S3** -> `unique-acs-s3-bucket` -> **Properties** -> **Versioning** -> **Enabled**.
 
 ### Enable AWS-KMS encryption
 
-This will encrypt data written by the pods in the s3 bucket using AWS-KMS (for example).
+This will encrypt data written by the pods in the S3 bucket using AWS-KMS (for example).
 
-First, create an AWS-KMS Encryption key (if it is not available)
+* First, create an AWS-KMS Encryption key (if it is not available).
 
-From the AWS Console -> Services -> IAM -> Encryption keys -> Create key -> Region: `US East (N.Virginia)`
+* From the **AWS Console**, select **Services** -> **IAM** -> **Encryption keys** -> **Create key** -> **Region:** `US East (N.Virginia)`
 ```
 Alias (required): alias/mykms-acs-s3
 Description: Some description
 ```
-click `Next Step` for `Add Tags` to tag the encryption key.
+
+* Click `Next Step` for `Add Tags` to tag the encryption key.
 
 `Name`: `mykms-acs-s3`
-click `Next Step` to select `Key Administrators` -> select `nodes.myacs.mydomain.com` (from `Filter`) IAM role created by kops.  
 
-click `Next Step` to select `This Account` -> select `nodes.myacs.mydomain.com` (from `Filter`) IAM role created by kops.
+* Click `Next Step` to select `Key Administrators` -> select `nodes.myacs.mydomain.com` (from `Filter`) IAM role created by kops.  
 
-click `Next Step` to `Preview Key Policy` and then click `Finish`
+* Click `Next Step` to select `This Account` -> select `nodes.myacs.mydomain.com` (from `Filter`) IAM role created by kops.
 
-By default, the kms key status is `Enabled`, select the key and note down from `Summary` it's ARN.
+* Click `Next Step` to `Preview Key Policy` and then click `Finish`
 
-Finally, on the s3 bucket enable `Default encryption` with `AWS-KMS` -> Custom KMS Arn -> `above kms key arn`
+* By default, the KMS key status is `Enabled`. Select the key and note down its ARN from the `Summary`.
+
+* Finally, on the S3 bucket, enable `Default encryption` with `AWS-KMS` -> Custom KMS Arn -> `above kms key arn`.
 
 
-### Apply S3 custom bucket policies for data integration (Recommended)
+### Apply S3 custom bucket policies for data integration (recommended)
 
-The ACS S3 contents bucket can be guarded to deny against:
+The ACS S3 content bucket can be guarded to deny against:
 - Incorrect encryption header
 - Unencrypted object uploads
 
@@ -98,9 +100,9 @@ The ACS S3 contents bucket can be guarded to deny against:
 }
 ```
 
-## Allow Kops created node IAM role to access S3 bucket for uploading contents
+## Allow Kops created node IAM role to access S3 bucket for uploading content
 
-In order for kubernetes pods to use the s3 buckets for writing contents, the node IAM role need to attach with a new policy to grant access to the s3 bucket.
+In order for Kubernetes pods to use the S3 buckets for writing content, the node IAM role needs to attach with a new policy to grant access to the S3 bucket.
 
 ```
 {
@@ -119,9 +121,9 @@ In order for kubernetes pods to use the s3 buckets for writing contents, the nod
 }
 ```
 
-## Deploy ACS Helm Chart with S3 connector module
+## Deploy ACS Helm chart with S3 Connector module
 
-Refer [helm deployment aws with kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  Below example is to enable s3 connector and pass s3 bucket configuration.
+Refer to [ACS deployment with Helm on AWS using Kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  The example below enables the S3 Connector and passes the S3 bucket configuration.
 
 ```bash
 export ACS_S3_BUCKET="unique-acs-s3-bucket"

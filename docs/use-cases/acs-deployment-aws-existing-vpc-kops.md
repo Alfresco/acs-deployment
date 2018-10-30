@@ -1,6 +1,6 @@
 # Alfresco Content Services Deployment with Helm on AWS using Kops in an existing VPC
 
-It is possible to deploy an ACS Helm Chart on AWS with Kops utility in an existing VPC.  Below is an example of setting up in US-East-1 (N.Virginia) region.
+It is possible to deploy an ACS Helm chart on AWS with Kops utility in an existing VPC.  Below is an example of setting up in US-East-1 (N.Virginia) region.
 
 ## Export Kops setup environment variables
 
@@ -22,13 +22,13 @@ export NETWORK_CIDR=172.30.0.0/16 # replace with the cidr for the VPC ${VPC_ID}
 
 ## Create new Utility and Private subnets inside the VPC
 
-By default if existing VPC_ID and it's NETWORK_CIDR are provided with kops create cluster command, it will try to create Utility and Private subnets but if any of the subnets about to be created by kops exists then the cluster creation will fail.  To avoid this problem, it is recommended to create subnets before hand.
+By default, if an existing VPC_ID and its NETWORK_CIDR are provided with the kops create cluster command, it will try to create a Utility and Private subnets. However, if any of the subnets that are about to be created by kops exist, then the cluster creation will fail.  To avoid this problem, it is recommended that you create subnets beforehand.
 
-Depending on number of Availability Zones (AZ) configured, utility and private subnets should be created in each of the AZ.
+Depending on the number of Availability Zones (AZ) configured, utility and private subnets should be created in each of the AZs.
 
 For example, if the Kubernetes cluster is intended to run in US-East-1 with 3 AZs (us-east-1a, us-east-1b and us-east-1c) then 3 Utility and 3 Private subnets need to be created in that existing VPC.
 
-From the AWS Console -> Services -> VPC Dashboard -> Subnets -> Create Subnet ->
+From the **AWS Console**, select **Services** -> **VPC Dashboard** -> **Subnet**s -> **Create Subnet** ->
 
 Utility subnet in AZ-1:
 ```
@@ -80,9 +80,9 @@ IPv4 CIDR block: 172.30.8.0/24
 
 ## Tagging the subnets
 
-It is important to tag the above subnets to enable kops setup a cluster in a shared vpc with above subnets.
+It is important to tag the above subnets to enable Kops to setup a cluster in a shared VPC with the above subnets.
 
-Select each of the above subnet and add below tags:
+Select each of the above subnets and add the tags below:
 
 For Utility Subnets:
 ```
@@ -149,16 +149,17 @@ To fix this below steps are required.
 
 ## Create a NAT Gateway in the existing VPC
 
-Kops require a NAT gateway to route traffic to enable Kubernetes API ELB to talk with Kubernetes Master node(s).
+Kops require a NAT gateway to route traffic to enable Kubernetes API ELB to talk to Kubernetes Master node(s).
 
-From the AWS Console -> Services -> VPC Dashboard -> NAT Gateways -> Create NAT Gateway ->
+* From the **AWS Console**, select **Services** -> **VPC Dashboard** -> **NAT Gateways** -> **Create NAT Gateway** ->
 ```
-Subnet: Select on of the Utility subnet (us-east-1a subnet Id)
+Subnet: Select one of the Utility subnet (us-east-1a subnet Id)
 Elastic IP Allocation ID: Create New EIP
 ```
-and click `Create a NAT Gateway` and wait for NAT Gateway to become available.
 
-Tag the above NAT Gateway as:
+* Click `Create a NAT Gateway` and wait for NAT Gateway to become available.
+
+* Tag the above NAT Gateway as:
 ```
 KubernetesCluster: sharedvpc.mydomain.com
 Name: us-east-1a.sharedvpc.mydomain.com
@@ -169,21 +170,23 @@ kubernetes.io/cluster/sharedvpc.mydomain.com: owned
 
 Kops require creation of new routes for Utility and Private subnets to route traffic
 
-From the AWS Console -> Services -> VPC Dashboard -> Route Tables -> Create Route Table
+* From the **AWS Console**, select **Services** -> **VPC Dashboard** -> **Route Tables** -> **Create Route Table**.
 
-Create a Utility subnet route:
+* Create a Utility subnet route:
 ```
 Name tag: sharedvpc.mydomain.com
 VPC: Select the VPC
 ```
-and click `Yes, Create` to create the route.
 
-Create a Private subnet route:
+* Click `Yes, Create` to create the route.
+
+* Create a Private subnet route:
 ```
 Name tag: private-us-east-1a-sharedvpc.mydomain.com
 VPC: Select the VPC
-and click 'Yes, Create' to create the route.
 ```
+
+* Click `Yes, Create` to create the route.
 
 ### Tag Route Tables
 
@@ -219,13 +222,13 @@ subnet-xxxxx | us-east-1c.sharedvpc.mydomain.com
 
 ### Route Tables Add Routes
 
-For Utility subnet route table edit and add a new route with internet gateway id.
+For Utility subnet route table, edit and add a new route with internet gateway ID.
 ```
 Destination: 0.0.0.0/0
 Target: igw-xxxxxx` (This Internet Gateway is created by kops while creating the cluster) 
 ```
 
-For Private subnet route table edit and add a new route with nat gateway id.
+For Private subnet route table, edit and add a new route with nat gateway ID.
 ```
 Destination: 0.0.0.0/0
 Target: nat-xxxxxx (This NAT Gateway was created manually above to fix kops validate cluster error) 
@@ -256,18 +259,18 @@ Your cluster sharedvpc.mydomain.com is ready
 
 ## Configure Nginx-Ingress controller
 
-[Deploying the Ingress for Alfresco Content Services](../helm-deployment-aws_kops.md#deploying-the-ingress-for-alfresco-content-services)
+Follow the steps outlined in [Deploying the Ingress for Alfresco Content Services](../helm-deployment-aws_kops.md#deploying-the-ingress-for-alfresco-content-services).
 
 
 ## Allow ALL Traffic of Ingress ELB Security Group in Kubernetes Nodes Security Group
 
-The k8s Nodes security group should be added with a TCP rule to allow ALL traffic from k8s ELB (created by nginx-ingress controller)
+The Kubernetes nodes security group should be added with a TCP rule to allow ALL traffic from the Kubernetes ELB (created by the nginx-ingress controller).
 
-From the AWS Console -> Services -> VPC Dashboard -> Security -> Security Groups -> search for your VPC SGs
+* From the **AWS Console**, select **Services** -> **VPC Dashboard** -> **Security** -> **Security Groups** -> search for your VPC SGs
 
-There should be a security group starting with `k8s-elb-<ELB-Address>` which is the ingress controller security group.  Note down the security group id of this.
+* There should be a security group starting with `k8s-elb-<ELB-Address>` which is the ingress controller security group.  Note down the security group ID.
 
-There should be another security group starting with `nodes.*` which is the kubernetes nodes security group.  Edit the `Inbound Rules` and add a new rule as:
+* There should be another security group starting with `nodes.*` which is the Kubernetes nodes security group.  Edit the `Inbound Rules` and add a new rule as:
 
 ```
 Type: ALL Traffic
@@ -276,4 +279,4 @@ Port Range: ALL
 Source: sg-<k8s-elb-sg-id>
 ```
 
-Rest of the deployment can be followed accordingly for [ACS Helm deployment kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services)
+Follow the rest of the deployment steps in [ACS deployment with Helm using Kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services)

@@ -75,7 +75,7 @@ Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` e
 
 ### Validate cluster
 
-It is important to confirm the status of kops creation of a kubernetes cluster before it can be utilised.
+It is important to confirm the status of the Kops creation of a Kubernetes cluster before it can be utilised.
 
 ```bash
 kops get cluster
