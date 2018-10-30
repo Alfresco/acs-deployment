@@ -47,7 +47,7 @@ This will allow the pods running on Kubernetes nodes to access the external data
 
 ## Deploy ACS Helm Chart with External Database service
 
-Refer [helm deployment aws with kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  Below is an example is to use the external database service.
+Refer [helm deployment aws with kops](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full `helm install` reference.  Below is an example to use an external database service.
 
 ```bash
 export RDS_ENDPOINT="my-acs-database.cluster-chc1vvifzyjv.us-east-1.rds.amazonaws.com"
