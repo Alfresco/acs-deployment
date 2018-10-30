@@ -68,6 +68,8 @@ The ACS S3 content bucket can be guarded to deny against:
 - Incorrect encryption header
 - Unencrypted object uploads
 
+From the **AWS Console**, select **Services** -> **S3** -> `unique-acs-s3-bucket` -> **Permissions** -> **Bucket Policy** and add below content and save it (remember to replace bucket name with yours).
+
 ```bash
 {
     "Version": "2008-10-17",
@@ -103,6 +105,8 @@ The ACS S3 content bucket can be guarded to deny against:
 ## Allow Kops created node IAM role to access S3 bucket for uploading content
 
 In order for Kubernetes pods to use the S3 buckets for writing content, the node IAM role needs to attach with a new policy to grant access to the S3 bucket.
+
+From the **AWS Console**, select **Services** -> **IAM** -> **Roles** -> Search & Select Kubernetes Nodes IAM Role -> **Permissions** -> **Add inline Policy** -> **JSON** and add below content and save it (remember to replace bucket name with yours).
 
 ```
 {
