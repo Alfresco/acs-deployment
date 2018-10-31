@@ -20,4 +20,4 @@ dependencies:
 - name: alfresco-digital-workspace
   version: 1.0.0
   condition: alfresco-digital-workspace.enabled
-  repository: https://kubernetes-charts.alfresco.com/incubator
+  repository: https://kubernetes-charts.alfresco.com/stable
