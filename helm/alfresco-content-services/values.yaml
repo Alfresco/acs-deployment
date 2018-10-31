@@ -319,6 +319,9 @@ alfresco-search:
 
 alfresco-digital-workspace:
   enabled: true
+  ingress:
+    path: /digital-workspace
+
 
 # choose if you want network policy enabled
 networkpolicysetting:
