@@ -1,4 +1,4 @@
-# Alfresco Content Services Deployment with Helm on AWS
+# Alfresco Content Services Deployment with Helm on AWS using Kops
 
 **Hint:** Consider [deploying ACS into EKS](./helm-deployment-aws_eks.md) instead of setting
 up a cluster with Kops.
@@ -72,6 +72,15 @@ kops create cluster \
 ```
 Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` etc.).
 **Note:** The default bastion user name is `admin` accessible via the Bastion ELB (and not the EC2 host where the bastion is running).
+
+### Validate cluster
+
+It is important to confirm the status of the Kops creation of a Kubernetes cluster before it can be utilised.
+
+```bash
+kops get cluster
+kops validate cluster
+```
 
 ### Upgrading a cluster (optional)
 
@@ -422,6 +431,8 @@ You can set the Alfresco Content Services stack configuration attributes above a
 ```bash
 # Example: For a hardened DB password:
  --set postgresql.postgresPassword="bLah!"
+# To setup repository cluster with 5 pods
+ --set repository.replicaCount=5
 ```
 
 For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).

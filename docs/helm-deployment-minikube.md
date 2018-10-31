@@ -125,4 +125,4 @@ You'll need to wait for some time for the deployment to start up. Use the Miniku
 
 ## Cleaning up your deployment
 
-See [clean up steps](helm-deployment-aws_cloud.md#cleaning-up-your-deployment) for more details.
+See [clean up steps](helm-deployment-aws_kops.md#cleaning-up-your-deployment) for more details.

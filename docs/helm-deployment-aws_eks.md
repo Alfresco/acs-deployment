@@ -55,15 +55,15 @@ On each EKS worker node EC2 instance, [install the Amazon EFS Utils package](htt
 
 ### Deploying Helm
 
-* Follow the steps outlined in [Deploying Helm](helm-deployment-aws_cloud.md#deploying-helm)
+* Follow the steps outlined in [Deploying Helm](helm-deployment-aws_kops.md#deploying-helm)
 
 ## Setting up Alfresco Content Services
 
-* Follow the steps outlined in [Setting up Alfresco Content Services](helm-deployment-aws_cloud.md#setting-up-alfresco-content-services)
+* Follow the steps outlined in [Setting up Alfresco Content Services](helm-deployment-aws_kops.md#setting-up-alfresco-content-services)
 
 ## Checking the status of your deployment
 
-* Follow the steps outlined in [Checking the status of your deployment](helm-deployment-aws_cloud.md#checking-the-status-of-your-deployment)
+* Follow the steps outlined in [Checking the status of your deployment](helm-deployment-aws_kops.md#checking-the-status-of-your-deployment)
 
 ## Cleaning up your deployment
 
