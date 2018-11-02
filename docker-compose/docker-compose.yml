@@ -158,16 +158,14 @@ services:
 
     digital-workspace:
         image: quay.io/alfresco/alfresco-digital-workspace:1.0.0
-        depends_on:
-            - alfresco
-        ports:
-            - 8085:80
+
     digital-workspace-ingress:
         image: quay.io/alfresco/alfresco-digital-workspace-ingress:1.0.0
         depends_on:
+            - alfresco
             - digital-workspace
         ports:
-            - 8086:80
+            - 8085:80
         links:
             - digital-workspace
             - alfresco
