@@ -165,7 +165,7 @@ services:
             - alfresco
             - digital-workspace
         ports:
-            - 8085:80
+            - 8085:8080
         links:
             - digital-workspace
             - alfresco
