@@ -17,6 +17,7 @@ node "nginx-ingress namespace" {
 }
 
 node "ACS namespace" {
+    component "Alfresco Digital Worspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "PostgreSQL" as psql #lightgrey
@@ -37,6 +38,7 @@ Client --> nginx
 
 nginx --> acs
 nginx --> share
+nginx --> adw
 
 acs --> vc
 ass --> vc
