@@ -317,6 +317,12 @@ alfresco-search:
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
     enabled: false
 
+alfresco-digital-workspace:
+  enabled: true
+  ingress:
+    path: /digital-workspace
+
+
 # choose if you want network policy enabled
 networkpolicysetting:
   enabled: true
