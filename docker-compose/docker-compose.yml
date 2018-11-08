@@ -159,8 +159,8 @@ services:
     digital-workspace:
         image: quay.io/alfresco/alfresco-digital-workspace:1.0.0
 
-    digital-workspace-ingress:
-        image: quay.io/alfresco/alfresco-digital-workspace-ingress:1.0.0
+    proxy:
+        image: quay.io/alfresco/alfresco-acs-nginx:1.0.0
         depends_on:
             - alfresco
             - digital-workspace
