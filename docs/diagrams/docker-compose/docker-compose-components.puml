@@ -13,6 +13,8 @@ skinparam rectangle {
 actor Client
 
 node "Docker Compose" {
+    component "NGINX proxy" as proxy #lightgrey
+    component "Alfresco Digital Worspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "PostgreSQL" as psql #lightgrey
@@ -28,11 +30,13 @@ node "Docker Compose" {
     }
 }
 
-Client --> acs
-Client --> ass
-Client --> share
+Client --> proxy
 
-ass --> acs
+proxy --> acs
+proxy --> share
+proxy --> adw
+
+acs <-left-> ass
 acs --> psql
 acs --> pdfr
 acs --> libr
