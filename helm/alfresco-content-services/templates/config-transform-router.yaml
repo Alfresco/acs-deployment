@@ -14,7 +14,7 @@ data:
   ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
   ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
   {{- else }}
-  ACTIVEMQ_URL: {{ .Values.messageBroker.url }}
+  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
   ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
   {{- end }}
