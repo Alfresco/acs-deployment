@@ -672,6 +672,71 @@
 					"response": []
 				},
 				{
+					"name": "Validate Digital Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7a23b66-b386-490a-bf8d-aeebed29ad86",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"adwIsUpAndRunningTest\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{url}}/digital-workspace",
+							"protocol": "https",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"digital-workspace"
+							]
+						},
+						"description": "Validate Digital Workspace is deployed correctly"
+					},
+					"response": []
+				},
+				{
 					"name": "google-docs",
 					"event": [
 						{
