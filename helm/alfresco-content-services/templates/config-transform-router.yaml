@@ -14,7 +14,7 @@ data:
   ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
   ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
   {{- else }}
-  ACTIVEMQ_URL: {{ .Values.messageBroker.url }}
+  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
   ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
   {{- end }}
@@ -23,3 +23,4 @@ data:
   LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
   TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  

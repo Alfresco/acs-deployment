@@ -45,7 +45,7 @@ services:
                 "
 
     transform-router:
-        image: quay.io/alfresco/alfresco-transform-router:0.2.1-EA
+        image: quay.io/alfresco/alfresco-transform-router:0.3.1-RC
         environment:
           ACTIVEMQ_URL: "nio://activemq:61616"
           IMAGEMAGICK_URL: "http://imagemagick:8090"
@@ -57,7 +57,7 @@ services:
           - activemq
 
     alfresco-pdf-renderer:
-        image: quay.io/alfresco/alfresco-pdf-renderer:2.0.4-EA
+        image: quay.io/alfresco/alfresco-pdf-renderer:2.0.5-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -66,7 +66,7 @@ services:
             - 8090:8090
 
     imagemagick:
-        image: quay.io/alfresco/alfresco-imagemagick:2.0.4-EA
+        image: quay.io/alfresco/alfresco-imagemagick:2.0.5-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -75,7 +75,7 @@ services:
             - 8091:8090
 
     libreoffice:
-        image: quay.io/alfresco/alfresco-libreoffice:2.0.4-EA
+        image: quay.io/alfresco/alfresco-libreoffice:2.0.5-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -84,7 +84,7 @@ services:
             - 8092:8090
 
     tika:
-        image: quay.io/alfresco/alfresco-tika:2.0.4-EA
+        image: quay.io/alfresco/alfresco-tika:2.0.5-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
