@@ -1560,10 +1560,10 @@
 							"raw": "{\r\n    \"query\": {\r\n      \"query\": \"name:alfresco\"\r\n    }\r\n}"
 						},
 						"url": {
-							"raw": "{{protocol}}://{url}/alfresco/api/-default-/public/search/versions/1/search",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
 							"protocol": "{{protocol}}",
 							"host": [
-								"{url}"
+								"{{url}}"
 							],
 							"path": [
 								"alfresco",
@@ -1637,10 +1637,10 @@
 							"raw": "{\r\n    \"query\": {\r\n    \"query\": \"SELECT * FROM cmis:folder WHERE cmis:name = 'MyFunkyNameForTestingPersistency'\",\r\n    \"language\": \"cmis\"\r\n    }\r\n}"
 						},
 						"url": {
-							"raw": "{{protocol}}://{url}/alfresco/api/-default-/public/search/versions/1/search",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
 							"protocol": "{{protocol}}",
 							"host": [
-								"{url}"
+								"{{url}}"
 							],
 							"path": [
 								"alfresco",
