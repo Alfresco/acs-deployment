@@ -3,7 +3,7 @@
 		"_postman_id": "ec9190a4-0b4b-499c-9f1d-c094c6cfffc0",
 		"name": "acs-validate-volume-collection",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "{{protocol}}://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -63,8 +63,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
-					"protocol": "https",
+					"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+					"protocol": "{{protocol}}",
 					"host": [
 						"{{url}}"
 					],
@@ -160,8 +160,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
-					"protocol": "https",
+					"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+					"protocol": "{{protocol}}",
 					"host": [
 						"{{url}}"
 					],
@@ -235,8 +235,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children",
-					"protocol": "https",
+					"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children",
+					"protocol": "{{protocol}}",
 					"host": [
 						"{{url}}"
 					],
@@ -310,8 +310,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
-					"protocol": "https",
+					"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
+					"protocol": "{{protocol}}",
 					"host": [
 						"{{url}}"
 					],
@@ -375,8 +375,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
-					"protocol": "https",
+					"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
+					"protocol": "{{protocol}}",
 					"host": [
 						"{{url}}"
 					],
