@@ -15,7 +15,7 @@ version: "2"
 services:
     alfresco:
         image: alfresco/alfresco-content-repository:6.1.0-EA3
-        mem_limit: 1500m
+        mem_limit: 1200m
         environment:
             JAVA_OPTS: "
                 -Ddb.driver=org.postgresql.Driver
@@ -45,7 +45,7 @@ services:
                 "
 
     transform-router:
-        mem_limit: 256m
+        mem_limit: 512m
         image: quay.io/alfresco/alfresco-transform-router:0.3.1-RC
         environment:
           ACTIVEMQ_URL: "nio://activemq:61616"
@@ -95,7 +95,7 @@ services:
 
     shared-file-store:
         image: alfresco/alfresco-shared-file-store:0.4
-        mem_limit: 256m
+        mem_limit: 512m
         environment:
             scheduler.content.age.millis: 86400000
             scheduler.cleanup.interval: 86400000
@@ -122,7 +122,7 @@ services:
 
     postgres:
         image: postgres:10.1
-        mem_limit: 1500m
+        mem_limit: 512m
         environment:
             - POSTGRES_PASSWORD=alfresco
             - POSTGRES_USER=alfresco
@@ -133,7 +133,7 @@ services:
 
     solr6:
         image: alfresco/alfresco-search-services:1.2.0
-        mem_limit: 2500m
+        mem_limit: 2g
         environment:
             #Solr needs to know how to register itself with Alfresco
             - SOLR_ALFRESCO_HOST=alfresco
@@ -149,7 +149,7 @@ services:
 
     activemq:
         image: alfresco/alfresco-activemq:5.15.6
-        mem_limit: 2048m
+        mem_limit: 1g
         ports:
             - 8161:8161 # Web Console
             - 5672:5672 # AMQP
@@ -158,11 +158,11 @@ services:
 
     digital-workspace:
         image: quay.io/alfresco/alfresco-digital-workspace:1.0.0
-        mem_limit: 256m
+        mem_limit: 128m
 
     proxy:
         image: quay.io/alfresco/alfresco-acs-nginx:1.0.0
-        mem_limit: 256m
+        mem_limit: 128m
         depends_on:
             - alfresco
             - digital-workspace
