@@ -1512,7 +1512,7 @@
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
-									"pm.test(\"canSearchTest\", function () {",
+									"pm.test(\"canUseSearchAPITest\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
@@ -1589,7 +1589,7 @@
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
-									"pm.test(\"canSearchTest\", function () {",
+									"pm.test(\"canSearchWithCMISTest\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",

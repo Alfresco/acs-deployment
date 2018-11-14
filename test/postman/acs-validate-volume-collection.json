@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ec9190a4-0b4b-499c-9f1d-c094c6cfffc0",
+		"_postman_id": "1f709dca-0da1-4c09-9056-fdb057e5ba29",
 		"name": "acs-validate-volume-collection",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -391,6 +391,160 @@
 						"nodes",
 						"{{contentId}}",
 						"content"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search-api-validation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
+						"exec": [
+							"pm.globals.get(\"url\");",
+							"",
+							"pm.test(\"canUseSearchAPITest\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"totalItems\", pm.response.json().list.pagination.totalItems);",
+							"",
+							"console.log(\"Total Items:\"+pm.environment.get(\"totalItems\"));",
+							"",
+							"pm.test(\"totalItems\", function () {",
+							"    pm.expect(pm.environment.get(\"totalItems\")).not.eql(0)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n      \"query\": \"name:alfresco\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"search",
+						"versions",
+						"1",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search-cmis-validation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
+						"exec": [
+							"pm.globals.get(\"url\");",
+							"",
+							"pm.test(\"canSearchWithCMISTest\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.environment.set(\"totalItems\", pm.response.json().list.pagination.totalItems);",
+							"",
+							"console.log(\"Total Items:\"+pm.environment.get(\"totalItems\"));",
+							"",
+							"pm.test(\"totalItems\", function () {",
+							"    pm.expect(pm.environment.get(\"totalItems\")).not.eql(0)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"query\": {\r\n    \"query\": \"SELECT * FROM cmis:folder WHERE cmis:name = 'MyFunkyNameForTestingPersistency'\",\r\n    \"language\": \"cmis\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
+					"protocol": "https",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"api",
+						"-default-",
+						"public",
+						"search",
+						"versions",
+						"1",
+						"search"
 					]
 				}
 			},
