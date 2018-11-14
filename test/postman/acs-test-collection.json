@@ -1503,7 +1503,7 @@
 					"response": []
 				},
 				{
-					"name": "search-name",
+					"name": "search-api-validation",
 					"event": [
 						{
 							"listen": "test",
@@ -1580,7 +1580,7 @@
 					"response": []
 				},
 				{
-					"name": "search-cmis",
+					"name": "search-cmis-validation",
 					"event": [
 						{
 							"listen": "test",
