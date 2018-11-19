@@ -58,7 +58,7 @@ services:
           - activemq
 
     alfresco-pdf-renderer:
-        image: quay.io/alfresco/alfresco-pdf-renderer:2.0.5-RC
+        image: quay.io/alfresco/alfresco-pdf-renderer:2.0.6-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -67,7 +67,7 @@ services:
             - 8090:8090
 
     imagemagick:
-        image: quay.io/alfresco/alfresco-imagemagick:2.0.5-RC
+        image: quay.io/alfresco/alfresco-imagemagick:2.0.6-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -76,7 +76,7 @@ services:
             - 8091:8090
 
     libreoffice:
-        image: quay.io/alfresco/alfresco-libreoffice:2.0.5-RC
+        image: quay.io/alfresco/alfresco-libreoffice:2.0.6-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -85,7 +85,7 @@ services:
             - 8092:8090
 
     tika:
-        image: quay.io/alfresco/alfresco-tika:2.0.5-RC
+        image: quay.io/alfresco/alfresco-tika:2.0.6-RC
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
