@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.1.0-EA3
+        image: alfresco/alfresco-content-repository:6.1.0-RC1
         mem_limit: 1200m
         environment:
             JAVA_OPTS: "
@@ -106,7 +106,7 @@ services:
             - shared-file-store-volume:/tmp/Alfresco/sfs
 
     share:
-        image: alfresco/alfresco-share:6.0
+        image: alfresco/alfresco-share:6.1.0-RC1
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"
