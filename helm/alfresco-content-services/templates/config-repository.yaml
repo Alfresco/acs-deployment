@@ -23,6 +23,7 @@ data:
   ALFRESCO_OPTS: " -Dalfresco.host={{ $alfhost }}
       -Dalfresco.protocol={{ $alfprotocol }}
       -Dalfresco.port={{ $alfport }}
+      -Daos.baseUrlOverwrite=${alfresco.protocol}://${alfresco.host}:${alfresco.port}/alfresco/aos
       -Dshare.protocol={{ .Values.externalProtocol | default "http"}}
       -Dshare.host={{ .Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .)) }}
       -Dshare.port={{ .Values.externalPort | default .Values.share.service.externalPort }}
