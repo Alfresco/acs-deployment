@@ -36,6 +36,7 @@ services:
                 -Dshare.port=8080
                 -Dalfresco.host=localhost
                 -Dalfresco.port=8080
+                -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
                 -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
                 -Ddeployment.method=DOCKER_COMPOSE
                 -Dlocal.transform.service.enabled=true
