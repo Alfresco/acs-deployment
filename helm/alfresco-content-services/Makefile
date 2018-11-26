@@ -20,7 +20,7 @@ package: build
 	helm init --client-only
 	helm package .	
 	helm search local/$(NAME) -l
-	rm -rf ${NAME}*.tgz%	
+	rm -rf ${NAME}*.tgz	
 
 tag:
 ifeq ($(OS),Darwin)
