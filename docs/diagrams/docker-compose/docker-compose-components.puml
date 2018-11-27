@@ -14,7 +14,7 @@ actor Client
 
 node "Docker Compose" {
     component "NGINX proxy" as proxy #lightgrey
-    component "Alfresco Digital Worspace" as adw #lightgrey
+    component "Alfresco Digital Workspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "PostgreSQL" as psql #lightgrey
