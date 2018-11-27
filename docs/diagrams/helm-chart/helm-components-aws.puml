@@ -21,7 +21,6 @@ node "ACS namespace" {
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "Alfresco Share" as share #lightgrey
-    database "EFS Volume Claim" as vc
     rectangle "Alfresco Transform Service" {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
@@ -33,8 +32,12 @@ node "ACS namespace" {
     }
 }
 
-database "Aurora RDS" as db
-database "S3" as s3
+node "Amazon Web Services" {
+    database "Aurora RDS" as db
+    database "S3" as s3
+    database "EFS Volume Claim" as vc
+    database "EBS" as ebs
+}
 
 Client --> nginx
 
@@ -43,7 +46,7 @@ nginx --> share
 nginx --> adw
 
 acs --> vc
-ass --> vc
+ass --> ebs
 sfs --> vc
 acs --> s3
 
