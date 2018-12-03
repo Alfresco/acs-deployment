@@ -32,7 +32,7 @@ To deploy Alfresco Content Services using _docker-compose_, you'll need to insta
 * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
 
 **Note:**
-* Make sure ports 5432, 8080, 8082, and 8083 are open. These are defined in the _docker-compose.yml_ file.
+* Make sure that exposed ports are open on your host. Check the docker-compose.yml file to determine the exposed ports - refer to the host:container port definitions. You'll see they include 5432, 8080, 8083 and others.
 * If Docker is running on your local machine, the IP address will be just _localhost_.
 * If you're using the [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows), run the following command to find the IP address:
 ```bash
