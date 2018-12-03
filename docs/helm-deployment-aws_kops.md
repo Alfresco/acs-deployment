@@ -339,7 +339,7 @@ export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
 ### Creating a Docker registry pull secret
 
-Since we need to use protected Docker images from Quay.io, you need access to a secret with credentials to be able to pull those images.
+Since we need to use protected Docker images from Quay.io, you need access to a secret with credentials to be able to pull those images. Alfresco customers can request their credentials by logging a ticket at https://support.alfresco.com.
 
 * Log in to Quay.io with your credentials:
 ```bash
