@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.1.0-RC1
+        image: quay.io/alfresco/alfresco-content-repository:fix-REPO-3943_vti_bin-6.2.0-SNAPSHOT
         mem_limit: 1200m
         environment:
             JAVA_OPTS: "
@@ -160,9 +160,11 @@ services:
     digital-workspace:
         image: quay.io/alfresco/alfresco-digital-workspace:1.0.0
         mem_limit: 128m
+        environment:
+            BASEPATH: ./
 
     proxy:
-        image: quay.io/alfresco/alfresco-acs-nginx:1.0.0
+        image: quay.io/alfresco/alfresco-acs-nginx:2.0.0
         mem_limit: 128m
         depends_on:
             - alfresco
