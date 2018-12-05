@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: quay.io/alfresco/alfresco-content-repository:fix-REPO-3943_vti_bin-6.2.0-SNAPSHOT
+        image: quay.io/alfresco/alfresco-content-repository:fix-REPO-4091_alfresco_root-6.2.0-SNAPSHOT
         mem_limit: 1200m
         environment:
             JAVA_OPTS: "
