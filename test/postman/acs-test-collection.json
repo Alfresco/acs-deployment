@@ -1383,6 +1383,46 @@
 					"response": []
 				},
 				{
+					"name": "aos auth fail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PROPFIND",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{url}}/alfresco/aos",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"aos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "aos-validation",
 					"event": [
 						{
@@ -1622,46 +1662,6 @@
 							"path": [
 								"_vti_bin",
 								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "aos auth fail",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
-								"exec": [
-									"pm.test(\"Status code is 401\", function () {",
-									"    pm.response.to.have.status(401);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PROPFIND",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{protocol}}://{{url}}/alfresco/aos",
-							"protocol": "{{protocol}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"alfresco",
-								"aos"
 							]
 						}
 					},
