@@ -38,7 +38,7 @@ To deploy Alfresco Content Services using _docker-compose_, you'll need to insta
 ```bash
 docker-machine ip
 ```
-* If you run ```docker-compose up``` after deleting a previous Docker Compose cluster, then replace step 3 with the following command:
+* If you run ```docker-compose up``` after deleting a previous Docker Compose cluster, then replace step 4 with the following command:
 ```bash
 docker-compose down && docker-compose build --no-cache && docker-compose up
 ```
