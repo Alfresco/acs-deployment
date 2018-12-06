@@ -159,9 +159,11 @@ services:
     digital-workspace:
         image: quay.io/alfresco/alfresco-digital-workspace:1.0.0
         mem_limit: 128m
+        environment:
+            BASEPATH: ./
 
     proxy:
-        image: quay.io/alfresco/alfresco-acs-nginx:1.0.0
+        image: quay.io/alfresco/alfresco-acs-nginx:2.2.0
         mem_limit: 128m
         depends_on:
             - alfresco
@@ -172,10 +174,6 @@ services:
             - digital-workspace
             - alfresco
             - share
-        # environment:
-        #     ADW_URL: "http://digital-workspace"
-        #     REPO_URL: "http://alfresco:8080"
-        #     SHARE_URL: "http://share:8080"
 
 volumes:
     shared-file-store-volume:
