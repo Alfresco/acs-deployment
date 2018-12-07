@@ -48,6 +48,7 @@ services:
         mem_limit: 512m
         image: quay.io/alfresco/alfresco-transform-router:0.4.0-RC
         environment:
+          JAVA_OPTS: " -Xms256m -Xmx512m"
           ACTIVEMQ_URL: "nio://activemq:61616"
           IMAGEMAGICK_URL: "http://imagemagick:8090"
           PDF_RENDERER_URL : "http://alfresco-pdf-renderer:8090"
@@ -61,7 +62,7 @@ services:
         image: quay.io/alfresco/alfresco-pdf-renderer:2.0.7
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx256m"
+            JAVA_OPTS: " -Xms256m -Xmx512m"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8090:8090
@@ -70,7 +71,7 @@ services:
         image: quay.io/alfresco/alfresco-imagemagick:2.0.7
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx256m"
+            JAVA_OPTS: " -Xms256m -Xmx512m"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8091:8090
@@ -79,7 +80,7 @@ services:
         image: quay.io/alfresco/alfresco-libreoffice:2.0.7
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx256m"
+            JAVA_OPTS: " -Xms256m -Xmx512m"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8092:8090
@@ -88,7 +89,7 @@ services:
         image: quay.io/alfresco/alfresco-tika:2.0.7
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx256m"
+            JAVA_OPTS: " -Xms256m -Xmx512m"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8093:8090
@@ -97,9 +98,9 @@ services:
         image: alfresco/alfresco-shared-file-store:0.4
         mem_limit: 512m
         environment:
+            JAVA_OPTS: " -Xms256m -Xmx512m"
             scheduler.content.age.millis: 86400000
             scheduler.cleanup.interval: 86400000
-            JAVA_OPTS: " -Xms256m -Xmx256m"
         ports:
             - 8099:8099
         volumes:
