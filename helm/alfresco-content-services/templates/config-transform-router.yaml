@@ -9,6 +9,12 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: transformrouter
 data:
+  # The JAVA_OPTS defined in the values.yaml file for "transformrouter" are set here using proper quotes
+  {{- if .Values.transformrouter.environment }}
+  {{- range $key, $val := .Values.transformrouter.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
   {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
   ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
   ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
