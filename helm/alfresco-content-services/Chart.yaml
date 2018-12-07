@@ -3,7 +3,7 @@
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/docker
 name: alfresco-content-services
 version: 1.1.6
-appVersion: fix-REPO-4091_alfresco_root-6.2.0-SNAPSHOT
+appVersion: 6.1.0-RC2
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
 - content
