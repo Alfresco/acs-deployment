@@ -24,6 +24,27 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.registryPullSecrets }}
       {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "content-services.shortname" . }}-imagemagick
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "content-services.shortname" . }}-imagemagick
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.imagemagick.image.repository }}:{{ .Values.imagemagick.image.tag }}"
