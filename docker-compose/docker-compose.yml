@@ -32,7 +32,7 @@ services:
                 -Dimg.url=http://imagemagick:8090/
                 -Dtika.url=http://tika:8090/
                 -Dsfs.url=http://shared-file-store:8099/
-                -Dshare.host=localhost
+                -Dshare.host=127.0.0.1
                 -Dshare.port=8080
                 -Dalfresco.host=localhost
                 -Dalfresco.port=8080
