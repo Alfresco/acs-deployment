@@ -24,6 +24,27 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.registryPullSecrets }}
       {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco.shortname" . }}-filestore
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco.shortname" . }}-filestore
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.filestore.image.repository }}:{{ .Values.filestore.image.tag }}"

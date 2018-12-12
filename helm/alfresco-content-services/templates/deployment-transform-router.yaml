@@ -20,6 +20,27 @@ spec:
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
         - name: {{ .Values.registryPullSecrets }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco.shortname" . }}-router
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco.shortname" . }}-router
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.transformrouter.image.repository }}:{{ .Values.transformrouter.image.tag }}"
