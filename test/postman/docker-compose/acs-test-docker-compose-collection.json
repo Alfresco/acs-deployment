@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "e21e4d8f-1846-48b1-b7cf-84d0c68f5ce8",
-		"name": "acs-test-collection",
+		"_postman_id": "5d5ad563-4b6a-4b0c-bfbf-ee37971808a3",
+		"name": "acs-test-docker-compose-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1324,8 +1324,8 @@
 							"raw": "{\r\n    \"query\": {\r\n      \"query\": \"name:alfresco\"\r\n    }\r\n}"
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1401,8 +1401,8 @@
 							"raw": "{\r\n    \"query\": {\r\n    \"query\": \"SELECT * FROM cmis:folder WHERE cmis:name = 'MyFunkyNameForTestingPersistency'\",\r\n    \"language\": \"cmis\"\r\n    }\r\n}"
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/search/versions/1/search",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
