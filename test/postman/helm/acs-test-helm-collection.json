@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f84ca51b-b8c9-44a0-95e4-368c4b042769",
+		"_postman_id": "e21e4d8f-1846-48b1-b7cf-84d0c68f5ce8",
 		"name": "acs-test-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -8,7 +8,6 @@
 	"item": [
 		{
 			"name": "01 ACS-basic-auth",
-			"description": null,
 			"item": [
 				{
 					"name": "repo-discovery",
@@ -1423,6 +1422,260 @@
 							]
 						},
 						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{url}}/alfresco/aos",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"aos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aos propfind root",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"exec": [
+									"pm.test(\"Status code is 207\", function () {",
+									"    pm.response.to.have.status(207);",
+									"});",
+									"",
+									"pm.test(\"Response contains the header MicrosoftSharePointTeamServices\", function () {",
+									"    pm.response.to.have.header(\"MicrosoftSharePointTeamServices\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "PROPFIND",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{url}}/",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aos get vti inf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include('<!-- FrontPage Configuration Information');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{url}}/_vti_inf.html",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"_vti_inf.html"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aos get vti bin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"This is the /_vti_bin application.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{protocol}}://{{url}}/_vti_bin/",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"_vti_bin",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "aos auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"exec": [
+									"pm.test(\"Status code is 207\", function () {",
+									"    pm.response.to.have.status(207);",
+									"});",
+									"",
+									"pm.test(\"Body matches string\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"<D:displayname>Company Home</D:displayname>\");",
+									"    pm.expect(pm.response.text()).to.include(\"<D:isFolder>t</D:isFolder>\");",
+									"    pm.expect(pm.response.text()).to.include(\"<D:getcontenttype>application/octet-stream</D:getcontenttype>\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "PROPFIND",
 						"header": [],
 						"body": {
 							"mode": "raw",
