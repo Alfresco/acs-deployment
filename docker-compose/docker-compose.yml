@@ -15,7 +15,7 @@ version: "2"
 services:
     alfresco:
         image: alfresco/alfresco-content-repository:6.1.0-RC3
-        mem_limit: 1200m
+        mem_limit: 1700m
         environment:
             JAVA_OPTS: "
                 -Ddb.driver=org.postgresql.Driver
@@ -41,7 +41,7 @@ services:
                 -Dlocal.transform.service.enabled=true
                 -Dtransform.service.enabled=true
                 -Dcsrf.filter.enabled=false
-                -Xms1g -Xmx1g
+                -Xms1500m -Xmx1500m
                 "
 
     transform-router:
