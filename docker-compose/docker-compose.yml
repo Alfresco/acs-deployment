@@ -96,7 +96,7 @@ services:
             - 8093:8090
 
     shared-file-store:
-        image: alfresco/alfresco-shared-file-store:0.5
+        image: alfresco/alfresco-shared-file-store:0.5.1
         mem_limit: 512m
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
