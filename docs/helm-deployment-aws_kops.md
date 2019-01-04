@@ -64,10 +64,10 @@ kops create cluster \
   --node-size m4.xlarge \
   --master-size t2.medium \
   -v 10 \
-  --kubernetes-version "1.10.1" \
+  --kubernetes-version "1.11.6" \
   --bastion \
   --topology private \
-  --networking calico \
+  --networking weave \
   --yes
 ```
 Adjust the above values accordingly (ex: `--node-size`, `--kubernetes-version` etc.).
@@ -105,53 +105,7 @@ kops rolling-update cluster --yes
 
 ### Deploying the Kubernetes Dashboard
 
-* Install the [Kubernetes dashboard](https://github.com/kubernetes/dashboard).  This Dashboard helps to view and manage the cluster from your localhost (Ex: Work laptop):
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-```
-
-* Enable access control to manage the AWS Kubernetes cluster:
-
-```bash
-kubectl create -f dashboard-admin.yaml
-```
-
-<details><summary>
-See example file: dashboard-admin.yaml</summary>
-<p>
-
-```bash
-cat <<EOF > dashboard-admin.yaml
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: kubernetes-dashboard
-  labels:
-    k8s-app: kubernetes-dashboard
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-- kind: ServiceAccount
-  name: kubernetes-dashboard
-  namespace: kube-system
-EOF
-```
-
-</p>
-</details>
-
-
-* Redirect the AWS Kubernetes cluster to manage it via your localhost with `kubectl` (on default port `8001`):
-
-```bash
-kubectl proxy &
-# To use a custom port: `kubectl proxy --port=8002 &`
-```
-
-* To access the cluster locally, go to: http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ and then press 'skip' in auth page.
+* Install the [Kubernetes dashboard](https://github.com/kubernetes/dashboard). This Dashboard helps to view and manage the cluster from your localhost (Ex: Work laptop). Use the repository's documentation to install and configure access to the dashboard.
 
 ### Deploying Helm
 
@@ -391,8 +345,8 @@ secret "quay-registry-secret" created
 
 * Add the Alfresco Helm charts repository:
 ```bash
-helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
-helm repo add alfresco-stable http://kubernetes-charts.alfresco.com/stable
+helm repo add alfresco-incubator https://kubernetes-charts.alfresco.com/incubator
+helm repo add alfresco-stable https://kubernetes-charts.alfresco.com/stable
 ```
 
 * Deploy Alfresco Content Services using the following set of commands:
