@@ -77,6 +77,12 @@ Not Supported:
 * LDAP
 * Centera
 * V0 APIs
+
+Not supported OnPrem and OnCloud:
+* Multi Tenancy
+* SMB/CIFS
+* Authentication with passthru
 * The old Cloud Sync
+* Transformations (we only support renditions)
 
 
