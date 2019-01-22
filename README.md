@@ -52,3 +52,31 @@ Another typical change would be the integration of your company-wide monitoring 
 * The images downloaded directly from Docker Hub, or Quay.io are for a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. Request an extended 30-day trial at
  https://www.alfresco.com/platform/content-services-ecm/trial/docker
 * Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/). These credentials are required to pull private (Enterprise-only) Docker images from Quay.io.
+
+## On Cloud Supported/unsupported endpoints/features/amps
+
+### Repository team
+
+Supported:
+* V1 REST API
+* WebDAV
+* CMIS (all three bindings)
+* AOS
+* S3
+* Renditions
+* Authentication with alfrescoNTLM
+* Authentication with AIS (JWT)
+* Email
+* IMAP
+* Activity Feeds / Subscriptions
+* Build in ACS Workflows
+
+Not Supported:
+* FTP
+* SAML
+* LDAP
+* Centera
+* V0 APIs
+* The old Cloud Sync
+
+
