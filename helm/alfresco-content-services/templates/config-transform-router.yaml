@@ -16,11 +16,11 @@ data:
   {{- end }}
   {{- end }}
   {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
-  ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
+  ACTIVEMQ_URL: failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
   ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
   ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
   {{- else }}
-  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
+  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "failover:(nio://%s-activemq-broker:61616)?timeout=3000&jms.useCompression=true" .Release.Name)}}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
   ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
   {{- end }}
