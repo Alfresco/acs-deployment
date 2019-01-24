@@ -49,7 +49,7 @@ services:
         image: quay.io/alfresco/alfresco-transform-router:1.0.0
         environment:
           JAVA_OPTS: " -Xms256m -Xmx512m"
-          ACTIVEMQ_URL: "failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+          ACTIVEMQ_URL: "nio://activemq:61616"
           IMAGEMAGICK_URL: "http://imagemagick:8090"
           PDF_RENDERER_URL : "http://alfresco-pdf-renderer:8090"
           LIBREOFFICE_URL : "http://libreoffice:8090"
@@ -63,7 +63,7 @@ services:
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
-            ACTIVEMQ_URL: "failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+            ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8090:8090
@@ -75,7 +75,7 @@ services:
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
-            ACTIVEMQ_URL: "failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+            ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8091:8090
@@ -87,7 +87,7 @@ services:
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
-            ACTIVEMQ_URL: "failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+            ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8092:8090
@@ -99,7 +99,7 @@ services:
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
-            ACTIVEMQ_URL: "failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+            ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8093:8090

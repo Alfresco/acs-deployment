@@ -20,4 +20,16 @@ spec:
       - podSelector:
           matchLabels:
             app: {{ template "alfresco.shortname" . }}-router
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.shortname" . }}-libreoffice
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.shortname" . }}-tika
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.shortname" . }}-imagemagick
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.shortname" . }}-pdfrenderer
 {{- end }}
