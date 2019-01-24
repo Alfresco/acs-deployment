@@ -29,5 +29,4 @@ data:
   LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
   TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  TRANSFORMER_ENGINE_PROTOCOL: jms
   
