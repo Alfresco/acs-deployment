@@ -67,6 +67,8 @@ services:
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8090:8090
+        links:
+        - activemq
 
     imagemagick:
         image: quay.io/alfresco/alfresco-imagemagick:2.0.9
@@ -77,6 +79,8 @@ services:
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8091:8090
+        links:
+        - activemq
 
     libreoffice:
         image: quay.io/alfresco/alfresco-libreoffice:2.0.9
@@ -87,6 +91,8 @@ services:
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8092:8090
+        links:
+        - activemq
 
     tika:
         image: quay.io/alfresco/alfresco-tika:2.0.9
@@ -97,6 +103,8 @@ services:
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8093:8090
+        links:
+        - activemq
 
     shared-file-store:
         image: alfresco/alfresco-shared-file-store:0.5.1
