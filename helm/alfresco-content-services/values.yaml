@@ -9,6 +9,14 @@
 # If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
+global:
+  acs: 
+    ingress:
+      hostName: # configure host name for all acs ingresses, i.e. {{ .Release.Name }}.domain.com
+      tls: # true | false 
+      tlsSecretName: # specify tls secret name, .i.e. "tls-{{ .Release.Name }}-acs"
+      annotations: [] # customize global ingress annotations, i.e. certmanager.k8s.io/issuer: letsencrypt-prod, kubernetes.io/tls-acme: "true" 
+
 repository:
   replicaCount: 2
   image:

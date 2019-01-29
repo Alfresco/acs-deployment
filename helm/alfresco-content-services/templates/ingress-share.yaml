@@ -10,12 +10,29 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       location ~ ^(/.*/proxy/alfresco/api/solr/.*)$ {return 403 ;}
                   location ~ ^(/.*/-default-/proxy/alfresco/api/.*)$ {return 403;}
-    
+    # Global ingress annotations to be combined with specific ingress annotations 
+    {{- range $key, $value := .Values.global.acs.ingress.annotations }}
+    {{ $key }}: {{ tpl $value $ | quote }}
+    {{- end }}
+
 spec:
   rules:
-  - http:
-      paths:
-      - path: {{ .Values.share.ingress.path }}
-        backend:
-          serviceName: {{ template "content-services.shortname" . }}-share
-          servicePort: {{ .Values.share.service.externalPort }}
+    {{- if .Values.global.acs.ingress.hostName }}
+    - host: {{ tpl .Values.global.acs.ingress.hostName $ | quote }}
+      http:
+    {{- else }}
+    - http:
+    {{- end }} 
+        paths:
+        - path: {{ .Values.share.ingress.path }}
+          backend:
+            serviceName: {{ template "content-services.shortname" . }}-share
+            servicePort: {{ .Values.share.service.externalPort }}
+  {{- if .Values.global.acs.ingress.tls }}
+  tls:
+    - secretName: {{ tpl .Values.global.acs.ingress.tlsSecretName $ }}
+      {{- if .Values.global.acs.ingress.hostName }}
+      hosts:
+        - {{ tpl .Values.global.acs.ingress.hostName $ | quote }}
+      {{- end }}
+  {{- end }}
