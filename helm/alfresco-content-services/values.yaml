@@ -31,7 +31,7 @@ repository:
     externalPort: &repositoryExternalPort 80
   ingress:
     path: /
-    maxUploadSize: "5g"
+    maxUploadSize: "5000m"
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
