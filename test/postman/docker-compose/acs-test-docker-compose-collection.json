@@ -1,14 +1,13 @@
 {
 	"info": {
 		"_postman_id": "33a9f6b4-dfe2-4e7b-b016-ad94f8258c86",
-		"name": "acs-test-collection",
+		"name": "acs-test-docker-compose-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "01 ACS-basic-auth",
-			"description": null,
 			"item": [
 				{
 					"name": "repo-discovery",
@@ -497,104 +496,6 @@
 								"admin-clustering-test"
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "validate cluster",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "e7bafe63-7b54-4f24-8833-f36dadfb0a10",
-								"type": "text/javascript",
-								"exec": [
-									"",
-									"pm.globals.get(\"url\");",
-									"",
-									"/*",
-									" this will fail if you don't call GET /alfresco/s/enterprise/admin/admin-clustering-test before this POST call",
-									"*/",
-									"pm.test(\"callToTestWasOKTest\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.test(\"validateClusterTest\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    ",
-									"    var nodeNamesArray = jsonData.nodeNames;",
-									"",
-									"    console.log(nodeNamesArray);",
-									"    pm.expect(nodeNamesArray.length).to.eq(2);",
-									"    ",
-									"    var tableDataArray= jsonData.tableData;",
-									"    console.log(tableDataArray[0][0]);",
-									"    console.log(tableDataArray[0][1]);",
-									"    console.log(tableDataArray[1][0]);",
-									"    console.log(tableDataArray[1][1]);",
-									"    ",
-									"    pm.expect(tableDataArray[0][1]).to.contain(\"success\");",
-									"    pm.expect(tableDataArray[1][0]).to.contain(\"success\");",
-									"    ",
-									"    ",
-									"});",
-									"",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"type": "any"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "alf-csrftoken",
-								"value": "{{alf-csrftoken}} "
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
-							"protocol": "{{protocol}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"alfresco",
-								"s",
-								"enterprise",
-								"admin",
-								"admin-clustering-test"
-							]
-						},
-						"description": "This request will validate whether the repo is set up correctly "
 					},
 					"response": []
 				},
