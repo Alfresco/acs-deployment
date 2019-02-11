@@ -180,6 +180,7 @@ helm install stable/nginx-ingress \
 --set controller.scope.namespace=$DESIREDNAMESPACE \
 --set rbac.create=true \
 --set controller.config."force-ssl-redirect"=\"true\" \
+--set controller.config."server-tokens"=\"false\" \
 --set controller.service.targetPorts.https=80 \
 --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
 --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
@@ -199,6 +200,7 @@ helm install stable/nginx-ingress \
 --version 0.14.0 \
 --set controller.scope.enabled=true \
 --set controller.scope.namespace=$DESIREDNAMESPACE \
+--set controller.config."server-tokens"=\"false\" \
 --set rbac.create=true \
 -f ingressvalues.yaml \
 --namespace $DESIREDNAMESPACE
@@ -213,6 +215,7 @@ cat <<EOF > ingressvalues.yaml
 controller:
   config:
     ssl-redirect: "false"
+    server-tokens: "false"
   scope:
     enabled: true
     namespace: $DESIREDNAMESPACE
