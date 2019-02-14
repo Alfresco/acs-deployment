@@ -39,10 +39,11 @@ data:
       {{- if index .Values "alfresco-search" "enabled" }}
       -Dsolr.host={{ template "alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
-      {{- end }}
+      {{- else }}
       {{- if index .Values "alfresco-search" "external" }}
       -Dsolr.host={{ index .Values "alfresco-search" "external" "host" }}
       -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
+      {{- end }}
       {{- end }}
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
