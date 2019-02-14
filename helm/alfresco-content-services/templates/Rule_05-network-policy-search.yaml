@@ -1,4 +1,5 @@
 {{- if .Values.networkpolicysetting.enabled }}
+{{- if index .Values "alfresco-search" "enabled" }}
 # Allow search communication with other components
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -56,4 +57,5 @@ spec:
       ports:
       - protocol: TCP
         port: 2049
+{{- end }}
 {{- end }}

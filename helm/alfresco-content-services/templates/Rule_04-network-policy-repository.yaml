@@ -18,10 +18,12 @@ spec:
           matchLabels:
             app: nginx-ingress
 
+      {{- if index .Values "alfresco-search" "enabled" }}
       # Allow traffic from search
       - podSelector:
           matchLabels:
-            app: {{ template "alfresco-search.host" . }}
+            app:  {{ template "alfresco-search.host" . }}
+      {{- end }}
 
       # Allow traffic from share
       - podSelector:
@@ -70,11 +72,13 @@ spec:
       - podSelector:
           matchLabels:
              app: {{ template "content-services.shortname" . }}-repository
-      
+
+      {{- if index .Values "alfresco-search" "enabled" }}
       # Search (solr)
       - podSelector:
           matchLabels:
-             app: {{ template "alfresco-search.host" . }}
+             app:  {{ template "alfresco-search.host" . }}
+      {{- end }}
 
       # Share
       - podSelector:
