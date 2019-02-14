@@ -16,7 +16,7 @@ metadata:
       location ~ ^(/.*/s/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcservice/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcs/api/solr/.*)$ {return 403;}
-    {{ end }}
+    {{- end }}
 
 spec:
   rules:

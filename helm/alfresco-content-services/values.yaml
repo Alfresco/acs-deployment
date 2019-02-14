@@ -307,7 +307,7 @@ alfresco-infrastructure:
     enabled: false
 
 alfresco-search:
-  enabled: false
+  enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
 # Note: Rule_05-network-policy-search will be disable.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.

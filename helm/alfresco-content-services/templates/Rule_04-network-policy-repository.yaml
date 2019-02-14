@@ -23,7 +23,7 @@ spec:
       - podSelector:
           matchLabels:
             app:  {{ template "alfresco-search.host" . }}
-      {{ end }}
+      {{- end }}
 
       # Allow traffic from share
       - podSelector:
@@ -73,12 +73,12 @@ spec:
           matchLabels:
              app: {{ template "content-services.shortname" . }}-repository
 
-      {{ if index .Values "alfresco-search" "enabled" }}
+      {{- if index .Values "alfresco-search" "enabled" }}
       # Search (solr)
       - podSelector:
           matchLabels:
              app:  {{ template "alfresco-search.host" . }}
-      {{ end }}
+      {{- end }}
 
       # Share
       - podSelector:
