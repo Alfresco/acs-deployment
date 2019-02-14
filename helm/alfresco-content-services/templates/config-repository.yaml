@@ -35,9 +35,13 @@ data:
       -Dshare.protocol={{ .Values.externalProtocol | default "http"}}
       -Dshare.host={{ .Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .)) }}
       -Dshare.port={{ .Values.externalPort | default .Values.share.service.externalPort }}
-      -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
+      -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }} {{ if index .Values "alfresco-search" "enabled" }}
       -Dsolr.host={{ template "alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
+      {{ end }} {{ if index .Values "alfresco-search" "external" }}
+      -Dsolr.host={{ index .Values "alfresco-search" "external" "host" }}
+      -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
+      {{ end }}
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
