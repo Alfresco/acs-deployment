@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "33a9f6b4-dfe2-4e7b-b016-ad94f8258c86",
-		"name": "acs-test-collection",
+		"name": "acs-test-helm-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -68,8 +68,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/api/discovery",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/discovery",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -139,8 +139,8 @@
 							"raw": "{\r\n  \"name\":\"MyFunkyNameForTestingPersistency\",\r\n  \"nodeType\":\"cm:folder\"\r\n}"
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children?autoRename=true",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children?autoRename=true",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -211,8 +211,8 @@
 							"raw": "{\r\n  \"folderPath\":\"{{folderName}}\",\r\n  \"fileCount\":\"2\",\r\n  \"forceBinaryStorage\":\"true\",\r\n  \"minFileSize\":\"22\",\r\n  \"maxFileSize\":\"42\"\r\n}"
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/s/api/model/filefolder/load",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/s/api/model/filefolder/load",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -282,8 +282,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -342,8 +342,8 @@
 							"raw": "So Long, and Thanks for All the Fish!"
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -406,8 +406,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -484,8 +484,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -581,8 +581,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -655,8 +655,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/share/page/modules/deploy",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/share/page/modules/deploy",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -723,8 +723,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/share/res/components/documentlibrary/actions/google-edit-flat-16.png",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/share/res/components/documentlibrary/actions/google-edit-flat-16.png",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -809,8 +809,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/s/api/solrstats",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/s/api/solrstats",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -875,8 +875,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/share/service/proxy/alfresco/api/solr/aclchangesets?fromId=1&maxResults=5",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/share/service/proxy/alfresco/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -955,8 +955,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/service/api/solr/aclchangesets?fromId=1&maxResults=5",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/service/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1033,8 +1033,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/s/api/solr/aclchangesets?fromId=1&maxResults=5",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/s/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1111,8 +1111,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/wcservice/api/solr/aclchangesets?fromId=1&maxResults=5",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/wcservice/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1189,8 +1189,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/wcs/api/solr/aclchangesets?fromId=1&maxResults=5",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/wcs/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1246,8 +1246,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/solr",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/solr",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1305,8 +1305,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/webdav",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/webdav",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1364,8 +1364,8 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{url}}/alfresco/aos",
-							"protocol": "https",
+							"raw": "{{protocol}}://{{url}}/alfresco/aos",
+							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
