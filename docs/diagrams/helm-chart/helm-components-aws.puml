@@ -46,7 +46,6 @@ nginx --> acs
 nginx --> share
 nginx --> adw
 
-acs --> vc
 ass --> ebs
 sfs --> vc
 acs --> s3
