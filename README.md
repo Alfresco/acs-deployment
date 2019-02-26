@@ -9,9 +9,9 @@ This project contains the code for starting the entire Alfresco Content Services
 The **master** branch of this repository will endeavour to support the following deployments:
 - [Docker Compose](docs/docker-compose-deployment.md) (latest): For development and trials
 - [MiniKube](docs/helm-deployment-minikube.md) (latest): For development and POCs
-- [Helm - AWS Cloud with Kubernetes using Kops](docs/helm-deployment-aws_kops.md) (latest): As a reference or basis of production deployments
+- [Helm - AWS Cloud with Kubernetes using Kops](docs/helm-deployment-aws_kops.md) (latest): As a deployment template which can be used as the basis for your specific deployment needs
 
-For the Community edition, go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
+For the Community Edition, go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
 The only differences between these projects are:
 * In the Enterprise chart, the images for the transformers are used, instead of the included binaries.
 * In the Enterprise chart, a cluster of two `alfresco-content-repository` nodes are started by default.
@@ -38,7 +38,8 @@ Alfresco Content Services deployed via `docker-compose` or Kubernetes contains t
 * [Customizing your deployment](docs/customising-deployment.md)
 
 ## Production environments
-The Helm charts in this repository provide a PostgreSQL database in a docker container and do not configure
+Alfresco provides tested Helm charts as a "deployment template" for customers who want to take advantage of the container orchestration benefits of Kubernetes. These Helm charts are undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
+The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure
 any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without
 changes and are still flexible to be adopted to your actual environment.   
 For your environment, you should use these charts as a starting point and modify them so that ACS integrates
@@ -84,5 +85,3 @@ Not supported OnPrem and OnCloud:
 * Authentication with passthru
 * The old Cloud Sync
 * Transformations (we only support renditions)
-
-
