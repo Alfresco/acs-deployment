@@ -45,7 +45,6 @@ nginx --> acs
 nginx --> share
 nginx --> adw
 
-acs --> vc
 ass --> ebs
 sfs --> vc
 acs --> s3
@@ -69,6 +68,6 @@ img --> sfs
 tika --> sfs
 share --> acs
 
-center footer Copyright 2018 Alfresco Software Inc
+center footer Copyright 2019 Alfresco Software Inc
 
 @enduml
