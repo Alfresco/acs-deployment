@@ -24,7 +24,6 @@ node "ACS namespace" {
     rectangle "Alfresco Transform Service" {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
-        component "ActiveMQ" as amq #lightgrey
         component "Alfresco PDF Renderer" as pdfr #lightgrey
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
@@ -32,11 +31,13 @@ node "ACS namespace" {
     }
 }
 
-node "Amazon Web Services" {
+cloud "Amazon Web Services" {
+    storage "S3" as s3
     database "Aurora RDS" as db
-    database "S3" as s3
-    database "EFS Volume Claim" as vc
-    database "EBS" as ebs
+    storage "EBS" as ebs
+    storage "EFS Volume Claim" as vc
+    queue "Amazon MQ" as mq
+
 }
 
 Client --> nginx
@@ -56,12 +57,12 @@ acs --> libr
 acs --> img
 acs --> tika
 acs --> sfs
-acs <--> amq
-tr --> pdfr
-tr --> libr
-tr --> img
-tr --> tika
-tr <-up-> amq
+acs <--> mq
+tr -up-> pdfr
+tr -up-> libr
+tr -up-> img
+tr -up-> tika
+tr <--> mq
 pdfr --> sfs
 libr --> sfs
 img --> sfs
