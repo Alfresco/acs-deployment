@@ -66,3 +66,10 @@ spec:
               initialDelaySeconds: {{ .Values.transformrouter.readinessProbe.initialDelaySeconds }}
               periodSeconds: {{ .Values.transformrouter.readinessProbe.periodSeconds }}
               timeoutSeconds: {{ .Values.transformrouter.readinessProbe.timeoutSeconds }}
+          volumeMounts:
+          - name: config-volume
+            mountPath: /tmp/routes
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
