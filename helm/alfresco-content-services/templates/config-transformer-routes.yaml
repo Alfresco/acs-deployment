@@ -1,4 +1,5 @@
 # Defines transformer routes
+{{- if .Values.ai.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -139,3 +140,4 @@ data:
 
     image/tiff|application/vnd.alfresco.ai.features.v1+json=image/tiff|image/gif|image/jpeg|text/plain|application/vnd.alfresco.ai.features.v1+json
     image/gif|application/vnd.alfresco.ai.features.v1+json=image/gif|image/jpeg|text/plain|application/vnd.alfresco.ai.features.v1+json
+{{- end }}

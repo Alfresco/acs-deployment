@@ -367,6 +367,12 @@ alfresco-digital-workspace:
 # choose if you want AI capabilities
 ai:
   enabled: false
+  # aws:
+  #  accessKey:
+  #  secretAccessKey:
+  #  region:
+  #  s3Bucket:
+  #  comprehendRoleARN:
 
 # choose if you want network policy enabled
 networkpolicysetting:
