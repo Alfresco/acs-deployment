@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 helm install alfresco-content-services \
+-f alfresco-content-services/ai-reference-values.yaml \
 --set externalProtocol="https" \
 --set externalHost="${EXTERNALHOST}" \
 --set externalPort="443" \
@@ -19,12 +20,6 @@ helm install alfresco-content-services \
 --set ai.aws.region="<ai-aws-region>" \
 --set ai.aws.s3Bucket="<ai-s3-bucket-name>" \
 --set ai.aws.comprehendRoleARN="<ai-aws-role-arn>" \
---set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
---set repository.image.tag="<tag>" \
---set share.image.repository="quay.io/alfresco/alfresco-share-aws" \
---set share.image.tag="<tag>" \
---set ai.enabled="true" \
---set s3connector.enabled="true" \
 --set s3connector.config.bucketName="<acs-s3-bucket-name>" \
 --set s3connector.config.bucketLocation="<acs-s3-region>" \
 --set s3connector.secrets.accessKey="<acs-access-key>" \
