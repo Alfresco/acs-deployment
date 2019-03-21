@@ -1,25 +1,28 @@
 #!/usr/bin/env bash
 
 helm install alfresco-content-services \
---set repository.adminPassword="admin" \
+--set externalProtocol="https" \
+--set externalHost="${EXTERNALHOST}" \
+--set externalPort="443" \
+--set repository.adminPassword="${ALF_ADMIN_PWD}" \
 --set alfresco-infrastructure.persistence.efs.enabled=true \
---set alfresco-infrastructure.persistence.efs.dns="<efs-dns>" \
+--set alfresco-infrastructure.persistence.efs.dns="${EFS_SERVER}" \
 --set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
 --set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
 --set persistence.repository.data.subPath="${DESIREDNAMESPACE}/alfresco-content-services/repository-data" \
 --set persistence.solr.data.subPath="${DESIREDNAMESPACE}/alfresco-content-services/solr-data" \
---set postgresql.postgresPassword="admin" \
+--set postgresql.postgresPassword="${ALF_DB_PWD}" \
 --set postgresql.persistence.subPath="${DESIREDNAMESPACE}/alfresco-content-services/database-data" \
 --set registryPullSecrets="<quay-pull-secret>" \
---set aws.accessKey="<ai-access-key>" \
---set aws.secretAccessKey="<ai-secret-key>" \
---set aws.region="<ai-aws-region>" \
---set aws.s3Bucket="<ai-s3-bucket-name>" \
---set aws.comprehendRoleARN="<ai-aws-role-arn>" \
+--set ai.aws.accessKey="<ai-access-key>" \
+--set ai.aws.secretAccessKey="<ai-secret-key>" \
+--set ai.aws.region="<ai-aws-region>" \
+--set ai.aws.s3Bucket="<ai-s3-bucket-name>" \
+--set ai.aws.comprehendRoleARN="<ai-aws-role-arn>" \
 --set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
---set repository.image.tag="latest" \
+--set repository.image.tag="<tag>" \
 --set share.image.repository="quay.io/alfresco/alfresco-share-aws" \
---set share.image.tag="latest" \
+--set share.image.tag="<tag>" \
 --set ai.enabled="true" \
 --set s3connector.enabled="true" \
 --set s3connector.config.bucketName="<acs-s3-bucket-name>" \
