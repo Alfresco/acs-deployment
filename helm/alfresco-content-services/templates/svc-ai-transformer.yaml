@@ -1,0 +1,22 @@
+# Defines the service for the ai transformer app
+{{- if .Values.ai.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "content-services.shortname" . }}-ai-transformer
+  labels:
+    app: {{ template "content-services.shortname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  type: {{ .Values.aiTransformer.service.type }}
+  ports:
+  - port: {{ .Values.aiTransformer.service.externalPort }}
+    targetPort: {{ .Values.aiTransformer.image.internalPort }}
+    name: {{ .Values.aiTransformer.service.name }}
+  selector:
+    app: {{ template "content-services.shortname" . }}-ai-transformer
+    release: {{ .Release.Name }}
+{{- end }}

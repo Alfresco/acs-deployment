@@ -29,4 +29,10 @@ data:
   LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
   TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  {{- if .Values.ai.enabled }}
+  TRANSFORMER_URL_AWS_AI: "http://aws-ai:8090"
+  TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
+  SPRING_APPLICATION_JSON: "{\"transformer\":{\"queue\":{\"AWS_AI\":\"org.alfresco.transform.engine.ai-aws.acs\"},\"url\":{\"AWS_AI\":\"http://aws-ai:8090\"}}}"
+  TRANSFORMER_ROUTES_FILE_LOCATION: "tmp/routes/transformer-routes-with-ai.properties"
+  {{- end }}
   
