@@ -10,7 +10,7 @@
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
 repository:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
     tag: "6.1.0"
@@ -56,7 +56,7 @@ apiexplorer:
     path: /api-explorer
 
 transformrouter:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: "1.0.1"
@@ -80,7 +80,7 @@ transformrouter:
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
     tag: "2.0.10"
@@ -113,7 +113,7 @@ pdfrenderer:
 # Declares the alfresco-imagemagick service used by the content repository
 # to transform image files
 imagemagick:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
     tag: "2.0.10"
@@ -146,7 +146,7 @@ imagemagick:
 # Declares the alfresco-libreoffice service used by the content repository
 # to transform office files
 libreoffice:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
     tag: "2.0.10"
@@ -179,7 +179,7 @@ libreoffice:
 # Declares the alfresco-tika service used by the content repository
 # to transform office files
 tika:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-tika
     tag: "2.0.10"
@@ -210,7 +210,7 @@ tika:
     maxTransformSeconds: 1800
 
 aiTransformer:
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: "0.3.0"
