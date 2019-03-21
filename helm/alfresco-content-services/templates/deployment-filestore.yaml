@@ -79,6 +79,15 @@ spec:
             subPath: {{ .Values.persistence.filestore.data.subPath }}
           {{- end }}
       {{- if .Values.persistence.filestore.enabled }}
+      initContainers:
+        - name: init-fs
+          image: busybox
+          # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
+          command: ["sh", "-c", "chown -R 33030:1000 {{ .Values.persistence.filestore.data.mountPath }}"]
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.filestore.data.mountPath }}
+              subPath: {{ .Values.persistence.filestore.data.subPath }}
       volumes:
       - name: data
         persistentVolumeClaim:
