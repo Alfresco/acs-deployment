@@ -82,7 +82,7 @@ spec:
       initContainers:
         - name: init-fs
           image: busybox
-          # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
+          # command to allow sfs to write to EFS volume.
           command: ["sh", "-c", "chown -R 33030:1000 {{ .Values.persistence.filestore.data.mountPath }}"]
           volumeMounts:
             - name: data
