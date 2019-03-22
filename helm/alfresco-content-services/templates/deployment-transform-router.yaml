@@ -69,7 +69,7 @@ spec:
           {{- if .Values.ai.enabled }}
           volumeMounts:
           - name: config-volume
-            mountPath: /tmp/routes
+            mountPath: /mnt/routes
           {{- end }}
       {{- if .Values.ai.enabled }}
       volumes:
