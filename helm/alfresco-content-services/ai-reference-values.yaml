@@ -1,11 +1,9 @@
 repository:
-  replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-content-repository-aws
     tag: "feature-ATS-292-release-6.1.0.2-AI"
 
 share:
-  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-share-aws
     tag: "support-HF-6.1.0-6.1.0.1-SNAPSHOT"
@@ -13,6 +11,5 @@ share:
 ai:
   enabled: true
 
-# Defines the properties to be used for the S3 Connector
 s3connector:
   enabled: true
