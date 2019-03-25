@@ -332,6 +332,7 @@ alfresco-digital-workspace:
   enabled: true
   ingress:
     path: /digital-workspace
+    applicationBasePath: ./
 
 
 # choose if you want network policy enabled
