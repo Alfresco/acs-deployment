@@ -47,8 +47,8 @@ helm init --service-account tiller
 
 * Add `incubator` or `stable` repository to your local Helm.
 ```bash
-helm repo add alfresco-incubator http://kubernetes-charts.alfresco.com/incubator
-helm repo add alfresco-stable http://kubernetes-charts.alfresco.com/stable
+helm repo add alfresco-incubator https://kubernetes-charts.alfresco.com/incubator
+helm repo add alfresco-stable https://kubernetes-charts.alfresco.com/stable
 ```
 
 * Update the repository indexes:
