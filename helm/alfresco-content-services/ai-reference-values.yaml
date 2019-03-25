@@ -6,7 +6,7 @@ repository:
 share:
   image:
     repository: quay.io/alfresco/alfresco-share-aws
-    tag: "support-HF-6.1.0-6.1.0.1-SNAPSHOT"
+    tag: "feature-ATS-345-release-6.1.0.1-AI"
 
 ai:
   enabled: true
