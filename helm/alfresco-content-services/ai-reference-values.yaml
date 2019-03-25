@@ -1,12 +1,12 @@
 repository:
   image:
     repository: quay.io/alfresco/alfresco-content-repository-aws
-    tag: "feature-ATS-292-release-6.1.0.2-AI"
+    tag: "6.1.0-AI-0.4.0"
 
 share:
   image:
     repository: quay.io/alfresco/alfresco-share-aws
-    tag: "feature-ATS-345-release-6.1.0.1-AI"
+    tag: "6.1.0-AI-0.4.0"
 
 ai:
   enabled: true
