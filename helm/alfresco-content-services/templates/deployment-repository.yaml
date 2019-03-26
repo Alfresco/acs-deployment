@@ -66,16 +66,26 @@ spec:
             periodSeconds: {{ .Values.repository.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.repository.livenessProbe.timeoutSeconds }}
-      {{- if eq .Values.database.external false }}
+      {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
       initContainers:
+      {{- if eq .Values.database.external false }}
         # wait for the DB to startup before this deployment can start
         - name: init-db
           image: busybox
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
       {{- if .Values.persistence.repository.enabled }}
+        - name: init-fs
+          image: busybox
+          # command to allow repository to write to EFS volume.
+          command: ["sh", "-c", "chown -R 33000:1000 {{ .Values.persistence.repository.data.mountPath }}"]
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.repository.data.mountPath }}
+              subPath: {{ .Values.persistence.repository.data.subPath }}
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
+      {{- end }}
       {{- end }}
