@@ -362,7 +362,8 @@ alfresco-search:
 alfresco-digital-workspace:
   enabled: true
   ingress:
-    path: /digital-workspace
+    path: /workspace
+    applicationBasePath: ./
 
 # choose if you want AI capabilities
 ai:
