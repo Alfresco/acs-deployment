@@ -722,13 +722,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{protocol}}://{{url}}/digital-workspace",
+							"raw": "{{protocol}}://{{url}}/workspace",
 							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
-								"digital-workspace"
+								"workspace"
 							]
 						},
 						"description": "Validate Digital Workspace is deployed correctly"
