@@ -33,8 +33,8 @@ node "ACS namespace" {
 }
 
 cloud "Amazon Web Services" {
-    storage "S3(ACS)" as s3acs
-    storage "S3(AI)" as s3ai
+    storage "S3 (ACS)" as s3acs
+    storage "S3 (AI)" as s3ai
     database "Aurora RDS" as db
     storage "EBS" as ebs
     storage "EFS Volume Claim" as vc
