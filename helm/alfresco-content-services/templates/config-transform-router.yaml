@@ -33,6 +33,6 @@ data:
   TRANSFORMER_URL_AWS_AI: http://{{ template "content-services.shortname" . }}-ai-transformer:80
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
   SPRING_APPLICATION_JSON: "{\"transformer\":{\"queue\":{\"AWS_AI\":\"org.alfresco.transform.engine.ai-aws.acs\"},\"url\":{\"AWS_AI\":\"http://{{ template "content-services.shortname" . }}-ai-transformer:80\"}}}"
-  TRANSFORMER_ROUTES_FILE_LOCATION: "mnt/routes/transformer-routes-with-ai.properties"
+  TRANSFORMER_ROUTES_FILE_LOCATION: "/mnt/routes/transformer-routes-with-ai.properties"
   {{- end }}
   

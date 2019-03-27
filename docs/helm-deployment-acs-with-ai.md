@@ -33,4 +33,4 @@ export ALF_DB_PWD="<db_password>"
 export QUAY_PULL_SECRET="<quay_pull_secret_name>"
 ```
 * For additional information on the S3 Connector benefits, installation and configuration, see the [Alfresco Content Connector for AWS S3 documentation](https://docs.alfresco.com/s3connector/concepts/s3-contentstore-overview.html).
-* For additional information on the `AI_AWS_*` variables and configuration, see the [AWS Setup documentation](https://docstest.alfresco.com/intelligence/concepts/aws-setup.html).
+* For additional information on the `AI_AWS_*` variables and configuration, see the [AWS Setup documentation](https://docs.alfresco.com/intelligence/concepts/aws-setup.html).
