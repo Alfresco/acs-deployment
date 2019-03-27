@@ -17,12 +17,12 @@ node "nginx-ingress namespace" {
 }
 
 node "ACS namespace" {
-    component "Alfresco Digital Workspace \n with AI configuration" as adw #lightgrey
-    component "Alfresco Content Services \n with AI AMP" as acs #lightgrey
+    component "Alfresco Digital Workspace \n (with AI config)" as adw #lightgrey
+    component "Alfresco Content Services \n (with AI AMP)" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
-    component "Alfresco Share \n with AI AMP" as share #lightgrey
+    component "Alfresco Share \n (with AI AMP)" as share #lightgrey
     rectangle "Alfresco Transform Service" {
-        component "Transform Router \n with AI configuration" as tr #lightgrey
+        component "Transform Router \n (with AI config)" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
         component "Alfresco PDF Renderer" as pdfr #lightgrey
         component "LibreOffice" as libr #lightgrey
@@ -33,7 +33,8 @@ node "ACS namespace" {
 }
 
 cloud "Amazon Web Services" {
-    storage "S3" as s3
+    storage "S3(ACS)" as s3acs
+    storage "S3(AI)" as s3ai
     database "Aurora RDS" as db
     storage "EBS" as ebs
     storage "EFS Volume Claim" as vc
@@ -51,7 +52,7 @@ nginx --> adw
 
 ass --> ebs
 sfs --> vc
-acs --> s3
+acs --> s3acs
 
 ass <--> acs
 acs --> db
@@ -73,7 +74,7 @@ img --> sfs
 tika --> sfs
 share --> acs
 aiEngine --> sfs
-aiEngine --> s3
+aiEngine --> s3ai
 aiEngine --> comp
 aiEngine --> rek
 aiEngine --> tex
