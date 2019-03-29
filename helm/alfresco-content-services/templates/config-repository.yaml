@@ -73,7 +73,20 @@ data:
       {{- end }}
       -Ddb.username=$DATABASE_USERNAME
       -Ddb.password=$DATABASE_PASSWORD
+      {{- if .Values.s3connector.enabled }}
+      {{- if .Values.s3connector.secrets }}
+      {{- if .Values.s3connector.secrets.accessKey }}
       -Ds3.accessKey=$ACCESSKEY
+      {{- end }}
+      {{- if .Values.s3connector.secrets.secretKey }}
       -Ds3.secretKey=$SECRETKEY
+      {{- end }}
+      {{- if .Values.s3connector.secrets.encryption }}
       -Ds3.encryption=$ENCRYPTION
-      -Ds3.awsKmsKeyId=$KMSKEYID"
+      {{- end }}
+      {{- if .Values.s3connector.secrets.awsKmsKeyId }}
+      -Ds3.awsKmsKeyId=$KMSKEYID
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      "
