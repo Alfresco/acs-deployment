@@ -1,0 +1,76 @@
+# Defines the deployment for the ai transformer app
+# Details: https://github.com/Alfresco/alfresco-ai-transformers/tree/master/alfresco-ai-docker-engine
+{{- if .Values.ai.enabled }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.shortname" . }}-ai-transformer
+  labels:
+    app: {{ template "content-services.shortname" . }}-ai-transformer
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  replicas: {{ .Values.aiTransformer.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "content-services.shortname" . }}-ai-transformer
+        release: {{ .Release.Name }}
+        component: transformers
+    spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 10
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                    - {{ template "content-services.shortname" . }}-ai-transformer
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+            - weight: 5
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                    - {{ template "content-services.shortname" . }}-ai-transformer
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.aiTransformer.image.repository }}:{{ .Values.aiTransformer.image.tag }}"
+          imagePullPolicy: {{ .Values.aiTransformer.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-ai-transformer.yaml
+              name: {{ template "content-services.shortname" . }}-ai-transformer-configmap
+          ports:
+              - containerPort: {{ .Values.aiTransformer.image.internalPort }}
+          resources:
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.aiTransformer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.aiTransformer.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.aiTransformer.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.aiTransformer.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.aiTransformer.image.internalPort }}
+            initialDelaySeconds: {{ .Values.aiTransformer.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.aiTransformer.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.aiTransformer.livenessProbe.timeoutSeconds }}
+{{ toYaml .Values.aiTransformer.resources | indent 12 }}
+{{- end }}

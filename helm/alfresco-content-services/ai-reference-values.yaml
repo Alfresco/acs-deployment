@@ -1,0 +1,15 @@
+repository:
+  image:
+    repository: quay.io/alfresco/alfresco-content-repository-aws
+    tag: "6.1.0-AI-0.4.0"
+
+share:
+  image:
+    repository: quay.io/alfresco/alfresco-share-aws
+    tag: "6.1.0-AI-0.4.0"
+
+ai:
+  enabled: true
+
+s3connector:
+  enabled: true

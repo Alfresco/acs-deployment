@@ -209,6 +209,37 @@ tika:
     maxTransforms: 10000
     maxTransformSeconds: 1800
 
+aiTransformer:
+  replicaCount: 2
+  image:
+    repository: quay.io/alfresco/alfresco-ai-docker-engine
+    tag: "0.3.0"
+    pullPolicy: Always
+    internalPort: 8090
+  service:
+    name: ai-transformer
+    type: ClusterIP
+    externalPort: 80
+  resources:
+    requests:
+      memory: "1000Mi"
+    limits:
+      memory: "1000Mi"
+  environment:
+    JAVA_OPTS: " -Xms256M -Xmx512M"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 400
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 10000
+    maxTransformSeconds: 1800
+
 # Declares the alfresco-shared-file-store used by the content repository
 # and transform service
 filestore:
@@ -334,6 +365,15 @@ alfresco-digital-workspace:
     path: /workspace
     applicationBasePath: ./
 
+# choose if you want AI capabilities
+ai:
+  enabled: false
+  # aws:
+  #  accessKey:
+  #  secretAccessKey:
+  #  region:
+  #  s3Bucket:
+  #  comprehendRoleARN:
 
 # choose if you want network policy enabled
 networkpolicysetting:

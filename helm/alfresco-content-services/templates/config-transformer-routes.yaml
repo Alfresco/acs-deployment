@@ -1,0 +1,143 @@
+# Defines transformer routes
+{{- if .Values.ai.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
+  labels:
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transform-routes
+data:
+  transformer-routes-with-ai.properties: |-
+    # This properties file is parsed by the org.alfresco.transform.router.routes.TransformerRoutes class
+    # All the wildcards are expanded based on a predefined set of Media Types
+
+    # Custom transformations go below here
+
+    # Images -> AWS (Rekognition)
+    image/png|application/vnd.alfresco.ai.labels.v1+json=AWS_AI
+    image/jpeg|application/vnd.alfresco.ai.labels.v1+json=AWS_AI
+
+    # Text -> AWS (Comprehend)
+    text/plain|application/vnd.alfresco.ai.features.v1+json=AWS_AI
+
+    # Images -> AWS (Textract)
+    image/png|application/vnd.alfresco.ai.textract.v1+json=AWS_AI
+    image/jpeg|application/vnd.alfresco.ai.textract.v1+json=AWS_AI
+    image/png|text/plain=AWS_AI
+    image/jpeg|text/plain=AWS_AI
+
+    # Images -> AWS (Textract) -> AWS (Comprehend)
+    image/png|application/vnd.alfresco.ai.features.v1+json=image/png|text/plain|application/vnd.alfresco.ai.features.v1+json
+    image/jpeg|application/vnd.alfresco.ai.features.v1+json=image/jpeg|text/plain|application/vnd.alfresco.ai.features.v1+json
+
+    # if version within original T-Router is updated then following section needs to also be updated to match it
+
+    image/gif|image/gif=IMAGEMAGICK
+    image/gif|image/jpeg=IMAGEMAGICK
+    image/gif|image/png=IMAGEMAGICK
+    image/gif|image/tiff=IMAGEMAGICK
+
+    image/jpeg|image/gif=IMAGEMAGICK
+    image/jpeg|image/jpeg=IMAGEMAGICK
+    image/jpeg|image/png=IMAGEMAGICK
+    image/jpeg|image/tiff=IMAGEMAGICK
+
+    image/png|image/gif=IMAGEMAGICK
+    image/png|image/jpeg=IMAGEMAGICK
+    image/png|image/png=IMAGEMAGICK
+    image/png|image/tiff=IMAGEMAGICK
+
+    image/tiff|image/gif=IMAGEMAGICK
+    image/tiff|image/tiff=IMAGEMAGICK
+
+    application/msword|application/pdf=LIBREOFFICE
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/pdf=LIBREOFFICE
+    application/vnd.ms-excel|application/pdf=LIBREOFFICE
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf=LIBREOFFICE
+    application/vnd.ms-powerpoint|application/pdf=LIBREOFFICE
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|application/pdf=LIBREOFFICE
+    application/vnd.ms-outlook|application/pdf=LIBREOFFICE
+
+    application/msword|application/msword=LIBREOFFICE
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/msword=LIBREOFFICE
+    application/vnd.ms-excel|application/vnd.ms-excel=LIBREOFFICE
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.ms-excel=LIBREOFFICE
+    application/vnd.ms-powerpoint|application/vnd.ms-powerpoint=LIBREOFFICE
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.ms-powerpoint=LIBREOFFICE
+
+    application/pdf|image/png=PDF_RENDERER
+    application/pdf|image/jpeg=application/pdf|image/png|image/jpeg
+
+    application/pdf|text/plain=TIKA
+    application/msword|text/plain=TIKA
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|text/plain=TIKA
+    application/vnd.ms-excel|text/plain=TIKA
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|text/plain=TIKA
+    application/vnd.ms-powerpoint|text/plain=TIKA
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|text/plain=TIKA
+    application/vnd.ms-outlook|text/plain=TIKA
+
+    application/msword|image/jpeg=application/msword|application/pdf|image/png|image/jpeg
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|image/jpeg=application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/pdf|image/png|image/jpeg
+    application/vnd.ms-excel|image/jpeg=application/vnd.ms-excel|application/pdf|image/png|image/jpeg
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|image/jpeg=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf|image/png|image/jpeg
+    application/vnd.ms-powerpoint|image/jpeg=application/vnd.ms-powerpoint|application/pdf|image/png|image/jpeg
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|image/jpeg=application/vnd.openxmlformats-officedocument.presentationml.presentation|application/pdf|image/png|image/jpeg
+    application/vnd.ms-outlook|image/jpeg=application/vnd.ms-outlook|application/pdf|image/png|image/jpeg
+
+    application/msword|image/png=application/msword|application/pdf|image/png|image/png
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|image/png=application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/pdf|image/png|image/png
+    application/vnd.ms-excel|image/png=application/vnd.ms-excel|application/pdf|image/png|image/png
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|image/png=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf|image/png|image/png
+    application/vnd.ms-powerpoint|image/png=application/vnd.ms-powerpoint|application/pdf|image/png|image/png
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|image/png=application/vnd.openxmlformats-officedocument.presentationml.presentation|application/pdf|image/png|image/png
+    application/vnd.ms-outlook|image/png=application/vnd.ms-outlook|application/pdf|image/png|image/png
+
+    # Complex transformations generating an AI Labels rendition (Rekognition)
+
+    image/gif|application/vnd.alfresco.ai.labels.v1+json=image/gif|image/jpeg|application/vnd.alfresco.ai.labels.v1+json
+    image/tiff|application/vnd.alfresco.ai.labels.v1+json=image/tiff|image/gif|image/jpeg|application/vnd.alfresco.ai.labels.v1+json
+    application/pdf|application/vnd.alfresco.ai.labels.v1+json=application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+    application/msword|application/vnd.alfresco.ai.labels.v1+json=application/msword|application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.alfresco.ai.labels.v1+json=application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+    application/vnd.ms-excel|application/vnd.alfresco.ai.labels.v1+json=application/vnd.ms-excel|application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.alfresco.ai.labels.v1+json=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+    application/vnd.ms-powerpoint|application/vnd.alfresco.ai.labels.v1+json=application/vnd.ms-powerpoint|application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.alfresco.ai.labels.v1+json=application/vnd.openxmlformats-officedocument.presentationml.presentation|application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+    application/vnd.ms-outlook|application/vnd.alfresco.ai.labels.v1+json=application/vnd.ms-outlook|application/pdf|image/png|application/vnd.alfresco.ai.labels.v1+json
+
+    # Complex transformations generating an AI Features rendition (Comprehend)
+
+    application/pdf|application/vnd.alfresco.ai.features.v1+json=application/pdf|text/plain|application/vnd.alfresco.ai.features.v1+json
+    application/msword|application/vnd.alfresco.ai.features.v1+json=application/msword|text/plain|application/vnd.alfresco.ai.features.v1+json
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.alfresco.ai.features.v1+json=application/vnd.openxmlformats-officedocument.wordprocessingml.document|text/plain|application/vnd.alfresco.ai.features.v1+json
+    application/vnd.ms-excel|application/vnd.alfresco.ai.features.v1+json=application/vnd.ms-excel|text/plain|application/vnd.alfresco.ai.features.v1+json
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.alfresco.ai.features.v1+json=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|text/plain|application/vnd.alfresco.ai.features.v1+json
+    application/vnd.ms-powerpoint|application/vnd.alfresco.ai.features.v1+json=application/vnd.ms-powerpoint|text/plain|application/vnd.alfresco.ai.features.v1+json
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.alfresco.ai.features.v1+json=application/vnd.openxmlformats-officedocument.presentationml.presentation|text/plain|application/vnd.alfresco.ai.features.v1+json
+    application/vnd.ms-outlook|application/vnd.alfresco.ai.features.v1+json=application/vnd.ms-outlook|text/plain|application/vnd.alfresco.ai.features.v1+json
+
+    # Complex transformations generating an AI Textract rendition
+
+    image/gif|text/plain=image/gif|image/jpeg|text/plain
+    image/tiff|text/plain=image/tiff|image/gif|image/jpeg|text/plain
+    image/gif|application/vnd.alfresco.ai.textract.v1+json=image/gif|image/jpeg|application/vnd.alfresco.ai.textract.v1+json
+    image/tiff|application/vnd.alfresco.ai.textract.v1+json=image/tiff|image/gif|image/jpeg|application/vnd.alfresco.ai.textract.v1+json
+    application/pdf|application/vnd.alfresco.ai.textract.v1+json=application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+    application/msword|application/vnd.alfresco.ai.textract.v1+json=application/msword|application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.alfresco.ai.textract.v1+json=application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+    application/vnd.ms-excel|application/vnd.alfresco.ai.textract.v1+json=application/vnd.ms-excel|application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/vnd.alfresco.ai.textract.v1+json=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+    application/vnd.ms-powerpoint|application/vnd.alfresco.ai.textract.v1+json=application/vnd.ms-powerpoint|application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+    application/vnd.openxmlformats-officedocument.presentationml.presentation|application/vnd.alfresco.ai.textract.v1+json=application/vnd.openxmlformats-officedocument.presentationml.presentation|application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+    application/vnd.ms-outlook|application/vnd.alfresco.ai.textract.v1+json=application/vnd.ms-outlook|application/pdf|image/png|application/vnd.alfresco.ai.textract.v1+json
+
+
+    # Complex transformations Images -> AWS (Textract) -> AWS (Comprehend)
+
+    image/tiff|application/vnd.alfresco.ai.features.v1+json=image/tiff|image/gif|image/jpeg|text/plain|application/vnd.alfresco.ai.features.v1+json
+    image/gif|application/vnd.alfresco.ai.features.v1+json=image/gif|image/jpeg|text/plain|application/vnd.alfresco.ai.features.v1+json
+{{- end }}

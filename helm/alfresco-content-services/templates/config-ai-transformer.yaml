@@ -1,0 +1,38 @@
+# Defines the properties required by the alfresco-ai-transformer container
+{{- if .Values.ai.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.shortname" . }}-ai-transformer-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: transformers
+data:
+  # The JAVA_OPTS defined in the values.yaml file for "ai" are set here using proper quotes
+  {{- if .Values.aiTransformer.environment }}
+  {{- range $key, $val := .Values.aiTransformer.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
+  {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
+  ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
+  ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
+  ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
+  {{- else }}
+  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
+  ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
+  ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
+  {{- end }}
+  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  AWS_ACCESS_KEY: {{ .Values.ai.aws.accessKey }}
+  AWS_SECRET_ACCESS_KEY: {{ .Values.ai.aws.secretAccessKey }}
+  AWS_REGION: {{ .Values.ai.aws.region }}
+  AWS_S3_BUCKET: {{ .Values.ai.aws.s3Bucket }}
+  AWS_COMPREHEND_ROLE_ARN: {{ .Values.ai.aws.comprehendRoleARN }}
+  livenessPercent: "{{ .Values.aiTransformer.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.aiTransformer.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.aiTransformer.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.aiTransformer.livenessProbe.maxTransformSeconds }}"
+{{- end }}

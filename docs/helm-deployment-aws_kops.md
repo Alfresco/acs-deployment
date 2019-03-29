@@ -394,6 +394,10 @@ You can set the Alfresco Content Services stack configuration attributes above a
 
 For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
 
+### Deploying ACS with Alfresco Intelligence Services enabled
+
+* Follow the steps outlined in [Deploying ACS with Alfresco Intelligence Services enabled](helm-deployment-acs-with-ai.md#deploying-acs-with-ai-renditions-enabled).
+
 ### Using an external database instance
 
 * Deploy the helm repository using the following values:
