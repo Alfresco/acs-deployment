@@ -1,6 +1,8 @@
 ### Deploying ACS with Alfresco Intelligence Services enabled
 
-By default, Alfresco Intelligence Services feature is disabled. To deploy ACS with this feature enabled, you can use [helm/deploy-acs-with-ai.sh](../helm/deploy-acs-with-ai.sh) script. Before running it, following environment variables need to be configured:
+By default, [Alfresco Intelligence Services](http://docs.alfresco.com/intelligence/concepts/ai-welcome.html) feature is disabled. 
+
+To deploy ACS with this feature enabled, you can use [helm/deploy-acs-with-ai.sh](../helm/deploy-acs-with-ai.sh) script. Before running it, following environment variables need to be configured:
 
 ```
 export DESIREDNAMESPACE="<k8s_namespace>"
