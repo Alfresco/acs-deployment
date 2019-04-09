@@ -13,13 +13,13 @@ data:
   # The JAVA_OPTS defined in the values.yaml file for the "repository" are set here using proper quotes
   {{- if .Values.repository.environment }}
   {{- range $key, $val := .Values.repository.environment }}
-  {{ $key }}: {{ $val | quote }}
+  {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
   {{- end }}
   RELEASE_NAME: {{ .Release.Name }}
-  {{ $alfhost := (.Values.externalHost | default (printf "%s-repository" (include "content-services.shortname" .))) }}
-  {{ $alfprotocol := (.Values.externalProtocol | default "http") }}
-  {{ $alfport := (.Values.externalPort | default .Values.repository.service.externalPort) | toString }}
+  {{ $alfhost := tpl (.Values.externalHost | default (printf "%s-repository" (include "content-services.shortname" .))) $ }}
+  {{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
+  {{ $alfport := tpl ((.Values.externalPort | default .Values.repository.service.externalPort) | toString) $ }}
   ALFRESCO_OPTS: " -Dalfresco.host={{ $alfhost }}
       -Dalfresco.protocol={{ $alfprotocol }}
       -Dalfresco.port={{ $alfport }}
