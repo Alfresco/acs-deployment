@@ -13,8 +13,8 @@ metadata:
     
 spec:
   rules:
-  {{- if .Values.share.ingress.hostName }}
-  - host: {{ tpl .Values.share.ingress.hostName . }}
+  {{- if .Values.externalHost}}
+  - host: {{ tpl .Values.externalHost $ }}
     http:
   {{- else }}
   - http:

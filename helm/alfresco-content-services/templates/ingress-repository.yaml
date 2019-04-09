@@ -20,8 +20,8 @@ metadata:
 
 spec:
   rules:
-  {{- if .Values.repository.ingress.hostName }}
-  - host: {{ tpl .Values.repository.ingress.hostName . }}
+  {{- if .Values.externalHost }}
+  - host: {{ tpl .Values.externalHost $ }}
     http:
   {{- else }}
   - http:

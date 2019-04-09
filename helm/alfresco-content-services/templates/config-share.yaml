@@ -9,12 +9,12 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: share
 data:
-  {{ $alfhost := (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) }}
-  {{ $alfprotocol := (.Values.externalProtocol | default "http") }}
+  {{ $alfhost := tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
+  {{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
   # The CATALINA_OPTS defined in the values.yaml file for the "share" are set here using proper quotes
   {{- if .Values.share.environment }}
   {{- range $key, $val := .Values.share.environment }}
-  {{ $key }}: {{ $val | quote }}
+  {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
   {{- end }}
   REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
