@@ -20,7 +20,12 @@ metadata:
 
 spec:
   rules:
+  {{- if .Values.repository.ingress.hostName }}
+  - host: {{ tpl .Values.repository.ingress.hostName . }}
+    http:
+  {{- else }}
   - http:
+  {{- end }}
       paths:
       - path: {{ .Values.repository.ingress.path }}
         backend:
