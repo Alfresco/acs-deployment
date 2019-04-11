@@ -13,7 +13,12 @@ metadata:
     
 spec:
   rules:
+  {{- if .Values.share.ingress.hostName }}
+  - host: {{ tpl .Values.share.ingress.hostName . }}
+    http:
+  {{- else }}
   - http:
+  {{- end }}
       paths:
       - path: {{ .Values.share.ingress.path }}
         backend:
