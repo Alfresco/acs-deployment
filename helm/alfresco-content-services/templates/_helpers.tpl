@@ -16,3 +16,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- $name := (.Values.nameOverride | default (printf "%s" "alfresco-")) -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- define "alfresco-content-services.activemq.url" -}}
+{{- $context := dict "Chart" (dict "Name" "activemq") "Release" .Release "Values" (index .Values "alfresco-infrastructure" "activemq") -}}
+{{- $name := include "activemq.fullname" $context -}}
+{{- printf "nio://%s-broker:61616" $name }}
+{{- end -}}

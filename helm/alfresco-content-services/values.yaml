@@ -336,7 +336,6 @@ alfresco-infrastructure:
     enabled: true
   alfresco-identity-service:
     enabled: false
-
 alfresco-search:
   enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
@@ -433,3 +432,7 @@ s3connector:
 # or uncomment the following line if you don't want/need to pass it as a parameter on every install command :
 # registryPullSecrets: private-repo-registry-secret
 # for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
+messageBroker:
+  url:
+  user:
+  password:
