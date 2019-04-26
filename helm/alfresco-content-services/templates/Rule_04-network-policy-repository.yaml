@@ -22,7 +22,7 @@ spec:
       # Allow traffic from search
       - podSelector:
           matchLabels:
-            app:  {{ template "alfresco-search.host" . }}
+            app:  {{ template "alfresco-content-services.alfresco-search.host" . }}
       {{- end }}
 
       # Allow traffic from share
@@ -77,7 +77,7 @@ spec:
       # Search (solr)
       - podSelector:
           matchLabels:
-             app:  {{ template "alfresco-search.host" . }}
+             app:  {{ template "alfresco-content-services.alfresco-search.host" . }}
       {{- end }}
 
       # Share

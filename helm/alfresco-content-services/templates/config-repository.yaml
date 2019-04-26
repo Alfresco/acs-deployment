@@ -37,7 +37,7 @@ data:
       -Dshare.port={{ .Values.externalPort | default .Values.share.service.externalPort }}
       -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
       {{- if index .Values "alfresco-search" "enabled" }}
-      -Dsolr.host={{ template "alfresco-search.host" . }}
+      -Dsolr.host={{ template "alfresco-content-services.alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
       {{- else }}
       {{- if index .Values "alfresco-search" "external" }}

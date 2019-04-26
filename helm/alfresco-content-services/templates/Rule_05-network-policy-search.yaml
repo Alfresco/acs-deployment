@@ -8,7 +8,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: {{ template "alfresco-search.host" . }}
+      app: {{ template "alfresco-content-services.alfresco-search.host" . }}
   policyTypes:
   - Ingress
   - Egress
@@ -27,7 +27,7 @@ spec:
       # Allow Search to access itself
       - podSelector:
           matchLabels:
-            app: {{ template "alfresco-search.host" . }}
+            app: {{ template "alfresco-content-services.alfresco-search.host" . }}
 
       ports:
         - protocol: TCP
@@ -48,7 +48,7 @@ spec:
       # Allow Search to access itself
       - podSelector:
           matchLabels:
-            app: {{ template "alfresco-search.host" . }}
+            app: {{ template "alfresco-content-services.alfresco-search.host" . }}
 
     # Allow DB to communicate with EFS
     - to:

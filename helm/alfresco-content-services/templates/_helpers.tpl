@@ -22,3 +22,13 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- $name := include "activemq.fullname" $context -}}
 {{- printf "nio://%s-broker:61616" $name }}
 {{- end -}}
+
+{{- define "alfresco-content-services.alfresco-search.host" -}}
+{{- $context := dict "Chart" (dict "Name" "alfresco-search") "Release" .Release "Values" (index .Values "alfresco-search") -}}
+{{- include "alfresco-search.host" $context -}}
+{{- end -}}
+
+{{- define "alfresco-content-services.alfresco-search.port" -}}
+{{- $context := dict "Chart" (dict "Name" "alfresco-search") "Release" .Release "Values" (index .Values "alfresco-search") -}}
+{{- index $context "service" "externalPort" -}}
+{{- end -}}
