@@ -47,7 +47,7 @@ services:
 
     transform-router:
         mem_limit: 512m
-        image: quay.io/alfresco/alfresco-transform-router:1.0.2
+        image: quay.io/alfresco/alfresco-transform-router:1.0.2.1
         environment:
           JAVA_OPTS: " -Xms256m -Xmx512m"
           ACTIVEMQ_URL: "nio://activemq:61616"
