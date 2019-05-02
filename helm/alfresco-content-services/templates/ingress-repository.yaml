@@ -3,6 +3,12 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ template "content-services.shortname" . }}-repository
+  labels:
+    app: {{ template "content-services.shortname" . }}-repository
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: repository
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/affinity: "cookie"
@@ -17,6 +23,9 @@ metadata:
       location ~ ^(/.*/wcservice/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcs/api/solr/.*)$ {return 403;}
     {{- end }}
+{{- if .Values.repository.ingress.annotations }}
+{{ toYaml .Values.repository.ingress.annotations | indent 4 }}
+{{- end }}
 
 spec:
   rules:

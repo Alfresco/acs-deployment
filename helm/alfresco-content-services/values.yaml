@@ -24,6 +24,8 @@ repository:
   ingress:
     path: /
     maxUploadSize: "5g"
+    annotations: {}
+      # nginx.ingress.kubernetes.io/enable-cors: "true"
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
@@ -288,6 +290,7 @@ share:
     externalPort: 80
   ingress:
     path: /share
+    annotations: {}
   resources:
     requests:
       memory: "2000Mi"
