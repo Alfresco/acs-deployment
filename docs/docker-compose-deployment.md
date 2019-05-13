@@ -25,7 +25,7 @@ To deploy Alfresco Content Services using _docker-compose_, you'll need to insta
 5. Navigate to the Admin Console and apply your trial license:
 * [http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (```<machine_ip>``` will usually just be ```localhost```)
 * Default username and password is ```admin```
-* See [Uploading a new license](http://docs.alfresco.com/6.0/tasks/at-adminconsole-license.html) for more details
+* See [Uploading a new license](https://docs.alfresco.com/6.1/tasks/at-adminconsole-license.html) for more details
 6. Open the following URLs in your browser to check that everything starts up:
 * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
 * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
