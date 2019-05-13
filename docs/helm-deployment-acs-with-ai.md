@@ -1,6 +1,6 @@
 ### Deploying ACS with Alfresco Intelligence Services enabled
 
-By default, [Alfresco Intelligence Services](http://docs.alfresco.com/intelligence/concepts/ai-welcome.html) feature is disabled. 
+By default, [Alfresco Intelligence Services](https://docs.alfresco.com/intelligence/concepts/ai-welcome.html) feature is disabled. 
 
 To deploy ACS with this feature enabled, you can use [helm/deploy-acs-with-ai.sh](../helm/deploy-acs-with-ai.sh) script. Before running it, following environment variables need to be configured:
 
@@ -24,7 +24,7 @@ export ACS_SECRET_KEY="<s3_connector_iam_user_secret_key>"
 
 The `helm install` command uses an additional file, [helm/alfresco-content-services/ai-reference-values.yaml](../helm/alfresco-content-services/ai-reference-values.yaml), to override some of the default values. The docker image tags will change, as we release and package new versions of Alfresco Intelligence Services.
 
-**Notes:** 
+**Notes:**
 * Follow [these steps](helm-deployment-aws_kops.md#setting-up-alfresco-content-services) to install `nginx-ingress` and to configure some of the environment variables:
 ```
 export DESIREDNAMESPACE="<k8s_namespace>"
