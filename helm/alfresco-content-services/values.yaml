@@ -24,8 +24,6 @@ repository:
   ingress:
     path: /
     maxUploadSize: "5g"
-    annotations: {}
-      # nginx.ingress.kubernetes.io/enable-cors: "true"
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
@@ -58,10 +56,10 @@ apiexplorer:
     path: /api-explorer
 
 transformrouter:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.0.2.1"
+    tag: "1.0.1"
     pullPolicy: Always
     internalPort: 8095
   service:
@@ -82,10 +80,10 @@ transformrouter:
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
-    tag: "2.0.17"
+    tag: "2.0.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -115,10 +113,10 @@ pdfrenderer:
 # Declares the alfresco-imagemagick service used by the content repository
 # to transform image files
 imagemagick:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
-    tag: "2.0.17"
+    tag: "2.0.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -148,10 +146,10 @@ imagemagick:
 # Declares the alfresco-libreoffice service used by the content repository
 # to transform office files
 libreoffice:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
-    tag: "2.0.17"
+    tag: "2.0.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -181,10 +179,10 @@ libreoffice:
 # Declares the alfresco-tika service used by the content repository
 # to transform office files
 tika:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-tika
-    tag: "2.0.17"
+    tag: "2.0.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -210,45 +208,13 @@ tika:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
-
-aiTransformer:
-  replicaCount: 2
-  image:
-    repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.0.1"
-    pullPolicy: Always
-    internalPort: 8090
-  service:
-    name: ai-transformer
-    type: ClusterIP
-    externalPort: 80
-  resources:
-    requests:
-      memory: "1000Mi"
-    limits:
-      memory: "1000Mi"
-  environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 400
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1800
-
 # Declares the alfresco-shared-file-store used by the content repository
 # and transform service
 filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.5.3"
+    tag: "0.5.2"
     pullPolicy: Always
     internalPort: 8099
   service:
@@ -290,7 +256,6 @@ share:
     externalPort: 80
   ingress:
     path: /share
-    annotations: {}
   resources:
     requests:
       memory: "2000Mi"
@@ -342,15 +307,6 @@ alfresco-infrastructure:
 
 alfresco-search:
   enabled: true
-# If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
-# Note: Rule_05-network-policy-search will be disable.
-# Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
-# Note: ingress-repository will not block external trafic to */solr/*
-#  external: 
-    # Host dns/ip of the external solr6 instance.
-#    host: "127.0.0.1"
-    # Port of the external solr6 instance.
-#    port: "8983"
   repository: &repositoryHostPort 
     # The value for "host" is the name of this chart
     host: alfresco-cs
@@ -365,18 +321,8 @@ alfresco-search:
 alfresco-digital-workspace:
   enabled: true
   ingress:
-    path: /workspace
-    applicationBasePath: ./
+    path: /digital-workspace
 
-# choose if you want AI capabilities
-ai:
-  enabled: false
-  # aws:
-  #  accessKey:
-  #  secretAccessKey:
-  #  region:
-  #  s3Bucket:
-  #  comprehendRoleARN:
 
 # choose if you want network policy enabled
 networkpolicysetting:
