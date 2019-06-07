@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.2.0-A3
+        image: quay.io/alfresco/alfresco-content-repository:feature-APPSREPO-656_include_sync-6.2.0-SNAPSHOT
         mem_limit: 1700m
         environment:
             JAVA_OPTS: "
@@ -54,6 +54,7 @@ services:
                 -Dtransform.misc.url=http://transform-misc:8090/
 
                 -Dcsrf.filter.enabled=false
+                -Ddsync.service.uris=http://localhost:9090/alfresco
                 -Xms1500m -Xmx1500m
                 "
 
@@ -214,6 +215,36 @@ services:
             - digital-workspace
             - alfresco
             - share
+            
+    sync-service:
+        image: quay.io/alfresco/service-sync:latest
+        mem_limit: 1g
+        environment:
+            JAVA_OPTS : "
+            -Dsql.db.driver=org.postgresql.Driver
+            -Dsql.db.url=jdbc:postgresql://postgres_sync:5432/alfresco
+            -Dsql.db.username=alfresco
+            -Dsql.db.password=alfresco
+            -Dmessaging.broker.host=activemq
+            -Drepo.hostname=alfresco
+            -Drepo.port=8080
+            -Ddw.server.applicationConnectors[0].type=http
+            -Xms1000m -Xmx1000m
+            "
+
+        ports:
+            - 9090:9090
+            
+    postgres_sync:
+        image: postgres:10.1
+        mem_limit: 512m
+        environment:
+            - POSTGRES_PASSWORD=alfresco
+            - POSTGRES_USER=alfresco
+            - POSTGRES_DB=alfresco
+        command: postgres -c max_connections=300 -c log_min_messages=LOG
+        ports:
+            - 5433:5432
 
 volumes:
     shared-file-store-volume:

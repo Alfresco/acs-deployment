@@ -12,8 +12,8 @@
 repository:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-content-repository
-    tag: "6.2.0-A2"
+    repository: quay.io/alfresco/alfresco-content-repository
+    tag: "feature-APPSREPO-656_include_sync-6.2.0-SNAPSHOT"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -487,3 +487,6 @@ s3connector:
 # or uncomment the following line if you don't want/need to pass it as a parameter on every install command :
 # registryPullSecrets: private-repo-registry-secret
 # for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
+
+alfresco-sync-service:
+   enabled : true

@@ -64,6 +64,11 @@ data:
       -Dmessaging.broker.url={{ .Values.messageBroker.url | default (printf "failover:(nio://%s-activemq-broker:61616)?timeout=3000&jms.useCompression=true" .Release.Name)}}
       -Dmessaging.broker.username={{ .Values.messageBroker.user }}
       -Dmessaging.broker.password={{ .Values.messageBroker.password }}
+      {{- end }}
+      {{- if index .Values "alfresco-sync-service" "enabled" }}
+      -Ddsync.service.uris={{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.syncservice.service.externalPort }}/syncservice
+      {{- else }}
+      -Devents.subsystem.autoStart=false
       {{- end }}"
   CATALINA_OPTS: " $ALFRESCO_OPTS  
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
