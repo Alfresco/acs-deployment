@@ -22,6 +22,7 @@ metadata:
       location ~ ^(/.*/s/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcservice/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcs/api/solr/.*)$ {return 403;}
+      location ~ ^(/.*/s/prometheus)$ {return 403;}
     {{- end }}
 {{- if .Values.repository.ingress.annotations }}
 {{ toYaml .Values.repository.ingress.annotations | indent 4 }}

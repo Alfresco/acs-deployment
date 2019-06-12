@@ -790,6 +790,70 @@
 					},
 					"response": []
 				},
+                {
+			         "name": "alfresco-prometheus ",
+			         "event": [
+				        {
+					       "listen": "test",
+					       "script": {
+						      "id": "7d0cc14b-b2e9-437d-91ff-5d0329e40dfb",
+                              "type": "text/javascript",
+						      "exec": [
+							     "pm.globals.get(\"url\");",
+							     "",
+							     "pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
+							     "    pm.response.to.have.status(403);",
+							     "});"
+						      ]      
+					       }
+				        }
+			         ],
+			     "request": {
+				    "auth": {
+					   "type": "basic",
+					   "basic": [
+						  {
+							 "key": "password",
+							 "value": "admin",
+							 "type": "string"
+						  },
+						  {
+							 "key": "username",
+							 "value": "admin",
+							 "type": "string"
+						  },
+						  {
+							 "key": "saveHelperData",
+							 "type": "any"
+						  },
+						  {
+							 "key": "showPassword",
+							 "value": false,
+							 "type": "boolean"
+						  }
+					   ]
+				    },
+				    "method": "GET",
+				    "header": [],
+				    "body": {
+					   "mode": "raw",
+					   "raw": ""
+				    },
+				    "url": {
+					    "raw": "{{protocol}}://{{url}}/alfresco/s/prometheus",
+					    "protocol": "{{protocol}}",
+                        "host": [
+						      "{{url}}"
+					       ],
+					       "path": [
+						      "alfresco",
+						      "s",
+						      "prometheus"
+					       ]
+				        }
+			         },
+			         "response": []
+		        },
 				{
 					"name": "solr-external-access",
 					"event": [
