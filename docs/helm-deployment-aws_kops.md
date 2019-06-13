@@ -381,6 +381,8 @@ helm install alfresco-incubator/alfresco-content-services \
 --namespace=$DESIREDNAMESPACE
 ```
 
+**Note:** The values for __externalProtocol__, __externalHost__ and __externalPort__ can also be specified as helm template strings for extra flexiblity. This is useful especially when this chart is used as a requirement in another chart, for example a value of `'acs.{{ .Values.global.domain }}'` for externalHost will generate the hostname from the value set for `global.domain`.
+
 **Note:** By default the Alfresco Search Services `/solr` endpoint is disabled for external access.  To enable it, see example [search-external-access](examples/search-external-access.md).
 
 You can set the Alfresco Content Services stack configuration attributes above accordingly.  Note that the `alfresco-incubator/alfresco-content-services` chart will deploy using default values (Ex: `postgresPassword = "alfresco"`).
