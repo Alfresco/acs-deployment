@@ -71,12 +71,12 @@ spec:
       {{- if eq .Values.database.external false }}
         # wait for the DB to startup before this deployment can start
         - name: init-db
-          image: busybox
+          image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
       {{- if .Values.persistence.repository.enabled }}
         - name: init-fs
-          image: busybox
+          image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
           # command to allow repository to write to EFS volume.
           command: ["sh", "-c", "chown -R 33000:1000 {{ .Values.persistence.repository.data.mountPath }}"]
           volumeMounts:

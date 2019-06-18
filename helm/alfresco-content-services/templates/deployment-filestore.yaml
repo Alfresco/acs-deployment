@@ -81,7 +81,7 @@ spec:
       {{- if .Values.persistence.filestore.enabled }}
       initContainers:
         - name: init-fs
-          image: busybox
+          image: "{{ .Values.filestore.initContainer.image.repository }}:{{ .Values.filestore.initContainer.image.tag }}"
           # command to allow sfs to write to EFS volume.
           command: ["sh", "-c", "chown -R 33030:1000 {{ .Values.persistence.filestore.data.mountPath }}"]
           volumeMounts:

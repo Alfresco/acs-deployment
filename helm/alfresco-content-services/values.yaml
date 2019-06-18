@@ -17,6 +17,10 @@ repository:
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
+  initContainer:
+    image:
+      repository: busybox
+      tag: latest
   service:
     name: alfresco
     type: ClusterIP
@@ -251,6 +255,10 @@ filestore:
     tag: "0.5.3"
     pullPolicy: Always
     internalPort: 8099
+  initContainer:
+    image:
+      repository: busybox
+      tag: latest
   service:
     name: filestore
     type: ClusterIP
