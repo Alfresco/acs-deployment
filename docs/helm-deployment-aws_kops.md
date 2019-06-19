@@ -111,9 +111,11 @@ kops rolling-update cluster --yes
 
 Helm is used to deploy the Alfresco Content Services into the Kubernetes cluster.
 
-* Create [Tiller](https://helm.sh/docs/glossary/#tiller) (cluster wide) and add the cluster admin role to tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md].  Below is an example of kubectl command with an external yaml file to create an [RBAC](https://github.com/helm/helm/blob/master/docs/rbac.md#role-based-access-control) configuration for Tiller:
+* Create [Tiller](https://helm.sh/docs/glossary/#tiller) (cluster wide) and add the cluster admin role to Tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md].
 
-Create a file with below command.
+Below is an example that uses a `kubectl` command with an external YAML file to create role-based access control ([RBAC](https://github.com/helm/helm/blob/master/docs/rbac.md#role-based-access-control)) configuration for Tiller:
+
+First, create the external YAML file:
 ```bash
 cat <<EOF > tiller-rbac-config.yaml
 apiVersion: v1
@@ -137,7 +139,7 @@ subjects:
 EOF
 ```
 
-Apply RBAC configuration for Tiller via `kubectl` command.
+Next, apply the RBAC configuration for Tiller via a `kubectl` command:
 ```bash
 kubectl create -f tiller-rbac-config.yaml
 ```
@@ -149,7 +151,7 @@ helm init --service-account tiller
 
 ## Setting up Alfresco Content Services
 
-Once the platform for Kubernetes is set up on AWS, you can set up the Alfresco Content Services.
+Once the platform for Kubernetes is set up on AWS, you can set up Alfresco Content Services.
 
 * Create a namespace to host Alfresco Content Services inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
 ```bash
@@ -159,9 +161,9 @@ kubectl create namespace $DESIREDNAMESPACE
 
 ### Deploying the Ingress for Alfresco Content Services
 
-* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file, or write the arguments in full:
+* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file (shown in Option 2), or write the arguments in full (shown in Option 1):
 
-Option 1: This method takes helm installation extra arguments via command line
+Option 1: This method takes extra Helm installation arguments via the command line
 
 ```bash
 # Helm install nginx-ingress along with args
@@ -185,10 +187,12 @@ helm install stable/nginx-ingress \
 --namespace $DESIREDNAMESPACE
 ```
 
+Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
-Option 2: This method takes helm installation extra arguments written in a yaml line
 
-Create the external yaml file with helm arguments as below.
+Option 2: This method takes extra Helm installation arguments written in a YAML file
+
+First, create the external YAML file with Helm arguments:
 ```bash
 cat <<EOF > ingressvalues.yaml
 controller:
@@ -211,7 +215,7 @@ controller:
 EOF
 ```
 
-Install helm using above yaml file as an argument.
+Next, install Helm using the above YAML file as an argument:
 ```bash
 # Helm install nginx-ingress with args in ingressvalues.yaml file
 helm install stable/nginx-ingress \
