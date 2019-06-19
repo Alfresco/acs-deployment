@@ -111,7 +111,7 @@ kops rolling-update cluster --yes
 
 Helm is used to deploy the Alfresco Content Services into the Kubernetes cluster.
 
-* Create [Tiller] (https://helm.sh/docs/glossary/#tiller) (cluster wide) and add the cluster admin role to tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md].  Below is an example of kubectl command with an external yaml file to create an [RBAC](https://github.com/helm/helm/blob/master/docs/rbac.md#role-based-access-control) configuration for Tiller:
+* Create [Tiller](https://helm.sh/docs/glossary/#tiller) (cluster wide) and add the cluster admin role to tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md].  Below is an example of kubectl command with an external yaml file to create an [RBAC](https://github.com/helm/helm/blob/master/docs/rbac.md#role-based-access-control) configuration for Tiller:
 
 Create a file with below command.
 ```bash
@@ -211,7 +211,7 @@ controller:
 EOF
 ```
 
-Install helm using above yaml with helm arguments.
+Install helm using above yaml file as an argument.
 ```bash
 # Helm install nginx-ingress with args in ingressvalues.yaml file
 helm install stable/nginx-ingress \
