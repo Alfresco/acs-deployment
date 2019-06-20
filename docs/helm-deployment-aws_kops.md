@@ -111,16 +111,11 @@ kops rolling-update cluster --yes
 
 Helm is used to deploy the Alfresco Content Services into the Kubernetes cluster.
 
-* Create tiller (cluster wide) and add the cluster admin role to tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md]:
+* Create [Tiller](https://helm.sh/docs/glossary/#tiller) (cluster wide) and add the cluster admin role to Tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md].
 
-```bash
-kubectl create -f tiller-rbac-config.yaml
-```
+Below is an example that uses a `kubectl` command with an external YAML file to create role-based access control ([RBAC](https://github.com/helm/helm/blob/master/docs/rbac.md#role-based-access-control)) configuration for Tiller:
 
-<details><summary>
-See example file: tiller-rbac-config.yaml</summary>
-<p>
-
+First, create the external YAML file:
 ```bash
 cat <<EOF > tiller-rbac-config.yaml
 apiVersion: v1
@@ -144,18 +139,19 @@ subjects:
 EOF
 ```
 
-</p>
-</details>
+Next, apply the RBAC configuration for Tiller via a `kubectl` command:
+```bash
+kubectl create -f tiller-rbac-config.yaml
+```
 
 * Initialize tiller:
 ```bash
 helm init --service-account tiller
 ```
-The above step may not even be needed as, by default, `kubectl` will create and initialize the service.
 
 ## Setting up Alfresco Content Services
 
-Once the platform for Kubernetes is set up on AWS, you can set up the Alfresco Content Services.
+Once the platform for Kubernetes is set up on AWS, you can set up Alfresco Content Services.
 
 * Create a namespace to host Alfresco Content Services inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
 ```bash
@@ -165,9 +161,9 @@ kubectl create namespace $DESIREDNAMESPACE
 
 ### Deploying the Ingress for Alfresco Content Services
 
-* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file, or write the arguments in full:
+* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file (shown in Option 2), or write the arguments in full (shown in Option 1):
 
-Option 1:
+Option 1: This method takes extra Helm installation arguments via the command line
 
 ```bash
 # Helm install nginx-ingress along with args
@@ -191,25 +187,12 @@ helm install stable/nginx-ingress \
 --namespace $DESIREDNAMESPACE
 ```
 
+Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
-Option 2:
 
-```bash
-# Helm install nginx-ingress with args in ingressvalues.yaml file
-helm install stable/nginx-ingress \
---version 0.14.0 \
---set controller.scope.enabled=true \
---set controller.scope.namespace=$DESIREDNAMESPACE \
---set controller.config."server-tokens"=\"false\" \
---set rbac.create=true \
--f ingressvalues.yaml \
---namespace $DESIREDNAMESPACE
-```
+Option 2: This method takes extra Helm installation arguments written in a YAML file
 
-<details><summary>
-See example file: ingressvalues.yaml</summary>
-<p>
-
+First, create the external YAML file with Helm arguments:
 ```bash
 cat <<EOF > ingressvalues.yaml
 controller:
@@ -232,9 +215,18 @@ controller:
 EOF
 ```
 
-</p>
-</details>
-
+Next, install Helm using the above YAML file as an argument:
+```bash
+# Helm install nginx-ingress with args in ingressvalues.yaml file
+helm install stable/nginx-ingress \
+--version 0.14.0 \
+--set controller.scope.enabled=true \
+--set controller.scope.namespace=$DESIREDNAMESPACE \
+--set controller.config."server-tokens"=\"false\" \
+--set rbac.create=true \
+-f ingressvalues.yaml \
+--namespace $DESIREDNAMESPACE
+```
 
 Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
@@ -536,7 +528,7 @@ Below are some recommended modifications to Security Groups (SG) that manage Inb
 
 #### Lockdown Bastion
 
-By default, SSH access to the bastion host is open from everywhere for Inbound and Outbound traffic.  You may want to lock it down to a specific IP address(es).
+By default, SSH access to the bastion host is open from everywhere for Inbound and Outbound traffic which can be restricted to specific IP address(es).
 
 <details><summary>
 Below is an example of how to modify the Bastion traffic with the AWS Cli.</summary>
