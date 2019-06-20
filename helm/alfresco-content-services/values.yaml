@@ -1,7 +1,7 @@
 # This is a YAML-formatted file.  Declare variables to be passed into your templates.
 
 # ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
-# 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika) and 1 x postgresql
+# 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
 
 # Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
 # For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
@@ -33,7 +33,16 @@ repository:
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dlocal.transform.service.enabled=true
-      -Dtransform.service.enabled=true
+      -DlocalTransformer.pdfrenderer.url=http://alfresco-pdf-renderer:8090/
+      -DlocalTransformer.imagemagick.url=http://imagemagick:8090/
+      -DlocalTransformer.libreoffice.url=http://libreoffice:8090/
+      -DlocalTransformer.tika.url=http://tika:8090/
+      -DlocalTransformer.misc.url=http://transform-misc:8090/
+      -Dlegacy.transform.service.enabled=true
+      -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
+      -Djodconverter.url=http://libreoffice:8090/
+      -Dimg.url=http://imagemagick:8090/
+      -Dtika.url=http://tika:8090/
       -Xms2000M -Xmx2000M"
   resources:
     requests:
@@ -61,7 +70,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.0.2.1"
+    tag: "latest"
     pullPolicy: Always
     internalPort: 8095
   service:
@@ -85,7 +94,7 @@ pdfrenderer:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
-    tag: "2.0.17"
+    tag: "2.1.0-CUSTOM4"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -118,7 +127,7 @@ imagemagick:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
-    tag: "2.0.17"
+    tag: "2.1.0-CUSTOM4"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -151,7 +160,7 @@ libreoffice:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
-    tag: "2.0.17"
+    tag: "2.1.0-CUSTOM4"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -184,11 +193,44 @@ tika:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-tika
-    tag: "2.0.17"
+    tag: "2.1.0-CUSTOM4"
     pullPolicy: Always
     internalPort: 8090
   service:
     name: tika
+    type: ClusterIP
+    externalPort: 80
+  resources:
+    requests:
+      memory: "1000Mi"
+    limits:
+      memory: "1000Mi"
+  environment:
+    JAVA_OPTS: " -Xms256M -Xmx512M"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+    livenessPercent: 400
+    livenessTransformPeriodSeconds: 600
+    maxTransforms: 10000
+    maxTransformSeconds: 1800
+
+# Declares the alfresco-tika service used by the content repository
+# to transform office files
+transformmisc:
+  replicaCount: 2
+  image:
+    repository: quay.io/alfresco/alfresco-transform-misc
+    tag: "2.1.0-CUSTOM4"
+    pullPolicy: Always
+    internalPort: 8090
+  service:
+    name: transformmisc
     type: ClusterIP
     externalPort: 80
   resources:
