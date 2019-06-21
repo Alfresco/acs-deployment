@@ -69,7 +69,7 @@ services:
           - activemq
 
     alfresco-pdf-renderer:
-        image: quay.io/alfresco/alfresco-pdf-renderer:2.1.0-CUSTOM4
+        image: alfresco/alfresco-pdf-renderer:2.1.0-CUSTOM4
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -81,7 +81,7 @@ services:
         - activemq
 
     imagemagick:
-        image: quay.io/alfresco/alfresco-imagemagick:2.1.0-CUSTOM4
+        image: alfresco/alfresco-imagemagick:2.1.0-CUSTOM4
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -93,7 +93,7 @@ services:
         - activemq
 
     libreoffice:
-        image: quay.io/alfresco/alfresco-libreoffice:2.1.0-CUSTOM4
+        image: alfresco/alfresco-libreoffice:2.1.0-CUSTOM4
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -105,7 +105,7 @@ services:
         - activemq
 
     tika:
-        image: quay.io/alfresco/alfresco-tika:2.1.0-CUSTOM4
+        image: alfresco/alfresco-tika:2.1.0-CUSTOM4
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -117,7 +117,7 @@ services:
             - activemq
 
     transform-misc:
-        image: quay.io/alfresco/alfresco-transform-misc:${TRANSFORMERS_TAG}
+        image: alfresco/alfresco-transform-misc:${TRANSFORMERS_TAG}
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
