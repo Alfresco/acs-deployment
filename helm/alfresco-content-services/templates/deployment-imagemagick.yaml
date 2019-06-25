@@ -56,6 +56,7 @@ spec:
           ports:
             - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources:
+{{ toYaml .Values.imagemagick.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -71,4 +72,3 @@ spec:
             periodSeconds: {{ .Values.imagemagick.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.imagemagick.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.imagemagick.resources | indent 12 }}
