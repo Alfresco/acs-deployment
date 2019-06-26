@@ -38,11 +38,11 @@ repository:
       -Dsfs.url=http://shared-file-store:8099/
 
       -Dlocal.transform.service.enabled=true
-      -DlocalTransformer.pdfrenderer.url=http://alfresco-pdf-renderer:8090/
-      -DlocalTransformer.imagemagick.url=http://imagemagick:8090/
-      -DlocalTransformer.libreoffice.url=http://libreoffice:8090/
-      -DlocalTransformer.tika.url=http://tika:8090/
-      -DlocalTransformer.misc.url=http://transformmisc:8090/
+      -DlocalTransform.pdfrenderer.url=http://alfresco-pdf-renderer:8090/
+      -DlocalTransform.imagemagick.url=http://imagemagick:8090/
+      -DlocalTransform.libreoffice.url=http://libreoffice:8090/
+      -DlocalTransform.tika.url=http://tika:8090/
+      -DlocalTransform.misc.url=http://transformmisc:8090/
 
       -Dlegacy.transform.service.enabled=true
       -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
