@@ -49,6 +49,7 @@ data:
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
       -Dtika.url=http://{{ template "content-services.shortname" . }}-tika
+      -Dtransform.misc.url=http://{{ template "content-services.shortname" . }}-transform.misc
       {{- if .Values.s3connector.enabled }}
       {{- range $key, $val := .Values.s3connector.config }}
       -Ds3.{{ $key }}={{ $val }}
