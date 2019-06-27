@@ -1,0 +1,20 @@
+# Defines the service for the transform-misc transformer app
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "content-services.shortname" . }}-transform-misc
+  labels:
+    app: {{ template "content-services.shortname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: transformers
+spec:
+  type: {{ .Values.transformmisc.service.type }}
+  ports:
+    - port: {{ .Values.transformmisc.service.externalPort }}
+      targetPort: {{ .Values.transformmisc.image.internalPort }}
+      name: {{ .Values.transformmisc.service.name }}
+  selector:
+    app: {{ template "content-services.shortname" . }}-transform-misc
+    release: {{ .Release.Name }}
