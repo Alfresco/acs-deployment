@@ -10,8 +10,8 @@ metadata:
     component: transformers
 data:
   # The JAVA_OPTS defined in the values.yaml file for "transform-misc" are set here using proper quotes
-  {{- if .Values.transform-misc.environment }}
-  {{- range $key, $val := .Values.transform-misc.environment }}
+  {{- if .Values.transformmisc.environment }}
+  {{- range $key, $val := .Values.transformmisc.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
@@ -25,7 +25,7 @@ data:
   ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
   {{- end }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.transform-misc.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.transform-misc.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.transform-misc.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.transform-misc.livenessProbe.maxTransformSeconds }}"
+  livenessPercent: "{{ .Values.transformmisc.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.transformmisc.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.transformmisc.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.transformmisc.livenessProbe.maxTransformSeconds }}"

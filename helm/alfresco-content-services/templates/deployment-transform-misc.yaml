@@ -11,7 +11,7 @@ metadata:
     heritage: {{ .Release.Service }}
     component: transformers
 spec:
-  replicas: {{ .Values.transform-misc.replicaCount }}
+  replicas: {{ .Values.transformmisc.replicaCount }}
   template:
     metadata:
       labels:
@@ -51,7 +51,7 @@ spec:
           imagePullPolicy: {{ .Values.transformmisc.image.pullPolicy }}
           envFrom:
           - configMapRef:
-              # config map to use, defined in config-transform-misc.yaml
+              # config map to use, defined in config-transformmisc.yaml
               name: {{ template "content-services.shortname" . }}-transform-misc-configmap
           ports:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
