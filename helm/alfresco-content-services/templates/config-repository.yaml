@@ -32,9 +32,9 @@ data:
       -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}
       -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*
       {{ end }}
-      -Dshare.protocol={{ .Values.externalProtocol | default "http"}}
-      -Dshare.host={{ .Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .)) }}
-      -Dshare.port={{ .Values.externalPort | default .Values.share.service.externalPort }}
+      -Dshare.protocol={{ tpl (.Values.externalProtocol | default "http") $ }}
+      -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
+      -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
       -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
       {{- if index .Values "alfresco-search" "enabled" }}
       -Dsolr.host={{ template "alfresco-search.host" . }}

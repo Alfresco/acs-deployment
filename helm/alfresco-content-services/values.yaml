@@ -411,6 +411,7 @@ alfresco-search:
     # Alfresco Search services endpoint ('/solr') is disabled by default
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
     enabled: false
+  registryPullSecrets: "quay-registry-secret"
 
 alfresco-digital-workspace:
   enabled: true
