@@ -27,6 +27,7 @@ node "Docker Compose" {
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
         component "Tika" as tika #lightgrey
+        component "Misc" as misc #lightgrey
     }
 }
 
@@ -42,19 +43,22 @@ acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
+acs --> misc
 acs --> sfs
 acs <-left-> amq
 tr --> pdfr
 tr --> libr
 tr --> img
 tr --> tika
+tr --> misc
 tr <-left-> amq
 pdfr --> sfs
 libr --> sfs
 img --> sfs
 tika --> sfs
+misc --> sfs
 share --> acs
 
-center footer Copyright 2018 Alfresco Software Inc
+center footer Copyright 2019 Alfresco Software Inc
 
 @enduml

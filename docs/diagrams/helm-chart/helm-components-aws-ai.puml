@@ -28,6 +28,7 @@ node "ACS namespace" {
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
         component "Tika" as tika #lightgrey
+        component "TransformMisc" as misc #lightgrey
         component "AI T-Engine" as aiEngine #lightgrey
     }
 }
@@ -60,18 +61,21 @@ acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
+acs --> misc
 acs --> sfs
 acs <--> mq
 tr -up-> pdfr
 tr -up-> libr
 tr -up-> img
 tr -up-> tika
+tr -up-> misc
 tr -up-> aiEngine
 tr <--> mq
 pdfr --> sfs
 libr --> sfs
 img --> sfs
 tika --> sfs
+misc --> sfs
 share --> acs
 aiEngine --> sfs
 aiEngine --> s3ai

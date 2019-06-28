@@ -1,0 +1,31 @@
+# Defines the properties required by the alfresco-transform-misc container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.shortname" . }}-transform-misc-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: transformers
+data:
+  # The JAVA_OPTS defined in the values.yaml file for "transform-misc" are set here using proper quotes
+  {{- if .Values.transformmisc.environment }}
+  {{- range $key, $val := .Values.transformmisc.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
+  {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
+  ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
+  ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
+  ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
+  {{- else }}
+  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
+  ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
+  ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
+  {{- end }}
+  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  livenessPercent: "{{ .Values.transformmisc.livenessProbe.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.transformmisc.livenessProbe.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.transformmisc.livenessProbe.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.transformmisc.livenessProbe.maxTransformSeconds }}"

@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.1.0
+        image: alfresco/alfresco-content-repository:6.2.0-A1
         mem_limit: 1700m
         environment:
             JAVA_OPTS: "
@@ -27,11 +27,6 @@ services:
                 -Dsolr.secureComms=none
                 -Dsolr.base.url=/solr
                 -Dindex.subsystem.name=solr6
-                -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
-                -Djodconverter.url=http://libreoffice:8090/
-                -Dimg.url=http://imagemagick:8090/
-                -Dtika.url=http://tika:8090/
-                -Dsfs.url=http://shared-file-store:8099/
                 -Dshare.host=127.0.0.1
                 -Dshare.port=8080
                 -Dalfresco.host=localhost
@@ -39,15 +34,32 @@ services:
                 -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
                 -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
                 -Ddeployment.method=DOCKER_COMPOSE
-                -Dlocal.transform.service.enabled=true
+
                 -Dtransform.service.enabled=true
+                -Dtransform.service.url=http://transform-router:8095
+                -Dsfs.url=http://shared-file-store:8099/
+
+                -Dlocal.transform.service.enabled=true
+                -DlocalTransform.pdfrenderer.url=http://alfresco-pdf-renderer:8090/
+                -DlocalTransform.imagemagick.url=http://imagemagick:8090/
+                -DlocalTransform.libreoffice.url=http://libreoffice:8090/
+                -DlocalTransform.tika.url=http://tika:8090/
+                -DlocalTransform.misc.url=http://transform-misc:8090/
+
+                -Dlegacy.transform.service.enabled=true
+                -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
+                -Djodconverter.url=http://libreoffice:8090/
+                -Dimg.url=http://imagemagick:8090/
+                -Dtika.url=http://tika:8090/
+                -Dtransform.misc.url=http://transform-misc:8090/
+
                 -Dcsrf.filter.enabled=false
                 -Xms1500m -Xmx1500m
                 "
 
     transform-router:
         mem_limit: 512m
-        image: quay.io/alfresco/alfresco-transform-router:1.0.2.1
+        image: quay.io/alfresco/alfresco-transform-router:1.1.0-EA1
         environment:
           JAVA_OPTS: " -Xms256m -Xmx512m"
           ACTIVEMQ_URL: "nio://activemq:61616"
@@ -56,11 +68,13 @@ services:
           LIBREOFFICE_URL : "http://libreoffice:8090"
           TIKA_URL : "http://tika:8090"
           FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
+        ports:
+            - 8095:8095
         links:
           - activemq
 
     alfresco-pdf-renderer:
-        image: quay.io/alfresco/alfresco-pdf-renderer:2.0.17
+        image: alfresco/alfresco-pdf-renderer:2.1.0-EA3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -72,7 +86,7 @@ services:
         - activemq
 
     imagemagick:
-        image: quay.io/alfresco/alfresco-imagemagick:2.0.17
+        image: alfresco/alfresco-imagemagick:2.1.0-EA3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -84,7 +98,7 @@ services:
         - activemq
 
     libreoffice:
-        image: quay.io/alfresco/alfresco-libreoffice:2.0.17
+        image: alfresco/alfresco-libreoffice:2.1.0-EA3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -96,7 +110,7 @@ services:
         - activemq
 
     tika:
-        image: quay.io/alfresco/alfresco-tika:2.0.17
+        image: alfresco/alfresco-tika:2.1.0-EA3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
@@ -105,7 +119,19 @@ services:
         ports:
             - 8093:8090
         links:
-        - activemq
+            - activemq
+
+    transform-misc:
+        image: alfresco/alfresco-transform-misc:2.1.0-EA3
+        mem_limit: 1g
+        environment:
+            JAVA_OPTS: " -Xms256m -Xmx512m"
+            ACTIVEMQ_URL: "nio://activemq:61616"
+            FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
+        ports:
+            - 8094:8090
+        links:
+            - activemq
 
     shared-file-store:
         image: alfresco/alfresco-shared-file-store:0.5.3
