@@ -30,6 +30,7 @@ node "ACS namespace" {
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
         component "Tika" as tika #lightgrey
+        component "TransformMisc" as misc #lightgrey
     }
 }
 
@@ -51,19 +52,22 @@ acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
+acs --> misc
 acs --> sfs
 acs <--> amq
 tr --> pdfr
 tr --> libr
 tr --> img
 tr --> tika
+tr --> misc
 tr <-up-> amq
 pdfr --> sfs
 libr --> sfs
 img --> sfs
 tika --> sfs
+misc --> sfs
 share --> acs
 
-center footer Copyright 2018 Alfresco Software Inc
+center footer Copyright 2019 Alfresco Software Inc
 
 @enduml
