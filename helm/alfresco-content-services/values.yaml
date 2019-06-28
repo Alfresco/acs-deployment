@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "latest"
+    tag: "6.2.0-A1"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -78,7 +78,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "latest"
+    tag: "1.1.0-EA1"
     pullPolicy: Always
     internalPort: 8095
   service:
