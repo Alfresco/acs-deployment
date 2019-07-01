@@ -222,7 +222,7 @@ services:
         environment:
             JAVA_OPTS : "
             -Dsql.db.driver=org.postgresql.Driver
-            -Dsql.db.url=jdbc:postgresql://postgres_sync:5432/alfresco
+            -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
             -Dsql.db.username=alfresco
             -Dsql.db.password=alfresco
             -Dmessaging.broker.host=activemq
@@ -234,17 +234,6 @@ services:
 
         ports:
             - 9090:9090
-            
-    postgres_sync:
-        image: postgres:10.1
-        mem_limit: 512m
-        environment:
-            - POSTGRES_PASSWORD=alfresco
-            - POSTGRES_USER=alfresco
-            - POSTGRES_DB=alfresco
-        command: postgres -c max_connections=300 -c log_min_messages=LOG
-        ports:
-            - 5433:5432
 
 volumes:
     shared-file-store-volume:
