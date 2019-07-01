@@ -1,9 +1,7 @@
-# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 16GB Memory to distribute among containers.
-# Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
-# For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
-# See Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D).
-# If the container memory is not explicitly set then the flags above will set the max heap default to 1/4 of the container's memory, which may not be ideal.
+# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 13GB Memory to distribute among containers.
+# 
 # For performance tuning, assign the container memory and give a percentage of it to the JVM.
+# Use either the -Xms,-Xmx flags or the newly added flags in java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage. More details here: https://merikan.com/2019/04/jvm-in-a-container/
 
 # Note: The docker-compose file from github.com is a limited trial that goes into read-only mode after 2 days.
 # Get the latest docker-compose.yml file with a 30-day trial license by accessing the Alfresco Content Services trial download page at:
