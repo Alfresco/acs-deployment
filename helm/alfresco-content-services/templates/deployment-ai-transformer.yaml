@@ -63,6 +63,7 @@ spec:
           ports:
               - containerPort: {{ .Values.aiTransformer.image.internalPort }}
           resources:
+{{ toYaml .Values.aiTransformer.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -78,5 +79,4 @@ spec:
             periodSeconds: {{ .Values.aiTransformer.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.aiTransformer.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.aiTransformer.resources | indent 12 }}
 {{- end }}

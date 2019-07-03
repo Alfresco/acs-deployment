@@ -62,6 +62,7 @@ spec:
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:
+{{ toYaml .Values.libreoffice.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -77,4 +78,3 @@ spec:
             periodSeconds: {{ .Values.libreoffice.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.libreoffice.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.libreoffice.resources | indent 12 }}
