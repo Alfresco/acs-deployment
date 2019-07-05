@@ -1503,7 +1503,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:9090/alfresco/healthcheck",
+						"url": "http://localhost:8080/syncservice/healthcheck",
 						"method": "GET",
 						"header": [
 							{
