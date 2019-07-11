@@ -1,3 +1,36 @@
+Table of Contents
+=================
+
+   * [Alfresco Content Services Deployment with Helm on AWS using Kops](#alfresco-content-services-deployment-with-helm-on-aws-using-kops)
+      * [Prerequisites](#prerequisites)
+         * [Prepare and configure Kops](#prepare-and-configure-kops)
+         * [Setting up Kubernetes cluster on AWS with Kops](#setting-up-kubernetes-cluster-on-aws-with-kops)
+         * [Validate cluster](#validate-cluster)
+         * [Upgrading a cluster (optional)](#upgrading-a-cluster-optional)
+         * [Deploying the Kubernetes Dashboard](#deploying-the-kubernetes-dashboard)
+         * [Deploying Helm](#deploying-helm)
+      * [Setting up Alfresco Content Services](#setting-up-alfresco-content-services)
+         * [Deploying the Ingress for Alfresco Content Services](#deploying-the-ingress-for-alfresco-content-services)
+         * [Creating File Storage for the Alfresco Content Services](#creating-file-storage-for-the-alfresco-content-services)         
+         * [Install the NFS client provisioner](#install-the-nfs-client-provisioner)
+         * [Creating a Docker registry pull secret](#creating-a-docker-registry-pull-secret)
+         * [Deploying Alfresco Content Services](#deploying-alfresco-content-services)
+         * [Deploying ACS with Alfresco Intelligence Services enabled](#deploying-acs-with-alfresco-intelligence-services-enabled)
+         * [Using an external database instance](#using-an-external-database-instance)
+         * [Using an external messaging broker](#using-an-external-messaging-broker)
+         * [Using the Alfresco S3 Connector](#using-the-alfresco-s3-connector)
+         * [Creating a Route 53 Record Set in your Hosted Zone](#creating-a-route-53-record-set-in-your-hosted-zone)
+      * [Checking the status of your deployment](#checking-the-status-of-your-deployment)
+         * [Network Hardening](#network-hardening)
+            * [Lockdown Bastion](#lockdown-bastion)
+            * [Restrict k8s Master(s) Outbound traffic](#restrict-k8s-masters-outbound-traffic)
+            * [Restrict k8s Node(s) Outbound traffic](#restrict-k8s-nodes-outbound-traffic)
+            * [Restrict API ELB Outbound traffic](#restrict-api-elb-outbound-traffic)
+            * [Restrict K8S ELB Outbound traffic](#restrict-k8s-elb-outbound-traffic)
+            * [Restrict Default SG Outbound traffic](#restrict-default-sg-outbound-traffic)
+      * [Cleaning up your deployment](#cleaning-up-your-deployment)
+
+
 # Alfresco Content Services Deployment with Helm on AWS using Kops
 
 **Hint:** Consider [deploying ACS into EKS](./helm-deployment-aws_eks.md) instead of setting
@@ -286,6 +319,26 @@ export EFS_SERVER=$EFS_FS_ID.efs.$AWS_DEFAULT_REGION.amazonaws.com
 # Publish EFS Volume's DNS name (if not already done)
 export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
+
+
+### Install the NFS client provisioner
+
+The NFS client provisioner is an automatic provisioner for Kubernetes that uses your already configured NFS server, automatically creating Persistent Volumes. Each volume created by the provisioner will be mounted in a unique folder, specifically created on the NFS server for each Persistent Volume Claim. 
+For more details check the official docs on [dynamic volume provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
+
+The command to install the NFS provisioner is the following:
+```bash
+helm install stable/nfs-client-provisioner \
+--name alfresco-nfs-provisioner \
+--set nfs.server="$EFS_SERVER" \
+--set nfs.path="/" \
+--set storageClass.name="nfs-client" \	
+--set storageClass.archiveOnDelete=false \
+```
+The command line interface might try to resolve the *nfs.path="/"* to a path from the local file system. In that case use escaping, like *nfs.path="\/"*.
+
+More info about the chart configuration can be found here: https://github.com/helm/charts/tree/master/stable/nfs-client-provisioner#configuration
+
 ### Creating a Docker registry pull secret
 
 Since we need to use private (Enterprise-only) Docker images from Quay.io, you need credentials to be able to pull those images from Quay.io. Alfresco customers can request their credentials by logging a ticket at https://support.alfresco.com.
@@ -355,23 +408,33 @@ export ALF_ADMIN_PWD=$(printf %s 'MyAdminPwd!' | iconv -t UTF-16LE | openssl md4
 # Alfresco Database (Postgresql) password
 export ALF_DB_PWD='MyDbPwd'
 
-# Install ACS
+# Install the alfresco-infrastructure which will create a Persistent Volume Claim. If the NFS provisioner is installed, a new Persistent Volume will be automatically created
+helm install alfresco-incubator/alfresco-infrastructure \
+--version 5.1.1 \
+--set persistence.storageClass.enabled=true \
+--set persistence.storageClass.name="nfs-client" \
+--set alfresco-infrastructure.alfresco-identity-service.enabled=false \
+--set alfresco-infrastructure.nginx-ingress.enabled=false \
+--set alfresco-infrastructure.activemq.enabled=false \
+--set alfresco-infrastructure.alfresco-event-gateway.enabled=false \
+--namespace $DESIREDNAMESPACE
+
+# Install ACS (whithout the nginx-ingress and EFS persistence which are already installed by the steps above)
 helm install alfresco-incubator/alfresco-content-services \
 --set externalProtocol="https" \
 --set externalHost="$EXTERNALHOST" \
 --set externalPort="443" \
 --set repository.adminPassword="$ALF_ADMIN_PWD" \
---set alfresco-infrastructure.persistence.efs.enabled=true \
---set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
+--set alfresco-infrastructure.persistence.efs.enabled=false \
+--set alfresco-infrastructure.alfresco-infrastructure.nginx-ingress.enabled=false \
 --set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
 --set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
---set persistence.repository.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/repository-data" \
---set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
 --set postgresql.postgresPassword="$ALF_DB_PWD" \
---set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
 --set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
+
+**Note:** The _alfresco-infrastructure:5.1.1_ is installed separately because the current version of the ACS chart requires _alfresco-infrastructure:4.1.0_, which doesn't support dynamic volume provisioning.
 
 **Note:** The values for __externalProtocol__, __externalHost__ and __externalPort__ can also be specified as helm template strings for extra flexiblity. This is useful especially when this chart is used as a requirement in another chart, for example a value of `'acs.{{ .Values.global.domain }}'` for externalHost will generate the hostname from the value set for `global.domain`.
 
