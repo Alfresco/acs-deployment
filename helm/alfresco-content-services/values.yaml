@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.2.0-A1"
+    tag: "6.2.0-A2"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -451,7 +451,7 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "10.1"
+  imageTag: "10.9"
   postgresUser: alfresco
   postgresPassword: alfresco
   postgresDatabase: alfresco
