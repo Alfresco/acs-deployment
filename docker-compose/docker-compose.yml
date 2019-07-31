@@ -14,7 +14,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.2.0-A2
+        image: alfresco/alfresco-content-repository:6.2.0-A3
         mem_limit: 1700m
         environment:
             JAVA_OPTS: "
@@ -161,7 +161,7 @@ services:
                 "
 
     postgres:
-        image: postgres:10.9
+        image: postgres:11.4
         mem_limit: 512m
         environment:
             - POSTGRES_PASSWORD=alfresco
