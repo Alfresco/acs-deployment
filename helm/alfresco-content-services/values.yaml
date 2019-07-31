@@ -401,7 +401,7 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "10.9"
+  imageTag: "11.4"
   postgresUser: alfresco
   postgresPassword: alfresco
   postgresDatabase: alfresco

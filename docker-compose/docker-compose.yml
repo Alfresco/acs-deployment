@@ -135,7 +135,7 @@ services:
                 "
 
     postgres:
-        image: postgres:10.9
+        image: postgres:11.4
         mem_limit: 512m
         environment:
             - POSTGRES_PASSWORD=alfresco
