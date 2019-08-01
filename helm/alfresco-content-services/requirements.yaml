@@ -18,6 +18,6 @@ dependencies:
   condition: alfresco-content-services.alfresco-infrastructure.enabled
   repository: https://kubernetes-charts.alfresco.com/stable
 - name: alfresco-digital-workspace
-  version: 1.0.0
+  version: 1.2.0
   condition: alfresco-digital-workspace.enabled
   repository: https://kubernetes-charts.alfresco.com/stable
