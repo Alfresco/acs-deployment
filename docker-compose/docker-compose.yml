@@ -12,7 +12,7 @@ version: "2"
 
 services:
     alfresco:
-        image: quay.io/alfresco/alfresco-content-repository:feature-APPSREPO-656_include_sync-6.2.0-SNAPSHOT
+        image: quay.io/alfresco/alfresco-content-repository:feature-6.1.N-APPSREPO-656_include_sync-6.1.1-SNAPSHOT
         mem_limit: 1700m
         environment:
             JAVA_OPTS: "

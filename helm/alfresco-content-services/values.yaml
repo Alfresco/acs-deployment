@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: "feature-APPSREPO-656_include_sync-6.2.0-SNAPSHOT"
+    tag: "feature-6.1.N-APPSREPO-656_include_sync-6.1.1-SNAPSHOT"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
