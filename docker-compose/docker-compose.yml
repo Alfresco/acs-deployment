@@ -1,9 +1,7 @@
-# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 16GB Memory to distribute among containers.
-# Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
-# For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
-# See Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D).
-# If the container memory is not explicitly set then the flags above will set the max heap default to 1/4 of the container's memory, which may not be ideal.
+# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 13GB Memory to distribute among containers.
+# 
 # For performance tuning, assign the container memory and give a percentage of it to the JVM.
+# Use either the -Xms,-Xmx flags or the newly added flags in java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage. More details here: https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 
 # Note: The docker-compose file from github.com is a limited trial that goes into read-only mode after 2 days.
 # Get the latest docker-compose.yml file with a 30-day trial license by accessing the Alfresco Content Services trial download page at:
@@ -42,6 +40,7 @@ services:
                 -Dlocal.transform.service.enabled=true
                 -Dtransform.service.enabled=true
                 -Dcsrf.filter.enabled=false
+                -Ddsync.service.uris=http://localhost:8080/syncservice
                 -Xms1500m -Xmx1500m
                 "
 
@@ -188,6 +187,25 @@ services:
             - digital-workspace
             - alfresco
             - share
+            
+    sync-service:
+        image: quay.io/alfresco/service-sync:3.1.2-RC2
+        mem_limit: 1g
+        environment:
+            JAVA_OPTS : "
+            -Dsql.db.driver=org.postgresql.Driver
+            -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
+            -Dsql.db.username=alfresco
+            -Dsql.db.password=alfresco
+            -Dmessaging.broker.host=activemq
+            -Drepo.hostname=alfresco
+            -Drepo.port=8080
+            -Ddw.server.applicationConnectors[0].type=http
+            -Xms1000m -Xmx1000m
+            "
+
+        ports:
+            - 9090:9090
 
 volumes:
     shared-file-store-volume:
