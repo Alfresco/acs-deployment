@@ -23,10 +23,18 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.registryPullSecrets }}
       {{- end }}
+      {{- if .Values.share.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.share.extraInitContainers . | indent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.share.image.repository }}:{{ .Values.share.image.tag }}"
           imagePullPolicy: {{ .Values.share.image.pullPolicy }}
+          {{- if .Values.share.commands }}
+          command:
+{{ tpl .Values.share.commands . | indent 12 }}
+          {{- end }}
           ports:
             - containerPort: {{ .Values.share.image.internalPort }}
           resources:
@@ -49,3 +57,11 @@ spec:
             periodSeconds: {{ .Values.share.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.share.livenessProbe.timeoutSeconds }}
+          {{- with .Values.share.extraVolumeMounts }}
+          volumeMounts:
+{{ tpl . $ | indent 12 }}
+          {{- end }}
+      {{- with .Values.share.extraVolumes }}
+      volumes:
+{{ tpl . $ | indent 8 }}
+      {{- end }}

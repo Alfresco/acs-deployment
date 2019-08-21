@@ -27,6 +27,10 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
+          {{- if .Values.repository.commands }}
+          command:
+{{ tpl .Values.repository.commands . | indent 12 }}
+          {{- end }}
           envFrom:
           - secretRef: 
               name: {{ template "content-services.shortname" . }}-dbsecret
@@ -49,6 +53,9 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+{{- with .Values.repository.extraVolumeMounts }}
+{{ tpl . $ | indent 10 }}
+{{- end }}
           {{- end }}
           readinessProbe:
             httpGet:
@@ -68,6 +75,9 @@ spec:
             timeoutSeconds: {{ .Values.repository.livenessProbe.timeoutSeconds }}
       {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
       initContainers:
+      {{- if .Values.repository.extraInitContainers }}
+{{ tpl .Values.repository.extraInitContainers . | indent 8 }}
+      {{- end }}
       {{- if eq .Values.database.external false }}
         # wait for the DB to startup before this deployment can start
         - name: init-db
@@ -87,5 +97,8 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
+{{- with .Values.repository.extraVolumes }}
+{{ tpl . $ | indent 6 }}
+{{- end }}
       {{- end }}
       {{- end }}
