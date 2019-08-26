@@ -65,7 +65,7 @@ data:
       -Dmessaging.broker.password={{ .Values.messageBroker.password }}
       {{- end }}
       {{- if index .Values "alfresco-sync-service" "enabled" }}
-      -Ddsync.service.uris={{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.syncservice.service.externalPort }}/syncservice
+      -Ddsync.service.uris={{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort }}/syncservice
       {{- else }}
       -Devents.subsystem.autoStart=false
       {{- end }}"
