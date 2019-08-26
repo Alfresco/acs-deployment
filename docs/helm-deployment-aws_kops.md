@@ -408,24 +408,14 @@ export ALF_ADMIN_PWD=$(printf %s 'MyAdminPwd!' | iconv -t UTF-16LE | openssl md4
 # Alfresco Database (Postgresql) password
 export ALF_DB_PWD='MyDbPwd'
 
-# Install the alfresco-infrastructure which will create a Persistent Volume Claim. If the NFS provisioner is installed, a new Persistent Volume will be automatically created
-helm install alfresco-incubator/alfresco-infrastructure \
---version 5.1.1 \
---set persistence.storageClass.enabled=true \
---set persistence.storageClass.name="nfs-client" \
---set alfresco-infrastructure.alfresco-identity-service.enabled=false \
---set alfresco-infrastructure.nginx-ingress.enabled=false \
---set alfresco-infrastructure.activemq.enabled=false \
---set alfresco-infrastructure.alfresco-event-gateway.enabled=false \
---namespace $DESIREDNAMESPACE
-
-# Install ACS (whithout the nginx-ingress and EFS persistence which are already installed by the steps above)
+# Install ACS
 helm install alfresco-incubator/alfresco-content-services \
 --set externalProtocol="https" \
 --set externalHost="$EXTERNALHOST" \
 --set externalPort="443" \
 --set repository.adminPassword="$ALF_ADMIN_PWD" \
---set alfresco-infrastructure.persistence.efs.enabled=false \
+--set alfresco-infrastructure.persistence.storageClass.enabled=true \
+--set alfresco-infrastructure.persistence.storageClass.name="nfs-client" \
 --set alfresco-infrastructure.alfresco-infrastructure.nginx-ingress.enabled=false \
 --set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
 --set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
@@ -433,8 +423,6 @@ helm install alfresco-incubator/alfresco-content-services \
 --set registryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
-
-**Note:** The _alfresco-infrastructure:5.1.1_ is installed separately because the current version of the ACS chart requires _alfresco-infrastructure:4.1.0_, which doesn't support dynamic volume provisioning.
 
 **Note:** The values for __externalProtocol__, __externalHost__ and __externalPort__ can also be specified as helm template strings for extra flexiblity. This is useful especially when this chart is used as a requirement in another chart, for example a value of `'acs.{{ .Values.global.domain }}'` for externalHost will generate the hostname from the value set for `global.domain`.
 
