@@ -66,6 +66,7 @@ services:
           PDF_RENDERER_URL : "http://alfresco-pdf-renderer:8090"
           LIBREOFFICE_URL : "http://libreoffice:8090"
           TIKA_URL : "http://tika:8090"
+          MISC_URL : "http://transform-misc:8090"
           FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
             - 8095:8095
