@@ -1,7 +1,7 @@
 repository:
   image:
     repository: quay.io/alfresco/alfresco-content-repository-aws
-    tag: "6.2.0-A2"
+    tag: "6.2.0-A7"
 
 share:
   image:
