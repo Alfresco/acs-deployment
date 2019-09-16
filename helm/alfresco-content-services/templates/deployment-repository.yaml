@@ -28,7 +28,7 @@ spec:
           image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
           envFrom:
-          - secretRef: 
+          - secretRef:
               name: {{ template "content-services.shortname" . }}-dbsecret
           {{- if .Values.s3connector.enabled }}
           - secretRef:
@@ -49,6 +49,12 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+          - name: custom-pipeline-config-volume
+            mountPath: {{ .Values.persistence.repository.config.transform.pipelinesMountPath }}
+          - name: custom-rendition-config-volume
+            mountPath: {{ .Values.persistence.repository.config.transform.renditionsMountPath }}
+          - name: custom-mimetype-config-volume
+            mountPath: {{ .Values.persistence.repository.config.transform.mimetypesMountPath }}
           {{- end }}
           readinessProbe:
             httpGet:
@@ -87,5 +93,17 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
+      - name: custom-pipeline-config-volume
+        configMap:
+          optional: true
+          name: custom-pipeline-config
+      - name: custom-rendition-config-volume
+        configMap:
+          optional: true
+          name: custom-rendition-config
+      - name: custom-mimetype-config-volume
+        configMap:
+          optional: true
+          name: custom-mimetype-config
       {{- end }}
       {{- end }}
