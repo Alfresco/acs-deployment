@@ -364,6 +364,11 @@ persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
     enabled: true
+    config:
+      transform:
+        renditionsMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"
+        pipelinesMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/"
+        mimetypesMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/"
     data:
       mountPath: "/usr/local/tomcat/alf_data"
       subPath: "alfresco-content-services/repository-data"
