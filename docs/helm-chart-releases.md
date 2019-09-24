@@ -17,5 +17,6 @@
 |2.0.1|6.1.0.5|
 |2.1.0|6.1.1|
 |3.0.0|6.2.0|
+|4.0.0|6.3.0|
 
-Note that 2.1.0 and 3.0.0 and not released yet.
+Note that 2.1.0, 3.0.0 and 4.0.0 are not released yet.

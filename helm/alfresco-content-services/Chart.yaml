@@ -2,8 +2,8 @@
 # that goes into read-only mode after 2-days.
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/docker
 name: alfresco-content-services
-version: 3.0.0
-appVersion: 6.2.0
+version: 4.0.0
+appVersion: 6.3.0
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
 - content
