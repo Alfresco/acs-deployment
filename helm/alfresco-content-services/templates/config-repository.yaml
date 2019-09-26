@@ -45,11 +45,17 @@ data:
       -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
       {{- end }}
       {{- end }}
+      -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
       -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
       -Dtika.url=http://{{ template "content-services.shortname" . }}-tika
-      -Dtransform.misc.url=http://{{ template "content-services.shortname" . }}-transform.misc
+      -Dtransform.misc.url=http://{{ template "content-services.shortname" . }}-transform-misc
+      -DlocalTransform.pdfrenderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
+      -DlocalTransform.imagemagick.url=http://{{ template "content-services.shortname" . }}-imagemagick
+      -DlocalTransform.libreoffice.url=http://{{ template "content-services.shortname" . }}-libreoffice
+      -DlocalTransform.tika.url=http://{{ template "content-services.shortname" . }}-tika
+      -DlocalTransform.misc.url=http://{{ template "content-services.shortname" . }}-transform-misc
       {{- if .Values.s3connector.enabled }}
       {{- range $key, $val := .Values.s3connector.config }}
       -Ds3.{{ $key }}={{ $val }}
