@@ -9,7 +9,14 @@ spec:
     matchLabels:
       app: {{ template "alfresco.shortname" . }}-router
   policyTypes:
+  - Ingress
   - Egress
+  ingress:
+    - from:
+      # Allow requests from repository
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.shortname" . }}-repository
   egress:
     # Allow router to communicate with transformers
     - to:
@@ -20,6 +27,10 @@ spec:
       - podSelector:
           matchLabels:
             app: {{ printf "%s-%s" .Release.Name "activemq" }}
+      # TODO Is the egress for repo required to return config responses?
+#      - podSelector:
+#          matchLabels:
+#            app: {{ template "content-services.shortname" . }}-repository
     - to:
       - ipBlock:
           cidr: 0.0.0.0/0
