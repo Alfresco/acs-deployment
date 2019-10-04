@@ -34,8 +34,8 @@ repository:
       -Ddeployment.method=HELM_CHART
 
       -Dtransform.service.enabled=true
-      -Dlocal.transform.service.enabled=true
-      -Dlegacy.transform.service.enabled=true
+      -Dlocal.transform.service.enabled=false
+      -Dlegacy.transform.service.enabled=false
 
       -Xms2000M -Xmx2000M"
   resources:
