@@ -35,11 +35,6 @@ spec:
           matchLabels:
             component: transformers
 
-      # Transform router (Transform Service)
-      - podSelector:
-          matchLabels:
-            component: transformrouter
-
       {{ if (index .Values "alfresco-insight-zeppelin") }}
       {{ if (index .Values "alfresco-insight-zeppelin" "enabled") }}
       # Allow traffic from Zeppelin

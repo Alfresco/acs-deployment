@@ -27,10 +27,6 @@ spec:
       - podSelector:
           matchLabels:
             app: {{ printf "%s-%s" .Release.Name "activemq" }}
-      # TODO Is the egress for repo required to return config responses?
-#      - podSelector:
-#          matchLabels:
-#            app: {{ template "content-services.shortname" . }}-repository
     - to:
       - ipBlock:
           cidr: 0.0.0.0/0
