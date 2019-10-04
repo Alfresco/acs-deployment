@@ -89,6 +89,11 @@ spec:
       - podSelector:
           matchLabels:
              component: transformers
+
+      # Transform router (Transform Service)
+      - podSelector:
+          matchLabels:
+            component: transformrouter
       
       # Activemq
       - podSelector:
