@@ -119,7 +119,7 @@ services:
             - shared-file-store-volume:/tmp/Alfresco/sfs
 
     share:
-        image: alfresco/alfresco-share:6.1.1-RC2
+        image: alfresco/alfresco-share:6.1.1
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"
