@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.2.0-A5"
+    tag: "6.3.0-A1"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -34,22 +34,8 @@ repository:
       -Ddeployment.method=HELM_CHART
 
       -Dtransform.service.enabled=true
-      -Dtransform.service.url=http://transformrouter:8095
-      -Dsfs.url=http://shared-file-store:8099/
-
       -Dlocal.transform.service.enabled=true
-      -DlocalTransform.pdfrenderer.url=http://alfresco-pdf-renderer:8090/
-      -DlocalTransform.imagemagick.url=http://imagemagick:8090/
-      -DlocalTransform.libreoffice.url=http://libreoffice:8090/
-      -DlocalTransform.tika.url=http://tika:8090/
-      -DlocalTransform.misc.url=http://transformmisc:8090/
-
       -Dlegacy.transform.service.enabled=true
-      -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
-      -Djodconverter.url=http://libreoffice:8090/
-      -Dimg.url=http://imagemagick:8090/
-      -Dtika.url=http://tika:8090/
-      -Dtransform.misc.url=http://transformmisc:8090/
 
       -Xms2000M -Xmx2000M"
   resources:
@@ -78,7 +64,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.1.0-RC2"
+    tag: "1.1.0-RC3"
     pullPolicy: Always
     internalPort: 8095
   service:
@@ -102,7 +88,7 @@ pdfrenderer:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.1.0-RC1"
+    tag: "2.1.0-RC2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -135,7 +121,7 @@ imagemagick:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.1.0-RC1"
+    tag: "2.1.0-RC2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -168,7 +154,7 @@ libreoffice:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.1.0-RC1"
+    tag: "2.1.0-RC2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -201,7 +187,7 @@ tika:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.1.0-RC1"
+    tag: "2.1.0-RC2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -234,7 +220,7 @@ transformmisc:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.1.0-RC1"
+    tag: "2.1.0-RC2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -265,7 +251,7 @@ aiTransformer:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.0.1"
+    tag: "1.1.0-RC2`"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -331,7 +317,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.1.0"
+    tag: "6.2.0-RC2"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -364,6 +350,11 @@ persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
     enabled: true
+    config:
+      transform:
+        renditionsMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"
+        pipelinesMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/"
+        mimetypesMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/"
     data:
       mountPath: "/usr/local/tomcat/alf_data"
       subPath: "alfresco-content-services/repository-data"
