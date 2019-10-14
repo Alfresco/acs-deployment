@@ -145,7 +145,7 @@ services:
             - 5432:5432
 
     solr6:
-        image: alfresco/alfresco-search-services:1.3.0.1
+        image: alfresco/alfresco-search-services:1.4.0
         mem_limit: 2g
         environment:
             #Solr needs to know how to register itself with Alfresco
@@ -156,6 +156,8 @@ services:
             - SOLR_SOLR_PORT=8983
             #Create the default alfresco and archive cores
             - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
+            #HTTP by default
+            - ALFRESCO_SECURE_COMMS=none
             - "SOLR_JAVA_MEM=-Xms2g -Xmx2g"
         ports:
             - 8083:8983 #Browser port
