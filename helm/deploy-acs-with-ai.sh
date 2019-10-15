@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# The following environment variables can either be inherited
+# The following environment variables can either be inherited 
 # from the parent shell or overwritten here in the script:
 #export DESIREDNAMESPACE="<k8s_namespace>"
 #export EXTERNALHOST="<external_host>"

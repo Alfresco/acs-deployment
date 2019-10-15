@@ -422,7 +422,7 @@ s3connector:
   enabled: false
   # config:
   #   bucketName:
-  #   bucketLocation:
+  #   bucketLocation:  
   ##   Additional properties can be defined here.
   ##   For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
   # secrets:

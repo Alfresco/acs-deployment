@@ -28,7 +28,7 @@ spec:
           image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
           envFrom:
-          - secretRef:
+          - secretRef: 
               name: {{ template "content-services.shortname" . }}-dbsecret
           {{- if .Values.s3connector.enabled }}
           - secretRef:
