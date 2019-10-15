@@ -346,12 +346,12 @@ alfresco-search:
 # Note: Rule_05-network-policy-search will be disable.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
 # Note: ingress-repository will not block external trafic to */solr/*
-#  external: 
+#  external:
     # Host dns/ip of the external solr6 instance.
 #    host: "127.0.0.1"
     # Port of the external solr6 instance.
 #    port: "8983"
-  repository: &repositoryHostPort 
+  repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
     port: *repositoryExternalPort
@@ -361,7 +361,7 @@ alfresco-search:
     # Alfresco Search services endpoint ('/solr') is disabled by default
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
     enabled: false
-  registryPullSecrets: "quay-registry-secret"
+  # registryPullSecrets: "quay-registry-secret"
 
 alfresco-digital-workspace:
   enabled: true
@@ -384,7 +384,7 @@ networkpolicysetting:
   enabled: true
 
 # Defines properties required by alfresco for connecting to the database
-# Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl 
+# Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
 # Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver
 database:
   external: false
@@ -397,7 +397,7 @@ database:
 # Note: the database (tables) information is also saved in the persistent volume claim
 postgresql:
   replicaCount: 1
-  ## If true, install the postgresql chart alongside Alfresco Content Services. 
+  ## If true, install the postgresql chart alongside Alfresco Content Services.
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
@@ -422,7 +422,7 @@ s3connector:
   enabled: false
   # config:
   #   bucketName:
-  #   bucketLocation:  
+  #   bucketLocation:
   ##   Additional properties can be defined here.
   ##   For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
   # secrets:
@@ -433,10 +433,14 @@ s3connector:
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
-# e.g.: helm install alfresco-content-services --set registryPullSecrets=private-repo-registry-secret
+# e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=private-repo-registry-secret
 # or uncomment the following line if you don't want/need to pass it as a parameter on every install command :
 # registryPullSecrets: private-repo-registry-secret
 # for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
+
+# Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s)
+global:
+  alfrescoRegistryPullSecret:
 
 alfresco-sync-service:
    enabled : true

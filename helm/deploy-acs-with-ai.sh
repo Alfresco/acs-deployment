@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# The following environment variables can either be inherited 
+# The following environment variables can either be inherited
 # from the parent shell or overwritten here in the script:
 #export DESIREDNAMESPACE="<k8s_namespace>"
 #export EXTERNALHOST="<external_host>"
@@ -33,7 +33,7 @@ helm install alfresco-content-services \
     --set persistence.solr.data.subPath="${DESIREDNAMESPACE}/alfresco-content-services/solr-data" \
     --set postgresql.postgresPassword="${ALF_DB_PWD}" \
     --set postgresql.persistence.subPath="${DESIREDNAMESPACE}/alfresco-content-services/database-data" \
-    --set registryPullSecrets="${QUAY_PULL_SECRET}" \
+    --set global.alfrescoRegistryPullSecrets="${QUAY_PULL_SECRET}" \
     --set ai.aws.accessKey="${AI_AWS_ACCESS_KEY_ID}" \
     --set ai.aws.secretAccessKey="${AI_AWS_SECRET_KEY}" \
     --set ai.aws.region="${AI_AWS_REGION}" \
