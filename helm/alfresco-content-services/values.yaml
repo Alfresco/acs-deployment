@@ -440,7 +440,7 @@ s3connector:
 
 # Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s)
 global:
-  alfrescoRegistryPullSecret:
+  alfrescoRegistryPullSecrets:
 
 alfresco-sync-service:
    enabled : true
