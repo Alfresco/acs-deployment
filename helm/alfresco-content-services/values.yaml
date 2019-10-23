@@ -474,9 +474,9 @@ s3connector:
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
-# e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=private-repo-registry-secret
+# e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret
 # or uncomment the following line if you don't want/need to pass it as a parameter on every install command :
-# global.alfrescoRegistryPullSecrets: private-repo-registry-secret
+# global.alfrescoRegistryPullSecrets: quay-registry-secret
 # for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
 
 # Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s)
