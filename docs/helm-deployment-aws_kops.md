@@ -386,7 +386,7 @@ kubectl create -f secrets.yaml --namespace $DESIREDNAMESPACE
 secret "quay-registry-secret" created
 ```
 
-**Note:** When installing the ACS Helm chart, we'll add the variable ```--set registryPullSecrets=quay-registry-secret```.
+**Note:** When installing the ACS Helm chart, we'll add the variable ```--set global.alfrescoRegistryPullSecrets=quay-registry-secret```.
 
 ### Deploying Alfresco Content Services
 
@@ -420,7 +420,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
 --set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
 --set postgresql.postgresPassword="$ALF_DB_PWD" \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -466,7 +466,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set database.user="myuser" \
 --set database.password="mypass" \
 --set database.url="jdbc:postgresql://mydb.eu-west-1.rds.amazonaws.com:5432/mydb" \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -509,7 +509,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set messageBroker.url="$MESSAGE_BROKER_URL" \
 --set messageBroker.user="$MESSAGE_BROKER_USER" \
 --set messageBroker.password="$MESSAGE_BROKER_PASSWORD" \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -533,7 +533,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set s3connector.config.bucketName=myBucket \
 --set s3connector.secrets.encryption=kms \
 --set s3connector.secrets.awsKmsKeyId=Your KMS Key ID \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
