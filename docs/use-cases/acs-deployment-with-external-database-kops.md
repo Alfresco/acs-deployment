@@ -67,7 +67,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set externalPort="443" \
 ...
 ...
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --set repository.image.repository="alfresco/alfresco-content-repository-aws" \
 --set repository.image.tag="0.1.3-repo-6.0.0.3" \
 --set postgresql.enabled=false \
