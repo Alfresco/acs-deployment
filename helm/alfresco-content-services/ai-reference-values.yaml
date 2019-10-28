@@ -6,7 +6,7 @@ repository:
 share:
   image:
     repository: quay.io/alfresco/alfresco-share-aws
-    tag: "6.2.0-RC4"
+    tag: "6.2.0"
 
 ai:
   enabled: true
