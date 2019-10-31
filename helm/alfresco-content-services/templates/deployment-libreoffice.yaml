@@ -14,6 +14,8 @@ spec:
   replicas: {{ .Values.libreoffice.replicaCount }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-libreoffice.yaml") . | sha256sum }}
       labels:
         app: {{ template "content-services.shortname" . }}-libreoffice
         release: {{ .Release.Name }}

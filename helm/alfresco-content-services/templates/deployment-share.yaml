@@ -13,6 +13,8 @@ spec:
   replicas: {{ .Values.share.replicaCount }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-share.yaml") . | sha256sum }}
       labels:
         app: {{ template "content-services.shortname" . }}-share
         release: {{ .Release.Name }}
