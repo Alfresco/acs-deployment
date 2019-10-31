@@ -10,6 +10,11 @@ metadata:
     component: transformrouter
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{ .Values.rollingUpdateMaxSurge | default 1 }}
+      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable | default 0 }}    
   template:
     metadata:
       labels:

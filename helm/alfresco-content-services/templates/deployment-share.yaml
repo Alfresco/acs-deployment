@@ -11,6 +11,11 @@ metadata:
     component: share
 spec:
   replicas: {{ .Values.share.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{ .Values.rollingUpdateMaxSurge | default 1 }}
+      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable | default 0 }}    
   template:
     metadata:
       labels:
@@ -49,3 +54,7 @@ spec:
             periodSeconds: {{ .Values.share.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.share.livenessProbe.timeoutSeconds }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 20"]            
