@@ -20,7 +20,7 @@ dependencies:
 - name: alfresco-digital-workspace
   version: 2.1.1
   condition: alfresco-digital-workspace.enabled
-  repository: https://kubernetes-charts.alfresco.com/stable
+  repository: https://kubernetes-charts.alfresco.com/incubator
 - name: alfresco-sync-service
   version: 1.1.1
   condition: alfresco-sync-service.enabled
