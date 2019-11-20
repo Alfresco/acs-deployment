@@ -52,7 +52,7 @@ services:
                 -Dtransform.misc.url=http://transform-misc:8090/
 
                 -Dcsrf.filter.enabled=false
-                -Ddsync.service.uris=http://localhost:8080/syncservice
+                -Ddsync.service.uris=http://localhost:9090/alfresco
                 -Xms1500m -Xmx1500m
                 "
 
