@@ -44,13 +44,6 @@ services:
                 -DlocalTransform.tika.url=http://tika:8090/
                 -DlocalTransform.misc.url=http://transform-misc:8090/
 
-                -Dlegacy.transform.service.enabled=true
-                -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
-                -Djodconverter.url=http://libreoffice:8090/
-                -Dimg.url=http://imagemagick:8090/
-                -Dtika.url=http://tika:8090/
-                -Dtransform.misc.url=http://transform-misc:8090/
-
                 -Dcsrf.filter.enabled=false
                 -Ddsync.service.uris=http://localhost:9090/alfresco
                 -Xms1500m -Xmx1500m
