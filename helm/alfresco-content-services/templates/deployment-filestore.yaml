@@ -13,6 +13,8 @@ metadata:
 spec:
   replicas: {{ .Values.filestore.replicaCount }}
   template:
+    annotations:
+      checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
     metadata:
       labels:
         app: {{ template "alfresco.shortname" . }}-filestore

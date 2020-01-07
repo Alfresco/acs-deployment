@@ -13,6 +13,10 @@ spec:
   replicas: {{ .Values.repository.replicaCount }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-repository.yaml") . | sha256sum }}
+        checksum/secretDatabase: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
+        checksum/secretS3: {{ include (print $.Template.BasePath "/secret-s3.yaml") . | sha256sum }}
       labels:
         app: {{ template "content-services.shortname" . }}-repository
         release: {{ .Release.Name }}
