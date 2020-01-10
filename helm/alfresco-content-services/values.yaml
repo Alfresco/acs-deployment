@@ -11,6 +11,8 @@
 
 repository:
   replicaCount: 2
+  # MNT-21042: enforce a Recreate update for the repository deployment
+  updateStrategyType: Recreate
   image:
     repository: alfresco/alfresco-content-repository
     tag: "6.3.0-A1"
