@@ -12,7 +12,7 @@ metadata:
 spec:
   replicas: {{ .Values.repository.replicaCount }}
   strategy:
-    type: RollingUpdate
+    type: {{ .Values.repository.updateStrategyType | default "RollingUpdate" }}
     rollingUpdate:
       maxSurge: {{ .Values.rollingUpdateMaxSurge | default 1 }}
       maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable | default 0 }}    
