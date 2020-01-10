@@ -11,6 +11,11 @@ metadata:
     component: repository
 spec:
   replicas: {{ .Values.repository.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{ .Values.rollingUpdateMaxSurge | default 1 }}
+      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable | default 0 }}    
   template:
     metadata:
       annotations:
@@ -76,6 +81,10 @@ spec:
             periodSeconds: {{ .Values.repository.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.repository.livenessProbe.timeoutSeconds }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 20"]            
       {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
       initContainers:
       {{- if eq .Values.database.external false }}
