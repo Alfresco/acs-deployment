@@ -12,6 +12,9 @@ spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-transform-router.yaml") . | sha256sum }}
+        checksum/config-routes: {{ include (print $.Template.BasePath "/config-transformer-routes.yaml") . | sha256sum }}
       labels:
         app: {{ template "alfresco.shortname" . }}-router
         release: {{ .Release.Name }}
