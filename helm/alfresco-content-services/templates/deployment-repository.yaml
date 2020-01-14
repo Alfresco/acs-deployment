@@ -12,11 +12,15 @@ metadata:
 spec:
   replicas: {{ .Values.repository.replicaCount }}
   strategy:
-    type: Recreate
-    rollingUpdate: null
-    # rollingUpdate:
-    #   maxSurge: {{ .Values.rollingUpdateMaxSurge | default 1 }}
-    #   maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable | default 0 }}    
+    {{- if eq .Values.repository.strategy.type "Recreate" }}
+    type: {{ .Values.repository.strategy.type }}
+    rollingUpdate: {{ .Values.repository.strategy.rollingUpdate }}
+    {{- else }}
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: {{ .Values.rollingUpdateMaxSurge | default 1 }}
+      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable | default 0 }}
+    {{- end }}
   template:
     metadata:
       annotations:
