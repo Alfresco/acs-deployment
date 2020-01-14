@@ -13,7 +13,6 @@ repository:
   replicaCount: 2
   strategy:
     type: Recreate
-    rollingUpdate: null
   image:
     repository: alfresco/alfresco-content-repository
     tag: "6.3.0-A1"
