@@ -13,8 +13,7 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: {{ .Values.rollingUpdateMaxSurge | default 1 }}
-      maxUnavailable: {{ .Values.rollingUpdateMaxUnavailable | default 0 }}    
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
