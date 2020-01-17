@@ -11,6 +11,15 @@ metadata:
     component: repository
 spec:
   replicas: {{ .Values.repository.replicaCount }}
+  strategy:
+    {{- if eq .Values.repository.strategy.type "Recreate" }}
+    type: {{ .Values.repository.strategy.type }}
+    rollingUpdate: null
+    {{- else }}
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+    {{- end }}
   template:
     metadata:
       annotations:
@@ -76,6 +85,10 @@ spec:
             periodSeconds: {{ .Values.repository.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.repository.livenessProbe.timeoutSeconds }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 20"]            
       {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
       initContainers:
       {{- if eq .Values.database.external false }}

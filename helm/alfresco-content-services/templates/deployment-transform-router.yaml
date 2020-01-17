@@ -10,6 +10,10 @@ metadata:
     component: transformrouter
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
