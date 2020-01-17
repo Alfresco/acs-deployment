@@ -12,6 +12,10 @@ metadata:
     component: transformers
 spec:
   replicas: {{ .Values.imagemagick.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
