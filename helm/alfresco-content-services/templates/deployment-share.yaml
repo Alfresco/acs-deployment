@@ -11,6 +11,10 @@ metadata:
     component: share
 spec:
   replicas: {{ .Values.share.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
@@ -51,3 +55,7 @@ spec:
             periodSeconds: {{ .Values.share.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.share.livenessProbe.timeoutSeconds }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 20"]            

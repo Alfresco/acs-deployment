@@ -11,6 +11,8 @@
 
 repository:
   replicaCount: 2
+  strategy:
+    type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
     tag: "6.1.1.2"
@@ -440,6 +442,10 @@ s3connector:
 # Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s)
 global:
   alfrescoRegistryPullSecrets:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
 
 alfresco-sync-service:
    enabled : true
