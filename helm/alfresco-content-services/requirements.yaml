@@ -22,6 +22,6 @@ dependencies:
   condition: alfresco-digital-workspace.enabled
   repository: https://kubernetes-charts.alfresco.com/stable
 - name: alfresco-sync-service
-  version: 2.0.0
+  version: 3.0.1
   condition: alfresco-sync-service.enabled
   repository: https://kubernetes-charts.alfresco.com/stable
