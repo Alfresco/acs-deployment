@@ -11,6 +11,8 @@ The **master** branch of this repository will endeavour to support the following
 - [MiniKube](docs/helm-deployment-minikube.md) (latest): For development and POCs
 - [Helm - AWS Cloud with Kubernetes using Kops](docs/helm-deployment-aws_kops.md) (latest): As a deployment template which can be used as the basis for your specific deployment needs
 
+**Note**: The ACS helm chart is currently not supported by Helm cli version v3.x due to deprecated annotations defined in one of the dependent chart, please use Helm cli v2.x in the interim while Helm v3.x support is resolved.
+
 For the Community Edition, go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
 The only differences between these projects are:
 * In the Enterprise chart, the images for the transformers are used, instead of the included binaries.
