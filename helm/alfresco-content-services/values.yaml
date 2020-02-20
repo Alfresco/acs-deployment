@@ -15,7 +15,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.2.0"
+    tag: "6.2.0.1"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
