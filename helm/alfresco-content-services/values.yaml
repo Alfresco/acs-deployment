@@ -15,7 +15,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.2.0.1"
+    tag: "6.2.0.2"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -389,12 +389,12 @@ alfresco-search:
 # Note: Rule_05-network-policy-search will be disable.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
 # Note: ingress-repository will not block external trafic to */solr/*
-#  external: 
+#  external:
     # Host dns/ip of the external solr6 instance.
 #    host: "127.0.0.1"
     # Port of the external solr6 instance.
 #    port: "8983"
-  repository: &repositoryHostPort 
+  repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
     port: *repositoryExternalPort
@@ -427,7 +427,7 @@ networkpolicysetting:
   enabled: true
 
 # Defines properties required by alfresco for connecting to the database
-# Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl 
+# Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
 # Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver
 database:
   external: false
@@ -440,7 +440,7 @@ database:
 # Note: the database (tables) information is also saved in the persistent volume claim
 postgresql:
   replicaCount: 1
-  ## If true, install the postgresql chart alongside Alfresco Content Services. 
+  ## If true, install the postgresql chart alongside Alfresco Content Services.
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
@@ -465,7 +465,7 @@ s3connector:
   enabled: false
   # config:
   #   bucketName:
-  #   bucketLocation:  
+  #   bucketLocation:
   ##   Additional properties can be defined here.
   ##   For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
   # secrets:
