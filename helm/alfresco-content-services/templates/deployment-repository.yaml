@@ -55,6 +55,7 @@ spec:
             # internal port and the hazelcast port used for clustering
             - containerPort: {{ .Values.repository.image.internalPort }}
             - containerPort: {{ .Values.repository.image.hazelcastPort }}
+            - containerPort: {{ .Values.repository.image.emailPort }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
           {{- if .Values.persistence.repository.enabled }}

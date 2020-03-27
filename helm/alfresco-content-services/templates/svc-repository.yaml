@@ -15,6 +15,9 @@ spec:
     - port: {{ .Values.repository.service.externalPort }}
       targetPort: {{ .Values.repository.image.internalPort }}
       name: {{ .Values.repository.service.name }}
+    - port: {{ .Values.repository.service.emailPort }}
+      targetPort: {{ .Values.repository.image.emailPort }}
+      name: {{ .Values.repository.service.name }}
   selector:
     app: {{ template "content-services.shortname" . }}-repository
     release: {{ .Release.Name }}

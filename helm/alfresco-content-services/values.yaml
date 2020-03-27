@@ -19,10 +19,12 @@ repository:
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
+    emailPort: 25
   service:
     name: alfresco
     type: ClusterIP
     externalPort: &repositoryExternalPort 80
+    emailPort: 25
   ingress:
     path: /
     maxUploadSize: "5g"
