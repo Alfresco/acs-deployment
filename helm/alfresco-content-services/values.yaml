@@ -19,12 +19,46 @@ repository:
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
-    emailPort: 25
+  emailServer:
+    enabled: &emailEnabled false
+    config:
+      ##   For a full list of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html
+      # In-bound SMTP configuration
+      email:
+        server:
+          enabled: *emailEnabled
+          port: &emailPort 25
+          domain:
+          allowed:
+            senders:
+          blocked:
+            senders:
+        inbound:
+          enabled: *emailEnabled
+          unknownUser:
+      # Outbound SMTP configuration
+      mail:
+        host:
+        port: *emailPort
+        username:
+        password:
+        encoding: "UTF-8"
+        protocol:
+        smtp:
+          auth: true
+          timeout: 30000
+        smtps:
+          auth: false
+          starttls:
+            enable: false
+        notification:
+          email:
+            siteinvite:
   service:
     name: alfresco
     type: ClusterIP
     externalPort: &repositoryExternalPort 80
-    emailPort: 25
+    emailPort: *emailPort
   ingress:
     path: /
     maxUploadSize: "5g"

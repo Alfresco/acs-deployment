@@ -61,6 +61,11 @@ data:
       -Ds3.{{ $key }}={{ $val }}
       {{- end }}
       {{- end }}
+      {{- if .Values.repository.emailServer.enabled }}
+      {{- range $key, $val := .Values.repository.emailServer.config }}
+      -D{{ $key }}={{ $val }}
+      {{- end }}
+      {{- end }}
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
       {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
       -Dmessaging.broker.url=failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
