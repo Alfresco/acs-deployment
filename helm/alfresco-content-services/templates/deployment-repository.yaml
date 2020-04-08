@@ -48,6 +48,11 @@ spec:
               # s3 connector secret keys
               name: {{ template "content-services.shortname" . }}-s3secret
           {{- end }}
+          {{- if .Values.email.server.enabled }}
+          - secretRef:
+              # mail password
+              name: {{ template "content-services.shortname" . }}-mail-password
+          {{- end }}
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap
@@ -55,8 +60,8 @@ spec:
             # internal port and the hazelcast port used for clustering
             - containerPort: {{ .Values.repository.image.internalPort }}
             - containerPort: {{ .Values.repository.image.hazelcastPort }}
-            {{- if .Values.repository.emailServer.enabled }}
-            - containerPort: {{ .Values.repository.emailServer.port }}
+            {{- if .Values.email.server.enabled }}
+            - containerPort: {{ .Values.email.server.port }}
             {{- end }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}

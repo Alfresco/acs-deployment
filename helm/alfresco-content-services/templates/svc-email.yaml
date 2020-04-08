@@ -1,8 +1,9 @@
-# Defines the service for the alfresco content repository app
+# Defines the email service for the alfresco content repository app
+{{- if .Values.email.server.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "content-services.shortname" . }}-repository
+  name: {{ template "content-services.shortname" . }}-email
   labels:
     app: {{ template "content-services.shortname" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -12,9 +13,11 @@ metadata:
 spec:
   type: {{ .Values.repository.service.type }}
   ports:
-    - port: {{ .Values.repository.service.externalPort }}
-      targetPort: {{ .Values.repository.image.internalPort }}
-      name: {{ .Values.repository.service.name }}
+    - port: {{ .Values.email.server.port }}
+      targetPort: {{ .Values.email.server.port }}
+      name: {{ .Values.repository.service.name }}-smtp
+      protocol: TCP
   selector:
     app: {{ template "content-services.shortname" . }}-repository
     release: {{ .Release.Name }}
+{{- end }}
