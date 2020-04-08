@@ -505,8 +505,8 @@ mail:
   username:
   password:
   from:
-    default:
-    enabled:
+    default:  # "some.body@example.com"
+    enabled: false
   smtp:
     auth: true
     debug: false
