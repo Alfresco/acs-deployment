@@ -10,14 +10,16 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     component: repository
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 spec:
-  type: {{ .Values.repository.service.type }}
+  type: LoadBalancer
   ports:
     - port: {{ .Values.email.server.port }}
       targetPort: {{ .Values.email.server.port }}
-      name: {{ .Values.repository.service.name }}-smtp
+      name: {{ .Values.repository.service.name }}-email
       protocol: TCP
   selector:
-    app: {{ template "content-services.shortname" . }}-repository
-    release: {{ .Release.Name }}
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
 {{- end }}
