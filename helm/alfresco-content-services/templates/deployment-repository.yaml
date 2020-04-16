@@ -61,7 +61,10 @@ spec:
             - containerPort: {{ .Values.repository.image.internalPort }}
             - containerPort: {{ .Values.repository.image.hazelcastPort }}
             {{- if .Values.email.server.enabled }}
+            - containerPort: {{ .Values.mail.port }}
             - containerPort: {{ .Values.email.server.port }}
+            - containerPort: {{ .Values.imap.server.port }}
+            - containerPort: {{ .Values.imap.server.imaps.port }}
             {{- end }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}

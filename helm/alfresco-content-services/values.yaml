@@ -477,7 +477,7 @@ email:
   server:
     enabled: false
     port: 1125
-    domain: # "mycompany.com"
+    domain:
     enableTLS: true
     hideTLS: false
     requireTLS: false
@@ -486,26 +486,26 @@ email:
     connections:
       max: 3
     allowed:
-      senders: # ".*\@alfresco\.com, .*\@alfresco\.org"
+      senders: .*
     blocked:
-      senders: # ".*\@hotmail\.com, .*\@googlemail\.com"
+      senders:
   inbound:
-    enabled: true
-    unknownUser: anonymous # "anonymous"
-    emailContributorsAuthority: # "EVERYONE"
+    enabled: false
+    unknownUser: anonymous
+    emailContributorsAuthority: EMAIL_CONTRIBUTORS
   handler:
     folder:
       overwriteDuplicates: true
 
 mail:
   host:
-  port: 25
-  protocol: smtp
-  encoding: "UTF-8"
+  port:
+  protocol: smtps
+  encoding: UTF-8
   username:
   password:
   from:
-    default:  # "some.body@example.com"
+    default:
     enabled: false
   smtp:
     auth: true
@@ -533,12 +533,12 @@ imap:
       enabled: true
     imaps:
       enabled: true
-      port: 1143
+      port: 1144
   mail:
     from:
-      default: # "noreply@mycompany.com"
+      default:
     to:
-      default: # "noreply@mycompany.com"
+      default:
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:

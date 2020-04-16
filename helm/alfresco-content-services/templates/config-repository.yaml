@@ -99,6 +99,7 @@ data:
       -Dimap.mail.to.default={{ .Values.imap.mail.to.default }}
       -Dcsrf.filter.enabled=false
       -Dsystem.usages.enabled=true
+      -Dnotification.email.siteinvite=true
       {{- end }}
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
       {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
