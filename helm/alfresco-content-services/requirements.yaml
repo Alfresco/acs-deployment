@@ -17,11 +17,12 @@ dependencies:
   version: 4.1.1
   condition: alfresco-content-services.alfresco-infrastructure.enabled
   repository: https://kubernetes-charts.alfresco.com/stable
-- name: alfresco-digital-workspace
-  version: 2.3.0
-  condition: alfresco-digital-workspace.enabled
-  repository: https://kubernetes-charts.alfresco.com/stable
 - name: alfresco-sync-service
   version: 3.0.2
   condition: alfresco-sync-service.enabled
   repository: https://kubernetes-charts.alfresco.com/stable
+- name: alfresco-adf-app
+  alias: alfresco-digital-workspace
+  version: 2.1.4
+  repository: https://kubernetes-charts.alfresco.com/incubator
+  condition: alfresco-content-services.alfresco-digital-workspace.enabled
