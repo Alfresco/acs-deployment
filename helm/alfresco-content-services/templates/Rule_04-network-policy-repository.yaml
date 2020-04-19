@@ -69,6 +69,20 @@ spec:
           port: {{ .Values.imap.server.imaps.port }}
         {{ end }}
 
+    {{- if .Values.email.server.enabled }}
+    # Allow external repo connection for email, smtp and imap services
+    - from:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+      - protocol: TCP
+        port: {{ .Values.email.server.port }}
+      - protocol: TCP
+        port: {{ .Values.imap.server.port }}
+      - protocol: TCP
+        port: {{ .Values.imap.server.imaps.port }}
+    {{- end }}
+
   egress:
     # Allow repo to communicate back with other components
     - to:

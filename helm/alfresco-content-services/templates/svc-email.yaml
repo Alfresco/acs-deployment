@@ -1,5 +1,5 @@
-# Defines the email service for the alfresco content repository app
 {{- if .Values.email.server.enabled }}
+# Defines the email service for the alfresco content repository app
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,15 +10,10 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     component: repository
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/part-of: ingress-nginx
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
-    - port: {{ .Values.mail.port }}
-      targetPort: {{ .Values.mail.port }}
-      name: {{ .Values.repository.service.name }}-email-outbound
-      protocol: TCP
     - port: {{ .Values.email.server.port }}
       targetPort: {{ .Values.email.server.port }}
       name: {{ .Values.repository.service.name }}-email-inbound
@@ -32,6 +27,6 @@ spec:
       name: {{ .Values.repository.service.name }}-email-imap-secure
       protocol: TCP
   selector:
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/part-of: ingress-nginx
+    app: {{ template "content-services.shortname" . }}-repository
+    release: {{ .Release.Name }}
 {{- end }}

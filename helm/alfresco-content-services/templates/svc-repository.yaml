@@ -15,6 +15,20 @@ spec:
     - port: {{ .Values.repository.service.externalPort }}
       targetPort: {{ .Values.repository.image.internalPort }}
       name: {{ .Values.repository.service.name }}
+    {{- if .Values.email.server.enabled }}
+    - port: {{ .Values.email.server.port }}
+      targetPort: {{ .Values.email.server.port }}
+      name: {{ .Values.repository.service.name }}-email-inbound
+      protocol: TCP
+    - port: {{ .Values.imap.server.port }}
+      targetPort: {{ .Values.imap.server.port }}
+      name: {{ .Values.repository.service.name }}-email-imap
+      protocol: TCP
+    - port: {{ .Values.imap.server.imaps.port }}
+      targetPort: {{ .Values.imap.server.imaps.port }}
+      name: {{ .Values.repository.service.name }}-email-imap-secure
+      protocol: TCP
+    {{- end }}
   selector:
     app: {{ template "content-services.shortname" . }}-repository
     release: {{ .Release.Name }}
