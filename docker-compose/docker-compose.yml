@@ -39,7 +39,11 @@ services:
 
                 -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
 
-                -DlegacyTransform.core-aio.url=http://transform-core-aio:8090/
+                -Dalfresco-pdf-renderer.url=http://transform-core-aio:8090/
+                -Djodconverter.url=http://transform-core-aio:8090/
+                -Dimg.url=http://transform-core-aio:8090/
+                -Dtika.url=http://transform-core-aio:8090/
+                -Dtransform.misc.url=http://transform-core-aio:8090/
 
                 -Dcsrf.filter.enabled=false
                 -Ddsync.service.uris=http://localhost:9090/alfresco
