@@ -409,7 +409,7 @@ alfresco-digital-workspace: &alfresco-digital-workspace
   enabled: true
   nameOverride: "alfresco-digital-workspace"
   ingress:
-    hostName: # Requires host rule in ingress https://<Domain name>
+    hostName:  # Requires host rule in ingress https://<Domain name>
     path: /workspace
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
@@ -417,13 +417,13 @@ alfresco-digital-workspace: &alfresco-digital-workspace
     internalPort: 8080
     pullPolicy: Always
   env:
-    APP_CONFIG_ECM_HOST:
+#    APP_CONFIG_ECM_HOST: "https://aaesri-dev.dev.alfresco.me"
     APP_CONFIG_AUTH_TYPE: "OAUTH"
     BASEPATH: /workspace/
-    APP_CONFIG_IDENTITY_HOST:
-    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI:
-    APP_CONFIG_OAUTH2_HOST:
-    API_URL:
+#    APP_CONFIG_IDENTITY_HOST: "https://aaesri-dev.dev.alfresco.me/auth/admin/realms/alfresco/"
+#    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "https://aaesri-dev.dev.alfresco.me/workspace/assets/silent-refresh.html"
+#    APP_CONFIG_OAUTH2_HOST: "https://aaesri-dev.dev.alfresco.me/auth/realms/alfresco"
+#    API_URL: "https://aaesri-dev.dev.alfresco.me"
   #######Example values for alfresco-digital-workspace#########
   #env:
   #  APP_CONFIG_ECM_HOST: "https://<Domain name>"
