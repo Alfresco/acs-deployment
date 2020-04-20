@@ -100,6 +100,9 @@ data:
       -Dcsrf.filter.enabled=false
       -Dsystem.usages.enabled=true
       -Dnotification.email.siteinvite=true
+      {{- if .Values.email.server.enableTLS }}
+      -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
+      {{- end }}
       {{- end }}
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
       {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
