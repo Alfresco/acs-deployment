@@ -2,21 +2,13 @@
 
 This documentation demonstrates how to enable Inbound and Outbound email when installing ACS Helm chart.
 
-Below is an example set up in the US-East-1 (N.Virginia) region.
-
-## Create Kubernetes cluster with Kops
-
-Follow the steps outlined in [Setting up a Kubernetes cluster on AWS with Kops](../helm-deployment-aws_kops.md#setting-up-kubernetes-cluster-on-aws-with-kops).
-
-Once the Kubernetes cluster is up and running with an nginx-ingress controller, an S3 bucket is required for ACS Deployment with the S3 Connector module.
-
 ## Deploy ACS Helm chart with email server enabled
 
 Currently, the ingress-nginx does not support tcp/udp services due to kubernetes limitations and the workaround is to expose the TCP (for example smtp(s), imap(s)) to be accessible from outside over internet, a kubernetes Service LoadBalancer is required.  This means inbound email need to be sent using this Service LoadBalancer address which is serving tcp traffic.  This may means there is an overhead of an extra L4 LoadBalancer cost.  This is purely due to current limitations on Kubernetes for TCP/UDP services and not related to ACS helm setup.
 
 So, for example if your ACS Helm chart is enabled with Inbound/Outbound email in domain `*.example.com`, then the service endpoints would be:
-`myacs.example.com` - For general Alfresco, Share and Digital Workspace endpoints
-`smtps-myacs.example.com` - For sending emails to ACS smtp(s) server (for example port: 1125 (smtps), 1144(imaps))
+- `myacs.example.com` - For general Alfresco, Share and Digital Workspace endpoints
+- `smtps-myacs.example.com` - For sending emails to ACS smtp(s) server (for example port: 1125 (smtps), 1144(imaps))
 
 It is recommended to enable TLS while configuring SMTP(s) and IMAP(s) configuration.  If TLS is enabled for inbound email, then the helm chart expects the TLS certificate as a Secret before installing the chart.  This secret name is passed on as a parameter with helm chart installation to be used for inbound email with TLS and repository will create keystore and truststore accordingly from the provided SSL certificates.
 
