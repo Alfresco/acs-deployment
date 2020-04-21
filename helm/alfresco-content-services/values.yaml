@@ -15,7 +15,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.3.0-A1"
+    tag: "6.2.1-A2"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -36,8 +36,6 @@ repository:
       -Ddeployment.method=HELM_CHART
 
       -Dtransform.service.enabled=true
-      -Dlocal.transform.service.enabled=true
-      -Dlegacy.transform.service.enabled=true
 
       -Xms2000M -Xmx2000M"
   resources:
@@ -90,7 +88,7 @@ pdfrenderer:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.1.1"
+    tag: "2.2.0-A4"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -123,7 +121,7 @@ imagemagick:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.1.1"
+    tag: "2.2.0-A4"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -156,7 +154,7 @@ libreoffice:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.1.1"
+    tag: "2.2.0-A4"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -189,7 +187,7 @@ tika:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.1.1"
+    tag: "2.2.0-A4"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -222,7 +220,7 @@ transformmisc:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.1.1"
+    tag: "2.2.0-A4"
     pullPolicy: Always
     internalPort: 8090
   service:
