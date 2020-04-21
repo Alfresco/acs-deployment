@@ -57,6 +57,7 @@ helm install alfresco-incubator/alfresco-content-services \
 ...
 --namespace=$DESIREDNAMESPACE
 ```
+NOTE: If you are using (for example Gmail or Yahoo) as the outbound email server, your application's attempts to send outgoing emails may be blocked by the email providers due to their security policies as if it considers the authentication attempts to be suspicious. When this happens, you will receive a security alert at the corresponding email address. To proceed, you will need to manually confirm the validity of the authentication attempt before the email provider will permit the application to send outbound emails. For more information on [Less secure apps & your Google Account](https://support.google.com/accounts/answer/6010255).
 
 # Exposing email service
 Ingress-nginx currently does not support TCP or UDP services.  The helm chart will expose SMTP service as a LoadBalancer (it creates a new AWS ELB).  This LoadBalancer/ELB information can be obtained as:
