@@ -15,7 +15,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.3.0-A1"
+    tag: "6.2.1-A2"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -36,8 +36,6 @@ repository:
       -Ddeployment.method=HELM_CHART
 
       -Dtransform.service.enabled=true
-      -Dlocal.transform.service.enabled=true
-      -Dlegacy.transform.service.enabled=true
 
       -Xms2000M -Xmx2000M"
   resources:
