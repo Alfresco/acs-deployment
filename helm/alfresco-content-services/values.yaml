@@ -407,7 +407,7 @@ alfresco-search:
 
 alfresco-digital-workspace: &alfresco-digital-workspace
   enabled: true
-  nameOverride: "alfresco-digital-workspace"
+  nameOverride: "alfresco-dw"
   ingress:
     path: /workspace
   image:
