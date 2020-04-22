@@ -16,20 +16,3 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- $name := (.Values.nameOverride | default (printf "%s" "alfresco-")) -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
-
-{{/* ======================================================================== */}}
-
-{{/* THE TEMPLATES DEFINED BELOW ARE SUPPOSSED TO BE USED FOR THIS CHART ONLY */}}
-
-{{/*
-Get Alfresco External Host
-*/}}
-
-{{- define "content-services.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "alfresco.acs-domain" -}}
-{{- $value := default (include "common.gateway-domain" .) .Values.global.gateway.domain -}}
-{{- tpl (printf "%s" $value) . -}}
-{{- end -}}

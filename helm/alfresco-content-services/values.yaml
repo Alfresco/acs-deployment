@@ -498,6 +498,6 @@ global:
       - "quay-registry-secret"
   gateway:
     domain:
-    host: '{{ include "alfresco.acs-domain" . }}'
+    host: 
 alfresco-sync-service:
    enabled : true
