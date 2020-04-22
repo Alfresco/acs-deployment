@@ -392,6 +392,8 @@ alfresco-search:
 #    host: "127.0.0.1"
     # Port of the external solr6 instance.
 #    port: "8983"
+  searchServicesImage:
+    tag: "1.4.2-RC2"
   repository: &repositoryHostPort 
     # The value for "host" is the name of this chart
     host: alfresco-cs
