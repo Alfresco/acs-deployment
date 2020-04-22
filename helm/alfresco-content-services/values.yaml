@@ -409,7 +409,6 @@ alfresco-digital-workspace: &alfresco-digital-workspace
   enabled: true
   nameOverride: "alfresco-digital-workspace"
   ingress:
-    hostName:  # Requires host rule in ingress https://<Domain name>
     path: /workspace
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
@@ -417,22 +416,7 @@ alfresco-digital-workspace: &alfresco-digital-workspace
     internalPort: 8080
     pullPolicy: Always
   env:
-#    APP_CONFIG_ECM_HOST: "https://aaesri-dev.dev.alfresco.me"
-    APP_CONFIG_AUTH_TYPE: "OAUTH"
-    BASEPATH: /workspace/
-#    APP_CONFIG_IDENTITY_HOST: "https://aaesri-dev.dev.alfresco.me/auth/admin/realms/alfresco/"
-#    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "https://aaesri-dev.dev.alfresco.me/workspace/assets/silent-refresh.html"
-#    APP_CONFIG_OAUTH2_HOST: "https://aaesri-dev.dev.alfresco.me/auth/realms/alfresco"
-#    API_URL: "https://aaesri-dev.dev.alfresco.me"
-  #######Example values for alfresco-digital-workspace#########
-  #env:
-  #  APP_CONFIG_ECM_HOST: "https://<Domain name>"
-  #  APP_CONFIG_AUTH_TYPE: "OAUTH"
-  #  BASEPATH: /workspace/
-  #  APP_CONFIG_IDENTITY_HOST: "https://<Domain name>/auth/admin/realms/alfresco/"
-  #  APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "https://<Domain name>/workspace/assets/silent-refresh.html"
-  #  APP_CONFIG_OAUTH2_HOST: "https://<Domain name>/auth/realms/alfresco"
-  #  API_URL: "<Domain name>"
+    APP_CONFIG_AUTH_TYPE: ""
 
 # choose if you want AI capabilities
 ai:
@@ -449,7 +433,7 @@ networkpolicysetting:
   enabled: true
 
 # Defines properties required by alfresco for connecting to the database
-# Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl 
+# Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
 # Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver
 database:
   external: false
@@ -512,5 +496,8 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
       - "quay-registry-secret"
+  gateway:
+    domain:
+    host: '{{ include "alfresco.acs-domain" . }}'
 alfresco-sync-service:
    enabled : true
