@@ -417,6 +417,7 @@ alfresco-digital-workspace: &alfresco-digital-workspace
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: ""
+    BASEPATH= ./
 
 # choose if you want AI capabilities
 ai:
