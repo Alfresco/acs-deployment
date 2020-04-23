@@ -411,7 +411,7 @@ alfresco-digital-workspace:
   ingress:
     path: /workspace
     annotations:
-      kubernetes.io/ingress.class: "nginx",
+      kubernetes.io/ingress.class: "nginx"
       nginx.ingress.kubernetes.io/rewrite-target: "/"
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
   image:
@@ -419,6 +419,8 @@ alfresco-digital-workspace:
     tag: 1.3.0
     internalPort: 8080
     pullPolicy: Always
+  env:
+    APP_CONFIG_AUTH_TYPE: ""
 
 # choose if you want AI capabilities
 ai:
@@ -498,6 +500,9 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
       - "quay-registry-secret"
+  gateway:
+    domain:
+    host: '{{ include "alfresco.acs-domain" . }}'
 
 alfresco-sync-service:
    enabled : true
