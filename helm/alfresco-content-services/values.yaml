@@ -405,19 +405,20 @@ alfresco-search:
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
     enabled: false
 
-alfresco-digital-workspace: &alfresco-digital-workspace
+alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:
     path: /workspace
+    annotations:
+      kubernetes.io/ingress.class: "nginx",
+      nginx.ingress.kubernetes.io/rewrite-target: "/"
+      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 1.3.0
     internalPort: 8080
     pullPolicy: Always
-  env:
-    APP_CONFIG_AUTH_TYPE: ""
-    BASEPATH: ./
 
 # choose if you want AI capabilities
 ai:
@@ -431,7 +432,7 @@ ai:
 
 # choose if you want network policy enabled
 networkpolicysetting:
-  enabled: true
+  enabled: false
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
@@ -497,8 +498,6 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
       - "quay-registry-secret"
-  gateway:
-    domain:
-    host: 
+
 alfresco-sync-service:
    enabled : true
