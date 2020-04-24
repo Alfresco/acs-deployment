@@ -421,6 +421,9 @@ alfresco-digital-workspace:
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: ""
+    BASE_PATH: "./"
+    API_URL: '{{ include "common.gateway-domain" . }}'
+
 
 # choose if you want AI capabilities
 ai:
@@ -434,7 +437,7 @@ ai:
 
 # choose if you want network policy enabled
 networkpolicysetting:
-  enabled: false
+  enabled: true
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
