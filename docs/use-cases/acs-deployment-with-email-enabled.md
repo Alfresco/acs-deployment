@@ -12,14 +12,13 @@ So, for example if your ACS Helm chart is enabled with Inbound/Outbound email in
 
 It is recommended to enable TLS while configuring SMTP(s) and IMAP(s) configuration.  If TLS is enabled for inbound email, then the helm chart expects the TLS certificate as a Secret before installing the chart.  This secret name is passed on as a parameter with helm chart installation to be used for inbound email with TLS and repository will create keystore and truststore accordingly from the provided SSL certificates.
 
-For example, if your ACS email domain is `smtps-myacs.example.com` and your SSL certificates (self signed or signed) are as below:
+For example, if your ACS email server name is `smtps-myacs.example.com` and your SSL certificates (self signed or signed) are as below:
 ```
 cert.pem
 fullchain.pem
 privkey.pem
 ```
-
-Then, the command to create a kubernetes secret in the namespace where ACS will be installed is:
+then, the command to create a kubernetes secret in the namespace where ACS will be installed would be:
 ```
 kubectl create secret tls your-cert-secret --key privkey.pem --cert fullchain.pem --namespace=$DESIREDNAMESPACE
 ```
