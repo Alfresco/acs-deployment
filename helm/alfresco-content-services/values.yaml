@@ -500,9 +500,6 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
       - "quay-registry-secret"
-  gateway:
-    domain:
-    host: '{{ include "alfresco.acs-domain" . }}'
 
 alfresco-sync-service:
    enabled : true
