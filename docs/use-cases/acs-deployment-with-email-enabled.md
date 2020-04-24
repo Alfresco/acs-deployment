@@ -20,8 +20,9 @@ privkey.pem
 ```
 
 Then, the command to create a kubernetes secret in the namespace where ACS will be installed is:
-`kubectl create secret tls your-cert-secret --key privkey.pem --cert fullchain.pem --namespace=$DESIREDNAMESPACE`
-
+```
+kubectl create secret tls your-cert-secret --key privkey.pem --cert fullchain.pem --namespace=$DESIREDNAMESPACE
+```
 
 Refer to [Deploying Alfresco Content Services](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for  the full `helm install` reference.  The example below enables the email service with TLS enabled by passing the related [configuration options]((../../helm/README.md#configuration)).
 
