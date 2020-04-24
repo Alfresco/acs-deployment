@@ -409,6 +409,7 @@ alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:
+    defaultHostNameEnabled: false
     path: /workspace
     annotations:
       kubernetes.io/ingress.class: "nginx"
@@ -421,6 +422,7 @@ alfresco-digital-workspace:
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: ""
+    BASE_PATH: "./"
 
 # choose if you want AI capabilities
 ai:
