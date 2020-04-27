@@ -424,7 +424,8 @@ alfresco-digital-workspace:
     APP_CONFIG_AUTH_TYPE: ""
     BASE_PATH: "./"
     API_URL: '{{ include "common.gateway-domain" . }}'
-
+  networkpolicysetting:
+    enabled: true
 
 # choose if you want AI capabilities
 ai:
