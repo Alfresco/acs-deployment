@@ -409,7 +409,8 @@ alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:
-    path: /workspace
+    hostName: '{{ include "common.gateway-domain" . }}'
+    path: /workspace/
     defaultHostNameEnabled: false
     annotations:
       kubernetes.io/ingress.class: "nginx"
@@ -423,7 +424,6 @@ alfresco-digital-workspace:
   env:
     APP_CONFIG_AUTH_TYPE: ""
     BASE_PATH: "./"
-    API_URL: '{{ include "common.gateway-domain" . }}'
   networkpolicysetting:
     enabled: true
 
