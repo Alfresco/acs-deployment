@@ -409,25 +409,22 @@ alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:
-    hostName: '{{ include "common.gateway-domain" . }}'
-    path: /workspace
+    path: "/workspace"
+    defaultHostNameEnabled: false
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
-      nginx.ingress.kubernetes.io/rewrite-target: "/"
+      ingress.kubernetes.io/ssl-redirect: "true"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 1.3.0
+    tag: 1.4.0
     internalPort: 8080
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    BASEPATH: "/workspace/"
-    BASE_PATH: "./"
+    BASEPATH: "./"
+    API_URL: '{{ include "common.gateway-domain" . }}'
   networkpolicysetting:
     enabled: true
-  common:
-    ingress:
-      path: /workspace/
 
 # choose if you want AI capabilities
 ai:
@@ -508,7 +505,6 @@ global:
   registryPullSecrets:
       - "quay-registry-secret"
   gateway:
-    host: '{{ include "common.gateway-domain" . }}'
     url: '{{ include "common.gateway-domain" . }}'
   keyclack:
     enabled: false
