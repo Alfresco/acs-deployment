@@ -425,6 +425,9 @@ alfresco-digital-workspace:
     BASE_PATH: "./"
   networkpolicysetting:
     enabled: true
+  common:
+    ingress:
+      path: /workspace/
 
 # choose if you want AI capabilities
 ai:
@@ -507,6 +510,8 @@ global:
   gateway:
     host: '{{ include "common.gateway-domain" . }}'
     url: '{{ include "common.gateway-domain" . }}'
+  keyclack:
+    enabled: false
 
 alfresco-sync-service:
    enabled : true
