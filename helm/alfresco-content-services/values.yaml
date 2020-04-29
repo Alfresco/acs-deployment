@@ -408,6 +408,7 @@ alfresco-search:
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
+  hostName: '{{ include "common.gateway-domain" . }}'
   ingress:
     path: "/workspace"
     defaultHostNameEnabled: false
@@ -421,7 +422,7 @@ alfresco-digital-workspace:
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    BASEPATH: "./"
+    BASEPATH: "{{ .Values.ingress.path }}/"
     API_URL: '{{ include "common.gateway-domain" . }}'
   networkpolicysetting:
     enabled: true
