@@ -432,6 +432,76 @@ s3connector:
   #   encryption:
   #   awsKmsKeyId:
 
+##  For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html
+email:
+  server:
+    enabled: false
+    port: 1125
+    domain:
+    enableTLS: true
+    hideTLS: false
+    requireTLS: false
+    auth:
+      enabled: true
+    connections:
+      max: 3
+    allowed:
+      senders: .*
+    blocked:
+      senders:
+  inbound:
+    enabled: false
+    unknownUser: anonymous
+    emailContributorsAuthority: EMAIL_CONTRIBUTORS
+  handler:
+    folder:
+      overwriteDuplicates: true
+  ssl:
+    secretName:
+
+mail:
+  host:
+  port:
+  protocol: smtps
+  encoding: UTF-8
+  username:
+  password:
+  from:
+    default:
+    enabled: false
+  smtp:
+    auth: true
+    debug: false
+    timeout: 30000
+    starttls:
+      enable: true
+  smtps:
+    auth: true
+    starttls:
+      enable: true
+  # DO NOT USE: It breaks repo pod with Error: Could not find or load main class SMTP Caused by: java.lang.ClassNotFoundException: SMTP
+  # testmessage:
+  #   send: false
+  #   subject: "Outbound SMTP"
+  #   text: "The Outbound SMTP email subsystem is working."
+  #   to:
+
+imap:
+  server:
+    enabled: false
+    host: "0.0.0.0"
+    port: 1143
+    imap:
+      enabled: true
+    imaps:
+      enabled: true
+      port: 1144
+  mail:
+    from:
+      default:
+    to:
+      default:
+
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret
