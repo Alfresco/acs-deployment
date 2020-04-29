@@ -47,6 +47,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set email.server.auth.enabled=true \
 --set email.server.enableTLS=true \
 --set email.server.ssl.secretName=your-cert-secret \
+--set email.server.domain=smtps-myacs.example.com \
 --set email.inbound.unknownUser="some.user@gmail.com" \
 ...
 ...
