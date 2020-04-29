@@ -12,16 +12,16 @@ So, for example if your ACS Helm chart is enabled with Inbound/Outbound email in
 
 It is recommended to enable TLS while configuring SMTP(s) and IMAP(s) configuration.  If TLS is enabled for inbound email, then the helm chart expects the TLS certificate as a Secret before installing the chart.  This secret name is passed on as a parameter with helm chart installation to be used for inbound email with TLS and repository will create keystore and truststore accordingly from the provided SSL certificates.
 
-For example, if your ACS email domain is `smtps-myacs.example.com` and your SSL certificates (self signed or signed) are as below:
+For example, if your ACS email server name is `smtps-myacs.example.com` and your SSL certificates (self signed or signed) are as below:
 ```
 cert.pem
 fullchain.pem
 privkey.pem
 ```
-
-Then, the command to create a kubernetes secret in the namespace where ACS will be installed is:
-`kubectl create secret tls your-cert-secret --key privkey.pem --cert fullchain.pem --namespace=$DESIREDNAMESPACE`
-
+then, the command to create a kubernetes secret in the namespace where ACS will be installed would be:
+```
+kubectl create secret tls your-cert-secret --key privkey.pem --cert fullchain.pem --namespace=$DESIREDNAMESPACE
+```
 
 Refer to [Deploying Alfresco Content Services](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for  the full `helm install` reference.  The example below enables the email service with TLS enabled by passing the related [configuration options]((../../helm/README.md#configuration)).
 
@@ -58,6 +58,7 @@ helm install alfresco-incubator/alfresco-content-services \
 ...
 --namespace=$DESIREDNAMESPACE
 ```
+NOTE: If you are using (for example Gmail or Yahoo) as the outbound email server, your application's attempts to send outgoing emails may be blocked by the email providers due to their security policies as if it considers the authentication attempts to be suspicious. When this happens, you will receive a security alert at the corresponding email address. To proceed, you will need to manually confirm the validity of the authentication attempt before the email provider will permit the application to send outbound emails. For more information on [Less secure apps & your Google Account](https://support.google.com/accounts/answer/6010255).
 
 # Exposing email service
 Ingress-nginx currently does not support TCP or UDP services.  The helm chart will expose SMTP service as a LoadBalancer (it creates a new AWS ELB).  This LoadBalancer/ELB information can be obtained as:
