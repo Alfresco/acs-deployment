@@ -1,0 +1,16 @@
+# Defines the email configmap for the alfresco content repository app
+{{- if .Values.email.server.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: repository
+data:
+  {{ .Values.email.server.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.email.server.port }}::PROXY"
+  {{ .Values.imap.server.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.imap.server.port }}::PROXY"
+  {{ .Values.imap.server.imaps.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.imap.server.imaps.port }}::PROXY"
+{{- end }}
