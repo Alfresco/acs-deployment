@@ -408,13 +408,13 @@ alfresco-search:
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
-  hostName: '{{ include "common.gateway-domain" . }}'
   ingress:
     path: "/workspace"
     defaultHostNameEnabled: false
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
       ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: "/"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 1.4.0
