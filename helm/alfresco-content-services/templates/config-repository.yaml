@@ -97,7 +97,6 @@ data:
       -Dimap.server.imaps.port={{ .Values.imap.server.imaps.port }}
       -Dimap.mail.from.default={{ .Values.imap.mail.from.default }}
       -Dimap.mail.to.default={{ .Values.imap.mail.to.default }}
-      -Dcsrf.filter.enabled=false
       -Dsystem.usages.enabled=true
       -Dnotification.email.siteinvite=true
       {{- if .Values.email.server.enableTLS }}
