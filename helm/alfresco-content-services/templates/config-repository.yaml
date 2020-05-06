@@ -61,6 +61,48 @@ data:
       -Ds3.{{ $key }}={{ $val }}
       {{- end }}
       {{- end }}
+      {{- if .Values.email.server.enabled }}
+      -Demail.server.enabled={{ .Values.email.server.enabled }}
+      -Demail.server.port={{ .Values.email.server.port }}
+      -Demail.server.domain={{ .Values.email.server.domain }}
+      -Demail.server.enableTLS={{ .Values.email.server.enableTLS }}
+      -Demail.server.hideTLS={{ .Values.email.server.hideTLS }}
+      -Demail.server.requireTLS={{ .Values.email.server.requireTLS }}
+      -Demail.server.auth.enabled={{ .Values.email.server.auth.enabled }}
+      -Demail.server.connections.max={{ .Values.email.server.connections.max }}
+      -Demail.server.allowed.senders={{ .Values.email.server.allowed.senders }}
+      -Demail.server.blocked.senders={{ .Values.email.server.blocked.senders }}
+      -Demail.inbound.enabled={{ .Values.email.inbound.enabled }}
+      -Demail.inbound.unknownUser={{ .Values.email.inbound.unknownUser }}
+      -Demail.inbound.emailContributorsAuthority={{ .Values.email.inbound.emailContributorsAuthority }}
+      -Demail.handler.folder.overwriteDuplicates={{ .Values.email.handler.folder.overwriteDuplicates }}
+      -Dmail.encoding={{ .Values.mail.encoding }}
+      -Dmail.host={{ .Values.mail.host }}
+      -Dmail.port={{ .Values.mail.port }}
+      -Dmail.protocol={{ .Values.mail.protocol }}
+      -Dmail.username={{ .Values.mail.username }}
+      -Dmail.from.default={{ .Values.mail.from.default }}
+      -Dmail.from.enabled={{ .Values.mail.from.enabled }}
+      -Dmail.smtp.auth={{ .Values.mail.smtp.auth }}
+      -Dmail.smtp.debug={{ .Values.mail.smtp.debug }}
+      -Dmail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
+      -Dmail.smtp.timeout={{ .Values.mail.smtp.timeout }}
+      -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
+      -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
+      -Dimap.server.enabled={{ .Values.imap.server.enabled }}
+      -Dimap.server.port={{ .Values.imap.server.port }}
+      -Dimap.server.host={{ .Values.imap.server.host }}
+      -Dimap.server.imap.enabled={{ .Values.imap.server.imap.enabled }}
+      -Dimap.server.imaps.enabled={{ .Values.imap.server.imaps.enabled }}
+      -Dimap.server.imaps.port={{ .Values.imap.server.imaps.port }}
+      -Dimap.mail.from.default={{ .Values.imap.mail.from.default }}
+      -Dimap.mail.to.default={{ .Values.imap.mail.to.default }}
+      -Dsystem.usages.enabled=true
+      -Dnotification.email.siteinvite=true
+      {{- if .Values.email.server.enableTLS }}
+      -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
+      {{- end }}
+      {{- end }}
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
       {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
       -Dmessaging.broker.url=failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
@@ -82,6 +124,9 @@ data:
       -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
       {{- else }}
       -Ddb.url={{ .Values.database.url }}
+      {{- end }}
+      {{- if .Values.email.server.enabled }}
+      -Dmail.password=$MAIL_PASSWORD
       {{- end }}
       -Ddb.username=$DATABASE_USERNAME
       -Ddb.password=$DATABASE_PASSWORD

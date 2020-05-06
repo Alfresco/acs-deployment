@@ -9,6 +9,7 @@ You can access all components of Alfresco Content Services Community using the s
 
   Content: {{ $alfurl }}/alfresco
   Share: {{ $alfurl }}/share
+  Alfresco Digital Workspace: {{ $alfurl }}/workspace/
   Api-Explorer: {{ $alfurl }}/api-explorer
 {{ if index .Values "alfresco-search" "ingress" "enabled" }}  Solr: {{ $alfurl }}/solr {{ end }}
 {{ if (index .Values "alfresco-insight-zeppelin") }}{{ if (index .Values "alfresco-insight-zeppelin" "enabled") }}  Zeppelin: {{ $alfurl }}/zeppelin {{ end }}{{ end }}
