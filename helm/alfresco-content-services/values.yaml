@@ -389,12 +389,12 @@ alfresco-search:
 # Note: Rule_05-network-policy-search will be disable.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
 # Note: ingress-repository will not block external trafic to */solr/*
-#  external: 
+#  external:
     # Host dns/ip of the external solr6 instance.
 #    host: "127.0.0.1"
     # Port of the external solr6 instance.
 #    port: "8983"
-  repository: &repositoryHostPort 
+  repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
     port: *repositoryExternalPort
@@ -409,21 +409,18 @@ alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:
-    path: "/workspace"
+    path: /workspace
     defaultHostNameEnabled: false
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
-      ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/rewrite-target: "/"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 1.5.0
-    internalPort: 8080
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    BASEPATH: "{{ .Values.ingress.path }}/"
-    API_URL: '{{ include "common.gateway-domain" . }}'
+    API_URL: "{protocol}//{hostname}{:port}"
   networkpolicysetting:
     enabled: true
 
@@ -455,7 +452,7 @@ database:
 # Note: the database (tables) information is also saved in the persistent volume claim
 postgresql:
   replicaCount: 1
-  ## If true, install the postgresql chart alongside Alfresco Content Services. 
+  ## If true, install the postgresql chart alongside Alfresco Content Services.
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
@@ -480,7 +477,7 @@ s3connector:
   enabled: false
   # config:
   #   bucketName:
-  #   bucketLocation:  
+  #   bucketLocation:
   ##   Additional properties can be defined here.
   ##   For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
   # secrets:
@@ -504,11 +501,7 @@ global:
       maxSurge: 1
       maxUnavailable: 0
   registryPullSecrets:
-      - "quay-registry-secret"
-  gateway:
-    url: '{{ include "common.gateway-domain" . }}'
-  keyclack:
-    enabled: false
+    - quay-registry-secret
 
 alfresco-sync-service:
    enabled : true
