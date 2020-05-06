@@ -23,6 +23,6 @@ dependencies:
   repository: https://kubernetes-charts.alfresco.com/stable
 - name: alfresco-adf-app
   alias: alfresco-digital-workspace
-  version: 2.1.5
-  repository: https://kubernetes-charts.alfresco.com/incubator
+  version: 2.2.0
+  repository: https://kubernetes-charts.alfresco.com/stable
   condition: alfresco-content-services.alfresco-digital-workspace.enabled
