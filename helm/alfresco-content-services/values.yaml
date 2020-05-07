@@ -15,7 +15,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.2.1-RC6"
+    tag: "6.2.1-RC7"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -317,7 +317,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.2.1-RC1"
+    tag: "6.2.1-RC2"
     pullPolicy: Always
     internalPort: 8080
   service:
