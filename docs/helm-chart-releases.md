@@ -23,4 +23,4 @@
 |4.0.3|6.2.1|
 |5.0.0|7.0.0|
 
-Note that 4.0.3 and 5.0.0 are not released yet.
+Note that 5.0.0 is not released yet.
