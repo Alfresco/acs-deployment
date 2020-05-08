@@ -58,6 +58,30 @@ spec:
       ports:
         - protocol: TCP
           port: 5701
+        {{- if .Values.email.server.enabled }}
+        - protocol: TCP
+          port: {{ .Values.mail.port }}
+        - protocol: TCP
+          port: {{ .Values.email.server.port }}
+        - protocol: TCP
+          port: {{ .Values.imap.server.port }}
+        - protocol: TCP
+          port: {{ .Values.imap.server.imaps.port }}
+        {{ end }}
+
+    {{- if .Values.email.server.enabled }}
+    # Allow external repo connection for email, smtp and imap services
+    - from:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+      - protocol: TCP
+        port: {{ .Values.email.server.port }}
+      - protocol: TCP
+        port: {{ .Values.imap.server.port }}
+      - protocol: TCP
+        port: {{ .Values.imap.server.imaps.port }}
+    {{- end }}
 
   egress:
     # Allow repo to communicate back with other components
@@ -131,4 +155,20 @@ spec:
         port: 61617
       - protocol: TCP
         port: 61616
+
+    {{- if .Values.email.server.enabled }}
+    # Allow repo connection for email, smtp and imap services
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+      - protocol: TCP
+        port: {{ .Values.mail.port }}
+      - protocol: TCP
+        port: {{ .Values.email.server.port }}
+      - protocol: TCP
+        port: {{ .Values.imap.server.port }}
+      - protocol: TCP
+        port: {{ .Values.imap.server.imaps.port }}
+      {{- end }}
 {{- end }}
