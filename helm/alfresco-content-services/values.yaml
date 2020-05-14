@@ -380,6 +380,8 @@ alfresco-infrastructure:
     enabled: true
   alfresco-identity-service:
     enabled: false
+  nginx-ingress:
+    enabled: false
 
 alfresco-search:
   enabled: true
@@ -394,7 +396,7 @@ alfresco-search:
 #    port: "8983"
   searchServicesImage:
     tag: "1.4.2"
-  repository: &repositoryHostPort 
+  repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
     port: *repositoryExternalPort
