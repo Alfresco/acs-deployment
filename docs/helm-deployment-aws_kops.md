@@ -204,7 +204,6 @@ export AWS_CERT_ARN="arn:aws:acm:<AWS-REGION>:<AWS-AccountID>:certificate/<Certi
 export AWS_CERT_POLICY="ELBSecurityPolicy-TLS-1-2-2017-01"
 
 helm install stable/nginx-ingress \
---version 0.14.0 \
 --set controller.scope.enabled=true \
 --set controller.scope.namespace=$DESIREDNAMESPACE \
 --set rbac.create=true \
@@ -252,7 +251,6 @@ Next, install Helm using the above YAML file as an argument:
 ```bash
 # Helm install nginx-ingress with args in ingressvalues.yaml file
 helm install stable/nginx-ingress \
---version 0.14.0 \
 --set controller.scope.enabled=true \
 --set controller.scope.namespace=$DESIREDNAMESPACE \
 --set controller.config."server-tokens"=\"false\" \
