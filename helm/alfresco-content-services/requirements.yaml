@@ -20,7 +20,7 @@ dependencies:
 - name: alfresco-sync-service
   version: 3.0.4
   condition: alfresco-sync-service.enabled
-  repository: https://kubernetes-charts.alfresco.com/incubator
+  repository: https://kubernetes-charts.alfresco.com/stable
 - name: alfresco-adf-app
   alias: alfresco-digital-workspace
   version: 2.2.0
