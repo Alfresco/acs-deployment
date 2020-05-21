@@ -133,4 +133,8 @@ data:
       -Ds3.accessKey=$ACCESSKEY
       -Ds3.secretKey=$SECRETKEY
       -Ds3.encryption=$ENCRYPTION
-      -Ds3.awsKmsKeyId=$KMSKEYID"
+      -Ds3.awsKmsKeyId=$KMSKEYID
+      -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
+      -Dmetadata-keystore.aliases=metadata
+      -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
+      -Dmetadata-keystore.metadata.algorithm=AES"

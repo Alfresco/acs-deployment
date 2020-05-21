@@ -15,7 +15,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.2.1"
+    tag: "6.3.0-A9"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -557,6 +557,12 @@ imap:
       default:
     to:
       default:
+
+metadataKeystore:
+  # keystorePassword: ""
+  # keyPassword: ""
+  defaultKeystorePassword: "mp6yc0UD9e"
+  defaultKeyPassword: "mp6yc0UD9e"
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
