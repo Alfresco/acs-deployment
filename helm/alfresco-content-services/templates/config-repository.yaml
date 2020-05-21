@@ -134,9 +134,6 @@ data:
       -Ds3.secretKey=$SECRETKEY
       -Ds3.encryption=$ENCRYPTION
       -Ds3.awsKmsKeyId=$KMSKEYID
-      -Dencryption.keystore.type=pkcs12
-      -Dencryption.cipherAlgorithm=AES/CBC/PKCS5Padding
-      -Dencryption.keyAlgorithm=AES
       -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
       -Dmetadata-keystore.aliases=metadata
       -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
