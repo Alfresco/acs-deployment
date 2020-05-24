@@ -1,6 +1,6 @@
 # Defines the deployment for the shared file store
 # Details: https://git.alfresco.com/Repository/alfresco-shared file store
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "alfresco.shortname" . }}-filestore
