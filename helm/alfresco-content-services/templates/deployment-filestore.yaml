@@ -17,9 +17,9 @@ spec:
     rollingUpdate:
 {{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
-    annotations:
-      checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
       labels:
         app: {{ template "alfresco.shortname" . }}-filestore
         release: {{ .Release.Name }}
