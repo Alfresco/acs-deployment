@@ -1,5 +1,5 @@
 # Defines the deployment for the alfresco share app
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-share
@@ -58,4 +58,4 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/bash", "-c", "sleep 20"]            
+                command: ["/bin/bash", "-c", "sleep 20"]
