@@ -1,6 +1,6 @@
 # Defines the deployment for the shared file store
 # Details: https://git.alfresco.com/Repository/alfresco-shared file store
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "alfresco.shortname" . }}-filestore
@@ -17,9 +17,9 @@ spec:
     rollingUpdate:
 {{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
-    annotations:
-      checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
       labels:
         app: {{ template "alfresco.shortname" . }}-filestore
         release: {{ .Release.Name }}
@@ -62,6 +62,7 @@ spec:
           ports:
             - containerPort: {{ .Values.filestore.image.internalPort }}
           resources:
+{{ toYaml .Values.filestore.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -77,7 +78,6 @@ spec:
             periodSeconds: {{ .Values.filestore.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.filestore.resources | indent 12 }}
           {{- if .Values.persistence.filestore.enabled }}
           volumeMounts:
           - name: data

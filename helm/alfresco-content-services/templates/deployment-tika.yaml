@@ -1,6 +1,6 @@
 # Defines the deployment for the tika transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-tika
@@ -62,6 +62,7 @@ spec:
           ports:
             - containerPort: {{ .Values.tika.image.internalPort }}
           resources:
+{{ toYaml .Values.tika.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -77,4 +78,3 @@ spec:
             periodSeconds: {{ .Values.tika.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.tika.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.tika.resources | indent 12 }}

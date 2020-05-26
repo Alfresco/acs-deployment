@@ -1,5 +1,5 @@
 # Defines the deployment for the alfresco content repository app
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-repository
@@ -106,7 +106,7 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["/bin/bash", "-c", "sleep 20"]            
+                command: ["/bin/bash", "-c", "sleep 20"]
       {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
       initContainers:
       {{- if eq .Values.database.external false }}
