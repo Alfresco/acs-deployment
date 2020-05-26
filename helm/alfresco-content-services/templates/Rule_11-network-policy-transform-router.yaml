@@ -9,7 +9,14 @@ spec:
     matchLabels:
       app: {{ template "alfresco.shortname" . }}-router
   policyTypes:
+  - Ingress
   - Egress
+  ingress:
+    - from:
+      # Allow requests from repository
+      - podSelector:
+          matchLabels:
+            app: {{ template "content-services.shortname" . }}-repository
   egress:
     # Allow router to communicate with transformers
     - to:

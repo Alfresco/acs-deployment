@@ -28,12 +28,11 @@ data:
   PDF_RENDERER_URL: http://{{ template "content-services.shortname" . }}-pdfrenderer:80
   LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
   TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80
-  TRANSFORM_MISC_URL: http://{{ template "content-services.shortname" . }}-transform-misc:80
+  MISC_URL: http://{{ template "content-services.shortname" . }}-transform-misc:80
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   {{- if .Values.ai.enabled }}
   TRANSFORMER_URL_AWS_AI: http://{{ template "content-services.shortname" . }}-ai-transformer:80
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
-  SPRING_APPLICATION_JSON: "{\"transformer\":{\"queue\":{\"AWS_AI\":\"org.alfresco.transform.engine.ai-aws.acs\"},\"url\":{\"AWS_AI\":\"http://{{ template "content-services.shortname" . }}-ai-transformer:80\"}}}"
-  TRANSFORMER_ROUTES_FILE_LOCATION: "/mnt/routes/transformer-routes-with-ai.properties"
+  TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-routes.properties"
   {{- end }}
   

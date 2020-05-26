@@ -10,8 +10,15 @@ metadata:
     component: transformrouter
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-transform-router.yaml") . | sha256sum }}
+        checksum/config-routes: {{ include (print $.Template.BasePath "/config-transformer-routes.yaml") . | sha256sum }}
       labels:
         app: {{ template "alfresco.shortname" . }}-router
         release: {{ .Release.Name }}
@@ -19,7 +26,7 @@ spec:
     spec:
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

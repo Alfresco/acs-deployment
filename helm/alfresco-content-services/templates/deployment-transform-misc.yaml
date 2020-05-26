@@ -12,17 +12,23 @@ metadata:
     component: transformers
 spec:
   replicas: {{ .Values.transformmisc.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-transform-misc.yaml") . | sha256sum }}
       labels:
         app: {{ template "content-services.shortname" . }}-transform-misc
         release: {{ .Release.Name }}
         component: transformers
     spec:
-      {{- if .Values.registryPullSecrets }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       affinity:
         podAntiAffinity:

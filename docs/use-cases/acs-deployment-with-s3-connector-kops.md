@@ -143,7 +143,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set externalPort="443" \
 ...
 ...
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --set s3connector.enabled=true \
 --set s3connector.config.bucketName="$ACS_S3_BUCKET" \
 --set s3connector.config.bucketLocation="$AWS_DEFAULT_REGION" \

@@ -15,6 +15,7 @@
 
    * [Versioning guide](./helm-versioning.md)
    * [Helm Chart releases](./helm-chart-releases.md)
+   * [Docker image source locations](./docker-image-source-locations.md)
 
 * [Customising your deployment](./customising-deployment.md)
 * [Troubleshooting ACS deployment in Kubernetes](./troubleshooting-helm-deployment.md)
