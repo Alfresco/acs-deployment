@@ -5,10 +5,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
   labels:
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transform-routes
+    {{- include "transform-router.labels" . | nindent 4 }}
 data:
   ai-routes.properties: |-
     # This properties file is parsed by the org.alfresco.transform.router.routes.TransformerRoutes class

@@ -4,11 +4,7 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-repository
   labels:
-    app: {{ template "content-services.shortname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: repository
+    {{- include "repository.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.repository.service.type }}
   ports:
@@ -30,5 +26,4 @@ spec:
       protocol: TCP
     {{- end }}
   selector:
-    app: {{ template "content-services.shortname" . }}-repository
-    release: {{ .Release.Name }}
+    {{- include "repository.selectorLabels" . | nindent 4 }}

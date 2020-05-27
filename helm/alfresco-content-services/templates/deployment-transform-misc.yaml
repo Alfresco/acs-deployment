@@ -1,17 +1,16 @@
 # Defines the deployment for the transform-misc transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-transform-misc
   labels:
-    app: {{ template "content-services.shortname" . }}-transform-misc
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "transform-misc.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.transformmisc.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "transform-misc.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,9 +20,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-transform-misc.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-transform-misc
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "transform-misc.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

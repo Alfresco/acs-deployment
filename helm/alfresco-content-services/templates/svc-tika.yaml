@@ -4,11 +4,7 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-tika
   labels:
-    app: {{ template "content-services.shortname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "tika.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.tika.service.type }}
   ports:
@@ -16,5 +12,4 @@ spec:
       targetPort: {{ .Values.tika.image.internalPort }}
       name: {{ .Values.tika.service.name }}
   selector:
-    app: {{ template "content-services.shortname" . }}-tika
-    release: {{ .Release.Name }}
+    {{- include "tika.selectorLabels" . | nindent 4 }}

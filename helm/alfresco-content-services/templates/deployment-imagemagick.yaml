@@ -1,17 +1,16 @@
 # Defines the deployment for the imagemagick transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-imagemagick
   labels:
-    app: {{ template "content-services.shortname" . }}-imagemagick
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "imagemagick.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.imagemagick.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "imagemagick.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,9 +20,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-imagemagick.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-imagemagick
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "imagemagick.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

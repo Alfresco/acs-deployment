@@ -4,11 +4,9 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-share
   labels:
-    app: {{ template "content-services.shortname" . }}
+    {{- include "share.selectorLabels" . | nindent 4 }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    component: share
 spec:
   type: {{ .Values.share.service.type }}
   ports:
@@ -16,5 +14,4 @@ spec:
       targetPort: {{ .Values.share.image.internalPort }}
       name: {{ .Values.share.service.name }}
   selector:
-    app: {{ template "content-services.shortname" . }}-share
-    release: {{ .Release.Name }}
+    {{- include "share.selectorLabels" . | nindent 4 }}

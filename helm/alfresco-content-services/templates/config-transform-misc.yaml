@@ -4,10 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "content-services.shortname" . }}-transform-misc-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: transformers
+    {{- include "transform-misc.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for "transform-misc" are set here using proper quotes
   {{- if .Values.transformmisc.environment }}

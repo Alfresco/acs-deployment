@@ -4,10 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "content-services.shortname" . }}-libreoffice-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: transformers
+    {{- include "libreoffice.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for the "libreoffice" are set here using proper quotes
   {{- if .Values.libreoffice.environment }}

@@ -5,11 +5,7 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-email
   labels:
-    app: {{ template "content-services.shortname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: repository
+    {{- include "repository.labels" . | nindent 4 }}
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
@@ -27,6 +23,5 @@ spec:
       name: {{ .Values.repository.service.name }}-email-imap-secure
       protocol: TCP
   selector:
-    app: {{ template "content-services.shortname" . }}-repository
-    release: {{ .Release.Name }}
+    {{- include "repository.selectorLabels" . | nindent 4 }}
 {{- end }}

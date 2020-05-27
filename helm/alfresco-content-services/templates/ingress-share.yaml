@@ -4,11 +4,7 @@ kind: Ingress
 metadata:
   name: {{ template "content-services.shortname" . }}-share
   labels:
-    app: {{ template "content-services.shortname" . }}-share
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: share
+    {{- include "share.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
     # Default limit is 1m, document(s) above this size will throw 413 (Request Entity Too Large) error
