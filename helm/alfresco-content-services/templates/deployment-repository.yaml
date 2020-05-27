@@ -1,5 +1,5 @@
 # Defines the deployment for the alfresco content repository app
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-repository
