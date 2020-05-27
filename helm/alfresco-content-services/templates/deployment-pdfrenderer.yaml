@@ -1,29 +1,36 @@
 # Defines the deployment for the pdfrenderer transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
+{{/*
+Selector labels
+*/}}
+{{- define "pdfrenderer.selectorLabels" -}}
+app: {{ template "content-services.shortname" . }}-pdfrenderer
+release: {{ .Release.Name }}
+component: transformers
+{{- end }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-pdfrenderer
   labels:
-    app: {{ template "content-services.shortname" . }}-pdfrenderer
+    {{- include "pdfrenderer.selectorLabels" . | nindent 4 }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    component: transformers
 spec:
   replicas: {{ .Values.pdfrenderer.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "pdfrenderer.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+      {{ toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-pdfrenderer.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-pdfrenderer
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "pdfrenderer.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

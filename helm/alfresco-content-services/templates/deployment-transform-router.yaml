@@ -1,28 +1,35 @@
+{{/*
+Selector labels
+*/}}
+{{- define "router.selectorLabels" -}}
+app: {{ template "content-services.shortname" . }}-router
+release: {{ .Release.Name }}
+component: transformrouter
+{{- end }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "alfresco.shortname" . }}-router
   labels:
-    app: {{ template "alfresco.shortname" . }}-router
+    {{- include "router.selectorLabels" . | nindent 4 }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    component: transformrouter
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "router.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+      {{ toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-transform-router.yaml") . | sha256sum }}
         checksum/config-routes: {{ include (print $.Template.BasePath "/config-transformer-routes.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco.shortname" . }}-router
-        release: {{ .Release.Name }}
-        component: transformrouter
+        {{- include "router.selectorLabels" . | nindent 8 }}
     spec:
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:

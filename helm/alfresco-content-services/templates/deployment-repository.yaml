@@ -1,16 +1,25 @@
 # Defines the deployment for the alfresco content repository app
+{{/*
+Selector labels
+*/}}
+{{- define "repository.selectorLabels" -}}
+app: {{ template "content-services.shortname" . }}-repository
+release: {{ .Release.Name }}
+component: repository
+{{- end }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-repository
   labels:
-    app: {{ template "content-services.shortname" . }}-repository
+    {{- include "repository.selectorLabels" . | nindent 4 }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-    component: repository
 spec:
   replicas: {{ .Values.repository.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "repository.selectorLabels" . | nindent 6 }}
   strategy:
     {{- if eq .Values.repository.strategy.type "Recreate" }}
     type: {{ .Values.repository.strategy.type }}
@@ -18,7 +27,7 @@ spec:
     {{- else }}
     type: RollingUpdate
     rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+      {{ toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
     {{- end }}
   template:
     metadata:
@@ -27,9 +36,7 @@ spec:
         checksum/secretDatabase: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
         checksum/secretS3: {{ include (print $.Template.BasePath "/secret-s3.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-repository
-        release: {{ .Release.Name }}
-        component: repository
+        {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
