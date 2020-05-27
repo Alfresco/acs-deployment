@@ -11,6 +11,11 @@ metadata:
     component: share
 spec:
   replicas: {{ .Values.share.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "content-services.shortname" . }}-share
+      release: {{ .Release.Name }}
+      component: share
   strategy:
     type: RollingUpdate
     rollingUpdate:

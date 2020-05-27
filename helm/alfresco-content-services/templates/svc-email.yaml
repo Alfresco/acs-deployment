@@ -5,7 +5,7 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-email
   labels:
-    app: {{ template "content-services.shortname" . }}
+    app: {{ template "content-services.shortname" . }}-repository
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -29,4 +29,5 @@ spec:
   selector:
     app: {{ template "content-services.shortname" . }}-repository
     release: {{ .Release.Name }}
+    component: repository
 {{- end }}

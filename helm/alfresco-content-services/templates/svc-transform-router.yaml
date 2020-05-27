@@ -18,3 +18,4 @@ spec:
   selector:
     app: {{ template "alfresco.shortname" . }}-router
     release: {{ .Release.Name }}
+    component: transformrouter

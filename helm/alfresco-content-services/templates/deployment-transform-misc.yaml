@@ -12,6 +12,11 @@ metadata:
     component: transformers
 spec:
   replicas: {{ .Values.transformmisc.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "content-services.shortname" . }}-transform-misc
+      release: {{ .Release.Name }}
+      component: transformers
   strategy:
     type: RollingUpdate
     rollingUpdate:

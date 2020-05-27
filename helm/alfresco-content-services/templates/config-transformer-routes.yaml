@@ -5,6 +5,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
   labels:
+    app: {{ template "alfresco.shortname" . }}-transform-routes
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}

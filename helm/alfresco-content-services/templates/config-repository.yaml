@@ -5,6 +5,7 @@ metadata:
   # the name of the config map
   name: {{ template "content-services.shortname" . }}-repository-configmap
   labels:
+    app: {{ template "content-services.shortname" . }}-repository
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -118,7 +119,7 @@ data:
       {{- else }}
       -Devents.subsystem.autoStart=false
       {{- end }}"
-  CATALINA_OPTS: " $ALFRESCO_OPTS  
+  CATALINA_OPTS: " $ALFRESCO_OPTS
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
       {{- if eq .Values.database.external false }}
       -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}

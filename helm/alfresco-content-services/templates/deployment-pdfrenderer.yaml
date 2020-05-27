@@ -12,6 +12,11 @@ metadata:
     component: transformers
 spec:
   replicas: {{ .Values.pdfrenderer.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "content-services.shortname" . }}-pdfrenderer
+      release: {{ .Release.Name }}
+      component: transformers
   strategy:
     type: RollingUpdate
     rollingUpdate:

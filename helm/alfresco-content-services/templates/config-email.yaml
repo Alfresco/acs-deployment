@@ -5,6 +5,7 @@ kind: ConfigMap
 metadata:
   name: tcp-services
   labels:
+    app: {{ template "content-services.shortname" . }}-repository
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}

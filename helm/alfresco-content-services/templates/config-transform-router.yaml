@@ -4,6 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "alfresco.shortname" . }}-router-configmap
   labels:
+    app: {{ template "alfresco.shortname" . }}-router
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
@@ -35,4 +36,3 @@ data:
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
   TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-routes.properties"
   {{- end }}
-  

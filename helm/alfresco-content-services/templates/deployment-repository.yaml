@@ -11,6 +11,11 @@ metadata:
     component: repository
 spec:
   replicas: {{ .Values.repository.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "content-services.shortname" . }}-repository
+      release: {{ .Release.Name }}
+      component: repository
   strategy:
     {{- if eq .Values.repository.strategy.type "Recreate" }}
     type: {{ .Values.repository.strategy.type }}

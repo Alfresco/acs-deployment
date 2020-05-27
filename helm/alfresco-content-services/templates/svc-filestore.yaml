@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ template "alfresco.shortname" . }}-filestore
   labels:
-    app: {{ template "alfresco.shortname" . }}
+    app: {{ template "alfresco.shortname" . }}-filestore
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -18,3 +18,4 @@ spec:
   selector:
     app: {{ template "alfresco.shortname" . }}-filestore
     release: {{ .Release.Name }}
+    component: transformers

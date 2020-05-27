@@ -10,6 +10,11 @@ metadata:
     component: transformrouter
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "alfresco.shortname" . }}-router
+      release: {{ .Release.Name }}
+      component: transformrouter
   strategy:
     type: RollingUpdate
     rollingUpdate:

@@ -5,7 +5,7 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-ai-transformer
   labels:
-    app: {{ template "content-services.shortname" . }}
+    app: {{ template "content-services.shortname" . }}-ai-transformer
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -19,4 +19,5 @@ spec:
   selector:
     app: {{ template "content-services.shortname" . }}-ai-transformer
     release: {{ .Release.Name }}
+    component: transformers
 {{- end }}

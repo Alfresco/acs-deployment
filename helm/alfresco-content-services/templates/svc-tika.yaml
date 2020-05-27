@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-tika
   labels:
-    app: {{ template "content-services.shortname" . }}
+    app: {{ template "content-services.shortname" . }}-tika
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -18,3 +18,4 @@ spec:
   selector:
     app: {{ template "content-services.shortname" . }}-tika
     release: {{ .Release.Name }}
+    component: transformers
