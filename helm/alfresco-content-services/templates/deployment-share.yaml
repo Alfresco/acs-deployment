@@ -1,35 +1,28 @@
 # Defines the deployment for the alfresco share app
-{{/*
-Selector labels
-*/}}
-{{- define "share.selectorLabels" -}}
-app: {{ template "content-services.shortname" . }}-share
-release: {{ .Release.Name }}
-component: share
-{{- end }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-share
   labels:
-    {{- include "share.selectorLabels" . | nindent 4 }}
+    app: {{ template "content-services.shortname" . }}-share
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    component: share
 spec:
   replicas: {{ .Values.share.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "share.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      {{ toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-share.yaml") . | sha256sum }}
       labels:
-        {{- include "share.selectorLabels" . | nindent 8 }}
+        app: {{ template "content-services.shortname" . }}-share
+        release: {{ .Release.Name }}
+        component: share
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

@@ -1,36 +1,29 @@
 # Defines the deployment for the shared file store
 # Details: https://git.alfresco.com/Repository/alfresco-shared file store
-{{/*
-Selector labels
-*/}}
-{{- define "filestore.selectorLabels" -}}
-app: {{ template "content-services.shortname" . }}-filestore
-release: {{ .Release.Name }}
-component: transformers
-{{- end }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "alfresco.shortname" . }}-filestore
   labels:
-    {{- include "filestore.selectorLabels" . | nindent 4 }}
+    app: {{ template "alfresco.shortname" . }}-filestore
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
+    component: transformers
 spec:
   replicas: {{ .Values.filestore.replicaCount }}
-  selector:
-    matchLabels:
-      {{- include "filestore.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      {{ toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
       labels:
-        {{- include "filestore.selectorLabels" . | nindent 8 }}
+        app: {{ template "alfresco.shortname" . }}-filestore
+        release: {{ .Release.Name }}
+        component: transformers
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
