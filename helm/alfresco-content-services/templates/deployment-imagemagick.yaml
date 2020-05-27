@@ -1,6 +1,6 @@
 # Defines the deployment for the imagemagick transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-imagemagick
