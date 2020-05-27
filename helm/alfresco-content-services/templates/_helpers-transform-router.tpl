@@ -1,5 +1,5 @@
 {{- define "transform-router.selectorLabels" -}}
-app: {{ template "alfresco.shortname" . }}-transform-router
+app: {{ template "alfresco.shortname" . }}-router
 release: {{ .Release.Name }}
 component: transformrouter
 {{- end }}
