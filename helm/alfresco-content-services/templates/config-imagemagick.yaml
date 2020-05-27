@@ -4,11 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "content-services.shortname" . }}-imagemagick-configmap
   labels:
-    app: {{ template "content-services.shortname" . }}-imagemagick
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: transformers
+    {{- include "imagemagick.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for the "imagemagick" are set here using proper quotes
   {{- if .Values.imagemagick.environment }}

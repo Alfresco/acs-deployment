@@ -4,11 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "alfresco.shortname" . }}-router-configmap
   labels:
-    app: {{ template "alfresco.shortname" . }}-router
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: transformrouter
+    {{- include "transform-router.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for "transformrouter" are set here using proper quotes
   {{- if .Values.transformrouter.environment }}

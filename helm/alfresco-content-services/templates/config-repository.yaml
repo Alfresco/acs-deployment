@@ -5,11 +5,7 @@ metadata:
   # the name of the config map
   name: {{ template "content-services.shortname" . }}-repository-configmap
   labels:
-    app: {{ template "content-services.shortname" . }}-repository
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: repository
+    {{- include "repository.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for the "repository" are set here using proper quotes
   {{- if .Values.repository.environment }}

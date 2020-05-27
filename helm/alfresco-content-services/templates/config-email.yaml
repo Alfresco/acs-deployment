@@ -5,11 +5,7 @@ kind: ConfigMap
 metadata:
   name: tcp-services
   labels:
-    app: {{ template "content-services.shortname" . }}-repository
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: repository
+    {{- include "repository.labels" . | nindent 4 }}
 data:
   {{ .Values.email.server.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.email.server.port }}::PROXY"
   {{ .Values.imap.server.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.imap.server.port }}::PROXY"

@@ -4,11 +4,7 @@ kind: Service
 metadata:
   name: {{ template "content-services.shortname" . }}-imagemagick
   labels:
-    app: {{ template "content-services.shortname" . }}-imagemagick
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "imagemagick.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.imagemagick.service.type }}
   ports:
@@ -16,6 +12,4 @@ spec:
       targetPort: {{ .Values.imagemagick.image.internalPort }}
       name: {{ .Values.imagemagick.service.name }}
   selector:
-    app: {{ template "content-services.shortname" . }}-imagemagick
-    release: {{ .Release.Name }}
-    component: transformers
+    {{- include "imagemagick.selectorLabels" . | nindent 4 }}

@@ -4,11 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "content-services.shortname" . }}-share-configmap
   labels:
-    app: {{ template "content-services.shortname" . }}-share
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: share
+    {{- include "share.labels" . | nindent 4 }}
 data:
   {{ $alfhost := tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
   {{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}

@@ -5,11 +5,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "content-services.shortname" . }}-ai-transformer-configmap
   labels:
-    app: {{ template "content-services.shortname" . }}-ai-transformer
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: transformers
+    {{- include "ai-transformer.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for "ai" are set here using proper quotes
   {{- if .Values.aiTransformer.environment }}

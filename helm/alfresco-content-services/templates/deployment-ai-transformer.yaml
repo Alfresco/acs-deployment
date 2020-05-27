@@ -6,18 +6,12 @@ kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-ai-transformer
   labels:
-    app: {{ template "content-services.shortname" . }}-ai-transformer
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "ai-transformer.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.aiTransformer.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "content-services.shortname" . }}-ai-transformer
-      release: {{ .Release.Name }}
-      component: transformers
+      {{- include "ai-transformer.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -27,9 +21,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-ai-transformer.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-ai-transformer
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

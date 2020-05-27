@@ -4,18 +4,12 @@ kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-share
   labels:
-    app: {{ template "content-services.shortname" . }}-share
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: share
+    {{- include "share.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.share.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "content-services.shortname" . }}-share
-      release: {{ .Release.Name }}
-      component: share
+      {{- include "share.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -25,9 +19,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-share.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-share
-        release: {{ .Release.Name }}
-        component: share
+        {{- include "share.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

@@ -5,18 +5,12 @@ kind: Deployment
 metadata:
   name: {{ template "alfresco.shortname" . }}-filestore
   labels:
-    app: {{ template "alfresco.shortname" . }}-filestore
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "filestore.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.filestore.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "alfresco.shortname" . }}-filestore
-      release: {{ .Release.Name }}
-      component: transformers
+      {{- include "filestore.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -26,9 +20,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco.shortname" . }}-filestore
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "filestore.selectorLabels" . | nindent 8 }}
     spec:
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
