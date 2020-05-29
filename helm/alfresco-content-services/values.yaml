@@ -406,7 +406,7 @@ alfrescosearch:
   # More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
   type: "search-services"
   searchServicesImage:
-    repository: alfresco/alfrescosearch-services
+    repository: alfresco/alfresco-search-services
     tag: "1.4.0"
     pullPolicy: &searchDockerImagePullPolicy Always
     internalPort: &searchDockerImageInternalPort 8983
