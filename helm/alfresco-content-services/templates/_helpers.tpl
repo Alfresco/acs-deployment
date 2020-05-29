@@ -25,30 +25,30 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{/*
 THE TEMPLATES DEFINED BELOW WILL BE USED BY OTHER CHARTS.
-"alfresco-search" IS THE CHART NAME. THE VALUE HAS TO BE HARD CODED.
+"alfrescosearch" IS THE CHART NAME. THE VALUE HAS TO BE HARD CODED.
 ".Chart.Name" CANNOT BE USED FOR THESE TEMPLATES AS THE TEMPLATE WILL BE REFERENCED FROM OTHER CHARTS.
 */}}
 
 {{/*
 Get Alfresco Search Full Name
 */}}
-{{- define "alfresco-search.fullName" -}}
-{{- $name := (.Values.alfresco-search.nameOverride | default (printf "%s" "alfresco-search")) -}}
+{{- define "alfrescosearch.fullName" -}}
+{{- $name := (.Values.alfrescosearch.nameOverride | default (printf "%s" "alfrescosearch")) -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Get Alfresco Search Host
 */}}
-{{- define "alfresco-search.host" -}}
-{{- printf "%s-%s-%s" .Release.Name "alfresco-search" "solr" -}}
+{{- define "alfrescosearch.host" -}}
+{{- printf "%s-%s-%s" .Release.Name "alfrescosearch" "solr" -}}
 {{- end -}}
 
 {{/*
 Get Alfresco Search Port
 */}}
-{{- define "alfresco-search.port" -}}
-{{- print (index .Values "alfresco-search" "service" "externalPort") -}}
+{{- define "alfrescosearch.port" -}}
+{{- print (index .Values "alfrescosearch" "service" "externalPort") -}}
 {{- end -}}
 
 {{/* ======================================================================== */}}
@@ -58,32 +58,32 @@ Get Alfresco Search Port
 {{/*
 Get Alfresco Search Internal Port
 */}}
-{{- define "alfresco-search.internalPort" -}}
-{{- if and (.Values.alfresco-search.type) (eq (.Values.alfresco-search.type | toString) "insight-engine") }}
-{{- print .Values.alfresco-search.insightEngineImage.internalPort -}}
+{{- define "alfrescosearch.internalPort" -}}
+{{- if and (.Values.alfrescosearch.type) (eq (.Values.alfrescosearch.type | toString) "insight-engine") }}
+{{- print .Values.alfrescosearch.insightEngineImage.internalPort -}}
 {{- else }}
-{{- print .Values.alfresco-search.searchServicesImage.internalPort -}}
+{{- print .Values.alfrescosearch.searchServicesImage.internalPort -}}
 {{- end }}
 {{- end -}}
 
 {{/*
 Get Alfresco Search Pull Policy
 */}}
-{{- define "alfresco-search.pullPolicy" -}}
-{{- if and (.Values.alfresco-search.type) (eq (.Values.alfresco-search.type | toString) "insight-engine") }}
-{{- print .Values.alfresco-search.insightEngineImage.pullPolicy -}}
+{{- define "alfrescosearch.pullPolicy" -}}
+{{- if and (.Values.alfrescosearch.type) (eq (.Values.alfrescosearch.type | toString) "insight-engine") }}
+{{- print .Values.alfrescosearch.insightEngineImage.pullPolicy -}}
 {{- else }}
-{{- print .Values.alfresco-search.searchServicesImage.pullPolicy -}}
+{{- print .Values.alfrescosearch.searchServicesImage.pullPolicy -}}
 {{- end }}
 {{- end -}}
 
 {{/*
 Get Alfresco Search Docker Image
 */}}
-{{- define "alfresco-search.dockerImage" -}}
-{{- if and (.Values.alfresco-search.type) (eq (.Values.alfresco-search.type | toString) "insight-engine") }}
-{{- printf "%s:%s" .Values.alfresco-search.insightEngineImage.repository .Values.alfresco-search.insightEngineImage.tag -}}
+{{- define "alfrescosearch.dockerImage" -}}
+{{- if and (.Values.alfrescosearch.type) (eq (.Values.alfrescosearch.type | toString) "insight-engine") }}
+{{- printf "%s:%s" .Values.alfrescosearch.insightEngineImage.repository .Values.alfrescosearch.insightEngineImage.tag -}}
 {{- else }}
-{{- printf "%s:%s" .Values.alfresco-search.searchServicesImage.repository .Values.alfresco-search.searchServicesImage.tag -}}
+{{- printf "%s:%s" .Values.alfrescosearch.searchServicesImage.repository .Values.alfrescosearch.searchServicesImage.tag -}}
 {{- end }}
 {{- end -}}

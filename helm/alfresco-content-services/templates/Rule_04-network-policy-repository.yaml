@@ -18,11 +18,11 @@ spec:
           matchLabels:
             app: nginx-ingress
 
-      {{- if index .Values "alfresco-search" "enabled" }}
+      {{- if index .Values "alfrescosearch" "enabled" }}
       # Allow traffic from search
       - podSelector:
           matchLabels:
-            app:  {{ template "alfresco-search.host" . }}
+            app:  {{ template "alfrescosearch.host" . }}
       {{- end }}
 
       # Allow traffic from share
@@ -50,7 +50,7 @@ spec:
         - protocol: TCP
           port: 80
 
-    # Allow traffic between repository members 
+    # Allow traffic between repository members
     - from:
       - podSelector:
           matchLabels:
@@ -97,11 +97,11 @@ spec:
           matchLabels:
              app: {{ template "content-services.shortname" . }}-repository
 
-      {{- if index .Values "alfresco-search" "enabled" }}
+      {{- if index .Values "alfrescosearch" "enabled" }}
       # Search (solr)
       - podSelector:
           matchLabels:
-             app:  {{ template "alfresco-search.host" . }}
+             app:  {{ template "alfrescosearch.host" . }}
       {{- end }}
 
       # Share
@@ -118,17 +118,17 @@ spec:
       - podSelector:
           matchLabels:
             component: transformrouter
-      
+
       # Activemq
       - podSelector:
           matchLabels:
             app: {{ printf "%s-%s" .Release.Name "activemq" }}
-      
+
       # SFS
       - podSelector:
           matchLabels:
             app: {{ template "alfresco.shortname" . }}-filestore
-                  
+
       # nginx-ingress
       - podSelector:
           matchLabels:
@@ -137,9 +137,9 @@ spec:
     # Allow repo to connect HeartBeat (https://hbrx.alfresco.com)
     - to:
       - ipBlock:
-          # AWS CloudFront CIDR range '52.84.0.0/15' is GLOBAL: https://ip-ranges.amazonaws.com/ip-ranges.json 
+          # AWS CloudFront CIDR range '52.84.0.0/15' is GLOBAL: https://ip-ranges.amazonaws.com/ip-ranges.json
           # As of now there is no selector to specify a DNS name of a host (https://github.com/kubernetes/kubernetes/issues/50453)
-          cidr: 52.84.0.0/15 
+          cidr: 52.84.0.0/15
       ports:
       - protocol: TCP
         port: 443

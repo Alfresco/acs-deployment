@@ -2,20 +2,21 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+  name: {{ template "alfrescosearch.fullName" . }}-solr-configmap
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: search
 data:
-  SOLR_ALFRESCO_HOST: "{{ .Release.Name }}-{{ .Values.alfresco-search.repository.host }}-repository"
-  SOLR_ALFRESCO_PORT: "{{ .Values.alfresco-search.repository.port }}"
-  SOLR_SOLR_HOST: "{{ template "alfresco-search.fullName" . }}-solr"
-  SOLR_SOLR_PORT: "{{ .Values.alfresco-search.service.externalPort }}"
+  SOLR_ALFRESCO_HOST: "{{ template "content-services.shortname" . }}-repository"
+  SOLR_ALFRESCO_PORT: "{{ .Values.repository.port }}"
+  SOLR_SOLR_HOST: "{{ template "alfrescosearch.fullName" . }}-solr"
+  SOLR_SOLR_PORT: "{{ .Values.alfrescosearch.service.externalPort }}"
   # The values for SOLR_CREATE_ALFRESCO_DEFAULTS and SOLR_OPTS, defined in the values.yaml for "search" are set next:
-  {{- if .Values.alfresco-search.environment }}
-  {{- range $key, $val := .Values.alfresco-search.environment }}
+  {{- if .Values.alfrescosearch.environment }}
+  {{- range $key, $val := .Values.alfrescosearch.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
+

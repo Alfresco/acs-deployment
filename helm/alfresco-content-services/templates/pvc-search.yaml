@@ -1,26 +1,26 @@
-{{- if .Values.persistence.enabled -}}
-{{- if .Values.persistence.EbsPvConfiguration.volumeID }}
+{{- if .Values.alfrescosearch.persistence.enabled -}}
+{{- if .Values.alfrescosearch.persistence.EbsPvConfiguration.volumeID }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr-pv
+  name: {{ template "alfrescosearch.fullName" . }}-solr-pv
   labels:
-    app: {{ template "alfresco-search.fullName" . }}-solr
+    app: {{ template "alfrescosearch.fullName" . }}-solr
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     component: search
 spec:
   capacity:
-    storage: {{ .Values.persistence.VolumeSizeRequest }}
-  storageClassName: {{ template "alfresco-search.fullName" . }}-solr-sc
+    storage: {{ .Values.alfrescosearch.persistence.VolumeSizeRequest }}
+  storageClassName: {{ template "alfrescosearch.fullName" . }}-solr-sc
   accessModes:
     - "ReadWriteOnce"
-  {{- with .Values.PvNodeAffinity }}
+  {{- with .Values.alfrescosearch.PvNodeAffinity }}
   nodeAffinity:
 {{ toYaml . | indent 4 }}
   {{- end }}
-  {{- with .Values.persistence.EbsPvConfiguration }}
+  {{- with .Values.alfrescosearch.persistence.EbsPvConfiguration }}
   awsElasticBlockStore:
 {{ toYaml . | indent 4 }}
   {{- end }}
@@ -29,9 +29,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr-claim
+  name: {{ template "alfrescosearch.fullName" . }}-solr-claim
   labels:
-    app: {{ template "alfresco-search.fullName" . }}-solr
+    app: {{ template "alfrescosearch.fullName" . }}-solr
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -42,8 +42,8 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: {{ .Values.persistence.VolumeSizeRequest }}
-  {{- if .Values.persistence.EbsPvConfiguration.volumeID }}
-  storageClassName: {{ template "alfresco-search.fullName" . }}-solr-sc
+      storage: {{ .Values.alfrescosearch.persistence.VolumeSizeRequest }}
+  {{- if .Values.alfrescosearch.persistence.EbsPvConfiguration.volumeID }}
+  storageClassName: {{ template "alfrescosearch.fullName" . }}-solr-sc
   {{- end }}
 {{- end -}}

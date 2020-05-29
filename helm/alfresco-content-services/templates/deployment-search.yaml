@@ -2,15 +2,15 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr
+  name: {{ template "alfrescosearch.fullName" . }}-solr
   labels:
-    app: {{ template "alfresco-search.fullName" . }}-solr
+    app: {{ template "alfrescosearch.fullName" . }}-solr
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     component: search
 spec:
-  replicas: {{ .Values.alfresco-search.replicaCount }}
+  replicas: {{ .Values.alfrescosearch.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,16 +18,16 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/config-search.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco-search.fullName" . }}-solr
+        app: {{ template "alfrescosearch.fullName" . }}-solr
         release: {{ .Release.Name }}
     spec:
-    {{- with .Values.alfresco-search.affinity }}
+    {{- with .Values.alfrescosearch.affinity }}
       affinity:
 {{ tpl . $ | indent 8 }}
     {{- end }}
-    {{- with .Values.alfresco-search.tolerations }}
+    {{- with .Values.alfrescosearch.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
@@ -38,34 +38,34 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ template "alfresco-search.dockerImage" . }}
-          imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
+          image: {{ template "alfrescosearch.dockerImage" . }}
+          imagePullPolicy: {{ template "alfrescosearch.pullPolicy" . }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+              name: {{ template "alfrescosearch.fullName" . }}-solr-configmap
           ports:
-            - containerPort: {{ template "alfresco-search.internalPort" . }}
+            - containerPort: {{ template "alfrescosearch.internalPort" . }}
           resources:
-{{ toYaml .Values.alfresco-search.resources | indent 12 }}
+{{ toYaml .Values.alfrescosearch.resources | indent 12 }}
           volumeMounts:
           - name: data
-            mountPath: {{ .Values.alfresco-search.persistence.search.data.mountPath }}
-            subPath: {{ .Values.alfresco-search.persistence.search.data.subPath }}
+            mountPath: {{ .Values.alfrescosearch.persistence.search.data.mountPath }}
+            subPath: {{ .Values.alfrescosearch.persistence.search.data.subPath }}
           readinessProbe:
             httpGet:
               path: /solr
-              port: {{ template "alfresco-search.internalPort" . }}
-            initialDelaySeconds: {{ .Values.alfresco-search.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.alfresco-search.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.alfresco-search.readinessProbe.timeoutSeconds }}
+              port: {{ template "alfrescosearch.internalPort" . }}
+            initialDelaySeconds: {{ .Values.alfrescosearch.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.alfrescosearch.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.alfrescosearch.readinessProbe.timeoutSeconds }}
           livenessProbe:
             httpGet:
               path: /solr/alfresco/admin/luke
-              port: {{ template "alfresco-search.internalPort" . }}
-            initialDelaySeconds: {{ .Values.alfresco-search.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.lalfresco-search.ivenessProbe.periodSeconds }}
+              port: {{ template "alfrescosearch.internalPort" . }}
+            initialDelaySeconds: {{ .Values.alfrescosearch.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.alfrescosearch.livenessProbe.periodSeconds }}
             failureThreshold: 1
-            timeoutSeconds: {{ .Values.alfresco-search.livenessProbe.timeoutSeconds }}
+            timeoutSeconds: {{ .Values.alfrescosearch.livenessProbe.timeoutSeconds }}
           # sleep to drain any existing connections
           lifecycle:
             preStop:
@@ -75,12 +75,12 @@ spec:
         - name: init-db
           image: busybox
           # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
-          command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.alfresco-search.persistence.search.data.mountPath }}"]
+          command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.alfrescosearch.persistence.search.data.mountPath }}"]
           volumeMounts:
           - name: data
-            mountPath: {{ .Values.alfresco-search.persistence.search.data.mountPath }}
-            subPath: {{ .Values.alfresco-search.persistence.search.data.subPath }}
+            mountPath: {{ .Values.alfrescosearch.persistence.search.data.mountPath }}
+            subPath: {{ .Values.alfrescosearch.persistence.search.data.subPath }}
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: "{{ .Values.alfresco-search.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}"
+          claimName: "{{ .Values.alfrescosearch.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfrescosearch.fullName" .)) }}"

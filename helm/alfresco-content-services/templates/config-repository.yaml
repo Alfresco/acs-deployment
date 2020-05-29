@@ -33,13 +33,13 @@ data:
       -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
       -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
       -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
-      {{- if index .Values "alfresco-search" "enabled" }}
-      -Dsolr.host={{ template "alfresco-search.host" . }}
-      -Dsolr.port={{ template "alfresco-search.port" . }}
+      {{- if index .Values "alfrescosearch" "enabled" }}
+      -Dsolr.host={{ template "alfrescosearch.host" . }}
+      -Dsolr.port={{ template "alfrescosearch.port" . }}
       {{- else }}
-      {{- if index .Values "alfresco-search" "external" }}
-      -Dsolr.host={{ index .Values "alfresco-search" "external" "host" }}
-      -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
+      {{- if index .Values "alfrescosearch" "external" }}
+      -Dsolr.host={{ index .Values "alfrescosearch" "external" "host" }}
+      -Dsolr.port={{ index .Values "alfrescosearch" "external" "port" }}
       {{- end }}
       {{- end }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
