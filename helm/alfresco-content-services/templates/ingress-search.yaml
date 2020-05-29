@@ -9,14 +9,14 @@ metadata:
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: {{ template "alfresco-search.fullName" . }}-solr
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Alfresco Search Services"
-    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.whitelist_ips }}
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.alfresco-search.ingress.whitelist_ips }}
 
 spec:
   rules:
   - http:
       paths:
-      - path: {{ .Values.ingress.path }}
+      - path: {{ .Values.alfresco-search.ingress.path }}
         backend:
           serviceName: {{ template "alfresco-search.fullName" . }}-solr
-          servicePort: {{ .Values.service.externalPort }}
+          servicePort: {{ .Values.alfresco-search.service.externalPort }}
 {{- end }}

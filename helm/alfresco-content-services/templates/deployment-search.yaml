@@ -10,7 +10,7 @@ metadata:
     heritage: {{ .Release.Service }}
     component: search
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.alfresco-search.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -23,11 +23,11 @@ spec:
         app: {{ template "alfresco-search.fullName" . }}-solr
         release: {{ .Release.Name }}
     spec:
-    {{- with .Values.affinity }}
+    {{- with .Values.alfresco-search.affinity }}
       affinity:
 {{ tpl . $ | indent 8 }}
     {{- end }}
-    {{- with .Values.tolerations }}
+    {{- with .Values.alfresco-search.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
@@ -46,26 +46,26 @@ spec:
           ports:
             - containerPort: {{ template "alfresco-search.internalPort" . }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ toYaml .Values.alfresco-search.resources | indent 12 }}
           volumeMounts:
           - name: data
-            mountPath: {{ .Values.persistence.search.data.mountPath }}
-            subPath: {{ .Values.persistence.search.data.subPath }}
+            mountPath: {{ .Values.alfresco-search.persistence.search.data.mountPath }}
+            subPath: {{ .Values.alfresco-search.persistence.search.data.subPath }}
           readinessProbe:
             httpGet:
               path: /solr
               port: {{ template "alfresco-search.internalPort" . }}
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            initialDelaySeconds: {{ .Values.alfresco-search.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.alfresco-search.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.alfresco-search.readinessProbe.timeoutSeconds }}
           livenessProbe:
             httpGet:
               path: /solr/alfresco/admin/luke
               port: {{ template "alfresco-search.internalPort" . }}
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            initialDelaySeconds: {{ .Values.alfresco-search.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.lalfresco-search.ivenessProbe.periodSeconds }}
             failureThreshold: 1
-            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            timeoutSeconds: {{ .Values.alfresco-search.livenessProbe.timeoutSeconds }}
           # sleep to drain any existing connections
           lifecycle:
             preStop:
@@ -75,12 +75,12 @@ spec:
         - name: init-db
           image: busybox
           # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
-          command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.persistence.search.data.mountPath }}"]
+          command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.alfresco-search.persistence.search.data.mountPath }}"]
           volumeMounts:
           - name: data
-            mountPath: {{ .Values.persistence.search.data.mountPath }}
-            subPath: {{ .Values.persistence.search.data.subPath }}
+            mountPath: {{ .Values.alfresco-search.persistence.search.data.mountPath }}
+            subPath: {{ .Values.alfresco-search.persistence.search.data.subPath }}
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}"
+          claimName: "{{ .Values.alfresco-search.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}"
