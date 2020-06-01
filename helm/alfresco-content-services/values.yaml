@@ -446,7 +446,7 @@ ai:
 
 # choose if you want network policy enabled
 networkpolicysetting:
-  enabled: true
+  enabled: false
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
