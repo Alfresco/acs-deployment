@@ -434,21 +434,21 @@ alfrescosearch:
   environment:
     SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
     ALFRESCO_SECURE_COMMS: "none"
-    SOLR_OPTS: "-Dsolr.content.dir=/opt/alfrescosearch-services/data/contentstore"
+    SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore"
   resources:
     requests:
       memory: "250Mi"
     limits:
       memory: "1024Mi"
   # Defines the mounting points for the persistence required by the apps in the cluster
-  # the solr data folder containing the indexes for the alfrescosearch-services is mapped to alfresco-content-services/solr-data
+  # the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
   persistence:
     enabled: true
     # existingClaim: "search-master-claim" #Only define if you have a specific claim already created
     VolumeSizeRequest: 10Gi
     search:
       data:
-        mountPath: "/opt/alfrescosearch-services/data"
+        mountPath: "/opt/alfresco-search-services/data"
         subPath: "alfresco-content-services/solr-data"
     EbsPvConfiguration:
       fsType: ext4
