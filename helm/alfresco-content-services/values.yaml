@@ -420,13 +420,13 @@ alfrescosearch:
     type: ClusterIP
     externalPort: 80
   ingress:
-    enabled: true
+    enabled: false
     path: /solr
     # Default solr basic auth user/password: admin / admin
     # You can create your own with htpasswd utilility & encode it with base640.
     # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
     # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
-    basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
+    basicAuth:
     # Comma separated list of IP CIDR to limit search endpoint over the internet
     whitelist_ips: "0.0.0.0/0"
   # The parent chart will set the values for "repository.host" and "repository.port"
