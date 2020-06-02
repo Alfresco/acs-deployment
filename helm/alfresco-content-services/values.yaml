@@ -393,26 +393,29 @@ alfresco-infrastructure:
 
 alfrescosearch:
   enabled: true
-  # Default values for alfrescosearch.
-  # This is a YAML-formatted file.
-  # Declare variables to be passed into your templates.
-
-  # Define the alfrescosearch properties to use in the k8s cluster
-  # This is the search provider used by alfresco-content-repository
+# If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
+# Note: Rule_05-network-policy-search will be disable.
+# Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
+# Note: ingress-repository will not block external trafic to */solr/*
+#  external:
+    # Host dns/ip of the external solr6 instance.
+#    host: "127.0.0.1"
+    # Port of the external solr6 instance.
+#    port: "8983"
   replicaCount: 1
-  # Define the type of Alfresco Search to use. The default is Alfresco Search Services.
-  # The type can be set to use Insight Engine with --set alfrescosearch.type="insight-engine",alfrescosearch.global.alfrescoRegistryPullSecrets="quay-registry-secret",alfresco-insight-zeppelin.enabled="true"
-  # As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set
-  # More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
+# Define the type of Alfresco Search to use. The default is Alfresco Search Services.
+# The type can be set to use Insight Engine with --set alfrescosearch.type="insight-engine",alfrescosearch.global.alfrescoRegistryPullSecrets="quay-registry-secret",alfresco-insight-zeppelin.enabled="true"
+# As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set
+# More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
   type: "search-services"
   searchServicesImage:
     repository: alfresco/alfresco-search-services
-    tag: "1.4.1"
+    tag: "1.4.2"
     pullPolicy: &searchDockerImagePullPolicy Always
     internalPort: &searchDockerImageInternalPort 8983
   insightEngineImage:
     repository: quay.io/alfresco/insight-engine
-    tag: "1.4.1"
+    tag: "1.4.2"
     pullPolicy: *searchDockerImagePullPolicy
     internalPort: *searchDockerImageInternalPort
   service:
@@ -420,6 +423,10 @@ alfrescosearch:
     type: ClusterIP
     externalPort: 80
   ingress:
+    # Alfresco Search services endpoint ('/solr') is disabled by default
+    # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
+    # Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
+    # Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
     enabled: false
     path: /solr
     # Default solr basic auth user/password: admin / admin
@@ -468,19 +475,7 @@ alfrescosearch:
     port: *repositoryExternalPort
   alfresco-insight-zeppelin:
     repository: *repositoryHostPort
-# ingress:
-#    # Alfresco Search services endpoint ('/solr') is disabled by default
-#    # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
-#    enabled: false
 
-  # Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
-  # Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
-global:
-  alfrescoRegistryPullSecrets: quay-registry-secret
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
   # Define Affinity and Tolerations used for scheduling SOLR on Pod and PV level
 
   # affinity: |
