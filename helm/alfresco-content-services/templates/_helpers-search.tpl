@@ -4,7 +4,7 @@
 Get Alfresco Search Full Name
 */}}
 {{- define "alfrescosearch.fullName" -}}
-{{- $name := (.Values.alfrescosearch.nameOverride | default (printf "%s" "alfrescosearch")) -}}
+{{- $name := (.Values.alfrescosearch.nameOverride | default (printf "%s" "alfresco-search")) -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -12,7 +12,7 @@ Get Alfresco Search Full Name
 Get Alfresco Search Host
 */}}
 {{- define "alfrescosearch.host" -}}
-{{- printf "%s-%s-%s" .Release.Name "alfrescosearch" "solr" -}}
+{{- printf "%s-%s-%s" .Release.Name "alfresco-search" "solr" -}}
 {{- end -}}
 
 {{/*
