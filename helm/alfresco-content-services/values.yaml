@@ -378,12 +378,19 @@ persistence:
 # by all the components in the DBP (https://www.alfresco.com/platform)
 # Currently the Alfresco Content Services product helm chart (this chart) only needs
 # the persistent volume claim (pvc) definition defined in the infrastructure
+#alfresco-content-services:
+#   alfresco-infrastructure:
+#     enabled: true
+# # All the components from the alfresco-infrastructure are disabled, because Alfresco Content Services product helm chart
+# # only needs the pvc defined in the dependency alfresco-infrastructure
+# alfresco-infrastructure:
+#   activemq:
+#     enabled: true
+#   alfresco-identity-service:
+#     enabled: false
+#   nginx-ingress:
+#     enabled: false
 alfresco-content-services:
-  alfresco-infrastructure:
-    enabled: true
-# All the components from the alfresco-infrastructure are disabled, because Alfresco Content Services product helm chart
-# only needs the pvc defined in the dependency alfresco-infrastructure
-alfresco-infrastructure:
   activemq:
     enabled: true
   alfresco-identity-service:
