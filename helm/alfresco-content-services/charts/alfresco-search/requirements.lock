@@ -1,0 +1,6 @@
+dependencies:
+- name: alfresco-insight-zeppelin
+  repository: http://kubernetes-charts.alfresco.com/stable
+  version: 1.0.3
+digest: sha256:fd28af6f3dbf990ccf0fd725a0209a861782960f64af9235fba6d3e51f470db1
+generated: 2020-01-15T14:21:10.158410759Z

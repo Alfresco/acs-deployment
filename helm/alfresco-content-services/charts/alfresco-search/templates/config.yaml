@@ -1,0 +1,21 @@
+# Defines the properties required by the Alfresco Search (Solr) App
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: search
+data:
+  SOLR_ALFRESCO_HOST: "{{ .Release.Name }}-{{ .Values.repository.host }}-repository"
+  SOLR_ALFRESCO_PORT: "{{ .Values.repository.port }}"
+  SOLR_SOLR_HOST: "{{ template "alfresco-search.fullName" . }}-solr"
+  SOLR_SOLR_PORT: "{{ .Values.service.externalPort }}"
+  # The values for SOLR_CREATE_ALFRESCO_DEFAULTS and SOLR_OPTS, defined in the values.yaml for "search" are set next:
+  {{- if .Values.environment }}
+  {{- range $key, $val := .Values.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}

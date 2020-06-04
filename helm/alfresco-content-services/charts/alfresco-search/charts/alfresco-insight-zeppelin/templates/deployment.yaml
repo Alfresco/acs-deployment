@@ -1,0 +1,41 @@
+# Defines the deployment for the Alfresco Insight Zeppelin App
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-insight-zeppelin.fullName" . }}
+  labels:
+    app: {{ template "alfresco-insight-zeppelin.fullName" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: zeppelin
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "alfresco-insight-zeppelin.fullName" . }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-insight-zeppelin.fullName" . }}-configmap
+          ports:
+            - containerPort: {{ .Values.image.internalPort }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}

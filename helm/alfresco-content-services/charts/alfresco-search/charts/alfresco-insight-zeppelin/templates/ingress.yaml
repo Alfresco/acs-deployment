@@ -1,0 +1,15 @@
+# Defines the ingress for the Alfresco Insight Zeppelin App
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "alfresco-insight-zeppelin.fullName" . }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: {{ .Values.ingress.path }}
+        backend:
+          serviceName: {{ template "alfresco-insight-zeppelin.fullName" . }}
+          servicePort: {{ .Values.service.externalPort }}

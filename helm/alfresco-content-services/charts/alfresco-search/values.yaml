@@ -1,0 +1,104 @@
+# Default values for alfresco-search.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Define the alfresco-search properties to use in the k8s cluster
+# This is the search provider used by alfresco-content-repository
+replicaCount: 1
+# Define the type of Alfresco Search to use. The default is Alfresco Search Services.
+# The type can be set to use Insight Engine with --set alfresco-search.type="insight-engine",alfresco-search.global.alfrescoRegistryPullSecrets="quay-registry-secret",alfresco-insight-zeppelin.enabled="true"
+# As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set
+# More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
+type: "search-services"
+searchServicesImage:
+  repository: alfresco/alfresco-search-services
+  tag: "1.4.0"
+  pullPolicy: &searchDockerImagePullPolicy Always
+  internalPort: &searchDockerImageInternalPort 8983
+insightEngineImage:
+  repository: quay.io/alfresco/insight-engine
+  tag: "1.4.0"
+  pullPolicy: *searchDockerImagePullPolicy
+  internalPort: *searchDockerImageInternalPort
+service:
+  name: solr
+  type: ClusterIP
+  externalPort: 80
+ingress:
+  enabled: true
+  path: /solr
+  # Default solr basic auth user/password: admin / admin
+  # You can create your own with htpasswd utilility & encode it with base640.
+  # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
+  # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
+  basicAuth:
+  # Comma separated list of IP CIDR to limit search endpoint over the internet
+  whitelist_ips: "0.0.0.0/0"
+# The parent chart will set the values for "repository.host" and "repository.port"
+repository: {}
+environment:
+  SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
+  ALFRESCO_SECURE_COMMS: "none"
+  SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore"
+resources:
+  requests:
+    memory: "250Mi"
+  limits:
+    memory: "1024Mi"
+# Defines the mounting points for the persistence required by the apps in the cluster
+# the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
+persistence:
+  enabled: true
+  # existingClaim: "search-master-claim" #Only define if you have a specific claim already created
+  VolumeSizeRequest: 10Gi
+  search:
+    data:
+      mountPath: "/opt/alfresco-search-services/data"
+      subPath: "alfresco-content-services/solr-data"
+  EbsPvConfiguration:
+    fsType: ext4
+alfresco-insight-zeppelin:
+  enabled: false
+readinessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 20
+  timeoutSeconds: 10
+livenessProbe:
+  initialDelaySeconds: 130
+  periodSeconds: 20
+  timeoutSeconds: 10
+
+# Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
+# Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+# Define Affinity and Tolerations used for scheduling SOLR on Pod and PV level
+
+# affinity: |
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#           - key: "SolrMasterOnly"
+#             operator: In
+#             values:
+#             - "true"
+
+# tolerations:
+# - key: "SolrMasterOnly"
+#   operator: "Equal"
+#   value: "true"
+#   effect: "NoSchedule"
+
+# PvNodeAffinity:
+#   required:
+#     nodeSelectorTerms:
+#     - matchExpressions:
+#       - key: "SolrMasterOnly"
+#         operator: In
+#         values:
+#         - "true"

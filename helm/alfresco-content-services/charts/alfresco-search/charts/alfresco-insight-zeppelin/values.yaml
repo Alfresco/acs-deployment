@@ -1,0 +1,29 @@
+# Default values for alfresco-insight-zeppelin.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Define the alfresco-insight-zeppelin properties to use in the k8s cluster
+# This is chart will be installed as part of Alfresco Insight Engine
+replicaCount: 1
+image:
+  repository: quay.io/alfresco/insight-zeppelin
+  tag: "1.4.0"
+  pullPolicy: Always
+  internalPort: 9090
+service:
+  name: zeppelin
+  type: ClusterIP
+  externalPort: 80
+ingress:
+  path: /zeppelin
+# The parent chart will set the values for "repository.host" and "repository.port"
+repository: {}
+
+# Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
+# Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
+global:
+  alfrescoRegistryPullSecrets:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
