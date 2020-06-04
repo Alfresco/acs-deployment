@@ -50,12 +50,12 @@ repository:
   # The repository readiness probe is used to check startup only as a failure
   # of the liveness probe later will result in the pod being restarted.
   readinessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 150
     periodSeconds: 20
     timeoutSeconds: 10
     failureThreshold: 6
   livenessProbe:
-    initialDelaySeconds: 130
+    initialDelaySeconds: 300
     periodSeconds: 20
     timeoutSeconds: 10
 
@@ -590,4 +590,6 @@ global:
     - quay-registry-secret
 
 alfresco-sync-service:
-   enabled : true
+  enabled : true
+  # networkpolicysetting:
+  #   enabled: false
