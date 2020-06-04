@@ -394,9 +394,56 @@ alfresco-content-services:
   activemq:
     enabled: true
   alfresco-identity-service:
-    enabled: false
-  nginx-ingress:
-    enabled: false
+    enabled: true
+    ingress:
+      enabled: false
+      common:
+        enabled: true
+      annotations:
+        # Disable Nginx CORS for Identity Service
+        nginx.ingress.kubernetes.io/enable-cors: "false"
+    keycloak:
+      ingress:
+        enabled: false
+      postgresql:
+        imageTag: "11.3"
+        persistence:
+          existingClaim: null # use default postgresql PVC
+      keycloak:
+        service:
+          port: 80
+        extraArgs: "-Dkeycloak.import=/realm/alfresco-aps-realm.json"
+        # Add explicit support for HTTPS proxy address forwarding
+        extraEnv: |
+          - name: PROXY_ADDRESS_FORWARDING
+            value: "true"
+    realm:
+      alfresco:
+        client:
+          redirectUris:
+            - "*"
+          webOrigins:
+            - "*"
+
+  persistence:
+    enabled: true
+    baseSize: 20Gi
+    storageClass: #enable and define if you already have a custom storage class defined
+      enabled: false
+      accessModes:
+        - ReadWriteMany
+      name: "nfs" #Custom storage classs name
+    efs:
+      enabled: false
+      dns: fs-example.efs.us-east-1.amazonaws.com #For aws you will need to specify the EFS server
+      path: "/"
+    azureFile:
+      enabled: false
+      secretName: ""
+      shareName: ""
+      # In case the secret is stored in a different namespace
+      shareNamespace: ""
+
 
 alfresco-search:
   enabled: true
