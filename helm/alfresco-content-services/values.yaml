@@ -343,11 +343,11 @@ share:
   environment:
     CATALINA_OPTS: " -Xms1000M -Xmx1000M"
   readinessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 150
     periodSeconds: 20
     timeoutSeconds: 10
   livenessProbe:
-    initialDelaySeconds: 130
+    initialDelaySeconds: 300
     periodSeconds: 20
     timeoutSeconds: 10
 
@@ -394,7 +394,7 @@ alfresco-infrastructure:
 alfresco-search:
   enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
-# Note: Rule_05-network-policy-search will be disable.
+# Note: Rule_05-network-policy-search will be disabled.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
 # Note: ingress-repository will not block external trafic to */solr/*
 #  external:
@@ -432,7 +432,7 @@ alfresco-digital-workspace:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
   networkpolicysetting:
-    enabled: true
+    enabled: false
 
 # choose if you want AI capabilities
 ai:
@@ -591,5 +591,5 @@ global:
 
 alfresco-sync-service:
   enabled : true
-  # networkpolicysetting:
-  #   enabled: false
+  networkpolicysetting:
+    enabled: false
