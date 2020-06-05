@@ -1,0 +1,22 @@
+{{- if .Values.ingress.enabled }}
+# Defines the ingress for the Alfresco Search (Solr) App
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "alfresco-search.fullName" . }}-solr
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: {{ template "alfresco-search.fullName" . }}-solr
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Alfresco Search Services"
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.whitelist_ips }}
+
+spec:
+  rules:
+  - http:
+      paths:
+      - path: {{ .Values.ingress.path }}
+        backend:
+          serviceName: {{ template "alfresco-search.fullName" . }}-solr
+          servicePort: {{ .Values.service.externalPort }}
+{{- end }}
