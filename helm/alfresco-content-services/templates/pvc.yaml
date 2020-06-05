@@ -13,7 +13,7 @@ spec:
   {{ else if or .Values.persistence.efs.enabled .Values.persistence.azureFile.enabled }}
   accessModes:
     - ReadWriteMany
-  storageClassName: {{ template "alfresco-infrastructure.fullname" . }}
+  storageClassName: {{ template "content-services.fullname" . }}
   {{ else }}
   accessModes:
     - ReadWriteOnce
