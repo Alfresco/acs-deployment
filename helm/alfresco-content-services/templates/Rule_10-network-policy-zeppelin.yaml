@@ -1,5 +1,6 @@
 {{- if .Values.networkpolicysetting.enabled }}
-{{- if (index .Values "alfresco-insight-zeppelin" "enabled") }}
+{{- if (index .Values "alfresco-search" "alfresco-insight-zeppelin") }}
+{{- if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "enabled") }}
 # Allow Zeppelin to communicate with other components
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -38,5 +39,6 @@ spec:
       - podSelector:
           matchLabels:
              app: nginx-ingress
+{{- end }}
 {{- end }}
 {{- end }}
