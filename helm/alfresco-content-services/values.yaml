@@ -409,11 +409,17 @@ alfresco-search:
     host: alfresco-cs
     port: *repositoryExternalPort
   alfresco-insight-zeppelin:
+    enabled: false
     repository: *repositoryHostPort
   ingress:
     # Alfresco Search services endpoint ('/solr') is disabled by default
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
     enabled: false
+  # Default solr basic auth user/password: admin / admin
+  # You can create your own with htpasswd utilility & encode it with base640.
+  # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
+  # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
+    basicAuth:
 
 alfresco-digital-workspace:
   enabled: true
