@@ -1,0 +1,6 @@
+# Alfresco Insight Engine brings Alfresco Insight Zeppelin
+dependencies:
+- name: alfresco-insight-zeppelin
+  version: 1.0.3
+  repository: http://kubernetes-charts.alfresco.com/stable
+  condition: alfresco-insight-zeppelin.enabled

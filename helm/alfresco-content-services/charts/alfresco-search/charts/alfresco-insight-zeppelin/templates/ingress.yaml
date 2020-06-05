@@ -1,4 +1,5 @@
 # Defines the ingress for the Alfresco Insight Zeppelin App
+{{- if .Values.insightzeppelin.enabled }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -13,3 +14,4 @@ spec:
         backend:
           serviceName: {{ template "alfresco-insight-zeppelin.fullName" . }}
           servicePort: {{ .Values.service.externalPort }}
+{{- end }}

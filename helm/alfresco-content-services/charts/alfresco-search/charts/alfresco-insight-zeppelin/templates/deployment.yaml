@@ -1,4 +1,5 @@
 # Defines the deployment for the Alfresco Insight Zeppelin App
+{{- if .Values.insightzeppelin.enabled }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -39,3 +40,4 @@ spec:
             - containerPort: {{ .Values.image.internalPort }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+{{- end }}

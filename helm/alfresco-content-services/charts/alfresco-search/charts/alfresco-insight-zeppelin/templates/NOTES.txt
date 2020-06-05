@@ -1,4 +1,5 @@
 {{ if and .Values.externalHost }}
+{{- if .Values.insightzeppelin.enabled }}
 You can access Alfresco Insight Zeppelin using:
 
   Zeppelin: {{ .Values.externalProtocol | default "http" }}://{{ .Values.externalHost }}:{{ .Values.externalPort | default .Values.service.externalPort }}/zeppelin
@@ -8,3 +9,4 @@ If you have a specific DNS address for the cluster please run the following comm
 
 helm upgrade --reuse-values {{ .Release.Name }} --set externalProtocol="http" --set externalHost="domain.com" --set externalPort="80" alfresco-incubator/alfresco-content-services
 {{ end }}
+{{- end }}

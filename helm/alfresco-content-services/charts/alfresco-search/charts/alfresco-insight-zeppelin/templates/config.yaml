@@ -1,4 +1,5 @@
 # Defines the config for the Alfresco Insight Zeppelin App
+{{- if .Values.insightzeppelin.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,3 +12,4 @@ metadata:
 data:
   REPO_HOST: "{{ template "alfresco-repo-host" . }}"
   REPO_PORT: "{{ .Values.repository.port }}"
+{{- end }}

@@ -1,4 +1,5 @@
 # Defines the service for the Alfresco Insight Zeppelin App
+{{- if .Values.insightzeppelin.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -17,3 +18,4 @@ spec:
   selector:
     app: {{ template "alfresco-insight-zeppelin.fullName" . }}
     release: {{ .Release.Name }}
+{{- end }}
