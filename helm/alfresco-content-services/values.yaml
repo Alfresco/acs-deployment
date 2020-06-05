@@ -394,7 +394,7 @@ alfresco-infrastructure:
 alfresco-search:
   enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
-# Note: Rule_05-network-policy-search will be disable.
+# Note: Rule_05-network-policy-search will be disabled.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
 # Note: ingress-repository will not block external trafic to */solr/*
 #  external:
@@ -432,7 +432,7 @@ alfresco-digital-workspace:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
   networkpolicysetting:
-    enabled: true
+    enabled: false
 
 # choose if you want AI capabilities
 ai:
@@ -446,7 +446,7 @@ ai:
 
 # choose if you want network policy enabled
 networkpolicysetting:
-  enabled: true
+  enabled: false
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
@@ -590,4 +590,6 @@ global:
     - quay-registry-secret
 
 alfresco-sync-service:
-   enabled : true
+  enabled : true
+  networkpolicysetting:
+    enabled: false
