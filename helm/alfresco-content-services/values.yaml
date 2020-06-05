@@ -411,7 +411,7 @@ alfresco-search:
     port: *repositoryExternalPort
   alfresco-insight-zeppelin:
     insightzeppelin:
-      enabled: true
+      enabled: false
     repository: *repositoryHostPort
   ingress:
     # Alfresco Search services endpoint ('/solr') is disabled by default
