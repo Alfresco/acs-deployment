@@ -1,24 +1,24 @@
-{{- if .Values.persistence.enabled }}
+{{- if .Values.persistence.enabled -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: alfresco-volume-claim
-  labels:
-    app:  "{{ .Release.Name }}-{{ .Chart.Name }}"
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
 spec:
-  {{- if index .Values.persistence "storageClassName" }}
-  storageClassName: {{ .Values.persistence.storageClassName }}
-  {{- end }}
-  {{- if index .Values.persistence "accessModes" }}
+  {{ if .Values.persistence.storageClass.enabled }}
   accessModes:
-    {{- range .Values.persistence.accessModes }}
+  {{- range .Values.persistence.storageClass.accessModes }}
     - {{ . }}
-    {{- end }}
   {{- end }}
+  storageClassName: {{ .Values.persistence.storageClass.name }}
+  {{ else if or .Values.persistence.efs.enabled .Values.persistence.azureFile.enabled }}
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ template "alfresco-infrastructure.fullname" . }}
+  {{ else }}
+  accessModes:
+    - ReadWriteOnce
+  {{ end }}
   resources:
     requests:
-      storage: {{ .Values.persistence.baseSize | default "100Gi" | quote }}
-{{- end }}
+      storage: {{ .Values.persistence.baseSize | quote }}
+{{- end -}}

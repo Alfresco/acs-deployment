@@ -1,0 +1,25 @@
+{{- if .Values.persistence.azureFile.enabled }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ template "content-services.fullname" . }}
+provisioner: alfresco.com/pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-{{ template "content-services.fullname" . }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.baseSize | quote }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: {{ .Values.persistence.reclaimPolicy | default "Recycle" }}
+  azureFile:
+    secretName: {{ .Values.persistence.azureFile.secretName }}
+    shareName:  {{ .Values.persistence.azureFile.shareName }}
+    # In case the secret is stored in a different namespace
+    shareNamespace: {{ .Values.persistence.azureFile.shareNamespace | default .Release.Namespace }}
+    readOnly: false
+  storageClassName: {{ template "content-services.fullname" . }}
+{{- end }}

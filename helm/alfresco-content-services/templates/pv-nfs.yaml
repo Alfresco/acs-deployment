@@ -1,0 +1,22 @@
+{{- if .Values.persistence.efs.enabled }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ template "content-services.fullname" . }}
+provisioner: alfresco.com/pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-{{ template "content-services.fullname" . }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.baseSize | quote }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: {{ .Values.persistence.reclaimPolicy | default "Recycle" }}
+  nfs:
+    server: "{{ .Values.persistence.efs.dns }}"
+    path: "{{ .Values.persistence.efs.path }}"
+  storageClassName: {{ template "content-services.fullname" . }}
+{{- end }}
