@@ -378,41 +378,40 @@ persistence:
 # by all the components in the DBP (https://www.alfresco.com/platform)
 # Currently the Alfresco Content Services product helm chart (this chart) only needs
 # the persistent volume claim (pvc) definition defined in the infrastructure
-alfresco-content-services:
-  activemq:
-    enabled: true
+activemq:
+  enabled: true
 
-  alfresco-identity-service:
-    enabled: true
+alfresco-identity-service:
+  enabled: true
+  ingress:
+    enabled: false
+    common:
+      enabled: true
+    annotations:
+      # Disable Nginx CORS for Identity Service
+      nginx.ingress.kubernetes.io/enable-cors: "false"
+  keycloak:
     ingress:
       enabled: false
-      common:
-        enabled: true
-      annotations:
-        # Disable Nginx CORS for Identity Service
-        nginx.ingress.kubernetes.io/enable-cors: "false"
+    postgresql:
+      imageTag: "11.3"
+      persistence:
+        existingClaim: null # use default postgresql PVC
     keycloak:
-      ingress:
-        enabled: false
-      postgresql:
-        imageTag: "11.3"
-        persistence:
-          existingClaim: null # use default postgresql PVC
-      keycloak:
-        service:
-          port: 80
-        extraArgs: "-Dkeycloak.import=/realm/alfresco-aps-realm.json"
-        # Add explicit support for HTTPS proxy address forwarding
-        extraEnv: |
-          - name: PROXY_ADDRESS_FORWARDING
-            value: "true"
-    realm:
-      alfresco:
-        client:
-          redirectUris:
-            - "*"
-          webOrigins:
-            - "*"
+      service:
+        port: 80
+      extraArgs: "-Dkeycloak.import=/realm/alfresco-aps-realm.json"
+      # Add explicit support for HTTPS proxy address forwarding
+      extraEnv: |
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+  realm:
+    alfresco:
+      client:
+        redirectUris:
+          - "*"
+        webOrigins:
+          - "*"
 
   persistence:
     enabled: true
