@@ -598,6 +598,7 @@ global:
     - quay-registry-secret
 
 alfresco-sync-service:
-  enabled : true
+  syncservice:
+    enabled : true
   networkpolicysetting:
     enabled: false

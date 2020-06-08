@@ -1,3 +1,4 @@
+{{- if .Values.syncservice.enabled }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -46,7 +47,7 @@ spec:
         image: "{{ .Values.syncservice.image.repository }}:{{ .Values.syncservice.image.tag }}"
         imagePullPolicy: {{ .Values.syncservice.image.pullPolicy }}
         envFrom:
-        - secretRef: 
+        - secretRef:
             name: {{ template "syncservice.fullname" . }}-dbsecret
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
@@ -72,3 +73,4 @@ spec:
           preStop:
             exec:
               command: ["/opt/alfresco-sync-service/sync_service_entrypoint.sh", "stop"]
+{{- end }}

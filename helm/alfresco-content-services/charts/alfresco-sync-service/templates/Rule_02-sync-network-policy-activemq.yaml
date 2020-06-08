@@ -1,3 +1,4 @@
+{{- if .Values.syncservice.enabled }}
 {{- if .Values.networkpolicysetting.enabled }}
 {{- if eq .Values.activemq.external false }}
 # Allow activemq to communicate with syncservice
@@ -11,13 +12,14 @@ spec:
       app: {{ printf "%s-%s" (include "acs.release.name" .) "activemq" }}
   policyTypes:
   - Ingress
-  
+
   ingress:
     - from:
       # Allow syncservice to communicate with activemq
       - podSelector:
           matchLabels:
             app: {{ template "syncservice.fullname" . }}
-            
+
+{{- end }}
 {{- end }}
 {{- end }}

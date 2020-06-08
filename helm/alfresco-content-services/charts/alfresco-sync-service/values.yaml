@@ -9,6 +9,7 @@ global:
       maxUnavailable: 0
 
 syncservice:
+  enabled: true
   image:
     repository: quay.io/alfresco/service-sync
     tag: 3.3.1

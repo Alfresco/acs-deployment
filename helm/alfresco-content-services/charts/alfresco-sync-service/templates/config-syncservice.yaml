@@ -1,4 +1,5 @@
 # Defines the properties required by the sync-service app
+{{- if .Values.syncservice.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -23,7 +24,7 @@ data:
       -Drepo.port={{ .Values.repository.port }}
       {{- if eq .Values.activemq.external false }}
       -Dmessaging.broker.host={{ printf "%s-%s" (include "acs.release.name" .) .Values.activemq.broker.host}}
-      {{- else }}     
+      {{- else }}
       -Dmessaging.broker.host={{ .Values.activemq.broker.host }}
       {{- end }}
       -Dmessaging.username={{ .Values.activemq.broker.username }}
@@ -33,3 +34,4 @@ data:
       -Ddw.server.applicationConnectors[0].type=http
       {{ .Values.syncservice.environment.JAVA_OPTS }}
       {{ .Values.syncservice.environment.EXTRA_JAVA_OPTS }}
+{{- end }}

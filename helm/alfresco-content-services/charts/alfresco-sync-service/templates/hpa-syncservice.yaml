@@ -1,3 +1,4 @@
+{{- if .Values.syncservice.enabled }}
 {{- if .Values.syncservice.horizontalPodAutoscaling.enabled }}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
@@ -28,4 +29,5 @@ spec:
       name: memory
       targetAverageUtilization: {{ .Values.syncservice.horizontalPodAutoscaling.memory.targetAverageUtilization }}
   {{- end }}
+{{- end }}
 {{- end }}
