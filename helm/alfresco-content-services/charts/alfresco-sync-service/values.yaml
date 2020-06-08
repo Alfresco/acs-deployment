@@ -1,0 +1,115 @@
+replicaCount: 1
+
+# Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+syncservice:
+  image:
+    repository: quay.io/alfresco/service-sync
+    tag: 3.3.1
+    pullPolicy: Always
+    internalPort: 9090
+  environment:
+    JAVA_OPTS: >-
+      -Dsync.metrics.reporter.graphite.enabled=false
+      -Dsync.metrics.reporter.graphite.address=127.0.0.1
+      -Dsync.metrics.reporter.graphite.port=2003
+      -Xms1000M -Xmx2000M
+    EXTRA_JAVA_OPTS: >-
+
+  service:
+    name: syncservice
+    type: NodePort
+    externalPort: 80
+  ingress:
+    path: /syncservice
+  resources:
+    requests:
+      memory: "2000Mi"
+      cpu: 2
+    limits:
+      memory: "2000Mi"
+      cpu: 2
+
+  livenessProbe:
+    initialDelaySeconds: 150
+    periodSeconds: 30
+    timeoutSeconds: 10
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 10
+    failureThreshold: 12
+    timeoutSeconds: 10
+
+  horizontalPodAutoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 3
+    CPU:
+      enabled: true
+      targetAverageUtilization: 80
+    memory:
+      enabled: true
+
+# For the memory a lower threshold(60) for the targetAverageUtilization is needed. We need to allow the resource metrics to be queried by the metrics-server, before the pod is killed # by Kubernetes due to reaching memory limits(the infamous message one might see  in the pod events history. "Terminated: OOMKilled"). The metrics are checked every 15 seconds by #    # default,  configured by the global cluster flag --horizontal-pod-autoscaler-sync-period
+      targetAverageUtilization: 60
+
+activemq:
+  external: false
+  broker:
+      host: activemq-broker
+      port: 61616
+      username:
+      password:
+      protocol: tcp
+
+repository:
+  host: alfresco-cs-repository
+  port: 80
+
+contentServices:
+# Specify when installing as a standalone chart, not as a subchart of ACS.
+# This variable will be used to construct the correct hostname for ACS and ActiveMQ
+  installationName:
+
+# Defines properties required by sync service for connecting to the database
+# Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
+# Also make sure that the container has the db driver in TODO - add container path
+database:
+  external: false
+  # driver:     #ex: org.postgresql.Driver
+  # user:     #ex: alfresco
+  # password:     #ex: alfresco
+  # url:    # ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco
+
+postgresql:
+  ## If true, install the postgresql chart alongside Alfresco Sync service.
+  # Note: Set this to false if you use an external database.
+  enabled: true
+  nameOverride: postgresql-syncservice
+  imageTag: "10.1"
+  persistence:
+    existingClaim: "alfresco-volume-claim"
+    subPath: "alfresco-sync-services/database-data"
+    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
+  postgresUser: alfresco
+  postgresPassword: admin
+  postgresDatabase: syncservice-postgresql
+  postgresConfig:
+    max_connections: 450
+  service:
+    port: 5432
+
+# choose if you want network policy enabled
+networkpolicysetting:
+  enabled: true
+
+ingress:
+  extraAnnotations:
+    #useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes
+    #nginx.ingress.kubernetes.io/ssl-redirect: "false"

@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "syncservice.fullname" . }}
+  labels:
+    app: {{ template "syncservice.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "syncservice.fullname" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-syncservice.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      initContainers:
+      {{- if eq .Values.activemq.external false }}
+      - name: init-activemq
+        image: busybox
+        env:
+        - name: ACTIVEMQ_HOST
+          value: {{ printf "%s-%s" (include "acs.release.name" .) .Values.activemq.broker.host}}
+        - name: ACTIVEMQ_PORT
+          value: {{ .Values.activemq.broker.ports | default 61616 | quote }}
+        command: ['sh', '-c', 'until nc -w1 $ACTIVEMQ_HOST $ACTIVEMQ_PORT; do echo "waiting for activemq"; sleep 5; done;']
+      {{- end }}
+      {{- if eq .Values.database.external false }}
+      - name: init-postgres
+        image: busybox
+        command: ['sh', '-c', 'until nc -w1 {{ .Release.Name }}-postgresql-syncservice 5432; do echo "waiting for postgresql"; sleep 2; done;']
+      {{- end }}
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: syncservice
+        image: "{{ .Values.syncservice.image.repository }}:{{ .Values.syncservice.image.tag }}"
+        imagePullPolicy: {{ .Values.syncservice.image.pullPolicy }}
+        envFrom:
+        - secretRef: 
+            name: {{ template "syncservice.fullname" . }}-dbsecret
+        - configMapRef:
+            name: {{ template "syncservice.fullname" . }}-configmap
+        ports:
+        - name: serviceport
+          containerPort: 9090
+        resources:
+{{ toYaml .Values.syncservice.resources | indent 12 }}
+        readinessProbe:
+          httpGet:
+            path: /alfresco/healthcheck
+            port: serviceport
+          initialDelaySeconds: {{ .Values.syncservice.readinessProbe.initialDelaySeconds }}
+          failureThreshold: {{ .Values.syncservice.readinessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.syncservice.readinessProbe.periodSeconds }}
+        livenessProbe:
+          httpGet:
+            path: /alfresco/healthcheck
+            port: serviceport
+          initialDelaySeconds: {{ .Values.syncservice.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.syncservice.livenessProbe.periodSeconds }}
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/opt/alfresco-sync-service/sync_service_entrypoint.sh", "stop"]

@@ -1,0 +1,35 @@
+# Defines the properties required by the sync-service app
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "syncservice.fullname" . }}-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: syncservice
+data:
+  JAVA_OPTS: >-
+      {{- if eq .Values.database.external false }}
+      -Dsql.db.driver="org.postgresql.Driver"
+      -Dsql.db.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
+      {{- else }}
+      -Dsql.db.driver={{ .Values.database.driver}}
+      -Dsql.db.url={{ .Values.database.url}}
+      {{- end }}
+      -Dsql.db.username=$DATABASE_USERNAME
+      -Dsql.db.password=$DATABASE_PASSWORD
+      -Drepo.hostname={{ printf "%s-%s" (include "acs.release.name" .) .Values.repository.host }}
+      -Drepo.port={{ .Values.repository.port }}
+      {{- if eq .Values.activemq.external false }}
+      -Dmessaging.broker.host={{ printf "%s-%s" (include "acs.release.name" .) .Values.activemq.broker.host}}
+      {{- else }}     
+      -Dmessaging.broker.host={{ .Values.activemq.broker.host }}
+      {{- end }}
+      -Dmessaging.username={{ .Values.activemq.broker.username }}
+      -Dmessaging.password={{ .Values.activemq.broker.password }}
+      -Dmessaging.broker.port={{ .Values.activemq.broker.port }}
+      -Dmessaging.broker.protocol={{ .Values.activemq.broker.protocol }}
+      -Ddw.server.applicationConnectors[0].type=http
+      {{ .Values.syncservice.environment.JAVA_OPTS }}
+      {{ .Values.syncservice.environment.EXTRA_JAVA_OPTS }}

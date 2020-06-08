@@ -1,0 +1,44 @@
+{{- if .Values.networkpolicysetting.enabled }}
+{{- if eq .Values.database.external false }}
+# Allow the DB to communicate with syncservice
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: syncservice-database
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+    # Allow syncservice to communicate with DB
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "syncservice.fullname" . }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.postgresql.service.port  }}
+  egress:
+    # Allow DB to communicate back with syncservice
+    - to:
+      - podSelector:
+          matchLabels:
+             app: {{ template "syncservice.fullname" . }}
+
+      ports:
+      - protocol: TCP
+        port: {{ .Values.postgresql.service.port  }}
+
+    # Allow DB to communicate with EFS
+    - to:
+      - ipBlock:
+          cidr: 0.0.0.0/0
+      ports:
+      - protocol: TCP
+        port: 2049
+
+{{- end }}
+{{- end }}

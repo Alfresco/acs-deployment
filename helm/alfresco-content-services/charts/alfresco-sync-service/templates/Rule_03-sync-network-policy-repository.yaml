@@ -1,0 +1,19 @@
+{{- if .Values.networkpolicysetting.enabled }}
+# Allow repository to communicate with syncservice
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: syncservice-repository
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ printf "%s-%s" (include "acs.release.name" .) .Values.repository.host }}
+  policyTypes:
+  - Ingress
+
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: {{ template "syncservice.fullname" . }}
+{{- end }}

@@ -1,0 +1,23 @@
+{{- if .Values.networkpolicysetting.enabled }}
+{{- if eq .Values.activemq.external false }}
+# Allow activemq to communicate with syncservice
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: syncservice-activemq
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ printf "%s-%s" (include "acs.release.name" .) "activemq" }}
+  policyTypes:
+  - Ingress
+  
+  ingress:
+    - from:
+      # Allow syncservice to communicate with activemq
+      - podSelector:
+          matchLabels:
+            app: {{ template "syncservice.fullname" . }}
+            
+{{- end }}
+{{- end }}

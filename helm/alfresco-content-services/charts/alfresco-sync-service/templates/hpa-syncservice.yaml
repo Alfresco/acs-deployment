@@ -1,0 +1,31 @@
+{{- if .Values.syncservice.horizontalPodAutoscaling.enabled }}
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "syncservice.fullname" . }}-hpa
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: syncservice
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: {{ template "syncservice.fullname" . }}
+  minReplicas: {{ .Values.syncservice.horizontalPodAutoscaling.minReplicas }}
+  maxReplicas: {{ .Values.syncservice.horizontalPodAutoscaling.maxReplicas }}
+  metrics:
+  {{- if .Values.syncservice.horizontalPodAutoscaling.CPU.enabled }}
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ .Values.syncservice.horizontalPodAutoscaling.CPU.targetAverageUtilization }}
+  {{- end }}
+  {{- if .Values.syncservice.horizontalPodAutoscaling.memory.enabled }}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {{ .Values.syncservice.horizontalPodAutoscaling.memory.targetAverageUtilization }}
+  {{- end }}
+{{- end }}
