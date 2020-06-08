@@ -602,3 +602,5 @@ alfresco-sync-service:
     enabled : true
   networkpolicysetting:
     enabled: false
+  postgresql:
+    enabled: true
