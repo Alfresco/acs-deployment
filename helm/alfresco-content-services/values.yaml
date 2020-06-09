@@ -399,38 +399,6 @@ persistence:
 activemq:
   enabled: true
 
-alfresco-identity-service:
-  enabled: false
-  ingress:
-    enabled: false
-    common:
-      enabled: true
-    annotations:
-      # Disable Nginx CORS for Identity Service
-      nginx.ingress.kubernetes.io/enable-cors: "false"
-  keycloak:
-    ingress:
-      enabled: false
-    postgresql:
-      imageTag: "11.3"
-      persistence:
-        existingClaim: null # use default postgresql PVC
-    keycloak:
-      service:
-        port: 80
-#      extraArgs: "-Dkeycloak.import=/realm/alfresco-aps-realm.json"
-      # Add explicit support for HTTPS proxy address forwarding
-      extraEnv: |
-        - name: PROXY_ADDRESS_FORWARDING
-          value: "true"
-  realm:
-    alfresco:
-      client:
-        redirectUris:
-          - "*"
-        webOrigins:
-          - "*"
-
 alfresco-search:
   enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
