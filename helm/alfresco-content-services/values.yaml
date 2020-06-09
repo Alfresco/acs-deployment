@@ -439,8 +439,6 @@ alfresco-digital-workspace:
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
-  networkpolicysetting:
-    enabled: false
 
 # choose if you want AI capabilities
 ai:
@@ -452,9 +450,6 @@ ai:
   #  s3Bucket:
   #  comprehendRoleARN:
 
-# choose if you want network policy enabled
-networkpolicysetting:
-  enabled: false
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
@@ -583,8 +578,7 @@ metadataKeystore:
 alfresco-sync-service:
   syncservice:
     enabled : true
-  networkpolicysetting:
-    enabled: false
+
 postgresql-syncservice:
   ## If true, install the postgresql chart alongside Alfresco Sync service.
   # Note: Set this to false if you use an external database.

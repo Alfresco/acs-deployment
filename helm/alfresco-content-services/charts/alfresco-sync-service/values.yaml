@@ -107,9 +107,6 @@ postgresql:
   service:
     port: 5432
 
-# choose if you want network policy enabled
-networkpolicysetting:
-  enabled: false
 
 ingress:
   extraAnnotations:
