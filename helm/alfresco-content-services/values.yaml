@@ -418,7 +418,7 @@ alfresco-identity-service:
     keycloak:
       service:
         port: 80
-      extraArgs: "-Dkeycloak.import=/realm/alfresco-aps-realm.json"
+#      extraArgs: "-Dkeycloak.import=/realm/alfresco-aps-realm.json"
       # Add explicit support for HTTPS proxy address forwarding
       extraEnv: |
         - name: PROXY_ADDRESS_FORWARDING
