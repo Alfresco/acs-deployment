@@ -580,6 +580,29 @@ metadataKeystore:
   defaultKeystorePassword: "mp6yc0UD9e"
   defaultKeyPassword: "mp6yc0UD9e"
 
+alfresco-sync-service:
+  syncservice:
+    enabled : true
+  networkpolicysetting:
+    enabled: false
+postgresql-syncservice:
+  ## If true, install the postgresql chart alongside Alfresco Sync service.
+  # Note: Set this to false if you use an external database.
+  enabled: true
+  name: postgresql-syncservice
+  imageTag: "10.1"
+  persistence:
+    existingClaim: "alfresco-volume-claim"
+    subPath: "alfresco-sync-services/database-data"
+    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
+  postgresUser: alfresco
+  postgresPassword: admin
+  postgresDatabase: syncservice-postgresql
+  postgresConfig:
+    max_connections: 450
+  service:
+    port: 5432
+
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret
@@ -596,8 +619,3 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
     - quay-registry-secret
-
-alfresco-sync-service:
-  enabled : true
-  networkpolicysetting:
-    enabled: false

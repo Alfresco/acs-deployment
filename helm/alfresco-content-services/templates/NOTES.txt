@@ -13,7 +13,7 @@ You can access all components of Alfresco Content Services Community using the s
   Api-Explorer: {{ $alfurl }}/api-explorer
 {{ if index .Values "alfresco-search" "ingress" "enabled" }}  Solr: {{ $alfurl }}/solr {{ end }}
 {{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "insightzeppelin") }}{{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "insightzeppelin" "enabled") }}  Zeppelin: {{ $alfurl }}/zeppelin {{ end }}{{ end }}
-{{- if index .Values "alfresco-sync-service" "enabled" }}
+{{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
   {{ $alfportdsync := tpl (.Values.externalPort | toString ) $ }}
   {{ $alfurldsync := printf "%s://%s:%s" $alfprotocol $alfhost $alfportdsync }}
    Sync service: {{ $alfurldsync }}/syncservice/healthcheck
