@@ -9,10 +9,6 @@ dependencies:
   version: 0.9.3
   repository: https://kubernetes-charts.storage.googleapis.com/
   condition: postgresql.enabled
-- name: alfresco-infrastructure
-  version: 4.1.1
-  condition: alfresco-content-services.alfresco-infrastructure.enabled
-  repository: https://kubernetes-charts.alfresco.com/stable
 - name: alfresco-adf-app
   alias: alfresco-digital-workspace
   version: 2.2.0
