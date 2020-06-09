@@ -400,9 +400,10 @@ activemq:
   enabled: true
 
 alfresco-search:
+  type: "search-services"
   enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
-# Note: Rule_05-network-policy-search will be disable.
+# Note: Rule_05-network-policy-search will be disabled.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
 # Note: ingress-repository will not block external trafic to */solr/*
 #  external:
@@ -417,11 +418,18 @@ alfresco-search:
     host: alfresco-cs
     port: *repositoryExternalPort
   alfresco-insight-zeppelin:
+    insightzeppelin:
+      enabled: false
     repository: *repositoryHostPort
   ingress:
     # Alfresco Search services endpoint ('/solr') is disabled by default
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
     enabled: false
+  # Default solr basic auth user/password: admin / admin
+  # You can create your own with htpasswd utilility & encode it with base640.
+  # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
+  # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
+    basicAuth:
 
 alfresco-digital-workspace:
   enabled: true
@@ -440,7 +448,7 @@ alfresco-digital-workspace:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
   networkpolicysetting:
-    enabled: true
+    enabled: false
 
 # choose if you want AI capabilities
 ai:
@@ -454,7 +462,7 @@ ai:
 
 # choose if you want network policy enabled
 networkpolicysetting:
-  enabled: true
+  enabled: false
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
@@ -580,6 +588,29 @@ metadataKeystore:
   defaultKeystorePassword: "mp6yc0UD9e"
   defaultKeyPassword: "mp6yc0UD9e"
 
+alfresco-sync-service:
+  syncservice:
+    enabled : true
+  networkpolicysetting:
+    enabled: false
+postgresql-syncservice:
+  ## If true, install the postgresql chart alongside Alfresco Sync service.
+  # Note: Set this to false if you use an external database.
+  enabled: true
+  name: postgresql-syncservice
+  imageTag: "10.1"
+  persistence:
+    existingClaim: "alfresco-volume-claim"
+    subPath: "alfresco-sync-services/database-data"
+    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
+  postgresUser: alfresco
+  postgresPassword: admin
+  postgresDatabase: syncservice-postgresql
+  postgresConfig:
+    max_connections: 450
+  service:
+    port: 5432
+
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret
@@ -596,6 +627,3 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
     - quay-registry-secret
-
-alfresco-sync-service:
-   enabled : true

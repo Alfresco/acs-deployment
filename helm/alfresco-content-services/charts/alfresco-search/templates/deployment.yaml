@@ -1,0 +1,86 @@
+# Defines the deployment for the Alfresco Search (Solr) App
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-search.fullName" . }}-solr
+  labels:
+    app: {{ template "alfresco-search.fullName" . }}-solr
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: search
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "alfresco-search.fullName" . }}-solr
+        release: {{ .Release.Name }}
+    spec:
+    {{- with .Values.affinity }}
+      affinity:
+{{ tpl . $ | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ template "alfresco-search.dockerImage" . }}
+          imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+          ports:
+            - containerPort: {{ template "alfresco-search.internalPort" . }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.search.data.mountPath }}
+            subPath: {{ .Values.persistence.search.data.subPath }}
+          readinessProbe:
+            httpGet:
+              path: /solr
+              port: {{ template "alfresco-search.internalPort" . }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /solr/alfresco/admin/luke
+              port: {{ template "alfresco-search.internalPort" . }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          # sleep to drain any existing connections
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 10"]
+      initContainers:
+        - name: init-db
+          image: busybox
+          # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
+          command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.persistence.search.data.mountPath }}"]
+          volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.search.data.mountPath }}
+            subPath: {{ .Values.persistence.search.data.subPath }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}"
