@@ -109,7 +109,7 @@ postgresql:
 
 # choose if you want network policy enabled
 networkpolicysetting:
-  enabled: true
+  enabled: false
 
 ingress:
   extraAnnotations:
