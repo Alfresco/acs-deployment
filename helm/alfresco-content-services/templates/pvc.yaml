@@ -1,0 +1,20 @@
+{{- if .Values.persistence.enabled -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: alfresco-volume-claim
+spec:
+  {{ if .Values.persistence.storageClass.enabled }}
+  accessModes:
+  {{- range .Values.persistence.storageClass.accessModes }}
+  - {{ . }}
+  {{- end }}
+  storageClassName: {{ .Values.persistence.storageClass.name }}
+  {{ else }}
+  accessModes:
+    - ReadWriteOnce
+  {{ end }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.baseSize | quote }}
+  {{- end -}}

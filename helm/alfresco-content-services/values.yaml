@@ -355,6 +355,13 @@ share:
 # cluster the alf_data folder from alfresco-content-repository app is mapped to
 # alfresco-content-services/repository-data
 persistence:
+  enabled: true
+  baseSize: 20Gi
+  storageClass: #enable and define if you already have a custom storage class defined
+    enabled: false
+    accessModes:
+      - ReadWriteMany
+    name: "nfs" #Custom storage classs name
   existingClaim: "alfresco-volume-claim"
   repository:
     enabled: true
@@ -372,24 +379,8 @@ persistence:
       mountPath: "/tmp/Alfresco"
       subPath: "alfresco-content-services/filestore-data"
 
-# Settings that define that alfresco-content-services (this helm chart) is dependent of alfresco-infrastructure chart
-# alfresco-infrastructure is defined here: https://github.com/Alfresco/alfresco-infrastructure-deployment/tree/master/charts/incubator/alfresco-infrastructure
-# This dependency is needed because the alfresco-infrastructure is meant to provide common tools and frameworks to be used
-# by all the components in the DBP (https://www.alfresco.com/platform)
-# Currently the Alfresco Content Services product helm chart (this chart) only needs
-# the persistent volume claim (pvc) definition defined in the infrastructure
-alfresco-content-services:
-  alfresco-infrastructure:
+activemq:
     enabled: true
-# All the components from the alfresco-infrastructure are disabled, because Alfresco Content Services product helm chart
-# only needs the pvc defined in the dependency alfresco-infrastructure
-alfresco-infrastructure:
-  activemq:
-    enabled: true
-  alfresco-identity-service:
-    enabled: false
-  nginx-ingress:
-    enabled: false
 
 alfresco-search:
   type: "search-services"
