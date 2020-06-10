@@ -101,10 +101,10 @@ data:
       {{- end }}
       {{- end }}
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
-      {{- if index .Values "activemq" "enabled" }}
+      {{- if .Values.activemq.enabled }}
       -Dmessaging.broker.url=failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
-      -Dmessaging.broker.username={{ index .Values "activemq" "adminUser" "username" }}
-      -Dmessaging.broker.password={{ index .Values "activemq" "adminUser" "password" }}
+      -Dmessaging.broker.username={{ .Values.activemq.adminUser.username }}
+      -Dmessaging.broker.password={{ .Values.activemq.adminUser.password }}
       {{- else }}
       -Dmessaging.broker.url={{ .Values.messageBroker.url | default (printf "failover:(nio://%s-activemq-broker:61616)?timeout=3000&jms.useCompression=true" .Release.Name)}}
       -Dmessaging.broker.username={{ .Values.messageBroker.user }}

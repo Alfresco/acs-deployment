@@ -13,10 +13,10 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  {{- if index .Values "activemq" "enabled" }}
+  {{- if .Values.activemq.enabled }}
   ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
-  ACTIVEMQ_USER: {{ index .Values "activemq" "adminUser" "username" }}
-  ACTIVEMQ_PASSWORD: {{ index .Values "activemq" "adminUser" "password" }}
+  ACTIVEMQ_USER: {{ .Values.activemq.adminUser.username }}
+  ACTIVEMQ_PASSWORD: {{ .Values.activemq.adminUser.password }}
   {{- else }}
   ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
