@@ -15,6 +15,12 @@ services:
         image: alfresco/alfresco-content-repository:6.3.0-A9
         mem_limit: 1700m
         environment:
+            JAVA_TOOL_OPTIONS: "
+                -Dmetadata-keystore.password=mp6yc0UD9e
+                -Dmetadata-keystore.aliases=metadata
+                -Dmetadata-keystore.metadata.password=mp6yc0UD9e
+                -Dmetadata-keystore.metadata.algorithm=AES
+            "
             JAVA_OPTS: "
                 -Ddb.driver=org.postgresql.Driver
                 -Ddb.username=alfresco
@@ -32,10 +38,6 @@ services:
                 -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
                 -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
                 -Ddeployment.method=DOCKER_COMPOSE
-                -Dmetadata-keystore.password=mp6yc0UD9e
-                -Dmetadata-keystore.aliases=metadata
-                -Dmetadata-keystore.metadata.password=mp6yc0UD9e
-                -Dmetadata-keystore.metadata.algorithm=AES
 
                 -Dtransform.service.enabled=true
                 -Dtransform.service.url=http://transform-router:8095
