@@ -11,6 +11,8 @@ The **master** branch of this repository will endeavour to support the following
 - [MiniKube](docs/helm-deployment-minikube.md) (latest): For development and POCs
 - [Helm - AWS Cloud with Kubernetes using Kops](docs/helm-deployment-aws_kops.md) (latest): As a deployment template which can be used as the basis for your specific deployment needs
 
+To work with a specific release of ACS, please refer to the [Helm Chart Releases](docs/helm-chart-releases.md) and select the appropriate tag for this repository.
+
 For the Community Edition, go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
 The only differences between these projects are:
 * In the Enterprise chart, the images for the transformers are used, instead of the included binaries.
