@@ -15,3 +15,22 @@ home: https://www.alfresco.com
 sources:
 - https://github.com/Alfresco/acs-deployment
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+dependencies:
+- name: postgresql
+  version: 8.6.4
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  condition: postgresql.enabled
+- name: activemq
+  version: 2.0.0
+  repository: https://kubernetes-charts.alfresco.com/stable
+  condition: activemq.enabled
+- name: alfresco-adf-app
+  alias: alfresco-digital-workspace
+  version: 2.2.0
+  repository: https://kubernetes-charts.alfresco.com/stable
+  condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
+- name: postgresql
+  version: 8.6.4
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  alias: postgresql-syncservice
+  condition: postgres-syncservice.enabled
