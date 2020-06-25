@@ -21,3 +21,8 @@ data:
   {{- else }}
   JAVA_OPTS: "-Dalfresco.proxy={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}"
   {{- end }}
+  {{- if .Values.share.environment }}
+  {{- range $key, $val := .Values.share.environment }}
+  {{ $key }}: {{ tpl $val $ | quote }}
+  {{- end }}
+  {{- end }}
