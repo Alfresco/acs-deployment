@@ -1,0 +1,6 @@
+import:
+  - Alfresco/alfresco-process-tools:.travis.helm.yml@master
+
+branches:
+  only:
+    - OPSEXP-115
