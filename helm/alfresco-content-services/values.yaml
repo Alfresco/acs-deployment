@@ -68,7 +68,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.3.0-RC1"
+    tag: "1.3.0"
     pullPolicy: Always
     internalPort: 8095
   service:
