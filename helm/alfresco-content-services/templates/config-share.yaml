@@ -12,14 +12,20 @@ data:
   {{ $alfhost := tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
   {{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
   {{ $alfport := tpl (.Values.externalPort | default .Values.repository.service.externalPort | toString) $ }}
-  # The CATALINA_OPTS defined in the values.yaml file for the "share" are set here using proper quotes
+  {{ $alfproxy := printf "-Dalfresco.proxy=%s://%s:%s" $alfprotocol $alfhost $alfport }}
+  CATALINA_OPTS: {{ index .Values "share" "environment" "CATALINA_OPTS" }}
+  REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
+  REPO_PORT: "{{ .Values.repository.service.externalPort }}"
+  CSRF_FILTER_REFERER: "{{ $alfprotocol }}://{{ $alfhost }}/.*"
+  CSRF_FILTER_ORIGIN: "{{ $alfprotocol }}://{{ $alfhost }}"
+  # The JAVA_OPTS defined in the values.yaml file for the "share" are set here using proper quotes
+  {{- if .Values.share.environment.JAVA_OPTS }}
+  JAVA_OPTS: {{ tpl (printf "%s %s" (index .Values "share" "environment" "JAVA_OPTS") $alfproxy) $ | quote }}
+  {{- else }}
+  JAVA_OPTS: "-Dalfresco.proxy={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}"
+  {{- end }}
   {{- if .Values.share.environment }}
   {{- range $key, $val := .Values.share.environment }}
   {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
   {{- end }}
-  REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
-  REPO_PORT: "{{ .Values.repository.service.externalPort }}"
-  CSRF_FILTER_REFERER: "{{ $alfprotocol }}://{{ $alfhost }}/.*"
-  CSRF_FILTER_ORIGIN: "{{ $alfprotocol }}://{{ $alfhost }}"
-  JAVA_OPTS: "-Dalfresco.proxy={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}"
