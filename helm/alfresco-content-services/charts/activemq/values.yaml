@@ -1,0 +1,48 @@
+image:
+  repository: alfresco/alfresco-activemq
+  tag: 5.15.8-java-8-oracle-centos-7-87b15e37ce8b
+  pullPolicy: Always
+adminUser:
+  username: admin
+  password: admin
+resources:
+  requests:
+    memory: "512Mi"
+  limits:
+    memory: "2048Mi"
+services:
+  broker:
+    ports:
+      internal:
+        stomp: 61613
+        amqp: 5672
+        openwire: 61616
+      external:
+        stomp: 61613
+        amqp: 5672
+        openwire: 61616
+    type: ClusterIP
+  webConsole:
+    ports:
+      internal:
+        webConsole: 8161
+      external:
+        webConsole: 8161
+    type: NodePort
+# The ActiveMQ readiness probe is used to check startup only as a failure
+# of the liveness probe later will result in the pod being restarted.
+readinessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 20
+  timeoutSeconds: 10
+  failureThreshold: 6
+livenessProbe:
+  initialDelaySeconds: 130
+  periodSeconds: 20
+  timeoutSeconds: 10
+  failureThreshold: 1
+
+persistence:
+  existingClaim: "alfresco-volume-claim"
+  mountPath: "/opt/activemq/data"
+  subPath: "alfresco-infrastructure/activemq-data"
