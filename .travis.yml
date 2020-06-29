@@ -1,3 +1,10 @@
+language: python
+python:
+  - "3.8.2"
+
+os: linux
+dist: xenial
+
 import:
   - Alfresco/alfresco-process-tools:.travis.helm.yml@master
   - Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
