@@ -54,11 +54,17 @@ jobs:
     - name: Deploy Chart and Run Postman Checks
       stage: test
       script: |
-        kubectl get pods
+        namespace=${TRAVIS_BRANCH}-${TRAVIS_BUILD_NUMBER}
+        # kubectl create namespace "$namespace"
+        # kubectl create secret docker-registry quay-registry-secret --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n "$namespace"
+        # kubectl -n $namespace create role $namespace:psp --verb=use --resource=podsecuritypolicy --resource-name=kube-system
+        # kubectl -n $namespace create rolebinding $namespace:psp:default --role=$namespace:psp --serviceaccount=$namespace:default
+        # cd helm/alfresco-content-services
+        # helm dependency update
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
         cd docker-compose
         /bin/bash startup.sh
         cd ../test/postman/docker-compose
-        docker run -a STDOUT --volume $PWD/test:/etc/newman postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "url=localhost:8080" --global-var "protocol=http"
+        docker run -a STDOUT --volume $PWD:/etc/newman postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "url=localhost:8080" --global-var "protocol=http"
