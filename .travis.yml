@@ -5,9 +5,13 @@ python:
 os: linux
 dist: xenial
 
+services:
+  - docker
+
 import:
   - Alfresco/alfresco-process-tools:.travis.helm.yml@master
   - Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
+  - Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
 
 env:
   global:
@@ -47,7 +51,14 @@ before_script:
 
 jobs:
   include:
-    - name: Deploy and Run Postman
+    - name: Deploy Chart and Run Postman Checks
       stage: test
       script: |
         kubectl get pods
+    - name: Deploy Docker Compose and Run Postman Checks
+      stage: test
+      script: |
+        cd docker-compose
+        /bin/bash startup.sh
+        cd ../test/postman/docker-compose
+        docker run -a STDOUT --volume $(PWD)/test:/etc/newman postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "url=localhost:8080" --global-var "protocol=http"
