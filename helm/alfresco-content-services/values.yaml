@@ -255,7 +255,7 @@ aiTransformer:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.2.0-RC1"
+    tag: "1.2.0"
     pullPolicy: Always
     internalPort: 8090
   service:
