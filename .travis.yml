@@ -16,6 +16,7 @@ branches:
 
 before_install:
   - |
+    pip install --upgrade awscli
     curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator
     curl -o aws-iam-authenticator.sha256 https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator.sha256
     openssl sha1 -sha256 aws-iam-authenticator
