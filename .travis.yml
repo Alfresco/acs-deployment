@@ -1,9 +1,28 @@
 import:
   - Alfresco/alfresco-process-tools:.travis.helm.yml@master
+  - Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
+
+env:
+  global:
+    - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
+    - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
+    - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
+    - HELM_REPO=stable
+    - KUBERNETES_VERSION=${KUBERNETES_VERSION:-1.16.8}
 
 branches:
   only:
     - OPSEXP-115
+
+before_install:
+  - |
+    curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator
+    curl -o aws-iam-authenticator.sha256 https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator.sha256
+    openssl sha1 -sha256 aws-iam-authenticator
+    chmod +x ./aws-iam-authenticator
+    mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+    export PATH=$PATH:$HOME/bin
+    aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
 
 before_script:
   - |
@@ -17,3 +36,10 @@ before_script:
       helm repo add alfresco-incubator ${HELM_REPO_BASE_URL}/${HELM_REPO}
     fi
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
+
+jobs:
+  include:
+    - name: Deploy and Run Postman
+      stage: test
+      script: |
+        kubectl get pods
