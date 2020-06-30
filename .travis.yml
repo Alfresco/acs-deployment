@@ -80,7 +80,6 @@ jobs:
         --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="sg-014a4c15b31f0c3ea" \
         --set controller.publishService.enabled=true \
         --namespace $namespace
-        helm version
         cd helm/alfresco-content-services
         helm dependency update
         helm install $release_name_acs . \
