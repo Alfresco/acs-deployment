@@ -98,9 +98,9 @@ jobs:
         --namespace=$namespace
         cd ../../test/postman/helm
         docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        #   kubetl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         # after_script: |
         #   helm delete $release_name_ingress $release_name_acs -n $namespace
-delete_pod repository $namespace
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |

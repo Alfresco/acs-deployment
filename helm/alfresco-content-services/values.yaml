@@ -476,6 +476,32 @@ postgresql:
     limits:
       memory: "1500Mi"
 
+postgresql-syncservice:
+  ## If true, install the postgresql chart alongside Alfresco Sync service.
+  # Note: Set this to false if you use an external database.
+  name: postgresql-syncservice
+  enabled: true
+  replicaCount: 1
+  nameOverride: postgresql-syncservice
+  imageTag: "11.4.0"
+  persistence:
+    existingClaim: "alfresco-volume-claim"
+    subPath: "alfresco-sync-services/database-data"
+    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
+  postgresqlUsername: alfresco
+  postgresqlPassword: admin
+  postgresqlDatabase: syncservice-postgresql
+  postgresConfig:
+    max_connections: 450
+    log_min_messages: LOG
+  service:
+    port: 5432
+  resources:
+    requests:
+      memory: "1500Mi"
+    limits:
+      memory: "1500Mi"
+
 # Defines the properties to be used for the S3 Connector
 s3connector:
   enabled: false
@@ -569,24 +595,6 @@ metadataKeystore:
 alfresco-sync-service:
   syncservice:
     enabled : true
-
-postgresql-syncservice:
-  ## If true, install the postgresql chart alongside Alfresco Sync service.
-  # Note: Set this to false if you use an external database.
-  enabled: true
-  name: postgresql-syncservice
-  imageTag: "10.1"
-  persistence:
-    existingClaim: "alfresco-volume-claim"
-    subPath: "alfresco-sync-services/database-data"
-    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
-  postgresUser: alfresco
-  postgresPassword: admin
-  postgresDatabase: syncservice-postgresql
-  postgresConfig:
-    max_connections: 450
-  service:
-    port: 5432
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
