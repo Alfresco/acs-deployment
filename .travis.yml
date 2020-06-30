@@ -77,8 +77,10 @@ jobs:
         --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
         --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.dev.alfresco.me" \
         --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
-        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="sg-014a4c15b31f0c3ea" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
         --set controller.publishService.enabled=true \
+        --wait \
+        --atomic \
         --namespace $namespace
         cd helm/alfresco-content-services
         helm dependency update
@@ -90,7 +92,15 @@ jobs:
         --set persistence.storageClass.enabled=true \
         --set persistence.storageClass.name="nfs-client" \
         --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+        --wait \
+        --timeout 10m0s \
+        --atomic \
         --namespace=$namespace
+        cd ../../test/postman/helm
+        docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        # after_script: |
+        #   helm delete $release_name_ingress $release_name_acs -n $namespace
+delete_pod repository $namespace
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
