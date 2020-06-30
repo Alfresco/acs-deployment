@@ -42,6 +42,7 @@ before_script:
     PROJECT_NAME=alfresco-content-services
     helm repo add activiti https://activiti.github.io/activiti-cloud-helm-charts
     helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
+    helm repo add stable https://kubernetes-charts.storage.googleapis.com
     if [[ "${TRAVIS_BRANCH}" != *"support/"* ]]
     then
       export HELM_REPO=incubator
