@@ -94,14 +94,14 @@ postgresql:
   name: postgresql-syncservice
   enabled: true
   nameOverride: postgresql-syncservice
-  imageTag: "10.1"
+  imageTag: "11.4.0"
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-sync-services/database-data"
     #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
-  postgresUser: alfresco
-  postgresPassword: admin
-  postgresDatabase: syncservice-postgresql
+  postgresqlUsername: alfresco
+  postgresqlPassword: admin
+  postgresqlDatabase: syncservice-postgresql
   postgresConfig:
     max_connections: 450
   service:

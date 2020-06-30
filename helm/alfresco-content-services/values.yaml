@@ -460,10 +460,10 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.4"
-  postgresUser: alfresco
-  postgresPassword: alfresco
-  postgresDatabase: alfresco
+  imageTag: "11.4.0"
+  postgresqlUsername: alfresco
+  postgresqlPassword: alfresco
+  postgresqlDatabase: alfresco
   postgresConfig:
     max_connections: 300
     log_min_messages: LOG
