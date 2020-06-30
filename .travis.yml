@@ -20,6 +20,7 @@ env:
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=stable
     - KUBERNETES_VERSION=${KUBERNETES_VERSION:-1.16.8}
+    - HELM_VERSION=${HELM_VERSION:-3.2.4}
 
 branches:
   only:
@@ -61,8 +62,6 @@ jobs:
         kubectl create secret docker-registry quay-registry-secret --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n "$namespace"
         kubectl -n $namespace create role $namespace:psp --verb=use --resource=podsecuritypolicy --resource-name=kube-system
         kubectl -n $namespace create rolebinding $namespace:psp:default --role=$namespace:psp --serviceaccount=$namespace:default
-        cd helm/alfresco-content-services
-        helm dependency update
         release_name_ingress=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-ing
         release_name_acs=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-acs
         kubectl -n $namespace create rolebinding $namespace:psp:$release_name_ingress-nginx-ingress --role=$namespace:psp --serviceaccount=$namespace:$release_name_ingress-nginx-ingress
@@ -81,6 +80,9 @@ jobs:
         --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="sg-014a4c15b31f0c3ea" \
         --set controller.publishService.enabled=true \
         --namespace $namespace
+        helm version
+        cd helm/alfresco-content-services
+        helm dependency update
         helm install $release_name_acs . \
         --set externalPort="443" \
         --set externalProtocol="https" \
