@@ -54,13 +54,40 @@ jobs:
     - name: Deploy Chart and Run Postman Checks
       stage: test
       script: |
-        namespace=${TRAVIS_BRANCH}-${TRAVIS_BUILD_NUMBER}
-        # kubectl create namespace "$namespace"
-        # kubectl create secret docker-registry quay-registry-secret --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n "$namespace"
-        # kubectl -n $namespace create role $namespace:psp --verb=use --resource=podsecuritypolicy --resource-name=kube-system
-        # kubectl -n $namespace create rolebinding $namespace:psp:default --role=$namespace:psp --serviceaccount=$namespace:default
-        # cd helm/alfresco-content-services
-        # helm dependency update
+        namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
+        kubectl create namespace "$namespace"
+        kubectl create secret docker-registry quay-registry-secret --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n "$namespace"
+        kubectl -n $namespace create role $namespace:psp --verb=use --resource=podsecuritypolicy --resource-name=kube-system
+        kubectl -n $namespace create rolebinding $namespace:psp:default --role=$namespace:psp --serviceaccount=$namespace:default
+        cd helm/alfresco-content-services
+        helm dependency update
+        release_name_ingress=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-ing
+        release_name_acs=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-acs
+        kubectl -n $namespace create rolebinding $namespace:psp:$release_name_ingress-nginx-ingress --role=$namespace:psp --serviceaccount=$namespace:$release_name_ingress-nginx-ingress
+        helm install $release_name_ingress stable/nginx-ingress \
+        --set controller.scope.enabled=true \
+        --set controller.scope.namespace=$namespace \
+        --set rbac.create=true \
+        --set controller.config."force-ssl-redirect"="true" \
+        --set controller.config."proxy-body-size"="100m" \
+        --set controller.service.targetPorts.https=80 \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
+        --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.dev.alfresco.me" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="sg-014a4c15b31f0c3ea" \
+        --set controller.publishService.enabled=true \
+        --namespace $namespace
+        helm install $release_name_acs . \
+        --set externalPort="443" \
+        --set externalProtocol="https" \
+        --set externalHost="$namespace.dev.alfresco.me" \
+        --set persistence.enabled=true \
+        --set persistence.storageClass.enabled=true \
+        --set persistence.storageClass.name="nfs-client" \
+        --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+        --namespace=$namespace
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
