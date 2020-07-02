@@ -13,7 +13,7 @@ repository:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.1.0.5"
+    tag: "6.1.0.9"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
