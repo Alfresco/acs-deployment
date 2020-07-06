@@ -3,14 +3,14 @@
 
 TODO: Travis Badges
 
-This project contains the code for starting the entire Alfresco Content Services (ACS Enterprise) product with [Docker](https://docs.docker.com/get-started) using [Docker Compose](https://docs.docker.com/compose) or [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
+This project contains the code for starting the entire Alfresco Content Services (ACS) product with [Docker](https://docs.docker.com/get-started) using [Docker Compose](https://docs.docker.com/compose) or [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
 ## Prerequisites
 
 By default the Enterprise version of ACS is installed. To accomplish this private Docker images stored in Quay.io are downloaded. Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/).
 
 During deployment a limited trial of the Enterprise version of ACS that goes into read-only mode after 2 days is installed. Request an extended 30-day trial at
- https://www.alfresco.com/platform/content-services-ecm/trial/docker
+ https://www.alfresco.com/platform/content-services-ecm/trial/docker.
 
 To avoid license restrictions and private Docker images try the [Community Edition deployment](https://github.com/Alfresco/acs-community-deployment).
 

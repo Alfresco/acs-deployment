@@ -1,5 +1,7 @@
 ### Apply Pod Security Policies to k8s cluster
 
+[EKS Blog Post](https://aws.amazon.com/blogs/opensource/using-pod-security-policies-amazon-eks-clusters)
+
 [Pod Security Policy](https://kubernetes.io/docs/concepts/policy/pod-security-policy) allows administrators to define a set of conditions that a pod must run with in order to be accepted into the system.
 
 The following recommendations need to be applied to the k8s cluster before any other pod is deployed.
