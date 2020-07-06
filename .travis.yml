@@ -58,15 +58,17 @@ jobs:
       stage: test
       script: |
         set -e
-        curl -v tesradufhdsaudasjn
         namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
+        release_name_ingress=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-ing
+        release_name_acs=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-acs
+
         kubectl create namespace "$namespace"
         kubectl create secret docker-registry quay-registry-secret --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n "$namespace"
         kubectl -n $namespace create role $namespace:psp --verb=use --resource=podsecuritypolicy --resource-name=kube-system
         kubectl -n $namespace create rolebinding $namespace:psp:default --role=$namespace:psp --serviceaccount=$namespace:default
-        release_name_ingress=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-ing
-        release_name_acs=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-acs
         kubectl -n $namespace create rolebinding $namespace:psp:$release_name_ingress-nginx-ingress --role=$namespace:psp --serviceaccount=$namespace:$release_name_ingress-nginx-ingress
+        
+        # install ingress
         helm install $release_name_ingress stable/nginx-ingress \
         --set controller.scope.enabled=true \
         --set controller.scope.namespace=$namespace \
@@ -83,6 +85,8 @@ jobs:
         --wait \
         --atomic \
         --namespace $namespace
+
+        # install acs
         helm install $release_name_acs helm/alfresco-content-services \
         --set externalPort="443" \
         --set externalProtocol="https" \
@@ -99,11 +103,8 @@ jobs:
         
         # dns propagation check
         DNS_PROPAGATED=0
-        # counters
         DNS_COUNTER=0
-        # counters limit
         DNS_COUNTER_MAX=90
-        # sleep seconds
         DNS_SLEEP_SECONDS=10
         
         echo "Trying to perform a trace DNS query to prevent caching"
@@ -123,10 +124,10 @@ jobs:
         
         [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
         
-
         # run acs checks
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         
+        # delete pods
         kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
         helm upgrade $release_name_acs helm/alfresco-content-services \
@@ -141,6 +142,8 @@ jobs:
 
       after_success: |
         helm delete $release_name_ingress $release_name_acs -n $namespace
+        kubectl delete namespace $namespace
+
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
