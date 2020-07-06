@@ -20,37 +20,11 @@ The **master** branch of this repository contains the latest work-in-progress de
 
 Branches and tags are used for denoting stable releases, to work with a specific release of ACS, please refer to the table below.
 
-|ACS version|Tag|Branch
-|:---:|:---:|:---|
-|6.0.0|1.0.0|support/HF/1.0
-|6.0.0|1.0.1|support/HF/1.0
-|6.0.0|1.0.2|support/HF/1.0
-|6.0.0|1.0.3|support/HF/1.0
-|6.0.0.1|1.0.5|support/HF/1.0
-|6.0.0.1|1.0.6|support/HF/1.0
-|6.0.0.1|1.0.7|support/HF/1.0
-|6.0.0.1|1.0.8|support/HF/1.0
-|6.0.1|1.0.10|support/HF/1.0
-|6.0.1.2|1.2.2|support/HF/1.0
-|6.0.1.3|1.2.3|support/HF/1.0
-|6.0.1.4|1.2.4|support/HF/1.0
+|ACS Version|Tag|Branch
+|---|---|---|
 |6.0.1.5|1.2.5|support/HF/1.0
-|6.1.0|2.0.0|support/HF/1.1
-|6.1.0.5|2.0.1|support/HF/1.1
-|6.1.0.5|2.0.2|support/HF/1.1
 |6.1.0.9|2.0.3|support/HF/1.1
-|6.1.1.1|2.1.0|support/SP/2.N
-|6.1.1.2|2.1.1|support/SP/2.N
-|6.1.1.2|2.1.2|support/SP/2.N
-|6.1.1.2|2.1.3|support/SP/2.N
-|6.1.1.2|2.1.4|support/SP/2.N
-|6.1.1.2|2.1.5|support/SP/2.N
 |6.1.1.3|2.1.6|support/SP/2.N
-|6.2.0|3.0.2|support/SP/3.N
-|6.2.0|3.0.3|support/SP/3.N
-|6.2.0.1|3.0.6|support/SP/3.N
-|6.2.0.2|3.0.7|support/SP/3.N
-|6.2.0.2|3.0.8|support/SP/3.N
 |6.2.0.2|3.0.9|support/SP/3.N
 |6.2.1|4.0.3|support/SP/4.N
 |6.2.2|4.1.0|support/SP/4.N
