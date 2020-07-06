@@ -94,7 +94,10 @@ jobs:
         --atomic \
         --dependency-update \
         --namespace=$namespace
+        
+        # run acs checks
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        
         kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
         helm upgrade $release_name_acs helm/alfresco-content-services \
@@ -103,7 +106,36 @@ jobs:
         --atomic \
         --reuse-values \
         --namespace=$namespace
+        
+        # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        
+        # dns propagation check
+        DNS_PROPAGATED=0
+        # counters
+        DNS_COUNTER=0
+        # counters limit
+        DNS_COUNTER_MAX=90
+        # sleep seconds
+        DNS_SLEEP_SECONDS=10
+        
+        echo "Trying to perform a trace DNS query to prevent caching"
+        dig +trace $namespace.dev.alfresco.me @8.8.8.8
+        
+        while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
+          host $namespace.dev.alfresco.me 8.8.8.8
+          if [ "$?" -eq 1 ]; then
+            DNS_COUNTER=$((DNS_COUNTER + 1))
+            echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
+            sleep "$DNS_SLEEP_SECONDS"
+          else
+            echo "DNS Propagated"
+            DNS_PROPAGATED=1
+          fi
+        done
+        
+        [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
+        
       after_success: |
         helm delete $release_name_ingress $release_name_acs -n $namespace
     - name: Deploy Docker Compose and Run Postman Checks
