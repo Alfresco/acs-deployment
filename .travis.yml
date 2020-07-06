@@ -69,7 +69,6 @@ jobs:
         --set controller.scope.enabled=true \
         --set controller.scope.namespace=$namespace \
         --set rbac.create=true \
-        --set-string controller.config.force-ssl-redirect=true \
         --set controller.config."proxy-body-size"="100m" \
         --set controller.service.targetPorts.https=80 \
         --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
