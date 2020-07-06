@@ -19,7 +19,7 @@ env:
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=stable
-    - KUBERNETES_VERSION=v1.18.4
+    - KUBERNETES_VERSION=1.18.4
     - HELM_VERSION=${HELM_VERSION:-3.2.4}
 
 branches:
