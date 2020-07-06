@@ -57,6 +57,8 @@ jobs:
     - name: Deploy Chart and Run Postman Checks
       stage: test
       script: |
+        set -e
+        curl -v tesradufhdsaudasjn
         namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
         kubectl create namespace "$namespace"
         kubectl create secret docker-registry quay-registry-secret --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n "$namespace"
