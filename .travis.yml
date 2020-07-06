@@ -94,12 +94,11 @@ jobs:
         --atomic \
         --dependency-update \
         --namespace=$namespace
-        cd /test/postman/helm
-        docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
         helm upgrade $release_name_acs helm/alfresco-content-services --reuse-values
-        docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         # after_script: |
         #   helm delete $release_name_ingress $release_name_acs -n $namespace
     - name: Deploy Docker Compose and Run Postman Checks
