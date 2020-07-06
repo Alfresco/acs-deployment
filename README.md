@@ -1,91 +1,79 @@
 
 # Alfresco Content Services Deployment
 
-## Contributing guide
-Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
+TODO: Travis Badges
 
-This project contains the code for starting the entire Alfresco Content Services (Enterprise) product with **Docker** or **Kubernetes**.
+This project contains the code for starting the entire Alfresco Content Services (ACS Enterprise) product with [Docker](https://docs.docker.com/get-started) using [Docker Compose](https://docs.docker.com/compose) or [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
-The **master** branch of this repository will endeavour to support the following deployments:
-- [Docker Compose](docs/docker-compose-deployment.md) (latest): For development and trials
-- [MiniKube](docs/helm-deployment-minikube.md) (latest): For development and POCs
-- [Helm - AWS Cloud with Kubernetes using Kops](docs/helm-deployment-aws_kops.md) (latest): As a deployment template which can be used as the basis for your specific deployment needs
+## Prerequisites
 
-To work with a specific release of ACS, please refer to the [Helm Chart Releases](docs/helm-chart-releases.md) and select the appropriate tag for this repository.
+By default the Enterprise version of ACS is installed. To accomplish this private Docker images stored in Quay.io are downloaded. Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/).
 
-For the Community Edition, go to the [acs-community-deployment](https://github.com/Alfresco/acs-community-deployment).
-The only differences between these projects are:
-* In the Enterprise chart, the images for the transformers are used, instead of the included binaries.
-* In the Enterprise chart, a cluster of two `alfresco-content-repository` nodes are started by default.
-
-## Contents of the deployment
-Alfresco Content Services deployed via `docker-compose` or Kubernetes contains the following:
-1. Alfresco Repository, with:  
-1.1. Alfresco Share Services   
-1.2. Alfresco Office Service (AOS) AMP  
-1.3. Alfresco vti-bin war - helps with AOS integration  
-1.4. Alfresco Google Docs Repo AMP  
-2. Alfresco Share, with:  
-2.1 Alfresco Google Docs Share AMP  
-3. A Postgres DB  
-4. Alfresco Search Services (Solr6)
-5. Alfresco Transform Service
-6. Alfresco Digital Workspace
-
-## Deployment options
-* [Deploying with Helm charts on AWS using Kops](docs/helm-deployment-aws_kops.md)
-* [Deploying with Helm charts on AWS using EKS](docs/helm-deployment-aws_eks.md)
-* [Deploying with Helm charts using Minikube](docs/helm-deployment-minikube.md)
-* [Deploying using Docker Compose](docs/docker-compose-deployment.md)
-* [Customizing your deployment](docs/customising-deployment.md)
-
-## Production environments
-Alfresco provides tested Helm charts as a "deployment template" for customers who want to take advantage of the container orchestration benefits of Kubernetes. These Helm charts are undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
-
-The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure
-any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without
-changes and are still flexible to be adopted to your actual environment. 
-
-For your environment, you should use these charts as a starting point and modify them so that ACS integrates
-into your infrastructure. You typically want to remove the PostgreSQL container and connect the cs-repository
-directly to your database (might require custom images to get the required JDBC driver in the container).
-Another typical change would be the integration of your company-wide monitoring and logging tools.
-
-## Other information
-* See alternative commands and start up [tutorial with AWS support](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/running-a-cluster.md)
-* [Tips and tricks](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/tips-and-tricks.md) for working with Kubernetes and Alfresco Content Services.
-* The images downloaded directly from Docker Hub, or Quay.io are for a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. Request an extended 30-day trial at
+During deployment a limited trial of the Enterprise version of ACS that goes into read-only mode after 2 days is installed. Request an extended 30-day trial at
  https://www.alfresco.com/platform/content-services-ecm/trial/docker
-* Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/). These credentials are required to pull private (Enterprise-only) Docker images from Quay.io.
 
-## On Cloud Supported/unsupported endpoints/features/amps
+To avoid license restrictions and private Docker images try the [Community Edition deployment](https://github.com/Alfresco/acs-community-deployment).
 
-### Repository team
+## Versioning
 
-Supported:
-* V1 REST API
-* WebDAV
-* CMIS (all three bindings)
-* AOS
-* S3
-* Renditions
-* Authentication with alfrescoNTLM
-* Authentication with AIS (JWT)
-* Email
-* IMAP
-* Activity Feeds / Subscriptions
-* Build in ACS Workflows
+The **master** branch of this repository contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
 
-Not Supported:
-* FTP
-* SAML
-* LDAP
-* Centera
-* V0 APIs
+Branches and tags are used for denoting stable releases, to work with a specific release of ACS, please refer to the table below.
 
-Not supported OnPrem and OnCloud:
-* Multi Tenancy
-* SMB/CIFS
-* Authentication with passthru
-* The old Cloud Sync
-* Transformations (we only support renditions)
+|ACS version|Tag|Branch
+|:---:|:---:|:---|
+|6.0.0|1.0.0|support/HF/1.0
+|6.0.0|1.0.1|support/HF/1.0
+|6.0.0|1.0.2|support/HF/1.0
+|6.0.0|1.0.3|support/HF/1.0
+|6.0.0.1|1.0.5|support/HF/1.0
+|6.0.0.1|1.0.6|support/HF/1.0
+|6.0.0.1|1.0.7|support/HF/1.0
+|6.0.0.1|1.0.8|support/HF/1.0
+|6.0.1|1.0.10|support/HF/1.0
+|6.0.1.2|1.2.2|support/HF/1.0
+|6.0.1.3|1.2.3|support/HF/1.0
+|6.0.1.4|1.2.4|support/HF/1.0
+|6.0.1.5|1.2.5|support/HF/1.0
+|6.1.0|2.0.0|support/HF/1.1
+|6.1.0.5|2.0.1|support/HF/1.1
+|6.1.0.5|2.0.2|support/HF/1.1
+|6.1.0.9|2.0.3|support/HF/1.1
+|6.1.1.1|2.1.0|support/SP/2.N
+|6.1.1.2|2.1.1|support/SP/2.N
+|6.1.1.2|2.1.2|support/SP/2.N
+|6.1.1.2|2.1.3|support/SP/2.N
+|6.1.1.2|2.1.4|support/SP/2.N
+|6.1.1.2|2.1.5|support/SP/2.N
+|6.1.1.3|2.1.6|support/SP/2.N
+|6.2.0|3.0.2|support/SP/3.N
+|6.2.0|3.0.3|support/SP/3.N
+|6.2.0.1|3.0.6|support/SP/3.N
+|6.2.0.2|3.0.7|support/SP/3.N
+|6.2.0.2|3.0.8|support/SP/3.N
+|6.2.0.2|3.0.9|support/SP/3.N
+|6.2.1|4.0.3|support/SP/4.N
+|6.2.2|4.1.0|support/SP/4.N
+|6.2.3|5.0.0|support/SP/5.N
+|7.0.0|6.0.0|master
+
+NOTE: The last two rows (5.0.0 & 6.0.0) have not been released yet.
+
+Helm charts also have their own [version scheme]((https://docs.helm.sh/developing_charts/#charts-and-versioning)) based on [Semantic Versioning](https://semver.org). The `appVersion` property within the chart describes the version of ACS being deployed. The chart version corresponds to the tag version described in the table above.
+
+There are a few ACS specific extensions to the rules:
+
+* Once a chart has been released, the contents of that version MUST NOT be modified. Any modifications MUST be released as a new version. Stable chart version starts with 1.0.0
+* The chart version must be incremented if ACS version is incremented within a Service Pack or Hot Fix.
+* The "appVersion" label must always specify the exact ACS release version, like 6.0.0, 6.1.0, 6.1.1.1, 6.1.1.2. If the "appVersion" was incremented between charts, downgrading to a previous chart is not possible.
+
+## Documentation & Examples
+
+To get started please refer to the [Docker Compose](./docs/docker-compose/README.md) and [Helm Chart](./docs/helm/README.md) documentation and explore the [examples](./examples).
+
+## License
+
+The code in this repository is released under the Apache License, see the [LICENSE](./LICENSE) file for details.
+
+## Contribution Guide
+Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
