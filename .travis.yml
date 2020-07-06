@@ -97,7 +97,7 @@ jobs:
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
-        helm upgrade $release_name_acs helm/alfresco-content-services |
+        helm upgrade $release_name_acs helm/alfresco-content-services \
         --wait \
         --timeout 10m0s \
         --atomic \
@@ -115,8 +115,4 @@ jobs:
         docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
       after_failure: |
         docker-compose logs --no-color
-
-
-
-
         helm install $release_name_ingress stable/nginx-ingress --set controller.scope.enabled=true --set controller.scope.namespace=$namespace --set rbac.create=true --set controller.config."proxy-body-size"="100m" --set controller.service.targetPorts.https=80 --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="arn:aws:acm:eu-west-1:586394462691:certificate/d359dcdc-9eab-44c7-a51d-10e51be01cf1" --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.dev.alfresco.me" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="sg-014a4c15b31f0c3ea" --set controller.publishService.enabled=true --namespace $namespace
