@@ -275,7 +275,7 @@
 							"    pm.expect(jsonData.list.pagination.count).to.eql(2);",
 							"});",
 							"",
-							"var entry = jsonData.list.entries[1].entry;",
+							"var entry = jsonData.list.entries[0].entry;",
 							"pm.environment.set(\"contentId\", entry.id);",
 							"pm.environment.set(\"contentName\", entry.name);",
 							"pm.environment.set(\"contentLength\", entry.content.sizeInBytes);",
@@ -345,14 +345,14 @@
 							"});",
 							"",
 							"pm.test(\"Content is correct\", function () {",
-							"    pm.response.to.have.body(\"compel completely therefore     \");",
+							"    pm.response.to.have.body(\"So Long, and Thanks for All the Fish!\");",
 							"});",
 							""
 						]
 					}
 				}
 			],
-			"request": {
+			"request": { 
 				"auth": {
 					"type": "basic",
 					"basic": [
