@@ -147,7 +147,7 @@ jobs:
         --namespace $namespace
 
         # install acs
-        helm install $release_name_acs helm/alfresco-content-services \
+        travis_wait 21 helm install $release_name_acs helm/alfresco-content-services \
         --set externalPort="443" \
         --set externalProtocol="https" \
         --set externalHost="$namespace.dev.alfresco.me" \
@@ -156,7 +156,7 @@ jobs:
         --set persistence.storageClass.name="nfs-client" \
         --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
         --wait \
-        --timeout 10m0s \
+        --timeout 20m0s \
         --atomic \
         --dependency-update \
         --namespace=$namespace
