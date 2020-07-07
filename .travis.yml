@@ -95,8 +95,8 @@ jobs:
         }
 
         namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
-        release_name_ingress=${TRAVIS_BUILD_NUMBER}-ing
-        release_name_acs=${TRAVIS_BUILD_NUMBER}-acs
+        release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
+        release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
 
         cat <<EOF | kubectl apply -f -
         apiVersion: v1
