@@ -60,30 +60,6 @@ jobs:
         set -e
 
         # Utility Functions
-        # dns ready
-        dns_check() {
-          DNS_PROPAGATED=0
-          DNS_COUNTER=0
-          DNS_COUNTER_MAX=90
-          DNS_SLEEP_SECONDS=10
-          
-          echo "Trying to perform a trace DNS query to prevent caching"
-          dig +trace $namespace.dev.alfresco.me @8.8.8.8
-          
-          while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
-            host $namespace.dev.alfresco.me 8.8.8.8
-            if [ "$?" -eq 1 ]; then
-              DNS_COUNTER=$((DNS_COUNTER + 1))
-              echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
-              sleep "$DNS_SLEEP_SECONDS"
-            else
-              echo "DNS Propagated"
-              DNS_PROPAGATED=1
-            fi
-          done
-          
-          [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
-        }
 
         # pod status
         pod_status() {
@@ -162,7 +138,28 @@ jobs:
         --namespace=$namespace
 
         # check dns and pods
-        dns_check
+        DNS_PROPAGATED=0
+        DNS_COUNTER=0
+        DNS_COUNTER_MAX=90
+        DNS_SLEEP_SECONDS=10
+        
+        echo "Trying to perform a trace DNS query to prevent caching"
+        dig +trace $namespace.dev.alfresco.me @8.8.8.8
+        
+        while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
+          host $namespace.dev.alfresco.me 8.8.8.8
+          if [ "$?" -eq 1 ]; then
+            DNS_COUNTER=$((DNS_COUNTER + 1))
+            echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
+            sleep "$DNS_SLEEP_SECONDS"
+          else
+            echo "DNS Propagated"
+            DNS_PROPAGATED=1
+          fi
+        done
+        
+        [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
+        
         pods_ready
 
         # run acs checks
