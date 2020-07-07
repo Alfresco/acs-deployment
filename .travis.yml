@@ -169,6 +169,7 @@ jobs:
         --namespace $namespace
 
         # install acs
+        helm dep up helm/alfresco-content-services
         helm upgrade --install $release_name_acs helm/alfresco-content-services \
         --set externalPort="443" \
         --set externalProtocol="https" \
@@ -180,7 +181,6 @@ jobs:
         --wait \
         --timeout 10m0s \
         --atomic \
-        --dependency-update \
         --namespace=$namespace
 
         # check dns and pods
