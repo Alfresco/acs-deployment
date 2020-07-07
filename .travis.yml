@@ -101,58 +101,9 @@ jobs:
         --dependency-update \
         --namespace=$namespace
 
-        # dns propagation check
-        DNS_PROPAGATED=0
-        DNS_COUNTER=0
-        DNS_COUNTER_MAX=90
-        DNS_SLEEP_SECONDS=10
-        
-        echo "Trying to perform a trace DNS query to prevent caching"
-        dig +trace $namespace.dev.alfresco.me @8.8.8.8
-        
-        while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
-          host $namespace.dev.alfresco.me 8.8.8.8
-          if [ "$?" -eq 1 ]; then
-            DNS_COUNTER=$((DNS_COUNTER + 1))
-            echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
-            sleep "$DNS_SLEEP_SECONDS"
-          else
-            echo "DNS Propagated"
-            DNS_PROPAGATED=1
-          fi
-        done
-        
-        [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
-        
-        # pod ready check
-        pod_status() {
-          kubectl get pods --namespace $namespace -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?\(@.type==\'Ready\'\)].status
-        }
-
-        PODS_COUNTER=0
-        PODS_COUNTER_MAX=60
-        PODS_SLEEP_SECONDS=10
-
-        while [ "$PODS_COUNTER" -lt "$PODS_COUNTER_MAX" ]; do
-          totalpods=$(pod_status | grep -v NAME | wc -l | sed 's/ *//')
-          readypodcount=$(pod_status | grep ' True' | wc -l | sed 's/ *//')
-          if [ "$readypodcount" -eq "$totalpods" ]; then
-                echo "     $readypodcount/$totalpods pods ready now"
-                pod_status
-            echo "All pods are ready!"
-            break
-          fi
-            PODS_COUNTER=$((PODS_COUNTER + 1))
-            echo "just $readypodcount/$totalpods pods ready now - sleeping $PODS_SLEEP_SECONDS seconds - counter $PODS_COUNTER"
-            sleep "$PODS_SLEEP_SECONDS"
-            continue
-          done
-        
-        if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
-          pod_status
-          echo "Pods did not start - exit 1"
-          exit 1
-        fi
+        # check dns and pods
+        dns_check
+        pods_ready
 
         # run acs checks
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
@@ -167,8 +118,70 @@ jobs:
         --reuse-values \
         --namespace=$namespace
         
+        # check pods
+        pods_ready
+
         # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+
+        # Utility Functions
+        # dns ready
+        dns_check() {
+          DNS_PROPAGATED=0
+          DNS_COUNTER=0
+          DNS_COUNTER_MAX=90
+          DNS_SLEEP_SECONDS=10
+          
+          echo "Trying to perform a trace DNS query to prevent caching"
+          dig +trace $namespace.dev.alfresco.me @8.8.8.8
+          
+          while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
+            host $namespace.dev.alfresco.me 8.8.8.8
+            if [ "$?" -eq 1 ]; then
+              DNS_COUNTER=$((DNS_COUNTER + 1))
+              echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
+              sleep "$DNS_SLEEP_SECONDS"
+            else
+              echo "DNS Propagated"
+              DNS_PROPAGATED=1
+            fi
+          done
+          
+          [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
+        }
+
+        # pod status
+        pod_status() {
+          kubectl get pods --namespace $namespace -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?\(@.type==\'Ready\'\)].status
+        }
+
+        # pods ready
+        pods_ready() {
+          PODS_COUNTER=0
+          PODS_COUNTER_MAX=60
+          PODS_SLEEP_SECONDS=10
+
+          while [ "$PODS_COUNTER" -lt "$PODS_COUNTER_MAX" ]; do
+            totalpods=$(pod_status | grep -v NAME | wc -l | sed 's/ *//')
+            readypodcount=$(pod_status | grep ' True' | wc -l | sed 's/ *//')
+            if [ "$readypodcount" -eq "$totalpods" ]; then
+                  echo "     $readypodcount/$totalpods pods ready now"
+                  pod_status
+              echo "All pods are ready!"
+              break
+            fi
+              PODS_COUNTER=$((PODS_COUNTER + 1))
+              echo "just $readypodcount/$totalpods pods ready now - sleeping $PODS_SLEEP_SECONDS seconds - counter $PODS_COUNTER"
+              sleep "$PODS_SLEEP_SECONDS"
+              continue
+            done
+          
+          if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
+            pod_status
+            echo "Pods did not start - exit 1"
+            exit 1
+          fi
+        }
 
       after_script: |
         if [[ $TRAVIS_COMMIT_MESSAGE != *"[keep env]"* ]]; then
@@ -185,4 +198,3 @@ jobs:
         docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
       after_failure: |
         docker-compose logs --no-color
-        helm install $release_name_ingress stable/nginx-ingress --set controller.scope.enabled=true --set controller.scope.namespace=$namespace --set rbac.create=true --set controller.config."proxy-body-size"="100m" --set controller.service.targetPorts.https=80 --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="arn:aws:acm:eu-west-1:586394462691:certificate/d359dcdc-9eab-44c7-a51d-10e51be01cf1" --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.dev.alfresco.me" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="sg-014a4c15b31f0c3ea" --set controller.publishService.enabled=true --namespace $namespace
