@@ -58,6 +58,66 @@ jobs:
       stage: test
       script: |
         set -e
+
+        # Utility Functions
+        # dns ready
+        dns_check() {
+          DNS_PROPAGATED=0
+          DNS_COUNTER=0
+          DNS_COUNTER_MAX=90
+          DNS_SLEEP_SECONDS=10
+          
+          echo "Trying to perform a trace DNS query to prevent caching"
+          dig +trace $namespace.dev.alfresco.me @8.8.8.8
+          
+          while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
+            host $namespace.dev.alfresco.me 8.8.8.8
+            if [ "$?" -eq 1 ]; then
+              DNS_COUNTER=$((DNS_COUNTER + 1))
+              echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
+              sleep "$DNS_SLEEP_SECONDS"
+            else
+              echo "DNS Propagated"
+              DNS_PROPAGATED=1
+            fi
+          done
+          
+          [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
+        }
+
+        # pod status
+        pod_status() {
+          kubectl get pods --namespace $namespace -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?\(@.type==\'Ready\'\)].status
+        }
+
+        # pods ready
+        pods_ready() {
+          PODS_COUNTER=0
+          PODS_COUNTER_MAX=60
+          PODS_SLEEP_SECONDS=10
+
+          while [ "$PODS_COUNTER" -lt "$PODS_COUNTER_MAX" ]; do
+            totalpods=$(pod_status | grep -v NAME | wc -l | sed 's/ *//')
+            readypodcount=$(pod_status | grep ' True' | wc -l | sed 's/ *//')
+            if [ "$readypodcount" -eq "$totalpods" ]; then
+                  echo "     $readypodcount/$totalpods pods ready now"
+                  pod_status
+              echo "All pods are ready!"
+              break
+            fi
+              PODS_COUNTER=$((PODS_COUNTER + 1))
+              echo "just $readypodcount/$totalpods pods ready now - sleeping $PODS_SLEEP_SECONDS seconds - counter $PODS_COUNTER"
+              sleep "$PODS_SLEEP_SECONDS"
+              continue
+            done
+          
+          if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
+            pod_status
+            echo "Pods did not start - exit 1"
+            exit 1
+          fi
+        }
+
         namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
         release_name_ingress=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-ing
         release_name_acs=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-acs
@@ -123,66 +183,6 @@ jobs:
 
         # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-
-        # Utility Functions
-        # dns ready
-        dns_check() {
-          DNS_PROPAGATED=0
-          DNS_COUNTER=0
-          DNS_COUNTER_MAX=90
-          DNS_SLEEP_SECONDS=10
-          
-          echo "Trying to perform a trace DNS query to prevent caching"
-          dig +trace $namespace.dev.alfresco.me @8.8.8.8
-          
-          while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
-            host $namespace.dev.alfresco.me 8.8.8.8
-            if [ "$?" -eq 1 ]; then
-              DNS_COUNTER=$((DNS_COUNTER + 1))
-              echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
-              sleep "$DNS_SLEEP_SECONDS"
-            else
-              echo "DNS Propagated"
-              DNS_PROPAGATED=1
-            fi
-          done
-          
-          [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
-        }
-
-        # pod status
-        pod_status() {
-          kubectl get pods --namespace $namespace -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?\(@.type==\'Ready\'\)].status
-        }
-
-        # pods ready
-        pods_ready() {
-          PODS_COUNTER=0
-          PODS_COUNTER_MAX=60
-          PODS_SLEEP_SECONDS=10
-
-          while [ "$PODS_COUNTER" -lt "$PODS_COUNTER_MAX" ]; do
-            totalpods=$(pod_status | grep -v NAME | wc -l | sed 's/ *//')
-            readypodcount=$(pod_status | grep ' True' | wc -l | sed 's/ *//')
-            if [ "$readypodcount" -eq "$totalpods" ]; then
-                  echo "     $readypodcount/$totalpods pods ready now"
-                  pod_status
-              echo "All pods are ready!"
-              break
-            fi
-              PODS_COUNTER=$((PODS_COUNTER + 1))
-              echo "just $readypodcount/$totalpods pods ready now - sleeping $PODS_SLEEP_SECONDS seconds - counter $PODS_COUNTER"
-              sleep "$PODS_SLEEP_SECONDS"
-              continue
-            done
-          
-          if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
-            pod_status
-            echo "Pods did not start - exit 1"
-            exit 1
-          fi
-        }
-
       after_script: |
         if [[ $TRAVIS_COMMIT_MESSAGE != *"[keep env]"* ]]; then
           helm delete $release_name_ingress $release_name_acs -n $namespace
