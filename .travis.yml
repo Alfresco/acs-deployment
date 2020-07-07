@@ -147,7 +147,7 @@ jobs:
         --namespace $namespace
 
         # install acs
-        travis_wait 30 helm install $release_name_acs helm/alfresco-content-services \
+        helm install $release_name_acs helm/alfresco-content-services \
         --set externalPort="443" \
         --set externalProtocol="https" \
         --set externalHost="$namespace.dev.alfresco.me" \
@@ -156,14 +156,14 @@ jobs:
         --set persistence.storageClass.name="nfs-client" \
         --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
         --wait \
-        --timeout 20m0s \
+        --timeout 10m0s \
         --atomic \
         --dependency-update \
         --namespace=$namespace
 
         # check dns and pods
-        travis_wait 16 dns_check
-        travis_wait 11 pods_ready
+        dns_check
+        pods_ready
 
         # run acs checks
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
@@ -179,7 +179,7 @@ jobs:
         --namespace=$namespace
         
         # check pods
-        travis_wait 11 pods_ready
+        pods_ready
 
         # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
