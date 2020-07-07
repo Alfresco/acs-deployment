@@ -95,17 +95,63 @@ jobs:
         }
 
         namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
-        release_name_ingress=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-ing
-        release_name_acs=$(openssl rand 200 | LC_CTYPE=C tr -dc "[:lower:]" | head -c 3)-acs
+        release_name_ingress=${TRAVIS_BUILD_NUMBER}-ing
+        release_name_acs=${TRAVIS_BUILD_NUMBER}-acs
 
-        kubectl create namespace "$namespace"
-        kubectl create secret docker-registry quay-registry-secret --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n "$namespace"
-        kubectl -n $namespace create role $namespace:psp --verb=use --resource=podsecuritypolicy --resource-name=kube-system
-        kubectl -n $namespace create rolebinding $namespace:psp:default --role=$namespace:psp --serviceaccount=$namespace:default
-        kubectl -n $namespace create rolebinding $namespace:psp:$release_name_ingress-nginx-ingress --role=$namespace:psp --serviceaccount=$namespace:$release_name_ingress-nginx-ingress
-        
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: Namespace
+        metadata:
+          name: $namespace
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: Role
+        metadata:
+          name: $namespace:psp
+          namespace: $namespace
+        rules:
+        - apiGroups:
+          - policy
+          resourceNames:
+          - kube-system
+          resources:
+          - podsecuritypolicies
+          verbs:
+          - use
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          name: $namespace:psp:default
+          namespace: $namespace
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: $namespace:psp
+        subjects:
+        - kind: ServiceAccount
+          name: default
+          namespace: $namespace
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          name: $namespace:psp:$release_name_ingress-nginx-ingress
+          namespace: $namespace
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: $namespace:psp
+        subjects:
+        - kind: ServiceAccount
+          name: $release_name_ingress-nginx-ingress
+          namespace: $namespace
+        ---
+        $(kubectl create secret docker-registry quay-registry-secret --dry-run=client --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n $namespace -o yaml)
+        EOF
+
         # install ingress
-        helm install $release_name_ingress stable/nginx-ingress \
+        helm upgrade --install $release_name_ingress stable/nginx-ingress \
         --set controller.scope.enabled=true \
         --set controller.scope.namespace=$namespace \
         --set rbac.create=true \
@@ -123,7 +169,7 @@ jobs:
         --namespace $namespace
 
         # install acs
-        helm install $release_name_acs helm/alfresco-content-services \
+        helm upgrade --install $release_name_acs helm/alfresco-content-services \
         --set externalPort="443" \
         --set externalProtocol="https" \
         --set externalHost="$namespace.dev.alfresco.me" \
@@ -159,7 +205,7 @@ jobs:
         done
         
         [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time"
-        
+
         pods_ready
 
         # run acs checks
@@ -181,7 +227,7 @@ jobs:
         # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
       after_script: |
-        if [[ $TRAVIS_COMMIT_MESSAGE != *"[keep env]"* ]]; then
+        if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
           helm delete $release_name_ingress $release_name_acs -n $namespace
           kubectl delete namespace $namespace
         fi
