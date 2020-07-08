@@ -32,7 +32,7 @@ For the best results we recommend deploying ACS to AWS EKS following these steps
 
 There are also several examples showing how to deploy with various configurations i.e. using an external database.
 
-## Configuration
+## Configure
 
 TODO
 

@@ -41,9 +41,9 @@ There are a few ACS specific extensions to the rules:
 * The chart version must be incremented if ACS version is incremented within a Service Pack or Hot Fix.
 * The "appVersion" label must always specify the exact ACS release version, like 6.0.0, 6.1.0, 6.1.1.1, 6.1.1.2. If the "appVersion" was incremented between charts, downgrading to a previous chart is not possible.
 
-## Documentation & Examples
+## Documentation
 
-To get started please refer to the [Docker Compose](./docs/docker-compose/README.md) and [Helm Chart](./docs/helm/README.md) documentation and explore the [examples](./examples).
+To get started please refer to the [Docker Compose](./docs/docker-compose) and [Helm Chart](./docs/helm) documentation.
 
 ## License
 

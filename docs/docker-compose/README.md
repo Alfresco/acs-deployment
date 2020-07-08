@@ -62,7 +62,7 @@ If you're using the [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_ins
 docker-machine ip
 ```
 
-## Configuration
+## Configure
 
 TODO
 
