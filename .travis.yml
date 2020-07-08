@@ -18,7 +18,7 @@ env:
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
-    - HELM_REPO=stable
+    - HELM_REPO=incubator
     - KUBERNETES_VERSION=1.18.4
     - HELM_VERSION=${HELM_VERSION:-3.2.4}
 
@@ -44,14 +44,14 @@ before_script:
     helm repo add activiti https://activiti.github.io/activiti-cloud-helm-charts
     helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
     helm repo add stable https://kubernetes-charts.storage.googleapis.com
-    if [[ "${TRAVIS_BRANCH}" != *"support/"* ]]
+    helm repo add alfresco-incubator ${HELM_REPO_BASE_URL}/${HELM_REPO}
+    [[ ( "$A" -eq "0" || "$B" -ne "0" ) && "$C" -eq "0" ]];
+    if [[ "${TRAVIS_BRANCH}" == *"support/"* || "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
     then
-      export HELM_REPO=incubator
-      helm repo add alfresco-incubator ${HELM_REPO_BASE_URL}/${HELM_REPO}
+      export HELM_REPO=stable
     fi
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
-
 
 after_success: |
   if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
