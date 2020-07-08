@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 # Utility Functions
 
 # pod status

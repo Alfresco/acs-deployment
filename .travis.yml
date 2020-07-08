@@ -69,15 +69,14 @@ jobs:
     - name: Deploy Chart for latest and Run Postman Checks
       stage: test
       script: |
-        set -e
         export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
         export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
         export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
         export values_file=helm/alfresco-content-services/values.yaml
+        ./.travis/deploy-acs.sh
     - name: Deploy Chart for SP2.N and Run Postman Checks
       stage: test
       script: |
-        set -e
         export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-sp2n-${TRAVIS_BUILD_NUMBER}
         export release_name_ingress=ing2n-${TRAVIS_BUILD_NUMBER}
         export release_name_acs=acs2n-${TRAVIS_BUILD_NUMBER}
