@@ -233,13 +233,13 @@ jobs:
         fi
     - name: Deploy Chart for SP2.N and Run Postman Checks
       stage: test
-      before_script: |
+      script: |
+        set -e
+        
         namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-sp2n-${TRAVIS_BUILD_NUMBER}
         release_name_ingress=ing2n-${TRAVIS_BUILD_NUMBER}
         release_name_acs=acs2n-${TRAVIS_BUILD_NUMBER}
         values_file=helm/older-versions/SP.2.N.yaml
-      script: |
-        set -e
 
         # Utility Functions
 
