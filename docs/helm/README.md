@@ -4,7 +4,7 @@ This page describes how to deploy Alfresco Content Services (ACS) using [Helm](h
 
 The system deployed is shown in the diagram below.
 
-![Helm Deployment Components](/docs/diagrams/helm-chart/helm-components.png)
+![Helm Deployment Components](/docs/helm/diagrams/helm-components.png)
 
 ## Components
 

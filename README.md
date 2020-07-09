@@ -1,7 +1,7 @@
 
 # Alfresco Content Services Deployment
 
-TODO: Travis Badges
+[![Build Status](https://travis-ci.com/Alfresco/acs-deployment.svg?branch=master)](https://travis-ci.com/Alfresco/acs-deployment)
 
 This project contains the code for starting the entire Alfresco Content Services (ACS) product with [Docker](https://docs.docker.com/get-started) using [Docker Compose](https://docs.docker.com/compose) or [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 

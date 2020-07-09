@@ -4,26 +4,7 @@ This page describes how to quickly deploy Alfresco Content Services (ACS) using 
 
 The system deployed is shown in the diagram below.
 
-![Docker Compose Deployment Components](/docs/diagrams/docker-compose/docker-compose-components.png)
-
-## Components
-
-TODO: Re-organise
-
-|Docker Image Name|Dockerfile Source Location|
-|:---|:---|
-|alfresco/alfresco-content-repository|[acs-packaging](https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile)|
-|alfresco/alfresco-acs-nginx|[acs-ingress](https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile)|
-
-
-1. alfresco-content-repository |  [tags](https://hub.docker.com/r/alfresco/alfresco-content-repository/tags/)
-2. alfresco-pdf-renderer | [tags](https://hub.docker.com/r/alfresco/alfresco-pdf-renderer/tags/)
-3. alfresco-imagemagick | [tags](https://hub.docker.com/r/alfresco/alfresco-imagemagick/tags/)
-4. alfresco-libreoffice | [tags](https://hub.docker.com/r/alfresco/alfresco-libreoffice/tags/)
-5. alfresco-tika | [tags](https://hub.docker.com/r/alfresco/alfresco-tika/tags/)
-6. alfresco-share | [tags](https://hub.docker.com/r/alfresco/alfresco-share/tags/)
-7. alfresco-search-services | [tags](https://hub.docker.com/r/alfresco/alfresco-search-services/tags/)
-8. postgres | [tags](https://hub.docker.com/r/library/postgres/tags/)
+![Docker Compose Deployment Components](/docs/docker-compose/diagrams/docker-compose-components.png)
 
 ## Considerations
 
