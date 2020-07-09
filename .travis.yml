@@ -257,7 +257,7 @@ jobs:
         echo "Starting Alfresco in Docker container"
         docker-compose ps
         docker-compose pull
-        COMPOSE_HTTP_TIMEOUT=120 docker-compose up -d
+        COMPOSE_HTTP_TIMEOUT=300 docker-compose up -d
         # docker-compose up
 
         WAIT_INTERVAL=1
