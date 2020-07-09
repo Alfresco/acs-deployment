@@ -246,76 +246,8 @@ jobs:
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
-        #!/bin/bash
         cd docker-compose
-
-        docker info
-        docker-compose --version
-
-        docker-compose config
-        echo "Starting Alfresco in Docker container"
-        docker-compose ps
-        docker-compose pull
-        COMPOSE_HTTP_TIMEOUT=300 docker-compose up -d
-        # docker-compose up
-
-        WAIT_INTERVAL=1
-        COUNTER=0
-        TIMEOUT=300
-        t0=`date +%s`
-
-        echo "Waiting for alfresco to start"
-        response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
-        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
-          printf '.'
-          sleep $WAIT_INTERVAL
-          COUNTER=$(($COUNTER+$WAIT_INTERVAL))
-          response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
-        done
-
-        if [[ "$COUNTER" < "$TIMEOUT" ]] ; then
-          t1=`date +%s`
-          delta=$((($t1 - $t0)/60))
-          echo "Alfresco Started in $delta minutes"
-        else
-          echo "Waited $COUNTER seconds"
-          echo "Alfresco could not start in time."
-          echo "The last response code from /alfresco/ was $response"
-          exit 1
-        fi
-
-        COUNTER=0
-        echo "Waiting for share to start"
-        response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/share/page)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
-          printf '.'
-          sleep $WAIT_INTERVAL
-          COUNTER=$(($COUNTER+$WAIT_INTERVAL))
-          response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/share/page)
-        done
-
-        if [[ "$COUNTER" < "$TIMEOUT" ]] ; then
-          t1=`date +%s`
-          delta=$((($t1 - $t0)/60))
-          echo "Share Started in $delta minutes"
-        else
-          echo "Waited $COUNTER seconds"
-          echo "Share could not start in time."
-          echo "The last response code from /share/ was $response"
-          exit 1
-        fi
-
-        COUNTER=0
-        TIMEOUT=20
-        echo "Waiting more time for SOLR"
-        response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
-          printf '.'
-          sleep $WAIT_INTERVAL
-          COUNTER=$(($COUNTER+$WAIT_INTERVAL))
-          response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
-        done
-
+        /bin/bash startup.sh
         cd ../test/postman/docker-compose
         docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
       after_success: |
