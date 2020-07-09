@@ -246,7 +246,7 @@ jobs:
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
-
+        #!/bin/bash
         cd docker-compose
 
         docker info
