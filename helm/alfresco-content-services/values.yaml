@@ -68,7 +68,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.3.0"
+    tag: "1.3.1-A1"
     pullPolicy: Always
     internalPort: 8095
   service:
@@ -92,7 +92,7 @@ pdfrenderer:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.3.1"
+    tag: "2.3.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -125,7 +125,7 @@ imagemagick:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.3.1"
+    tag: "2.3.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -158,7 +158,7 @@ libreoffice:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.3.1"
+    tag: "2.3.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -191,7 +191,7 @@ tika:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.3.1"
+    tag: "2.3.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -224,7 +224,7 @@ transformmisc:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.3.1"
+    tag: "2.3.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -288,7 +288,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.8.0"
+    tag: "0.9.0"
     pullPolicy: Always
     internalPort: 8099
   initContainer:
