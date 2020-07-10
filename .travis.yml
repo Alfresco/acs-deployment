@@ -266,7 +266,7 @@ jobs:
         until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
           printf '.'
           sleep $WAIT_INTERVAL
-          COUNTER=$(($COUNTER + $WAIT_INTERVAL))
+          COUNTER=$((COUNTER + WAIT_INTERVAL))
           response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
         done
         if (("$COUNTER" < "$TIMEOUT")) ; then
@@ -285,7 +285,7 @@ jobs:
         until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
           printf '.'
           sleep $WAIT_INTERVAL
-          COUNTER=$(($COUNTER + $WAIT_INTERVAL))
+          COUNTER=$((COUNTER + WAIT_INTERVAL))
           response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/share/page)
         done
         if (("$COUNTER" < "$TIMEOUT")) ; then
