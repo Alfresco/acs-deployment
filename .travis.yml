@@ -25,7 +25,6 @@ env:
 branches:
   only:
     - master
-    - OPSEXP-115
     - /support.*/
     - /feature.*/
 
