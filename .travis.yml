@@ -1,0 +1,313 @@
+language: python
+python:
+  - "3.8.2"
+
+os: linux
+dist: xenial
+
+services:
+  - docker
+
+import:
+  - Alfresco/alfresco-process-tools:.travis.helm.yml@master
+  - Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
+  - Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
+
+env:
+  global:
+    - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
+    - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
+    - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
+    - HELM_REPO=incubator
+    - KUBERNETES_VERSION=1.18.4
+    - HELM_VERSION=${HELM_VERSION:-3.2.4}
+
+branches:
+  only:
+    - master
+    - /feature.*/
+
+before_install:
+  - |
+    pip install --upgrade awscli
+    curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator
+    curl -o aws-iam-authenticator.sha256 https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator.sha256
+    openssl sha1 -sha256 aws-iam-authenticator
+    chmod +x ./aws-iam-authenticator
+    mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+    export PATH=$PATH:$HOME/bin
+    aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
+
+before_script:
+  - |
+    REPO_NAME=${TRAVIS_REPO_SLUG##*/}
+    PROJECT_NAME=alfresco-content-services
+    helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
+    helm repo add stable https://kubernetes-charts.storage.googleapis.com
+    helm repo add alfresco-incubator ${HELM_REPO_BASE_URL}/${HELM_REPO}
+    [[ ( "$A" -eq "0" || "$B" -ne "0" ) && "$C" -eq "0" ]];
+    if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
+    then
+      export HELM_REPO=stable
+    fi
+    helm repo update
+    echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
+
+after_success: |
+  if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
+    helm delete $release_name_ingress $release_name_acs -n $namespace
+    kubectl delete namespace $namespace
+  fi
+after_failure: |
+  if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
+    helm delete $release_name_ingress $release_name_acs -n $namespace
+    kubectl delete namespace $namespace
+  fi
+
+jobs:
+  include:
+    - name: Deploy Chart and Run Postman Checks
+      stage: test
+      script: |
+        export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
+        export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
+        export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
+        export values_file=helm/alfresco-content-services/values.yaml
+
+        set -e
+        # Utility Functions
+
+        # pod status
+        pod_status() {
+          kubectl get pods --namespace $namespace -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?\(@.type==\'Ready\'\)].status
+        }
+
+        # pods ready
+        pods_ready() {
+          PODS_COUNTER=0
+          PODS_COUNTER_MAX=60
+          PODS_SLEEP_SECONDS=10
+
+          while [ "$PODS_COUNTER" -lt "$PODS_COUNTER_MAX" ]; do
+            totalpods=$(pod_status | grep -v NAME | wc -l | sed 's/ *//')
+            readypodcount=$(pod_status | grep ' True' | wc -l | sed 's/ *//')
+            if [ "$readypodcount" -eq "$totalpods" ]; then
+                  echo "     $readypodcount/$totalpods pods ready now"
+                  pod_status
+              echo "All pods are ready!"
+              break
+            fi
+              PODS_COUNTER=$((PODS_COUNTER + 1))
+              echo "just $readypodcount/$totalpods pods ready now - sleeping $PODS_SLEEP_SECONDS seconds - counter $PODS_COUNTER"
+              sleep "$PODS_SLEEP_SECONDS"
+              continue
+            done
+          
+          if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
+            pod_status
+            echo "Pods did not start - exit 1"
+            exit 1
+          fi
+        }
+
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: Namespace
+        metadata:
+          name: $namespace
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: Role
+        metadata:
+          name: $namespace:psp
+          namespace: $namespace
+        rules:
+        - apiGroups:
+          - policy
+          resourceNames:
+          - kube-system
+          resources:
+          - podsecuritypolicies
+          verbs:
+          - use
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          name: $namespace:psp:default
+          namespace: $namespace
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: $namespace:psp
+        subjects:
+        - kind: ServiceAccount
+          name: default
+          namespace: $namespace
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          name: $namespace:psp:$release_name_ingress-nginx-ingress
+          namespace: $namespace
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: $namespace:psp
+        subjects:
+        - kind: ServiceAccount
+          name: $release_name_ingress-nginx-ingress
+          namespace: $namespace
+        ---
+        $(kubectl create secret docker-registry quay-registry-secret --dry-run=client --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n $namespace -o yaml)
+        EOF
+
+        # install ingress
+        helm upgrade --install $release_name_ingress stable/nginx-ingress \
+        --set controller.scope.enabled=true \
+        --set controller.scope.namespace=$namespace \
+        --set rbac.create=true \
+        --set controller.config."proxy-body-size"="100m" \
+        --set controller.service.targetPorts.https=80 \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
+        --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.dev.alfresco.me" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
+        --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
+        --set controller.publishService.enabled=true \
+        --wait \
+        --atomic \
+        --namespace $namespace
+
+        # install acs
+        helm dep up helm/alfresco-content-services
+        helm upgrade --install $release_name_acs helm/alfresco-content-services \
+        --values=$values_file \
+        --set externalPort="443" \
+        --set externalProtocol="https" \
+        --set externalHost="$namespace.dev.alfresco.me" \
+        --set persistence.enabled=true \
+        --set persistence.storageClass.enabled=true \
+        --set persistence.storageClass.name="nfs-client" \
+        --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+        --wait \
+        --timeout 9m0s \
+        --atomic \
+        --namespace=$namespace
+
+        # check dns and pods
+        DNS_PROPAGATED=0
+        DNS_COUNTER=0
+        DNS_COUNTER_MAX=90
+        DNS_SLEEP_SECONDS=10
+
+        echo "Trying to perform a trace DNS query to prevent caching"
+        dig +trace $namespace.dev.alfresco.me @8.8.8.8
+
+        while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
+          host $namespace.dev.alfresco.me 8.8.8.8
+          if [ "$?" -eq 1 ]; then
+            DNS_COUNTER=$((DNS_COUNTER + 1))
+            echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
+            sleep "$DNS_SLEEP_SECONDS"
+          else
+            echo "DNS Propagated"
+            DNS_PROPAGATED=1
+          fi
+        done
+
+        [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time" && exit 1
+
+        pods_ready
+
+        # run acs checks
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+
+        # For checking if persistence failover is correctly working with our deployments 
+        # in the next phase we delete the acs and postgress pods, 
+        # wait for k8s to recreate them, then check if the data created in the first test run is still there
+        kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
+        kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
+        helm upgrade $release_name_acs helm/alfresco-content-services \
+        --wait \
+        --timeout 10m0s \
+        --atomic \
+        --reuse-values \
+        --namespace=$namespace
+
+        # check pods
+        pods_ready
+
+        # run checks after pod deletion
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    - name: Deploy Docker Compose and Run Postman Checks
+      stage: test
+      script: |
+        cd docker-compose
+        docker info
+        docker-compose --version
+        docker-compose config
+        echo "Starting Alfresco in Docker container"
+        docker-compose ps
+        docker-compose pull
+        export COMPOSE_HTTP_TIMEOUT=120 
+        docker-compose up -d
+        # docker-compose up
+        WAIT_INTERVAL=1
+        COUNTER=0
+        TIMEOUT=300
+        t0=`date +%s`
+        echo "Waiting for alfresco to start"
+        response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
+          printf '.'
+          sleep $WAIT_INTERVAL
+          COUNTER=$((COUNTER + WAIT_INTERVAL))
+          response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
+        done
+        if (("$COUNTER" < "$TIMEOUT")) ; then
+          t1=`date +%s`
+          delta=$(((t1 - t0)/60))
+          echo "Alfresco Started in $delta minutes"
+        else
+          echo "Waited $COUNTER seconds"
+          echo "Alfresco could not start in time."
+          echo "The last response code from /alfresco/ was $response"
+          exit 1
+        fi
+        COUNTER=0
+        echo "Waiting for share to start"
+        response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/share/page)
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
+          printf '.'
+          sleep $WAIT_INTERVAL
+          COUNTER=$((COUNTER + WAIT_INTERVAL))
+          response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/share/page)
+        done
+        if (("$COUNTER" < "$TIMEOUT")) ; then
+          t1=`date +%s`
+          delta=$(((t1 - t0)/60))
+          echo "Share Started in $delta minutes"
+        else
+          echo "Waited $COUNTER seconds"
+          echo "Share could not start in time."
+          echo "The last response code from /share/ was $response"
+          exit 1
+        fi
+        COUNTER=0
+        TIMEOUT=20
+        echo "Waiting more time for SOLR"
+        response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
+          printf '.'
+          sleep $WAIT_INTERVAL
+          COUNTER=$((COUNTER + WAIT_INTERVAL))
+          response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
+        done
+        cd ../test/postman/docker-compose
+        docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
+      after_success: |
+        echo "nothing to cleanup"
+      after_failure: |
+        docker-compose logs --no-color
