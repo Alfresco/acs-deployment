@@ -271,7 +271,7 @@ jobs:
         done
         if (("$COUNTER" < "$TIMEOUT")) ; then
           t1=`date +%s`
-          delta=$((($t1 - $t0)/60))
+          delta=$(((t1 - t0)/60))
           echo "Alfresco Started in $delta minutes"
         else
           echo "Waited $COUNTER seconds"
@@ -290,7 +290,7 @@ jobs:
         done
         if (("$COUNTER" < "$TIMEOUT")) ; then
           t1=`date +%s`
-          delta=$((($t1 - $t0)/60))
+          delta=$(((t1 - t0)/60))
           echo "Share Started in $delta minutes"
         else
           echo "Waited $COUNTER seconds"
@@ -305,7 +305,7 @@ jobs:
         until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
           printf '.'
           sleep $WAIT_INTERVAL
-          COUNTER=$(($COUNTER + $WAIT_INTERVAL))
+          COUNTER=$((COUNTER + WAIT_INTERVAL))
           response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
         done
         EOF
