@@ -247,15 +247,14 @@ jobs:
       stage: test
       script: |
         cd docker-compose
-        cat <<EOF | /bin/bash 
-        #!/bin/bash
         docker info
         docker-compose --version
         docker-compose config
         echo "Starting Alfresco in Docker container"
         docker-compose ps
         docker-compose pull
-        COMPOSE_HTTP_TIMEOUT=120 docker-compose up -d
+        export COMPOSE_HTTP_TIMEOUT=120 
+        docker-compose up -d
         # docker-compose up
         WAIT_INTERVAL=1
         COUNTER=0
@@ -263,7 +262,7 @@ jobs:
         t0=`date +%s`
         echo "Waiting for alfresco to start"
         response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
           printf '.'
           sleep $WAIT_INTERVAL
           COUNTER=$((COUNTER + WAIT_INTERVAL))
@@ -282,7 +281,7 @@ jobs:
         COUNTER=0
         echo "Waiting for share to start"
         response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/share/page)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
           printf '.'
           sleep $WAIT_INTERVAL
           COUNTER=$((COUNTER + WAIT_INTERVAL))
@@ -302,13 +301,12 @@ jobs:
         TIMEOUT=20
         echo "Waiting more time for SOLR"
         response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
           printf '.'
           sleep $WAIT_INTERVAL
           COUNTER=$((COUNTER + WAIT_INTERVAL))
           response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
         done
-        EOF
         cd ../test/postman/docker-compose
         docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
       after_success: |
