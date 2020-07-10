@@ -254,7 +254,7 @@ jobs:
         docker-compose ps
         docker-compose pull
         export COMPOSE_HTTP_TIMEOUT=120 
-        travis_wait 30 docker-compose up -d
+        docker-compose up -d
         # docker-compose up
         WAIT_INTERVAL=1
         COUNTER=0
@@ -262,13 +262,13 @@ jobs:
         t0=`date +%s`
         echo "Waiting for alfresco to start"
         response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
           printf '.'
           sleep $WAIT_INTERVAL
           COUNTER=$(($COUNTER+$WAIT_INTERVAL))
           response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
         done
-        if (("$COUNTER" < "$TIMEOUT")) ; then
+        if [["$COUNTER" < "$TIMEOUT"]] ; then
           t1=`date +%s`
           delta=$((($t1 - $t0)/60))
           echo "Alfresco Started in $delta minutes"
@@ -281,7 +281,7 @@ jobs:
         COUNTER=0
         echo "Waiting for share to start"
         response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/share/page)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
           printf '.'
           sleep $WAIT_INTERVAL
           COUNTER=$(($COUNTER+$WAIT_INTERVAL))
@@ -301,7 +301,7 @@ jobs:
         TIMEOUT=20
         echo "Waiting more time for SOLR"
         response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
-        until [ "200" -eq "$response" ] || [ "$COUNTER" -eq "$TIMEOUT" ]; do
+        until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
           printf '.'
           sleep $WAIT_INTERVAL
           COUNTER=$(($COUNTER+$WAIT_INTERVAL))
