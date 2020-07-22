@@ -64,7 +64,7 @@ In docker-compose deployment, alfresco properties are passed to the JVM through 
 * ```solr.port``` - This specifies the application server's http port (non-secure) on which Solr 6 is running. This is only used if Solr 6 is configured to run without secure communications. (e.g.: 8983)
 * ```solr.secureComms``` - E.g.: none for http or https
 * ```solr.base.url``` - This specifies the base URL for the Solr 6 web application. (E.g.: /solr)
-* ```index.subsystem.name``` - The subsystem type value. (E.g.:solr6)
+* ```index.subsystem.name``` - The subsystem type value. (E.g.: solr6)
 
 ##### URL Generation Parameters
 
@@ -79,6 +79,9 @@ In docker-compose deployment, alfresco properties are passed to the JVM through 
 * ```messaging.broker.url``` - Specifies the ActiveMQ connector URL.
 
 * ```deployment.method``` - Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START)
+
+##### Transformers
+
 * ```transform.service.enabled```=true
 * ```transform.service.url```=http://transform-router:8095
 * ```sfs.url```=http://shared-file-store:8099/
