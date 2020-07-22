@@ -45,9 +45,33 @@ docker-machine ip
 
 ## Configure
 
-### Minimum set of properties required
+#### Alfresco Content Repository
 
-In docker-compose deployment, alfresco properties are passed to the JVM through JAVA_OPTS environment variable
+| Name | Format | Description |
+|------|--------|-------------|
+| JAVA_TOOL_OPTIONS | "-Dparam=value ..." | Adding this environment variable, allows to set sensible values (like passwords) that are not passed as arguments to the Java Process. |
+| JAVA_OPTS | "-Dparam=value ..." | A set of properties that are picked up by the JVM inside the container |
+
+
+#### Alfresco Search Services (solr6)
+
+| Name | Format | Description |
+|------|--------|-------------|
+| SOLR_ALFRESCO_HOST | Alfresco host (e.g. alfresco) | Solr needs to know how to register itself with Alfresco |
+| SOLR_ALFRESCO_PORT | Alfresco port (e.g. 8080) | Solr needs to know how to register itself with Alfresco |
+| SOLR_SOLR_HOST | Search host (e.g. alfresco) | Alfresco needs to know how to call solr |
+| SOLR_SOLR_PORT | Search host (e.g. 8983) | Alfresco needs to know how to call solr |
+| SOLR_CREATE_ALFRESCO_DEFAULTS | e.g. alfresco,archive | Create the default alfresco and archive cores |
+| SOLR_OPTS | "-Dparam=value ..." | Options to pass when starting the Java process. |
+| SOLR_HEAP | Memory amount (e.g. 2g) | The Java heap assigned to Solr. |
+| SOLR_JAVA_MEM | "-Xms... -Xmx..." | The exact memory settings for Solr. Note that SOLR_HEAP takes precedence over this. |
+| MAX_SOLR_RAM_PERCENTAGE | Integer | The percentage of available memory to assign to Solr. Note that SOLR_HEAP and SOLR_JAVA_MEM take precedence over this. |
+| SEARCH_LOG_LEVEL | ERROR, WARN, INFO, DEBUG or TRACE | The root logger level. |
+| ENABLE_SPELLCHECK | true or false | Whether spellchecking is enabled or not. |
+| DISABLE_CASCADE_TRACKING | true or false | Whether cascade tracking is enabled or not. Disabling cascade tracking will improve performance, but result in some feature loss (e.g. path queries). |
+| ALFRESCO_SECURE_COMMS | https or none | Whether communication with the repository is secured. See below. |
+| SOLR_SSL_... | --- | These variables are also used to configure SSL. See below. |
+
 
 ## Cleanup
 
