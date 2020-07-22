@@ -70,14 +70,14 @@ docker-machine ip
 | ENABLE_SPELLCHECK | true or false | Whether spellchecking is enabled or not. |
 | DISABLE_CASCADE_TRACKING | true or false | Whether cascade tracking is enabled or not. Disabling cascade tracking will improve performance, but result in some feature loss (e.g. path queries). |
 | ALFRESCO_SECURE_COMMS | https or none | Whether communication with the repository is secured. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_KEY_STORE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_KEY_STORE_PASSWORD | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_KEY_STORE_TYPE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_TRUST_STORE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_TRUST_STORE_PASSWORD | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_TRUST_STORE_TYPE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_NEED_CLIENT_AUTH | true or false | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
-| SOLR_SSL_WANT_CLIENT_AUTH | true or false | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details. |
+| SOLR_SSL_KEY_STORE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
+| SOLR_SSL_KEY_STORE_PASSWORD | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
+| SOLR_SSL_KEY_STORE_TYPE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
+| SOLR_SSL_TRUST_STORE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
+| SOLR_SSL_TRUST_STORE_PASSWORD | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
+| SOLR_SSL_TRUST_STORE_TYPE | --- | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
+| SOLR_SSL_NEED_CLIENT_AUTH | true or false | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
+| SOLR_SSL_WANT_CLIENT_AUTH | true or false | These variables are also used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |
 
 
 ## Cleanup
