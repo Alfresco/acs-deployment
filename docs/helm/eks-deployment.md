@@ -8,11 +8,11 @@ Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy,
 
 ## Prerequisites
 
-As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) please also follow the steps below.
+As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) we also recommend that you are proficient in AWS and Kubernetes.
 
-TODO: Hosted zone and ACM Certificate
+## Setup An EKS Cluster
 
-Follow the [AWS EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to create a cluster and prepare your local machine to connect to the cluster. Use the "Cluster with Linux-only workloads" option and specify a `--node-type` of at least m4.xlarge.
+Follow the [AWS EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to create a cluster and prepare your local machine to connect to the cluster. Use the "Managed nodes - Linux" option and specify a `--node-type` of at least m5.xlarge.
 
 As we'll be using Helm to deploy the ACS chart follow the [Using Helm with EKS](https://docs.aws.amazon.com/eks/latest/userguide/helm.html) instructions to setup helm on your local machine.
 
@@ -20,21 +20,46 @@ Optionally, follow the tutorial to [deploy the Kubernetes Dashboard](https://doc
 
 ## Prepare The Cluster For ACS
 
-Do these one time steps...
+Now we have an EKS cluster up and running there are a few one time steps we need to perform to prepare the cluster for ACS to be installed.
 
-* External DNS
-* EFS File System
-* Deploy NFS Client Provisioner
-* Update security groups for EFS access & Route53
+### DNS
+
+1. Create a hosted zone in Route53 using [these steps](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html) if you don't already have one available
+
+2. Create a public certificate for the hosted zone created in step 1 in Certificate Manager using [these steps](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html) if you don't have one already available
+
+3. Create a file called `external-dns.yaml` with the text below. This manifest defines a service account and a cluster role for managing DNS.
+    ```yaml
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: external-dns
+    ...
+    ```
+4. Use the kubectl command to deploy the external-dns service.
+   ```bash
+   kubectl apply -f external-dns.yaml -n kube-system
+   ```
+
+### File System
+
+1. Create an Elastic File System in the VPC created by EKS using [these steps](https://docs.aws.amazon.com/efs/latest/ug/gs-step-two-create-efs-resources.html)
+2. Create mount points and take a note of the EFS DNS name
+3. Deploy an NFS Client Provisioner with Helm using the following command (replacing `efs-dns-name` with the value obtained in the previous step):
+    ```bash
+    helm install alfresco-nfs-provisioner stable/nfs-client-provisioner --set nfs.server="<efs-dns-name>" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
+    ```
+3. Update security groups for EFS access
 
 ## Deploy
+
+### Namespace
 
 ### Nginx Ingress
 
 ### ACS 
 
 * Helm Repos
-* Namespace
 * ACS helm chart install
 
 ## Access
