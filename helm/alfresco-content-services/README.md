@@ -24,7 +24,7 @@ $ helm install alfresco-incubator/alfresco-content-services
 This chart bootstraps an ACS deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
-  - [30-day trial license](https://www.alfresco.com/platform/content-services-ecm/trial/download) for Enterprise
+  - [30-day trial](https://www.alfresco.com/platform/content-services-ecm/trial/download) for Enterprise
   - Kubernetes 1.4+ with Beta APIs enabled
   - Minimum of 16GB Memory to distribute among ACS Cluster nodes
 
@@ -86,13 +86,3 @@ Parameter | Description | Default
 `s3connector.enabled` | Switch this to `true` if you have access to the S3 Connector AMP | `false`
 `s3connector.config` | S3 configuration - see [S3 Connector properties reference](https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html). Example: `s3connector.config.bucketName: myS3Bucket` | `{}`
 `s3connector.secrets` | S3 secrets configuration - see [S3 Connector properties reference](https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html). Example: `s3connector.secrets.accessKey: AJJJJJJJJ` | `{}`
-
-
-
-
-
-
-
-
-
-
