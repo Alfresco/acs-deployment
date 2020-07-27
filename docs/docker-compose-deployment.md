@@ -8,7 +8,7 @@ To deploy Alfresco Content Services using _docker-compose_, you'll need to insta
 
 | Component      | Installation Guide |
 | ---------------| ------------------ |
-| License        | [30-day trial license](https://www.alfresco.com/platform/content-services-ecm/trial/download) for Enterprise |
+| Download Trial | [30-day trial](https://www.alfresco.com/platform/content-services-ecm/trial/download) for Enterprise |
 | Docker         | https://docs.docker.com/ |
 | Docker Compose | https://docs.docker.com/compose/install/ |
 
@@ -22,7 +22,7 @@ To deploy Alfresco Content Services using _docker-compose_, you'll need to insta
 3. Log in to Quay.io with your credentials: ```docker login quay.io```
 * Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/).
 4. Run ```docker-compose up```
-5. Navigate to the Admin Console and apply your trial license:
+5. Navigate to the Admin Console and apply your license:
 * [http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (```<machine_ip>``` will usually just be ```localhost```)
 * Default username and password is ```admin```
 * See [Uploading a new license](https://docs.alfresco.com/6.1/tasks/at-adminconsole-license.html) for more details
