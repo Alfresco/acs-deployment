@@ -42,7 +42,7 @@ Alfresco provides tested Helm charts as a "deployment template" for customers wh
 
 The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure
 any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without
-changes and are still flexible to be adopted to your actual environment. 
+changes and are still flexible to be adopted to your actual environment.
 
 For your environment, you should use these charts as a starting point and modify them so that ACS integrates
 into your infrastructure. You typically want to remove the PostgreSQL container and connect the cs-repository
@@ -52,8 +52,7 @@ Another typical change would be the integration of your company-wide monitoring 
 ## Other information
 * See alternative commands and start up [tutorial with AWS support](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/running-a-cluster.md)
 * [Tips and tricks](https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/docs/tips-and-tricks.md) for working with Kubernetes and Alfresco Content Services.
-* The images downloaded directly from Docker Hub, or Quay.io are for a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. Request an extended 30-day trial at
- https://www.alfresco.com/platform/content-services-ecm/trial/docker
+* The images downloaded directly from Docker Hub, or Quay.io are for a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. If you'd like to try Alfresco Content Services for a longer period, request the 30-day [Download Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
 * Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/). These credentials are required to pull private (Enterprise-only) Docker images from Quay.io.
 
 ## On Cloud Supported/unsupported endpoints/features/amps
