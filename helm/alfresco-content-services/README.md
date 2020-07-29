@@ -24,7 +24,7 @@ $ helm install alfresco-incubator/alfresco-content-services
 This chart bootstraps an ACS deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
-  - [30-day trial license](https://www.alfresco.com/platform/content-services-ecm/trial/download) for Enterprise
+  - [30-day trial](https://www.alfresco.com/platform/content-services-ecm/trial/download) for Enterprise
   - Kubernetes 1.4+ with Beta APIs enabled
   - Minimum of 16GB Memory to distribute among ACS Cluster nodes
 
