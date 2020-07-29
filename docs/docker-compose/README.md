@@ -52,6 +52,44 @@ docker-machine ip
 | JAVA_TOOL_OPTIONS | "-Dparam=value ..." | Adding this environment variable, allows to set sensible values (like passwords) that are not passed as arguments to the Java Process. |
 | JAVA_OPTS | "-Dparam=value ..." | A set of properties that are picked up by the JVM inside the container |
 
+#### Alfresco Share
+| Name | Format | Description |
+|------|--------|-------------|
+| REPO_HOST | Alfresco host (e.g. alfresco) | Share needs to know how to register itself with Alfresco |
+| REPO_PORT | Alfresco port (e.g. 8080) | Share needs to know how to register itself with Alfresco |
+| JAVA_OPTS | "-Dparam=value ..." | A set of properties that are picked up by the JVM inside the container |
+
+#### Alfresco Digital Workspace
+| Name | Format | Description |
+|------|--------|-------------|
+| BASE_PATH | e.g. "./" ||
+| APP_CONFIG_OAUTH2_HOST | "<url>" | OAuth host |
+| APP_CONFIG_AUTH_TYPE | e.g. "BASIC" | Authentication type |
+| APP_CONFIG_OAUTH2_CLIENTID |  |  |
+| APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI |  |  |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGIN |  |  |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGOUT |  |  |
+| APP_BASE_SHARE_URL | e.g. '{protocol}//{hostname}{:port}/workspace/#/preview/s' | Base URL |
+| AUTH_TYPE | e.g. "BASIC" | Authentication type |
+| PROVIDER | e.g. "ALL" |  |
+| ENVIRONMENT_SUFFIX | e.g. "_CLOUD"  | # Only for Process Cloud instance |
+| API_HOST | "<url>" |  |
+| API_CONTENT_HOST | "<url>" |  |
+| API_CONTENT_HOST_LOCAL | "http://localhost:8080" |  |
+| API_PROCESS_HOST | "<url>" |  |
+| OAUTH_HOST | "<url>" |  |
+| IDENTITY_HOST | "<url>" |  |
+| E2E_HOST | e.g. "http://localhost" |  |
+| E2E_PORT | e.g. "80" |  |
+| API_HOST_CLOUD | "<url>" |  |
+| API_CONTENT_HOST_CLOUD | "<url>" |  |
+| API_PROCESS_HOST_CLOUD | "<url>" |  |
+| OAUTH_HOST_CLOUD | "<url>" |  |
+| IDENTITY_HOST_CLOUD | "<url>" |  |
+| E2E_HOST_CLOUD | e.g. "http://localhost" |  |
+| E2E_PORT_CLOUD | e.g. "4200" |  |
+| APP_CONFIG_APPS_DEPLOYED | "[{"name": "<the name of the application deployed>"}]" | The name of the application deployed |
+
 
 #### Alfresco Search Services (solr6)
 
