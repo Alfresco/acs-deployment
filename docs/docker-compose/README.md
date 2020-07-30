@@ -53,7 +53,7 @@ docker-machine ip
 | JAVA_TOOL_OPTIONS | Adding this environment variable, allows to set sensible values (like passwords) that are not passed as arguments to the Java Process. | "-Dparam=value ..." |
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
 
-For a complete list of parameters that can be passed through JAVA_OPTS enviroment variable, please check this [Appendix](acs-deployment/docs/Appendix-repository.md)
+For a complete list of parameters that can be passed through JAVA_OPTS enviroment variable, please check this [Appendix](../Appendix-repository.md)
 
 ### Alfresco Share
 
