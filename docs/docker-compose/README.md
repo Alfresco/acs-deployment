@@ -125,6 +125,30 @@ docker-machine ip
 |----------|-------------|---------------|
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
 | ACTIVEMQ_URL | ActiveMQ URL (in this case the name of the container is used) | "nio://activemq:61616" |
+| ACTIVEMQ_USER | ActiveMQ user | "admin" |
+| ACTIVEMQ_PASSWORD | ActiveMQ password | "admin" |
+| TRANSFORM_REQUEST_QUEUE |  | "org.alfresco.transform.t-request.acs" |
+| TRANSFORM_REPLY_QUEUE |  | "org.alfresco.transform.t-reply.acs" |
+| TRANSFORM_ENGINE_REPLY_QUEUE |  | "org.alfresco.transform.engine.t-reply.acs" |
+| JMS_LISTENER_CONCURRENCY |  | "1-10" |
+| IMAGEMAGICK_URL |  |  |
+| PDF_RENDERER_URL |  |  |
+| LIBREOFFICE_URL |  |  |
+| TIKA_URL |  |  |
+| MISC_URL |  |  |
+| IMAGEMAGICK_QUEUE |  | "org.alfresco.transform.engine.imagemagick.acs" |
+| PDF_RENDERER_QUEUE |  | "org.alfresco.transform.engine.alfresco-pdf-renderer.acs" |
+| LIBREOFFICE_QUEUE |  | org.alfresco.transform.engine.libreoffice.acs |
+| TIKA_QUEUE |  | org.alfresco.transform.engine.tika.acs |
+| MISC_QUEUE |  | org.alfresco.transform.engine.misc.acs |
+| CORE_AIO_QUEUE |  | org.alfresco.transform.engine.aio.acs |
+| TRANSFORMER_ENGINE_PROTOCOL | This value can be one of the following (http, jms) | "jms" |
+| TRANSFORMER_ROUTES_FILE_LOCATION |  | transformer-pipelines.json |
+| MAX_TRANSFORM_RETRIES |  | 3 |
+| INITIAL_RETRY_TIMEOUT |  | 10000 |
+| INCREASE_RETRY_TIMEOUT |  | 10000 |
+| MAX_IN_MEMORY_SIZE |  Double default limit to 512KiB | 524288 |
+| HOSTNAME |  | t-router |
 | CORE_AIO_URL | Transform core AIO URL (in this case the name of the container is used) | "http://transform-core-aio:8090" |
 | FILE_STORE_URL | Shared file store URL (in this case the name of the container is used) | "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file" |
 
@@ -135,6 +159,14 @@ docker-machine ip
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
 | ACTIVEMQ_URL | ActiveMQ URL (in this case the name of the container is used) | "nio://activemq:61616" |
 | FILE_STORE_URL | Shared file store URL (in this case the name of the container is used) | "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file" |
+| TRANSFORM_ENGINE_REQUEST_QUEUE |  | "org.alfresco.transform.engine.aio.acs" |
+| PDFRENDERER_EXE |  | "/usr/bin/alfresco-pdf-renderer" |
+| LIBREOFFICE_HOME |  | "/opt/libreoffice6.3" |
+| IMAGEMAGICK_ROOT |  | "/usr/lib64/ImageMagick-7.0.10" |
+| IMAGEMAGICK_DYN |  | "/usr/lib64/ImageMagick-7.0.10/lib" |
+| IMAGEMAGICK_EXE |  | "/usr/bin/convert" |
+| IMAGEMAGICK_CODERS |  |  |
+| IMAGEMAGICK_CONFIG |  |  |
 
 ### Alfresco Shared File Store
 
