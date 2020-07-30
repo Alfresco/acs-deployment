@@ -1,4 +1,4 @@
-# WIP
+# Alfresco Content Repository common application properties
 
 | Property | Description | Default value |
 |----------|-------------|---------------|
