@@ -468,7 +468,7 @@
 | authority.findAuthorityLimit | Limit the number of results from findAuthority query | 10000 |
 | system.quickshare.enabled | Enable QuickShare - if false then the QuickShare-specific REST APIs will return 403 Forbidden | true |
 | system.quickshare.email.from.default |  | noreply@alfresco.com |
-| system.quickshare.expiry_date.enforce.minimum.period | By default the difference between the quick share expiry date and the current time must be at least 1 day (24 hours). However, this can be changed to at least 1 hour or 1 minute for testing purposes. For example, setting the value to MINUTES, means the service will calculate the difference between NOW and the given expiry date in terms of minutes and checks for the difference to be greater than 1 minute. `DAYS` | `HOURS` | `MINUTES` | DAYS |
+| system.quickshare.expiry_date.enforce.minimum.period | By default the difference between the quick share expiry date and the current time must be at least 1 day (24 hours). However, this can be changed to at least 1 hour or 1 minute for testing purposes. For example, setting the value to MINUTES, means the service will calculate the difference between NOW and the given expiry date in terms of minutes and checks for the difference to be greater than 1 minute. `DAYS` \| `HOURS` \| `MINUTES` | DAYS |
 | mail.service.corePoolSize | Oubound Mail | 8 |
 | mail.service.maximumPoolSize | Oubound Mail | 20 |
 | nodes.bulkLoad.cachingThreshold |  | 10 |
@@ -490,6 +490,246 @@
 | webscripts.setMaxContentSize | Webscripts config (4gb) | 5368709120 |
 | system.metadata-query-indexes.ignored | Property to enable index upgrade for metadata query (MDQ). The indexes are not added unless this value is changed. Adding each the supporting indexes may take several hours depending on the size of the database. The required indexes may be added in stages. See: `classpath:alfresco/dbscripts/upgrade/4.2/${db.script.dialect}/metadata-query-indexes.sql` . See: `classpath:alfresco/dbscripts/upgrade/5.1/${db.script.dialect}/metadata-query-indexes-2.sql` | true |
 | system.metadata-query-indexes-more.ignored |  | true |
+| system.patch.sharedFolder.deferred | Do we defer running the shared folder patch? | false |
+| system.patch.sharedFolder.cronExpression | Default value is run new years day 2030 i.e. not run. | `0 0 0 ? 1 1 2030` |
+| system.patch.addUnmovableAspect.deferred | Default values for deferring the running of the addUnmovableAspect patch | false |
+| system.patch.addUnmovableAspect.cronExpression | Default values for deferring the running of the addUnmovableAspect patch | `0 0 0 ? 1 1 2030` |
+| system.remove-jbpm-tables-from-db.ignored | Property to enable removal of all JBPM related data from the database. The tables are not removed from the databasen unless explicitly requested by setting this property to false. See: `classpath:alfresco/dbscripts/upgrade/5.2/${db.script.dialect}/remove-jbpm-tables-from-db.sql` | true |
+| people.search.honor.hint.useCQ | Use a canned query when requested to search for people if "\[hint:useCQ\]" is provided in search term | true |
+| system.cronJob.startDelayMilliseconds | Delays cron jobs after bootstrap to allow server to fully come up before jobs start | 60000 |
+| mimetype.config.cronExpression | Schedule for reading mimetype config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `0 30 0/1 * * ?` |
+| mimetype.config.initialAndOnError.cronExpression |  | `0/10 * * * * ?` |
+| mimetype.config.dir | Optional property to specify an external file or directory that will be read for mimetype definitions from YAML  files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/mimetypes |
+| rendition.config.cronExpression | Schedule for reading rendition config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `2 30 0/1 * * ?` |
+| rendition.config.initialAndOnError.cronExpression |  | `0/10 * * * * ?` |
+| rendition.config.dir | Optional property to specify an external file or directory that will be read for rendition definitions from YAML files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/transform/renditions |
+| local.transform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
+| local.transform.service.enabled | Used to disable transforms locally. | true |
+| local.transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `4 30 0/1 * * ?` |
+| local.transform.service.initialAndOnError.cronExpression |  | `0/10 * * * * ?` |
+| legacy.transform.service.enabled | Used to disable transforms that extend AbstractContentTransformer2 | true |
+| transformer.strict.mimetype.check | Check that the declared mimetype (of the Node) is the same as the derived mimetype of the content (via Tika) before a transformation takes place. Only files in the repository (not intermediate files in a transformer pipeline) are checked. This property provides a trade off between a security check and a relatively expensive (Tika) operation. There are a few issues with the Tika mimetype detection. So that transformations still take place where the detected mimetype is not the same as the declared mimetype, another property (transformer.strict.mimetype.check.whitelist.mimetypes) contains pairs of declared and detected mimetypes that should be allowed. This parameter value is a sequence of `;` separated pairs. The declared and derived mimetypes are also `;` separated. | true |
+| transformer.strict.mimetype.check.whitelist.mimetypes | A white list of declared and detected mimetypes, that don't match, but should still be transformed. | application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
+| content.transformer.retryOn.different.mimetype | Enable transformation retrying if the file has MIME type differ than file extension. Ignored if transformer.strict.mimetype.check is true as these transformations will not take place. | true |
+| system.lockTryTimeout | Lock timeout configuration | 100 |
+| system.lockTryTimeout.DictionaryDAOImpl | Lock timeout configuration | 10000 |
+| system.lockTryTimeout.MessageServiceImpl | Lock timeout configuration | ${system.lockTryTimeout} |
+| system.lockTryTimeout.PolicyComponentImpl | Lock timeout configuration | ${system.lockTryTimeout} |
+| attributes.propcleaner.cronExpression | Scheduled job to clean up unused properties from the alf_prop_xxx tables. Default setting of `0 0 3 ? * SAT` is to run every Saturday at 3am. | `0 0 3 ? * SAT` |
+| alfresco.jmx.connector.enabled | Control Alfresco JMX connectivity | false |
+| system.propval.uniquenessCheck.enabled | Dissallow Attribute Service Entries with "Serializable" objects in key Segments. Please, see MNT-11895 for details. | true |
+| alfresco.ephemeralLock.expiryThresh | Requests for ephemeral (in-memory) locks with expiry times (in seconds) greater than this value will result in persistent locks being created instead. By default this value is equal to the maximum allowed expiry for ephemeral locks, therefore this feature is disabled by default. Setting this to -1 would mean that ALL requests for ephemeral locks would result in persistent locks being created. | 172800 |
+| system.patch.surfConfigFolder.deferred | Do we defer running the surf-config folder patch? | false |
+| system.patch.surfConfigFolder.cronExpression | Default value. i.e. never run. It can be triggered using JMX | `* * * * * ? 2099` |
+| solr_facets.root.path | Solr Facets Config Properties | /app:company_home/app:dictionary |
+| solr_facets.root | Solr Facets Config Properties | ${solr_facets.root.path}/${spaces.solr_facets.root.childname} |
+| solr_facets.inheritanceHierarchy | Solr Facets Config Properties | default,custom |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
 |  |  |  |
 |  |  |  |
 |  |  |  |
