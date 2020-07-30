@@ -69,13 +69,12 @@ stages:
 
 jobs:
   include:
-    - name: Lint
-      stage: test
+    - name: Lint for subcharts
+      stage: test chart
       script: |
-        cd helm/alfresco-content-services/charts/
-        helm lint ./activemq
-        helm lint ./alfresco-search
-        helm lint ./alfresco-sync-service
+        helm lint helm/alfresco-content-services/charts/activemq
+        helm lint helm/alfresco-content-services/charts/alfresco-search
+        helm lint helm/alfresco-content-services/charts/alfresco-sync-service
     - name: Deploy Chart and Run Postman Checks
       stage: test
       script: |
