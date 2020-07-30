@@ -114,6 +114,221 @@
 | index.backup.cronExpression |  | 0 0 3 * * ? |
 | lucene.defaultAnalyserResourceBundleName |  | alfresco/model/dataTypeAnalyzers |
 | transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
+| db.schema.name | Database configuration |  |
+| db.schema.stopAfterSchemaBootstrap | Database configuration | false |
+| db.schema.update | Database configuration | true |
+| db.schema.update.lockRetryCount | Database configuration | 24 |
+| db.schema.update.lockRetryWaitSeconds | Database configuration |  |
+| db.schema.update.lockRetryWaitSeconds| Database configuration | 5 |
+| db.driver | Database configuration | org.gjt.mm.mysql.Driver |
+| db.name | Database configuration | alfresco |
+| db.url | Database configuration | jdbc:mysql:///${db.name} |
+| db.username | Database configuration | alfresco |
+| db.password | Database configuration | alfresco |
+| db.pool.initial | Database configuration | 10 |
+| db.pool.max | Database configuration | 275 |
+| db.txn.isolation | Database configuration | -1 |
+| db.pool.statements.enable | Database configuration | true |
+| db.pool.statements.max | Database configuration | 40 |
+| db.pool.min | Database configuration | 10 |
+| db.pool.idle | Database configuration | 10 |
+| db.pool.wait.max | Database configuration | 5000 |
+| db.pool.validate.query | Database configuration |  |
+| db.pool.evict.interval | Database configuration | 600000 |
+| db.pool.evict.idle.min | Database configuration | 1800000 |
+| db.pool.evict.num.tests | note: for 'db.pool.evict.num.tests' see http://commons.apache.org/dbcp/configuration.html (numTestsPerEvictionRun) and also following extract from "org.apache.commons.pool.impl.GenericKeyedObjectPool" (1.5.5). The number of objects to examine during each run of the idle object evictor thread (if any). When a negative value is supplied, <code>ceil({@link #getNumIdle})/abs({@link #getNumTestsPerEvictionRun})</code> tests will be run.  I.e., when the value is <code>-n</code>, roughly one <code>n</code>th of the idle objects will be tested per run. | -1 |
+| db.pool.evict.validate | Database configuration | false |
+| db.pool.validate.borrow | Database configuration | true |
+| db.pool.validate.return | Database configuration | false |
+| db.pool.abandoned.detect | Database configuration | false |
+| db.pool.abandoned.time | Database configuration | 300 |
+| db.pool.abandoned.log | db.pool.abandoned.log=true (logAbandoned) adds overhead (http://commons.apache.org/dbcp/configuration.html) and also requires db.pool.abandoned.detect=true (removeAbandoned) | false |
+| audit.enabled | Audit configuration | true |
+| audit.tagging.enabled | Audit configuration | true |
+| audit.alfresco-access.enabled | Audit configuration | false |
+| audit.alfresco-access.sub-actions.enabled | Audit configuration | false |
+| audit.cmischangelog.enabled | Audit configuration | false |
+| audit.dod5015.enabled | Audit configuration | false |
+| audit.config.strict | Setting this flag to true will force startup failure when invalid audit configurations are detected. | false |
+| audit.filter.alfresco-access.default.enabled | Audit map filter for AccessAuditor - restricts recorded events to user driven events | false |
+| audit.filter.alfresco-access.transaction.user | Audit configuration | ~System;~null;.* |
+| audit.filter.alfresco-access.transaction.type | Audit configuration | cm:folder;cm:content;st:site |
+| audit.filter.alfresco-access.transaction.path | Audit configuration | ~/sys:archivedItem;~/ver:;.* |
+| system.store | System Configuration | system://system |
+| system.descriptor.childname | System Configuration | sys:descriptor |
+| system.descriptor.current.childname | System Configuration | sys:descriptor-current |
+| alfresco_user_store.store | User config | user://alfrescoUserStore |
+| alfresco_user_store.system_container.childname | User config | sys:system |
+| alfresco_user_store.user_container.childname | User config | sys:people |
+| alfresco_user_store.adminusername | Note: default admin username - should not be changed after installation | admin |
+| alfresco_user_store.adminpassword | Initial password - editing this will not have any effect once the repository is installed | 209c6174da490caeb422f3fa5a7ae634 |
+| alfresco_user_store.guestusername | Note: default guest username - should not be changed after installation | guest |
+| home_folder_provider_synchronizer.enabled | Used to move home folders to a new location | false |
+| home_folder_provider_synchronizer.override_provider | Used to move home folders to a new location |  |
+| home_folder_provider_synchronizer.keep_empty_parents | Used to move home folders to a new location | false |
+| spaces.archive.store | Spaces Archive Configuration | archive://SpacesStore |
+| spaces.store | Spaces Configuration | workspace://SpacesStore |
+| spaces.company_home.childname | Spaces Configuration | app:company_home |
+| spaces.guest_home.childname | Spaces Configuration | app:guest_home |
+| spaces.dictionary.childname | Spaces Configuration | app:dictionary |
+| spaces.templates.childname | Spaces Configuration | app:space_templates |
+| spaces.imap_attachments.childname | Spaces Configuration | cm:Imap Attachments |
+| spaces.imap_home.childname | Spaces Configuration | cm:Imap Home |
+| spaces.imapConfig.childname | Spaces Configuration | app:imap_configs |
+| spaces.imap_templates.childname | Spaces Configuration | app:imap_templates |
+| spaces.scheduled_actions.childname | Spaces Configuration | cm:Scheduled Actions |
+| spaces.emailActions.childname | Spaces Configuration | app:email_actions |
+| spaces.searchAction.childname | Spaces Configuration | cm:search |
+| spaces.templates.content.childname | Spaces Configuration | app:content_templates |
+| spaces.templates.email.childname | Spaces Configuration | app:email_templates |
+| spaces.templates.email.invite1.childname | Spaces Configuration | app:invite_email_templates |
+| spaces.templates.email.notify.childname | Spaces Configuration | app:notify_email_templates |
+| spaces.templates.email.following.childname | Spaces Configuration | app:following |
+| spaces.templates.rss.childname | Spaces Configuration | app:rss_templates |
+| spaces.savedsearches.childname | Spaces Configuration | app:saved_searches |
+| spaces.scripts.childname | Spaces Configuration | app:scripts |
+| spaces.content_forms.childname | Spaces Configuration | app:forms |
+| spaces.user_homes.childname | Spaces Configuration | app:user_homes |
+| spaces.user_homes.regex.key | Spaces Configuration | userName |
+| spaces.user_homes.regex.pattern | Spaces Configuration |  |
+| spaces.user_homes.regex.group_order | Spaces Configuration |  |
+| spaces.sites.childname | Spaces Configuration | st:sites |
+| spaces.templates.email.invite.childname | Spaces Configuration | cm:invite |
+| spaces.templates.email.activities.childname | Spaces Configuration | cm:activities |
+| spaces.rendition.rendering_actions.childname | Spaces Configuration | app:rendering_actions |
+| spaces.replication.replication_actions.childname | Spaces Configuration | app:replication_actions |
+| spaces.transfers.childname | Spaces Configuration | app:transfers |
+| spaces.transfer_groups.childname | Spaces Configuration | app:transfer_groups |
+| spaces.transfer_temp.childname | Spaces Configuration | app:temp |
+| spaces.inbound_transfer_records.childname | Spaces Configuration | app:inbound_transfer_records |
+| spaces.webscripts.childname | Spaces Configuration | cm:webscripts |
+| spaces.extension_webscripts.childname | Spaces Configuration | cm:extensionwebscripts |
+| spaces.models.childname | Spaces Configuration | app:models |
+| spaces.workflow.definitions.childname | Spaces Configuration | app:workflow_defs |
+| spaces.templates.email.workflowemailnotification.childname | Spaces Configuration | cm:workflownotification |
+| spaces.nodetemplates.childname | Spaces Configuration | app:node_templates |
+| spaces.shared.childname | Spaces Configuration | app:shared |
+| spaces.solr_facets.root.childname | Spaces Configuration | srft:facets |
+| spaces.smartfolders.childname | Spaces Configuration | app:smart_folders |
+| spaces.smartdownloads.childname | Spaces Configuration | app:smart_downloads |
+| spaces.transfer_summary_report.location | Spaces Configuration | /${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.transfers.childname}/${spaces.inbound_transfer_records.childname} |
+| spaces.quickshare.link_expiry_actions.childname | Spaces Configuration | app:quick_share_link_expiry_actions |
+| version.store.initialVersion | ADM VersionStore Configuration | true |
+| version.store.enableAutoVersioning | ADM VersionStore Configuration | true |
+| version.store.enableAutoVersionOnUpdateProps | ADM VersionStore Configuration | false |
+| version.store.deprecated.lightWeightVersionStore | ADM VersionStore Configuration | workspace://lightWeightVersionStore |
+| version.store.version2Store | ADM VersionStore Configuration | workspace://version2Store |
+| version.store.versionComparatorClass | Optional Comparator<Version> class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster.  |  |
+| system.system_container.childname | Folders for storing people | sys:system |
+| system.people_container.childname | Folders for storing people | sys:people |
+| system.authorities_container.childname | Folders for storing people | sys:authorities |
+| system.zones_container.childname | Folders for storing people | sys:zones |
+| system.workflow_container.childname | Folders for storing workflow related info | sys:workflow |
+| system.remote_credentials_container.childname | Folder for storing shared remote credentials | sys:remote_credentials |
+| system.syncset_definition_container.childname | Folder for storing syncset definitions | sys:syncset_definitions |
+| system.downloads_container.childname | Folder for storing download archives | sys:downloads |
+| system.certificate_container.childname | Folder for storing IdP's certificate definitions | sys:samlcertificate |
+| user.name.caseSensitive | Are user names case sensitive? | false |
+| domain.name.caseSensitive | Are domain names case sensitive? | false |
+| domain.separator |  |  |
+| xforms.formatCaption | Format caption extracted from the XML Schema. | true |
+| system.usages.enabled | ECM content usages/quotas | false |
+| system.usages.clearBatchSize | ECM content usages/quotas | 0 |
+| system.usages.updateBatchSize | ECM content usages/quotas | 50 |
+| repo.remote.endpoint | Repository endpoint - used by Activity Service | /service |
+| create.missing.people | Some authentication mechanisms may need to create people in the repository on demand. This enables that feature. If disabled an error will be generated for missing people. If enabled then a person will be created and persisted. | ${server.transaction.allow-writes} |
+| home.folder.creation.eager | Create home folders (unless disabled, see next property) as people are created (true) or create them lazily (false) | true |
+| home.folder.creation.disabled | Disable home folder creation - if true then home folders are not created (neither eagerly nor lazily) | false |
+| policy.content.update.ignoreEmpty | Should we consider zero byte content to be the same as no content when firing content update policies? Prevents 'premature' firing of inbound content rules for some clients such as Mac OS X Finder | true |
+| alfresco.rmi.services.port | Default value of alfresco.rmi.services.host is 0.0.0.0 which means 'listen on all adapters'. This allows connections to JMX both remotely and locally. | 50500 |
+| alfresco.rmi.services.external.host |  | localhost |
+| alfresco.rmi.services.host |  | 0.0.0.0 |
+| alfresco.rmi.services.retries | If the RMI address is in-use, how many retries should be done before aborting. Default value of alfresco.rmi.services.retries is 0 which means 'Don't retry if the address is in-use'. | 4 |
+| alfresco.rmi.services.retryInterval | How long in milliseconds to wait after a failed server socket bind, before retrying | 250 |
+| monitor.rmi.service.port | RMI service ports for the individual services. These eight services are available remotely. Assign individual ports for each service for best performance or run several services on the same port, you can even run everything on 50500 if running through a firewall. Specify 0 to use a random unused port. | 50508 |
+| monitor.rmi.service.enabled | enable or disable individual RMI services | false |
+| mbean.server.locateExistingServerIfPossible | Should the Mbean server bind to an existing server. Set to true for most application servers. false for WebSphere clusters. | true |
+| img.root | External executable locations | ./ImageMagick |
+| img.dyn | External executable locations | ${img.root}/lib |
+| img.exe | External executable locations | ${img.root}/bin/convert |
+| img.url | Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default. |  |
+| img.startupRetryPeriodSeconds | When img.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| renditionService2.enabled | Rendition Service 2 | true |
+| system.thumbnail.generate | Thumbnail Service | true |
+| system.thumbnail.definition.default.timeoutMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.readLimitTimeMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.maxSourceSizeKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.readLimitKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.pageLimit | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | 1 |
+| system.thumbnail.definition.default.maxPages | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.pdf | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.txt | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.docx | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.xlsx | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.pptx | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.odt | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.ods | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.odp | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.retryPeriod | Configuration for handling of failing thumbnails. See NodeEligibleForRethumbnailingEvaluator's javadoc for details. Retry periods limit the frequency with which the repository will attempt to create Share thumbnails for content nodes which have previously failed in their thumbnail attempts. These periods are in seconds. 604800s = 60s * 60m * 24h * 7d = 1 week | 60 |
+| system.thumbnail.retryCount | Configuration for handling of failing thumbnails | 2 |
+| system.thumbnail.quietPeriod | Configuration for handling of failing thumbnails | 604800 |
+| system.thumbnail.quietPeriodRetriesEnabled | Configuration for handling of failing thumbnails | true |
+| system.thumbnail.redeployStaticDefsOnStartup | Configuration for handling of failing thumbnails | true |
+| content.metadataExtracter.default.timeoutMs | The default timeout for metadata mapping extracters | 20000 |
+| tika.url | Legacy tika url to T-Engines to service transform requests via http. Disabled by default. |  |
+| transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. |  |
+| tika.startupRetryPeriodSeconds | When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| transform.misc.startupRetryPeriodSeconds | When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | http://localhost:8090/ |
+| localTransform.core-aio.startupRetryPeriodSeconds | When a local transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| content.metadataExtracter.pdf.maxDocumentSizeMB |  | 10 |
+| content.metadataExtracter.pdf.maxConcurrentExtractionsCount |  | 5 |
+| content.metadataExtracter.pdf.overwritePolicy | The default overwrite policy for PdfBoxMetadataExtracter | PRAGMATIC |
+| content.transformer.PdfBox.extractBookmarksText | True if bookmarks content should be extracted for PDFBox | true |
+| V2.1-A.fixes.to.schema | Property to enable upgrade from 2.1-A | 0 |
+| authentication.chain | The default authentication chain | alfrescoNtlm1:alfrescoNtlm |
+| authentication.ticket.ticketsExpire | Do authentication tickets expire or live for ever? | true |
+| authentication.ticket.expiryMode | If ticketsEpire is true then how they should expire? Valid values are: <code>AFTER_INACTIVITY</code>, <code>AFTER_FIXED_TIME</code>, <code>DO_NOT_EXPIRE</code>. The default is <code>AFTER_FIXED_TIME | AFTER_INACTIVITY |
+| authentication.ticket.validDuration | If <code>authentication.ticket.ticketsExpire</code> is true and <code>authentication.ticket.expiryMode</code> is <code>AFTER_FIXED_TIME</code> or <code>AFTER_INACTIVITY</code>, this controls the minimum period for which tickets are valid. The default is PT1H for one hour. | PT1H |
+| authentication.ticket.useSingleTicketPerUser | Use one ticket for all user sessions. For the pre 4.2 behaviour of one ticket per session set this to false. | true |
+| authentication.alwaysAllowBasicAuthForAdminConsole.enabled |  | true |
+| authentication.getRemoteUserTimeoutMilliseconds |  | 10000 |
+| ftp.enabled | FTP access | false |
+| protocols.storeName | Default root path for protocols | ${spaces.store} |
+| protocols.rootPath | Default root path for protocols | /${spaces.company_home.childname} |
+| opencmis.connector.default.store | OpenCMIS property | ${spaces.store} |
+| opencmis.connector.default.rootPath | OpenCMIS property | /${spaces.company_home.childname} |
+| opencmis.connector.default.typesDefaultMaxItems | OpenCMIS property | 500 |
+| opencmis.connector.default.typesDefaultDepth | OpenCMIS property | -1 |
+| opencmis.connector.default.objectsDefaultMaxItems | OpenCMIS property | 10000 |
+| opencmis.connector.default.objectsDefaultDepth | OpenCMIS property | 100 |
+| opencmis.connector.default.contentChangesDefaultMaxItems | OpenCMIS property | 10000 |
+| opencmis.connector.default.openHttpSession | OpenCMIS property | false |
+| opencmis.activities.enabled | OpenCMIS property | true |
+| opencmis.bulkUpdateProperties.maxItemsSize | OpenCMIS property | 1000 |
+| opencmis.bulkUpdateProperties.batchSize | OpenCMIS property | 20 |
+| opencmis.bulkUpdateProperties.workerThreads | OpenCMIS property | 2 |
+| opencmis.maxContentSizeMB | OpenCMIS property | 4096 |
+| opencmis.memoryThresholdKB | OpenCMIS property | 4096 |
+| opencmis.context.override | URL generation overrides. If true, the context path of OpenCMIS generated urls will be set to "opencmis.context.value", otherwise it will be taken from the request url | false |
+| opencmis.context.value | URL generation overrides |  |
+| opencmis.servletpath.override | If true, the servlet path of OpenCMIS generated urls will be set to "opencmis.servletpath.value", otherwise it will be taken from the request url | false |
+| opencmis.servletpath.value | URL generation overrides |  |
+| opencmis.server.override | URL generation overrides | false |
+| opencmis.server.value | URL generation overrides |  |
+| imap.server.enabled | IMAP property | false |
+| imap.server.port | IMAP property | 143 |
+| imap.server.attachments.extraction.enabled | IMAP property | true |
+| imap.config.home.store | Default IMAP mount points | ${spaces.store} |
+| imap.config.home.rootPath | Default IMAP mount points | /${spaces.company_home.childname} |
+| imap.config.home.folderPath | Default IMAP mount points | ${spaces.imap_home.childname} |
+| imap.config.server.mountPoints | Default IMAP mount points | AlfrescoIMAP |
+| imap.config.server.mountPoints.default.mountPointName | Default IMAP mount points | IMAP |
+| imap.config.server.mountPoints.default.modeName | Default IMAP mount points | ARCHIVE |
+| imap.config.server.mountPoints.default.store | Default IMAP mount points | ${spaces.store} |
+| imap.config.server.mountPoints.default.rootPath | Default IMAP mount points | ${protocols.rootPath} |
+| imap.config.server.mountPoints.value.AlfrescoIMAP.mountPointName | Default IMAP mount points | Alfresco IMAP |
+| imap.config.server.mountPoints.value.AlfrescoIMAP.modeName | Default IMAP mount points | MIXED |
 |  |  |  |
 |  |  |  |
 |  |  |  |
@@ -132,7 +347,9 @@
 |  |  |  |
 |  |  |  |
 |  |  |  |
-
+|  |  |  |
+|  |  |  |
+|  |  |  |
 ## Alfresco Content Services
 
 ## Alfresco Digital Workspace
