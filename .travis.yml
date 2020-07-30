@@ -70,7 +70,7 @@ stages:
 jobs:
   include:
     - name: Lint for subcharts
-      stage: test chart
+      stage: test
       script: |
         helm lint helm/alfresco-content-services/charts/activemq
         helm lint helm/alfresco-content-services/charts/alfresco-search
