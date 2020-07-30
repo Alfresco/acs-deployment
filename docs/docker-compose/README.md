@@ -39,26 +39,30 @@ Make sure that exposed ports are open on your host. Check the _docker-compose.ym
 If Docker is running on your local machine, the IP address will be just _localhost_.
 
 If you're using the [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows), run the following command to find the IP address:
+
 ```bash
 docker-machine ip
 ```
 
 ## Configure
 
-#### Alfresco Content Repository
+### Alfresco Content Repository
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | JAVA_TOOL_OPTIONS | Adding this environment variable, allows to set sensible values (like passwords) that are not passed as arguments to the Java Process. | "-Dparam=value ..." |
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
 
-#### Alfresco Share
+### Alfresco Share
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | REPO_HOST | Share needs to know how to register itself with Alfresco | alfresco |
 | REPO_PORT | Share needs to know how to register itself with Alfresco | 8080 |
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
 
-#### Alfresco Digital Workspace
+### Alfresco Digital Workspace
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | BASE_PATH |  | ./ |
@@ -89,7 +93,8 @@ docker-machine ip
 | E2E_PORT_CLOUD |  | "4200" |
 | APP_CONFIG_APPS_DEPLOYED | The name of the application deployed | "[{"name": "\<the name of the application deployed\>"}]" |
 
-#### Alfresco Search Services (solr6)
+### Alfresco Search Services (solr6)
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | SOLR_ALFRESCO_HOST | Solr needs to know how to register itself with Alfresco | "alfresco"  |
@@ -114,7 +119,8 @@ docker-machine ip
 | SOLR_SSL_NEED_CLIENT_AUTH | This variable is used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. | true or false |
 | SOLR_SSL_WANT_CLIENT_AUTH | This variable is used to configure SSL. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. | true or false |
 
-#### Alfresco Transform Router
+### Alfresco Transform Router
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
@@ -122,14 +128,16 @@ docker-machine ip
 | CORE_AIO_URL | Transform core AIO URL (in this case the name of the container is used) | "http://transform-core-aio:8090" |
 | FILE_STORE_URL | Shared file store URL (in this case the name of the container is used) | "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file" |
 
-#### Alfresco Transform Core AIO
+### Alfresco Transform Core AIO
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
 | ACTIVEMQ_URL | ActiveMQ URL (in this case the name of the container is used) | "nio://activemq:61616" |
 | FILE_STORE_URL | Shared file store URL (in this case the name of the container is used) | "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file" |
 
-#### Alfresco Shared File Store
+### Alfresco Shared File Store
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
@@ -138,7 +146,8 @@ docker-machine ip
 | scheduler.content.age.millis | Content retention period | 86400000 |
 | scheduler.cleanup.interval | Cleanup Scheduler interval | 86400000 |
 
-#### Alfresco Sync Service
+### Alfresco Sync Service
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | JAVA_OPTS | A set of properties that are picked up by the JVM inside the container | "-Dparam=value ..." |
