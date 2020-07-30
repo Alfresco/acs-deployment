@@ -58,7 +58,7 @@
 | system.readpermissions.optimise | Property to control read permission evaluation for acegi | true |
 | system.readpermissions.bulkfetchsize | Property to control read permission evaluation for acegi | 1000 |
 | system.maximumStringLength | Manually control how the system handles maximum string lengths. Any zero or negative value is ignored. Only change this after consulting support or reading the appropriate Javadocs for org.alfresco.repo.domain.schema.SchemaBootstrap for V2.1.2. Before database migration, the string value storage may need to be adjusted using the scheduled job | -1 |
-| system.maximumStringLength.jobCronExpression |  | `* * * * * ? 2099` |
+| system.maximumStringLength.jobCronExpression |  | \* \* \* \* * ? 2099 |
 | system.maximumStringLength.jobQueryRange |  | 10000 |
 | system.maximumStringLength.jobThreadCount |  | 4 |
 | system.hibernateMaxExecutions | Limit hibernate session size by trying to amalgamate events for the L2 session invalidation. *1.* Hibernate works as is up to this size. *2.* After the limit is hit events that can be grouped invalidate the L2 cache by type and not instance. Events may not group if there are post action listener registered (this is not the case with the default distribution) | 20000 |
@@ -70,7 +70,7 @@
 | system.content.eagerOrphanCleanup | Decide if content should be removed from the system immediately after being orphaned. Do not change this unless you have examined the impact it has on your backup procedures. | false |
 | system.content.orphanProtectDays | The number of days to keep orphaned content in the content stores. This has no effect on the 'deleted' content stores, which are not automatically emptied. | 14 |
 | system.content.deletionFailureAction | The action to take when a store or stores fails to delete orphaned content. IGNORE: Just log a warning. The binary remains and the record is expunged. KEEP_URL: Log a warning and create a URL entry with orphan time 0. It won't be processed or removed. | IGNORE |
-| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | `0 0 4 * * ?` |
+| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | 0 0 4 \* * ? |
 | lucene.maxAtomicTransformationTime | Millisecond threshold for text transformations. Slower transformers will force the text extraction to be asynchronous | 100 |
 | lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query  | 10000 |
 | lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. <http://issues.alfresco.com/browse/AR-1280>:  Setting this high is the workaround as of 1.4.3.  | 1000000 |
@@ -407,7 +407,7 @@
 | solr.max.total.connections | SOLR connection details (e.g. for JMX) | 40 |
 | solr.max.host.connections | SOLR connection details (e.g. for JMX) | 40 |
 | solr.solrConnectTimeout | Solr connect timeout in ms | 5000 |
-| solr.solrPingCronExpression | cron expression defining how often the Solr Admin client (used by JMX) pings Solr if it goes away | `0 0/5 * * * ? *` |
+| solr.solrPingCronExpression | cron expression defining how often the Solr Admin client (used by JMX) pings Solr if it goes away | 0 0/5 \* \* \* ? * |
 | solr.store.mappings | Default SOLR store mappings mappings | solrMappingAlfresco,solrMappingArchive |
 | solr.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
 | solr.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR store mappings mappings | /solr/alfresco |
@@ -446,7 +446,7 @@
 | bulkImport.batch.batchSize | The size of a batch in a batch import i.e. the number of files to import in a transaction/thread | 20 |
 | system.content.caching.cacheOnInbound | Caching Content Store | true |
 | system.content.caching.maxDeleteWatchCount | Caching Content Store | 1 |
-| system.content.caching.contentCleanup.cronExpression | Clean up every day at 3 am | `0 0 3 * * ?` |
+| system.content.caching.contentCleanup.cronExpression | Clean up every day at 3 am | 0 0 3 \* * ? |
 | system.content.caching.minFileAgeMillis |  | 60000 |
 | system.content.caching.maxUsageMB |  | 4096 |
 | system.content.caching.maxFileSizeMB | maxFileSizeMB - 0 means no max file size. | 0 |
@@ -456,7 +456,7 @@
 | system.content.caching.normalCleanThresholdSec | Threshold in seconds indicating a minimal gap between normal cleanup starts | 0 |
 | mybatis.useLocalCaches |  | false |
 | fileFolderService.checkHidden.enabled |  | true |
-| ticket.cleanup.cronExpression |  | `0 0 * * * ?` |
+| ticket.cleanup.cronExpression |  | 0 0 \* \* * ? |
 | download.cleaner.startDelayMilliseconds | Download Service Cleanup | 3600000 |
 | download.cleaner.repeatIntervalMilliseconds | Download Service Cleanup | 3600000 |
 | download.cleaner.maxAgeMins | Download Service Cleanup | 60 |
@@ -491,22 +491,22 @@
 | system.metadata-query-indexes.ignored | Property to enable index upgrade for metadata query (MDQ). The indexes are not added unless this value is changed. Adding each the supporting indexes may take several hours depending on the size of the database. The required indexes may be added in stages. See: `classpath:alfresco/dbscripts/upgrade/4.2/${db.script.dialect}/metadata-query-indexes.sql` . See: `classpath:alfresco/dbscripts/upgrade/5.1/${db.script.dialect}/metadata-query-indexes-2.sql` | true |
 | system.metadata-query-indexes-more.ignored |  | true |
 | system.patch.sharedFolder.deferred | Do we defer running the shared folder patch? | false |
-| system.patch.sharedFolder.cronExpression | Default value is run new years day 2030 i.e. not run. | `0 0 0 ? 1 1 2030` |
+| system.patch.sharedFolder.cronExpression | Default value is run new years day 2030 i.e. not run. | 0 0 0 ? 1 1 2030 |
 | system.patch.addUnmovableAspect.deferred | Default values for deferring the running of the addUnmovableAspect patch | false |
-| system.patch.addUnmovableAspect.cronExpression | Default values for deferring the running of the addUnmovableAspect patch | `0 0 0 ? 1 1 2030` |
+| system.patch.addUnmovableAspect.cronExpression | Default values for deferring the running of the addUnmovableAspect patch | 0 0 0 ? 1 1 2030 |
 | system.remove-jbpm-tables-from-db.ignored | Property to enable removal of all JBPM related data from the database. The tables are not removed from the databasen unless explicitly requested by setting this property to false. See: `classpath:alfresco/dbscripts/upgrade/5.2/${db.script.dialect}/remove-jbpm-tables-from-db.sql` | true |
 | people.search.honor.hint.useCQ | Use a canned query when requested to search for people if "\[hint:useCQ\]" is provided in search term | true |
 | system.cronJob.startDelayMilliseconds | Delays cron jobs after bootstrap to allow server to fully come up before jobs start | 60000 |
-| mimetype.config.cronExpression | Schedule for reading mimetype config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `0 30 0/1 * * ?` |
-| mimetype.config.initialAndOnError.cronExpression |  | `0/10 * * * * ?` |
+| mimetype.config.cronExpression | Schedule for reading mimetype config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 0 30 0/1 \* * ? |
+| mimetype.config.initialAndOnError.cronExpression |  | 0/10 \* \* \* * ? |
 | mimetype.config.dir | Optional property to specify an external file or directory that will be read for mimetype definitions from YAML  files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/mimetypes |
-| rendition.config.cronExpression | Schedule for reading rendition config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `2 30 0/1 * * ?` |
-| rendition.config.initialAndOnError.cronExpression |  | `0/10 * * * * ?` |
+| rendition.config.cronExpression | Schedule for reading rendition config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 2 30 0/1 \* * ? |
+| rendition.config.initialAndOnError.cronExpression |  | 0/10 \* \* \* * ? |
 | rendition.config.dir | Optional property to specify an external file or directory that will be read for rendition definitions from YAML files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/transform/renditions |
 | local.transform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
 | local.transform.service.enabled | Used to disable transforms locally. | true |
-| local.transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `4 30 0/1 * * ?` |
-| local.transform.service.initialAndOnError.cronExpression |  | `0/10 * * * * ?` |
+| local.transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 4 30 0/1 \* * ? |
+| local.transform.service.initialAndOnError.cronExpression |  | 0/10 \* \* \* * ? |
 | legacy.transform.service.enabled | Used to disable transforms that extend AbstractContentTransformer2 | true |
 | transformer.strict.mimetype.check | Check that the declared mimetype (of the Node) is the same as the derived mimetype of the content (via Tika) before a transformation takes place. Only files in the repository (not intermediate files in a transformer pipeline) are checked. This property provides a trade off between a security check and a relatively expensive (Tika) operation. There are a few issues with the Tika mimetype detection. So that transformations still take place where the detected mimetype is not the same as the declared mimetype, another property (transformer.strict.mimetype.check.whitelist.mimetypes) contains pairs of declared and detected mimetypes that should be allowed. This parameter value is a sequence of `;` separated pairs. The declared and derived mimetypes are also `;` separated. | true |
 | transformer.strict.mimetype.check.whitelist.mimetypes | A white list of declared and detected mimetypes, that don't match, but should still be transformed. | application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
@@ -515,297 +515,78 @@
 | system.lockTryTimeout.DictionaryDAOImpl | Lock timeout configuration | 10000 |
 | system.lockTryTimeout.MessageServiceImpl | Lock timeout configuration | ${system.lockTryTimeout} |
 | system.lockTryTimeout.PolicyComponentImpl | Lock timeout configuration | ${system.lockTryTimeout} |
-| attributes.propcleaner.cronExpression | Scheduled job to clean up unused properties from the alf_prop_xxx tables. Default setting of `0 0 3 ? * SAT` is to run every Saturday at 3am. | `0 0 3 ? * SAT` |
+| attributes.propcleaner.cronExpression | Scheduled job to clean up unused properties from the alf_prop_xxx tables. Default setting of `0 0 3 ? * SAT` is to run every Saturday at 3am. | 0 0 3 ? * SAT |
 | alfresco.jmx.connector.enabled | Control Alfresco JMX connectivity | false |
 | system.propval.uniquenessCheck.enabled | Dissallow Attribute Service Entries with "Serializable" objects in key Segments. Please, see MNT-11895 for details. | true |
 | alfresco.ephemeralLock.expiryThresh | Requests for ephemeral (in-memory) locks with expiry times (in seconds) greater than this value will result in persistent locks being created instead. By default this value is equal to the maximum allowed expiry for ephemeral locks, therefore this feature is disabled by default. Setting this to -1 would mean that ALL requests for ephemeral locks would result in persistent locks being created. | 172800 |
 | system.patch.surfConfigFolder.deferred | Do we defer running the surf-config folder patch? | false |
-| system.patch.surfConfigFolder.cronExpression | Default value. i.e. never run. It can be triggered using JMX | `* * * * * ? 2099` |
+| system.patch.surfConfigFolder.cronExpression | Default value. i.e. never run. It can be triggered using JMX | \* \* \* \* * ? 2099 |
 | solr_facets.root.path | Solr Facets Config Properties | /app:company_home/app:dictionary |
 | solr_facets.root | Solr Facets Config Properties | ${solr_facets.root.path}/${spaces.solr_facets.root.childname} |
 | solr_facets.inheritanceHierarchy | Solr Facets Config Properties | default,custom |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-
-## Alfresco Content Services
-
-## Alfresco Digital Workspace
-
-## Alfresco Share
-
-## Alfresco Search Services
-
-## Alfresco Sync Service
-
-repo.scheme   Specifies the repository URL scheme. The default value is http repo.scheme.
-repo.hostname  Specifies the repository hostname. The default value is localhost.
-messaging.broker.host   Specifies the ActiveMQ broker hostname.
-messaging.broker.port   Specifies the ActiveMQ broker port.
-sql.db.url  Specifies the sync database URL.
-sql.db.username  Specifies the sync database username.
-sql.db.password   Specifies the sync database password.
-
-|Property|Description|
-|:---|:---|
-|repo.scheme|Specifies the repository URL scheme. The default value is http repo.scheme.|
-|repo.hostname|Specifies the repository hostname. The default value is localhost.|
-|messaging.broker.host|Specifies the ActiveMQ broker hostname.|
-|messaging.broker.port|Specifies the ActiveMQ broker port.|
-|sql.db.url|Specifies the sync database URL.|
-|sql.db.username|Specifies the sync database username.|
-|sql.db.password|Specifies the sync database password.|
-
-## Alfresco Process Service
-
-### Alfresco Content Repository
-
-#### Database configuration
-
-* ```db.driver``` - Database driver (e.g.: org.postgresql.Driver)
-* ```db.username``` - Database username (default value: alfresco)
-* ```db.password``` - Database password (default value: alfresco)
-* ```db.url``` - Database connection url (e.g.: jdbc:postgresql://postgres:5432/alfresco)
-
-##### SOLR connection details
-
-* ```solr.host``` - The host name where the Solr instance is located (for docker-compose deployment this value can be the name of the service (e.g. solr6)).
-* ```solr.port``` - This specifies the application server's http port (non-secure) on which Solr 6 is running. This is only used if Solr 6 is configured to run without secure communications. (e.g.: 8983)
-* ```solr.secureComms``` - E.g.: none for http or https
-* ```solr.base.url``` - This specifies the base URL for the Solr 6 web application. (E.g.: /solr)
-* ```index.subsystem.name``` - The subsystem type value. (E.g.: solr6)
-
-##### URL Generation Parameters
-
-* ```share.host``` - Specifies the externally resolvable host name of the Alfresco Share web application URL.
-* ```share.port``` - Specifies the externally resolvable port number of the Alfresco Share web application URL.
-* ```alfresco.host``` - Specifies the externally resolvable host name of the web application.
-* ```alfresco.port``` - Specifies the externally resolvable port number of the web application URL.
-
-* ```aos.baseUrlOverwrite``` - <http://localhost:8080/alfresco/aos>
-* ```messaging.broker.url``` - Specifies the ActiveMQ connector URL.
-* ```deployment.method``` - Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START)
-
-##### Transformers
-
-* ```transform.service.enabled```=true
-* ```transform.service.url```=<http://transform-router:8095>
-* ```sfs.url```=<http://shared-file-store:8099/>
-* ```localTransform.core-aio.url```=<http://transform-core-aio:8090/>
-* ```alfresco-pdf-renderer.url```=<http://transform-core-aio:8090/>
-* ```jodconverter.url```=<http://transform-core-aio:8090/>
-* ```img.url```=<http://transform-core-aio:8090/>
-* ```tika.url```=<http://transform-core-aio:8090/>
-* ```transform.misc.url```=<http://transform-core-aio:8090/>
-* ```csrf.filter.enabled``` - Enables/disables Cross-Site Request Forgery filters for repository (true/false)
-* ```dsync.service.uris``` - Specifies the hostname of the Sync Service (or the load balancer hiding the Sync Service cluster) that Desktop Sync clients can see. For example, `https://<hostname>:9090/alfresco`.
+| models.enforceTenantInNamespace |  | false |
+| links.protocosl.white.list | Allowed protocols for links | http,https,ftp,mailto |
+| system.fixedACLs.maxTransactionTime | Fixed ACLs. Required for fixing MNT-15368 - Time Consumed for Updating Folder Permission. `ADMAccessControlListDAO.setFixedAcls` called on a large folder hierarchy will take a long time for its execution. For this reason now method can also be called asynchronously if transaction reaches `system.fixedACLs.maxTransactionTime`. In this case setFixedAcls method recursion will be stopped and unfinished nodes will be marked with `ASPECT_PENDING_FIX_ACL`. Pending nodes will be processed by `FixedAclUpdater`, programmatically called but also configured as a scheduled job. | 10000 |
+| system.fixedACLsUpdater.lockTTL | fixedACLsUpdater - lock time to live | 10000 |
+| system.fixedACLsUpdater.maxItemBatchSize | fixedACLsUpdater - maximum number of nodes to process per execution | 100 |
+| system.fixedACLsUpdater.numThreads | fixedACLsUpdater - the number of threads to use | 4 |
+| system.fixedACLsUpdater.cronExpression | fixedACLsUpdater cron expression - fire at midnight every day | 0 0 0 \* * ? |
+| cmis.disable.hidden.leading.period.files |  | false |
+| smart.folders.enabled | Smart Folders Config Properties | false |
+| smart.reference.classpath.hash | Smart reference config | ${smart.folders.config.vanilla.processor.classpath}->1,${smart.folders.config.system.templates.classpath}->2 |
+| smart.download.associations.folder | Company home relative download associations of smart entries  | ${spaces.dictionary.childname}/${spaces.smartdownloads.childname} |
+| smart.folders.config.vanilla.processor.classpath | Vanilla JSON templates javascript processor classpath. A java script processor used to convert JSON templates to internal smart folder definitions. | /org/alfresco/repo/virtual/node/vanilla.js |
+| smart.folders.config.system.aspect | System virtualization method aspect. | smf:systemConfigSmartFolder |
+| smart.folders.config.system.aspect.template.location.property | System virtualization method aspect defined template location property. | smf:system-template-location |
+| smart.folders.config.system.templates.classpath | Classpath to be explored for *.json entries defining system templates. | /org/alfresco/repo/virtual/node |
+| smart.folders.config.system.templates.path | A company home relative name or qname path location of repository system templates. | ${spaces.dictionary.childname}/${spaces.smartfolders.childname} |
+| smart.folders.config.system.templates.template.type | Content sub type of repository system templates. | smf:smartFolderTemplate |
+| smart.folders.config.custom.aspect | Custom virtualization method aspect. | smf:customConfigSmartFolder |
+| smart.folders.config.custom.aspect.template.association | Custom virtualization method aspect template content association. | smf:custom-template-association |
+| smart.folders.config.type.templates.path | A company home relative name or qname path location of the type mapped templates. | ${spaces.dictionary.childname}/${spaces.smartfolders.childname} |
+| smart.folders.config.type.templates.qname.filter | Type and aspect qname regular expression filter. | none |
+| system.preferred.password.encoding | Preferred password encoding, md4, sha256, bcrypt10 | md4 |
+| system.upgradePasswordHash.jobBatchSize | Upgrade Password Hash Job | 100 |
+| system.upgradePasswordHash.jobQueryRange | Upgrade Password Hash Job | 10000 |
+| system.upgradePasswordHash.jobThreadCount | Upgrade Password Hash Job | 4 |
+| system.upgradePasswordHash.jobCronExpression | Upgrade Password Hash Job | \* \* \* \* \* ? 2099 |
+| system.api.discovery.enabled |  | true |
+| category.queryFetchSize | Maximum query size for category/tag fetch when not explicitly set by paging parameters | 5000 |
+| authentication.protection.enabled | Brute force protection | true |
+| authentication.protection.limit | Brute force protection | 10 |
+| authentication.protection.periodSeconds | Brute force protection | 6 |
+| system.email.sender.default |  | noreply@alfresco.com |
+| system.reset-password.endTimer | Reset password workflow will expire in an hour | PT1H |
+| system.reset-password.sendEmailAsynchronously |  | true |
+| heartbeat.target.url | HeartBeat |  |
+| heartbeat.enabled | HeartBeat | true |
+| csrf.filter.enabled | CSRF filter overrides | true |
+| csrf.filter.referer | CSRF filter overrides |  |
+| csrf.filter.referer.always | CSRF filter overrides | false |
+| csrf.filter.origin | CSRF filter overrides |  |
+| csrf.filter.origin.always | CSRF filter overrides | false |
+| cors.enabled | CORS settings | false |
+| cors.allowed.origins | CORS settings |  |
+| cors.allowed.methods | CORS settings | GET,POST,HEAD,OPTIONS,PUT,DELETE |
+| cors.allowed.headers | CORS settings | Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token |
+| cors.exposed.headers | CORS settings | Access-Control-Allow-Origin,Access-Control-Allow-Credentials |
+| cors.support.credentials | CORS settings | true |
+| cors.preflight.maxage | CORS settings | 10 |
+| api-explorer.url | Alfresco Rest Api-Explorer |  |
+| events.subsystem.autoStart | Events subsystem | false |
+| messaging.subsystem.autoStart | Messaging subsystem | true |
+| acs.repo.rendition.events.endpoint | Raw events | jms:acs-repo-rendition-events?jmsMessageType=Text |
+| acs.repo.transform.request.endpoint | Transform request events | jms:acs-repo-transform-request?jmsMessageType=Text |
+| contentPropertyRestrictions.enabled | If enabled doesn't allow to set content properties via NodeService | true |
+| contentPropertyRestrictions.whitelist |  |  |
+| repo.event2.filter.nodeTypes | Repo events2. Type and aspect filters which should be excluded. Note: System folders node types are added by default | sys:\*, fm:\*, cm:thumbnail, cm:failedThumbnail, cm:rating, rma:rmsite include_subtypes |
+| repo.event2.filter.nodeAspects | Repo events2 | sys:\* |
+| repo.event2.filter.childAssocTypes | Repo events2 | rn:rendition |
+| repo.event2.filter.users | Comma separated list of users which should be excluded. Note: username's case-sensitivity depends on the {user.name.caseSensitive} setting | System, null |
+| repo.event2.topic.endpoint | Topic name | amqp:topic:alfresco.repo.event2 |
+| system.delete_not_exists.batchsize | MNT-21083 --DELETE_NOT_EXISTS - default settings | 100000 |
+| system.delete_not_exists.delete_batchsize |  | 1000 |
+| system.delete_not_exists.read_only |  | false |
+| system.delete_not_exists.timeout_seconds |  | -1 |
+| system.prop_table_cleaner.algorithm |  | V2 |
+| alfresco.content.directAccessUrl.lifetimeInSec | Configure the expiration time of the direct access url. This is the length of time in seconds that the link is valid for. Note: It is up to the actual ContentStore implementation if it can fulfil this request or not. | 300 |
