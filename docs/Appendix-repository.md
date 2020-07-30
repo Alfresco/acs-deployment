@@ -153,7 +153,7 @@
 | audit.filter.alfresco-access.default.enabled | Audit map filter for AccessAuditor - restricts recorded events to user driven events | false |
 | audit.filter.alfresco-access.transaction.user | Audit configuration | ~System;~null;.* |
 | audit.filter.alfresco-access.transaction.type | Audit configuration | cm:folder;cm:content;st:site |
-| audit.filter.alfresco-access.transaction.path | Audit configuration | ~/sys:archivedItem;~/ver:;.* |
+| audit.filter.alfresco-access.transaction.path | Audit configuration | \~/sys:archivedItem;~/ver:;.* |
 | system.store | System Configuration | system://system |
 | system.descriptor.childname | System Configuration | sys:descriptor |
 | system.descriptor.current.childname | System Configuration | sys:descriptor-current |
