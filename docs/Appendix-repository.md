@@ -23,7 +23,7 @@
 | system.webdav.url.path.prefix | WebDAV URL path prefix | "" |
 | system.webdav.storeName | WebDAV store name | ${protocols.storeName} |
 | system.webdav.rootPath | WebDAV root path | ${protocols.rootPath} |
-| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | `(.*/\\..*)|(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*atmp[0-9]+$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)|(.*backup.*\\.do[ct]{1}[x]?[m]?$)|(.*\\.sb\\-\\w{8}\\-\\w{6}$)` |
+| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | ```(.*/\\..*)|(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*atmp[0-9]+$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)|(.*backup.*\\.do[ct]{1}[x]?[m]?$)|(.*\\.sb\\-\\w{8}\\-\\w{6}$)``` |
 | system.webdav.activities.enabled |  | false |
 | system.workflow.jbpm.comment.property.max.length |  | -1 |
 | system.workflow.comment.property.max.length |  | 4000 |
@@ -111,7 +111,7 @@
 | lucene.indexer.useInMemorySort |  | true |
 | lucene.indexer.maxRawResultSetSizeForInMemorySort |  | 1000 |
 | lucene.indexer.contentIndexingEnabled |  | true |
-| index.backup.cronExpression |  | `0 0 3 * * ?` |
+| index.backup.cronExpression |  | 0 0 3 \* * ? |
 | lucene.defaultAnalyserResourceBundleName |  | alfresco/model/dataTypeAnalyzers |
 | transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
 | db.schema.name | Database configuration |  |
