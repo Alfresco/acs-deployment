@@ -91,7 +91,7 @@ docker-machine ip
 | IDENTITY_HOST_CLOUD |  |  |
 | E2E_HOST_CLOUD |  | "http://localhost" |
 | E2E_PORT_CLOUD |  | "4200" |
-| APP_CONFIG_APPS_DEPLOYED | The name of the application deployed | "[{"name": "\<the name of the application deployed\>"}]" |
+| APP_CONFIG_APPS_DEPLOYED | The name of the application deployed (e.g. `"[{"name": "\<the name of the application deployed\>"}]"`) |  |
 
 ### Alfresco Search Services (solr6)
 
