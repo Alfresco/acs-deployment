@@ -48,6 +48,72 @@
 | system.cache.disableImmutableSharedCaches | Disables immutable shared caches. These property is used for diagnostic purposes | false |
 | system.cache.parentAssocs.maxSize | The maximum capacity of the parent assocs cache (the number of nodes whose parents can be cached) | 130000 |
 | system.cache.parentAssocs.limitFactor | The average number of parents expected per cache entry. This parameter is multiplied by the above value to compute a limit on the total number of cached parents, which will be proportional to the cache's memory usage. The cache will be pruned when this limit is exceeded to avoid excessive memory usage. | 8 |
+| system.acl.maxPermissionCheckTimeMillis | Property to limit resources spent on individual searches. The maximum time spent pruning results. | 10000 |
+| system.acl.maxPermissionChecks | Property to limit resources spent on individual searches.The maximum number of search results to perform permission checks against. | 1000 |
+| system.filefolderservice.defaultListMaxResults | The maximum number of filefolder list results | 5000 |
+| system.preserve.modificationData | DEPRECATED: Use 'system.auditableData.preserve' | false |
+| system.auditableData.preserve | The default to preserve all cm:auditable data on a node when the process is not directly driven by a user action. | ${system.preserve.modificationData} |
+| system.auditableData.FileFolderService | Specific control of how the FileFolderService treats cm:auditable data when performing moves | ${system.auditableData.preserve} |
+| system.auditableData.ACLs | Specific control of whether ACL changes on a node trigger the cm:auditable aspect | ${system.auditableData.preserve} |
+| system.readpermissions.optimise | Property to control read permission evaluation for acegi | true |
+| system.readpermissions.bulkfetchsize | Property to control read permission evaluation for acegi | 1000 |
+| system.maximumStringLength | Manually control how the system handles maximum string lengths. Any zero or negative value is ignored. Only change this after consulting support or reading the appropriate Javadocs for org.alfresco.repo.domain.schema.SchemaBootstrap for V2.1.2. Before database migration, the string value storage may need to be adjusted using the scheduled job | -1 |
+| system.maximumStringLength.jobCronExpression |  | * * * * * ? 2099 |
+| system.maximumStringLength.jobQueryRange |  | 10000 |
+| system.maximumStringLength.jobThreadCount |  | 4 |
+| system.hibernateMaxExecutions | Limit hibernate session size by trying to amalgamate events for the L2 session invalidation<br/>* hibernate works as is up to this size<br/>* after the limit is hit events that can be grouped invalidate the L2 cache by type and not instance.<br/>Events may not group if there are post action listener registered (this is not the case with the default distribution) | 20000 |
+| system.enableTimestampPropagation | Determine if modification timestamp propagation from child to parent nodes is respected or not. Even if 'true', the functionality is only supported for child associations that declare the 'propagateTimestamps' element in the dictionary definition. | true |
+| system.integrity.enabled | Enable system model integrity checking. WARNING: Changing this is unsupported; bugs may corrupt data | true |
+| system.integrity.failOnViolation | Do integrity violations fail transactions. WARNING: Changing this is unsupported; bugs may corrupt data | true |
+| system.integrity.maxErrorsPerTransaction | The number of errors to report when violations are detected | 5 |
+| system.integrity.trace | Add call stacks to integrity events so that errors are logged with possible causes. WARNING: This is expensive and should only be switched on for diagnostic purposes | false |
+| system.content.eagerOrphanCleanup | Decide if content should be removed from the system immediately after being orphaned. Do not change this unless you have examined the impact it has on your backup procedures. | false |
+| system.content.orphanProtectDays | The number of days to keep orphaned content in the content stores. This has no effect on the 'deleted' content stores, which are not automatically emptied. | 14 |
+| system.content.deletionFailureAction | The action to take when a store or stores fails to delete orphaned content. IGNORE: Just log a warning. The binary remains and the record is expunged. KEEP_URL: Log a warning and create a URL entry with orphan time 0. It won't be processed or removed. | IGNORE |
+| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | 0 0 4 * * ? |
+| lucene.maxAtomicTransformationTime | Millisecond threshold for text transformations. Slower transformers will force the text extraction to be asynchronous | 100 |
+| lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query  | 10000 |
+| lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. http://issues.alfresco.com/browse/AR-1280:  Setting this high is the workaround as of 1.4.3.  | 1000000 |
+| fts.indexer.batchSize |  | 1000 |
+| lucene.indexer.cacheEnabled | Index cache sizes | true |
+| lucene.indexer.maxDocIdCacheSize |  | 100000 |
+| lucene.indexer.maxDocumentCacheSize |  | 100 |
+| lucene.indexer.maxIsCategoryCacheSize |  | -1 |
+| lucene.indexer.maxLinkAspectCacheSize |  | 10000 |
+| lucene.indexer.maxParentCacheSize |  | 100000 |
+| lucene.indexer.maxPathCacheSize |  | 100000 |
+| lucene.indexer.maxTypeCacheSize |  | 10000 |
+| lucene.indexer.mergerMaxMergeDocs | Properties for merge (not this does not affect the final index segment which will be optimised). Max merge docs only applies to the merge process not the resulting index which will be optimised. | 1000000 |
+| lucene.indexer.mergerMergeFactor |  | 5 |
+| lucene.indexer.mergerMaxBufferedDocs |  | -1 |
+| lucene.indexer.mergerRamBufferSizeMb |  | 16 |
+| lucene.indexer.writerMaxMergeDocs | Properties for delta indexes (not this does not affect the final index segment which will be optimised). Max merge docs only applies to the index building process not the resulting index which will be optimised. | 1000000 |
+| lucene.indexer.writerMergeFactor |  | 5 |
+| lucene.indexer.writerMaxBufferedDocs |  | -1 |
+| lucene.indexer.writerRamBufferSizeMb |  | 16 |
+| lucene.indexer.mergerTargetIndexCount | Target number of indexes and deltas in the overall index and what index size to merge in memory | 8 |
+| lucene.indexer.mergerTargetOverlayCount |  | 5 |
+| lucene.indexer.mergerTargetOverlaysBlockingFactor |  | 2 |
+| lucene.indexer.maxDocsForInMemoryMerge |  | 60000 |
+| lucene.indexer.maxRamInMbForInMemoryMerge |  | 16 |
+| lucene.indexer.maxDocsForInMemoryIndex |  | 60000 |
+| lucene.indexer.maxRamInMbForInMemoryIndex |  | 16 |
+| lucene.indexer.termIndexInterval |  | 128 |
+| lucene.indexer.useNioMemoryMapping |  | true |
+| lucene.indexer.postSortDateTime | over-ride to false for pre 3.0 behaviour | true |
+| lucene.indexer.defaultMLIndexAnalysisMode |  | EXACT_LANGUAGE_AND_ALL |
+| lucene.indexer.defaultMLSearchAnalysisMode |  | EXACT_LANGUAGE_AND_ALL |
+| lucene.indexer.maxFieldLength | The number of terms from a document that will be indexed | 10000 |
+| lucene.indexer.fairLocking | Should we use a 'fair' locking policy, giving queue-like access behaviour to the indexes and avoiding starvation of waiting writers? Set to false on old JVMs where this appears to cause deadlock | true |
+| lucene.write.lock.timeout | Index locks (mostly deprecated and will be tidied up with the next lucene upgrade) | 10000 |
+| lucene.commit.lock.timeout |  | 100000 |
+| lucene.lock.poll.interval |  | 100 |
+| lucene.indexer.useInMemorySort |  | true |
+| lucene.indexer.maxRawResultSetSizeForInMemorySort |  | 1000 |
+| lucene.indexer.contentIndexingEnabled |  | true |
+| index.backup.cronExpression |  | 0 0 3 * * ? |
+| lucene.defaultAnalyserResourceBundleName |  | alfresco/model/dataTypeAnalyzers |
+| transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
 |  |  |  |
 |  |  |  |
 |  |  |  |
@@ -66,41 +132,6 @@
 |  |  |  |
 |  |  |  |
 |  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-
 
 ## Alfresco Content Services
 
