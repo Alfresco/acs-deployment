@@ -72,7 +72,7 @@ docker-machine ip
 | APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI | The address that Digital Workspace uses to refresh authorization tokens. |  |
 | APP_CONFIG_OAUTH2_REDIRECT_LOGIN | The URL to redirect to after a user is successfully authenticated |  |
 | APP_CONFIG_OAUTH2_REDIRECT_LOGOUT | The URL to redirect to after a user successfully signs out |  |
-| APP_BASE_SHARE_URL | Base Share URL |  e.g. '{protocol}//{hostname}{:port}/workspace/#/preview/s' |
+| APP_BASE_SHARE_URL | Base Share URL. e.g. `'{protocol}//{hostname}{:port}/workspace/#/preview/s'` |   |
 | AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | "BASIC" |
 | PROVIDER |  | "ALL" |
 | ENVIRONMENT_SUFFIX | Only for Process Cloud instance | "_CLOUD" |
