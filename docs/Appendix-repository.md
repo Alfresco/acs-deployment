@@ -329,20 +329,167 @@
 | imap.config.server.mountPoints.default.rootPath | Default IMAP mount points | ${protocols.rootPath} |
 | imap.config.server.mountPoints.value.AlfrescoIMAP.mountPointName | Default IMAP mount points | Alfresco IMAP |
 | imap.config.server.mountPoints.value.AlfrescoIMAP.modeName | Default IMAP mount points | MIXED |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| imap.attachments.mode | `SEPARATE` -- All attachments for each email will be extracted to separate folder. `COMMON` -- All attachments for all emails will be extracted to one folder. `SAME` -- Attachments will be extracted to the same folder where email lies. | SEPARATE |
+| imap.attachments.folder.store | Imap extraction settings | ${spaces.store} |
+| imap.attachments.folder.rootPath | Imap extraction settings | /${spaces.company_home.childname} |
+| imap.attachments.folder.folderPath | Imap extraction settings | ${spaces.imap_attachments.childname} |
+| activities.feed.max.idRange | Feed max ID range to limit maximum number of entries | 1000000 |
+| activities.feed.max.size | Feed max size (number of entries) | 200 |
+| activities.feed.max.ageMins | Feed max age (eg. 44640 mins > 31 days) | 44640 |
+| activities.feed.generator.jsonFormatOnly |  | true |
+| activities.feed.fetchBatchSize |  | 250 |
+| activities.feedNotifier.batchSize |  | 200 |
+| activities.feedNotifier.numThreads |  | 2 |
+| subsystems.test.beanProp.default.longProperty | Subsystem unit test values. Will not have any effect on production servers | 123456789123456789 |
+| subsystems.test.beanProp.default.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Default |
+| subsystems.test.beanProp | Subsystem unit test values. Will not have any effect on production servers | inst1,inst2,inst3 |
+| subsystems.test.beanProp.value.inst2.boolProperty | Subsystem unit test values. Will not have any effect on production servers | true |
+| subsystems.test.beanProp.value.inst3.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Instance Default |
+| subsystems.test.simpleProp2 | Subsystem unit test values. Will not have any effect on production servers | true |
+| subsystems.test.simpleProp3 | Subsystem unit test values. Will not have any effect on production servers | Global Default3 |
+| default.async.action.threadPriority | Default Async Action Thread Pool | 1 |
+| default.async.action.corePoolSize | Default Async Action Thread Pool | 8 |
+| default.async.action.maximumPoolSize | Default Async Action Thread Pool | 20 |
+| deployment.service.numberOfSendingThreads | Deployment Service | 5 |
+| deployment.service.corePoolSize | Deployment Service | 2 |
+| deployment.service.maximumPoolSize | Deployment Service | 3 |
+| deployment.service.threadPriority | Deployment Service | 5 |
+| deployment.service.targetLockRefreshTime | How long to wait in mS before refreshing a target lock - detects shutdown servers | 60000 |
+| deployment.service.targetLockTimeout | How long to wait in mS from the last communication before deciding that deployment has failed, possibly the destination is no longer available? | 3600000 |
+| deployment.method | Deployment method used to deploy this Alfresco instance (`DEFAULT`, `INSTALLER`, `DOCKER_COMPOSE`, `HELM_CHART`, `ZIP`, `QUICK_START`) | DEFAULT |
+| notification.email.siteinvite | Should send emails as part of invitation process. | true |
+| site.invite.moderated.workflowId | Moderated invite Activiti workflow | activiti$activitiInvitationModerated |
+| site.invite.nominated.workflowId | Add intneral users Activiti workflow (use activiti$activitiInvitationNominated to revert to requiring accept of invite for internal users) | activiti$activitiInvitationNominatedAddDirect |
+| site.invite.nominatedExternal.workflowId | Add external users Activiti workflow | activiti$activitiInvitationNominated |
+| replication.enabled | Replication Service | false |
+| transferservice.receiver.enabled | Transfer Service | false |
+| transferservice.receiver.stagingDir | Transfer Service | ${java.io.tmpdir}/alfresco-transfer-staging |
+| transferservice.receiver.lockRefreshTime | How long to wait in mS before refreshing a transfer lock - detects shutdown servers. Default 1 minute. | 60000 |
+| transferservice.receiver.lockRetryCount | How many times to attempt retry the transfer lock | 3 |
+| transferservice.receiver.lockRetryWait | How long to wait, in mS, before retrying the transfer lock | 100 |
+| transferservice.receiver.lockTimeOut | How long to wait, in mS, since the last contact with from the client before timing out a transfer. Needs to be long enough to cope with network delays and "thinking time" for both source and destination. Default 5 minutes. | 300000 |
+| orphanReaper.lockRefreshTime | OrphanReaper | 60000 |
+| orphanReaper.lockTimeOut | OrphanReaper | 3600000 |
+| security.anyDenyDenies | Security | true |
+| security.postProcessDenies | Whether to post-process denies. Only applies to solr4+ when `anyDenyDenies` is true. | false |
+| dir.keystore | Encryption properties. Default keystores location | classpath:alfresco/keystore |
+| encryption.keySpec.class | General encryption parameters | org.alfresco.encryption.DESEDEKeyGenerator |
+| encryption.keyAlgorithm | General encryption parameters | AES |
+| encryption.cipherAlgorithm | General encryption parameters | AES/CBC/PKCS5Padding |
+| encryption.keystore.location | Secret key keystore configuration | ${dir.keystore}/keystore |
+| encryption.keystore.keyMetaData.location | Configuration via metadata is deprecated |  |
+| encryption.keystore.provider |  |  |
+| encryption.keystore.type |  | pkcs12 |
+| encryption.keystore.backup.location | Backup secret key keystore configuration | ${dir.keystore}/backup-keystore |
+| encryption.keystore.backup.keyMetaData.location | Configuration via metadata is deprecated |  |
+| encryption.keystore.backup.provider |  |  |
+| encryption.keystore.backup.type |  | pkcs12 |
+| encryption.bootstrap.reencrypt | Should encryptable properties be re-encrypted with new encryption keys on botstrap? | false |
+| encryption.mac.messageTimeout | mac/md5 encryption | 30000 |
+| encryption.mac.algorithm | mac/md5 encryption | HmacSHA1 |
+| encryption.ssl.keystore.location | ssl encryption | ${dir.keystore}/ssl.keystore |
+| encryption.ssl.keystore.provider | ssl encryption |  |
+| encryption.ssl.keystore.type | ssl encryption | JCEKS |
+| encryption.ssl.keystore.keyMetaData.location | Configuration via metadata is deprecated |  |
+| encryption.ssl.truststore.location |  | ${dir.keystore}/ssl.truststore |
+| encryption.ssl.truststore.provider |  |  |
+| encryption.ssl.truststore.type |  | JCEKS |
+| encryption.ssl.truststore.keyMetaData.location | Configuration via metadata is deprecated |  |
+| encryption.reencryptor.chunkSize | Re-encryptor properties | 100 |
+| encryption.reencryptor.numThreads | Re-encryptor properties | 2 |
+| solr.host | SOLR connection details (e.g. for JMX) | localhost |
+| solr.port | SOLR connection details (e.g. for JMX) | 8983 |
+| solr.port.ssl | SOLR connection details (e.g. for JMX) | 8984 |
+| solr.solrUser | SOLR connection details (e.g. for JMX) | solr |
+| solr.solrPassword | SOLR connection details (e.g. for JMX) | solr |
+| solr.secureComms | SOLR connection details (e.g. for JMX). `none`, `https` | https |
+| solr.cmis.alternativeDictionary | SOLR connection details (e.g. for JMX) | DEFAULT_DICTIONARY |
+| solr.max.total.connections | SOLR connection details (e.g. for JMX) | 40 |
+| solr.max.host.connections | SOLR connection details (e.g. for JMX) | 40 |
+| solr.solrConnectTimeout | Solr connect timeout in ms | 5000 |
+| solr.solrPingCronExpression | cron expression defining how often the Solr Admin client (used by JMX) pings Solr if it goes away | `0 0/5 * * * ? *` |
+| solr.store.mappings | Default SOLR store mappings mappings | solrMappingAlfresco,solrMappingArchive |
+| solr.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
+| solr.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR store mappings mappings | /solr/alfresco |
+| solr.store.mappings.value.solrMappingAlfresco.protocol | Default SOLR store mappings mappings | workspace |
+| solr.store.mappings.value.solrMappingAlfresco.identifier | Default SOLR store mappings mappings | SpacesStore |
+| solr.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
+| solr.store.mappings.value.solrMappingArchive.baseUrl | Default SOLR store mappings mappings | /solr/archive |
+| solr.store.mappings.value.solrMappingArchive.protocol | Default SOLR store mappings mappings | archive |
+| solr.store.mappings.value.solrMappingArchive.identifier | Default SOLR store mappings mappings | SpacesStore |
+| solr4.store.mappings | Default SOLR 4 store mappings mappings | solrMappingAlfresco,solrMappingArchive |
+| solr4.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
+| solr4.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 4 store mappings mappings | /solr4/alfresco |
+| solr4.store.mappings.value.solrMappingAlfresco.protocol | Default SOLR 4 store mappings mappings | workspace |
+| solr4.store.mappings.value.solrMappingAlfresco.identifier | Default SOLR 4 store mappings mappings | SpacesStore |
+| solr4.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
+| solr4.store.mappings.value.solrMappingArchive.baseUrl | Default SOLR 4 store mappings mappings | /solr4/archive |
+| solr4.store.mappings.value.solrMappingArchive.protocol | Default SOLR 4 store mappings mappings | archive |
+| solr4.store.mappings.value.solrMappingArchive.identifier | Default SOLR 4 store mappings mappings | SpacesStore |
+| solr6.store.mappings | Default SOLR 6 store mappings mappings | solrMappingAlfresco,solrMappingArchive,solrMappingHistory |
+| solr6.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
+| solr6.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 6 store mappings mappings | /solr/alfresco |
+| solr6.store.mappings.value.solrMappingAlfresco.protocol | Default SOLR 6 store mappings mappings | workspace |
+| solr6.store.mappings.value.solrMappingAlfresco.identifier | Default SOLR 6 store mappings mappings | SpacesStore |
+| solr6.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
+| solr6.store.mappings.value.solrMappingArchive.baseUrl | Default SOLR 6 store mappings mappings | /solr/archive |
+| solr6.store.mappings.value.solrMappingArchive.protocol | Default SOLR 6 store mappings mappings | archive |
+| solr6.store.mappings.value.solrMappingArchive.identifier | Default SOLR 6 store mappings mappings | SpacesStore |
+| solr6.store.mappings.value.solrMappingHistory.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
+| solr6.store.mappings.value.solrMappingHistory.baseUrl | Default SOLR 6 store mappings mappings | /solr/history |
+| solr6.store.mappings.value.solrMappingHistory.protocol | Default SOLR 6 store mappings mappings | workspace |
+| solr6.store.mappings.value.solrMappingHistory.identifier | Default SOLR 6 store mappings mappings | history |
+| urlshortening.bitly.username | URL Shortening Properties | brianalfresco |
+| urlshortening.bitly.api.key | URL Shortening Properties | R_ca15c6c89e9b25ccd170bafd209a0d4f |
+| urlshortening.bitly.url.length | URL Shortening Properties | 20 |
+| bulkImport.batch.numThreads | Bulk Filesystem Importer. The number of threads to employ in a batch import | 4 |
+| bulkImport.batch.batchSize | The size of a batch in a batch import i.e. the number of files to import in a transaction/thread | 20 |
+| system.content.caching.cacheOnInbound | Caching Content Store | true |
+| system.content.caching.maxDeleteWatchCount | Caching Content Store | 1 |
+| system.content.caching.contentCleanup.cronExpression | Clean up every day at 3 am | `0 0 3 * * ?` |
+| system.content.caching.minFileAgeMillis |  | 60000 |
+| system.content.caching.maxUsageMB |  | 4096 |
+| system.content.caching.maxFileSizeMB | maxFileSizeMB - 0 means no max file size. | 0 |
+| system.content.caching.panicThresholdPct | When the CachingContentStore is about to write a cache file but the disk usage is in excess of panicThresholdPct (default 90%) then the cache file is not written and the cleaner is started (if not already running) in a new thread. | 90 |
+| system.content.caching.cleanThresholdPct | When a cache file has been written that results in cleanThresholdPct (default 80%) of maxUsageBytes being exceeded then the cached content cleaner is invoked (if not already running) in a new thread. | 80 |
+| system.content.caching.targetUsagePct | An aggressive cleaner is run till the targetUsagePct (default 70%) of maxUsageBytes is achieved | 70 |
+| system.content.caching.normalCleanThresholdSec | Threshold in seconds indicating a minimal gap between normal cleanup starts | 0 |
+| mybatis.useLocalCaches |  | false |
+| fileFolderService.checkHidden.enabled |  | true |
+| ticket.cleanup.cronExpression |  | `0 0 * * * ?` |
+| download.cleaner.startDelayMilliseconds | Download Service Cleanup | 3600000 |
+| download.cleaner.repeatIntervalMilliseconds | Download Service Cleanup | 3600000 |
+| download.cleaner.maxAgeMins | Download Service Cleanup | 60 |
+| download.cleaner.batchSize | Download Service Cleanup. -1 or 0 for not using batches | 1000 |
+| download.cleaner.cleanAllSysDownloadFolders | You could set this to false for new installations greater then ACS 6.2 see MNT-20212 | true |
+| download.maxContentSize | Download Service Limits, in bytes | 2152852358 |
+| trashcan.MaxSize | Max size of view trashcan files | 1000 |
+| authority.useBridgeTable | Use bridge tables for caching authority evaluation. | true |
+| authority.findAuthorityLimit | Limit the number of results from findAuthority query | 10000 |
+| system.quickshare.enabled | Enable QuickShare - if false then the QuickShare-specific REST APIs will return 403 Forbidden | true |
+| system.quickshare.email.from.default |  | noreply@alfresco.com |
+| system.quickshare.expiry_date.enforce.minimum.period | By default the difference between the quick share expiry date and the current time must be at least 1 day (24 hours). However, this can be changed to at least 1 hour or 1 minute for testing purposes. For example, setting the value to MINUTES, means the service will calculate the difference between NOW and the given expiry date in terms of minutes and checks for the difference to be greater than 1 minute. `DAYS` | `HOURS` | `MINUTES` | DAYS |
+| mail.service.corePoolSize | Oubound Mail | 8 |
+| mail.service.maximumPoolSize | Oubound Mail | 20 |
+| nodes.bulkLoad.cachingThreshold |  | 10 |
+| dir.contentstore.tenants | Multi-Tenancy. If `dir.contentstore.tenants` is set then tenants are not co-mingled and all content roots will appear below this container (in \<tenantdomain\> sub-folder) and when creating a tenant the `contentRootPath` (root content store directory for a given tenant) will be ignored |  |
+| alfresco.authentication.gateway.host | Gateway authentication is disabled if empty host is specified |  |
+| alfresco.authentication.gateway.protocol | Gateway Authentication | https |
+| alfresco.authentication.gateway.port | Gateway Authentication | 443 |
+| alfresco.authentication.gateway.outboundHeaders | Gateway Authentication | Authorization,key |
+| alfresco.authentication.gateway.inboundHeaders | Gateway Authentication | X-Alfresco-Authenticator-Key,X-Alfresco-Remote-User |
+| alfresco.authentication.gateway.prefixUrl | Gateway Authentication | /publicapi |
+| alfresco.authentication.gateway.bufferSize | Gateway Authentication | 2048 |
+| alfresco.authentication.gateway.connectTimeout | Gateway Authentication | 10000 |
+| alfresco.authentication.gateway.readTimeout | Gateway Authentication | 120000 |
+| alfresco.authentication.gateway.httpTcpNodelay | Gateway Authentication | true |
+| alfresco.authentication.gateway.httpConnectionStalecheck | Gateway Authentication | true |
+| webscripts.encryptTempFiles | Webscripts config | false |
+| webscripts.tempDirectoryName | Webscripts config | Alfresco-WebScripts |
+| webscripts.memoryThreshold | Webscripts config (4mb) | 4194304 |
+| webscripts.setMaxContentSize | Webscripts config (4gb) | 5368709120 |
+| system.metadata-query-indexes.ignored | Property to enable index upgrade for metadata query (MDQ). The indexes are not added unless this value is changed. Adding each the supporting indexes may take several hours depending on the size of the database. The required indexes may be added in stages. See: `classpath:alfresco/dbscripts/upgrade/4.2/${db.script.dialect}/metadata-query-indexes.sql` . See: `classpath:alfresco/dbscripts/upgrade/5.1/${db.script.dialect}/metadata-query-indexes-2.sql` | true |
+| system.metadata-query-indexes-more.ignored |  | true |
 |  |  |  |
 |  |  |  |
 |  |  |  |
