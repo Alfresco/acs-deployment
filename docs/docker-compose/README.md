@@ -140,12 +140,12 @@ For a complete list of parameters that can be passed through JAVA_OPTS enviromen
 | MISC_URL |  |  |
 | IMAGEMAGICK_QUEUE |  | "org.alfresco.transform.engine.imagemagick.acs" |
 | PDF_RENDERER_QUEUE |  | "org.alfresco.transform.engine.alfresco-pdf-renderer.acs" |
-| LIBREOFFICE_QUEUE |  | org.alfresco.transform.engine.libreoffice.acs |
-| TIKA_QUEUE |  | org.alfresco.transform.engine.tika.acs |
-| MISC_QUEUE |  | org.alfresco.transform.engine.misc.acs |
-| CORE_AIO_QUEUE |  | org.alfresco.transform.engine.aio.acs |
+| LIBREOFFICE_QUEUE |  | "org.alfresco.transform.engine.libreoffice.acs" |
+| TIKA_QUEUE |  | "org.alfresco.transform.engine.tika.acs" |
+| MISC_QUEUE |  | "org.alfresco.transform.engine.misc.acs" |
+| CORE_AIO_QUEUE |  | "org.alfresco.transform.engine.aio.acs" |
 | TRANSFORMER_ENGINE_PROTOCOL | This value can be one of the following (http, jms) | "jms" |
-| TRANSFORMER_ROUTES_FILE_LOCATION |  | transformer-pipelines.json |
+| TRANSFORMER_ROUTES_FILE_LOCATION |  | "transformer-pipelines.json" |
 | MAX_TRANSFORM_RETRIES |  | 3 |
 | INITIAL_RETRY_TIMEOUT |  | 10000 |
 | INCREASE_RETRY_TIMEOUT |  | 10000 |
