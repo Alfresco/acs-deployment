@@ -23,7 +23,7 @@
 | system.webdav.url.path.prefix | WebDAV URL path prefix | "" |
 | system.webdav.storeName | WebDAV store name | ${protocols.storeName} |
 | system.webdav.rootPath | WebDAV root path | ${protocols.rootPath} |
-| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | <code>(.*/\\..*)|(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*atmp[0-9]+$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)|(.*backup.*\\.do[ct]{1}[x]?[m]?$)|(.*\\.sb\\-\\w{8}\\-\\w{6}$)</code> |
+| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | `(.*/\\..*)|(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*atmp[0-9]+$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)|(.*backup.*\\.do[ct]{1}[x]?[m]?$)|(.*\\.sb\\-\\w{8}\\-\\w{6}$)` |
 | system.webdav.activities.enabled |  | false |
 | system.workflow.jbpm.comment.property.max.length |  | -1 |
 | system.workflow.comment.property.max.length |  | 4000 |
@@ -51,17 +51,17 @@
 | system.acl.maxPermissionCheckTimeMillis | Property to limit resources spent on individual searches. The maximum time spent pruning results. | 10000 |
 | system.acl.maxPermissionChecks | Property to limit resources spent on individual searches.The maximum number of search results to perform permission checks against. | 1000 |
 | system.filefolderservice.defaultListMaxResults | The maximum number of filefolder list results | 5000 |
-| system.preserve.modificationData | DEPRECATED: Use 'system.auditableData.preserve' | false |
+| system.preserve.modificationData | DEPRECATED: Use `system.auditableData.preserve` | false |
 | system.auditableData.preserve | The default to preserve all cm:auditable data on a node when the process is not directly driven by a user action. | ${system.preserve.modificationData} |
 | system.auditableData.FileFolderService | Specific control of how the FileFolderService treats cm:auditable data when performing moves | ${system.auditableData.preserve} |
 | system.auditableData.ACLs | Specific control of whether ACL changes on a node trigger the cm:auditable aspect | ${system.auditableData.preserve} |
 | system.readpermissions.optimise | Property to control read permission evaluation for acegi | true |
 | system.readpermissions.bulkfetchsize | Property to control read permission evaluation for acegi | 1000 |
 | system.maximumStringLength | Manually control how the system handles maximum string lengths. Any zero or negative value is ignored. Only change this after consulting support or reading the appropriate Javadocs for org.alfresco.repo.domain.schema.SchemaBootstrap for V2.1.2. Before database migration, the string value storage may need to be adjusted using the scheduled job | -1 |
-| system.maximumStringLength.jobCronExpression |  | * * * * * ? 2099 |
+| system.maximumStringLength.jobCronExpression |  | `* * * * * ? 2099` |
 | system.maximumStringLength.jobQueryRange |  | 10000 |
 | system.maximumStringLength.jobThreadCount |  | 4 |
-| system.hibernateMaxExecutions | Limit hibernate session size by trying to amalgamate events for the L2 session invalidation<br/>* hibernate works as is up to this size<br/>* after the limit is hit events that can be grouped invalidate the L2 cache by type and not instance.<br/>Events may not group if there are post action listener registered (this is not the case with the default distribution) | 20000 |
+| system.hibernateMaxExecutions | Limit hibernate session size by trying to amalgamate events for the L2 session invalidation. *1.* Hibernate works as is up to this size. *2.* After the limit is hit events that can be grouped invalidate the L2 cache by type and not instance. Events may not group if there are post action listener registered (this is not the case with the default distribution) | 20000 |
 | system.enableTimestampPropagation | Determine if modification timestamp propagation from child to parent nodes is respected or not. Even if 'true', the functionality is only supported for child associations that declare the 'propagateTimestamps' element in the dictionary definition. | true |
 | system.integrity.enabled | Enable system model integrity checking. WARNING: Changing this is unsupported; bugs may corrupt data | true |
 | system.integrity.failOnViolation | Do integrity violations fail transactions. WARNING: Changing this is unsupported; bugs may corrupt data | true |
@@ -70,10 +70,10 @@
 | system.content.eagerOrphanCleanup | Decide if content should be removed from the system immediately after being orphaned. Do not change this unless you have examined the impact it has on your backup procedures. | false |
 | system.content.orphanProtectDays | The number of days to keep orphaned content in the content stores. This has no effect on the 'deleted' content stores, which are not automatically emptied. | 14 |
 | system.content.deletionFailureAction | The action to take when a store or stores fails to delete orphaned content. IGNORE: Just log a warning. The binary remains and the record is expunged. KEEP_URL: Log a warning and create a URL entry with orphan time 0. It won't be processed or removed. | IGNORE |
-| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | 0 0 4 * * ? |
+| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | `0 0 4 * * ?` |
 | lucene.maxAtomicTransformationTime | Millisecond threshold for text transformations. Slower transformers will force the text extraction to be asynchronous | 100 |
 | lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query  | 10000 |
-| lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. http://issues.alfresco.com/browse/AR-1280:  Setting this high is the workaround as of 1.4.3.  | 1000000 |
+| lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. <http://issues.alfresco.com/browse/AR-1280>:  Setting this high is the workaround as of 1.4.3.  | 1000000 |
 | fts.indexer.batchSize |  | 1000 |
 | lucene.indexer.cacheEnabled | Index cache sizes | true |
 | lucene.indexer.maxDocIdCacheSize |  | 100000 |
@@ -111,7 +111,7 @@
 | lucene.indexer.useInMemorySort |  | true |
 | lucene.indexer.maxRawResultSetSizeForInMemorySort |  | 1000 |
 | lucene.indexer.contentIndexingEnabled |  | true |
-| index.backup.cronExpression |  | 0 0 3 * * ? |
+| index.backup.cronExpression |  | `0 0 3 * * ?` |
 | lucene.defaultAnalyserResourceBundleName |  | alfresco/model/dataTypeAnalyzers |
 | transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
 | db.schema.name | Database configuration |  |
@@ -136,13 +136,13 @@
 | db.pool.validate.query | Database configuration |  |
 | db.pool.evict.interval | Database configuration | 600000 |
 | db.pool.evict.idle.min | Database configuration | 1800000 |
-| db.pool.evict.num.tests | note: for 'db.pool.evict.num.tests' see http://commons.apache.org/dbcp/configuration.html (numTestsPerEvictionRun) and also following extract from "org.apache.commons.pool.impl.GenericKeyedObjectPool" (1.5.5). The number of objects to examine during each run of the idle object evictor thread (if any). When a negative value is supplied, <code>ceil({@link #getNumIdle})/abs({@link #getNumTestsPerEvictionRun})</code> tests will be run.  I.e., when the value is <code>-n</code>, roughly one <code>n</code>th of the idle objects will be tested per run. | -1 |
+| db.pool.evict.num.tests | note: for `db.pool.evict.num.tests` see <http://commons.apache.org/dbcp/configuration.html> (numTestsPerEvictionRun) and also following extract from "org.apache.commons.pool.impl.GenericKeyedObjectPool" (1.5.5). The number of objects to examine during each run of the idle object evictor thread (if any). When a negative value is supplied, `ceil({@link #getNumIdle})/abs({@link #getNumTestsPerEvictionRun})` tests will be run.  I.e., when the value is `-n`, roughly one `n`th of the idle objects will be tested per run. | -1 |
 | db.pool.evict.validate | Database configuration | false |
 | db.pool.validate.borrow | Database configuration | true |
 | db.pool.validate.return | Database configuration | false |
 | db.pool.abandoned.detect | Database configuration | false |
 | db.pool.abandoned.time | Database configuration | 300 |
-| db.pool.abandoned.log | db.pool.abandoned.log=true (logAbandoned) adds overhead (http://commons.apache.org/dbcp/configuration.html) and also requires db.pool.abandoned.detect=true (removeAbandoned) | false |
+| db.pool.abandoned.log | `db.pool.abandoned.log=true` (logAbandoned) adds overhead (<http://commons.apache.org/dbcp/configuration.html>) and also requires db.pool.abandoned.detect=true (removeAbandoned) | false |
 | audit.enabled | Audit configuration | true |
 | audit.tagging.enabled | Audit configuration | true |
 | audit.alfresco-access.enabled | Audit configuration | false |
@@ -218,7 +218,7 @@
 | version.store.enableAutoVersionOnUpdateProps | ADM VersionStore Configuration | false |
 | version.store.deprecated.lightWeightVersionStore | ADM VersionStore Configuration | workspace://lightWeightVersionStore |
 | version.store.version2Store | ADM VersionStore Configuration | workspace://version2Store |
-| version.store.versionComparatorClass | Optional Comparator<Version> class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster.  |  |
+| version.store.versionComparatorClass | Optional Comparator\<Version\> class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster.  |  |
 | system.system_container.childname | Folders for storing people | sys:system |
 | system.people_container.childname | Folders for storing people | sys:people |
 | system.authorities_container.childname | Folders for storing people | sys:authorities |
@@ -269,7 +269,7 @@
 | system.thumbnail.mimetype.maxSourceSizeKBytes.odt | Max mimetype sizes to create thumbnail icons | -1 |
 | system.thumbnail.mimetype.maxSourceSizeKBytes.ods | Max mimetype sizes to create thumbnail icons | -1 |
 | system.thumbnail.mimetype.maxSourceSizeKBytes.odp | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.retryPeriod | Configuration for handling of failing thumbnails. See NodeEligibleForRethumbnailingEvaluator's javadoc for details. Retry periods limit the frequency with which the repository will attempt to create Share thumbnails for content nodes which have previously failed in their thumbnail attempts. These periods are in seconds. 604800s = 60s * 60m * 24h * 7d = 1 week | 60 |
+| system.thumbnail.retryPeriod | Configuration for handling of failing thumbnails. See NodeEligibleForRethumbnailingEvaluator's javadoc for details. Retry periods limit the frequency with which the repository will attempt to create Share thumbnails for content nodes which have previously failed in their thumbnail attempts. These periods are in seconds. `604800s = 60s * 60m * 24h * 7d = 1 week` | 60 |
 | system.thumbnail.retryCount | Configuration for handling of failing thumbnails | 2 |
 | system.thumbnail.quietPeriod | Configuration for handling of failing thumbnails | 604800 |
 | system.thumbnail.quietPeriodRetriesEnabled | Configuration for handling of failing thumbnails | true |
@@ -279,7 +279,7 @@
 | transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. |  |
 | tika.startupRetryPeriodSeconds | When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | transform.misc.startupRetryPeriodSeconds | When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | http://localhost:8090/ |
+| localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | <http://localhost:8090/> |
 | localTransform.core-aio.startupRetryPeriodSeconds | When a local transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | content.metadataExtracter.pdf.maxDocumentSizeMB |  | 10 |
 | content.metadataExtracter.pdf.maxConcurrentExtractionsCount |  | 5 |
@@ -288,8 +288,8 @@
 | V2.1-A.fixes.to.schema | Property to enable upgrade from 2.1-A | 0 |
 | authentication.chain | The default authentication chain | alfrescoNtlm1:alfrescoNtlm |
 | authentication.ticket.ticketsExpire | Do authentication tickets expire or live for ever? | true |
-| authentication.ticket.expiryMode | If ticketsEpire is true then how they should expire? Valid values are: <code>AFTER_INACTIVITY</code>, <code>AFTER_FIXED_TIME</code>, <code>DO_NOT_EXPIRE</code>. The default is <code>AFTER_FIXED_TIME | AFTER_INACTIVITY |
-| authentication.ticket.validDuration | If <code>authentication.ticket.ticketsExpire</code> is true and <code>authentication.ticket.expiryMode</code> is <code>AFTER_FIXED_TIME</code> or <code>AFTER_INACTIVITY</code>, this controls the minimum period for which tickets are valid. The default is PT1H for one hour. | PT1H |
+| authentication.ticket.expiryMode | If ticketsEpire is true then how they should expire? Valid values are: `AFTER_INACTIVITY`, `AFTER_FIXED_TIME`, `DO_NOT_EXPIRE`. The default is `AFTER_FIXED_TIME` | AFTER_INACTIVITY |
+| authentication.ticket.validDuration | If `authentication.ticket.ticketsExpire` is true and `authentication.ticket.expiryMode` is `AFTER_FIXED_TIME` or `AFTER_INACTIVITY`, this controls the minimum period for which tickets are valid. The default is PT1H for one hour. | PT1H |
 | authentication.ticket.useSingleTicketPerUser | Use one ticket for all user sessions. For the pre 4.2 behaviour of one ticket per session set this to false. | true |
 | authentication.alwaysAllowBasicAuthForAdminConsole.enabled |  | true |
 | authentication.getRemoteUserTimeoutMilliseconds |  | 10000 |
@@ -350,21 +350,24 @@
 |  |  |  |
 |  |  |  |
 |  |  |  |
+
 ## Alfresco Content Services
 
 ## Alfresco Digital Workspace
+
 ## Alfresco Share
+
 ## Alfresco Search Services
+
 ## Alfresco Sync Service
 
-repo.scheme 	Specifies the repository URL scheme. The default value is http repo.scheme.
-repo.hostname 	Specifies the repository hostname. The default value is localhost.
-messaging.broker.host 	Specifies the ActiveMQ broker hostname.
-messaging.broker.port 	Specifies the ActiveMQ broker port.
-sql.db.url 	Specifies the sync database URL.
-sql.db.username 	Specifies the sync database username.
-sql.db.password 	Specifies the sync database password.
-
+repo.scheme   Specifies the repository URL scheme. The default value is http repo.scheme.
+repo.hostname  Specifies the repository hostname. The default value is localhost.
+messaging.broker.host   Specifies the ActiveMQ broker hostname.
+messaging.broker.port   Specifies the ActiveMQ broker port.
+sql.db.url  Specifies the sync database URL.
+sql.db.username  Specifies the sync database username.
+sql.db.password   Specifies the sync database password.
 
 |Property|Description|
 |:---|:---|
@@ -378,10 +381,9 @@ sql.db.password 	Specifies the sync database password.
 
 ## Alfresco Process Service
 
+### Alfresco Content Repository
 
-#### Alfresco Content Repository
-
-##### Database configuration
+#### Database configuration
 
 * ```db.driver``` - Database driver (e.g.: org.postgresql.Driver)
 * ```db.username``` - Database username (default value: alfresco)
@@ -403,25 +405,20 @@ sql.db.password 	Specifies the sync database password.
 * ```alfresco.host``` - Specifies the externally resolvable host name of the web application.
 * ```alfresco.port``` - Specifies the externally resolvable port number of the web application URL.
 
-
-* ```aos.baseUrlOverwrite``` - http://localhost:8080/alfresco/aos
-
+* ```aos.baseUrlOverwrite``` - <http://localhost:8080/alfresco/aos>
 * ```messaging.broker.url``` - Specifies the ActiveMQ connector URL.
-
 * ```deployment.method``` - Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START)
 
 ##### Transformers
 
 * ```transform.service.enabled```=true
-* ```transform.service.url```=http://transform-router:8095
-* ```sfs.url```=http://shared-file-store:8099/
-* ```localTransform.core-aio.url```=http://transform-core-aio:8090/
-* ```alfresco-pdf-renderer.url```=http://transform-core-aio:8090/
-* ```jodconverter.url```=http://transform-core-aio:8090/
-* ```img.url```=http://transform-core-aio:8090/
-* ```tika.url```=http://transform-core-aio:8090/
-* ```transform.misc.url```=http://transform-core-aio:8090/
+* ```transform.service.url```=<http://transform-router:8095>
+* ```sfs.url```=<http://shared-file-store:8099/>
+* ```localTransform.core-aio.url```=<http://transform-core-aio:8090/>
+* ```alfresco-pdf-renderer.url```=<http://transform-core-aio:8090/>
+* ```jodconverter.url```=<http://transform-core-aio:8090/>
+* ```img.url```=<http://transform-core-aio:8090/>
+* ```tika.url```=<http://transform-core-aio:8090/>
+* ```transform.misc.url```=<http://transform-core-aio:8090/>
 * ```csrf.filter.enabled``` - Enables/disables Cross-Site Request Forgery filters for repository (true/false)
-* ```dsync.service.uris``` - Specifies the hostname of the Sync Service (or the load balancer hiding the Sync Service cluster) that Desktop Sync clients can see. For example, https://<hostname>:9090/alfresco.
-
-#### Alfresco Share
+* ```dsync.service.uris``` - Specifies the hostname of the Sync Service (or the load balancer hiding the Sync Service cluster) that Desktop Sync clients can see. For example, `https://<hostname>:9090/alfresco`.
