@@ -23,7 +23,7 @@
 | system.webdav.url.path.prefix | WebDAV URL path prefix | "" |
 | system.webdav.storeName | WebDAV store name | ${protocols.storeName} |
 | system.webdav.rootPath | WebDAV root path | ${protocols.rootPath} |
-| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | ``(.*/\\..*)|(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*atmp[0-9]+$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)|(.*backup.*\\.do[ct]{1}[x]?[m]?$)|(.*\\.sb\\-\\w{8}\\-\\w{6}$)`` |
+| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | <code>(.*/\\..*)|(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*atmp[0-9]+$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)|(.*backup.*\\.do[ct]{1}[x]?[m]?$)|(.*\\.sb\\-\\w{8}\\-\\w{6}$)</code> |
 | system.webdav.activities.enabled |  | false |
 | system.workflow.jbpm.comment.property.max.length |  | -1 |
 | system.workflow.comment.property.max.length |  | 4000 |
@@ -211,7 +211,7 @@
 | spaces.solr_facets.root.childname | Spaces Configuration | srft:facets |
 | spaces.smartfolders.childname | Spaces Configuration | app:smart_folders |
 | spaces.smartdownloads.childname | Spaces Configuration | app:smart_downloads |
-| spaces.transfer_summary_report.location | Spaces Configuration | /${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.transfers.childname}/${spaces.inbound_transfer_records.childname} |
+| spaces.transfer_summary_report.location | Spaces Configuration | \/${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.transfers.childname}/${spaces.inbound_transfer_records.childname} |
 | spaces.quickshare.link_expiry_actions.childname | Spaces Configuration | app:quick_share_link_expiry_actions |
 | version.store.initialVersion | ADM VersionStore Configuration | true |
 | version.store.enableAutoVersioning | ADM VersionStore Configuration | true |
