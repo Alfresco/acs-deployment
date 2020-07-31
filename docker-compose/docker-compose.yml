@@ -80,7 +80,7 @@ services:
         - activemq
 
     shared-file-store:
-        image: alfresco/alfresco-shared-file-store:0.9.0
+        image: alfresco/alfresco-shared-file-store:0.10.0
         mem_limit: 512m
         environment:
             JAVA_OPTS: " -Xms256m -Xmx512m"
