@@ -28,10 +28,9 @@ Branches and tags are used for denoting stable releases, to work with a specific
 |6.2.0.2|3.0.9|support/SP/3.N
 |6.2.1|4.0.3|support/SP/4.N
 |6.2.2|4.1.0|support/SP/4.N
-|6.2.3|5.0.0|support/SP/5.N
-|7.0.0|6.0.0|master
+|7.0.0|5.0.0|master
 
-NOTE: The last two rows (5.0.0 & 6.0.0) have not been released yet.
+NOTE: The last rows (5.0.0) has not been released yet.
 
 Helm charts also have their own [version scheme]((https://docs.helm.sh/developing_charts/#charts-and-versioning)) based on [Semantic Versioning](https://semver.org). The `appVersion` property within the chart describes the version of ACS being deployed. The chart version corresponds to the tag version described in the table above.
 

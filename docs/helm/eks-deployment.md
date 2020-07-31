@@ -34,9 +34,9 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
 1. Create a hosted zone in Route53 using [these steps](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html) if you don't already have one available.
 
-2. Create a public certificate for the hosted zone created in step 1 in Certificate Manager using [these steps](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html) if you don't have one already available and make a note of the certificate ARN.
+2. Create a public certificate for the hosted zone created in step 1 in Certificate Manager using [these steps](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html) if you don't have one already available and make a note of the certificate ARN for use later.
 
-3. Create a file called `external-dns.yaml` with the text below (replacing `your-domain-name` with the domain name you created in step 1). This manifest defines a service account and a cluster role for managing DNS.
+3. Create a file called `external-dns.yaml` with the text below (replacing `YOUR-DOMAIN-NAME` with the domain name you created in step 1). This manifest defines a service account and a cluster role for managing DNS.
     ```yaml
     apiVersion: v1
     kind: ServiceAccount
@@ -92,7 +92,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
             image: registry.opensource.zalan.do/teapot/external-dns:latest
             args:
             - --source=service
-            - --domain-filter=your-domain-name
+            - --domain-filter=YOUR-DOMAIN-NAME
             - --provider=aws
             - --policy=sync
             - --aws-zone-type=public
@@ -104,20 +104,43 @@ Now we have an EKS cluster up and running there are a few one time steps we need
    ```bash
    kubectl apply -f external-dns.yaml -n kube-system
    ```
-5. Find the name of the role used by the nodes by running the following command (replacing `your-cluster-name` with the name you gave your cluster):
+
+5. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
     ```bash
-    aws eks describe-nodegroup --cluster-name your-cluster-name --nodegroup-name linux-nodes --query "nodegroup.nodeRole" --output text
+    aws eks describe-nodegroup --cluster-name YOUR-CLUSTER-NAME --nodegroup-name linux-nodes --query "nodegroup.nodeRole" --output text
     ```
-6. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy.
+
+6. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy as shown in the screenshot below:
+
+    ![Attach Policy](./diagrams/eks-attach-policy.png)
 
 ### File System
 
-1. Create an Elastic File System in the VPC created by EKS using [these steps](https://docs.aws.amazon.com/efs/latest/ug/creating-using-create-fs.html) ensuring a mount target is created in each subnet. Make a note of the File System ID.
-2. Find The CIDR range of VPC created by eksctl.
-3. Locate the default security group for the VPC and add an inbound rule for NFS traffic from the VPC CIDR range.
-4. Deploy an NFS Client Provisioner with Helm using the following command (replacing `efs-dns-name` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
+1. Create an Elastic File System in the VPC created by EKS using [these steps](https://docs.aws.amazon.com/efs/latest/ug/creating-using-create-fs.html) ensuring a mount target is created in each subnet. Make a note of the File System ID (circled in the screenshot below).
+
+    ![EFS](./diagrams/eks-efs.png)
+
+2. Find The ID of VPC created when your cluster was built using the command below (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
     ```bash
-    helm install alfresco-nfs-provisioner stable/nfs-client-provisioner --set nfs.server="efs-dns-name" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
+    aws eks describe-cluster --name YOUR-CLUSTER-NAME --query "cluster.resourcesVpcConfig.vpcId" --output text
+    ```
+
+3. Find The CIDR range of VPC using the command below (replacing `VPC-ID` with the ID retrieved in the previous step):
+    ```bash
+    aws ec2 describe-vpcs --vpc-ids VPC-ID --query "Vpcs[].CidrBlock" --output text
+    ```
+
+4. Go to the [VPC Console](https://console.aws.amazon.com/vpc/home) and search for the VPC using the ID retrieved in step 2 as shown in the screenshot below:
+
+    ![VPC Default Security Group](./diagrams/eks-vpc-security-group.png)
+
+5. Click on the default security group for the VPC (highlighted in the screenshot above) and add an inbound rule for NFS traffic from the VPC CIDR range as shown in the screenshot below:
+
+    ![Inbound Rules](./diagrams/eks-inbound-rules.png)
+
+6. Deploy an NFS Client Provisioner with Helm using the following command (replacing `EFS-DNS-NAME` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
+    ```bash
+    helm install alfresco-nfs-provisioner stable/nfs-client-provisioner --set nfs.server="EFS-DNS-NAME" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
     ```
 
 ## Deploy
@@ -126,10 +149,10 @@ Now the EKS cluster is setup we can deploy ACS.
 
 ### Namespace
 
-Create a namespace to host ACS inside the cluster using the following command:
+Namespaces in Kubernetes isolate workloads from each other, create a namespace to host ACS inside the cluster using the following command (we'll then use the `alfresco` throughout the rest of the tutorial):
 
 ```bash
-kubectl create namespace acs
+kubectl create namespace alfresco
 ```
 
 ### Ingress
@@ -140,7 +163,7 @@ kubectl create namespace acs
     kind: Role
     metadata:
       name: acs:psp
-      namespace: acs
+      namespace: alfresco
     rules:
     - apiGroups:
       - policy
@@ -154,8 +177,8 @@ kubectl create namespace acs
     apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     metadata:
-      name: my-acs:psp:default
-      namespace: acs
+      name: acs:psp:default
+      namespace: alfresco
     roleRef:
       apiGroup: rbac.authorization.k8s.io
       kind: Role
@@ -163,13 +186,13 @@ kubectl create namespace acs
     subjects:
     - kind: ServiceAccount
       name: default
-      namespace: acs
+      namespace: alfresco
     ---
     apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     metadata:
       name: acs:psp:acs-ingress
-      namespace: acs
+      namespace: alfresco
     roleRef:
       apiGroup: rbac.authorization.k8s.io
       kind: Role
@@ -177,19 +200,21 @@ kubectl create namespace acs
     subjects:
     - kind: ServiceAccount
       name: acs-ingress
-      namespace: acs
+      namespace: alfresco
     ```
 
 2. Use the kubectl command to create the cluster roles required by the ingress service.
     ```bash
-    kubectl apply -f ingress-rbac.yaml -n acs
+    kubectl apply -f ingress-rbac.yaml -n alfresco
     ```
+
 3. Locate the ID of the security
-4. Deploy the ingress using the following command (replacing ACM_CERTIFICATE_ARN with the ARN of the certificate created in the DNS section):
+
+4. Deploy the ingress using the following command (replacing `ACM_CERTIFICATE_ARN` with the ARN of the certificate created in the DNS section):
     ```bash
     helm install acs-ingress stable/nginx-ingress \
     --set controller.scope.enabled=true \
-    --set controller.scope.namespace=acs \
+    --set controller.scope.namespace=alfresco \
     --set rbac.create=true \
     --set controller.config."proxy-body-size"="100m" \
     --set controller.service.targetPorts.https=80 \
@@ -200,15 +225,15 @@ kubectl create namespace acs
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
     --set controller.publishService.enabled=true \
     --atomic \
-    --namespace acs
+    --namespace alfresco
     ```
     NOTE: The command will wait until the deployment is ready so please be patient.
 
 ### Docker Registry Secret
 
-1. Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following commmand (replacing your-username and your-password with your credentials):
+1. Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following commmand (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
     ```bash
-    kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=your-username --docker-password=your-password -n acs
+    kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
     ```
 
 ### ACS 
@@ -225,13 +250,13 @@ kubectl create namespace acs
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --atomic \
     --timeout 9m0s \
-    --namespace=acs
+    --namespace=alfresco
     ```
     NOTE: The command will wait until the deployment is ready so please be patient.
 
 ## Access
 
-If the deployment was successful the following URLs will be available:
+When the deployment has completed the following URLs will be available:
 
 * Repository: https://acs.opsexp.alfresco.me:443/alfresco
 * ADW: https://acs.opsexp.alfresco.me:443/workspace/
@@ -241,17 +266,27 @@ If the deployment was successful the following URLs will be available:
 
 ## Configure
 
-Installs an out-of-the-box setup by default but there are many options.
-Config table or refer to examples.
+By default, this tutorial installs an out-of-the-box setup, however there are many configurations options described [here](../README.md#Configure). There are also several [examples](./examples) covering various use cases.
+
+This deployment is also not fully secured by default, to learn about and apply further restrictions please refer to the [EKS Best Practices for Security](https://aws.github.io/aws-eks-best-practices/).
 
 ## Cleanup
 
-1. Remove the `acs` deployment by running the following command:
+1. Remove the `acs` and `acs-ingress` deployments by running the following command:
      ```bash
-     helm uninstall acs
+     helm uninstall -n alfresco acs acs-ingress
      ```
 
-kubectl delete namespace $DESIREDNAMESPACE
-aws efs delete-mount-target --mount-target-id $EFS_MOUNT_ID
-aws efs delete-file-system --file-system-id $EFS_FS_ID
-eksctl delete
+2. Delete the Kubernetes namespace using the command below:
+    ```bash
+    kubectl delete namespace alfresco
+    ```
+
+3. Go to the [EFS Console](https://console.aws.amazon.com/efs), select the file system we created earlier and press the "Delete" button to remove the mount targets and file system.
+
+4. Go to the [IAM console](https://console.aws.amazon.com/iam/home) and remove the AmazonRoute53FullAccess managed policy we added to the NodeInstanceRole in the File System section otherwise the cluster will fail to delete in the next step.
+
+5. Finally, delete the EKS cluster using the command below (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
+    ```bash
+    eksctl delete cluster --name YOUR-CLUSTER-NAME
+    ```
