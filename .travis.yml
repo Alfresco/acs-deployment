@@ -232,7 +232,8 @@ jobs:
 
         # run acs checks
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-
+        # run sync service checks
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         # For checking if persistence failover is correctly working with our deployments
         # in the next phase we delete the acs and postgress pods,
         # wait for k8s to recreate them, then check if the data created in the first test run is still there
