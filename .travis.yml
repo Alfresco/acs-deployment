@@ -75,6 +75,7 @@ jobs:
         helm lint helm/alfresco-content-services/charts/activemq
         helm lint helm/alfresco-content-services/charts/alfresco-search
         helm lint helm/alfresco-content-services/charts/alfresco-sync-service
+        helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
     - name: Deploy Chart and Run Postman Checks
       stage: test
       script: |
