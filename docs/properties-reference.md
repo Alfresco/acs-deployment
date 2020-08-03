@@ -1,51 +1,57 @@
-acs.repo.rendition.events.endpoint                                         jms:acs-repo-rendition-events?jmsMessageType=Text
-acs.repo.transform.request.endpoint                                        jms:acs-repo-transform-request?jmsMessageType=Text
-activities.feed.fetchBatchSize                                             250
-activities.feed.generator.jsonFormatOnly                                   true
-activities.feed.max.ageMins                                                44640
-activities.feed.max.idRange                                                1000000
-activities.feed.max.size                                                   200
-activities.feedNotifier.batchSize                                          200
-activities.feedNotifier.numThreads                                         2
-alfresco.authentication.gateway.bufferSize                                 2048
-alfresco.authentication.gateway.connectTimeout                             10000
-alfresco.authentication.gateway.host                                       
-alfresco.authentication.gateway.httpConnectionStalecheck                   true
-alfresco.authentication.gateway.httpTcpNodelay                             true
-alfresco.authentication.gateway.inboundHeaders                             X-Alfresco-Authenticator-Key,X-Alfresco-Remote-User
-alfresco.authentication.gateway.outboundHeaders                            Authorization,key
-alfresco.authentication.gateway.port                                       443
-alfresco.authentication.gateway.prefixUrl                                  /publicapi
-alfresco.authentication.gateway.protocol                                   https
-alfresco.authentication.gateway.readTimeout                                120000
-alfresco.cluster.enabled                                                   true
-alfresco.cluster.hostname                                                  ${localname}
-alfresco.cluster.interface                                                 
-alfresco.cluster.max.init.retries                                          50
-alfresco.cluster.memberchange.dropInvalidatingCaches                       true
-alfresco.cluster.nodetype                                                  "Repository server"
-alfresco.cluster.specify.interface                                         false
-alfresco.clusterCheck.timeout                                              4000
-alfresco.ephemeralLock.expiryThresh                                        172800
-alfresco.events.include                                                    CONTENTPUT, NODEMOVED, NODEADDED, NODEREMOVED, NODERENAMED, NODECHECKOUTCANCELLED, NODECHECKEDOUT, NODECHECKEDIN, AUTHADDEDTOGROUP, AUTHREMOVEDFROMGROUP, GROUPDELETED, INHERITPERMISSIONSDISABLED, INHERITPERMISSIONSENABLED, LOCALPERMISSIONGRANTED, LOCALPERMISSIONREVOKED, RECORDCREATED, RECORDREJECTED, FILECLASSIFIED, FILEUNCLASSIFIED, NODELOCKED, NODEUNLOCKED
-alfresco.hazelcast.autoinc.port                                            false
-alfresco.hazelcast.bind.any                                                false
-alfresco.hazelcast.configLocation                                          classpath:alfresco/hazelcast/hazelcast-tcp.xml
-alfresco.hazelcast.mancenter.enabled                                       false
-alfresco.hazelcast.mancenter.url                                           http://localhost:8080/mancenter
-alfresco.hazelcast.max.no.heartbeat.seconds                                15
-alfresco.hazelcast.port                                                    5701
-alfresco.jmx.connector.enabled                                             false
-alfresco.restApi.basicAuthScheme                                           false
-alfresco.rmi.services.external.host                                        localhost
-alfresco.rmi.services.host                                                 0.0.0.0
-alfresco.rmi.services.port                                                 50500
-alfresco.rmi.services.retries                                              4
-alfresco.rmi.services.retryInterval                                        250
-alfresco_user_store.adminpassword                                          ********
-alfresco_user_store.adminusername                                          admin
-alfresco_user_store.guestusername                                          guest
-alfresco_user_store.store                                                  user://alfrescoUserStore
+# Alfresco Content Services Property Reference
+
+The table below shows the full list of properties (exluding module specific properties) that can be figured via alfresco-global.properties ordered alphabetically.
+
+| Property | Description | Default value |
+|----------|-------------|---------------|
+| acs.repo.rendition.events.endpoint | Raw events | jms:acs-repo-rendition-events?jmsMessageType=Text
+| acs.repo.transform.request.endpoint |                                       | jms:acs-repo-transform-request?jmsMessageType=Text
+| activities.feed.fetchBatchSize |                                            | 250
+| activities.feed.generator.jsonFormatOnly |                                   | true
+| activities.feed.max.ageMins |                                                 | 44640
+| activities.feed.max.idRange |                                                | 1000000
+| activities.feed.max.size |                                                   | 200
+| activities.feedNotifier.batchSize |                                          | 200
+| activities.feedNotifier.numThreads |                                         | 2
+| alfresco.authentication.gateway.bufferSize | Gateway Authentication | 2048
+| alfresco.authentication.gateway.connectTimeout |                             | 10000
+| alfresco.authentication.gateway.host | Gateway authentication is disabled if empty host is specified | |
+| alfresco.authentication.gateway.httpConnectionStalecheck |                   | true
+| alfresco.authentication.gateway.httpTcpNodelay |                             | true
+| alfresco.authentication.gateway.inboundHeaders |                             | X-Alfresco-Authenticator-Key,X-Alfresco-Remote-User
+| alfresco.authentication.gateway.outboundHeaders |                            | Authorization,key
+| alfresco.authentication.gateway.port |                                       | 443
+| alfresco.authentication.gateway.prefixUrl |                                  | /publicapi
+| alfresco.authentication.gateway.protocol |                                   | https
+| alfresco.authentication.gateway.readTimeout |                                | 120000
+| alfresco.cluster.enabled |                                                   | true
+| alfresco.cluster.hostname |                                                  | ${localname}
+| alfresco.cluster.interface |                                                 | 
+| alfresco.cluster.max.init.retries |                                          | 50
+| alfresco.cluster.memberchange.dropInvalidatingCaches |                       | true
+| alfresco.cluster.nodetype |                                                 | "Repository server"
+| alfresco.cluster.specify.interface |                                         | false
+| alfresco.clusterCheck.timeout |                                              | 4000
+| alfresco.ephemeralLock.expiryThresh |                                        | 172800
+| alfresco.events.include |                                                    | CONTENTPUT, NODEMOVED, NODEADDED, NODEREMOVED, NODERENAMED, NODECHECKOUTCANCELLED, NODECHECKEDOUT, NODECHECKEDIN, AUTHADDEDTOGROUP, AUTHREMOVEDFROMGROUP, GROUPDELETED, INHERITPERMISSIONSDISABLED, INHERITPERMISSIONSENABLED, LOCALPERMISSIONGRANTED, LOCALPERMISSIONREVOKED, RECORDCREATED, RECORDREJECTED, FILECLASSIFIED, FILEUNCLASSIFIED, NODELOCKED, NODEUNLOCKED
+| alfresco.hazelcast.autoinc.port |                                            | false
+| alfresco.hazelcast.bind.any |                                                | false
+| alfresco.hazelcast.configLocation |                                          | classpath:alfresco/hazelcast/hazelcast-tcp.xml
+| alfresco.hazelcast.mancenter.enabled |                                       | false
+| alfresco.hazelcast.mancenter.url |                                           | http://localhost:8080/mancenter
+| alfresco.hazelcast.max.no.heartbeat.seconds |                                | 15
+| alfresco.hazelcast.port |                                                    | 5701
+| alfresco.jmx.connector.enabled |                                             | false
+| alfresco.restApi.basicAuthScheme |                                           | false
+| alfresco.rmi.services.external.host |                                        | localhost
+| alfresco.rmi.services.host |                                                 | 0.0.0.0
+| alfresco.rmi.services.port |                                                 | 50500
+| alfresco.rmi.services.retries |                                              | 4
+| alfresco.rmi.services.retryInterval |                                        | 250
+| alfresco_user_store.adminpassword |                                          | ********
+| alfresco_user_store.adminusername |                                          | admin
+| alfresco_user_store.guestusername |                                          | guest
+| alfresco_user_store.store |                                                  | user://alfrescoUserStore
 alfresco_user_store.system_container.childname                             sys:system
 alfresco_user_store.user_container.childname                               sys:people
 api-explorer.url                                                           
