@@ -64,8 +64,18 @@ after_failure: |
     kubectl delete namespace $namespace
   fi
 
+stages:
+  - test
+
 jobs:
   include:
+    - name: Lint for subcharts
+      stage: test
+      script: |
+        helm lint helm/alfresco-content-services/charts/activemq
+        helm lint helm/alfresco-content-services/charts/alfresco-search
+        helm lint helm/alfresco-content-services/charts/alfresco-sync-service
+        helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
     - name: Deploy Chart and Run Postman Checks
       stage: test
       script: |
@@ -102,7 +112,7 @@ jobs:
               sleep "$PODS_SLEEP_SECONDS"
               continue
             done
-          
+
           if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
             pod_status
             echo "Pods did not start - exit 1"
@@ -223,9 +233,10 @@ jobs:
 
         # run acs checks
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-
-        # For checking if persistence failover is correctly working with our deployments 
-        # in the next phase we delete the acs and postgress pods, 
+        # run sync service checks
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        # For checking if persistence failover is correctly working with our deployments
+        # in the next phase we delete the acs and postgress pods,
         # wait for k8s to recreate them, then check if the data created in the first test run is still there
         kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
@@ -241,6 +252,7 @@ jobs:
 
         # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
@@ -251,7 +263,7 @@ jobs:
         echo "Starting Alfresco in Docker container"
         docker-compose ps
         docker-compose pull
-        export COMPOSE_HTTP_TIMEOUT=120 
+        export COMPOSE_HTTP_TIMEOUT=120
         docker-compose up -d
         # docker-compose up
         WAIT_INTERVAL=1
@@ -307,6 +319,7 @@ jobs:
         done
         cd ../test/postman/docker-compose
         docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
+
       after_success: |
         echo "nothing to cleanup"
       after_failure: |
