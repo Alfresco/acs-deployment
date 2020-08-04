@@ -2,332 +2,334 @@
 
 The table below shows the full list of properties (exluding module specific properties) that can be figured via alfresco-global.properties ordered alphabetically.
 
+
+
 | Property | Description | Default value |
 |----------|-------------|---------------|
-| acs.repo.rendition.events.endpoint | Raw events | jms:acs-repo-rendition-events?jmsMessageType=Text
-| acs.repo.transform.request.endpoint |                                       | jms:acs-repo-transform-request?jmsMessageType=Text
-| activities.feed.fetchBatchSize |                                            | 250
-| activities.feed.generator.jsonFormatOnly |                                   | true
-| activities.feed.max.ageMins |                                                 | 44640
-| activities.feed.max.idRange |                                                | 1000000
-| activities.feed.max.size |                                                   | 200
-| activities.feedNotifier.batchSize |                                          | 200
-| activities.feedNotifier.numThreads |                                         | 2
-| alfresco.authentication.gateway.bufferSize | Gateway Authentication | 2048
-| alfresco.authentication.gateway.connectTimeout |                             | 10000
+| acs.repo.rendition.events.endpoint | Raw events | jms:acs-repo-rendition-events?jmsMessageType=Text |
+| acs.repo.transform.request.endpoint | Transform request events | jms:acs-repo-transform-request?jmsMessageType=Text |
+| activities.feed.fetchBatchSize | | 250 |
+| activities.feed.generator.jsonFormatOnly | | true |
+| activities.feed.max.ageMins | Feed max age (eg. 44640 mins > 31 days)| 44640 |
+| activities.feed.max.idRange | Feed max ID range to limit maximum number of entries | 1000000 |
+| activities.feed.max.size | Feed max size (number of entries) | 200 |
+| activities.feedNotifier.batchSize | | 200 |
+| activities.feedNotifier.numThreads | | 2 |
+| alfresco.authentication.gateway.bufferSize | Gateway Authentication | 2048 |
+| alfresco.authentication.gateway.connectTimeout | Gateway Authentication | 10000 |
 | alfresco.authentication.gateway.host | Gateway authentication is disabled if empty host is specified | |
-| alfresco.authentication.gateway.httpConnectionStalecheck |                   | true
-| alfresco.authentication.gateway.httpTcpNodelay |                             | true
-| alfresco.authentication.gateway.inboundHeaders |                             | X-Alfresco-Authenticator-Key,X-Alfresco-Remote-User
-| alfresco.authentication.gateway.outboundHeaders |                            | Authorization,key
-| alfresco.authentication.gateway.port |                                       | 443
-| alfresco.authentication.gateway.prefixUrl |                                  | /publicapi
-| alfresco.authentication.gateway.protocol |                                   | https
-| alfresco.authentication.gateway.readTimeout |                                | 120000
-| alfresco.cluster.enabled |                                                   | true
-| alfresco.cluster.hostname |                                                  | ${localname}
-| alfresco.cluster.interface |                                                 | 
-| alfresco.cluster.max.init.retries |                                          | 50
-| alfresco.cluster.memberchange.dropInvalidatingCaches |                       | true
-| alfresco.cluster.nodetype |                                                 | "Repository server"
-| alfresco.cluster.specify.interface |                                         | false
-| alfresco.clusterCheck.timeout |                                              | 4000
-| alfresco.ephemeralLock.expiryThresh |                                        | 172800
-| alfresco.events.include |                                                    | CONTENTPUT, NODEMOVED, NODEADDED, NODEREMOVED, NODERENAMED, NODECHECKOUTCANCELLED, NODECHECKEDOUT, NODECHECKEDIN, AUTHADDEDTOGROUP, AUTHREMOVEDFROMGROUP, GROUPDELETED, INHERITPERMISSIONSDISABLED, INHERITPERMISSIONSENABLED, LOCALPERMISSIONGRANTED, LOCALPERMISSIONREVOKED, RECORDCREATED, RECORDREJECTED, FILECLASSIFIED, FILEUNCLASSIFIED, NODELOCKED, NODEUNLOCKED
-| alfresco.hazelcast.autoinc.port |                                            | false
-| alfresco.hazelcast.bind.any |                                                | false
-| alfresco.hazelcast.configLocation |                                          | classpath:alfresco/hazelcast/hazelcast-tcp.xml
-| alfresco.hazelcast.mancenter.enabled |                                       | false
-| alfresco.hazelcast.mancenter.url |                                           | http://localhost:8080/mancenter
-| alfresco.hazelcast.max.no.heartbeat.seconds |                                | 15
-| alfresco.hazelcast.port |                                                    | 5701
-| alfresco.jmx.connector.enabled |                                             | false
-| alfresco.restApi.basicAuthScheme |                                           | false
-| alfresco.rmi.services.external.host |                                        | localhost
-| alfresco.rmi.services.host |                                                 | 0.0.0.0
-| alfresco.rmi.services.port |                                                 | 50500
-| alfresco.rmi.services.retries |                                              | 4
-| alfresco.rmi.services.retryInterval |                                        | 250
-| alfresco_user_store.adminpassword |                                          | ********
-| alfresco_user_store.adminusername |                                          | admin
-| alfresco_user_store.guestusername |                                          | guest
-| alfresco_user_store.store |                                                  | user://alfrescoUserStore
-alfresco_user_store.system_container.childname                             sys:system
-alfresco_user_store.user_container.childname                               sys:people
-api-explorer.url                                                           
-attributes.propcleaner.cronExpression                                      0 0 3 ? * SAT
-audit.alfresco-access.enabled                                              false
-audit.alfresco-access.sub-actions.enabled                                  false
-audit.cmischangelog.enabled                                                false
-audit.config.strict                                                        false
-audit.dod5015.enabled                                                      false
-audit.enabled                                                              true
-audit.filter.alfresco-access.default.enabled                               false
-audit.filter.alfresco-access.transaction.path                              ~/sys:archivedItem;~/ver:;.*
-audit.filter.alfresco-access.transaction.type                              cm:folder;cm:content;st:site
-audit.filter.alfresco-access.transaction.user                              ~System;~null;.*
-audit.tagging.enabled                                                      true
-authentication.alwaysAllowBasicAuthForAdminConsole.enabled                 true
-authentication.chain                                                       alfrescoNtlm1:alfrescoNtlm
-authentication.getRemoteUserTimeoutMilliseconds                            10000
-authentication.protection.enabled                                          true
-authentication.protection.limit                                            10
-authentication.protection.periodSeconds                                    6
-authentication.ticket.expiryMode                                           AFTER_INACTIVITY
-authentication.ticket.ticketsExpire                                        true
-authentication.ticket.useSingleTicketPerUser                               true
-authentication.ticket.validDuration                                        PT1H
-authority.findAuthorityLimit                                               10000
-authority.useBridgeTable                                                   true
-authorization.audit.day                                                    2
-authorization.audit.hour                                                   3
-authorization.audit.minute                                                 0
-authorization.locales.previous                                             
-bulkImport.batch.batchSize                                                 20
-bulkImport.batch.numThreads                                                4
-cache.aclEntitySharedCache.backup-count                                    1
-cache.aclEntitySharedCache.cluster.type                                    fully-distributed
-cache.aclEntitySharedCache.eviction-policy                                 LRU
-cache.aclEntitySharedCache.maxIdleSeconds                                  0
-cache.aclEntitySharedCache.maxItems                                        50000
-cache.aclEntitySharedCache.merge-policy                                    com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.aclEntitySharedCache.readBackupData                                  false
-cache.aclEntitySharedCache.timeToLiveSeconds                               0
-cache.aclEntitySharedCache.tx.maxItems                                     50000
-cache.aclEntitySharedCache.tx.statsEnabled                                 ${caches.tx.statsEnabled}
-cache.aclSharedCache.backup-count                                          1
-cache.aclSharedCache.cluster.type                                          fully-distributed
-cache.aclSharedCache.eviction-policy                                       LRU
-cache.aclSharedCache.maxIdleSeconds                                        0
-cache.aclSharedCache.maxItems                                              50000
-cache.aclSharedCache.merge-policy                                          com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.aclSharedCache.readBackupData                                        false
-cache.aclSharedCache.timeToLiveSeconds                                     0
-cache.aclSharedCache.tx.maxItems                                           20000
-cache.aclSharedCache.tx.statsEnabled                                       ${caches.tx.statsEnabled}
-cache.activitiTokensCache.backup-count                                     1
-cache.activitiTokensCache.cluster.type                                     fully-distributed
-cache.activitiTokensCache.eviction-percentage                              1
-cache.activitiTokensCache.eviction-policy                                  NONE
-cache.activitiTokensCache.maxIdleSeconds                                   3600
-cache.activitiTokensCache.maxItems                                         0
-cache.activitiTokensCache.merge-policy                                     hz.ADD_NEW_ENTRY
-cache.activitiTokensCache.timeToLiveSeconds                                0
-cache.authenticationSharedCache.backup-count                               1
-cache.authenticationSharedCache.cluster.type                               fully-distributed
-cache.authenticationSharedCache.eviction-policy                            LRU
-cache.authenticationSharedCache.maxIdleSeconds                             0
-cache.authenticationSharedCache.maxItems                                   5000
-cache.authenticationSharedCache.merge-policy                               com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.authenticationSharedCache.readBackupData                             false
-cache.authenticationSharedCache.timeToLiveSeconds                          0
-cache.authenticationSharedCache.tx.maxItems                                1000
-cache.authenticationSharedCache.tx.statsEnabled                            ${caches.tx.statsEnabled}
-cache.authorityEntitySharedCache.tx.maxItems                               50000
-cache.authorityEntitySharedCache.tx.statsEnabled                           ${caches.tx.statsEnabled}
-cache.authoritySharedCache.backup-count                                    1
-cache.authoritySharedCache.cluster.type                                    invalidating
-cache.authoritySharedCache.eviction-policy                                 LRU
-cache.authoritySharedCache.maxIdleSeconds                                  0
-cache.authoritySharedCache.maxItems                                        10000
-cache.authoritySharedCache.merge-policy                                    com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.authoritySharedCache.readBackupData                                  false
-cache.authoritySharedCache.timeToLiveSeconds                               0
-cache.authoritySharedCache.tx.maxItems                                     10000
-cache.authoritySharedCache.tx.statsEnabled                                 ${caches.tx.statsEnabled}
-cache.authorityToChildAuthoritySharedCache.backup-count                    1
-cache.authorityToChildAuthoritySharedCache.cluster.type                    invalidating
-cache.authorityToChildAuthoritySharedCache.eviction-policy                 LRU
-cache.authorityToChildAuthoritySharedCache.maxIdleSeconds                  0
-cache.authorityToChildAuthoritySharedCache.maxItems                        40000
-cache.authorityToChildAuthoritySharedCache.merge-policy                    com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.authorityToChildAuthoritySharedCache.readBackupData                  false
-cache.authorityToChildAuthoritySharedCache.timeToLiveSeconds               0
-cache.authorityToChildAuthoritySharedCache.tx.maxItems                     40000
-cache.authorityToChildAuthoritySharedCache.tx.statsEnabled                 ${caches.tx.statsEnabled}
-cache.authorizationCache.backup-count                                      1
-cache.authorizationCache.cluster.type                                      fully-distributed
-cache.authorizationCache.eviction-policy                                   LRU
-cache.authorizationCache.maxIdleSeconds                                    0
-cache.authorizationCache.maxItems                                          10000
-cache.authorizationCache.merge-policy                                      com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.authorizationCache.readBackupData                                    false
-cache.authorizationCache.timeToLiveSeconds                                 300
-cache.authorizationCache.tx.maxItems                                       1000
-cache.authorizationCache.tx.statsEnabled                                   ${caches.tx.statsEnabled}
-cache.cachingContentStoreCache.backup-count                                1
-cache.cachingContentStoreCache.cluster.type                                local
-cache.cachingContentStoreCache.eviction-policy                             LRU
-cache.cachingContentStoreCache.maxIdleSeconds                              14400
-cache.cachingContentStoreCache.maxItems                                    5000
-cache.cachingContentStoreCache.merge-policy                                com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.cachingContentStoreCache.readBackupData                              false
-cache.cachingContentStoreCache.timeToLiveSeconds                           86400
-cache.caveatConfigCache.backup-count                                       1
-cache.caveatConfigCache.cluster.type                                       invalidating
-cache.caveatConfigCache.eviction-policy                                    LRU
-cache.caveatConfigCache.maxIdleSeconds                                     0
-cache.caveatConfigCache.maxItems                                           5000
-cache.caveatConfigCache.merge-policy                                       com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.caveatConfigCache.readBackupData                                     false
-cache.caveatConfigCache.timeToLiveSeconds                                  0
-cache.caveatConfigCache.tx.maxItems                                        100
-cache.caveatConfigCache.tx.statsEnabled                                    ${caches.tx.statsEnabled}
-cache.cloudHybridSyncDenyCache.backup-count                                1
-cache.cloudHybridSyncDenyCache.cluster.type                                fully-distributed
-cache.cloudHybridSyncDenyCache.eviction-policy                             LRU
-cache.cloudHybridSyncDenyCache.maxIdleSeconds                              0
-cache.cloudHybridSyncDenyCache.maxItems                                    150000
-cache.cloudHybridSyncDenyCache.merge-policy                                com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.cloudHybridSyncDenyCache.timeToLiveSeconds                           3600
-cache.cloudHybridSyncEventCounterCache.backup-count                        1
-cache.cloudHybridSyncEventCounterCache.cluster.type                        fully-distributed
-cache.cloudHybridSyncEventCounterCache.eviction-policy                     LRU
-cache.cloudHybridSyncEventCounterCache.maxIdleSeconds                      0
-cache.cloudHybridSyncEventCounterCache.maxItems                            150000
-cache.cloudHybridSyncEventCounterCache.merge-policy                        com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.cloudHybridSyncEventCounterCache.timeToLiveSeconds                   0
-cache.contentDataSharedCache.backup-count                                  1
-cache.contentDataSharedCache.cluster.type                                  fully-distributed
-cache.contentDataSharedCache.eviction-policy                               LRU
-cache.contentDataSharedCache.maxIdleSeconds                                0
-cache.contentDataSharedCache.maxItems                                      130000
-cache.contentDataSharedCache.merge-policy                                  com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.contentDataSharedCache.readBackupData                                false
-cache.contentDataSharedCache.timeToLiveSeconds                             0
-cache.contentDataSharedCache.tx.maxItems                                   65000
-cache.contentDataSharedCache.tx.statsEnabled                               ${caches.tx.statsEnabled}
-cache.contentDiskDriver.fileInfoCache.backup-count                         1
-cache.contentDiskDriver.fileInfoCache.cluster.type                         local
-cache.contentDiskDriver.fileInfoCache.eviction-policy                      LRU
-cache.contentDiskDriver.fileInfoCache.maxIdleSeconds                       0
-cache.contentDiskDriver.fileInfoCache.maxItems                             1000
-cache.contentDiskDriver.fileInfoCache.merge-policy                         com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.contentDiskDriver.fileInfoCache.readBackupData                       false
-cache.contentDiskDriver.fileInfoCache.timeToLiveSeconds                    0
-cache.contentUrlEncryptingMasterKeySharedCache.backup-count                1
-cache.contentUrlEncryptingMasterKeySharedCache.cluster.type                fully-distributed
-cache.contentUrlEncryptingMasterKeySharedCache.eviction-policy             NONE
-cache.contentUrlEncryptingMasterKeySharedCache.maxIdleSeconds              0
-cache.contentUrlEncryptingMasterKeySharedCache.maxItems                    0
-cache.contentUrlEncryptingMasterKeySharedCache.merge-policy                com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.contentUrlEncryptingMasterKeySharedCache.nearCache.maxIdleSeconds    0
-cache.contentUrlEncryptingMasterKeySharedCache.nearCache.maxSize           50
-cache.contentUrlEncryptingMasterKeySharedCache.nearCache.timeToLiveSeconds 0
-cache.contentUrlEncryptingMasterKeySharedCache.readBackupData              false
-cache.contentUrlEncryptingMasterKeySharedCache.timeToLiveSeconds           0
-cache.contentUrlEncryptingMasterKeySharedCache.tx.maxItems                 50
-cache.contentUrlEncryptingMasterKeySharedCache.tx.statsEnabled             ${caches.tx.statsEnabled}
-cache.contentUrlMasterKeySharedCache.backup-count                          1
-cache.contentUrlMasterKeySharedCache.cluster.type                          fully-distributed
-cache.contentUrlMasterKeySharedCache.eviction-policy                       NONE
-cache.contentUrlMasterKeySharedCache.maxIdleSeconds                        0
-cache.contentUrlMasterKeySharedCache.maxItems                              0
-cache.contentUrlMasterKeySharedCache.merge-policy                          com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.contentUrlMasterKeySharedCache.nearCache.maxIdleSeconds              0
-cache.contentUrlMasterKeySharedCache.nearCache.maxSize                     50
-cache.contentUrlMasterKeySharedCache.nearCache.timeToLiveSeconds           0
-cache.contentUrlMasterKeySharedCache.readBackupData                        false
-cache.contentUrlMasterKeySharedCache.timeToLiveSeconds                     0
-cache.contentUrlMasterKeySharedCache.tx.maxItems                           50
-cache.contentUrlMasterKeySharedCache.tx.statsEnabled                       ${caches.tx.statsEnabled}
-cache.contentUrlSharedCache.backup-count                                   1
-cache.contentUrlSharedCache.cluster.type                                   fully-distributed
-cache.contentUrlSharedCache.eviction-policy                                LRU
-cache.contentUrlSharedCache.maxIdleSeconds                                 0
-cache.contentUrlSharedCache.maxItems                                       130000
-cache.contentUrlSharedCache.merge-policy                                   com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.contentUrlSharedCache.readBackupData                                 false
-cache.contentUrlSharedCache.timeToLiveSeconds                              0
-cache.contentUrlSharedCache.tx.maxItems                                    65000
-cache.contentUrlSharedCache.tx.statsEnabled                                ${caches.tx.statsEnabled}
-cache.executingActionsCache.backup-count                                   1
-cache.executingActionsCache.cluster.type                                   fully-distributed
-cache.executingActionsCache.eviction-policy                                LRU
-cache.executingActionsCache.maxIdleSeconds                                 0
-cache.executingActionsCache.maxItems                                       1000
-cache.executingActionsCache.merge-policy                                   com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.executingActionsCache.readBackupData                                 false
-cache.executingActionsCache.timeToLiveSeconds                              0
-cache.globalConfigSharedCache.backup-count                                 1
-cache.globalConfigSharedCache.cluster.type                                 invalidating
-cache.globalConfigSharedCache.eviction-policy                              LRU
-cache.globalConfigSharedCache.maxIdleSeconds                               0
-cache.globalConfigSharedCache.maxItems                                     1000
-cache.globalConfigSharedCache.merge-policy                                 com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.globalConfigSharedCache.readBackupData                               false
-cache.globalConfigSharedCache.timeToLiveSeconds                            0
-cache.hbClusterUsageCache.backup-count                                     1
-cache.hbClusterUsageCache.cluster.type                                     fully-distributed
-cache.hbClusterUsageCache.eviction-policy                                  NONE
-cache.hbClusterUsageCache.maxIdleSeconds                                   0
-cache.hbClusterUsageCache.maxItems                                         10
-cache.hbClusterUsageCache.merge-policy                                     com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.hbClusterUsageCache.readBackupData                                   false
-cache.hbClusterUsageCache.timeToLiveSeconds                                0
-cache.imapMessageSharedCache.backup-count                                  1
-cache.imapMessageSharedCache.cluster.type                                  invalidating
-cache.imapMessageSharedCache.eviction-policy                               LRU
-cache.imapMessageSharedCache.maxIdleSeconds                                0
-cache.imapMessageSharedCache.maxItems                                      2000
-cache.imapMessageSharedCache.merge-policy                                  com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.imapMessageSharedCache.readBackupData                                false
-cache.imapMessageSharedCache.timeToLiveSeconds                             0
-cache.imapMessageSharedCache.tx.maxItems                                   1000
-cache.imapMessageSharedCache.tx.statsEnabled                               ${caches.tx.statsEnabled}
-cache.immutableEntitySharedCache.backup-count                              1
-cache.immutableEntitySharedCache.cluster.type                              invalidating
-cache.immutableEntitySharedCache.eviction-policy                           LRU
-cache.immutableEntitySharedCache.maxIdleSeconds                            0
-cache.immutableEntitySharedCache.maxItems                                  50000
-cache.immutableEntitySharedCache.merge-policy                              com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.immutableEntitySharedCache.readBackupData                            false
-cache.immutableEntitySharedCache.timeToLiveSeconds                         0
-cache.immutableEntitySharedCache.tx.maxItems                               10000
-cache.immutableEntitySharedCache.tx.statsEnabled                           ${caches.tx.statsEnabled}
-cache.immutableSingletonSharedCache.backup-count                           1
-cache.immutableSingletonSharedCache.cluster.type                           invalidating
-cache.immutableSingletonSharedCache.eviction-policy                        LRU
-cache.immutableSingletonSharedCache.maxIdleSeconds                         0
-cache.immutableSingletonSharedCache.maxItems                               12000
-cache.immutableSingletonSharedCache.merge-policy                           com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.immutableSingletonSharedCache.readBackupData                         false
-cache.immutableSingletonSharedCache.timeToLiveSeconds                      0
-cache.immutableSingletonSharedCache.tx.maxItems                            12000
-cache.immutableSingletonSharedCache.tx.statsEnabled                        ${caches.tx.statsEnabled}
-cache.loadedResourceBundlesSharedCache.backup-count                        1
-cache.loadedResourceBundlesSharedCache.cluster.type                        invalidating
-cache.loadedResourceBundlesSharedCache.eviction-policy                     LRU
-cache.loadedResourceBundlesSharedCache.maxIdleSeconds                      0
-cache.loadedResourceBundlesSharedCache.maxItems                            1000
-cache.loadedResourceBundlesSharedCache.merge-policy                        com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.loadedResourceBundlesSharedCache.readBackupData                      false
-cache.loadedResourceBundlesSharedCache.timeToLiveSeconds                   0
-cache.loadedResourceBundlesSharedCache.tx.maxItems                         1000
-cache.loadedResourceBundlesSharedCache.tx.statsEnabled                     ${caches.tx.statsEnabled}
-cache.messagesSharedCache.backup-count                                     1
-cache.messagesSharedCache.cluster.type                                     invalidating
-cache.messagesSharedCache.eviction-policy                                  LRU
-cache.messagesSharedCache.maxIdleSeconds                                   0
-cache.messagesSharedCache.maxItems                                         1000
-cache.messagesSharedCache.merge-policy                                     com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.messagesSharedCache.readBackupData                                   false
-cache.messagesSharedCache.timeToLiveSeconds                                0
-cache.messagesSharedCache.tx.maxItems                                      1000
-cache.messagesSharedCache.tx.statsEnabled                                  ${caches.tx.statsEnabled}
-cache.node.allRootNodesSharedCache.backup-count                            1
-cache.node.allRootNodesSharedCache.cluster.type                            invalidating
-cache.node.allRootNodesSharedCache.eviction-policy                         LRU
-cache.node.allRootNodesSharedCache.maxIdleSeconds                          0
-cache.node.allRootNodesSharedCache.maxItems                                1000
-cache.node.allRootNodesSharedCache.merge-policy                            com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
-cache.node.allRootNodesSharedCache.readBackupData                          false
-cache.node.allRootNodesSharedCache.timeToLiveSeconds                       0
-cache.node.allRootNodesSharedCache.tx.maxItems                             500
-cache.node.allRootNodesSharedCache.tx.statsEnabled                         ${caches.tx.statsEnabled}
-cache.node.aspectsSharedCache.backup-count                                 1
-cache.node.aspectsSharedCache.cluster.type                                 local
-cache.node.aspectsSharedCache.eviction-policy                              LRU
+| alfresco.authentication.gateway.httpConnectionStalecheck | Gateway Authentication | true |
+| alfresco.authentication.gateway.httpTcpNodelay | Gateway Authentication | true |
+| alfresco.authentication.gateway.inboundHeaders | Gateway Authentication | X-Alfresco-Authenticator-Key,X-Alfresco-Remote-User |
+| alfresco.authentication.gateway.outboundHeaders | Gateway Authentication | Authorization,key |
+| alfresco.authentication.gateway.port | Gateway Authentication | 443 |
+| alfresco.authentication.gateway.prefixUrl | Gateway Authentication | /publicapi |
+| alfresco.authentication.gateway.protocol | Gateway Authentication | https |
+| alfresco.authentication.gateway.readTimeout | Gateway Authentication | 120000 |
+| alfresco.cluster.enabled | | true |
+| alfresco.cluster.hostname | | ${localname} 
+| alfresco.cluster.interface | | 
+| alfresco.cluster.max.init.retries | | 50 |
+| alfresco.cluster.memberchange.dropInvalidatingCaches | | true |
+| alfresco.cluster.nodetype | | "Repository server" |
+| alfresco.cluster.specify.interface | | false |
+| alfresco.clusterCheck.timeout | | 4000 |
+| alfresco.ephemeralLock.expiryThresh | Requests for ephemeral (in-memory) locks with expiry times (in seconds) greater than this value will result in persistent locks being created instead. By default this value is equal to the maximum allowed expiry for ephemeral locks, therefore this feature is disabled by default. Setting this to -1 would mean that ALL requests for ephemeral locks would result in persistent locks being created. | 172800 |
+| alfresco.events.include | | CONTENTPUT, NODEMOVED, NODEADDED, NODEREMOVED, NODERENAMED, NODECHECKOUTCANCELLED, NODECHECKEDOUT, NODECHECKEDIN, AUTHADDEDTOGROUP, AUTHREMOVEDFROMGROUP, GROUPDELETED, INHERITPERMISSIONSDISABLED, INHERITPERMISSIONSENABLED, LOCALPERMISSIONGRANTED, LOCALPERMISSIONREVOKED, RECORDCREATED, RECORDREJECTED, FILECLASSIFIED, FILEUNCLASSIFIED, NODELOCKED, NODEUNLOCKED |
+| alfresco.hazelcast.autoinc.port | | false |
+| alfresco.hazelcast.bind.any | | false |
+| alfresco.hazelcast.configLocation | | classpath:alfresco/hazelcast/hazelcast-tcp.xml |
+| alfresco.hazelcast.mancenter.enabled | | false |
+| alfresco.hazelcast.mancenter.url | | http://localhost:8080/mancenter |
+| alfresco.hazelcast.max.no.heartbeat.seconds | | 15 |
+| alfresco.hazelcast.port | | 5701 |
+| alfresco.jmx.connector.enabled | Control Alfresco JMX connectivity | false |
+| alfresco.restApi.basicAuthScheme | | false |
+| alfresco.rmi.services.external.host | | localhost |
+| alfresco.rmi.services.host | | 0.0.0.0 |
+| alfresco.rmi.services.port | Default value of alfresco.rmi.services.host is 0.0.0.0 which means 'listen on all adapters'. This allows connections to JMX both remotely and locally. | 50500 |
+| alfresco.rmi.services.retries | If the RMI address is in-use, how many retries should be done before aborting. Default value of alfresco.rmi.services.retries is 0 which means 'Don't retry if the address is in-use'. | 4 |
+| alfresco.rmi.services.retryInterval | How long in milliseconds to wait after a failed server socket bind, before retrying | 250 |
+| alfresco_user_store.adminpassword | Initial password - editing this will not have any effect once the repository is installed | ******** |
+| alfresco_user_store.adminusername | Note: default admin username - should not be changed after installation | admin |
+| alfresco_user_store.guestusername | Note: default guest username - should not be changed after installation | guest |
+| alfresco_user_store.store | User config | user://alfrescoUserStore |
+alfresco_user_store.system_container.childname | User config | sys:system |
+alfresco_user_store.user_container.childname | User config | sys:people |
+api-explorer.url | Alfresco Rest Api-Explorer |
+attributes.propcleaner.cronExpression | Scheduled job to clean up unused properties from the alf_prop_xxx tables. Default setting of 0 0 3 ? * SAT is to run every Saturday at 3am. | 0 0 3 ? * SAT |
+audit.alfresco-access.enabled | Audit configuration | false |
+audit.alfresco-access.sub-actions.enabled | Audit configuration | false |
+audit.cmischangelog.enabled | Audit configuration | false |
+audit.config.strict | Setting this flag to true will force startup failure when invalid audit configurations are detected. | false |
+audit.dod5015.enabled | Audit configuration | false |
+audit.enabled | Audit configuration | true |
+audit.filter.alfresco-access.default.enabled | Audit map filter for AccessAuditor - restricts recorded events to user driven events | false |
+audit.filter.alfresco-access.transaction.path | Audit configuration | ~/sys:archivedItem;~/ver:;.* |
+audit.filter.alfresco-access.transaction.type | Audit configuration | cm:folder;cm:content;st:site |
+audit.filter.alfresco-access.transaction.user | Audit configuration | ~System;~null;.* |
+audit.tagging.enabled | Audit configuration | true |
+authentication.alwaysAllowBasicAuthForAdminConsole.enabled | | true |
+authentication.chain | he default authentication chain | alfrescoNtlm1:alfrescoNtlm |
+authentication.getRemoteUserTimeoutMilliseconds | | 10000 |
+authentication.protection.enabled | Brute force protection | true |
+authentication.protection.limit | Brute force protection | 10 |
+authentication.protection.periodSeconds | Brute force protection | 6 |
+authentication.ticket.expiryMode | If ticketsEpire is true then how they should expire? Valid values are: AFTER_INACTIVITY, AFTER_FIXED_TIME, DO_NOT_EXPIRE. The default is AFTER_FIXED_TIME | AFTER_INACTIVITY |
+authentication.ticket.ticketsExpire | Do authentication tickets expire or live for ever? | true |
+authentication.ticket.useSingleTicketPerUser | Use one ticket for all user sessions. For the pre 4.2 behaviour of one ticket per session set this to false. | true |
+authentication.ticket.validDuration | If authentication.ticket.ticketsExpire is true and authentication.ticket.expiryMode is AFTER_FIXED_TIME or AFTER_INACTIVITY, this controls the minimum period for which tickets are valid. The default is PT1H for one hour. | PT1H |
+authority.findAuthorityLimit | 	Limit the number of results from findAuthority query | 10000 |
+authority.useBridgeTable | Use bridge tables for caching authority evaluation. | true |
+authorization.audit.day | | 2 |
+authorization.audit.hour | | 3 |
+authorization.audit.minute | | 0 |
+authorization.locales.previous | |
+bulkImport.batch.batchSize | The size of a batch in a batch import i.e. the number of files to import in a transaction/thread | 20 |
+bulkImport.batch.numThreads | Bulk Filesystem Importer. The number of threads to employ in a batch import | 4 |
+cache.aclEntitySharedCache.backup-count | | 1 |
+cache.aclEntitySharedCache.cluster.type | | fully-distributed |
+cache.aclEntitySharedCache.eviction-policy | | LRU |
+cache.aclEntitySharedCache.maxIdleSeconds | | 0 |
+cache.aclEntitySharedCache.maxItems | | 50000 |
+cache.aclEntitySharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.aclEntitySharedCache.readBackupData | | false |
+cache.aclEntitySharedCache.timeToLiveSeconds | | 0 |
+cache.aclEntitySharedCache.tx.maxItems | | 50000 |
+cache.aclEntitySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.aclSharedCache.backup-count | | 1 |
+cache.aclSharedCache.cluster.type | | fully-distributed |
+cache.aclSharedCache.eviction-policy | | LRU |
+cache.aclSharedCache.maxIdleSeconds | | 0 |
+cache.aclSharedCache.maxItems | | 50000 |
+cache.aclSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.aclSharedCache.readBackupData | | false |
+cache.aclSharedCache.timeToLiveSeconds | | 0 |
+cache.aclSharedCache.tx.maxItems | | 20000 |
+cache.aclSharedCache.tx.statsEnabled |  | ${caches.tx.statsEnabled} |
+cache.activitiTokensCache.backup-count | | 1 |
+cache.activitiTokensCache.cluster.type | | fully-distributed |
+cache.activitiTokensCache.eviction-percentage | | 1 |
+cache.activitiTokensCache.eviction-policy | | NONE |
+cache.activitiTokensCache.maxIdleSeconds | | 3600 |
+cache.activitiTokensCache.maxItems | | 0 |
+cache.activitiTokensCache.merge-policy | | hz.ADD_NEW_ENTRY |
+cache.activitiTokensCache.timeToLiveSeconds | | 0 |
+cache.authenticationSharedCache.backup-count | | 1 |
+cache.authenticationSharedCache.cluster.type | | fully-distributed |
+cache.authenticationSharedCache.eviction-policy | | LRU |
+cache.authenticationSharedCache.maxIdleSeconds | | 0 |
+cache.authenticationSharedCache.maxItems | | 5000 |
+cache.authenticationSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.authenticationSharedCache.readBackupData | | false |
+cache.authenticationSharedCache.timeToLiveSeconds | | 0 |
+cache.authenticationSharedCache.tx.maxItems | | 1000 |
+cache.authenticationSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.authorityEntitySharedCache.tx.maxItems | | 50000 |
+cache.authorityEntitySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.authoritySharedCache.backup-count | | 1 |
+cache.authoritySharedCache.cluster.type | | invalidating |
+cache.authoritySharedCache.eviction-policy | | LRU |
+cache.authoritySharedCache.maxIdleSeconds | | 0 |
+cache.authoritySharedCache.maxItems | | 10000 |
+cache.authoritySharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.authoritySharedCache.readBackupData | | false |
+cache.authoritySharedCache.timeToLiveSeconds | | 0 |
+cache.authoritySharedCache.tx.maxItems | | 10000 |
+cache.authoritySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.authorityToChildAuthoritySharedCache.backup-count | | 1 |
+cache.authorityToChildAuthoritySharedCache.cluster.type | | invalidating |
+cache.authorityToChildAuthoritySharedCache.eviction-policy | | LRU |
+cache.authorityToChildAuthoritySharedCache.maxIdleSeconds | | 0 |
+cache.authorityToChildAuthoritySharedCache.maxItems | | 40000 |
+cache.authorityToChildAuthoritySharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.authorityToChildAuthoritySharedCache.readBackupData | | false |
+cache.authorityToChildAuthoritySharedCache.timeToLiveSeconds | | 0 |
+cache.authorityToChildAuthoritySharedCache.tx.maxItems | | 40000 |
+cache.authorityToChildAuthoritySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.authorizationCache.backup-count | | 1 |
+cache.authorizationCache.cluster.type | | fully-distributed |
+cache.authorizationCache.eviction-policy | | LRU |
+cache.authorizationCache.maxIdleSeconds | | 0 |
+cache.authorizationCache.maxItems | | 10000 |
+cache.authorizationCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.authorizationCache.readBackupData | | false |
+cache.authorizationCache.timeToLiveSeconds | | 300 |
+cache.authorizationCache.tx.maxItems | | 1000 |
+cache.authorizationCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.cachingContentStoreCache.backup-count | | 1 |
+cache.cachingContentStoreCache.cluster.type | | local |
+cache.cachingContentStoreCache.eviction-policy | | LRU |
+cache.cachingContentStoreCache.maxIdleSeconds | | 14400 |
+cache.cachingContentStoreCache.maxItems | | 5000 |
+cache.cachingContentStoreCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.cachingContentStoreCache.readBackupData | | false |
+cache.cachingContentStoreCache.timeToLiveSeconds | | 86400 |
+cache.caveatConfigCache.backup-count | | 1 |
+cache.caveatConfigCache.cluster.type | | invalidating |
+cache.caveatConfigCache.eviction-policy | | LRU |
+cache.caveatConfigCache.maxIdleSeconds | | 0 |
+cache.caveatConfigCache.maxItems | | 5000 |
+cache.caveatConfigCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.caveatConfigCache.readBackupData | | false |
+cache.caveatConfigCache.timeToLiveSeconds | | 0 |
+cache.caveatConfigCache.tx.maxItems | | 100 |
+cache.caveatConfigCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.cloudHybridSyncDenyCache.backup-count | | 1 |
+cache.cloudHybridSyncDenyCache.cluster.type | | fully-distributed |
+cache.cloudHybridSyncDenyCache.eviction-policy | | LRU |
+cache.cloudHybridSyncDenyCache.maxIdleSeconds | | 0 |
+cache.cloudHybridSyncDenyCache.maxItems | | 150000 |
+cache.cloudHybridSyncDenyCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.cloudHybridSyncDenyCache.timeToLiveSeconds | | 3600 |
+cache.cloudHybridSyncEventCounterCache.backup-count | | 1 |
+cache.cloudHybridSyncEventCounterCache.cluster.type | | fully-distributed |
+cache.cloudHybridSyncEventCounterCache.eviction-policy | | LRU |
+cache.cloudHybridSyncEventCounterCache.maxIdleSeconds | | 0 |
+cache.cloudHybridSyncEventCounterCache.maxItems | | 150000 |
+cache.cloudHybridSyncEventCounterCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.cloudHybridSyncEventCounterCache.timeToLiveSeconds | | 0 |
+cache.contentDataSharedCache.backup-count | | 1 |
+cache.contentDataSharedCache.cluster.type | | fully-distributed | 
+cache.contentDataSharedCache.eviction-policy | | LRU |
+cache.contentDataSharedCache.maxIdleSeconds | | 0 |
+cache.contentDataSharedCache.maxItems | | 130000 |
+cache.contentDataSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.contentDataSharedCache.readBackupData | | false |
+cache.contentDataSharedCache.timeToLiveSeconds | | 0 |
+cache.contentDataSharedCache.tx.maxItems | | 65000 |
+cache.contentDataSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.contentDiskDriver.fileInfoCache.backup-count | | 1 |
+cache.contentDiskDriver.fileInfoCache.cluster.type | | local |
+cache.contentDiskDriver.fileInfoCache.eviction-policy | | LRU |
+cache.contentDiskDriver.fileInfoCache.maxIdleSeconds | | 0 |
+cache.contentDiskDriver.fileInfoCache.maxItems | | 1000 |
+cache.contentDiskDriver.fileInfoCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.contentDiskDriver.fileInfoCache.readBackupData | | false |
+cache.contentDiskDriver.fileInfoCache.timeToLiveSeconds | | 0 |
+cache.contentUrlEncryptingMasterKeySharedCache.backup-count | | 1 |
+cache.contentUrlEncryptingMasterKeySharedCache.cluster.type | | fully-distributed |
+cache.contentUrlEncryptingMasterKeySharedCache.eviction-policy | | NONE |
+cache.contentUrlEncryptingMasterKeySharedCache.maxIdleSeconds | | 0 |
+cache.contentUrlEncryptingMasterKeySharedCache.maxItems | | 0 | 
+cache.contentUrlEncryptingMasterKeySharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.contentUrlEncryptingMasterKeySharedCache.nearCache.maxIdleSeconds | | 0 | 
+cache.contentUrlEncryptingMasterKeySharedCache.nearCache.maxSize | | 50 |
+cache.contentUrlEncryptingMasterKeySharedCache.nearCache.timeToLiveSeconds | | 0 |
+cache.contentUrlEncryptingMasterKeySharedCache.readBackupData | | false |
+cache.contentUrlEncryptingMasterKeySharedCache.timeToLiveSeconds | | 0 |
+cache.contentUrlEncryptingMasterKeySharedCache.tx.maxItems | | 50 |
+cache.contentUrlEncryptingMasterKeySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.contentUrlMasterKeySharedCache.backup-count | | 1 |
+cache.contentUrlMasterKeySharedCache.cluster.type | | fully-distributed |
+cache.contentUrlMasterKeySharedCache.eviction-policy | | NONE |
+cache.contentUrlMasterKeySharedCache.maxIdleSeconds | | 0 |
+cache.contentUrlMasterKeySharedCache.maxItems | | 0 |
+cache.contentUrlMasterKeySharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.contentUrlMasterKeySharedCache.nearCache.maxIdleSeconds | | 0 |
+cache.contentUrlMasterKeySharedCache.nearCache.maxSize | | 50 |
+cache.contentUrlMasterKeySharedCache.nearCache.timeToLiveSeconds | | 0 |
+cache.contentUrlMasterKeySharedCache.readBackupData | | false |
+cache.contentUrlMasterKeySharedCache.timeToLiveSeconds | | 0 |
+cache.contentUrlMasterKeySharedCache.tx.maxItems | | 50 |
+cache.contentUrlMasterKeySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.contentUrlSharedCache.backup-count | | 1 |
+cache.contentUrlSharedCache.cluster.type | | fully-distributed |
+cache.contentUrlSharedCache.eviction-policy | | LRU |
+cache.contentUrlSharedCache.maxIdleSeconds | | 0 |
+cache.contentUrlSharedCache.maxItems | | 130000 |
+cache.contentUrlSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.contentUrlSharedCache.readBackupData | | false |
+cache.contentUrlSharedCache.timeToLiveSeconds | | 0 |
+cache.contentUrlSharedCache.tx.maxItems | | 65000 |
+cache.contentUrlSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.executingActionsCache.backup-count | | 1 |
+cache.executingActionsCache.cluster.type | | fully-distributed |
+cache.executingActionsCache.eviction-policy | | LRU |
+cache.executingActionsCache.maxIdleSeconds | | 0 |
+cache.executingActionsCache.maxItems | | 1000 |
+cache.executingActionsCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.executingActionsCache.readBackupData | | false |
+cache.executingActionsCache.timeToLiveSeconds | | 0 |
+cache.globalConfigSharedCache.backup-count | | 1 |
+cache.globalConfigSharedCache.cluster.type | | invalidating |
+cache.globalConfigSharedCache.eviction-policy | | LRU |
+cache.globalConfigSharedCache.maxIdleSeconds | | 0 |
+cache.globalConfigSharedCache.maxItems | | 1000 |
+cache.globalConfigSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.globalConfigSharedCache.readBackupData | | false |
+cache.globalConfigSharedCache.timeToLiveSeconds | | 0 |
+cache.hbClusterUsageCache.backup-count | | 1 |
+cache.hbClusterUsageCache.cluster.type | | fully-distributed |
+cache.hbClusterUsageCache.eviction-policy | | NONE |
+cache.hbClusterUsageCache.maxIdleSeconds | | 0 |
+cache.hbClusterUsageCache.maxItems | | 10 |
+cache.hbClusterUsageCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.hbClusterUsageCache.readBackupData | | false |
+cache.hbClusterUsageCache.timeToLiveSeconds | | 0 |
+cache.imapMessageSharedCache.backup-count | | 1 |
+cache.imapMessageSharedCache.cluster.type | | invalidating |
+cache.imapMessageSharedCache.eviction-policy | | LRU |
+cache.imapMessageSharedCache.maxIdleSeconds | | 0 |
+cache.imapMessageSharedCache.maxItems | | 2000 |
+cache.imapMessageSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.imapMessageSharedCache.readBackupData | | false |
+cache.imapMessageSharedCache.timeToLiveSeconds | | 0 |
+cache.imapMessageSharedCache.tx.maxItems | | 1000 |
+cache.imapMessageSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.immutableEntitySharedCache.backup-count | | 1 |
+cache.immutableEntitySharedCache.cluster.type | | invalidating |
+cache.immutableEntitySharedCache.eviction-policy | | LRU |
+cache.immutableEntitySharedCache.maxIdleSeconds | | 0 |
+cache.immutableEntitySharedCache.maxItems | | 50000 |
+cache.immutableEntitySharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.immutableEntitySharedCache.readBackupData | | false |
+cache.immutableEntitySharedCache.timeToLiveSeconds | | 0 |
+cache.immutableEntitySharedCache.tx.maxItems | | 10000 |
+cache.immutableEntitySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.immutableSingletonSharedCache.backup-count | | 1 |
+cache.immutableSingletonSharedCache.cluster.type | | invalidating |
+cache.immutableSingletonSharedCache.eviction-policy | | LRU |
+cache.immutableSingletonSharedCache.maxIdleSeconds | | 0 |
+cache.immutableSingletonSharedCache.maxItems | | 12000 |
+cache.immutableSingletonSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.immutableSingletonSharedCache.readBackupData | | false |
+cache.immutableSingletonSharedCache.timeToLiveSeconds | | 0 |
+cache.immutableSingletonSharedCache.tx.maxItems | | 12000 |
+cache.immutableSingletonSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.loadedResourceBundlesSharedCache.backup-count | | 1 |
+cache.loadedResourceBundlesSharedCache.cluster.type | | invalidating |
+cache.loadedResourceBundlesSharedCache.eviction-policy | | LRU |
+cache.loadedResourceBundlesSharedCache.maxIdleSeconds | | 0 |
+cache.loadedResourceBundlesSharedCache.maxItems | | 1000 |
+cache.loadedResourceBundlesSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.loadedResourceBundlesSharedCache.readBackupData | | false |
+cache.loadedResourceBundlesSharedCache.timeToLiveSeconds | | 0 |
+cache.loadedResourceBundlesSharedCache.tx.maxItems | | 1000 |
+cache.loadedResourceBundlesSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.messagesSharedCache.backup-count | | 1 |
+cache.messagesSharedCache.cluster.type | | invalidating |
+cache.messagesSharedCache.eviction-policy | | LRU |
+cache.messagesSharedCache.maxIdleSeconds | | 0 |
+cache.messagesSharedCache.maxItems | | 1000 |
+cache.messagesSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.messagesSharedCache.readBackupData | | false |
+cache.messagesSharedCache.timeToLiveSeconds | | 0 |
+cache.messagesSharedCache.tx.maxItems | | 1000 |
+cache.messagesSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.node.allRootNodesSharedCache.backup-count | | 1 |
+cache.node.allRootNodesSharedCache.cluster.type | | invalidating |
+cache.node.allRootNodesSharedCache.eviction-policy | | LRU |
+cache.node.allRootNodesSharedCache.maxIdleSeconds | | 0 |
+cache.node.allRootNodesSharedCache.maxItems | | 1000 |
+cache.node.allRootNodesSharedCache.merge-policy | | com.hazelcast.map.merge.PutIfAbsentMapMergePolicy |
+cache.node.allRootNodesSharedCache.readBackupData | | false |
+cache.node.allRootNodesSharedCache.timeToLiveSeconds | | 0 |
+cache.node.allRootNodesSharedCache.tx.maxItems | | 500 |
+cache.node.allRootNodesSharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
+cache.node.aspectsSharedCache.backup-count | | 1 |
+cache.node.aspectsSharedCache.cluster.type | | local |
+cache.node.aspectsSharedCache.eviction-policy | | LRU |
 cache.node.aspectsSharedCache.maxIdleSeconds                               0
 cache.node.aspectsSharedCache.maxItems                                     130000
 cache.node.aspectsSharedCache.merge-policy                                 com.hazelcast.map.merge.PutIfAbsentMapMergePolicy
