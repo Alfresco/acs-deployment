@@ -646,8 +646,8 @@ The table below shows the full list of properties (exluding module specific prop
 | cache.zoneToAuthoritySharedCache.tx.maxItems | | 500 |
 | cache.zoneToAuthoritySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
 | caches.tx.statsEnabled | | true |
-| category.queryFetchSize                                                    5000 |
-| cmis.disable.hidden.leading.period.files                                   false |
+| category.queryFetchSize | Maximum query size for category/tag fetch when not explicitly set by paging parameters | 5000 |
+| cmis.disable.hidden.leading.period.files | | false |
 | content.metadataExtracter.default.timeoutMs                                20000 |
 | content.metadataExtracter.pdf.maxConcurrentExtractionsCount                5 |
 | content.metadataExtracter.pdf.maxDocumentSizeMB                            10 |
