@@ -1,5 +1,5 @@
 # Defines the deployment for the Alfresco Search (Solr) App
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "alfresco-search.fullName" . }}-solr
@@ -11,6 +11,10 @@ metadata:
     component: search
 spec:
   replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "alfresco-search.fullName" . }}-solr
+      release: {{ .Release.Name }}
   strategy:
     type: RollingUpdate
     rollingUpdate:

@@ -1,25 +1,15 @@
-# Defines the list of dependent charts required by this chart
-# Alfresco Content Services product requires
-# - a postgres DB
-# - the alfresco-infrastructure chart; Details here: https://github.com/Alfresco/alfresco-infrastructure-deployment
-#       currently only the pvc (https://github.com/Alfresco/alfresco-infrastructure-deployment/blob/master/charts/incubator/alfresco-infrastructure/templates/pvc.yaml)
-#       is really required from the alfresco-infrastructure to start up the Alfresco Content Services product
 dependencies:
 - name: postgresql
-  version: 0.9.3
+  version: 8.6.4
   repository: https://kubernetes-charts.storage.googleapis.com/
   condition: postgresql.enabled
-- name: activemq
-  version: 1.1.1
-  repository: https://kubernetes-charts.alfresco.com/stable
-  condition: activemq.enabled
+- name: postgresql
+  version: 8.6.4
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  alias: postgresql-syncservice
+  condition: postgres-syncservice.enabled
 - name: alfresco-adf-app
   alias: alfresco-digital-workspace
   version: 2.2.1
   repository: https://kubernetes-charts.alfresco.com/stable
   condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-- name: postgresql
-  version: 0.9.3
-  repository: https://kubernetes-charts.storage.googleapis.com/
-  alias: postgresql-syncservice
-  condition: postgres-syncservice.enabled

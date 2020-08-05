@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "activemq.fullname" . }}
+  labels:
+    app: {{ template "activemq.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "activemq.fullname" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "activemq.fullname" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: activemq
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        - name: ACTIVEMQ_CONFIG_MINMEMORY
+          value: "{{ .Values.resources.requests.memory | replace "Mi" "" }}"
+        - name: ACTIVEMQ_CONFIG_MAXMEMORY
+          value: "{{ .Values.resources.limits.memory | replace "Mi" "" }}"
+        - name: ACTIVEMQ_BROKER_NAME
+          value: "{{ template "activemq.fullname" . }}"
+        - name: ACTIVEMQ_ADMIN_LOGIN
+          value: "{{ .Values.adminUser.username }}"
+        - name: ACTIVEMQ_ADMIN_PASSWORD	
+          value: "{{ .Values.adminUser.password }}"
+        ports:
+        - name: stomp
+          containerPort: {{ .Values.services.broker.ports.internal.stomp | default 61613 }}
+        - name: openwire
+          containerPort: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
+        - name: amqp
+          containerPort: {{ .Values.services.broker.ports.internal.amqp | default 5672 }}
+        - name: web-console
+          containerPort: {{ .Values.services.webConsole.ports.internal.webConsole | default 8161 }}
+        readinessProbe:
+          tcpSocket:
+            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+        volumeMounts:
+        - name: data
+          mountPath: {{ .Values.persistence.mountPath }}
+          subPath: {{ .Values.persistence.subPath }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+      initContainers:
+        - name: init-fs
+          image: busybox
+          # command to allow repository to write to EFS volume.
+          command: ["sh", "-c", "chown -R 33031:1000 {{ .Values.persistence.mountPath }}"]
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.mountPath }}
+              subPath: {{ .Values.persistence.subPath }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim }}
