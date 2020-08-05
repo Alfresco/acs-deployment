@@ -258,11 +258,16 @@ kubectl create namespace alfresco
 
 When the deployment has completed the following URLs will be available:
 
-* Repository: https://acs.opsexp.alfresco.me:443/alfresco
-* ADW: https://acs.opsexp.alfresco.me:443/workspace/
-* Share: https://acs.opsexp.alfresco.me:443/share
-* Api-Explorer: https://acs.opsexp.alfresco.me:443/api-explorer
-* Sync service: https://acs.opsexp.alfresco.me:443/syncservice/healthcheck
+* Repository: https://acs.opsexp.alfresco.me/alfresco
+* ADW: https://acs.opsexp.alfresco.me/workspace/
+* Share: https://acs.opsexp.alfresco.me/share
+* Api-Explorer: https://acs.opsexp.alfresco.me/api-explorer
+* Sync service: https://acs.opsexp.alfresco.me/syncservice/healthcheck
+
+If you requested an extended trial license navigate to the Admin Console and apply your license:
+* [https://acs.opsexp.alfresco.me/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license)
+* Default username and password is ```admin```
+* See [Uploading a new license](https://docs.alfresco.com/6.1/tasks/at-adminconsole-license.html) for more details
 
 ## Configure
 
