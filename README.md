@@ -9,8 +9,7 @@ This project contains the code for starting the entire Alfresco Content Services
 
 By default the Enterprise version of ACS is installed. To accomplish this private Docker images stored in Quay.io are downloaded. Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/).
 
-During deployment a limited trial of the Enterprise version of ACS that goes into read-only mode after 2 days is installed. Request an extended 30-day trial at
- https://www.alfresco.com/platform/content-services-ecm/trial/docker.
+The images downloaded directly from Docker Hub, or Quay.io are for a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. If you'd like to try Alfresco Content Services for a longer period, request the 30-day [Download Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
 
 To avoid license restrictions and private Docker images try the [Community Edition deployment](https://github.com/Alfresco/acs-community-deployment).
 

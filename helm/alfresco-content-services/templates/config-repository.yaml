@@ -110,7 +110,7 @@ data:
       -Dmessaging.broker.username={{ .Values.messageBroker.user }}
       -Dmessaging.broker.password={{ .Values.messageBroker.password }}
       {{- end }}
-      {{- if index .Values "alfresco-sync-service" "enabled" }}
+      {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
       -Ddsync.service.uris={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/syncservice
       {{- else }}
       -Devents.subsystem.autoStart=false

@@ -1,6 +1,6 @@
 # Defines the deployment for the Alfresco Insight Zeppelin App
 {{- if .Values.insightzeppelin.enabled }}
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "alfresco-insight-zeppelin.fullName" . }}
@@ -12,6 +12,10 @@ metadata:
     component: zeppelin
 spec:
   replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "alfresco-insight-zeppelin.fullName" . }}
+      release: {{ .Release.Name }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
