@@ -25,37 +25,41 @@ The table below shows the full list of properties (exluding module specific prop
 | alfresco.authentication.gateway.protocol | Gateway Authentication | https |
 | alfresco.authentication.gateway.readTimeout | Gateway Authentication | 120000 |
 | alfresco.cluster.enabled | | true |
-| alfresco.cluster.hostname | | ${localname} |
+| alfresco.cluster.hostname |  | ${localname} |
 | alfresco.cluster.interface | | |
 | alfresco.cluster.max.init.retries | | 50 |
 | alfresco.cluster.memberchange.dropInvalidatingCaches | | true |
-| alfresco.cluster.nodetype | | "Repository server" |
+| alfresco.cluster.nodetype | | Repository server |
 | alfresco.cluster.specify.interface | | false |
 | alfresco.clusterCheck.timeout | | 4000 |
+| alfresco.context | Alfresco context | alfresco |
 | alfresco.ephemeralLock.expiryThresh | Requests for ephemeral (in-memory) locks with expiry times (in seconds) greater than this value will result in persistent locks being created instead. By default this value is equal to the maximum allowed expiry for ephemeral locks, therefore this feature is disabled by default. Setting this to -1 would mean that ALL requests for ephemeral locks would result in persistent locks being created. | 172800 |
 | alfresco.events.include | | CONTENTPUT, NODEMOVED, NODEADDED, NODEREMOVED, NODERENAMED, NODECHECKOUTCANCELLED, NODECHECKEDOUT, NODECHECKEDIN, AUTHADDEDTOGROUP, AUTHREMOVEDFROMGROUP, GROUPDELETED, INHERITPERMISSIONSDISABLED, INHERITPERMISSIONSENABLED, LOCALPERMISSIONGRANTED, LOCALPERMISSIONREVOKED, RECORDCREATED, RECORDREJECTED, FILECLASSIFIED, FILEUNCLASSIFIED, NODELOCKED, NODEUNLOCKED |
 | alfresco.hazelcast.autoinc.port | | false |
 | alfresco.hazelcast.bind.any | | false |
-| alfresco.hazelcast.configLocation | | classpath:alfresco/hazelcast/hazelcast-tcp.xml |
+| alfresco.hazelcast.configLocation | | `classpath:alfresco/hazelcast/hazelcast-tcp.xml` |
 | alfresco.hazelcast.mancenter.enabled | | false |
-| alfresco.hazelcast.mancenter.url | | http://localhost:8080/mancenter |
+| alfresco.hazelcast.mancenter.url | | `http://localhost:8080/mancenter` |
 | alfresco.hazelcast.max.no.heartbeat.seconds | | 15 |
 | alfresco.hazelcast.port | | 5701 |
+| alfresco.host | Alfresco hostname | ${localname} |
 | alfresco.jmx.connector.enabled | Control Alfresco JMX connectivity | false |
+| alfresco.port | Alfresco port | 8080 |
+| alfresco.protocol | Alfresco protocol | http |
 | alfresco.restApi.basicAuthScheme | | false |
 | alfresco.rmi.services.external.host | | localhost |
 | alfresco.rmi.services.host | | 0.0.0.0 |
 | alfresco.rmi.services.port | Default value of alfresco.rmi.services.host is 0.0.0.0 which means 'listen on all adapters'. This allows connections to JMX both remotely and locally. | 50500 |
 | alfresco.rmi.services.retries | If the RMI address is in-use, how many retries should be done before aborting. Default value of alfresco.rmi.services.retries is 0 which means 'Don't retry if the address is in-use'. | 4 |
 | alfresco.rmi.services.retryInterval | How long in milliseconds to wait after a failed server socket bind, before retrying | 250 |
-| alfresco_user_store.adminpassword | Initial password - editing this will not have any effect once the repository is installed | ******** |
+| alfresco_user_store.adminpassword | Initial MD4 hashed password - editing this will not have any effect once the repository is installed | 209c6174da490caeb422f3fa5a7ae634 |
 | alfresco_user_store.adminusername | Note: default admin username - should not be changed after installation | admin |
 | alfresco_user_store.guestusername | Note: default guest username - should not be changed after installation | guest |
-| alfresco_user_store.store | User config | user://alfrescoUserStore |
+| alfresco_user_store.store | User config | `user://alfrescoUserStore` |
 | alfresco_user_store.system_container.childname | User config | sys:system |
 | alfresco_user_store.user_container.childname | User config | sys:people |
 | api-explorer.url | Alfresco Rest Api-Explorer |
-| attributes.propcleaner.cronExpression | Scheduled job to clean up unused properties from the alf_prop_xxx tables. Default setting of 0 0 3 ? * SAT is to run every Saturday at 3am. | 0 0 3 ? * SAT |
+| attributes.propcleaner.cronExpression | Scheduled job to clean up unused properties from the alf_prop_xxx tables. | `0 0 3 ? * SAT` (every Saturday at 3am) |
 | audit.alfresco-access.enabled | Audit configuration | false |
 | audit.alfresco-access.sub-actions.enabled | Audit configuration | false |
 | audit.cmischangelog.enabled | Audit configuration | false |
@@ -77,7 +81,7 @@ The table below shows the full list of properties (exluding module specific prop
 | authentication.ticket.ticketsExpire | Do authentication tickets expire or live for ever? | true |
 | authentication.ticket.useSingleTicketPerUser | Use one ticket for all user sessions. For the pre 4.2 behaviour of one ticket per session set this to false. | true |
 | authentication.ticket.validDuration | If authentication.ticket.ticketsExpire is true and authentication.ticket.expiryMode is AFTER_FIXED_TIME or AFTER_INACTIVITY, this controls the minimum period for which tickets are valid. The default is PT1H for one hour. | PT1H |
-| authority.findAuthorityLimit | 	Limit the number of results from findAuthority query | 10000 |
+| authority.findAuthorityLimit | Limit the number of results from findAuthority query | 10000 |
 | authority.useBridgeTable | Use bridge tables for caching authority evaluation. | true |
 | authorization.audit.day | | 2 |
 | authorization.audit.hour | | 3 |
@@ -664,20 +668,20 @@ The table below shows the full list of properties (exluding module specific prop
 | cors.preflight.maxage | CORS settings | 10 |
 | cors.support.credentials | CORS settings | true |
 | create.missing.people | ome authentication mechanisms may need to create people in the repository on demand. This enables that feature. If disabled an error will be generated for missing people. If enabled then a person will be created and persisted. | ${server.transaction.allow-writes} |
-| csrf.filter.enabled | CSRF filter overrides | false |
+| csrf.filter.enabled | CSRF filter overrides | true |
 | csrf.filter.origin | CSRF filter overrides |
 | csrf.filter.origin.always | CSRF filter overrides | false |
 | csrf.filter.referer | CSRF filter overrides |
 | csrf.filter.referer.always | CSRF filter overrides | false |
-| db.driver | Database configuration | org.postgresql.Driver |
+| db.driver | Database configuration | org.gjt.mm.mysql.Driver |
 | db.name | Database configuration | alfresco |
-| db.password | Database configuration | ******** |
+| db.password | Database configuration | alfresco |
 | db.pool.abandoned.detect | Database configuration | false |
-| db.pool.abandoned.log | db.pool.abandoned.log=true (logAbandoned) adds overhead (http://commons.apache.org/dbcp/configuration.html) and also requires db.pool.abandoned.detect=true (removeAbandoned) | false |
+| db.pool.abandoned.log | db.pool.abandoned.log=true (logAbandoned) adds [overhead](http://commons.apache.org/dbcp/configuration.html) and also requires db.pool.abandoned.detect=true (removeAbandoned) | false |
 | db.pool.abandoned.time | Database configuration | 300 |
 | db.pool.evict.idle.min | Database configuration | 1800000 |
 | db.pool.evict.interval | Database configuration | 600000 |
-| db.pool.evict.num.tests | note: for db.pool.evict.num.tests see http://commons.apache.org/dbcp/configuration.html (numTestsPerEvictionRun) and also following extract from "org.apache.commons.pool.impl.GenericKeyedObjectPool" (1.5.5). The number of objects to examine during each run of the idle object evictor thread (if any). When a negative value is supplied, ceil({@link #getNumIdle})/abs({@link #getNumTestsPerEvictionRun}) tests will be run. I.e., when the value is -n, roughly one nth of the idle objects will be tested per run. | -1 |
+| db.pool.evict.num.tests | note: for db.pool.evict.num.tests see [http://commons.apache.org/dbcp/configuration.html](http://commons.apache.org/dbcp/configuration.html) (numTestsPerEvictionRun) and also following extract from "org.apache.commons.pool.impl.GenericKeyedObjectPool" (1.5.5). The number of objects to examine during each run of the idle object evictor thread (if any). When a negative value is supplied, ceil({@link #getNumIdle})/abs({@link #getNumTestsPerEvictionRun}) tests will be run. I.e., when the value is -n, roughly one nth of the idle objects will be tested per run. | -1 |
 | db.pool.evict.validate | Database configuration | false |
 | db.pool.idle | Database configuration | 10 |
 | db.pool.initial | Database configuration | 10 |
@@ -695,12 +699,12 @@ The table below shows the full list of properties (exluding module specific prop
 | db.schema.update.lockRetryCount | Database configuration | 24 |
 | db.schema.update.lockRetryWaitSeconds | Database configuration | 5 |
 | db.txn.isolation | Database configuration | -1 |
-| db.url | Database configuration | jdbc:postgresql://postgres:5432/alfresco |
+| db.url | Database configuration | `jdbc:mysql:///${db.name}` |
 | db.username | Database configuration | alfresco |
 | default.async.action.corePoolSize | Default Async Action Thread Pool | 8 |
 | default.async.action.maximumPoolSize | Default Async Action Thread Pool | 20 |
 | default.async.action.threadPriority | Default Async Action Thread Pool | 1 |
-| deployment.method | Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START) | DOCKER_COMPOSE |
+| deployment.method | Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START) | DEFAULT |
 | deployment.service.corePoolSize | Deployment Service | 2 |
 | deployment.service.maximumPoolSize | Deployment Service | 3 |
 | deployment.service.numberOfSendingThreads | Deployment Service | 5 |
@@ -711,7 +715,7 @@ The table below shows the full list of properties (exluding module specific prop
 | dir.contentstore | Content store folder path | ${dir.root}/contentstore |
 | dir.contentstore.bucketsPerMinute | | 0 |
 | dir.contentstore.deleted | Content soter deleted folder path | ${dir.root}/contentstore.deleted |
-| dir.contentstore.tenants | Multi-Tenancy. If dir.contentstore.tenants is set then tenants are not co-mingled and all content roots will appear below this container (in <tenantdomain> sub-folder) and when creating a tenant the contentRootPath (root content store directory for a given tenant) will be ignored | |
+| dir.contentstore.tenants | Multi-Tenancy. If dir.contentstore.tenants is set then tenants are not co-mingled and all content roots will appear below this container (in `<tenantdomain>` sub-folder) and when creating a tenant the contentRootPath (root content store directory for a given tenant) will be ignored | |
 | dir.indexes | The location for lucene index files | ${dir.root}/lucene-indexes |
 | dir.indexes.backup | The location for index backups | ${dir.root}/backup-lucene-indexes |
 | dir.indexes.lock | The location for lucene index locks | ${dir.indexes}/locks |
@@ -726,17 +730,6 @@ The table below shows the full list of properties (exluding module specific prop
 | download.cleaner.repeatIntervalMilliseconds | Download Service Cleanup | 3600000 |
 | download.cleaner.startDelayMilliseconds | Download Service Cleanup | 3600000 |
 | download.maxContentSize | Download Service Limits, in bytes | 2152852358 |
-| dsync.checkDuration | | 60000 |
-| dsync.client.ignorePatterns | | ^\..*,IGNORE;^~.*,IGNORE;^.*\.(iso|exe|app|tmp|TMP)$,IGNORE;^.*\.sb-.*$,IGNORE;untitled folder,IGNORE;Microsoft User Data,IGNORE;About Stacks.lpdf,IGNORE;Thumbs.db,IGNORE |
-| dsync.client.version.min | | 1.0.1 |
-| dsync.events.include | | DEVICESUBSCRIPTION, DEVICESUBSCRIPTIONREMOVED, SYNCNODESUBSCRIBE, SYNCNODEUNSUBSCRIBE, NODECHECKEDOUT |
-| dsync.filter.aspects | | cm:workingcopy, ${dsync.filter.aspects.smartFolder} |
-| dsync.filter.aspects.smartFolder | | sf:*, smf:*, ${smart.folders.config.type.templates.qname.filter} |
-| dsync.filter.nodeTypes | | fm:*, cm:thumbnail, cm:rating, cm:failedThumbnail, rma:rmsite include_subtypes |
-| dsync.maxSubscribersPerUser | | -1 |
-| dsync.messaging.events.repo.node.target.endpoint | | activemq:topic:VirtualTopic.alfresco.repo.events.nodes?jmsMessageType=Text |
-| dsync.service.uris | | http://localhost:9090/alfresco |
-| dsync.whitelistAllNodeTypes | | false |
 | encryption.bootstrap.reencrypt | Should encryptable properties be re-encrypted with new encryption keys on botstrap? | false |
 | encryption.cipherAlgorithm | General encryption parameters | AES/CBC/PKCS5Padding |
 | encryption.keyAlgorithm | General encryption parameters | AES |
@@ -796,25 +789,25 @@ The table below shows the full list of properties (exluding module specific prop
 | img.exe | External executable locations | ${img.root}/bin/convert |
 | img.root | External executable locations | ./ImageMagick |
 | img.startupRetryPeriodSeconds | When img.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| img.url | Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default. | http://transform-core-aio:8090/ |
-| index.backup.cronExpression | | 0 0 3 * * ? |
-| index.subsystem.name | | solr6 |
+| img.url | Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default. | |
+| index.backup.cronExpression | | `0 0 3 * * ?` |
+| index.subsystem.name | | noindex |
 | index.tracking.minRecordPurgeAgeDays | Index tracking information of a certain age is cleaned out by a scheduled job. Any clustered system that has been offline for longer than this period will need to be seeded with a more recent backup of the Lucene indexes or the indexes will have to be fully rebuilt.Use -1 to disable purging. This can be switched on at any stage. | 30 |
 | index.tracking.purgeSize | Unused transactions will be purged in chunks determined by commit time boundaries. 'index.tracking.purgeSize' specifies the size of the chunk (in ms). Default is a couple of hours. | 7200000 |
 | legacy.transform.service.enabled | Used to disable transforms that extend AbstractContentTransformer2 | true |
-| links.protocosl.white.list | 	Allowed protocols for links | http,https,ftp,mailto |
-| local.transform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
-| local.transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 4 30 0/1 * * ? |
+| links.protocosl.white.list | Allowed protocols for links | http,https,ftp,mailto |
+| local.tregacy.transform.service.enabledansform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
+| local.transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `4 30 0/1 * * ?` |
 | local.transform.service.enabled | Used to disable transforms locally. | true |
-| local.transform.service.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| local.transform.service.initialAndOnError.cronExpression | | `0/10 * * * * ?` |
 | localTransform.core-aio.startupRetryPeriodSeconds | When a local transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | http://transform-core-aio:8090/ |
+| localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | `http://localhost:8090/` |
 | location.license.embedded | Spring resource location of embedded license files | /WEB-INF/alfresco/license/*.lic |
 | location.license.external | Spring resource location of external license files | file://${dir.license.external}/*.lic |
 | location.license.shared | Spring resource location of license files on shared classpath | classpath*:/alfresco/extension/license/*.lic |
 | lucene.commit.lock.timeout | | 100000 |
 | lucene.defaultAnalyserResourceBundleName | | alfresco/model/dataTypeAnalyzers |
-| lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. http://issues.alfresco.com/browse/AR-1280: Setting this high is the workaround as of 1.4.3. | 1000000 |
+| lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. [http://issues.alfresco.com/browse/AR-1280](http://issues.alfresco.com/browse/AR-1280): Setting this high is the workaround as of 1.4.3. | 1000000 |
 | lucene.indexer.cacheEnabled | Index cache sizes | true |
 | lucene.indexer.contentIndexingEnabled | | true |
 | lucene.indexer.defaultMLIndexAnalysisMode | | EXACT_LANGUAGE_AND_ALL |
@@ -851,18 +844,17 @@ The table below shows the full list of properties (exluding module specific prop
 | lucene.lock.poll.interval | | 100 |
 | lucene.maxAtomicTransformationTime | Millisecond threshold for text transformations. Slower transformers will force the text extraction to be asynchronous | 100 |
 | lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query | 10000 |
-| lucene.write.lock.timeout | 	Index locks (mostly deprecated and will be tidied up with the next lucene upgrade) | 10000 |
+| lucene.write.lock.timeout | Index locks (mostly deprecated and will be tidied up with the next lucene upgrade) | 10000 |
 | mail.service.corePoolSize | Oubound Mail | 8 |
 | mail.service.maximumPoolSize | Oubound Mail | 20 |
 | mbean.server.locateExistingServerIfPossible | Should the Mbean server bind to an existing server. Set to true for most application servers. false for WebSphere clusters. | true |
-| messaging.broker.connections.max | | 100 |
+| messaging.broker.connections.max | | 8 |
 | messaging.broker.connections.maxActiveSessionsPerConnection | | 1000 |
 | messaging.broker.password | | |
 | messaging.broker.ssl | | false |
-| messaging.broker.url | | failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true |
+| messaging.broker.url | | failover:(tcp://localhost:61616)?timeout=3000&jms.useCompression=true |
 | messaging.broker.username | | |
 | messaging.camel.context.id | | alfrescoCamelContext |
-| messaging.camel.route.devicesync.id | | alfresco.events -> VirtualTopic:alfresco.repo.events |
 | messaging.subsystem.autoStart | Messaging subsystem | true |
 | messaging.transacted | | true |
 | metrics.dbMetricsReporter.enabled | | false |
@@ -873,9 +865,9 @@ The table below shows the full list of properties (exluding module specific prop
 | metrics.restMetricsReporter.enabled | | false |
 | metrics.restMetricsReporter.path.enabled | | false |
 | metrics.tomcatMetricsReporter.enabled | | false |
-| mimetype.config.cronExpression | Schedule for reading mimetype config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 0 30 0/1 * * ? |
+| mimetype.config.cronExpression | Schedule for reading mimetype config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `0 30 0/1 * * ?` |
 | mimetype.config.dir | Optional property to specify an external file or directory that will be read for mimetype definitions from YAML files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/mimetypes |
-| mimetype.config.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| mimetype.config.initialAndOnError.cronExpression | | `0/10 * * * * ?` |
 | models.enforceTenantInNamespace | | false |
 | monitor.rmi.service.enabled | enable or disable individual RMI services | false |
 | monitor.rmi.service.port | RMI service ports for the individual services. These eight services are available remotely. Assign individual ports for each service for best performance or run several services on the same port, you can even run everything on 50500 if running through a firewall. Specify 0 to use a random unused port. | 50508 |
@@ -908,9 +900,9 @@ The table below shows the full list of properties (exluding module specific prop
 | policy.content.update.ignoreEmpty | Should we consider zero byte content to be the same as no content when firing content update policies? Prevents 'premature' firing of inbound content rules for some clients such as Mac OS X Finder | true |
 | protocols.rootPath | Default root path for protocols | /${spaces.company_home.childname} |
 | protocols.storeName | Default store name| ${spaces.store} |
-| rendition.config.cronExpression | Schedule for reading rendition config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 2 30 0/1 * * ? |
+| rendition.config.cronExpression | Schedule for reading rendition config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `2 30 0/1 * * ?` |
 | rendition.config.dir | Optional property to specify an external file or directory that will be read for rendition definitions from YAML files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/transform/renditions |
-| rendition.config.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| rendition.config.initialAndOnError.cronExpression | | `0/10 * * * * ?` |
 | renditionService2.enabled | Rendition Service 2 | true |
 | replication.enabled | Replication Service | false |
 | repo.event2.filter.nodeAspects | Repo events2 | |
@@ -922,6 +914,8 @@ The table below shows the full list of properties (exluding module specific prop
 | sample.site.disabled | | false |
 | security.anyDenyDenies | Security | true |
 | security.postProcessDenies | Whether to post-process denies. Only applies to solr4+ when anyDenyDenies is true. | false |
+| server.allowedusers | | |
+| server.allowWrite | | true |
 | server.maxusers | Server Max Users - limit number of users with non-expired tickets. Note: -1 allows any number of users, assuming not in single-user mode 0 prevents further logins, including the ability to enter single-user mode. | -1 |
 | server.setup.transaction.max-retries | | 40 |
 | server.setup.transaction.max-retry-wait-ms | | 15000 |
@@ -936,7 +930,12 @@ The table below shows the full list of properties (exluding module specific prop
 | server.transaction.wait-increment-ms | | 100 |
 | server.web.transaction.max-duration-ms | | 0 |
 | sfs.endpoint | | ${sfs.url}/alfresco/api/-default-/private/sfs/versions/1 |
-| sfs.url | | http://shared-file-store:8099/ |
+| sfs.url | | |
+| share.context | Share context | share |
+| share.host | Share hostname | ${localname} |
+| share.port | Share port | 8080 |
+| share.protocol | Share protocol | http |
+| site.public.group | This property controls who has visibility of created share sites. | GROUP_EVERYONE |
 | shutdown.backstop.enabled | | false |
 | shutdown.backstop.timeout | How long should shutdown wait to complete normally before taking stronger action and calling System.exit() in ms, 10,000 is 10 seconds | 10000 |
 | site.invite.moderated.workflowId | Moderated invite Activiti workflow |activiti$activitiInvitationModerated |
@@ -956,16 +955,16 @@ The table below shows the full list of properties (exluding module specific prop
 | smart.folders.enabled | Smart Folders Config Properties | false |
 | smart.reference.classpath.hash | Smart reference config | ${smart.folders.config.vanilla.processor.classpath}->1,${smart.folders.config.system.templates.classpath}->2 |
 | solr.cmis.alternativeDictionary | SOLR connection details (e.g. for JMX) | DEFAULT_DICTIONARY |
-| solr.host | SOLR connection details (e.g. for JMX) | solr6 |
-| solr.max.host.connections | SOLR connection details (e.g. for JMX) | 40 |
-| solr.max.total.connections | SOLR connection details (e.g. for JMX) |40 |
-| solr.port | SOLR connection details (e.g. for JMX) | 8983 |
-| solr.port.ssl | SOLR connection details (e.g. for JMX) | 8984 |
-| solr.secureComms | SOLR connection details (e.g. for JMX). none, https | none |
+| solr.host | SOLR hostname | localhost |
+| solr.max.host.connections | Maximum number of connections | 40 |
+| solr.max.total.connections | Total number of connections |40 |
+| solr.port | SOLR port | 8983 |
+| solr.port.ssl | SOLR SSL port | 8984 |
+| solr.secureComms | Determines whether to connect to SOLR using HTTPS (none, https) | https |
 | solr.solrConnectTimeout | Solr connect timeout in ms | 5000 |
-| solr.solrPassword | SOLR connection details (e.g. for JMX) | ******** |
-| solr.solrPingCronExpression | cron expression defining how often the Solr Admin client (used by JMX) pings Solr if it goes away | 0 0/5 * * * ? * |
-| solr.solrUser | SOLR connection details (e.g. for JMX) | solr |
+| solr.solrPassword | Default SOLR password | solr |
+| solr.solrPingCronExpression | cron expression defining how often the Solr Admin client (used by JMX) pings Solr if it goes away | `0 0/5 * * * ? *` |
+| solr.solrUser | Default SOLR username | solr |
 | solr.store.mappings | Default SOLR store mappings mappings | solrMappingAlfresco,solrMappingArchive |
 | solr.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR store mappings mappings | /solr/alfresco |
 | solr.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
@@ -1060,7 +1059,7 @@ The table below shows the full list of properties (exluding module specific prop
 | system.api.discovery.enabled | | true |
 | system.auditableData.ACLs | Specific control of whether ACL changes on a node trigger the cm:auditable aspect | ${system.auditableData.preserve} |
 | system.auditableData.FileFolderService | Specific control of how the FileFolderService treats cm:auditable data when performing moves | ${system.auditableData.preserve} |
-| system.auditableData.preserve | | ${system.preserve.modificationData} |
+| system.auditableData.preserve | The default to preserve all cm:auditable data on a node when the process is not directly driven by a user action | ${system.preserve.modificationData} |
 | system.authorities_container.childname | Folders for storing people | sys:authorities |
 | system.bootstrap.config_check.strict | Change the failure behaviour of the configuration checker | true |
 | system.cache.disableImmutableSharedCaches | Disables immutable shared caches. These property is used for diagnostic purposes | false |
@@ -1070,7 +1069,7 @@ The table below shows the full list of properties (exluding module specific prop
 | system.certificate_container.childname | Folder for storing IdP's certificate definitions | sys:samlcertificate |
 | system.content.caching.cacheOnInbound | Caching Content Store | true |
 | system.content.caching.cleanThresholdPct | When a cache file has been written that results in cleanThresholdPct (default 80%) of maxUsageBytes being exceeded then the cached content cleaner is invoked (if not already running) in a new thread. | 80 |
-| system.content.caching.contentCleanup.cronExpression | Clean up every day at 3 am | 0 0 3 * * ? |
+| system.content.caching.contentCleanup.cronExpression | Clean up every day at 3 am | `0 0 3 * * ?` |
 | system.content.caching.maxDeleteWatchCount | Caching Content Store | 1 |
 | system.content.caching.maxFileSizeMB | maxFileSizeMB - 0 means no max file size. | 0 |
 | system.content.caching.maxUsageMB | | 4096 |
@@ -1081,10 +1080,10 @@ The table below shows the full list of properties (exluding module specific prop
 | system.content.deletionFailureAction | The action to take when a store or stores fails to delete orphaned content. IGNORE: Just log a warning. The binary remains and the record is expunged. KEEP_URL: Log a warning and create a URL entry with orphan time 0. It won't be processed or removed. | IGNORE |
 | system.content.eagerOrphanCleanup | Decide if content should be removed from the system immediately after being orphaned. Do not change this unless you have examined the impact it has on your backup procedures. | false |
 | system.content.maximumFileSizeLimit | The value for the maximum permitted size in bytes of all content. No value (or a negative long) will be taken to mean that no limit should be applied. | |
-| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | 0 0 4 * * ? |
+| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | `0 0 4 * * ?` |
 | system.content.orphanProtectDays | The number of days to keep orphaned content in the content stores. This has no effect on the 'deleted' content stores, which are not automatically emptied.| 14 |
 | system.cronJob.startDelayMilliseconds | Delays cron jobs after bootstrap to allow server to fully come up before jobs start | 60000 |
-| system.delete_not_exists.batchsize | 	MNT-21083 --DELETE_NOT_EXISTS - default settings | 100000 |
+| system.delete_not_exists.batchsize | MNT-21083 --DELETE_NOT_EXISTS - default settings | 100000 |
 | system.delete_not_exists.delete_batchsize | | 1000 |
 | system.delete_not_exists.read_only | | false |
 | system.delete_not_exists.timeout_seconds | | -1 |
@@ -1095,7 +1094,7 @@ The table below shows the full list of properties (exluding module specific prop
 | system.enableTimestampPropagation | Determine if modification timestamp propagation from child to parent nodes is respected or not. Even if 'true', the functionality is only supported for child associations that declare the 'propagateTimestamps' element in the dictionary definition. | true |
 | system.filefolderservice.defaultListMaxResults | The maximum number of filefolder list results | 5000 |
 | system.fixedACLs.maxTransactionTime | Fixed ACLs. Required for fixing MNT-15368 - Time Consumed for Updating Folder Permission. ADMAccessControlListDAO.setFixedAcls called on a large folder hierarchy will take a long time for its execution. For this reason now method can also be called asynchronously if transaction reaches system.fixedACLs.maxTransactionTime. In this case setFixedAcls method recursion will be stopped and unfinished nodes will be marked with ASPECT_PENDING_FIX_ACL. Pending nodes will be processed by FixedAclUpdater, programmatically called but also configured as a scheduled job. | 10000 |
-| system.fixedACLsUpdater.cronExpression | fixedACLsUpdater cron expression - fire at midnight every day | 0 0 0 * * ? |
+| system.fixedACLsUpdater.cronExpression | fixedACLsUpdater cron expression - fire at midnight every day | `0 0 0 * * ?` |
 | system.fixedACLsUpdater.lockTTL | ixedACLsUpdater - lock time to live | 10000 |
 | system.fixedACLsUpdater.maxItemBatchSize | fixedACLsUpdater - maximum number of nodes to process per execution | 100 |
 | system.fixedACLsUpdater.numThreads | fixedACLsUpdater - the number of threads to use | 4 |
@@ -1109,7 +1108,7 @@ The table below shows the full list of properties (exluding module specific prop
 | system.lockTryTimeout.MessageServiceImpl | Lock timeout configuration | ${system.lockTryTimeout} |
 | system.lockTryTimeout.PolicyComponentImpl | Lock timeout configuration | ${system.lockTryTimeout} |
 | system.maximumStringLength | Manually control how the system handles maximum string lengths. Any zero or negative value is ignored. Only change this after consulting support or reading the appropriate Javadocs for org.alfresco.repo.domain.schema.SchemaBootstrap for V2.1.2. Before database migration, the string value storage may need to be adjusted using the scheduled job | -1 |
-| system.maximumStringLength.jobCronExpression | | * * * * * ? 2099 |
+| system.maximumStringLength.jobCronExpression | | `* * * * * ? 2099` |
 | system.maximumStringLength.jobQueryRange | | 10000 |
 | system.maximumStringLength.jobThreadCount | | 4 |
 | system.metadata-query-indexes-more.ignored | | true |
@@ -1118,7 +1117,7 @@ The table below shows the full list of properties (exluding module specific prop
 | system.patch.addUnmovableAspect.deferred | Default values for deferring the running of the addUnmovableAspect patch | false |
 | system.patch.sharedFolder.cronExpression | Default value is run new years day 2030 i.e. not run. | 0 0 0 ? 1 1 2030 |
 | system.patch.sharedFolder.deferred | Do we defer running the shared folder patch? | false |
-| system.patch.surfConfigFolder.cronExpression | Default value. i.e. never run. It can be triggered using JMX | * * * * * ? 2099 |
+| system.patch.surfConfigFolder.cronExpression | Default value. i.e. never run. It can be triggered using JMX | `* * * * * ? 2099` |
 | system.patch.surfConfigFolder.deferred | Do we defer running the surf-config folder patch? | false |
 | system.people_container.childname | Folders for storing people | sys:people |
 | system.preferred.password.encoding | Preferred password encoding, md4, sha256, bcrypt10 | md4 |
@@ -1141,7 +1140,7 @@ The table below shows the full list of properties (exluding module specific prop
 | system.thumbnail.definition.default.maxPages | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
 | system.thumbnail.definition.default.maxSourceSizeKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
 | system.thumbnail.definition.default.pageLimit | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | 1 |
-| system.thumbnail.definition.default.readLimitKBytes | 	Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.readLimitKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
 | system.thumbnail.definition.default.readLimitTimeMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
 | system.thumbnail.definition.default.timeoutMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
 | system.thumbnail.generate | Thumbnail Service | true |
@@ -1157,16 +1156,16 @@ The table below shows the full list of properties (exluding module specific prop
 | system.thumbnail.quietPeriodRetriesEnabled | Configuration for handling of failing thumbnails | true |
 | system.thumbnail.redeployStaticDefsOnStartup | Configuration for handling of failing thumbnails | true |
 | system.thumbnail.retryCount | Configuration for handling of failing thumbnails | 2 |
-| system.thumbnail.retryPeriod | 	Configuration for handling of failing thumbnails. See NodeEligibleForRethumbnailingEvaluator's javadoc for details. Retry periods limit the frequency with which the repository will attempt to create Share thumbnails for content nodes which have previously failed in their thumbnail attempts. These periods are in seconds. 604800s = 60s * 60m * 24h * 7d = 1 week |60 |
+| system.thumbnail.retryPeriod | Configuration for handling of failing thumbnails. See NodeEligibleForRethumbnailingEvaluator's javadoc for details. Retry periods limit the frequency with which the repository will attempt to create Share thumbnails for content nodes which have previously failed in their thumbnail attempts. These periods are in seconds. `604800s = 60s * 60m * 24h * 7d = 1 week` | 60 |
 | system.upgradePasswordHash.jobBatchSize | Upgrade Password Hash Job | 100 |
-| system.upgradePasswordHash.jobCronExpression | Upgrade Password Hash Job | * * * * * ? 2099 |
+| system.upgradePasswordHash.jobCronExpression | Upgrade Password Hash Job | `* * * * * ? 2099` |
 | system.upgradePasswordHash.jobQueryRange | Upgrade Password Hash Job | 10000 |
 | system.upgradePasswordHash.jobThreadCount | Upgrade Password Hash Job | 4 |
 | system.usages.clearBatchSize | ECM content usages/quotas | 0 |
 | system.usages.enabled | ECM content usages/quotas | false |
 | system.usages.updateBatchSize | ECM content usages/quotas | 50 |
 | system.webdav.activities.enabled | | false |
-| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | (.*/\..*)|(.*[a-f0-9]{8}+$)|(.*\.tmp$)|(.*atmp[0-9]+$)|(.*\.wbk$)|(.*\.bak$)|(.*\~$)|(.*backup.*\.do[ct]{1}[x]?[m]?$)|(.*\.sb\-\w{8}\-\w{6}$) |
+| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | `(.*/\..*)|(.*[a-f0-9]{8}+$)|(.*\.tmp$)|(.*atmp[0-9]+$)|(.*\.wbk$)|(.*\.bak$)|(.*\~$)|(.*backup.*\.do[ct]{1}[x]?[m]?$)|(.*\.sb\-\w{8}\-\w{6}$)` |
 | system.webdav.rootPath | WebDAV root path | ${protocols.rootPath} |
 | system.webdav.servlet.enabled | WebDAV initialization properties | true |
 | system.webdav.storeName | WebDAV store name | ${protocols.storeName} |
@@ -1184,9 +1183,9 @@ The table below shows the full list of properties (exluding module specific prop
 | system.workflow.maxPooledTasks | The maximum number of pooled tasks to return in a query. It may be necessary to limit this depending on UI limitations. | -1 |
 | system.workflow_container.childname | Folders for storing workflow related info | sys:workflow |
 | system.zones_container.childname | Folders for storing people | sys:zones |
-| ticket.cleanup.cronExpression | | 0 0 * * * ? |
+| ticket.cleanup.cronExpression | | `0 0 * * * ?` |
 | tika.startupRetryPeriodSeconds | When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| tika.url | Legacy tika url to T-Engines to service transform requests via http. Disabled by default. | http://transform-core-aio:8090/ |
+| tika.url | Legacy tika url to T-Engines to service transform requests via http. Disabled by default. | |
 | transferservice.receiver.enabled | Transfer Service | false |
 | transferservice.receiver.lockRefreshTime | How long to wait in mS before refreshing a transfer lock - detects shutdown servers. Default 1 minute. | 60000 |
 | transferservice.receiver.lockRetryCount | How many times to attempt retry the transfer lock | 3 |
@@ -1194,19 +1193,19 @@ The table below shows the full list of properties (exluding module specific prop
 | transferservice.receiver.lockTimeOut | How long to wait, in mS, since the last contact with from the client before timing out a transfer. Needs to be long enough to cope with network delays and "thinking time" for both source and destination. Default 5 minutes. | 300000 |
 | transferservice.receiver.stagingDir | Transfer Service | ${java.io.tmpdir}/alfresco-transfer-staging |
 | transform.misc.startupRetryPeriodSeconds | When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. | http://transform-core-aio:8090/ |
-| transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 6 30 0/1 * * ? |
-| transform.service.enabled | Used to disable transforms locally. | true |
-| transform.service.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. | |
+| transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `6 30 0/1 * * ?` |
+| transform.service.enabled | Determines whether the transform service is enabled | false |
+| transform.service.initialAndOnError.cronExpression | | `0/10 * * * * ?` |
 | transform.service.reply.endpoint | | |
 | transform.service.reply.endpoint.prefix | | org.alfresco.transform |
 | transform.service.reply.endpoint.suffix | | t-reply |
 | transform.service.request.endpoint | | jms:org.alfresco.transform.t-request.acs?jmsMessageType=Text |
-| transform.service.url | | http://transform-router:8095 |
+| transform.service.url | | |
 | transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
 | transformer.strict.mimetype.check | Check that the declared mimetype (of the Node) is the same as the derived mimetype of the content (via Tika) before a transformation takes place. Only files in the repository (not intermediate files in a transformer pipeline) are checked. This property provides a trade off between a security check and a relatively expensive (Tika) operation. There are a few issues with the Tika mimetype detection. So that transformations still take place where the detected mimetype is not the same as the declared mimetype, another property (transformer.strict.mimetype.check.whitelist.mimetypes) contains pairs of declared and detected mimetypes that should be allowed. This parameter value is a sequence of ; separated pairs. The declared and derived mimetypes are also ; separated. | true |
-| transformer.strict.mimetype.check.whitelist.mimetypes | | application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
-| trashcan-cleaner.cron | | * * * * * ? 2099 |
+| transformer.strict.mimetype.check.whitelist.mimetypes | A white list of declared and detected mimetypes, that don't match, but should still be transformed. | application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
+| trashcan-cleaner.cron | | `* * * * * ? 2099` |
 | trashcan-cleaner.deleteBatchCount | | 1000 |
 | trashcan-cleaner.keepPeriod | | P28D |
 | trashcan.MaxSize | Max size of view trashcan files | 1000 |
@@ -1222,10 +1221,10 @@ The table below shows the full list of properties (exluding module specific prop
 | version.store.enableAutoVersioning | ADM VersionStore Configuration | true |
 | version.store.initialVersion | ADM VersionStore Configuration | true |
 | version.store.version2Store | ADM VersionStore Configuration | workspace://version2Store |
-| version.store.versionComparatorClass | Optional Comparator<Version> class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster. | |
+| version.store.versionComparatorClass | Optional `Comparator<Version>` class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster. | |
 | webscripts.encryptTempFiles | Webscripts config | false |
 | webscripts.memoryThreshold | Webscripts config (4mb) | 4194304 |
-| webscripts.setMaxContentSize | Webscripts config (4gb) |  5368709120 |
+| webscripts.setMaxContentSize | Webscripts config (4gb) | 5368709120 |
 | webscripts.tempDirectoryName | Webscripts config | Alfresco-WebScripts |
 | webscripts.transaction.preserveHeadersPattern | | Access-Control-.* |
 | xforms.formatCaption | Format caption extracted from the XML Schema. | true |
