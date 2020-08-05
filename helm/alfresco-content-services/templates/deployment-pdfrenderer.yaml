@@ -1,28 +1,31 @@
 # Defines the deployment for the pdfrenderer transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-pdfrenderer
   labels:
-    app: {{ template "content-services.shortname" . }}-pdfrenderer
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "pdfrenderer.labels" . | nindent 6 }}
 spec:
   replicas: {{ .Values.pdfrenderer.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "pdfrenderer.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-pdfrenderer.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-pdfrenderer
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "pdfrenderer.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.registryPullSecrets }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       affinity:
         podAntiAffinity:
@@ -56,6 +59,7 @@ spec:
           ports:
             - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
           resources:
+{{ toYaml .Values.pdfrenderer.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -71,4 +75,3 @@ spec:
             periodSeconds: {{ .Values.pdfrenderer.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.pdfrenderer.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.pdfrenderer.resources | indent 12 }}

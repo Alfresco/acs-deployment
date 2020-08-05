@@ -1,28 +1,31 @@
 # Defines the deployment for the shared file store
 # Details: https://git.alfresco.com/Repository/alfresco-shared file store
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "alfresco.shortname" . }}-filestore
   labels:
-    app: {{ template "alfresco.shortname" . }}-filestore
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "filestore.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.filestore.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "filestore.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco.shortname" . }}-filestore
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "filestore.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.registryPullSecrets }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       affinity:
         podAntiAffinity:
@@ -56,6 +59,7 @@ spec:
           ports:
             - containerPort: {{ .Values.filestore.image.internalPort }}
           resources:
+{{ toYaml .Values.filestore.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -71,7 +75,6 @@ spec:
             periodSeconds: {{ .Values.filestore.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.filestore.resources | indent 12 }}
           {{- if .Values.persistence.filestore.enabled }}
           volumeMounts:
           - name: data
@@ -81,7 +84,7 @@ spec:
       {{- if .Values.persistence.filestore.enabled }}
       initContainers:
         - name: init-fs
-          image: busybox
+          image: "{{ .Values.filestore.initContainer.image.repository }}:{{ .Values.filestore.initContainer.image.tag }}"
           # command to allow sfs to write to EFS volume.
           command: ["sh", "-c", "chown -R 33030:1000 {{ .Values.persistence.filestore.data.mountPath }}"]
           volumeMounts:

@@ -1,3 +1,36 @@
+Table of Contents
+=================
+
+   * [Alfresco Content Services Deployment with Helm on AWS using Kops](#alfresco-content-services-deployment-with-helm-on-aws-using-kops)
+      * [Prerequisites](#prerequisites)
+         * [Prepare and configure Kops](#prepare-and-configure-kops)
+         * [Setting up Kubernetes cluster on AWS with Kops](#setting-up-kubernetes-cluster-on-aws-with-kops)
+         * [Validate cluster](#validate-cluster)
+         * [Upgrading a cluster (optional)](#upgrading-a-cluster-optional)
+         * [Deploying the Kubernetes Dashboard](#deploying-the-kubernetes-dashboard)
+         * [Deploying Helm](#deploying-helm)
+      * [Setting up Alfresco Content Services](#setting-up-alfresco-content-services)
+         * [Deploying the Ingress for Alfresco Content Services](#deploying-the-ingress-for-alfresco-content-services)
+         * [Creating File Storage for the Alfresco Content Services](#creating-file-storage-for-the-alfresco-content-services)         
+         * [Install the NFS client provisioner](#install-the-nfs-client-provisioner)
+         * [Creating a Docker registry pull secret](#creating-a-docker-registry-pull-secret)
+         * [Deploying Alfresco Content Services](#deploying-alfresco-content-services)
+         * [Deploying ACS with Alfresco Intelligence Services enabled](#deploying-acs-with-alfresco-intelligence-services-enabled)
+         * [Using an external database instance](#using-an-external-database-instance)
+         * [Using an external messaging broker](#using-an-external-messaging-broker)
+         * [Using the Alfresco S3 Connector](#using-the-alfresco-s3-connector)
+         * [Creating a Route 53 Record Set in your Hosted Zone](#creating-a-route-53-record-set-in-your-hosted-zone)
+      * [Checking the status of your deployment](#checking-the-status-of-your-deployment)
+         * [Network Hardening](#network-hardening)
+            * [Lockdown Bastion](#lockdown-bastion)
+            * [Restrict k8s Master(s) Outbound traffic](#restrict-k8s-masters-outbound-traffic)
+            * [Restrict k8s Node(s) Outbound traffic](#restrict-k8s-nodes-outbound-traffic)
+            * [Restrict API ELB Outbound traffic](#restrict-api-elb-outbound-traffic)
+            * [Restrict K8S ELB Outbound traffic](#restrict-k8s-elb-outbound-traffic)
+            * [Restrict Default SG Outbound traffic](#restrict-default-sg-outbound-traffic)
+      * [Cleaning up your deployment](#cleaning-up-your-deployment)
+
+
 # Alfresco Content Services Deployment with Helm on AWS using Kops
 
 **Hint:** Consider [deploying ACS into EKS](./helm-deployment-aws_eks.md) instead of setting
@@ -111,16 +144,11 @@ kops rolling-update cluster --yes
 
 Helm is used to deploy the Alfresco Content Services into the Kubernetes cluster.
 
-* Create tiller (cluster wide) and add the cluster admin role to tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md]:
+* Create [Tiller](https://helm.sh/docs/glossary/#tiller) (cluster wide) and add the cluster admin role to Tiller.  It should not be isolated in a namespace as the ingress needs to set up cluster roles [https://github.com/kubernetes/helm/blob/master/docs/rbac.md].
 
-```bash
-kubectl create -f tiller-rbac-config.yaml
-```
+Below is an example that uses a `kubectl` command with an external YAML file to create role-based access control ([RBAC](https://github.com/helm/helm/blob/master/docs/rbac.md#role-based-access-control)) configuration for Tiller:
 
-<details><summary>
-See example file: tiller-rbac-config.yaml</summary>
-<p>
-
+First, create the external YAML file:
 ```bash
 cat <<EOF > tiller-rbac-config.yaml
 apiVersion: v1
@@ -144,18 +172,19 @@ subjects:
 EOF
 ```
 
-</p>
-</details>
+Next, apply the RBAC configuration for Tiller via a `kubectl` command:
+```bash
+kubectl create -f tiller-rbac-config.yaml
+```
 
 * Initialize tiller:
 ```bash
 helm init --service-account tiller
 ```
-The above step may not even be needed as, by default, `kubectl` will create and initialize the service.
 
 ## Setting up Alfresco Content Services
 
-Once the platform for Kubernetes is set up on AWS, you can set up the Alfresco Content Services.
+Once the platform for Kubernetes is set up on AWS, you can set up Alfresco Content Services.
 
 * Create a namespace to host Alfresco Content Services inside the cluster.  A Kubernetes cluster can have many namespaces to separate and isolate multiple application environments (such as development, staging, and production):
 ```bash
@@ -165,9 +194,9 @@ kubectl create namespace $DESIREDNAMESPACE
 
 ### Deploying the Ingress for Alfresco Content Services
 
-* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file, or write the arguments in full:
+* Install the `nginx-ingress` service to create a web service, virtual LBs, and AWS ELB inside `$DESIREDNAMESPACE` to serve Alfresco Content Services. You have the option to either create an `ingressvalues.yaml` file (shown in Option 2), or write the arguments in full (shown in Option 1):
 
-Option 1:
+Option 1: This method takes extra Helm installation arguments via the command line
 
 ```bash
 # Helm install nginx-ingress along with args
@@ -175,7 +204,6 @@ export AWS_CERT_ARN="arn:aws:acm:<AWS-REGION>:<AWS-AccountID>:certificate/<Certi
 export AWS_CERT_POLICY="ELBSecurityPolicy-TLS-1-2-2017-01"
 
 helm install stable/nginx-ingress \
---version 0.14.0 \
 --set controller.scope.enabled=true \
 --set controller.scope.namespace=$DESIREDNAMESPACE \
 --set rbac.create=true \
@@ -191,25 +219,12 @@ helm install stable/nginx-ingress \
 --namespace $DESIREDNAMESPACE
 ```
 
+Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
-Option 2:
 
-```bash
-# Helm install nginx-ingress with args in ingressvalues.yaml file
-helm install stable/nginx-ingress \
---version 0.14.0 \
---set controller.scope.enabled=true \
---set controller.scope.namespace=$DESIREDNAMESPACE \
---set controller.config."server-tokens"=\"false\" \
---set rbac.create=true \
--f ingressvalues.yaml \
---namespace $DESIREDNAMESPACE
-```
+Option 2: This method takes extra Helm installation arguments written in a YAML file
 
-<details><summary>
-See example file: ingressvalues.yaml</summary>
-<p>
-
+First, create the external YAML file with Helm arguments:
 ```bash
 cat <<EOF > ingressvalues.yaml
 controller:
@@ -232,9 +247,17 @@ controller:
 EOF
 ```
 
-</p>
-</details>
-
+Next, install Helm using the above YAML file as an argument:
+```bash
+# Helm install nginx-ingress with args in ingressvalues.yaml file
+helm install stable/nginx-ingress \
+--set controller.scope.enabled=true \
+--set controller.scope.namespace=$DESIREDNAMESPACE \
+--set controller.config."server-tokens"=\"false\" \
+--set rbac.create=true \
+-f ingressvalues.yaml \
+--namespace $DESIREDNAMESPACE
+```
 
 Adjust the above values accordingly (ex: `--version` of `nginx-ingress`, `controller.service.annotations` etc.)
 
@@ -294,6 +317,26 @@ export EFS_SERVER=$EFS_FS_ID.efs.$AWS_DEFAULT_REGION.amazonaws.com
 # Publish EFS Volume's DNS name (if not already done)
 export EFS_SERVER=<EFS_ID>.efs.<AWS-REGION>.amazonaws.com
 ```
+
+
+### Install the NFS client provisioner
+
+The NFS client provisioner is an automatic provisioner for Kubernetes that uses your already configured NFS server, automatically creating Persistent Volumes. Each volume created by the provisioner will be mounted in a unique folder, specifically created on the NFS server for each Persistent Volume Claim. 
+For more details check the official docs on [dynamic volume provisioning](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/)
+
+The command to install the NFS provisioner is the following:
+```bash
+helm install stable/nfs-client-provisioner \
+--name alfresco-nfs-provisioner \
+--set nfs.server="$EFS_SERVER" \
+--set nfs.path="/" \
+--set storageClass.name="nfs-client" \	
+--set storageClass.archiveOnDelete=false \
+```
+The command line interface might try to resolve the *nfs.path="/"* to a path from the local file system. In that case use escaping, like *nfs.path="\/"*.
+
+More info about the chart configuration can be found here: https://github.com/helm/charts/tree/master/stable/nfs-client-provisioner#configuration
+
 ### Creating a Docker registry pull secret
 
 Since we need to use private (Enterprise-only) Docker images from Quay.io, you need credentials to be able to pull those images from Quay.io. Alfresco customers can request their credentials by logging a ticket at https://support.alfresco.com.
@@ -341,7 +384,7 @@ kubectl create -f secrets.yaml --namespace $DESIREDNAMESPACE
 secret "quay-registry-secret" created
 ```
 
-**Note:** When installing the ACS Helm chart, we'll add the variable ```--set registryPullSecrets=quay-registry-secret```.
+**Note:** When installing the ACS Helm chart, we'll add the variable ```--set global.alfrescoRegistryPullSecrets=quay-registry-secret```.
 
 ### Deploying Alfresco Content Services
 
@@ -369,17 +412,17 @@ helm install alfresco-incubator/alfresco-content-services \
 --set externalHost="$EXTERNALHOST" \
 --set externalPort="443" \
 --set repository.adminPassword="$ALF_ADMIN_PWD" \
---set alfresco-infrastructure.persistence.efs.enabled=true \
---set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
+--set alfresco-infrastructure.persistence.storageClass.enabled=true \
+--set alfresco-infrastructure.persistence.storageClass.name="nfs-client" \
+--set alfresco-infrastructure.alfresco-infrastructure.nginx-ingress.enabled=false \
 --set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
 --set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
---set persistence.repository.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/repository-data" \
---set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
 --set postgresql.postgresPassword="$ALF_DB_PWD" \
---set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
+
+**Note:** The values for __externalProtocol__, __externalHost__ and __externalPort__ can also be specified as helm template strings for extra flexiblity. This is useful especially when this chart is used as a requirement in another chart, for example a value of `'acs.{{ .Values.global.domain }}'` for externalHost will generate the hostname from the value set for `global.domain`.
 
 **Note:** By default the Alfresco Search Services `/solr` endpoint is disabled for external access.  To enable it, see example [search-external-access](examples/search-external-access.md).
 
@@ -393,6 +436,10 @@ You can set the Alfresco Content Services stack configuration attributes above a
 ```
 
 For more parameter options, see the [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
+
+### Deploying ACS with Alfresco Intelligence Services enabled
+
+* Follow the steps outlined in [Deploying ACS with Alfresco Intelligence Services enabled](helm-deployment-acs-with-ai.md#deploying-acs-with-ai-renditions-enabled).
 
 ### Using an external database instance
 
@@ -417,7 +464,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set database.user="myuser" \
 --set database.password="mypass" \
 --set database.url="jdbc:postgresql://mydb.eu-west-1.rds.amazonaws.com:5432/mydb" \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -460,7 +507,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set messageBroker.url="$MESSAGE_BROKER_URL" \
 --set messageBroker.user="$MESSAGE_BROKER_USER" \
 --set messageBroker.password="$MESSAGE_BROKER_PASSWORD" \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -484,7 +531,7 @@ helm install alfresco-incubator/alfresco-content-services \
 --set s3connector.config.bucketName=myBucket \
 --set s3connector.secrets.encryption=kms \
 --set s3connector.secrets.awsKmsKeyId=Your KMS Key ID \
---set registryPullSecrets=quay-registry-secret \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --namespace=$DESIREDNAMESPACE
 ```
 
@@ -530,7 +577,7 @@ Below are some recommended modifications to Security Groups (SG) that manage Inb
 
 #### Lockdown Bastion
 
-By default, SSH access to the bastion host is open from everywhere for Inbound and Outbound traffic.  You may want to lock it down to a specific IP address(es).
+By default, SSH access to the bastion host is open from everywhere for Inbound and Outbound traffic which can be restricted to specific IP address(es).
 
 <details><summary>
 Below is an example of how to modify the Bastion traffic with the AWS Cli.</summary>

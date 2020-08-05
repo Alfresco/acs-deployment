@@ -1,25 +1,29 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "alfresco.shortname" . }}-router
   labels:
-    app: {{ template "alfresco.shortname" . }}-router
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformrouter
+    {{- include "transform-router.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "transform-router.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-transform-router.yaml") . | sha256sum }}
+        checksum/config-routes: {{ include (print $.Template.BasePath "/config-transformer-routes.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco.shortname" . }}-router
-        release: {{ .Release.Name }}
-        component: transformrouter
+        {{- include "transform-router.selectorLabels" . | nindent 8 }}
     spec:
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -55,14 +59,25 @@ spec:
             httpGet:
               path: /actuator/health
               port: {{ .Values.transformrouter.image.internalPort }}
-              initialDelaySeconds: {{ .Values.transformrouter.livenessProbe.initialDelaySeconds }}
-              periodSeconds: {{ .Values.transformrouter.livenessProbe.periodSeconds }}
-              failureThreshold: 1
-              timeoutSeconds: {{ .Values.transformrouter.livenessProbe.timeoutSeconds }}
+            initialDelaySeconds: {{ .Values.transformrouter.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.transformrouter.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.transformrouter.livenessProbe.timeoutSeconds }}
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: {{ .Values.transformrouter.image.internalPort }}
-              initialDelaySeconds: {{ .Values.transformrouter.readinessProbe.initialDelaySeconds }}
-              periodSeconds: {{ .Values.transformrouter.readinessProbe.periodSeconds }}
-              timeoutSeconds: {{ .Values.transformrouter.readinessProbe.timeoutSeconds }}
+            initialDelaySeconds: {{ .Values.transformrouter.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.transformrouter.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.transformrouter.readinessProbe.timeoutSeconds }}
+          {{- if .Values.ai.enabled }}
+          volumeMounts:
+          - name: config-volume
+            mountPath: /mnt/routes
+          {{- end }}
+      {{- if .Values.ai.enabled }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
+      {{- end }}

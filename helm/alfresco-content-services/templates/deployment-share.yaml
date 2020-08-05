@@ -1,27 +1,30 @@
 # Defines the deployment for the alfresco share app
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-share
   labels:
-    app: {{ template "content-services.shortname" . }}-share
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: share
+    {{- include "share.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.share.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "share.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-share.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-share
-        release: {{ .Release.Name }}
-        component: share
+        {{- include "share.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.registryPullSecrets }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
@@ -49,3 +52,7 @@ spec:
             periodSeconds: {{ .Values.share.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.share.livenessProbe.timeoutSeconds }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 20"]

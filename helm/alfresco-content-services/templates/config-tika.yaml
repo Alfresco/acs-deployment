@@ -4,10 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "content-services.shortname" . }}-tika-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: transformers
+    {{- include "tika.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for "tika" are set here using proper quotes
   {{- if .Values.tika.environment }}
@@ -15,10 +12,10 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  {{- if index .Values "alfresco-infrastructure" "activemq" "enabled" }}
+  {{- if .Values.activemq.enabled }}
   ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
-  ACTIVEMQ_USER: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "username" }}
-  ACTIVEMQ_PASSWORD: {{ index .Values "alfresco-infrastructure" "activemq" "adminUser" "password" }}
+  ACTIVEMQ_USER: {{ .Values.activemq.adminUser.username }}
+  ACTIVEMQ_PASSWORD: {{ .Values.activemq.adminUser.password }}
   {{- else }}
   ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user }}

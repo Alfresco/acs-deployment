@@ -352,7 +352,7 @@
 					}
 				}
 			],
-			"request": {
+			"request": { 
 				"auth": {
 					"type": "basic",
 					"basic": [

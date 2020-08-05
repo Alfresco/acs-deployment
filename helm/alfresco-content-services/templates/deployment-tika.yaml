@@ -1,28 +1,31 @@
 # Defines the deployment for the tika transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-tika
   labels:
-    app: {{ template "content-services.shortname" . }}-tika
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "tika.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.tika.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "tika.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-tika.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-tika
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "tika.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.registryPullSecrets }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       affinity:
         podAntiAffinity:
@@ -56,6 +59,7 @@ spec:
           ports:
             - containerPort: {{ .Values.tika.image.internalPort }}
           resources:
+{{ toYaml .Values.tika.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -71,4 +75,3 @@ spec:
             periodSeconds: {{ .Values.tika.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.tika.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.tika.resources | indent 12 }}

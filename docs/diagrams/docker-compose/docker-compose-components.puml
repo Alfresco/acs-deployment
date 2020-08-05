@@ -23,10 +23,7 @@ node "Docker Compose" {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
         component "ActiveMQ" as amq #lightgrey
-        component "Alfresco PDF Renderer" as pdfr #lightgrey
-        component "LibreOffice" as libr #lightgrey
-        component "ImageMagick" as img #lightgrey
-        component "Tika" as tika #lightgrey
+        component "Transform Core" as tcore #lightgrey
     }
 }
 
@@ -38,23 +35,14 @@ proxy --> adw
 
 acs <-left-> ass
 acs --> psql
-acs --> pdfr
-acs --> libr
-acs --> img
-acs --> tika
+acs --> tcore
 acs --> sfs
 acs <-left-> amq
-tr --> pdfr
-tr --> libr
-tr --> img
-tr --> tika
+tr --> tcore
 tr <-left-> amq
-pdfr --> sfs
-libr --> sfs
-img --> sfs
-tika --> sfs
+tcore --> sfs
 share --> acs
 
-center footer Copyright 2018 Alfresco Software Inc
+center footer Copyright 2020 Alfresco Software Inc
 
 @enduml

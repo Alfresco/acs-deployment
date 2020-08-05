@@ -1,0 +1,77 @@
+# Defines the deployment for the transform-misc transformer app
+# Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.shortname" . }}-transform-misc
+  labels:
+    {{- include "transform-misc.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.transformmisc.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "transform-misc.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-transform-misc.yaml") . | sha256sum }}
+      labels:
+        {{- include "transform-misc.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "content-services.shortname" . }}-transform-misc
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "content-services.shortname" . }}-transform-misc
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.transformmisc.image.repository }}:{{ .Values.transformmisc.image.tag }}"
+          imagePullPolicy: {{ .Values.transformmisc.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-transformmisc.yaml
+              name: {{ template "content-services.shortname" . }}-transform-misc-configmap
+          ports:
+            - containerPort: {{ .Values.transformmisc.image.internalPort }}
+          resources:
+{{ toYaml .Values.transformmisc.resources | indent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.transformmisc.image.internalPort }}
+            initialDelaySeconds: {{ .Values.transformmisc.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.transformmisc.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.transformmisc.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.transformmisc.image.internalPort }}
+            initialDelaySeconds: {{ .Values.transformmisc.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.transformmisc.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.transformmisc.livenessProbe.timeoutSeconds }}

@@ -1,28 +1,31 @@
 # Defines the deployment for the libreoffice transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "content-services.shortname" . }}-libreoffice
   labels:
-    app: {{ template "content-services.shortname" . }}-libreoffice
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: transformers
+    {{- include "libreoffice.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.libreoffice.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "libreoffice.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-libreoffice.yaml") . | sha256sum }}
       labels:
-        app: {{ template "content-services.shortname" . }}-libreoffice
-        release: {{ .Release.Name }}
-        component: transformers
+        {{- include "libreoffice.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.registryPullSecrets }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       affinity:
         podAntiAffinity:
@@ -56,6 +59,7 @@ spec:
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:
+{{ toYaml .Values.libreoffice.resources | indent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
@@ -71,4 +75,3 @@ spec:
             periodSeconds: {{ .Values.libreoffice.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.libreoffice.livenessProbe.timeoutSeconds }}
-{{ toYaml .Values.libreoffice.resources | indent 12 }}
