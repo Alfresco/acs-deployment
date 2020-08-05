@@ -648,584 +648,584 @@ The table below shows the full list of properties (exluding module specific prop
 | caches.tx.statsEnabled | | true |
 | category.queryFetchSize | Maximum query size for category/tag fetch when not explicitly set by paging parameters | 5000 |
 | cmis.disable.hidden.leading.period.files | | false |
-| content.metadataExtracter.default.timeoutMs                                20000 |
-| content.metadataExtracter.pdf.maxConcurrentExtractionsCount                5 |
-| content.metadataExtracter.pdf.maxDocumentSizeMB                            10 |
-| content.metadataExtracter.pdf.overwritePolicy                              PRAGMATIC |
-| content.transformer.PdfBox.extractBookmarksText                            true |
-| content.transformer.retryOn.different.mimetype                             true |
-| contentPropertyRestrictions.enabled                                        true |
-| contentPropertyRestrictions.whitelist                                       |
-| cors.allowed.headers                                                       Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token |
-| cors.allowed.methods                                                       GET,POST,HEAD,OPTIONS,PUT,DELETE |
-| cors.allowed.origins                                                        |
-| cors.enabled                                                               false |
-| cors.exposed.headers                                                       Access-Control-Allow-Origin,Access-Control-Allow-Credentials |
-| cors.preflight.maxage                                                      10 |
-| cors.support.credentials                                                   true |
-| create.missing.people                                                      ${server.transaction.allow-writes} |
-| csrf.filter.enabled                                                        false |
-| csrf.filter.origin                                                          |
-| csrf.filter.origin.always                                                  false |
-| csrf.filter.referer                                                         |
-| csrf.filter.referer.always                                                 false |
-| db.driver                                                                  org.postgresql.Driver |
-| db.name                                                                    alfresco |
-| db.password                                                                ******** |
-| db.pool.abandoned.detect                                                   false |
-| db.pool.abandoned.log                                                      false |
-| db.pool.abandoned.time                                                     300 |
-| db.pool.evict.idle.min                                                     1800000 |
-| db.pool.evict.interval                                                     600000 |
-| db.pool.evict.num.tests                                                    -1 |
-| db.pool.evict.validate                                                     false |
-| db.pool.idle                                                               10 |
-| db.pool.initial                                                            10 |
-| db.pool.max                                                                275 |
-| db.pool.min                                                                10 |
-| db.pool.statements.enable                                                  true |
-| db.pool.statements.max                                                     40 |
-| db.pool.validate.borrow                                                    true |
-| db.pool.validate.query                                                      |
-| db.pool.validate.return                                                    false |
-| db.pool.wait.max                                                           5000 |
-| db.schema.name                                                              |
-| db.schema.stopAfterSchemaBootstrap                                         false |
-| db.schema.update                                                           true |
-| db.schema.update.lockRetryCount                                            24 |
-| db.schema.update.lockRetryWaitSeconds                                      5 |
-| db.txn.isolation                                                           -1 |
-| db.url                                                                     jdbc:postgresql://postgres:5432/alfresco |
-| db.username                                                                alfresco |
-| default.async.action.corePoolSize                                          8 |
-| default.async.action.maximumPoolSize                                       20 |
-| default.async.action.threadPriority                                        1 |
-| deployment.method                                                          DOCKER_COMPOSE |
-| deployment.service.corePoolSize                                            2 |
-| deployment.service.maximumPoolSize                                         3 |
-| deployment.service.numberOfSendingThreads                                  5 |
-| deployment.service.targetLockRefreshTime                                   60000 |
-| deployment.service.targetLockTimeout                                       3600000 |
-| deployment.service.threadPriority                                          5 |
-| dir.cachedcontent                                                          ${dir.root}/cachedcontent |
-| dir.contentstore                                                           ${dir.root}/contentstore |
-| dir.contentstore.bucketsPerMinute                                          0 |
-| dir.contentstore.deleted                                                   ${dir.root}/contentstore.deleted |
-| dir.contentstore.tenants                                                    |
-| dir.indexes                                                                ${dir.root}/lucene-indexes |
-| dir.indexes.backup                                                         ${dir.root}/backup-lucene-indexes |
-| dir.indexes.lock                                                           ${dir.indexes}/locks |
-| dir.keystore                                                               classpath:alfresco/keystore |
-| dir.license.external                                                       . |
-| dir.root                                                                   ./alf_data |
-| domain.name.caseSensitive                                                  false |
-| domain.separator                                                            |
-| download.cleaner.batchSize                                                 1000 |
-| download.cleaner.cleanAllSysDownloadFolders                                true |
-| download.cleaner.maxAgeMins                                                60 |
-| download.cleaner.repeatIntervalMilliseconds                                3600000 |
-| download.cleaner.startDelayMilliseconds                                    3600000 |
-| download.maxContentSize                                                    2152852358 |
-| dsync.checkDuration                                                        60000 |
-| dsync.client.ignorePatterns                                                ^\..*,IGNORE;^~.*,IGNORE;^.*\.(iso|exe|app|tmp|TMP)$,IGNORE;^.*\.sb-.*$,IGNORE;untitled folder,IGNORE;Microsoft User Data,IGNORE;About Stacks.lpdf,IGNORE;Thumbs.db,IGNORE |
-| dsync.client.version.min                                                   1.0.1 |
-| dsync.events.include                                                       DEVICESUBSCRIPTION, DEVICESUBSCRIPTIONREMOVED, SYNCNODESUBSCRIBE, SYNCNODEUNSUBSCRIBE, NODECHECKEDOUT |
-| dsync.filter.aspects                                                       cm:workingcopy, ${dsync.filter.aspects.smartFolder} |
-| dsync.filter.aspects.smartFolder                                           sf:*, smf:*, ${smart.folders.config.type.templates.qname.filter} |
-| dsync.filter.nodeTypes                                                     fm:*, cm:thumbnail, cm:rating, cm:failedThumbnail, rma:rmsite include_subtypes |
-| dsync.maxSubscribersPerUser                                                -1 |
-| dsync.messaging.events.repo.node.target.endpoint                           activemq:topic:VirtualTopic.alfresco.repo.events.nodes?jmsMessageType=Text |
-| dsync.service.uris                                                         http://localhost:9090/alfresco |
-| dsync.whitelistAllNodeTypes                                                false |
-| encryption.bootstrap.reencrypt                                             false |
-| encryption.cipherAlgorithm                                                 AES/CBC/PKCS5Padding |
-| encryption.keyAlgorithm                                                    AES |
-| encryption.keySpec.class                                                   org.alfresco.encryption.DESEDEKeyGenerator |
-| encryption.keystore.backup.keyMetaData.location                             |
-| encryption.keystore.backup.location                                        ${dir.keystore}/backup-keystore |
-| encryption.keystore.backup.provider                                         |
-| encryption.keystore.backup.type                                            pkcs12 |
-| encryption.keystore.keyMetaData.location                                    |
-| encryption.keystore.location                                               ${dir.keystore}/keystore |
-| encryption.keystore.provider                                                |
-| encryption.keystore.type                                                   pkcs12 |
-| encryption.mac.algorithm                                                   HmacSHA1 |
-| encryption.mac.messageTimeout                                              30000 |
-| encryption.reencryptor.chunkSize                                           100 |
-| encryption.reencryptor.numThreads                                          2 |
-| encryption.ssl.keystore.keyMetaData.location                                |
-| encryption.ssl.keystore.location                                           ${dir.keystore}/ssl.keystore |
-| encryption.ssl.keystore.provider                                            |
-| encryption.ssl.keystore.type                                               JCEKS |
-| encryption.ssl.truststore.keyMetaData.location                              |
-| encryption.ssl.truststore.location                                         ${dir.keystore}/ssl.truststore |
-| encryption.ssl.truststore.provider                                          |
-| encryption.ssl.truststore.type                                             JCEKS |
-| events.subsystem.autoStart                                                 true |
-| fileFolderService.checkHidden.enabled                                      true |
-| filecontentstore.subsystem.name                                            unencryptedContentStore |
-| ftp.enabled                                                                false |
-| fts.indexer.batchSize                                                      1000 |
-| heartbeat.enabled                                                          true |
-| heartbeat.target.url                                                        |
-| hibernate.jdbc.use_get_generated_keys                                      false |
-| home.folder.creation.disabled                                              false |
-| home.folder.creation.eager                                                 true |
-| home_folder_provider_synchronizer.enabled                                  false |
-| home_folder_provider_synchronizer.keep_empty_parents                       false |
-| home_folder_provider_synchronizer.override_provider                         |
-| hybridworkflow.enabled                                                     false |
-| imap.attachments.folder.folderPath                                         ${spaces.imap_attachments.childname} |
-| imap.attachments.folder.rootPath                                           /${spaces.company_home.childname} |
-| imap.attachments.folder.store                                              ${spaces.store} |
-| imap.attachments.mode                                                      SEPARATE |
-| imap.config.home.folderPath                                                ${spaces.imap_home.childname} |
-| imap.config.home.rootPath                                                  /${spaces.company_home.childname} |
-| imap.config.home.store                                                     ${spaces.store} |
-| imap.config.server.mountPoints                                             AlfrescoIMAP |
-| imap.config.server.mountPoints.default.modeName                            ARCHIVE |
-| imap.config.server.mountPoints.default.mountPointName                      IMAP |
-| imap.config.server.mountPoints.default.rootPath                            ${protocols.rootPath} |
-| imap.config.server.mountPoints.default.store                               ${spaces.store} |
-| imap.config.server.mountPoints.value.AlfrescoIMAP.modeName                 MIXED |
-| imap.config.server.mountPoints.value.AlfrescoIMAP.mountPointName           Alfresco IMAP |
-| imap.server.attachments.extraction.enabled                                 true |
-| imap.server.enabled                                                        false |
-| imap.server.port                                                           143 |
-| img.dyn                                                                    ${img.root}/lib |
-| img.exe                                                                    ${img.root}/bin/convert |
-| img.root                                                                   ./ImageMagick |
-| img.startupRetryPeriodSeconds                                              60 |
-| img.url                                                                    http://transform-core-aio:8090/ |
-| index.backup.cronExpression                                                0 0 3 * * ? |
-| index.subsystem.name                                                       solr6 |
-| index.tracking.minRecordPurgeAgeDays                                       30 |
-| index.tracking.purgeSize                                                   7200000 |
-| legacy.transform.service.enabled                                           true |
-| links.protocosl.white.list                                                 http,https,ftp,mailto |
-| local.transform.pipeline.config.dir                                        shared/classes/alfresco/extension/transform/pipelines |
-| local.transform.service.cronExpression                                     4 30 0/1 * * ? |
-| local.transform.service.enabled                                            true |
-| local.transform.service.initialAndOnError.cronExpression                   0/10 * * * * ? |
-| localTransform.core-aio.startupRetryPeriodSeconds                          60 |
-| localTransform.core-aio.url                                                http://transform-core-aio:8090/ |
-| location.license.embedded                                                  /WEB-INF/alfresco/license/*.lic |
-| location.license.external                                                  file://${dir.license.external}/*.lic |
-| location.license.shared                                                    classpath*:/alfresco/extension/license/*.lic |
-| lucene.commit.lock.timeout                                                 100000 |
-| lucene.defaultAnalyserResourceBundleName                                   alfresco/model/dataTypeAnalyzers |
-| lucene.indexer.batchSize                                                   1000000 |
-| lucene.indexer.cacheEnabled                                                true |
-| lucene.indexer.contentIndexingEnabled                                      true |
-| lucene.indexer.defaultMLIndexAnalysisMode                                  EXACT_LANGUAGE_AND_ALL |
-| lucene.indexer.defaultMLSearchAnalysisMode                                 EXACT_LANGUAGE_AND_ALL |
-| lucene.indexer.fairLocking                                                 true |
-| lucene.indexer.maxDocIdCacheSize                                           100000 |
-| lucene.indexer.maxDocsForInMemoryIndex                                     60000 |
-| lucene.indexer.maxDocsForInMemoryMerge                                     60000 |
-| lucene.indexer.maxDocumentCacheSize                                        100 |
-| lucene.indexer.maxFieldLength                                              10000 |
-| lucene.indexer.maxIsCategoryCacheSize                                      -1 |
-| lucene.indexer.maxLinkAspectCacheSize                                      10000 |
-| lucene.indexer.maxParentCacheSize                                          100000 |
-| lucene.indexer.maxPathCacheSize                                            100000 |
-| lucene.indexer.maxRamInMbForInMemoryIndex                                  16 |
-| lucene.indexer.maxRamInMbForInMemoryMerge                                  16 |
-| lucene.indexer.maxRawResultSetSizeForInMemorySort                          1000 |
-| lucene.indexer.maxTypeCacheSize                                            10000 |
-| lucene.indexer.mergerMaxBufferedDocs                                       -1 |
-| lucene.indexer.mergerMaxMergeDocs                                          1000000 |
-| lucene.indexer.mergerMergeFactor                                           5 |
-| lucene.indexer.mergerRamBufferSizeMb                                       16 |
-| lucene.indexer.mergerTargetIndexCount                                      8 |
-| lucene.indexer.mergerTargetOverlayCount                                    5 |
-| lucene.indexer.mergerTargetOverlaysBlockingFactor                          2 |
-| lucene.indexer.postSortDateTime                                            true |
-| lucene.indexer.termIndexInterval                                           128 |
-| lucene.indexer.useInMemorySort                                             true |
-| lucene.indexer.useNioMemoryMapping                                         true |
-| lucene.indexer.writerMaxBufferedDocs                                       -1 |
-| lucene.indexer.writerMaxMergeDocs                                          1000000 |
-| lucene.indexer.writerMergeFactor                                           5 |
-| lucene.indexer.writerRamBufferSizeMb                                       16 |
-| lucene.lock.poll.interval                                                  100 |
-| lucene.maxAtomicTransformationTime                                         100 |
-| lucene.query.maxClauses                                                    10000 |
-| lucene.write.lock.timeout                                                  10000 |
-| mail.service.corePoolSize                                                  8 |
-| mail.service.maximumPoolSize                                               20 |
-| mbean.server.locateExistingServerIfPossible                                true |
-| messaging.broker.connections.max                                           100 |
-| messaging.broker.connections.maxActiveSessionsPerConnection                1000 |
-| messaging.broker.password                                                   |
-| messaging.broker.ssl                                                       false |
-| messaging.broker.url                                                       failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true |
-| messaging.broker.username                                                   |
-| messaging.camel.context.id                                                 alfrescoCamelContext |
-| messaging.camel.route.devicesync.id                                        alfresco.events -> VirtualTopic:alfresco.repo.events |
-| messaging.subsystem.autoStart                                              true |
-| messaging.transacted                                                       true |
-| metrics.dbMetricsReporter.enabled                                          false |
-| metrics.dbMetricsReporter.query.enabled                                    false |
-| metrics.dbMetricsReporter.query.statements.enabled                         false |
-| metrics.enabled                                                            false |
-| metrics.jvmMetricsReporter.enabled                                         false |
-| metrics.restMetricsReporter.enabled                                        false |
-| metrics.restMetricsReporter.path.enabled                                   false |
-| metrics.tomcatMetricsReporter.enabled                                      false |
-| mimetype.config.cronExpression                                             0 30 0/1 * * ? |
-| mimetype.config.dir                                                        shared/classes/alfresco/extension/mimetypes |
-| mimetype.config.initialAndOnError.cronExpression                           0/10 * * * * ? |
-| models.enforceTenantInNamespace                                            false |
-| monitor.rmi.service.enabled                                                false |
-| monitor.rmi.service.port                                                   50508 |
-| mybatis.useLocalCaches                                                     false |
-| nodes.bulkLoad.cachingThreshold                                            10 |
-| notification.email.siteinvite                                              true |
-| opencmis.activities.enabled                                                true |
-| opencmis.bulkUpdateProperties.batchSize                                    20 |
-| opencmis.bulkUpdateProperties.maxItemsSize                                 1000 |
-| opencmis.bulkUpdateProperties.workerThreads                                2 |
-| opencmis.connector.default.contentChangesDefaultMaxItems                   10000 |
-| opencmis.connector.default.objectsDefaultDepth                             100 |
-| opencmis.connector.default.objectsDefaultMaxItems                          10000 |
-| opencmis.connector.default.openHttpSession                                 false |
-| opencmis.connector.default.rootPath                                        /${spaces.company_home.childname} |
-| opencmis.connector.default.store                                           ${spaces.store} |
-| opencmis.connector.default.typesDefaultDepth                               -1 |
-| opencmis.connector.default.typesDefaultMaxItems                            500 |
-| opencmis.context.override                                                  false |
-| opencmis.context.value                                                      |
-| opencmis.maxContentSizeMB                                                  4096 |
-| opencmis.memoryThresholdKB                                                 4096 |
-| opencmis.server.override                                                   false |
-| opencmis.server.value                                                       |
-| opencmis.servletpath.override                                              false |
-| opencmis.servletpath.value                                                  |
-| orphanReaper.lockRefreshTime                                               60000 |
-| orphanReaper.lockTimeOut                                                   3600000 |
-| people.search.honor.hint.useCQ                                             true |
-| policy.content.update.ignoreEmpty                                          true |
-| protocols.rootPath                                                         /${spaces.company_home.childname} |
-| protocols.storeName                                                        ${spaces.store} |
-| rendition.config.cronExpression                                            2 30 0/1 * * ? |
-| rendition.config.dir                                                       shared/classes/alfresco/extension/transform/renditions |
-| rendition.config.initialAndOnError.cronExpression                          0/10 * * * * ? |
-| renditionService2.enabled                                                  true |
-| replication.enabled                                                        false |
-| repo.event2.filter.nodeAspects                                              |
-| repo.event2.filter.nodeTypes                                               sys:*, fm:*, cm:thumbnail, cm:failedThumbnail, cm:rating, rma:rmsite include_subtypes |
-| repo.event2.filter.users                                                   System, null |
-| repo.event2.topic.endpoint                                                 amqp:topic:alfresco.repo.event2 |
-| repo.remote.endpoint                                                       /service |
-| repository.name                                                            Main Repository |
-| sample.site.disabled                                                       false |
-| security.anyDenyDenies                                                     true |
-| security.postProcessDenies                                                 false |
-| server.maxusers                                                            -1 |
-| server.setup.transaction.max-retries                                       40 |
-| server.setup.transaction.max-retry-wait-ms                                 15000 |
-| server.setup.transaction.min-retry-wait-ms                                 15000 |
-| server.setup.transaction.wait-increment-ms                                 10 |
-| server.transaction.allow-writes                                            true |
-| server.transaction.max-retries                                             40 |
-| server.transaction.max-retry-wait-ms                                       2000 |
-| server.transaction.min-retry-wait-ms                                       100 |
-| server.transaction.mode.default                                            PROPAGATION_REQUIRED |
-| server.transaction.mode.readOnly                                           PROPAGATION_REQUIRED, readOnly |
-| server.transaction.wait-increment-ms                                       100 |
-| server.web.transaction.max-duration-ms                                     0 |
-| sfs.endpoint                                                               ${sfs.url}/alfresco/api/-default-/private/sfs/versions/1 |
-| sfs.url                                                                    http://shared-file-store:8099/ |
-| shutdown.backstop.enabled                                                  false |
-| shutdown.backstop.timeout                                                  10000 |
-| site.invite.moderated.workflowId                                           activiti$activitiInvitationModerated |
-| site.invite.nominated.workflowId                                           activiti$activitiInvitationNominatedAddDirect |
-| site.invite.nominatedExternal.workflowId                                   activiti$activitiInvitationNominated |
-| smart.download.associations.folder                                         ${spaces.dictionary.childname}/${spaces.smartdownloads.childname} |
-| smart.folders.config.custom.aspect                                         smf:customConfigSmartFolder |
-| smart.folders.config.custom.aspect.template.association                    smf:custom-template-association |
-| smart.folders.config.system.aspect                                         smf:systemConfigSmartFolder |
-| smart.folders.config.system.aspect.template.location.property              smf:system-template-location |
-| smart.folders.config.system.templates.classpath                            /org/alfresco/repo/virtual/node |
-| smart.folders.config.system.templates.path                                 ${spaces.dictionary.childname}/${spaces.smartfolders.childname} |
-| smart.folders.config.system.templates.template.type                        smf:smartFolderTemplate |
-| smart.folders.config.type.templates.path                                   ${spaces.dictionary.childname}/${spaces.smartfolders.childname} |
-| smart.folders.config.type.templates.qname.filter                           none |
-| smart.folders.config.vanilla.processor.classpath                           /org/alfresco/repo/virtual/node/vanilla.js |
-| smart.folders.enabled                                                      false |
-| smart.reference.classpath.hash                                             ${smart.folders.config.vanilla.processor.classpath}->1,${smart.folders.config.system.templates.classpath}->2 |
-| solr.cmis.alternativeDictionary                                            DEFAULT_DICTIONARY |
-| solr.host                                                                  solr6 |
-| solr.max.host.connections                                                  40 |
-| solr.max.total.connections                                                 40 |
-| solr.port                                                                  8983 |
-| solr.port.ssl                                                              8984 |
-| solr.secureComms                                                           none |
-| solr.solrConnectTimeout                                                    5000 |
-| solr.solrPassword                                                          ******** |
-| solr.solrPingCronExpression                                                0 0/5 * * * ? * |
-| solr.solrUser                                                              solr |
-| solr.store.mappings                                                        solrMappingAlfresco,solrMappingArchive |
-| solr.store.mappings.value.solrMappingAlfresco.baseUrl                      /solr/alfresco |
-| solr.store.mappings.value.solrMappingAlfresco.httpClientFactory            solrHttpClientFactory |
-| solr.store.mappings.value.solrMappingAlfresco.identifier                   SpacesStore |
-| solr.store.mappings.value.solrMappingAlfresco.protocol                     workspace |
-| solr.store.mappings.value.solrMappingArchive.baseUrl                       /solr/archive |
-| solr.store.mappings.value.solrMappingArchive.httpClientFactory             solrHttpClientFactory |
-| solr.store.mappings.value.solrMappingArchive.identifier                    SpacesStore |
-| solr.store.mappings.value.solrMappingArchive.protocol                      archive |
-| solr4.store.mappings                                                       solrMappingAlfresco,solrMappingArchive |
-| solr4.store.mappings.value.solrMappingAlfresco.baseUrl                     /solr4/alfresco |
-| solr4.store.mappings.value.solrMappingAlfresco.httpClientFactory           solrHttpClientFactory |
-| solr4.store.mappings.value.solrMappingAlfresco.identifier                  SpacesStore |
-| solr4.store.mappings.value.solrMappingAlfresco.protocol                    workspace |
-| solr4.store.mappings.value.solrMappingArchive.baseUrl                      /solr4/archive |
-| solr4.store.mappings.value.solrMappingArchive.httpClientFactory            solrHttpClientFactory |
-| solr4.store.mappings.value.solrMappingArchive.identifier                   SpacesStore |
-| solr4.store.mappings.value.solrMappingArchive.protocol                     archive |
-| solr6.store.mappings                                                       solrMappingAlfresco,solrMappingArchive,solrMappingHistory |
-| solr6.store.mappings.value.solrMappingAlfresco.baseUrl                     /solr/alfresco |
-| solr6.store.mappings.value.solrMappingAlfresco.httpClientFactory           solrHttpClientFactory |
-| solr6.store.mappings.value.solrMappingAlfresco.identifier                  SpacesStore |
-| solr6.store.mappings.value.solrMappingAlfresco.protocol                    workspace |
-| solr6.store.mappings.value.solrMappingArchive.baseUrl                      /solr/archive |
-| solr6.store.mappings.value.solrMappingArchive.httpClientFactory            solrHttpClientFactory |
-| solr6.store.mappings.value.solrMappingArchive.identifier                   SpacesStore |
-| solr6.store.mappings.value.solrMappingArchive.protocol                     archive |
-| solr6.store.mappings.value.solrMappingHistory.baseUrl                      /solr/history |
-| solr6.store.mappings.value.solrMappingHistory.httpClientFactory            solrHttpClientFactory |
-| solr6.store.mappings.value.solrMappingHistory.identifier                   history |
-| solr6.store.mappings.value.solrMappingHistory.protocol                     workspace |
-| solr_facets.inheritanceHierarchy                                           default,custom |
-| solr_facets.root                                                           ${solr_facets.root.path}/${spaces.solr_facets.root.childname} |
-| solr_facets.root.path                                                      /app:company_home/app:dictionary |
-| spaces.archive.store                                                       archive://SpacesStore |
-| spaces.company_home.childname                                              app:company_home |
-| spaces.content_forms.childname                                             app:forms |
-| spaces.dictionary.childname                                                app:dictionary |
-| spaces.emailActions.childname                                              app:email_actions |
-| spaces.extension_webscripts.childname                                      cm:extensionwebscripts |
-| spaces.guest_home.childname                                                app:guest_home |
-| spaces.imapConfig.childname                                                app:imap_configs |
-| spaces.imap_attachments.childname                                          cm:Imap Attachments |
-| spaces.imap_home.childname                                                 cm:Imap Home |
-| spaces.imap_templates.childname                                            app:imap_templates |
-| spaces.inbound_transfer_records.childname                                  app:inbound_transfer_records |
-| spaces.models.childname                                                    app:models |
-| spaces.nodetemplates.childname                                             app:node_templates |
-| spaces.quickshare.link_expiry_actions.childname                            app:quick_share_link_expiry_actions |
-| spaces.rendition.rendering_actions.childname                               app:rendering_actions |
-| spaces.replication.replication_actions.childname                           app:replication_actions |
-| spaces.savedsearches.childname                                             app:saved_searches |
-| spaces.scheduled_actions.childname                                         cm:Scheduled Actions |
-| spaces.scripts.childname                                                   app:scripts |
-| spaces.searchAction.childname                                              cm:search |
-| spaces.shared.childname                                                    app:shared |
-| spaces.sites.childname                                                     st:sites |
-| spaces.smartdownloads.childname                                            app:smart_downloads |
-| spaces.smartfolders.childname                                              app:smart_folders |
-| spaces.solr_facets.root.childname                                          srft:facets |
-| spaces.store                                                               workspace://SpacesStore |
-| spaces.system.childname                                                    sys:system |
-| spaces.templates.childname                                                 app:space_templates |
-| spaces.templates.content.childname                                         app:content_templates |
-| spaces.templates.email.activities.childname                                cm:activities |
-| spaces.templates.email.childname                                           app:email_templates |
-| spaces.templates.email.following.childname                                 app:following |
-| spaces.templates.email.invite.childname                                    cm:invite |
-| spaces.templates.email.invite1.childname                                   app:invite_email_templates |
-| spaces.templates.email.notify.childname                                    app:notify_email_templates |
-| spaces.templates.email.workflowemailnotification.childname                 cm:workflownotification |
-| spaces.templates.rss.childname                                             app:rss_templates |
-| spaces.transfer_groups.childname                                           app:transfer_groups |
-| spaces.transfer_summary_report.location                                    /${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.transfers.childname}/${spaces.inbound_transfer_records.childname} |
-| spaces.transfer_temp.childname                                             app:temp |
-| spaces.transfers.childname                                                 app:transfers |
-| spaces.user_homes.childname                                                app:user_homes |
-| spaces.user_homes.regex.group_order                                         |
-| spaces.user_homes.regex.key                                                userName |
-| spaces.user_homes.regex.pattern                                             |
-| spaces.webscripts.childname                                                cm:webscripts |
-| spaces.workflow.definitions.childname                                      app:workflow_defs |
-| subsystems.test.beanProp                                                   inst1,inst2,inst3 |
-| subsystems.test.beanProp.default.anotherStringProperty                     Global Default |
-| subsystems.test.beanProp.default.longProperty                              123456789123456789 |
-| subsystems.test.beanProp.value.inst2.boolProperty                          true |
-| subsystems.test.beanProp.value.inst3.anotherStringProperty                 Global Instance Default |
-| subsystems.test.simpleProp2                                                true |
-| subsystems.test.simpleProp3                                                Global Default3 |
-| system.acl.maxPermissionCheckTimeMillis                                    10000 |
-| system.acl.maxPermissionChecks                                             1000 |
-| system.api.discovery.enabled                                               true |
-| system.auditableData.ACLs                                                  ${system.auditableData.preserve} |
-| system.auditableData.FileFolderService                                     ${system.auditableData.preserve} |
-| system.auditableData.preserve                                              ${system.preserve.modificationData} |
-| system.authorities_container.childname                                     sys:authorities |
-| system.bootstrap.config_check.strict                                       true |
-| system.cache.disableImmutableSharedCaches                                  false |
-| system.cache.disableMutableSharedCaches                                    false |
-| system.cache.parentAssocs.limitFactor                                      8 |
-| system.cache.parentAssocs.maxSize                                          130000 |
-| system.certificate_container.childname                                     sys:samlcertificate |
-| system.content.caching.cacheOnInbound                                      true |
-| system.content.caching.cleanThresholdPct                                   80 |
-| system.content.caching.contentCleanup.cronExpression                       0 0 3 * * ? |
-| system.content.caching.maxDeleteWatchCount                                 1 |
-| system.content.caching.maxFileSizeMB                                       0 |
-| system.content.caching.maxUsageMB                                          4096 |
-| system.content.caching.minFileAgeMillis                                    60000 |
-| system.content.caching.normalCleanThresholdSec                             0 |
-| system.content.caching.panicThresholdPct                                   90 |
-| system.content.caching.targetUsagePct                                      70 |
-| system.content.deletionFailureAction                                       IGNORE |
-| system.content.eagerOrphanCleanup                                          false |
-| system.content.maximumFileSizeLimit                                         |
-| system.content.orphanCleanup.cronExpression                                0 0 4 * * ? |
-| system.content.orphanProtectDays                                           14 |
-| system.cronJob.startDelayMilliseconds                                      60000 |
-| system.delete_not_exists.batchsize                                         100000 |
-| system.delete_not_exists.delete_batchsize                                  1000 |
-| system.delete_not_exists.read_only                                         false |
-| system.delete_not_exists.timeout_seconds                                   -1 |
-| system.descriptor.childname                                                sys:descriptor |
-| system.descriptor.current.childname                                        sys:descriptor-current |
-| system.downloads_container.childname                                       sys:downloads |
-| system.email.sender.default                                                noreply@alfresco.com |
-| system.enableTimestampPropagation                                          true |
-| system.filefolderservice.defaultListMaxResults                             5000 |
-| system.fixedACLs.maxTransactionTime                                        10000 |
-| system.fixedACLsUpdater.cronExpression                                     0 0 0 * * ? |
-| system.fixedACLsUpdater.lockTTL                                            10000 |
-| system.fixedACLsUpdater.maxItemBatchSize                                   100 |
-| system.fixedACLsUpdater.numThreads                                         4 |
-| system.hibernateMaxExecutions                                              20000 |
-| system.integrity.enabled                                                   true |
-| system.integrity.failOnViolation                                           true |
-| system.integrity.maxErrorsPerTransaction                                   5 |
-| system.integrity.trace                                                     false |
-| system.lockTryTimeout                                                      100 |
-| system.lockTryTimeout.DictionaryDAOImpl                                    10000 |
-| system.lockTryTimeout.MessageServiceImpl                                   ${system.lockTryTimeout} |
-| system.lockTryTimeout.PolicyComponentImpl                                  ${system.lockTryTimeout} |
-| system.maximumStringLength                                                 -1 |
-| system.maximumStringLength.jobCronExpression                               * * * * * ? 2099 |
-| system.maximumStringLength.jobQueryRange                                   10000 |
-| system.maximumStringLength.jobThreadCount                                  4 |
-| system.metadata-query-indexes-more.ignored                                 true |
-| system.metadata-query-indexes.ignored                                      true |
-| system.patch.addUnmovableAspect.cronExpression                             0 0 0 ? 1 1 2030 |
-| system.patch.addUnmovableAspect.deferred                                   false |
-| system.patch.sharedFolder.cronExpression                                   0 0 0 ? 1 1 2030 |
-| system.patch.sharedFolder.deferred                                         false |
-| system.patch.surfConfigFolder.cronExpression                               * * * * * ? 2099 |
-| system.patch.surfConfigFolder.deferred                                     false |
-| system.people_container.childname                                          sys:people |
-| system.preferred.password.encoding                                         md4 |
-| system.preserve.modificationData                                           false |
-| system.prop_table_cleaner.algorithm                                        V2 |
-| system.propval.uniquenessCheck.enabled                                     true |
-| system.quickshare.email.from.default                                       noreply@alfresco.com |
-| system.quickshare.enabled                                                  true |
-| system.quickshare.expiry_date.enforce.minimum.period                       DAYS |
-| system.readpermissions.bulkfetchsize                                       1000 |
-| system.readpermissions.optimise                                            true |
-| system.remote_credentials_container.childname                              sys:remote_credentials |
-| system.remove-jbpm-tables-from-db.ignored                                  true |
-| system.reset-password.endTimer                                             PT1H |
-| system.reset-password.sendEmailAsynchronously                              true |
-| system.serverMode                                                          UNKNOWN |
-| system.store                                                               system://system |
-| system.syncset_definition_container.childname                              sys:syncset_definitions |
-| system.system_container.childname                                          sys:system |
-| system.thumbnail.definition.default.maxPages                               -1 |
-| system.thumbnail.definition.default.maxSourceSizeKBytes                    -1 |
-| system.thumbnail.definition.default.pageLimit                              1 |
-| system.thumbnail.definition.default.readLimitKBytes                        -1 |
-| system.thumbnail.definition.default.readLimitTimeMs                        -1 |
-| system.thumbnail.definition.default.timeoutMs                              -1 |
-| system.thumbnail.generate                                                  true |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.docx                         -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.odp                          -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.ods                          -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.odt                          -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.pdf                          -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.pptx                         -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.txt                          -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.xlsx                         -1 |
-| system.thumbnail.quietPeriod                                               604800 |
-| system.thumbnail.quietPeriodRetriesEnabled                                 true |
-| system.thumbnail.redeployStaticDefsOnStartup                               true |
-| system.thumbnail.retryCount                                                2 |
-| system.thumbnail.retryPeriod                                               60 |
-| system.upgradePasswordHash.jobBatchSize                                    100 |
-| system.upgradePasswordHash.jobCronExpression                               * * * * * ? 2099 |
-| system.upgradePasswordHash.jobQueryRange                                   10000 |
-| system.upgradePasswordHash.jobThreadCount                                  4 |
-| system.usages.clearBatchSize                                               0 |
-| system.usages.enabled                                                      false |
-| system.usages.updateBatchSize                                              50 |
-| system.webdav.activities.enabled                                           false |
-| system.webdav.renameShufflePattern                                         (.*/\..*)|(.*[a-f0-9]{8}+$)|(.*\.tmp$)|(.*atmp[0-9]+$)|(.*\.wbk$)|(.*\.bak$)|(.*\~$)|(.*backup.*\.do[ct]{1}[x]?[m]?$)|(.*\.sb\-\w{8}\-\w{6}$) |
-| system.webdav.rootPath                                                     ${protocols.rootPath} |
-| system.webdav.servlet.enabled                                              true |
-| system.webdav.storeName                                                    ${protocols.storeName} |
-| system.webdav.url.path.prefix                                               |
-| system.workflow.comment.property.max.length                                4000 |
-| system.workflow.deployWorkflowsInTenant                                    true |
-| system.workflow.engine.activiti.definitions.visible                        true |
-| system.workflow.engine.activiti.enabled                                    true |
-| system.workflow.engine.activiti.idblocksize                                100 |
-| system.workflow.engine.activiti.retentionHistoricProcessInstance           false |
-| system.workflow.engine.activiti.taskvariableslimit                         20000 |
-| system.workflow.jbpm.comment.property.max.length                           -1 |
-| system.workflow.maxAuthoritiesForPooledTasks                               500 |
-| system.workflow.maxGroupReviewers                                          0 |
-| system.workflow.maxPooledTasks                                             -1 |
-| system.workflow_container.childname                                        sys:workflow |
-| system.zones_container.childname                                           sys:zones |
-| ticket.cleanup.cronExpression                                              0 0 * * * ? |
-| tika.startupRetryPeriodSeconds                                             60 |
-| tika.url                                                                   http://transform-core-aio:8090/ |
-| transferservice.receiver.enabled                                           false |
-| transferservice.receiver.lockRefreshTime                                   60000 |
-| transferservice.receiver.lockRetryCount                                    3 |
-| transferservice.receiver.lockRetryWait                                     100 |
-| transferservice.receiver.lockTimeOut                                       300000 |
-| transferservice.receiver.stagingDir                                        ${java.io.tmpdir}/alfresco-transfer-staging |
-| transform.misc.startupRetryPeriodSeconds                                   60 |
-| transform.misc.url                                                         http://transform-core-aio:8090/ |
-| transform.service.cronExpression                                           6 30 0/1 * * ? |
-| transform.service.enabled                                                  true |
-| transform.service.initialAndOnError.cronExpression                         0/10 * * * * ? |
-| transform.service.reply.endpoint                                            |
-| transform.service.reply.endpoint.prefix                                    org.alfresco.transform |
-| transform.service.reply.endpoint.suffix                                    t-reply |
-| transform.service.request.endpoint                                         jms:org.alfresco.transform.t-request.acs?jmsMessageType=Text |
-| transform.service.url                                                      http://transform-router:8095 |
-| transformer.Archive.includeContents                                        false |
-| transformer.strict.mimetype.check                                          true |
-| transformer.strict.mimetype.check.whitelist.mimetypes                      application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
-| trashcan-cleaner.cron                                                      * * * * * ? 2099 |
-| trashcan-cleaner.deleteBatchCount                                          1000 |
-| trashcan-cleaner.keepPeriod                                                P28D |
-| trashcan.MaxSize                                                           1000 |
-| trialUid                                                                    |
-| trialUidPattern                                                            id\d+ |
-| urlshortening.bitly.api.key                                                R_ca15c6c89e9b25ccd170bafd209a0d4f |
-| urlshortening.bitly.url.length                                             20 |
-| urlshortening.bitly.username                                               brianalfresco |
-| user.name.caseSensitive                                                    false |
-| version.schema                                                             14001 |
-| version.store.deprecated.lightWeightVersionStore                           workspace://lightWeightVersionStore |
-| version.store.enableAutoVersionOnUpdateProps                               false |
-| version.store.enableAutoVersioning                                         true |
-| version.store.initialVersion                                               true |
-| version.store.version2Store                                                workspace://version2Store |
-| version.store.versionComparatorClass                                        |
-| webscripts.encryptTempFiles                                                false |
-| webscripts.memoryThreshold                                                 4194304 |
-| webscripts.setMaxContentSize                                               5368709120 |
-| webscripts.tempDirectoryName                                               Alfresco-WebScripts |
-| webscripts.transaction.preserveHeadersPattern                              Access-Control-.* |
-| xforms.formatCaption                                                       true |
+| content.metadataExtracter.default.timeoutMs | The default timeout for metadata mapping extracters | 20000 |
+| content.metadataExtracter.pdf.maxConcurrentExtractionsCount | | 5 |
+| content.metadataExtracter.pdf.maxDocumentSizeMB | | 10 |
+| content.metadataExtracter.pdf.overwritePolicy | The default overwrite policy for PdfBoxMetadataExtracter | PRAGMATIC |
+| content.transformer.PdfBox.extractBookmarksText | True if bookmarks content should be extracted for PDFBox | true |
+| content.transformer.retryOn.different.mimetype | Enable transformation retrying if the file has MIME type differ than file extension. Ignored if transformer.strict.mimetype.check is true as these transformations will not take place. | true |
+| contentPropertyRestrictions.enabled | If enabled doesn't allow to set content properties via NodeService | true |
+| contentPropertyRestrictions.whitelist |
+| cors.allowed.headers | CORS settings | Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token |
+| cors.allowed.methods | CORS settings | GET,POST,HEAD,OPTIONS,PUT,DELETE |
+| cors.allowed.origins | CORS settings |
+| cors.enabled | CORS settings | false |
+| cors.exposed.headers | CORS settings | Access-Control-Allow-Origin,Access-Control-Allow-Credentials |
+| cors.preflight.maxage | CORS settings | 10 |
+| cors.support.credentials | CORS settings | true |
+| create.missing.people | ome authentication mechanisms may need to create people in the repository on demand. This enables that feature. If disabled an error will be generated for missing people. If enabled then a person will be created and persisted. | ${server.transaction.allow-writes} |
+| csrf.filter.enabled | CSRF filter overrides | false |
+| csrf.filter.origin | CSRF filter overrides |
+| csrf.filter.origin.always | CSRF filter overrides | false |
+| csrf.filter.referer | CSRF filter overrides |
+| csrf.filter.referer.always | CSRF filter overrides | false |
+| db.driver | Database configuration | org.postgresql.Driver |
+| db.name | Database configuration | alfresco |
+| db.password | Database configuration | ******** |
+| db.pool.abandoned.detect | Database configuration | false |
+| db.pool.abandoned.log | db.pool.abandoned.log=true (logAbandoned) adds overhead (http://commons.apache.org/dbcp/configuration.html) and also requires db.pool.abandoned.detect=true (removeAbandoned) | false |
+| db.pool.abandoned.time | Database configuration | 300 |
+| db.pool.evict.idle.min | Database configuration | 1800000 |
+| db.pool.evict.interval | Database configuration | 600000 |
+| db.pool.evict.num.tests | note: for db.pool.evict.num.tests see http://commons.apache.org/dbcp/configuration.html (numTestsPerEvictionRun) and also following extract from "org.apache.commons.pool.impl.GenericKeyedObjectPool" (1.5.5). The number of objects to examine during each run of the idle object evictor thread (if any). When a negative value is supplied, ceil({@link #getNumIdle})/abs({@link #getNumTestsPerEvictionRun}) tests will be run. I.e., when the value is -n, roughly one nth of the idle objects will be tested per run. | -1 |
+| db.pool.evict.validate | Database configuration | false |
+| db.pool.idle | Database configuration | 10 |
+| db.pool.initial | Database configuration | 10 |
+| db.pool.max | Database configuration | 275 |
+| db.pool.min | Database configuration | 10 |
+| db.pool.statements.enable | Database configuration | true |
+| db.pool.statements.max | Database configuration | 40 |
+| db.pool.validate.borrow | Database configuration | true |
+| db.pool.validate.query | Database configuration | |
+| db.pool.validate.return | Database configuration | false |
+| db.pool.wait.max | Database configuration | 5000 |
+| db.schema.name | Database configuration | |
+| db.schema.stopAfterSchemaBootstrap | Database configuration | false |
+| db.schema.update | Database configuration | true |
+| db.schema.update.lockRetryCount | Database configuration | 24 |
+| db.schema.update.lockRetryWaitSeconds | Database configuration | 5 |
+| db.txn.isolation | Database configuration | -1 |
+| db.url | Database configuration | jdbc:postgresql://postgres:5432/alfresco |
+| db.username | Database configuration | alfresco |
+| default.async.action.corePoolSize | Default Async Action Thread Pool | 8 |
+| default.async.action.maximumPoolSize | Default Async Action Thread Pool | 20 |
+| default.async.action.threadPriority | Default Async Action Thread Pool | 1 |
+| deployment.method | Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START) | DOCKER_COMPOSE |
+| deployment.service.corePoolSize | Deployment Service | 2 |
+| deployment.service.maximumPoolSize | Deployment Service | 3 |
+| deployment.service.numberOfSendingThreads | Deployment Service | 5 |
+| deployment.service.targetLockRefreshTime | How long to wait in mS before refreshing a target lock - detects shutdown servers | 60000 |
+| deployment.service.targetLockTimeout | How long to wait in mS from the last communication before deciding that deployment has failed, possibly the destination is no longer available? | 3600000 |
+| deployment.service.threadPriority | Deployment Service | 5 |
+| dir.cachedcontent | The location of cached content | ${dir.root}/cachedcontent |
+| dir.contentstore | Content store folder path | ${dir.root}/contentstore |
+| dir.contentstore.bucketsPerMinute | | 0 |
+| dir.contentstore.deleted | Content soter deleted folder path | ${dir.root}/contentstore.deleted |
+| dir.contentstore.tenants | Multi-Tenancy. If dir.contentstore.tenants is set then tenants are not co-mingled and all content roots will appear below this container (in <tenantdomain> sub-folder) and when creating a tenant the contentRootPath (root content store directory for a given tenant) will be ignored | |
+| dir.indexes | The location for lucene index files | ${dir.root}/lucene-indexes |
+| dir.indexes.backup | The location for index backups | ${dir.root}/backup-lucene-indexes |
+| dir.indexes.lock | The location for lucene index locks | ${dir.indexes}/locks |
+| dir.keystore | Encryption properties. Default keystores location | classpath:alfresco/keystore |
+| dir.license.external | Directory to find external license | . |
+| dir.root | Root folder path | ./alf_data |
+| domain.name.caseSensitive | Are domain names case sensitive? | false |
+| domain.separator | | |
+| download.cleaner.batchSize | Download Service Cleanup. -1 or 0 for not using batches | 1000 |
+| download.cleaner.cleanAllSysDownloadFolders | You could set this to false for new installations greater then ACS 6.2 see MNT-20212 | true |
+| download.cleaner.maxAgeMins | Download Service Cleanup | 60 |
+| download.cleaner.repeatIntervalMilliseconds | Download Service Cleanup | 3600000 |
+| download.cleaner.startDelayMilliseconds | Download Service Cleanup | 3600000 |
+| download.maxContentSize | Download Service Limits, in bytes | 2152852358 |
+| dsync.checkDuration | | 60000 |
+| dsync.client.ignorePatterns | | ^\..*,IGNORE;^~.*,IGNORE;^.*\.(iso|exe|app|tmp|TMP)$,IGNORE;^.*\.sb-.*$,IGNORE;untitled folder,IGNORE;Microsoft User Data,IGNORE;About Stacks.lpdf,IGNORE;Thumbs.db,IGNORE |
+| dsync.client.version.min | | 1.0.1 |
+| dsync.events.include | | DEVICESUBSCRIPTION, DEVICESUBSCRIPTIONREMOVED, SYNCNODESUBSCRIBE, SYNCNODEUNSUBSCRIBE, NODECHECKEDOUT |
+| dsync.filter.aspects | | cm:workingcopy, ${dsync.filter.aspects.smartFolder} |
+| dsync.filter.aspects.smartFolder | | sf:*, smf:*, ${smart.folders.config.type.templates.qname.filter} |
+| dsync.filter.nodeTypes | | fm:*, cm:thumbnail, cm:rating, cm:failedThumbnail, rma:rmsite include_subtypes |
+| dsync.maxSubscribersPerUser | | -1 |
+| dsync.messaging.events.repo.node.target.endpoint | | activemq:topic:VirtualTopic.alfresco.repo.events.nodes?jmsMessageType=Text |
+| dsync.service.uris | | http://localhost:9090/alfresco |
+| dsync.whitelistAllNodeTypes | | false |
+| encryption.bootstrap.reencrypt | Should encryptable properties be re-encrypted with new encryption keys on botstrap? | false |
+| encryption.cipherAlgorithm | General encryption parameters | AES/CBC/PKCS5Padding |
+| encryption.keyAlgorithm | General encryption parameters | AES |
+| encryption.keySpec.class | General encryption parameters | org.alfresco.encryption.DESEDEKeyGenerator |
+| encryption.keystore.backup.keyMetaData.location | Configuration via metadata is deprecated | |
+| encryption.keystore.backup.location | Backup secret key keystore configuration | ${dir.keystore}/backup-keystore |
+| encryption.keystore.backup.provider | | |
+| encryption.keystore.backup.type | | pkcs12 |
+| encryption.keystore.keyMetaData.location | Configuration via metadata is deprecated | |
+| encryption.keystore.location | Secret key keystore configuration | ${dir.keystore}/keystore |
+| encryption.keystore.provider | | |
+| encryption.keystore.type | | pkcs12 |
+| encryption.mac.algorithm | mac/md5 encryption | HmacSHA1 |
+| encryption.mac.messageTimeout | mac/md5 encryption | 30000 |
+| encryption.reencryptor.chunkSize | Re-encryptor properties | 100 |
+| encryption.reencryptor.numThreads | Re-encryptor properties | 2 |
+| encryption.ssl.keystore.keyMetaData.location | Configuration via metadata is deprecated | |
+| encryption.ssl.keystore.location | ssl encryption | ${dir.keystore}/ssl.keystore |
+| encryption.ssl.keystore.provider | ssl encryption | |
+| encryption.ssl.keystore.type | ssl encryption | JCEKS |
+| encryption.ssl.truststore.keyMetaData.location | Configuration via metadata is deprecated | |
+| encryption.ssl.truststore.location | | ${dir.keystore}/ssl.truststore |
+| encryption.ssl.truststore.provider | | |
+| encryption.ssl.truststore.type | | JCEKS |
+| events.subsystem.autoStart | Events subsystem | true |
+| fileFolderService.checkHidden.enabled | | true |
+| filecontentstore.subsystem.name | ContentStore subsystem: default choice | unencryptedContentStore |
+| ftp.enabled | FTP access | false |
+| fts.indexer.batchSize | | 1000 |
+| heartbeat.enabled | HeartBeat | true |
+| heartbeat.target.url | HeartBeat | |
+| hibernate.jdbc.use_get_generated_keys | | false |
+| home.folder.creation.disabled | Disable home folder creation - if true then home folders are not created (neither eagerly nor lazily) | false |
+| home.folder.creation.eager | Create home folders (unless disabled, see next property) as people are created (true) or create them lazily (false) | true |
+| home_folder_provider_synchronizer.enabled | Used to move home folders to a new location | false |
+| home_folder_provider_synchronizer.keep_empty_parents | Used to move home folders to a new location | false |
+| home_folder_provider_synchronizer.override_provider | Used to move home folders to a new location | |
+| hybridworkflow.enabled | | false |
+| imap.attachments.folder.folderPath | Imap extraction settings | ${spaces.imap_attachments.childname} |
+| imap.attachments.folder.rootPath | Imap extraction settings | /${spaces.company_home.childname} |
+| imap.attachments.folder.store | Imap extraction settings | ${spaces.store} |
+| imap.attachments.mode | SEPARATE -- All attachments for each email will be extracted to separate folder. COMMON -- All attachments for all emails will be extracted to one folder. SAME -- Attachments will be extracted to the same folder where email lies. | SEPARATE |
+| imap.config.home.folderPath | Default IMAP mount points | ${spaces.imap_home.childname} |
+| imap.config.home.rootPath | Default IMAP mount points | /${spaces.company_home.childname} |
+| imap.config.home.store | Default IMAP mount points | ${spaces.store} |
+| imap.config.server.mountPoints | Default IMAP mount points | AlfrescoIMAP |
+| imap.config.server.mountPoints.default.modeName | Default IMAP mount points | ARCHIVE |
+| imap.config.server.mountPoints.default.mountPointName | Default IMAP mount points | IMAP |
+| imap.config.server.mountPoints.default.rootPath | Default IMAP mount points | ${protocols.rootPath} |
+| imap.config.server.mountPoints.default.store | Default IMAP mount points | ${spaces.store} |
+| imap.config.server.mountPoints.value.AlfrescoIMAP.modeName | Default IMAP mount points | MIXED |
+| imap.config.server.mountPoints.value.AlfrescoIMAP.mountPointName | Default IMAP mount points | Alfresco IMAP |
+| imap.server.attachments.extraction.enabled | IMAP property | true |
+| imap.server.enabled | IMAP property | false |
+| imap.server.port | IMAP property | 143 |
+| img.dyn | External executable locations | ${img.root}/lib |
+| img.exe | External executable locations | ${img.root}/bin/convert |
+| img.root | External executable locations | ./ImageMagick |
+| img.startupRetryPeriodSeconds | When img.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| img.url | Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default. | http://transform-core-aio:8090/ |
+| index.backup.cronExpression | | 0 0 3 * * ? |
+| index.subsystem.name | | solr6 |
+| index.tracking.minRecordPurgeAgeDays | Index tracking information of a certain age is cleaned out by a scheduled job. Any clustered system that has been offline for longer than this period will need to be seeded with a more recent backup of the Lucene indexes or the indexes will have to be fully rebuilt.Use -1 to disable purging. This can be switched on at any stage. | 30 |
+| index.tracking.purgeSize | Unused transactions will be purged in chunks determined by commit time boundaries. 'index.tracking.purgeSize' specifies the size of the chunk (in ms). Default is a couple of hours. | 7200000 |
+| legacy.transform.service.enabled | Used to disable transforms that extend AbstractContentTransformer2 | true |
+| links.protocosl.white.list | 	Allowed protocols for links | http,https,ftp,mailto |
+| local.transform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
+| local.transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 4 30 0/1 * * ? |
+| local.transform.service.enabled | Used to disable transforms locally. | true |
+| local.transform.service.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| localTransform.core-aio.startupRetryPeriodSeconds | When a local transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | http://transform-core-aio:8090/ |
+| location.license.embedded | Spring resource location of embedded license files | /WEB-INF/alfresco/license/*.lic |
+| location.license.external | Spring resource location of external license files | file://${dir.license.external}/*.lic |
+| location.license.shared | Spring resource location of license files on shared classpath | classpath*:/alfresco/extension/license/*.lic |
+| lucene.commit.lock.timeout | | 100000 |
+| lucene.defaultAnalyserResourceBundleName | | alfresco/model/dataTypeAnalyzers |
+| lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. http://issues.alfresco.com/browse/AR-1280: Setting this high is the workaround as of 1.4.3. | 1000000 |
+| lucene.indexer.cacheEnabled | Index cache sizes | true |
+| lucene.indexer.contentIndexingEnabled | | true |
+| lucene.indexer.defaultMLIndexAnalysisMode | | EXACT_LANGUAGE_AND_ALL |
+| lucene.indexer.defaultMLSearchAnalysisMode | | EXACT_LANGUAGE_AND_ALL |
+| lucene.indexer.fairLocking | Should we use a 'fair' locking policy, giving queue-like access behaviour to the indexes and avoiding starvation of waiting writers? Set to false on old JVMs where this appears to cause deadlock | true |
+| lucene.indexer.maxDocIdCacheSize | | 100000 |
+| lucene.indexer.maxDocsForInMemoryIndex | | 60000 |
+| lucene.indexer.maxDocsForInMemoryMerge | | 60000 |
+| lucene.indexer.maxDocumentCacheSize | | 100 |
+| lucene.indexer.maxFieldLength | The number of terms from a document that will be indexed | 10000 |
+| lucene.indexer.maxIsCategoryCacheSize | | -1 |
+| lucene.indexer.maxLinkAspectCacheSize | | 10000 |
+| lucene.indexer.maxParentCacheSize | | 100000 |
+| lucene.indexer.maxPathCacheSize | | 100000 |
+| lucene.indexer.maxRamInMbForInMemoryIndex | | 16 |
+| lucene.indexer.maxRamInMbForInMemoryMerge | | 16 |
+| lucene.indexer.maxRawResultSetSizeForInMemorySort | | 1000 |
+| lucene.indexer.maxTypeCacheSize | | 10000 |
+| lucene.indexer.mergerMaxBufferedDocs | | -1 |
+| lucene.indexer.mergerMaxMergeDocs | Properties for merge (not this does not affect the final index segment which will be optimised). Max merge docs only applies to the merge process not the resulting index which will be optimised. | 1000000 |
+| lucene.indexer.mergerMergeFactor | | 5 |
+| lucene.indexer.mergerRamBufferSizeMb | | 16 |
+| lucene.indexer.mergerTargetIndexCount | Target number of indexes and deltas in the overall index and what index size to merge in memory | 8 |
+| lucene.indexer.mergerTargetOverlayCount | | 5 |
+| lucene.indexer.mergerTargetOverlaysBlockingFactor | | 2 |
+| lucene.indexer.postSortDateTime | over-ride to false for pre 3.0 behaviour | true |
+| lucene.indexer.termIndexInterval | | 128 |
+| lucene.indexer.useInMemorySort | | true |
+| lucene.indexer.useNioMemoryMapping | | true |
+| lucene.indexer.writerMaxBufferedDocs | | -1 |
+| lucene.indexer.writerMaxMergeDocs | Properties for delta indexes (not this does not affect the final index segment which will be optimised). Max merge docs only applies to the index building process not the resulting index which will be optimised. | 1000000 |
+| lucene.indexer.writerMergeFactor | | 5 |
+| lucene.indexer.writerRamBufferSizeMb | | 16 |
+| lucene.lock.poll.interval | | 100 |
+| lucene.maxAtomicTransformationTime | Millisecond threshold for text transformations. Slower transformers will force the text extraction to be asynchronous | 100 |
+| lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query | 10000 |
+| lucene.write.lock.timeout | 	Index locks (mostly deprecated and will be tidied up with the next lucene upgrade) | 10000 |
+| mail.service.corePoolSize | Oubound Mail | 8 |
+| mail.service.maximumPoolSize | Oubound Mail | 20 |
+| mbean.server.locateExistingServerIfPossible | Should the Mbean server bind to an existing server. Set to true for most application servers. false for WebSphere clusters. | true |
+| messaging.broker.connections.max | | 100 |
+| messaging.broker.connections.maxActiveSessionsPerConnection | | 1000 |
+| messaging.broker.password | | |
+| messaging.broker.ssl | | false |
+| messaging.broker.url | | failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true |
+| messaging.broker.username | | |
+| messaging.camel.context.id | | alfrescoCamelContext |
+| messaging.camel.route.devicesync.id | | alfresco.events -> VirtualTopic:alfresco.repo.events |
+| messaging.subsystem.autoStart | Messaging subsystem | true |
+| messaging.transacted | | true |
+| metrics.dbMetricsReporter.enabled | | false |
+| metrics.dbMetricsReporter.query.enabled | | false |
+| metrics.dbMetricsReporter.query.statements.enabled | | false |
+| metrics.enabled | | false |
+| metrics.jvmMetricsReporter.enabled | | false |
+| metrics.restMetricsReporter.enabled | | false |
+| metrics.restMetricsReporter.path.enabled | | false |
+| metrics.tomcatMetricsReporter.enabled | | false |
+| mimetype.config.cronExpression | Schedule for reading mimetype config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 0 30 0/1 * * ? |
+| mimetype.config.dir | Optional property to specify an external file or directory that will be read for mimetype definitions from YAML files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/mimetypes |
+| mimetype.config.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| models.enforceTenantInNamespace | | false |
+| monitor.rmi.service.enabled | enable or disable individual RMI services | false |
+| monitor.rmi.service.port | RMI service ports for the individual services. These eight services are available remotely. Assign individual ports for each service for best performance or run several services on the same port, you can even run everything on 50500 if running through a firewall. Specify 0 to use a random unused port. | 50508 |
+| mybatis.useLocalCaches | | false |
+| nodes.bulkLoad.cachingThreshold | | 10 |
+| notification.email.siteinvite | Should send emails as part of invitation process. | true |
+| opencmis.activities.enabled | OpenCMIS property | true |
+| opencmis.bulkUpdateProperties.batchSize | OpenCMIS property | 20 |
+| opencmis.bulkUpdateProperties.maxItemsSize | OpenCMIS property | 1000 |
+| opencmis.bulkUpdateProperties.workerThreads | OpenCMIS property | 2 |
+| opencmis.connector.default.contentChangesDefaultMaxItems | OpenCMIS property | 10000 |
+| opencmis.connector.default.objectsDefaultDepth | OpenCMIS property | 100 |
+| opencmis.connector.default.objectsDefaultMaxItems | OpenCMIS property | 10000 |
+| opencmis.connector.default.openHttpSession | OpenCMIS property | false |
+| opencmis.connector.default.rootPath | OpenCMIS property | /${spaces.company_home.childname} |
+| opencmis.connector.default.store | OpenCMIS property | ${spaces.store} |
+| opencmis.connector.default.typesDefaultDepth | OpenCMIS property | -1 |
+| opencmis.connector.default.typesDefaultMaxItems | OpenCMIS property | 500 |
+| opencmis.context.override | URL generation overrides. If true, the context path of OpenCMIS generated urls will be set to "opencmis.context.value", otherwise it will be taken from the request url | false |
+| opencmis.context.value | URL generation overrides | |
+| opencmis.maxContentSizeMB | OpenCMIS property | 4096 |
+| opencmis.memoryThresholdKB | OpenCMIS property | 4096 |
+| opencmis.server.override | URL generation overrides | false |
+| opencmis.server.value | URL generation overrides | |
+| opencmis.servletpath.override | If true, the servlet path of OpenCMIS generated urls will be set to "opencmis.servletpath.value", otherwise it will be taken from the request url | false |
+| opencmis.servletpath.value | URL generation overrides | |
+| orphanReaper.lockRefreshTime | OrphanReaper | 60000 |
+| orphanReaper.lockTimeOut | OrphanReaper | 3600000 |
+| people.search.honor.hint.useCQ | Use a canned query when requested to search for people if "[hint:useCQ]" is provided in search term | true |
+| policy.content.update.ignoreEmpty | Should we consider zero byte content to be the same as no content when firing content update policies? Prevents 'premature' firing of inbound content rules for some clients such as Mac OS X Finder | true |
+| protocols.rootPath | Default root path for protocols | /${spaces.company_home.childname} |
+| protocols.storeName | Default store name| ${spaces.store} |
+| rendition.config.cronExpression | Schedule for reading rendition config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 2 30 0/1 * * ? |
+| rendition.config.dir | Optional property to specify an external file or directory that will be read for rendition definitions from YAML files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/transform/renditions |
+| rendition.config.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| renditionService2.enabled | Rendition Service 2 | true |
+| replication.enabled | Replication Service | false |
+| repo.event2.filter.nodeAspects | Repo events2 | |
+| repo.event2.filter.nodeTypes | Repo events2. Type and aspect filters which should be excluded. Note: System folders node types are added by default | sys:*, fm:*, cm:thumbnail, cm:failedThumbnail, cm:rating, rma:rmsite include_subtypes |
+| repo.event2.filter.users | Comma separated list of users which should be excluded. Note: username's case-sensitivity depends on the {user.name.caseSensitive} setting | System, null |
+| repo.event2.topic.endpoint | Topic name | amqp:topic:alfresco.repo.event2 |
+| repo.remote.endpoint | repo.remote.endpoint | /service |
+| repository.name | The name of the repository | Main Repository |
+| sample.site.disabled | | false |
+| security.anyDenyDenies | Security | true |
+| security.postProcessDenies | Whether to post-process denies. Only applies to solr4+ when anyDenyDenies is true. | false |
+| server.maxusers | Server Max Users - limit number of users with non-expired tickets. Note: -1 allows any number of users, assuming not in single-user mode 0 prevents further logins, including the ability to enter single-user mode. | -1 |
+| server.setup.transaction.max-retries | | 40 |
+| server.setup.transaction.max-retry-wait-ms | | 15000 |
+| server.setup.transaction.min-retry-wait-ms | | 15000 |
+| server.setup.transaction.wait-increment-ms | | 10 |
+| server.transaction.allow-writes | | true |
+| server.transaction.max-retries | | 40 |
+| server.transaction.max-retry-wait-ms | | 2000 |
+| server.transaction.min-retry-wait-ms | | 100 |
+| server.transaction.mode.default | | PROPAGATION_REQUIRED |
+| server.transaction.mode.readOnly | | PROPAGATION_REQUIRED, readOnly |
+| server.transaction.wait-increment-ms | | 100 |
+| server.web.transaction.max-duration-ms | | 0 |
+| sfs.endpoint | | ${sfs.url}/alfresco/api/-default-/private/sfs/versions/1 |
+| sfs.url | | http://shared-file-store:8099/ |
+| shutdown.backstop.enabled | | false |
+| shutdown.backstop.timeout | How long should shutdown wait to complete normally before taking stronger action and calling System.exit() in ms, 10,000 is 10 seconds | 10000 |
+| site.invite.moderated.workflowId | Moderated invite Activiti workflow |activiti$activitiInvitationModerated |
+| site.invite.nominated.workflowId | Add intneral users Activiti workflow (use activiti$activitiInvitationNominated to revert to requiring accept of invite for internal users) | activiti$activitiInvitationNominatedAddDirect |
+| site.invite.nominatedExternal.workflowId | Add external users Activiti workflow | activiti$activitiInvitationNominated |
+| smart.download.associations.folder | | ${spaces.dictionary.childname}/${spaces.smartdownloads.childname} |
+| smart.folders.config.custom.aspect | Custom virtualization method aspect. | smf:customConfigSmartFolder |
+| smart.folders.config.custom.aspect.template.association | Custom virtualization method aspect template content association. | smf:custom-template-association |
+| smart.folders.config.system.aspect | System virtualization method aspect. | smf:systemConfigSmartFolder |
+| smart.folders.config.system.aspect.template.location.property | System virtualization method aspect defined template location property. | smf:system-template-location |
+| smart.folders.config.system.templates.classpath | Classpath to be explored for *.json entries defining system templates. | /org/alfresco/repo/virtual/node |
+| smart.folders.config.system.templates.path | A company home relative name or qname path location of repository system templates. | ${spaces.dictionary.childname}/${spaces.smartfolders.childname} |
+| smart.folders.config.system.templates.template.type | Content sub type of repository system templates. | smf:smartFolderTemplate |
+| smart.folders.config.type.templates.path | A company home relative name or qname path location of the type mapped templates. | ${spaces.dictionary.childname}/${spaces.smartfolders.childname} |
+| smart.folders.config.type.templates.qname.filter | Type and aspect qname regular expression filter. | none |
+| smart.folders.config.vanilla.processor.classpath | Vanilla JSON templates javascript processor classpath. A java script processor used to convert JSON templates to internal smart folder definitions. | /org/alfresco/repo/virtual/node/vanilla.js |
+| smart.folders.enabled | Smart Folders Config Properties | false |
+| smart.reference.classpath.hash | Smart reference config | ${smart.folders.config.vanilla.processor.classpath}->1,${smart.folders.config.system.templates.classpath}->2 |
+| solr.cmis.alternativeDictionary | SOLR connection details (e.g. for JMX) | DEFAULT_DICTIONARY |
+| solr.host | SOLR connection details (e.g. for JMX) | solr6 |
+| solr.max.host.connections | SOLR connection details (e.g. for JMX) | 40 |
+| solr.max.total.connections | SOLR connection details (e.g. for JMX) |40 |
+| solr.port | SOLR connection details (e.g. for JMX) | 8983 |
+| solr.port.ssl | SOLR connection details (e.g. for JMX) | 8984 |
+| solr.secureComms | SOLR connection details (e.g. for JMX). none, https | none |
+| solr.solrConnectTimeout | Solr connect timeout in ms | 5000 |
+| solr.solrPassword | SOLR connection details (e.g. for JMX) | ******** |
+| solr.solrPingCronExpression | cron expression defining how often the Solr Admin client (used by JMX) pings Solr if it goes away | 0 0/5 * * * ? * |
+| solr.solrUser | SOLR connection details (e.g. for JMX) | solr |
+| solr.store.mappings | Default SOLR store mappings mappings | solrMappingAlfresco,solrMappingArchive |
+| solr.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR store mappings mappings | /solr/alfresco |
+| solr.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
+| solr.store.mappings.value.solrMappingAlfresco.identifier | Default SOLR store mappings mappings | SpacesStore |
+| solr.store.mappings.value.solrMappingAlfresco.protocol | Default SOLR store mappings mappings | workspace |
+| solr.store.mappings.value.solrMappingArchive.baseUrl | Default SOLR store mappings mappings |/solr/archive |
+| solr.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
+| solr.store.mappings.value.solrMappingArchive.identifier | Default SOLR store mappings mappings | SpacesStore |
+| solr.store.mappings.value.solrMappingArchive.protocol | Default SOLR store mappings mappings | archive |
+| solr4.store.mappings | Default SOLR 4 store mappings mappings | solrMappingAlfresco,solrMappingArchive |
+| solr4.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 4 store mappings mappings | /solr4/alfresco |
+| solr4.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
+| solr4.store.mappings.value.solrMappingAlfresco.identifier | Default SOLR 4 store mappings mappings | SpacesStore |
+| solr4.store.mappings.value.solrMappingAlfresco.protocol | Default SOLR 4 store mappings mappings | workspace |
+| solr4.store.mappings.value.solrMappingArchive.baseUrl | Default SOLR 4 store mappings mappings | /solr4/archive |
+| solr4.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
+| solr4.store.mappings.value.solrMappingArchive.identifier | Default SOLR 4 store mappings mappings | SpacesStore |
+| solr4.store.mappings.value.solrMappingArchive.protocol | Default SOLR 4 store mappings mappings | archive |
+| solr6.store.mappings | Default SOLR 6 store mappings mappings | solrMappingAlfresco,solrMappingArchive,solrMappingHistory |
+| solr6.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 6 store mappings mappings | /solr/alfresco |
+| solr6.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
+| solr6.store.mappings.value.solrMappingAlfresco.identifier | Default SOLR 6 store mappings mappings | SpacesStore |
+| solr6.store.mappings.value.solrMappingAlfresco.protocol | Default SOLR 6 store mappings mappings | workspace |
+| solr6.store.mappings.value.solrMappingArchive.baseUrl | Default SOLR 6 store mappings mappings | /solr/archive |
+| solr6.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
+| solr6.store.mappings.value.solrMappingArchive.identifier | Default SOLR 6 store mappings mappings | SpacesStore |
+| solr6.store.mappings.value.solrMappingArchive.protocol | Default SOLR 6 store mappings mappings | archive |
+| solr6.store.mappings.value.solrMappingHistory.baseUrl | Default SOLR 6 store mappings mappings | /solr/history |
+| solr6.store.mappings.value.solrMappingHistory.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
+| solr6.store.mappings.value.solrMappingHistory.identifier | Default SOLR 6 store mappings mappings | history |
+| solr6.store.mappings.value.solrMappingHistory.protocol | Default SOLR 6 store mappings mappings | workspace |
+| solr_facets.inheritanceHierarchy | Solr Facets Config Properties | default,custom |
+| solr_facets.root | Solr Facets Config Properties | ${solr_facets.root.path}/${spaces.solr_facets.root.childname} |
+| solr_facets.root.path | Solr Facets Config Properties | /app:company_home/app:dictionary |
+| spaces.archive.store | Spaces Archive Configuration | archive://SpacesStore |
+| spaces.company_home.childname | Spaces Configuration | app:company_home |
+| spaces.content_forms.childname | Spaces Configuration | app:forms |
+| spaces.dictionary.childname | Spaces Configuration | app:dictionary |
+| spaces.emailActions.childname | Spaces Configuration | app:email_actions |
+| spaces.extension_webscripts.childname | Spaces Configuration | cm:extensionwebscripts |
+| spaces.guest_home.childname | Spaces Configuration | app:guest_home |
+| spaces.imapConfig.childname | Spaces Configuration | app:imap_configs |
+| spaces.imap_attachments.childname | Spaces Configuration | cm:Imap Attachments |
+| spaces.imap_home.childname | Spaces Configuration | cm:Imap Home |
+| spaces.imap_templates.childname | Spaces Configuration | app:imap_templates |
+| spaces.inbound_transfer_records.childname | Spaces Configuration | app:inbound_transfer_records |
+| spaces.models.childname | Spaces Configuration | app:models |
+| spaces.nodetemplates.childname | Spaces Configuration | app:node_templates |
+| spaces.quickshare.link_expiry_actions.childname | Spaces Configuration | app:quick_share_link_expiry_actions |
+| spaces.rendition.rendering_actions.childname | Spaces Configuration | app:rendering_actions |
+| spaces.replication.replication_actions.childname | Spaces Configuration | app:replication_actions |
+| spaces.savedsearches.childname | Spaces Configuration | app:saved_searches |
+| spaces.scheduled_actions.childname | Spaces Configuration | cm:Scheduled Actions |
+| spaces.scripts.childname | Spaces Configuration | app:scripts |
+| spaces.searchAction.childname | Spaces Configuration | cm:search |
+| spaces.shared.childname | Spaces Configuration | app:shared |
+| spaces.sites.childname | Spaces Configuration | st:sites |
+| spaces.smartdownloads.childname | Spaces Configuration | app:smart_downloads |
+| spaces.smartfolders.childname | Spaces Configuration | app:smart_folders |
+| spaces.solr_facets.root.childname | Spaces Configuration |srft:facets |
+| spaces.store | Spaces Configuration | workspace://SpacesStore |
+| spaces.system.childname | Spaces Configuration | sys:system |
+| spaces.templates.childname | Spaces Configuration | app:space_templates |
+| spaces.templates.content.childname | Spaces Configuration | app:content_templates |
+| spaces.templates.email.activities.childname | Spaces Configuration | cm:activities |
+| spaces.templates.email.childname | Spaces Configuration | app:email_templates |
+| spaces.templates.email.following.childname | Spaces Configuration | pp:following |
+| spaces.templates.email.invite.childname | Spaces Configuration | cm:invite |
+| spaces.templates.email.invite1.childname | Spaces Configuration | app:invite_email_templates |
+| spaces.templates.email.notify.childname | Spaces Configuration | app:notify_email_templates |
+| spaces.templates.email.workflowemailnotification.childname | Spaces Configuration | cm:workflownotification |
+| spaces.templates.rss.childname | Spaces Configuration | app:rss_templates |
+| spaces.transfer_groups.childname | Spaces Configuration | app:transfer_groups |
+| spaces.transfer_summary_report.location | Spaces Configuration | /${spaces.company_home.childname}/${spaces.dictionary.childname}/${spaces.transfers.childname}/${spaces.inbound_transfer_records.childname} |
+| spaces.transfer_temp.childname | Spaces Configuration | app:temp |
+| spaces.transfers.childname | Spaces Configuration | app:transfers |
+| spaces.user_homes.childname | Spaces Configuration | app:user_homes |
+| spaces.user_homes.regex.group_order | Spaces Configuration | |
+| spaces.user_homes.regex.key | Spaces Configuration | userName |
+| spaces.user_homes.regex.pattern | Spaces Configuration | |
+| spaces.webscripts.childname | Spaces Configuration | cm:webscripts |
+| spaces.workflow.definitions.childname | Spaces Configuration | app:workflow_defs |
+| subsystems.test.beanProp | Subsystem unit test values. Will not have any effect on production servers | inst1,inst2,inst3 |
+| subsystems.test.beanProp.default.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Default |
+| subsystems.test.beanProp.default.longProperty | Subsystem unit test values. Will not have any effect on production servers | 123456789123456789 |
+| subsystems.test.beanProp.value.inst2.boolProperty | Subsystem unit test values. Will not have any effect on production servers | true |
+| subsystems.test.beanProp.value.inst3.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Instance Default |
+| subsystems.test.simpleProp2 | Subsystem unit test values. Will not have any effect on production servers | true |
+| subsystems.test.simpleProp3 | Subsystem unit test values. Will not have any effect on production servers | Global Default3 |
+| system.acl.maxPermissionCheckTimeMillis | Property to limit resources spent on individual searches. The maximum time spent pruning results. | 10000 |
+| system.acl.maxPermissionChecks |Property to limit resources spent on individual searches.The maximum number of search results to perform permission checks against. | 1000 |
+| system.api.discovery.enabled | | true |
+| system.auditableData.ACLs | Specific control of whether ACL changes on a node trigger the cm:auditable aspect | ${system.auditableData.preserve} |
+| system.auditableData.FileFolderService | Specific control of how the FileFolderService treats cm:auditable data when performing moves | ${system.auditableData.preserve} |
+| system.auditableData.preserve | | ${system.preserve.modificationData} |
+| system.authorities_container.childname | Folders for storing people | sys:authorities |
+| system.bootstrap.config_check.strict | Change the failure behaviour of the configuration checker | true |
+| system.cache.disableImmutableSharedCaches | Disables immutable shared caches. These property is used for diagnostic purposes | false |
+| system.cache.disableMutableSharedCaches | Disables mutable shared caches. This property is used for diagnostic purposes | false |
+| system.cache.parentAssocs.limitFactor | The average number of parents expected per cache entry. This parameter is multiplied by the above value to compute a limit on the total number of cached parents, which will be proportional to the cache's memory usage. The cache will be pruned when this limit is exceeded to avoid excessive memory usage. | 8 |
+| system.cache.parentAssocs.maxSize | The maximum capacity of the parent assocs cache (the number of nodes whose parents can be cached) | 130000 |
+| system.certificate_container.childname | Folder for storing IdP's certificate definitions | sys:samlcertificate |
+| system.content.caching.cacheOnInbound | Caching Content Store | true |
+| system.content.caching.cleanThresholdPct | When a cache file has been written that results in cleanThresholdPct (default 80%) of maxUsageBytes being exceeded then the cached content cleaner is invoked (if not already running) in a new thread. | 80 |
+| system.content.caching.contentCleanup.cronExpression | Clean up every day at 3 am | 0 0 3 * * ? |
+| system.content.caching.maxDeleteWatchCount | Caching Content Store | 1 |
+| system.content.caching.maxFileSizeMB | maxFileSizeMB - 0 means no max file size. | 0 |
+| system.content.caching.maxUsageMB | | 4096 |
+| system.content.caching.minFileAgeMillis | | 60000 |
+| system.content.caching.normalCleanThresholdSec | Threshold in seconds indicating a minimal gap between normal cleanup starts | 0 |
+| system.content.caching.panicThresholdPct | When the CachingContentStore is about to write a cache file but the disk usage is in excess of panicThresholdPct (default 90%) then the cache file is not written and the cleaner is started (if not already running) in a new thread. | 90 |
+| system.content.caching.targetUsagePct | An aggressive cleaner is run till the targetUsagePct (default 70%) of maxUsageBytes is achieved | 70 |
+| system.content.deletionFailureAction | The action to take when a store or stores fails to delete orphaned content. IGNORE: Just log a warning. The binary remains and the record is expunged. KEEP_URL: Log a warning and create a URL entry with orphan time 0. It won't be processed or removed. | IGNORE |
+| system.content.eagerOrphanCleanup | Decide if content should be removed from the system immediately after being orphaned. Do not change this unless you have examined the impact it has on your backup procedures. | false |
+| system.content.maximumFileSizeLimit | The value for the maximum permitted size in bytes of all content. No value (or a negative long) will be taken to mean that no limit should be applied. | |
+| system.content.orphanCleanup.cronExpression | The CRON expression to trigger the deletion of resources associated with orphaned content. | 0 0 4 * * ? |
+| system.content.orphanProtectDays | The number of days to keep orphaned content in the content stores. This has no effect on the 'deleted' content stores, which are not automatically emptied.| 14 |
+| system.cronJob.startDelayMilliseconds | Delays cron jobs after bootstrap to allow server to fully come up before jobs start | 60000 |
+| system.delete_not_exists.batchsize | 	MNT-21083 --DELETE_NOT_EXISTS - default settings | 100000 |
+| system.delete_not_exists.delete_batchsize | | 1000 |
+| system.delete_not_exists.read_only | | false |
+| system.delete_not_exists.timeout_seconds | | -1 |
+| system.descriptor.childname | System Configuration | sys:descriptor |
+| system.descriptor.current.childname | System Configuration | sys:descriptor-current |
+| system.downloads_container.childname | Folder for storing download archives | sys:downloads |
+| system.email.sender.default | | noreply@alfresco.com |
+| system.enableTimestampPropagation | Determine if modification timestamp propagation from child to parent nodes is respected or not. Even if 'true', the functionality is only supported for child associations that declare the 'propagateTimestamps' element in the dictionary definition. | true |
+| system.filefolderservice.defaultListMaxResults | The maximum number of filefolder list results | 5000 |
+| system.fixedACLs.maxTransactionTime | Fixed ACLs. Required for fixing MNT-15368 - Time Consumed for Updating Folder Permission. ADMAccessControlListDAO.setFixedAcls called on a large folder hierarchy will take a long time for its execution. For this reason now method can also be called asynchronously if transaction reaches system.fixedACLs.maxTransactionTime. In this case setFixedAcls method recursion will be stopped and unfinished nodes will be marked with ASPECT_PENDING_FIX_ACL. Pending nodes will be processed by FixedAclUpdater, programmatically called but also configured as a scheduled job. | 10000 |
+| system.fixedACLsUpdater.cronExpression | fixedACLsUpdater cron expression - fire at midnight every day | 0 0 0 * * ? |
+| system.fixedACLsUpdater.lockTTL | ixedACLsUpdater - lock time to live | 10000 |
+| system.fixedACLsUpdater.maxItemBatchSize | fixedACLsUpdater - maximum number of nodes to process per execution | 100 |
+| system.fixedACLsUpdater.numThreads | fixedACLsUpdater - the number of threads to use | 4 |
+| system.hibernateMaxExecutions | Limit hibernate session size by trying to amalgamate events for the L2 session invalidation. 1. Hibernate works as is up to this size. 2. After the limit is hit events that can be grouped invalidate the L2 cache by type and not instance. Events may not group if there are post action listener registered (this is not the case with the default distribution) | 20000 |
+| system.integrity.enabled | Enable system model integrity checking. WARNING: Changing this is unsupported; bugs may corrupt data | true |
+| system.integrity.failOnViolation | Do integrity violations fail transactions. WARNING: Changing this is unsupported; bugs may corrupt data | true |
+| system.integrity.maxErrorsPerTransaction | The number of errors to report when violations are detected | 5 |
+| system.integrity.trace | Add call stacks to integrity events so that errors are logged with possible causes. WARNING: This is expensive and should only be switched on for diagnostic purposes | false |
+| system.lockTryTimeout | Lock timeout configuration | 100 |
+| system.lockTryTimeout.DictionaryDAOImpl | Lock timeout configuration | 10000 |
+| system.lockTryTimeout.MessageServiceImpl | Lock timeout configuration | ${system.lockTryTimeout} |
+| system.lockTryTimeout.PolicyComponentImpl | Lock timeout configuration | ${system.lockTryTimeout} |
+| system.maximumStringLength | Manually control how the system handles maximum string lengths. Any zero or negative value is ignored. Only change this after consulting support or reading the appropriate Javadocs for org.alfresco.repo.domain.schema.SchemaBootstrap for V2.1.2. Before database migration, the string value storage may need to be adjusted using the scheduled job | -1 |
+| system.maximumStringLength.jobCronExpression | | * * * * * ? 2099 |
+| system.maximumStringLength.jobQueryRange | | 10000 |
+| system.maximumStringLength.jobThreadCount | | 4 |
+| system.metadata-query-indexes-more.ignored | | true |
+| system.metadata-query-indexes.ignored | Property to enable index upgrade for metadata query (MDQ). The indexes are not added unless this value is changed. Adding each the supporting indexes may take several hours depending on the size of the database. The required indexes may be added in stages. See: classpath:alfresco/dbscripts/upgrade/4.2/${db.script.dialect}/metadata-query-indexes.sql . See: classpath:alfresco/dbscripts/upgrade/5.1/${db.script.dialect}/metadata-query-indexes-2.sql | true |
+| system.patch.addUnmovableAspect.cronExpression | Default values for deferring the running of the addUnmovableAspect patch | 0 0 0 ? 1 1 2030 |
+| system.patch.addUnmovableAspect.deferred | Default values for deferring the running of the addUnmovableAspect patch | false |
+| system.patch.sharedFolder.cronExpression | Default value is run new years day 2030 i.e. not run. | 0 0 0 ? 1 1 2030 |
+| system.patch.sharedFolder.deferred | Do we defer running the shared folder patch? | false |
+| system.patch.surfConfigFolder.cronExpression | Default value. i.e. never run. It can be triggered using JMX | * * * * * ? 2099 |
+| system.patch.surfConfigFolder.deferred | Do we defer running the surf-config folder patch? | false |
+| system.people_container.childname | Folders for storing people | sys:people |
+| system.preferred.password.encoding | Preferred password encoding, md4, sha256, bcrypt10 | md4 |
+| system.preserve.modificationData | DEPRECATED: Use system.auditableData.preserve | false |
+| system.prop_table_cleaner.algorithm | | V2 |
+| system.propval.uniquenessCheck.enabled | Dissallow Attribute Service Entries with "Serializable" objects in key Segments. Please, see MNT-11895 for details. | true |
+| system.quickshare.email.from.default | | noreply@alfresco.com |
+| system.quickshare.enabled | Enable QuickShare - if false then the QuickShare-specific REST APIs will return 403 Forbidden | true |
+| system.quickshare.expiry_date.enforce.minimum.period | By default the difference between the quick share expiry date and the current time must be at least 1 day (24 hours). However, this can be changed to at least 1 hour or 1 minute for testing purposes. For example, setting the value to MINUTES, means the service will calculate the difference between NOW and the given expiry date in terms of minutes and checks for the difference to be greater than 1 minute. DAYS | HOURS | MINUTES | DAYS |
+| system.readpermissions.bulkfetchsize | Property to control read permission evaluation for acegi | 1000 |
+| system.readpermissions.optimise | Property to control read permission evaluation for acegi | true |
+| system.remote_credentials_container.childname | Folder for storing shared remote credentials | sys:remote_credentials |
+| system.remove-jbpm-tables-from-db.ignored | Property to enable removal of all JBPM related data from the database. The tables are not removed from the databasen unless explicitly requested by setting this property to false. See: classpath:alfresco/dbscripts/upgrade/5.2/${db.script.dialect}/remove-jbpm-tables-from-db.sql | true |
+| system.reset-password.endTimer | Reset password workflow will expire in an hour | PT1H |
+| system.reset-password.sendEmailAsynchronously | | true |
+| system.serverMode | The server mode. Set value in alfresco-global.properties (UNKNOWN, TEST, BACKUP, PRODUCTION) | UNKNOWN |
+| system.store | System Configuration | system://system |
+| system.syncset_definition_container.childname | Folder for storing syncset definitions | sys:syncset_definitions |
+| system.system_container.childname | Folders for storing people | sys:system |
+| system.thumbnail.definition.default.maxPages | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.maxSourceSizeKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.pageLimit | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | 1 |
+| system.thumbnail.definition.default.readLimitKBytes | 	Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.readLimitTimeMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.definition.default.timeoutMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| system.thumbnail.generate | Thumbnail Service | true |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.docx | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.odp | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.ods | Max mimetype sizes to create thumbnail icons |-1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.odt | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.pdf | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.pptx | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.txt | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.mimetype.maxSourceSizeKBytes.xlsx | Max mimetype sizes to create thumbnail icons | -1 |
+| system.thumbnail.quietPeriod | Configuration for handling of failing thumbnails | 604800 |
+| system.thumbnail.quietPeriodRetriesEnabled | Configuration for handling of failing thumbnails | true |
+| system.thumbnail.redeployStaticDefsOnStartup | Configuration for handling of failing thumbnails | true |
+| system.thumbnail.retryCount | Configuration for handling of failing thumbnails | 2 |
+| system.thumbnail.retryPeriod | 	Configuration for handling of failing thumbnails. See NodeEligibleForRethumbnailingEvaluator's javadoc for details. Retry periods limit the frequency with which the repository will attempt to create Share thumbnails for content nodes which have previously failed in their thumbnail attempts. These periods are in seconds. 604800s = 60s * 60m * 24h * 7d = 1 week |60 |
+| system.upgradePasswordHash.jobBatchSize | Upgrade Password Hash Job | 100 |
+| system.upgradePasswordHash.jobCronExpression | Upgrade Password Hash Job | * * * * * ? 2099 |
+| system.upgradePasswordHash.jobQueryRange | Upgrade Password Hash Job | 10000 |
+| system.upgradePasswordHash.jobThreadCount | Upgrade Password Hash Job | 4 |
+| system.usages.clearBatchSize | ECM content usages/quotas | 0 |
+| system.usages.enabled | ECM content usages/quotas | false |
+| system.usages.updateBatchSize | ECM content usages/quotas | 50 |
+| system.webdav.activities.enabled | | false |
+| system.webdav.renameShufflePattern | File name patterns that trigger rename shuffle detection. Pattern is used by move - tested against full path after it has been lower cased. | (.*/\..*)|(.*[a-f0-9]{8}+$)|(.*\.tmp$)|(.*atmp[0-9]+$)|(.*\.wbk$)|(.*\.bak$)|(.*\~$)|(.*backup.*\.do[ct]{1}[x]?[m]?$)|(.*\.sb\-\w{8}\-\w{6}$) |
+| system.webdav.rootPath | WebDAV root path | ${protocols.rootPath} |
+| system.webdav.servlet.enabled | WebDAV initialization properties | true |
+| system.webdav.storeName | WebDAV store name | ${protocols.storeName} |
+| system.webdav.url.path.prefix | system.webdav.url.path.prefix  | |
+| system.workflow.comment.property.max.length | | 4000 |
+| system.workflow.deployWorkflowsInTenant | etermines if the workflows that are deployed to the activiti engine should be deployed in the tenant-context of the thread IF the tenant-service is enabled. If set to false, all workflows deployed will be shared among tenants. Recommended setting is true unless there is a good reason to not allow deploy tenant-specific worklfows when a MT-environment is set up. | true |
+| system.workflow.engine.activiti.definitions.visible | Determines if Activiti definitions are visible | true |
+| system.workflow.engine.activiti.enabled | Determines if the Activiti engine is enabled | true |
+| system.workflow.engine.activiti.idblocksize | | 100 |
+| system.workflow.engine.activiti.retentionHistoricProcessInstance | Determines if historic process instance are retained in case of canceling a process instance. | false |
+| system.workflow.engine.activiti.taskvariableslimit | | 20000 |
+| system.workflow.jbpm.comment.property.max.length | | -1 |
+| system.workflow.maxAuthoritiesForPooledTasks | he maximum number of groups to check for pooled tasks. For performance reasons, this is limited to 500 by default. | 500 |
+| system.workflow.maxGroupReviewers | The maximum number of reviewers for "Group Review and Approve" workflow. Use '0' for unlimited. | 0 |
+| system.workflow.maxPooledTasks | The maximum number of pooled tasks to return in a query. It may be necessary to limit this depending on UI limitations. | -1 |
+| system.workflow_container.childname | Folders for storing workflow related info | sys:workflow |
+| system.zones_container.childname | Folders for storing people | sys:zones |
+| ticket.cleanup.cronExpression | | 0 0 * * * ? |
+| tika.startupRetryPeriodSeconds | When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| tika.url | Legacy tika url to T-Engines to service transform requests via http. Disabled by default. | http://transform-core-aio:8090/ |
+| transferservice.receiver.enabled | Transfer Service | false |
+| transferservice.receiver.lockRefreshTime | How long to wait in mS before refreshing a transfer lock - detects shutdown servers. Default 1 minute. | 60000 |
+| transferservice.receiver.lockRetryCount | How many times to attempt retry the transfer lock | 3 |
+| transferservice.receiver.lockRetryWait | How long to wait, in mS, before retrying the transfer lock | 100 |
+| transferservice.receiver.lockTimeOut | How long to wait, in mS, since the last contact with from the client before timing out a transfer. Needs to be long enough to cope with network delays and "thinking time" for both source and destination. Default 5 minutes. | 300000 |
+| transferservice.receiver.stagingDir | Transfer Service | ${java.io.tmpdir}/alfresco-transfer-staging |
+| transform.misc.startupRetryPeriodSeconds | When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. | http://transform-core-aio:8090/ |
+| transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | 6 30 0/1 * * ? |
+| transform.service.enabled | Used to disable transforms locally. | true |
+| transform.service.initialAndOnError.cronExpression | | 0/10 * * * * ? |
+| transform.service.reply.endpoint | | |
+| transform.service.reply.endpoint.prefix | | org.alfresco.transform |
+| transform.service.reply.endpoint.suffix | | t-reply |
+| transform.service.request.endpoint | | jms:org.alfresco.transform.t-request.acs?jmsMessageType=Text |
+| transform.service.url | | http://transform-router:8095 |
+| transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
+| transformer.strict.mimetype.check | Check that the declared mimetype (of the Node) is the same as the derived mimetype of the content (via Tika) before a transformation takes place. Only files in the repository (not intermediate files in a transformer pipeline) are checked. This property provides a trade off between a security check and a relatively expensive (Tika) operation. There are a few issues with the Tika mimetype detection. So that transformations still take place where the detected mimetype is not the same as the declared mimetype, another property (transformer.strict.mimetype.check.whitelist.mimetypes) contains pairs of declared and detected mimetypes that should be allowed. This parameter value is a sequence of ; separated pairs. The declared and derived mimetypes are also ; separated. | true |
+| transformer.strict.mimetype.check.whitelist.mimetypes | | application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
+| trashcan-cleaner.cron | | * * * * * ? 2099 |
+| trashcan-cleaner.deleteBatchCount | | 1000 |
+| trashcan-cleaner.keepPeriod | | P28D |
+| trashcan.MaxSize | Max size of view trashcan files | 1000 |
+| trialUid | | |
+| trialUidPattern | | id\d+ |
+| urlshortening.bitly.api.key | URL Shortening Properties | R_ca15c6c89e9b25ccd170bafd209a0d4f |
+| urlshortening.bitly.url.length | URL Shortening Properties | 20 |
+| urlshortening.bitly.username | URL Shortening Properties | brianalfresco |
+| user.name.caseSensitive | Are user names case sensitive? | false |
+| version.schema | Schema number | 14001 |
+| version.store.deprecated.lightWeightVersionStore | ADM VersionStore Configuration | workspace://lightWeightVersionStore |
+| version.store.enableAutoVersionOnUpdateProps | ADM VersionStore Configuration | false |
+| version.store.enableAutoVersioning | ADM VersionStore Configuration | true |
+| version.store.initialVersion | ADM VersionStore Configuration | true |
+| version.store.version2Store | ADM VersionStore Configuration | workspace://version2Store |
+| version.store.versionComparatorClass | Optional Comparator<Version> class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster. | |
+| webscripts.encryptTempFiles | Webscripts config | false |
+| webscripts.memoryThreshold | Webscripts config (4mb) | 4194304 |
+| webscripts.setMaxContentSize | Webscripts config (4gb) |  5368709120 |
+| webscripts.tempDirectoryName | Webscripts config | Alfresco-WebScripts |
+| webscripts.transaction.preserveHeadersPattern | | Access-Control-.* |
+| xforms.formatCaption | Format caption extracted from the XML Schema. | true |
