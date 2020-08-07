@@ -20,7 +20,7 @@
 
 echo "Deploying alfresco-content-services charts..."
 helm install alfresco-content-services \
-    -f alfresco-content-services/ai-reference-values.yaml \
+    -f ai-reference-values.yaml \
     --set externalProtocol="https" \
     --set externalHost="${EXTERNALHOST}" \
     --set externalPort="443" \
