@@ -12,7 +12,7 @@ The Docker Compose file is undergoing continual development and improvement, and
 
 ## Prerequisites
 
-As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) you'll need to install the following software:
+As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) you will need a machine with at least 13GB of memory and the following software installed:
 
 * [Docker](https://www.docker.com/products/docker-desktop)
 * [Docker Compose](https://docs.docker.com/compose/install)
