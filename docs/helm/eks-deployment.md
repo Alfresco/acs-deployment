@@ -136,7 +136,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
     aws ec2 describe-vpcs --vpc-ids VPC-ID --query "Vpcs[].CidrBlock" --output text
     ```
 
-4. Go to the [VPC Console](https://console.aws.amazon.com/vpc/home) and search for the VPC using the ID retrieved in step 2 as shown in the screenshot below:
+4. Go to the [Security Groups section of the VPC Console](https://console.aws.amazon.com/vpc/home#SecurityGroups) and search for the VPC using the ID retrieved in step 2, as shown in the screenshot below:
 
     ![VPC Default Security Group](./diagrams/eks-vpc-security-group.png)
 
@@ -217,9 +217,7 @@ kubectl create namespace alfresco
     kubectl apply -f ingress-rbac.yaml -n alfresco
     ```
 
-3. Locate the ID of the security
-
-4. Deploy the ingress using the following command (replacing `ACM_CERTIFICATE_ARN` and `YOUR-DOMAIN-NAME` with the ARN of the certificate and hosted zone created in the DNS section):
+3. Deploy the ingress using the following command (replacing `ACM_CERTIFICATE_ARN` and `YOUR-DOMAIN-NAME` with the ARN of the certificate and hosted zone created earlier in the DNS section):
 
     ```bash
     helm install acs-ingress stable/nginx-ingress \
