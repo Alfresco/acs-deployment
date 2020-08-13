@@ -82,7 +82,7 @@ jobs:
         export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
         export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
         export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
-        export values_file=older-versions/6.2.2_support_SP_4.N_values.yaml
+        export values_file=older-versions/6.2.0.2_support_SP_3.N_values.yaml
 
         set -e
         # Utility Functions
