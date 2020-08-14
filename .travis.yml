@@ -13,6 +13,16 @@ import:
   - Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
   - Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
 
+
+stages:
+  - test
+  - Test Latest
+  - version 6.1.1.3
+  - version 6.2.0.2
+  - version 6.2.1
+  - version 6.2.2
+  - publish
+
 env:
   global:
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
@@ -65,15 +75,6 @@ after_failure: |
     helm delete $release_name_ingress $release_name_acs -n $namespace
     kubectl delete namespace $namespace
   fi
-
-stages:
-  - test
-  - Test Latest
-  - version 6.1.1.3
-  - version 6.2.0.2
-  - version 6.2.1
-  - version 6.2.2
-  - publish
 
 _helm_deploy: &helm_deploy
   script: |
