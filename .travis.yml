@@ -337,18 +337,18 @@ jobs:
       stage: test
       <<: *helm_deploy
     - name: 6.1.1.3_support_SP_2.N_values.yaml
-      if: env(TRAVIS_JOB_NAME) in env(GIT_DIFF)
+      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       stage: version_6.1.1.3
       <<: *helm_deploy
     - name: 6.2.0.2_support_SP_3.N_values.yaml
-      if: env(TRAVIS_JOB_NAME) in env(GIT_DIFF)
+      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       stage: version_6.2.0.2
       <<: *helm_deploy
     - name: 6.2.1_support_SP_4.N_values.yaml
-      if: env(TRAVIS_JOB_NAME) in env(GIT_DIFF)
+      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       stage: version_6.2.1
       <<: *helm_deploy
     - name: 6.2.2_support_SP_4.N_values.yaml
-      if: env(TRAVIS_JOB_NAME) in env(GIT_DIFF)
+      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       stage: version_6.2.2
       <<: *helm_deploy
