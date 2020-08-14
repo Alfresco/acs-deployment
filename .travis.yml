@@ -14,6 +14,10 @@ import:
   - Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
 
 env:
+- VERSION_VALUES_FILE: helm/alfresco-content-services/values.yaml
+- VERSION_VALUES_FILE: helm/older-versions/6.2.0.2_support_SP_3.N_values.yaml
+# - VERSION_VALUES_FILE: helm/older-versions/6.2.1_support_SP_4.N_values.yaml
+# - VERSION_VALUES_FILE: helm/older-versions/6.2.2_support_SP_4.N_values.yaml
   global:
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
@@ -82,7 +86,7 @@ jobs:
         export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
         export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
         export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
-        export values_file=older-versions/6.2.0.2_support_SP_3.N_values.yaml
+        export values_file=${VERSION_VALUES_FILE}
 
         set -e
         # Utility Functions
