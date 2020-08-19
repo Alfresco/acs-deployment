@@ -13,7 +13,6 @@ import:
   - Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
   - Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
 
-
 stages:
   - test
   - version_6.1.1.3
