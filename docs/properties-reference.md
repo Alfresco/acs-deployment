@@ -6,13 +6,37 @@ The table below shows the full list of properties (exluding module specific prop
 |----------|-------------|---------------|
 | acs.repo.rendition.events.endpoint | Raw events | jms:acs-repo-rendition-events?jmsMessageType=Text |
 | acs.repo.transform.request.endpoint | Transform request events | jms:acs-repo-transform-request?jmsMessageType=Text |
+| activities.feed.cleaner.cronExpression | | 0 0/10 * * * ? |
+| activities.feed.cleaner.enabled | | true |
+| activities.feed.cleaner.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feed.fetchBatchSize | | 250 |
+| activities.feed.generator.batchSize | | 1000 |
+| activities.feed.generator.cronExpression | | 0/30 * * * * ? |
+| activities.feed.generator.enabled | | true |
 | activities.feed.generator.jsonFormatOnly | | true |
+| activities.feed.generator.maxItemsPerCycle | | 100 |
+| activities.feed.generator.numThreads | | 4 |
+| activities.feed.generator.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feed.max.ageMins | Feed max age in minutes | 44640 (31 days) |
 | activities.feed.max.idRange | Feed max ID range to limit maximum number of entries | 1000000 |
 | activities.feed.max.size | Feed max size (number of entries) | 200 |
+| activities.feed.notifier.cronExpression | Feed notification period (every 24 hours at 00:00) | `0 0 0 * * ?` |
+| activities.feed.notifier.emailTemplatePath | | /app:company_home/app:dictionary/app:email_templates/cm:activities/cm:activities-email.ftl |
+| activities.feed.notifier.emailTemplateLocationType | | xpath |
+| activities.feed.notifier.enabled | | true |
+| activities.feed.notifier.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feedNotifier.batchSize | | 200 |
 | activities.feedNotifier.numThreads | | 2 |
+| activities.post.cleaner.cronExpression | | 0 0/10 * * * ? |
+| activities.post.cleaner.enabled | | true |
+| activities.post.cleaner.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
+| activities.post.lookup.cronExpression | | 0/15 * * * * ? |
+| activities.post.lookup.enabled | | true |
+| activities.post.lookup.maxItemsPerCycle | | 500 |
+| activities.post.lookup.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
+| alfresco.authentication.allowGuestLogin | | true |
+| alfresco.authentication.authenticateCIFS | | true |
+| alfresco.authentication.authenticateFTP | | true |
 | alfresco.authentication.gateway.bufferSize | Gateway Authentication | 2048 |
 | alfresco.authentication.gateway.connectTimeout | Gateway Authentication | 10000 |
 | alfresco.authentication.gateway.host | Gateway authentication is disabled if empty host is specified | |
@@ -24,6 +48,7 @@ The table below shows the full list of properties (exluding module specific prop
 | alfresco.authentication.gateway.prefixUrl | Gateway Authentication | /publicapi |
 | alfresco.authentication.gateway.protocol | Gateway Authentication | https |
 | alfresco.authentication.gateway.readTimeout | Gateway Authentication | 120000 |
+| alfresco.authentication.sessionCleanup | | true |
 | alfresco.cluster.enabled | | true |
 | alfresco.cluster.hostname |  | ${localname} |
 | alfresco.cluster.interface | | |
@@ -755,6 +780,11 @@ The table below shows the full list of properties (exluding module specific prop
 | encryption.ssl.truststore.provider | | |
 | encryption.ssl.truststore.type | | JCEKS |
 | events.subsystem.autoStart | Events subsystem | true |
+| external.authentication.defaultAdministratorUserNames | | |
+| external.authentication.enabled | | true |
+| external.authentication.proxyHeader | | X-Alfresco-Remote-User |
+| external.authentication.proxyUserName | | alfresco-system |
+| external.authentication.userIdPattern | | |
 | fileFolderService.checkHidden.enabled | | true |
 | filecontentstore.subsystem.name | ContentStore subsystem: default choice | unencryptedContentStore |
 | ftp.enabled | FTP access | false |
@@ -768,6 +798,13 @@ The table below shows the full list of properties (exluding module specific prop
 | home_folder_provider_synchronizer.keep_empty_parents | Used to move home folders to a new location | false |
 | home_folder_provider_synchronizer.override_provider | Used to move home folders to a new location | |
 | hybridworkflow.enabled | | false |
+| identity-service.authentication.defaultAdministratorUserNames | | admin |
+| identity-service.authentication.enabled | | true |
+| identity-service.auth-server-url | | http://localhost:8180/auth | 
+| identity-service.realm | | springboot |
+| identity-service.resource | | activiti | 
+| identity-service.public-client | | true |
+| identity-service.ssl-required | | none |
 | imap.attachments.folder.folderPath | Imap extraction settings | ${spaces.imap_attachments.childname} |
 | imap.attachments.folder.rootPath | Imap extraction settings | /${spaces.company_home.childname} |
 | imap.attachments.folder.store | Imap extraction settings | ${spaces.store} |
@@ -794,6 +831,63 @@ The table below shows the full list of properties (exluding module specific prop
 | index.subsystem.name | | noindex |
 | index.tracking.minRecordPurgeAgeDays | Index tracking information of a certain age is cleaned out by a scheduled job. Any clustered system that has been offline for longer than this period will need to be seeded with a more recent backup of the Lucene indexes or the indexes will have to be fully rebuilt.Use -1 to disable purging. This can be switched on at any stage. | 30 |
 | index.tracking.purgeSize | Unused transactions will be purged in chunks determined by commit time boundaries. 'index.tracking.purgeSize' specifies the size of the chunk (in ms). Default is a couple of hours. | 7200000 |
+| kerberos.authentication.authenticateCIFS | | true |
+| kerberos.authentication.authenticateFTP | | true |
+| kerberos.authentication.cifs.configEntryName | | AlfrescoCIFS | 
+| kerberos.authentication.cifs.password | | secret |
+| kerberos.authentication.defaultAdministratorUserNames | | | 
+| kerberos.authentication.realm | | ALFRESCO.ORG | 
+| kerberos.authentication.stripUsernameSuffix | | true | 
+| kerberos.authentication.user.configEntryName | | Alfresco |
+| ldap.authentication.active | This flag enables use of this LDAP subsystem for authentication. It may be that this subsytem should only be used for synchronization, in which case this flag should be set to false. | true |
+| ldap.authentication.allowGuestLogin | This properties file brings together the common options for LDAP authentication rather than editing the bean definitions | true |
+| ldap.authentication.authenticateFTP | Enable FTP authentication using LDAP | true |
+| ldap.authentication.defaultAdministratorUserNames | Comma separated list of user names who should be considered administrators by default | Administrator |
+| ldap.authentication.escapeCommasInBind | Escape commas entered by the user at bind time Useful when using simple authentication and the CN is part of the DN and contains commas| false |
+| ldap.authentication.escapeCommasInUid | Escape commas entered by the user when setting the authenticated user Useful when using simple authentication and the CN is part of the DN and contains commas, and the escaped \, is pulled in as part of an LDAP sync If this option is set to true it will break the default home folder provider as space names can not contain \ | false |
+| ldap.authentication.java.naming.factory.initial | The LDAP context factory to use | com.sun.jndi.ldap.LdapCtxFactory | 
+| ldap.authentication.java.naming.provider.url | The URL to connect to the LDAP server | ldap://domaincontroller.company.com:389 |
+| ldap.authentication.java.naming.read.timeout | equests timeout, in miliseconds, use 0 for none (default) | 0 |
+| ldap.authentication.java.naming.referral | Referrals processing, can be: ignore, follow, throw | follow |
+| ldap.authentication.java.naming.security.authentication | Custom Socket Factory. ldap.java.naming.ldap.factory.socket=org.alfresco.repo.security.authentication.ldap.AlfrescoLdapSSLSocketFactory The authentication mechanism to use for password validation | simple |
+| ldap.authentication.userNameFormat | How to map the user id entered by the user to taht passed through to LDAP In Active Directory, this can either be the user principal name (UPN) or DN. UPNs are in the form <sAMAccountName>@domain and are held in the userPrincipalName attribute of a user| %s@domain | 
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.authentication | A list of space-separated authentication types of connections that may be pooled. Valid types are "none", "simple", and "DIGEST-MD5". | none simple |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.debug | A string that indicates the level of debug output to produce. Valid values are "fine" (trace connection creation and removal) and "all" (all debugging information). | |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.initsize | The string representation of an integer that represents the number of connections per connection identity to create when initially creating a connection for the identity. | 1 |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.maxsize | The string representation of an integer that represents the maximum number of connections per connection identity that can be maintained concurrently. Empty value means no maximum size. | |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.prefsize | The string representation of an integer that represents the preferred number of connections per connection identity that should be maintained concurrently. Empty value means no preferred size. | |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.protocol | A list of space-separated protocol types of connections that may be pooled. Valid types are "plain" and "ssl". | plain |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.timeout | The string representation of an integer that represents the number of milliseconds that an idle connection may remain in the pool without being closed and removed from the pool. Empty value means no timeout, connection stays in pool forever. Bad connections are automatically detected and removed from the pool by the LDAP provider | |
+| ldap.pooling.com.sun.jndi.ldap.connect.timeout | The string representation of an integer that represents the number of milliseconds to specify how long to wait for a pooled connection. If you omit this property, the application will wait indefinitely. | |
+| ldap.synchronization.active | This flag enables use of this LDAP subsystem for user and group synchronization. It may be that this subsytem should only be used for authentication, in which case this flag should be set to false. | true |
+| ldap.synchronization.com.sun.jndi.ldap.connect.pool | LDAPS truststore configuration properties ldap.authentication.truststore.path= ldap.authentication.truststore.passphrase= ldap.authentication.truststore.type= Set to 'ssl' to enable truststore configuration via subsystem's properties ldap.authentication.java.naming.security.protocol=ssl Enable/disable connection pooling for synchronization For more information about connection pooling please refer to http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/pool.html. For more information about pool configuration please refer to http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/config.html. | true |
+ldap.synchronization.defaultHomeFolderProvider | The default home folder provider to use for people created via LDAP import | largeHomeFolderProvider |
+| ldap.synchronization.enableProgressEstimation | If true progress estimation is enabled. When enabled, the user query has to be run twice in order to count entries. | true |
+| ldap.synchronization.groupDifferentialQuery | The query to select objects that represent the groups to import that have changed since a certain time. | (&(objectclass\=group)(!(whenChanged<\={0}))) |
+| ldap.synchronization.groupDisplayNameAttributeName | The attribute on LDAP group objects to map to the authority display name property in Alfresco | displayName |
+| ldap.synchronization.groupIdAttributeName | The attribute on LDAP group objects to map to the authority name property in Alfresco | cn |
+| ldap.synchronization.groupMemberAttributeName | The attribute in LDAP on group objects that defines the DN for its members | member |
+| ldap.synchronization.groupQuery | The query to select all objects that represent the groups to import. | (objectclass\=group) | 
+| ldap.synchronization.groupSearchBase | The group search base restricts the LDAP group query to a sub section of tree on the LDAP server. | ou\=Security Groups,ou\=Alfresco,dc=domain | 
+| ldap.synchronization.groupType | The group type in LDAP | group |
+| ldap.synchronization.java.naming.security.authentication | The authentication mechanism to use for synchronization | simple |
+| ldap.synchronization.java.naming.security.credentials | The password for the default principal (only used for LDAP sync) | secret |
+| ldap.synchronization.java.naming.security.principal | The default principal to bind with (only used for LDAP sync). This should be a UPN or DN | alfresco@domain | 
+| ldap.synchronization.modifyTimestampAttributeName | The name of the operational attribute recording the last update time for a group or user. | whenChanged |
+| ldap.synchronization.personDifferentialQuery | The query to select objects that represent the users to import that have changed since a certain time. | (&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512)(!(whenChanged<\={0}))) |
+| ldap.synchronization.personQuery | The query to select all objects that represent the users to import. | (&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512)) | 
+| ldap.synchronization.personType | The person type in LDAP | user |
+| ldap.synchronization.queryBatchSize | If positive, this property indicates that RFC 2696 paged results should be used to split query results into batches of the specified size. This overcomes any size limits imposed by the LDAP server. | 1000 |
+| ldap.synchronization.timestampFormat | The timestamp format. Unfortunately, this varies between directory servers. | yyyyMMddHHmmss'.0Z' |
+| ldap.synchronization.userAccountStatusInterpreter | The Account Status Interpreter bean name | ldapadUserAccountStatusInterpreter |
+| ldap.synchronization.userAccountStatusProperty | LDAP-AD property name for user enabled/disabled status | userAccountControl |
+| ldap.synchronization.userEmailAttributeName | The attribute on person objects in LDAP to map to the email property in Alfresco
+ | mail |
+| ldap.synchronization.userFirstNameAttributeName | The attribute on person objects in LDAP to map to the first name property in Alfresco | givenName |
+| ldap.synchronization.userIdAttributeName | The attribute name on people objects found in LDAP to use as the uid in Alfresco | sAMAccountName |
+| ldap.synchronization.userLastNameAttributeName | The attribute on person objects in LDAP to map to the last name property in Alfresco | sn |
+| ldap.synchronization.userOrganizationalIdAttributeName | The attribute on person objects in LDAP to map to the organizational id  property in Alfresco | company |
+| ldap.synchronization.userSearchBase | The user search base restricts the LDAP user query to a sub section of tree on the LDAP server. | ou\=User Accounts,ou=\Alfresco,dc=domain |
 | legacy.transform.service.enabled | Used to disable transforms that extend AbstractContentTransformer2 | true |
 | links.protocosl.white.list | Allowed protocols for links | http,https,ftp,mailto |
 | local.tregacy.transform.service.enabledansform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
