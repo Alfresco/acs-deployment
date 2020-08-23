@@ -69,6 +69,10 @@ The table below shows the full list of properties (exluding module specific prop
 | alfresco.hazelcast.port | | 5701 |
 | alfresco.host | Alfresco hostname | ${localname} |
 | alfresco.jmx.connector.enabled | Control Alfresco JMX connectivity | false |
+| alfresco-pdf-renderer.exe | External executable locations | ${alfresco-pdf-renderer.root}/alfresco-pdf-renderer |
+| alfresco-pdf-renderer.root | External executable locations | |
+| alfresco-pdf-renderer.startupRetryPeriodSeconds | When alfresco-pdf-renderer.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| alfresco-pdf-renderer.url | Remote server (or docker container) url used to service alfresco-pdf-renderer requests. | |
 | alfresco.port | Alfresco port | 8080 |
 | alfresco.protocol | Alfresco protocol | http |
 | alfresco.restApi.basicAuthScheme | | false |
@@ -676,6 +680,32 @@ The table below shows the full list of properties (exluding module specific prop
 | cache.zoneToAuthoritySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
 | caches.tx.statsEnabled | | true |
 | category.queryFetchSize | Maximum query size for category/tag fetch when not explicitly set by paging parameters | 5000 |
+| cifs.bindto | An empty value indicates bind to all available network adapters | |
+| cifs.broadcast | CIFS Server Configuration | 255.255.255.255 | 
+| cifs.disableNativeCode | Disable the use of JNI code. Only currently affects Windows | false |
+| cifs.disableNIO | Enable the use of asynchronous sockets/NIO code | false |
+| cifs.domain | CIFS Server Configuration | | 
+| cifs.enabled | CIFS Server Configuration | false |
+| cifs.hostannounce | An empty value indicates bind to all available network adapters | true |
+| cifs.ipv6.enabled | An empty value indicates bind to all available network adapters | false |
+| cifs.loadBalancerList | | |
+| cifs.maximumVirtualCircuitsPerSession | Maximum virtual circuits per session Should only be changed when using Terminal Server clients | 16 |
+| cifs.netBIOSSMB.datagramPort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 138 |
+| cifs.netBIOSSMB.namePort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 137 |
+| cifs.netBIOSSMB.sessionPort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 139 |
+| cifs.pseudoFiles.enabled | Big Switch, are the Desktop Actions and URL shortcuts shown for CIFS ? | true | 
+| cifs.pseudoFiles.explorerURL.enabled | CIFS URL for alfresco explorer | false |
+| cifs.pseudoFiles.explorerURL.fileName | CIFS URL for alfresco explorer | __Alfresco.url |
+| cifs.pseudoFiles.shareURL.enabled | Cifs URL for alfresco share | true |
+| cifs.pseudoFiles.shareURL.fileName | Cifs URL for alfresco share | __Share.url |
+| cifs.sessionDebug | CIFS session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels :-    NETBIOS, STATE, RXDATA, TXDATA, DUMPDATA, NEGOTIATE, TREE, SEARCH, INFO, FILE, FILEIO, TRANSACT    ECHO, ERROR, IPC, LOCK, PKTTYPE, DCERPC, STATECACHE, TIMING, NOTIFY, STREAMS, SOCKET, PKTPOOL    PKTSTATS, THREADPOOL, BENCHMARK | |
+| cifs.serverName | CIFS Server Configuration | ${localname}A | 
+| cifs.sessionTimeout | Session timeout, in seconds. Defaults to 15 minutes, to match the default Windows client setting. If no I/O is received within that time the session is closed by the server | 900 |
+| cifs.tcpipSMB.port | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 445 |
+| cifs.terminalServerList | | | 
+| cifs.WINS.autoDetectEnabled | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | true | 
+| cifs.WINS.primary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 1.2.3.4 |
+| cifs.WINS.secondary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 5.6.7.8 |
 | cmis.disable.hidden.leading.period.files | | false |
 | content.metadataExtracter.default.timeoutMs | The default timeout for metadata mapping extracters | 20000 |
 | content.metadataExtracter.pdf.maxConcurrentExtractionsCount | | 5 |
@@ -729,6 +759,66 @@ The table below shows the full list of properties (exluding module specific prop
 | default.async.action.corePoolSize | Default Async Action Thread Pool | 8 |
 | default.async.action.maximumPoolSize | Default Async Action Thread Pool | 20 |
 | default.async.action.threadPriority | Default Async Action Thread Pool | 1 |
+| default.cm\:content.mimetype.displayControl | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | alfresco/search/FacetFilters | 
+| default.cm\:content.mimetype.displayName | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | faceted-search.facet-menu.facet.formats | 
+| default.cm\:content.mimetype.filterID | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | filter_mimetype | 
+| default.cm\:content.mimetype.hitThreshold | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 1 |
+| default.cm\:content.mimetype.isEnabled | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | true |
+| default.cm\:content.mimetype.maxFilters | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 5 |
+| default.cm\:content.mimetype.minFilterValueLength | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 4 | 
+| default.cm\:content.mimetype.scope | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | ALL |
+| default.cm\:content.mimetype.scopedSites | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | |
+| default.cm\:content.mimetype.sortBy | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | ASCENDING |
+| default.cm\:created.displayControl | Field-Facet-Qname => cm:created | alfresco/search/FacetFilters | 
+| default.cm\:created.displayName | Field-Facet-Qname => cm:created | faceted-search.facet-menu.facet.created | 
+| default.cm\:created.filterID | Field-Facet-Qname => cm:created | filter_created |
+| default.cm\:created.hitThreshold | Field-Facet-Qname => cm:created  | 1 |
+| default.cm\:created.isEnabled | Field-Facet-Qname => cm:created  | true |
+| default.cm\:created.maxFilters | Field-Facet-Qname => cm:created  | 5 | 
+| default.cm\:created.minFilterValueLength | Field-Facet-Qname => cm:created  | 4 |
+| default.cm\:created.scope | Field-Facet-Qname => cm:created  | ALL |
+| default.cm\:created.scopedSites | Field-Facet-Qname => cm:created  | |
+| default.cm\:created.sortBy | Field-Facet-Qname => cm:created  | INDEX |
+| default.cm\:creator.displayControl | Field-Facet-Qname => cm:creator | alfresco/search/FacetFilters | 
+| default.cm\:creator.displayName | Field-Facet-Qname => cm:creator  | faceted-search.facet-menu.facet.creator | 
+| default.cm\:creator.filterID | Field-Facet-Qname => cm:creator | filter_creator |
+| default.cm\:creator.hitThreshold | Field-Facet-Qname => cm:creator | 1 |
+| default.cm\:creator.isEnabled | Field-Facet-Qname => cm:creator | true |
+| default.cm\:creator.maxFilters | Field-Facet-Qname => cm:creator  | 5 |
+| default.cm\:creator.minFilterValueLength | Field-Facet-Qname => cm:creator | 4 |
+| default.cm\:creator.scope | Field-Facet-Qname => cm:creator | ALL |
+| default.cm\:creator.scopedSites | Field-Facet-Qname => cm:creator | |
+| default.cm\:creator.sortBy | Field-Facet-Qname => cm:creator | ASCENDING |
+| default.cm\:modified.displayControl | Field-Facet-Qname => cm:modified | alfresco/search/FacetFilters |
+| default.cm\:modified.displayName | Field-Facet-Qname => cm:modified | faceted-search.facet-menu.facet.modified |
+| default.cm\:modified.filterID | Field-Facet-Qname => cm:modified | filter_modified | 
+| default.cm\:modified.hitThreshold | Field-Facet-Qname => cm:modified | 1 |
+| default.cm\:modified.isEnabled | Field-Facet-Qname => cm:modified | true |
+| default.cm\:modified.maxFilters | Field-Facet-Qname => cm:modified | 5 | 
+| default.cm\:modified.minFilterValueLength | Field-Facet-Qname => cm:modified | 4 |
+| default.cm\:modified.scope | Field-Facet-Qname => cm:modified  | ALL |
+| default.cm\:modified.scopedSites | Field-Facet-Qname => cm:modified | |
+| default.cm\:modified.sortBy | Field-Facet-Qname => cm:modified | INDEX |
+| default.cm\:modifier.displayControl | Field-Facet-Qname => cm:modifier | alfresco/search/FacetFilters | 
+| default.cm\:modifier.displayName | Field-Facet-Qname => cm:modifier  | faceted-search.facet-menu.facet.modifier | 
+| default.cm\:modifier.filterID | Field-Facet-Qname => cm:modifier | filter_modifier | 
+| default.cm\:modifier.hitThreshold | Field-Facet-Qname => cm:modifier | 1 |
+| default.cm\:modifier.isEnabled | Field-Facet-Qname => cm:modifier | true |
+| default.cm\:modifier.maxFilters | Field-Facet-Qname => cm:modifier | 5 |
+| default.cm\:modifier.minFilterValueLength | Field-Facet-Qname => cm:modifier | 4 |
+| default.cm\:modifier.scope | Field-Facet-Qname => cm:modifier | ALL |
+| default.cm\:modifier.scopedSites | Field-Facet-Qname => cm:modifier | |
+| default.cm\:modifier.sortBy | Field-Facet-Qname => cm:modifier | ASCENDING |
+| default.cm\:content.size.displayControl | Field-Facet-Qname => cm:content.size | alfresco/search/FacetFilters |
+| default.cm\:content.size.displayName | Field-Facet-Qname => cm:content.size | faceted-search.facet-menu.facet.size |
+| default.cm\:content.size.filterID | Field-Facet-Qname => cm:content.size | filter_content_size | 
+| default.cm\:content.size.hitThreshold | Field-Facet-Qname => cm:content.size | 1 | 
+| default.cm\:content.size.isEnabled | Field-Facet-Qname => cm:content.size | true |
+| default.cm\:content.size.maxFilters | Field-Facet-Qname => cm:content.size | 5 |
+| default.cm\:content.size.minFilterValueLength | Field-Facet-Qname => cm:content.size | 4 |
+| default.cm\:content.size.scope | Field-Facet-Qname => cm:content.size | ALL |
+| default.cm\:content.size.scopedSites | Field-Facet-Qname => cm:content.size | |
+| default.cm\:content.size.sortBy | Field-Facet-Qname => cm:content.size  | INDEX |
 | deployment.method | Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START) | DEFAULT |
 | deployment.service.corePoolSize | Deployment Service | 2 |
 | deployment.service.maximumPoolSize | Deployment Service | 3 |
@@ -736,6 +826,8 @@ The table below shows the full list of properties (exluding module specific prop
 | deployment.service.targetLockRefreshTime | How long to wait in mS before refreshing a target lock - detects shutdown servers | 60000 |
 | deployment.service.targetLockTimeout | How long to wait in mS from the last communication before deciding that deployment has failed, possibly the destination is no longer available? | 3600000 |
 | deployment.service.threadPriority | Deployment Service | 5 |
+| dev.email.not.sent | NOTE: DO NOT remove this value - leave as false if you don't want to override  (if true then emails will not be sent) | false |
+| dev.email.recipient.address | NOTE: DO NOT remove this value - leave the value empty if you don't want to override | |
 | dir.cachedcontent | The location of cached content | ${dir.root}/cachedcontent |
 | dir.contentstore | Content store folder path | ${dir.root}/contentstore |
 | dir.contentstore.bucketsPerMinute | | 0 |
@@ -755,6 +847,20 @@ The table below shows the full list of properties (exluding module specific prop
 | download.cleaner.repeatIntervalMilliseconds | Download Service Cleanup | 3600000 |
 | download.cleaner.startDelayMilliseconds | Download Service Cleanup | 3600000 |
 | download.maxContentSize | Download Service Limits, in bytes | 2152852358 |
+| email.handler.folder.overwriteDuplicates | Should duplicate messages to a folder overwrite each other or be named with a (number) | true |
+| email.inbound.emailContributorsAuthority | The group authority name that users must be a member of in order to add email. Normally EMAIL_CONTRIBUTORS but may be changed to EVERYONE | EMAIL_CONTRIBUTORS |
+| email.inbound.enabled | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | true |
+| email.inbound.unknownUser | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | anonymous |
+| email.server.allowed.senders | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | .* | 
+| email.server.auth.enabled | Is the user required to authenticate to use the smtp server? | false |
+| email.server.blocked.senders | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | |
+| email.server.connections.max | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | 3 |
+| email.server.domain | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | alfresco.com |
+| email.server.enabled | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | false |
+| email.server.enableTLS | Set this to false to turn off TLS, The server will not allow TLS. | true |
+| email.server.hideTLS | Set this to true to accept TLS but not announce it when the EHLO is called. | false |
+| email.server.port | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco  | 25 |
+| email.server.requireTLS | Set this to true to require TLS | false |
 | encryption.bootstrap.reencrypt | Should encryptable properties be re-encrypted with new encryption keys on botstrap? | false |
 | encryption.cipherAlgorithm | General encryption parameters | AES/CBC/PKCS5Padding |
 | encryption.keyAlgorithm | General encryption parameters | AES |
@@ -785,10 +891,35 @@ The table below shows the full list of properties (exluding module specific prop
 | external.authentication.proxyHeader | | X-Alfresco-Remote-User |
 | external.authentication.proxyUserName | | alfresco-system |
 | external.authentication.userIdPattern | | |
-| fileFolderService.checkHidden.enabled | | true |
 | filecontentstore.subsystem.name | ContentStore subsystem: default choice | unencryptedContentStore |
+| fileFolderService.checkHidden.enabled | | true |
+| filesystem.acl.global.defaultAccessLevel | Alfresco filesystem context | |
+| filesystem.lockKeeperEnabled | Is content open in the file systems locked by the repository? | true |
+| filesystem.lockKeeperRefreshCronExpression | Run refresh job every hour | 0 * */1 * * ? |
+| filesystem.lockKeeperTimeout | Number of seconds to hold an ephemeral lock - 2 hours | 7200 |
+| filesystem.name | Alfresco filesystem context | Alfresco |
+| filesystem.renameCSVShufflePattern | MNT-211 File name patterns for rename shuffle detection CSV files. | .*[a-f0-9]{8}+$ | 
+| filesystem.renameShufflePattern | ALF-3856 File name patterns that trigger rename shuffle detection pattern is used by rename - tested against full path after it has been lower cased. | (.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$) | 
+| filesystem.rootPath | Root directory to open onto | ${protocols.rootPath} |
+| filesystem.setReadOnlyFlagOnFolders | Should we ever set the read only flag on folders? This may cause problematic behaviour in Windows clients. See ALF-6727. | false |
+| filesystem.storeName | Root directory to open onto | ${spaces.store} | 
+| ftp.bindto | An empty value indicates bind to all available network adapters | |
+| ftp.dataPortFrom | FTP data port range, a value of 0:0 disables the data port range and will use the next available port Valid range is 1024-65535 | 0 |
+| ftp.dataPortTo | FTP data port range, a value of 0:0 disables the data port range and will use the next available port Valid range is 1024-65535 | 0 |
 | ftp.enabled | FTP access | false |
+| ftp.externalAddress | FTP external address, the IP address as seen by FTP clients (in case of NAT) | |
 | fts.indexer.batchSize | | 1000 |
+| ftp.keyStore | FTPS support (enabled when the keystore and truststore are set) | |
+| ftp.keyStorePassphrase | FTPS support (enabled when the keystore and truststore are set) | |
+| ftp.keyStoreType | FTPS support (enabled when the keystore and truststore are set) | JKS |
+| ftp.port | FTP Server Configuration | 21 |
+| ftp.requireSecureSession | | true |
+| ftp.sessionDebug | FTP session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels :-	 STATE, RXDATA, TXDATA, DUMPDATA, SEARCH, INFO, FILE, FILEIO, ERROR, PKTTYPE, TIMING, DATAPORT, DIRECTORY, SSL | |
+| ftp.sessionTimeout | Timeout for socket, that is waiting response from client | 5000 |
+| ftp.sslEngineDebug | | false |
+| ftp.trustStore | | |
+| ftp.trustStorePassphrase | | |
+| ftp.trustStoreType | | JKS |
 | heartbeat.enabled | HeartBeat | true |
 | heartbeat.target.url | HeartBeat | |
 | hibernate.jdbc.use_get_generated_keys | | false |
@@ -819,25 +950,46 @@ The table below shows the full list of properties (exluding module specific prop
 | imap.config.server.mountPoints.default.store | Default IMAP mount points | ${spaces.store} |
 | imap.config.server.mountPoints.value.AlfrescoIMAP.modeName | Default IMAP mount points | MIXED |
 | imap.config.server.mountPoints.value.AlfrescoIMAP.mountPointName | Default IMAP mount points | Alfresco IMAP |
+| imap.mail.from.default | | alfresco@demo.alfresco.org |
+| imap.mail.to.default | | alfresco@demo.alfresco.org |
 | imap.server.attachments.extraction.enabled | IMAP property | true |
 | imap.server.enabled | IMAP property | false |
+| imap.server.folder.cache.size | | 10000 |
+| imap.server.host | | 0.0.0.0 |
+| imap.server.imap.enabled | IMAP Port | true |
+| imap.server.imaps.enabled | IMAPS Port Keystore used for IMAPS is defined by the following Java system properties. javax.net.ssl.keyStore=mySrvKeystore  javax.net.ssl keyStorePassword=123456 | false |
+| imap.server.imaps.port | IMAPS Port Keystore used for IMAPS is defined by the following Java system properties. javax.net.ssl.keyStore=mySrvKeystore  javax.net.ssl keyStorePassword=123456 | 993 |
 | imap.server.port | IMAP property | 143 |
+| imap.server.shuffle.move.delete.delay | | 10000 |
+| img.coders | External executable locations | ${img.root}/modules/coders |
+| img.config | External executable locations | ${img.root}/config |
 | img.dyn | External executable locations | ${img.root}/lib |
 | img.exe | External executable locations | ${img.root}/bin/convert |
 | img.root | External executable locations | ./ImageMagick |
 | img.startupRetryPeriodSeconds | When img.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | img.url | Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default. | |
 | index.backup.cronExpression | | `0 0 3 * * ?` |
-| index.subsystem.name | | noindex |
+| index.subsystem.name | The search subsystem to use (noindex, solr6) | noindex |
 | index.tracking.minRecordPurgeAgeDays | Index tracking information of a certain age is cleaned out by a scheduled job. Any clustered system that has been offline for longer than this period will need to be seeded with a more recent backup of the Lucene indexes or the indexes will have to be fully rebuilt.Use -1 to disable purging. This can be switched on at any stage. | 30 |
 | index.tracking.purgeSize | Unused transactions will be purged in chunks determined by commit time boundaries. 'index.tracking.purgeSize' specifies the size of the chunk (in ms). Default is a couple of hours. | 7200000 |
+| jodconverter.connectTimeout | | 25000 |
+| jodconverter.enabled | External executable locations This property determines whether the jodConverter services are enabled. Allowed values are 'true' or 'false'. | true |
+| jodconverter.maxTasksPerProcess | The maximum number of OOo-related tasks to perform before a process restart | 200 |
+| jodconverter.officeHome | The property jodconverter.officeHome is used to locate LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like:                /Applications/OpenOffice.org.app/Contents For other OSes this should be the directory that contains "program/soffice.bin" Debian/Ubuntu it should be like:     /usr/lib64/libreoffice Fedora it should be like:            /opt/openoffice.org3 Windows it should be like:           C:/Alfresco/libreoffice | /usr/lib64/libreoffice | 
+| jodconverter.portNumbers | 1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003, 2004
+Note that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use. | 2022 |
+| jodconverter.startupRetryPeriodSeconds | When jodconverter.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| jodconverter.taskExecutionTimeout | timeouts are in milliseconds | 120000 |
+| jodconverter.taskQueueTimeout | timeouts are in milliseconds | 30000 |
+| jodconverter.templateProfileDir | OpenOffice user template profile to be used by the JOD started OpenOffice process. Among other settings, the profile contains values set in Tools|Options via the UI This includes the temporary directory: Tools|Options|openOffice.org|Temporary Files If blank, a default profile is created. The user profile is recreated on each restart from the template. May be set to an existing user's profile such as: C:\Users\<username>\AppData\Roaming\OpenOffice.org\3 | |
+| jodconverter.url | Remote server (or docker container) url used to service jodconverter requests. | | 
 | kerberos.authentication.authenticateCIFS | | true |
 | kerberos.authentication.authenticateFTP | | true |
-| kerberos.authentication.cifs.configEntryName | | AlfrescoCIFS | 
+| kerberos.authentication.cifs.configEntryName | | AlfrescoCIFS |
 | kerberos.authentication.cifs.password | | secret |
-| kerberos.authentication.defaultAdministratorUserNames | | | 
-| kerberos.authentication.realm | | ALFRESCO.ORG | 
-| kerberos.authentication.stripUsernameSuffix | | true | 
+| kerberos.authentication.defaultAdministratorUserNames | | |
+| kerberos.authentication.realm | | ALFRESCO.ORG |
+| kerberos.authentication.stripUsernameSuffix | | true |
 | kerberos.authentication.user.configEntryName | | Alfresco |
 | ldap.authentication.active | This flag enables use of this LDAP subsystem for authentication. It may be that this subsytem should only be used for synchronization, in which case this flag should be set to false. | true |
 | ldap.authentication.allowGuestLogin | This properties file brings together the common options for LDAP authentication rather than editing the bean definitions | true |
@@ -939,9 +1091,31 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | lucene.maxAtomicTransformationTime | Millisecond threshold for text transformations. Slower transformers will force the text extraction to be asynchronous | 100 |
 | lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query | 10000 |
 | lucene.write.lock.timeout | Index locks (mostly deprecated and will be tidied up with the next lucene upgrade) | 10000 |
+| mail.encoding | | UTF-8 |
+| mail.from.default | Default email address used for FROM if no other suitable value can found. | alfresco@demo.alfresco.org | 
+| mail.from.enabled | Can the FROM field be specified as a parameter or current user or does it  always need to be the default value - to agree with the username/password? | true |
+| mail.host | Outbound SMTP properties use these properties to configure the out-bound SMTP server. | smtp.example.com |
+| mail.password | | |
+| mail.port | Outbound SMTP properties use these properties to configure the out-bound SMTP server. | 25 |
+| mail.protocol | Is the email protocol smtp or smtps | smtp |
 | mail.service.corePoolSize | Oubound Mail | 8 |
 | mail.service.maximumPoolSize | Oubound Mail | 20 |
 | mbean.server.locateExistingServerIfPossible | Should the Mbean server bind to an existing server. Set to true for most application servers. false for WebSphere clusters. | true |
+| mail.smtp.auth | Additional Java Mail properties for SMTP protocol | false |
+| mail.smtp.debug | Additional Java Mail properties for SMTP protocol | false |
+| mail.smtp.starttls.enable | Additional Java Mail properties for SMTP protocol | false |
+| mail.smtp.timeout | Additional Java Mail properties for SMTP protocol | 30000 |
+| mail.testmessage.send | use these properties to send test message during start of subsystem | false |
+| mail.testmessage.subject | use these properties to send test message during start of subsystem | Outbound SMTP | 
+| mail.testmessage.text | use these properties to send test message during start of subsystem | The Outbound SMTP email subsystem is working. | 
+| mail.testmessage.to | use these properties to send test message during start of subsystem | |
+| mail.transports.maxActive | transport pool settings | 1 |
+| mail.transports.maxIdle | transport pool settings | 8 |
+| mail.tranports.maxWait | transport pool settings | 30000 |
+| mail.tranports.minEvictableIdleTime | transport pool settings | 30000 |
+| mail.tranports.timeBetweenEvictionRuns | transport pool settings | 30000 |
+| mail.username | | anonymous | 
+| mail.validate.addresses | validate email addresses | true |
 | messaging.broker.connections.max | | 8 |
 | messaging.broker.connections.maxActiveSessionsPerConnection | | 1000 |
 | messaging.broker.password | | |
@@ -990,6 +1164,18 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | opencmis.servletpath.value | URL generation overrides | |
 | orphanReaper.lockRefreshTime | OrphanReaper | 60000 |
 | orphanReaper.lockTimeOut | OrphanReaper | 3600000 |
+| passthru.authentication.authenticateCIFS | | true |
+| passthru.authentication.authenticateFTP | | true |
+| passthru.authentication.broadcastMask | | |
+| passthru.authentication.connectTimeout | Timeout value when opening a session to an authentication server, in milliseconds | 5000 |
+| passthru.authentication.defaultAdministratorUserNames | | |
+| passthru.authentication.domain | | DOMAIN |
+| passthru.authentication.guestAccess | | false |
+| passthru.authentication.offlineCheckInterval | Offline server check interval in seconds | 300 |
+| passthru.authentication.protocolOrder | | TCPIP,NetBIOS |
+| passthru.authentication.servers | | |
+| passthru.authentication.sessionCleanup | | true |
+| passthru.authentication.useLocalServer | | false |
 | people.search.honor.hint.useCQ | Use a canned query when requested to search for people if "[hint:useCQ]" is provided in search term | true |
 | policy.content.update.ignoreEmpty | Should we consider zero byte content to be the same as no content when firing content update policies? Prevents 'premature' firing of inbound content rules for some clients such as Mac OS X Finder | true |
 | protocols.rootPath | Default root path for protocols | /${spaces.company_home.childname} |
@@ -999,6 +1185,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | rendition.config.initialAndOnError.cronExpression | | `0/10 * * * * ?` |
 | renditionService2.enabled | Rendition Service 2 | true |
 | replication.enabled | Replication Service | false |
+| replication.transfer.readonly | | true |
 | repo.event2.filter.nodeAspects | Repo events2 | |
 | repo.event2.filter.nodeTypes | Repo events2. Type and aspect filters which should be excluded. Note: System folders node types are added by default | sys:*, fm:*, cm:thumbnail, cm:failedThumbnail, cm:rating, rma:rmsite include_subtypes |
 | repo.event2.filter.users | Comma separated list of users which should be excluded. Note: username's case-sensitivity depends on the {user.name.caseSensitive} setting | System, null |
@@ -1006,6 +1193,12 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | repo.remote.endpoint | repo.remote.endpoint | /service |
 | repository.name | The name of the repository | Main Repository |
 | sample.site.disabled | | false |
+| search.solrShardRegistry.maxAllowedReplicaTxCountDifference | | 1000 |
+| search.solrShardRegistry.purgeOnInit | | true |
+| search.solrShardRegistry.shardInstanceTimeoutInSeconds | | 300 |
+| search.solrTrackingSupport.enabled | | true |
+| search.solrTrackingSupport.ignorePathsForSpecificAspects | | false |
+| search.solrTrackingSupport.ignorePathsForSpecificTypes | | false |
 | security.anyDenyDenies | Security | true |
 | security.postProcessDenies | Whether to post-process denies. Only applies to solr4+ when anyDenyDenies is true. | false |
 | server.allowedusers | | |
@@ -1048,12 +1241,26 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | smart.folders.config.vanilla.processor.classpath | Vanilla JSON templates javascript processor classpath. A java script processor used to convert JSON templates to internal smart folder definitions. | /org/alfresco/repo/virtual/node/vanilla.js |
 | smart.folders.enabled | Smart Folders Config Properties | false |
 | smart.reference.classpath.hash | Smart reference config | ${smart.folders.config.vanilla.processor.classpath}->1,${smart.folders.config.system.templates.classpath}->2 |
+| solr.backup.alfresco.cronExpression | | 0 0 2 * * ? |
+| solr.backup.alfresco.numberToKeep | | 3 |
+| solr.backup.alfresco.remoteBackupLocation | | ${dir.root}/solr6Backup/alfresco |
+| solr.backup.archive.cronExpression | | 0 0 4 * * ? |
+| solr.backup.archive.numberToKeep | | 3 |
+| solr.backup.archive.remoteBackupLocation | | ${dir.root}/solr6Backup/archive |
+| solr.baseUrl | /solr |
 | solr.cmis.alternativeDictionary | SOLR connection details (e.g. for JMX) | DEFAULT_DICTIONARY |
+| solr.defaultShardedFacetLimit | \ 20 |
+| solr.defaultUnshardedFacetLimit | | 100 |
 | solr.host | SOLR hostname | localhost |
 | solr.max.host.connections | Maximum number of connections | 40 |
 | solr.max.total.connections | Total number of connections |40 |
-| solr.port | SOLR port | 8983 |
-| solr.port.ssl | SOLR SSL port | 8984 |
+| solr.port | SOLR port | 8083 |
+| solr.port.ssl | SOLR SSL port | 8446 |
+| solr.query.cmis.queryConsistency | | TRANSACTIONAL_IF_POSSIBLE |
+| solr.query.fts.queryConsistency | | TRANSACTIONAL_IF_POSSIBLE | 
+| solr.query.hybrid.enabled | | false |
+| solr.query.includeGroupsForRoleAdmin | | false |
+| solr.query.maximumResultsFromUnlimitedQuery | | ${system.acl.maxPermissionChecks} |
 | solr.secureComms | Determines whether to connect to SOLR using HTTPS (none, https) | https |
 | solr.solrConnectTimeout | Solr connect timeout in ms | 5000 |
 | solr.solrPassword | Default SOLR password | solr |
@@ -1068,6 +1275,8 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | solr.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
 | solr.store.mappings.value.solrMappingArchive.identifier | Default SOLR store mappings mappings | SpacesStore |
 | solr.store.mappings.value.solrMappingArchive.protocol | Default SOLR store mappings mappings | archive |
+| solr.suggester.enabled | Solr Suggester properties | true |
+| solr.useDynamicShardRegistration | | false |
 | solr4.store.mappings | Default SOLR 4 store mappings mappings | solrMappingAlfresco,solrMappingArchive |
 | solr4.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 4 store mappings mappings | /solr4/alfresco |
 | solr4.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
@@ -1077,6 +1286,12 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | solr4.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
 | solr4.store.mappings.value.solrMappingArchive.identifier | Default SOLR 4 store mappings mappings | SpacesStore |
 | solr4.store.mappings.value.solrMappingArchive.protocol | Default SOLR 4 store mappings mappings | archive |
+| solr6.alfresco.nodeString | Default unsharded | |
+| solr6.alfresco.numShards | Default unsharded | 1 |
+| solr6.alfresco.replicationFactor | Default unsharded | 1 |
+| solr6.archive.nodeString | Default unsharded | |
+| solr6.archive.numShards | Default unsharded | 1 |
+| solr6.archive.replicationFactor | Default unsharded | 1 |
 | solr6.store.mappings | Default SOLR 6 store mappings mappings | solrMappingAlfresco,solrMappingArchive,solrMappingHistory |
 | solr6.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 6 store mappings mappings | /solr/alfresco |
 | solr6.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
@@ -1141,6 +1356,9 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | spaces.user_homes.regex.pattern | Spaces Configuration | |
 | spaces.webscripts.childname | Spaces Configuration | cm:webscripts |
 | spaces.workflow.definitions.childname | Spaces Configuration | app:workflow_defs |
+| subscriptions.enabled | Enables the subscription service | true |
+| subscriptions.following.emailTemplateLocationType | | xpath |
+| subscriptions.following.emailTemplatePath | | /app:company_home/app:dictionary/app:email_templates/app:following/cm:following-email.html.ftl
 | subsystems.test.beanProp | Subsystem unit test values. Will not have any effect on production servers | inst1,inst2,inst3 |
 | subsystems.test.beanProp.default.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Default |
 | subsystems.test.beanProp.default.longProperty | Subsystem unit test values. Will not have any effect on production servers | 123456789123456789 |
@@ -1148,6 +1366,17 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | subsystems.test.beanProp.value.inst3.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Instance Default |
 | subsystems.test.simpleProp2 | Subsystem unit test values. Will not have any effect on production servers | true |
 | subsystems.test.simpleProp3 | Subsystem unit test values. Will not have any effect on production servers | Global Default3 |
+| synchronization.allowDeletions | Synchronization with deletions | true |
+| synchronization.autoCreatePeopleOnLogin | Should we auto create a missing person on log in? | true |
+| synchronization.externalUserControl | external setting (LDAP systems) - whether users can be enabled; if false then users have to be explicitly disabled in Alfresco | false |
+| synchronization.externalUserControlSubsystemName | Subsystem that will handle the external user control | |
+| synchronization.import.cron | The cron expression defining when imports should take place | 0 0 0 * * ? |
+| synchronization.loggingInterval | The number of entries to process before logging progress | 100 |
+| synchronization.syncDelete | For large LDAP directories the delete query is expensive and time consuming, needing to read the entire LDAP directory. | true |
+| synchronization.synchronizeChangesOnly | This properties file is used to configure user registry syncronisation (e.g. LDAP) Should the scheduled sync job use differential or full queries on the user registries to determine the set of local users to be updated? When true, each user registry is only queried for those users and groups modified since the most recent modification date of all the objects last queried from that same source. When <code>false</code> then <i>all</i> users and groups are queried from the user registry and updated locally. Nevertheless, a separate query will be run by the scheduled sync job to determine deletions. | true |
+|synchronization.syncOnStartup | Should we trigger a differential sync on startup? | true |
+|synchronization.syncWhenMissingPeopleLogIn | Should we trigger a differential sync when missing people log in? | ture |
+| synchronization.workerThreads | The number of threads to use when doing a batch (scheduled or startup) sync | 1 |
 | system.acl.maxPermissionCheckTimeMillis | Property to limit resources spent on individual searches. The maximum time spent pruning results. | 10000 |
 | system.acl.maxPermissionChecks |Property to limit resources spent on individual searches.The maximum number of search results to perform permission checks against. | 1000 |
 | system.api.discovery.enabled | | true |
