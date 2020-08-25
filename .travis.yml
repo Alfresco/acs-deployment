@@ -79,7 +79,13 @@ _helm_deploy: &helm_deploy
     if [[ ${TRAVIS_JOB_NAME} != "Deploy Latest Chart and Run Postman Checks" ]]; then
       values_file="helm/older-versions/${TRAVIS_JOB_NAME}"
     fi
-    
+    deploy=false
+    if [[ "${GIT_DIFF}" == *helm/older-versions/${TRAVIS_JOB_NAME}* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services* ]]
+    then
+      deploy=true
+    fi
+
+    if $deploy; then
     set -e
     # Utility Functions
 
@@ -248,6 +254,7 @@ _helm_deploy: &helm_deploy
 
     # run checks after pod deletion
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    fi
 
 jobs:
   include:
@@ -259,7 +266,6 @@ jobs:
         helm lint helm/alfresco-content-services/charts/alfresco-sync-service
         helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
     - name: Deploy Docker Compose and Run Postman Checks
-      if: env(GIT_DIFF) =~ /.*docker-compose.*/
       stage: test
       script: |
         cd docker-compose
@@ -330,18 +336,13 @@ jobs:
       after_failure: |
         docker-compose logs --no-color
     - name: Deploy Latest Chart and Run Postman Checks
-      if: env(GIT_DIFF) =~ /.*helm\/alfresco-content-services.*/
       stage: test
       <<: *helm_deploy
     - name: 6.1.1.3_support_SP_2.N_values.yaml
-      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       <<: *helm_deploy
     - name: 6.2.0.2_support_SP_3.N_values.yaml
-      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       <<: *helm_deploy
     - name: 6.2.1_support_SP_4.N_values.yaml
-      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       <<: *helm_deploy
     - name: 6.2.2_support_SP_4.N_values.yaml
-      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       <<: *helm_deploy
