@@ -1485,8 +1485,8 @@ The table below shows the full list of properties (exluding module specific prop
 | deployment.service.targetLockRefreshTime | How long to wait in mS before refreshing a target lock - detects shutdown servers | 60000 |
 | deployment.service.targetLockTimeout | How long to wait in mS from the last communication before deciding that deployment has failed, possibly the destination is no longer available? | 3600000 |
 | deployment.service.threadPriority | Deployment Service | 5 |
-| dev.email.not.sent | NOTE: DO NOT remove this value - leave as false if you don't want to override  (if true then emails will not be sent) | false |
-| dev.email.recipient.address | NOTE: DO NOT remove this value - leave the value empty if you don't want to override | |
+| dev.email.not.sent | If true emails will not be sent | false |
+| dev.email.recipient.address | if provided all emails will be sent to this address (for development purposes) | |
 | dir.cachedcontent | The location of cached content | ${dir.root}/cachedcontent |
 | dir.contentstore | Content store folder path | ${dir.root}/contentstore |
 | dir.contentstore.bucketsPerMinute | | 0 |
