@@ -6,12 +6,12 @@ The table below shows the full list of properties (exluding module specific prop
 |----------|-------------|---------------|
 | acs.repo.rendition.events.endpoint | Raw events | jms:acs-repo-rendition-events?jmsMessageType=Text |
 | acs.repo.transform.request.endpoint | Transform request events | jms:acs-repo-transform-request?jmsMessageType=Text |
-| activities.feed.cleaner.cronExpression | | 0 0/10 * * * ? |
+| activities.feed.cleaner.cronExpression | | `0 0/10 * * * ?` |
 | activities.feed.cleaner.enabled | | true |
 | activities.feed.cleaner.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feed.fetchBatchSize | | 250 |
 | activities.feed.generator.batchSize | | 1000 |
-| activities.feed.generator.cronExpression | | 0/30 * * * * ? |
+| activities.feed.generator.cronExpression | | `0/30 * * * * ?` |
 | activities.feed.generator.enabled | | true |
 | activities.feed.generator.jsonFormatOnly | | true |
 | activities.feed.generator.maxItemsPerCycle | | 100 |
@@ -27,10 +27,10 @@ The table below shows the full list of properties (exluding module specific prop
 | activities.feed.notifier.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feedNotifier.batchSize | | 200 |
 | activities.feedNotifier.numThreads | | 2 |
-| activities.post.cleaner.cronExpression | | 0 0/10 * * * ? |
+| activities.post.cleaner.cronExpression | | `0 0/10 * * * ?` |
 | activities.post.cleaner.enabled | | true |
 | activities.post.cleaner.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
-| activities.post.lookup.cronExpression | | 0/15 * * * * ? |
+| activities.post.lookup.cronExpression | | `0/15 * * * * ?` |
 | activities.post.lookup.enabled | | true |
 | activities.post.lookup.maxItemsPerCycle | | 500 |
 | activities.post.lookup.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
@@ -681,10 +681,10 @@ The table below shows the full list of properties (exluding module specific prop
 | caches.tx.statsEnabled | | true |
 | category.queryFetchSize | Maximum query size for category/tag fetch when not explicitly set by paging parameters | 5000 |
 | cifs.bindto | An empty value indicates bind to all available network adapters | |
-| cifs.broadcast | CIFS Server Configuration | 255.255.255.255 | 
+| cifs.broadcast | CIFS Server Configuration | 255.255.255.255 |
 | cifs.disableNativeCode | Disable the use of JNI code. Only currently affects Windows | false |
 | cifs.disableNIO | Enable the use of asynchronous sockets/NIO code | false |
-| cifs.domain | CIFS Server Configuration | | 
+| cifs.domain | CIFS Server Configuration | |
 | cifs.enabled | CIFS Server Configuration | false |
 | cifs.hostannounce | An empty value indicates bind to all available network adapters | true |
 | cifs.ipv6.enabled | An empty value indicates bind to all available network adapters | false |
@@ -693,17 +693,17 @@ The table below shows the full list of properties (exluding module specific prop
 | cifs.netBIOSSMB.datagramPort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 138 |
 | cifs.netBIOSSMB.namePort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 137 |
 | cifs.netBIOSSMB.sessionPort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 139 |
-| cifs.pseudoFiles.enabled | Big Switch, are the Desktop Actions and URL shortcuts shown for CIFS ? | true | 
+| cifs.pseudoFiles.enabled | Big Switch, are the Desktop Actions and URL shortcuts shown for CIFS ? | true |
 | cifs.pseudoFiles.explorerURL.enabled | CIFS URL for alfresco explorer | false |
 | cifs.pseudoFiles.explorerURL.fileName | CIFS URL for alfresco explorer | __Alfresco.url |
 | cifs.pseudoFiles.shareURL.enabled | Cifs URL for alfresco share | true |
 | cifs.pseudoFiles.shareURL.fileName | Cifs URL for alfresco share | __Share.url |
 | cifs.sessionDebug | CIFS session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels :-    NETBIOS, STATE, RXDATA, TXDATA, DUMPDATA, NEGOTIATE, TREE, SEARCH, INFO, FILE, FILEIO, TRANSACT    ECHO, ERROR, IPC, LOCK, PKTTYPE, DCERPC, STATECACHE, TIMING, NOTIFY, STREAMS, SOCKET, PKTPOOL    PKTSTATS, THREADPOOL, BENCHMARK | |
-| cifs.serverName | CIFS Server Configuration | ${localname}A | 
+| cifs.serverName | CIFS Server Configuration | ${localname}A |
 | cifs.sessionTimeout | Session timeout, in seconds. Defaults to 15 minutes, to match the default Windows client setting. If no I/O is received within that time the session is closed by the server | 900 |
 | cifs.tcpipSMB.port | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 445 |
-| cifs.terminalServerList | | | 
-| cifs.WINS.autoDetectEnabled | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | true | 
+| cifs.terminalServerList | | |
+| cifs.WINS.autoDetectEnabled | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | true |
 | cifs.WINS.primary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 1.2.3.4 |
 | cifs.WINS.secondary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 5.6.7.8 |
 | cmis.disable.hidden.leading.period.files | | false |
@@ -759,28 +759,28 @@ The table below shows the full list of properties (exluding module specific prop
 | default.async.action.corePoolSize | Default Async Action Thread Pool | 8 |
 | default.async.action.maximumPoolSize | Default Async Action Thread Pool | 20 |
 | default.async.action.threadPriority | Default Async Action Thread Pool | 1 |
-| default.cm\:content.mimetype.displayControl | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | alfresco/search/FacetFilters | 
-| default.cm\:content.mimetype.displayName | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | faceted-search.facet-menu.facet.formats | 
-| default.cm\:content.mimetype.filterID | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | filter_mimetype | 
+| default.cm\:content.mimetype.displayControl | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | alfresco/search/FacetFilters |
+| default.cm\:content.mimetype.displayName | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | faceted-search.facet-menu.facet.formats |
+| default.cm\:content.mimetype.filterID | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | filter_mimetype |
 | default.cm\:content.mimetype.hitThreshold | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 1 |
 | default.cm\:content.mimetype.isEnabled | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | true |
 | default.cm\:content.mimetype.maxFilters | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 5 |
-| default.cm\:content.mimetype.minFilterValueLength | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 4 | 
+| default.cm\:content.mimetype.minFilterValueLength | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 4 |
 | default.cm\:content.mimetype.scope | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | ALL |
 | default.cm\:content.mimetype.scopedSites | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | |
 | default.cm\:content.mimetype.sortBy | Alfresco default facets Note: If you have changed the filter's™ default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | ASCENDING |
-| default.cm\:created.displayControl | Field-Facet-Qname => cm:created | alfresco/search/FacetFilters | 
-| default.cm\:created.displayName | Field-Facet-Qname => cm:created | faceted-search.facet-menu.facet.created | 
+| default.cm\:created.displayControl | Field-Facet-Qname => cm:created | alfresco/search/FacetFilters |
+| default.cm\:created.displayName | Field-Facet-Qname => cm:created | faceted-search.facet-menu.facet.created |
 | default.cm\:created.filterID | Field-Facet-Qname => cm:created | filter_created |
 | default.cm\:created.hitThreshold | Field-Facet-Qname => cm:created  | 1 |
 | default.cm\:created.isEnabled | Field-Facet-Qname => cm:created  | true |
-| default.cm\:created.maxFilters | Field-Facet-Qname => cm:created  | 5 | 
+| default.cm\:created.maxFilters | Field-Facet-Qname => cm:created  | 5 |
 | default.cm\:created.minFilterValueLength | Field-Facet-Qname => cm:created  | 4 |
 | default.cm\:created.scope | Field-Facet-Qname => cm:created  | ALL |
 | default.cm\:created.scopedSites | Field-Facet-Qname => cm:created  | |
 | default.cm\:created.sortBy | Field-Facet-Qname => cm:created  | INDEX |
-| default.cm\:creator.displayControl | Field-Facet-Qname => cm:creator | alfresco/search/FacetFilters | 
-| default.cm\:creator.displayName | Field-Facet-Qname => cm:creator  | faceted-search.facet-menu.facet.creator | 
+| default.cm\:creator.displayControl | Field-Facet-Qname => cm:creator | alfresco/search/FacetFilters |
+| default.cm\:creator.displayName | Field-Facet-Qname => cm:creator  | faceted-search.facet-menu.facet.creator |
 | default.cm\:creator.filterID | Field-Facet-Qname => cm:creator | filter_creator |
 | default.cm\:creator.hitThreshold | Field-Facet-Qname => cm:creator | 1 |
 | default.cm\:creator.isEnabled | Field-Facet-Qname => cm:creator | true |
@@ -791,17 +791,17 @@ The table below shows the full list of properties (exluding module specific prop
 | default.cm\:creator.sortBy | Field-Facet-Qname => cm:creator | ASCENDING |
 | default.cm\:modified.displayControl | Field-Facet-Qname => cm:modified | alfresco/search/FacetFilters |
 | default.cm\:modified.displayName | Field-Facet-Qname => cm:modified | faceted-search.facet-menu.facet.modified |
-| default.cm\:modified.filterID | Field-Facet-Qname => cm:modified | filter_modified | 
+| default.cm\:modified.filterID | Field-Facet-Qname => cm:modified | filter_modified |
 | default.cm\:modified.hitThreshold | Field-Facet-Qname => cm:modified | 1 |
 | default.cm\:modified.isEnabled | Field-Facet-Qname => cm:modified | true |
-| default.cm\:modified.maxFilters | Field-Facet-Qname => cm:modified | 5 | 
+| default.cm\:modified.maxFilters | Field-Facet-Qname => cm:modified | 5 |
 | default.cm\:modified.minFilterValueLength | Field-Facet-Qname => cm:modified | 4 |
 | default.cm\:modified.scope | Field-Facet-Qname => cm:modified  | ALL |
 | default.cm\:modified.scopedSites | Field-Facet-Qname => cm:modified | |
 | default.cm\:modified.sortBy | Field-Facet-Qname => cm:modified | INDEX |
-| default.cm\:modifier.displayControl | Field-Facet-Qname => cm:modifier | alfresco/search/FacetFilters | 
-| default.cm\:modifier.displayName | Field-Facet-Qname => cm:modifier  | faceted-search.facet-menu.facet.modifier | 
-| default.cm\:modifier.filterID | Field-Facet-Qname => cm:modifier | filter_modifier | 
+| default.cm\:modifier.displayControl | Field-Facet-Qname => cm:modifier | alfresco/search/FacetFilters |
+| default.cm\:modifier.displayName | Field-Facet-Qname => cm:modifier  | faceted-search.facet-menu.facet.modifier |
+| default.cm\:modifier.filterID | Field-Facet-Qname => cm:modifier | filter_modifier |
 | default.cm\:modifier.hitThreshold | Field-Facet-Qname => cm:modifier | 1 |
 | default.cm\:modifier.isEnabled | Field-Facet-Qname => cm:modifier | true |
 | default.cm\:modifier.maxFilters | Field-Facet-Qname => cm:modifier | 5 |
@@ -811,8 +811,8 @@ The table below shows the full list of properties (exluding module specific prop
 | default.cm\:modifier.sortBy | Field-Facet-Qname => cm:modifier | ASCENDING |
 | default.cm\:content.size.displayControl | Field-Facet-Qname => cm:content.size | alfresco/search/FacetFilters |
 | default.cm\:content.size.displayName | Field-Facet-Qname => cm:content.size | faceted-search.facet-menu.facet.size |
-| default.cm\:content.size.filterID | Field-Facet-Qname => cm:content.size | filter_content_size | 
-| default.cm\:content.size.hitThreshold | Field-Facet-Qname => cm:content.size | 1 | 
+| default.cm\:content.size.filterID | Field-Facet-Qname => cm:content.size | filter_content_size |
+| default.cm\:content.size.hitThreshold | Field-Facet-Qname => cm:content.size | 1 |
 | default.cm\:content.size.isEnabled | Field-Facet-Qname => cm:content.size | true |
 | default.cm\:content.size.maxFilters | Field-Facet-Qname => cm:content.size | 5 |
 | default.cm\:content.size.minFilterValueLength | Field-Facet-Qname => cm:content.size | 4 |
@@ -851,7 +851,7 @@ The table below shows the full list of properties (exluding module specific prop
 | email.inbound.emailContributorsAuthority | The group authority name that users must be a member of in order to add email. Normally EMAIL_CONTRIBUTORS but may be changed to EVERYONE | EMAIL_CONTRIBUTORS |
 | email.inbound.enabled | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | true |
 | email.inbound.unknownUser | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | anonymous |
-| email.server.allowed.senders | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | .* | 
+| email.server.allowed.senders | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | .* |
 | email.server.auth.enabled | Is the user required to authenticate to use the smtp server? | false |
 | email.server.blocked.senders | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | |
 | email.server.connections.max | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | 3 |
@@ -895,14 +895,14 @@ The table below shows the full list of properties (exluding module specific prop
 | fileFolderService.checkHidden.enabled | | true |
 | filesystem.acl.global.defaultAccessLevel | Alfresco filesystem context | |
 | filesystem.lockKeeperEnabled | Is content open in the file systems locked by the repository? | true |
-| filesystem.lockKeeperRefreshCronExpression | Run refresh job every hour | 0 * */1 * * ? |
+| filesystem.lockKeeperRefreshCronExpression | Run refresh job every hour | `0 * */1 * * ?` |
 | filesystem.lockKeeperTimeout | Number of seconds to hold an ephemeral lock - 2 hours | 7200 |
 | filesystem.name | Alfresco filesystem context | Alfresco |
-| filesystem.renameCSVShufflePattern | MNT-211 File name patterns for rename shuffle detection CSV files. | .*[a-f0-9]{8}+$ | 
-| filesystem.renameShufflePattern | ALF-3856 File name patterns that trigger rename shuffle detection pattern is used by rename - tested against full path after it has been lower cased. | (.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$) | 
+| filesystem.renameCSVShufflePattern | MNT-211 File name patterns for rename shuffle detection CSV files. | `.*[a-f0-9]{8}+$` |
+| filesystem.renameShufflePattern | ALF-3856 File name patterns that trigger rename shuffle detection pattern is used by rename - tested against full path after it has been lower cased. | `(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)` |
 | filesystem.rootPath | Root directory to open onto | ${protocols.rootPath} |
 | filesystem.setReadOnlyFlagOnFolders | Should we ever set the read only flag on folders? This may cause problematic behaviour in Windows clients. See ALF-6727. | false |
-| filesystem.storeName | Root directory to open onto | ${spaces.store} | 
+| filesystem.storeName | Root directory to open onto | ${spaces.store} |
 | ftp.bindto | An empty value indicates bind to all available network adapters | |
 | ftp.dataPortFrom | FTP data port range, a value of 0:0 disables the data port range and will use the next available port Valid range is 1024-65535 | 0 |
 | ftp.dataPortTo | FTP data port range, a value of 0:0 disables the data port range and will use the next available port Valid range is 1024-65535 | 0 |
@@ -914,7 +914,7 @@ The table below shows the full list of properties (exluding module specific prop
 | ftp.keyStoreType | FTPS support (enabled when the keystore and truststore are set) | JKS |
 | ftp.port | FTP Server Configuration | 21 |
 | ftp.requireSecureSession | | true |
-| ftp.sessionDebug | FTP session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels :-	 STATE, RXDATA, TXDATA, DUMPDATA, SEARCH, INFO, FILE, FILEIO, ERROR, PKTTYPE, TIMING, DATAPORT, DIRECTORY, SSL | |
+| ftp.sessionDebug | FTP session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels: STATE, RXDATA, TXDATA, DUMPDATA, SEARCH, INFO, FILE, FILEIO, ERROR, PKTTYPE, TIMING, DATAPORT, DIRECTORY, SSL | |
 | ftp.sessionTimeout | Timeout for socket, that is waiting response from client | 5000 |
 | ftp.sslEngineDebug | | false |
 | ftp.trustStore | | |
@@ -931,9 +931,9 @@ The table below shows the full list of properties (exluding module specific prop
 | hybridworkflow.enabled | | false |
 | identity-service.authentication.defaultAdministratorUserNames | | admin |
 | identity-service.authentication.enabled | | true |
-| identity-service.auth-server-url | | http://localhost:8180/auth | 
+| identity-service.auth-server-url | | `http://localhost:8180/auth` |
 | identity-service.realm | | springboot |
-| identity-service.resource | | activiti | 
+| identity-service.resource | | activiti |
 | identity-service.public-client | | true |
 | identity-service.ssl-required | | none |
 | imap.attachments.folder.folderPath | Imap extraction settings | ${spaces.imap_attachments.childname} |
@@ -975,14 +975,14 @@ The table below shows the full list of properties (exluding module specific prop
 | jodconverter.connectTimeout | | 25000 |
 | jodconverter.enabled | External executable locations This property determines whether the jodConverter services are enabled. Allowed values are 'true' or 'false'. | true |
 | jodconverter.maxTasksPerProcess | The maximum number of OOo-related tasks to perform before a process restart | 200 |
-| jodconverter.officeHome | The property jodconverter.officeHome is used to locate LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like:                /Applications/OpenOffice.org.app/Contents For other OSes this should be the directory that contains "program/soffice.bin" Debian/Ubuntu it should be like:     /usr/lib64/libreoffice Fedora it should be like:            /opt/openoffice.org3 Windows it should be like:           C:/Alfresco/libreoffice | /usr/lib64/libreoffice | 
+| jodconverter.officeHome | The property jodconverter.officeHome is used to locate LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like:                /Applications/OpenOffice.org.app/Contents For other OSes this should be the directory that contains "program/soffice.bin" Debian/Ubuntu it should be like:     /usr/lib64/libreoffice Fedora it should be like:            /opt/openoffice.org3 Windows it should be like:           C:/Alfresco/libreoffice | /usr/lib64/libreoffice |
 | jodconverter.portNumbers | 1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003, 2004
 Note that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use. | 2022 |
 | jodconverter.startupRetryPeriodSeconds | When jodconverter.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | jodconverter.taskExecutionTimeout | timeouts are in milliseconds | 120000 |
 | jodconverter.taskQueueTimeout | timeouts are in milliseconds | 30000 |
 | jodconverter.templateProfileDir | OpenOffice user template profile to be used by the JOD started OpenOffice process. Among other settings, the profile contains values set in Tools|Options via the UI This includes the temporary directory: Tools|Options|openOffice.org|Temporary Files If blank, a default profile is created. The user profile is recreated on each restart from the template. May be set to an existing user's profile such as: C:\Users\<username>\AppData\Roaming\OpenOffice.org\3 | |
-| jodconverter.url | Remote server (or docker container) url used to service jodconverter requests. | | 
+| jodconverter.url | Remote server (or docker container) url used to service jodconverter requests. | |
 | kerberos.authentication.authenticateCIFS | | true |
 | kerberos.authentication.authenticateFTP | | true |
 | kerberos.authentication.cifs.configEntryName | | AlfrescoCIFS |
@@ -997,12 +997,12 @@ Note that it is by specifying multiple port numbers that one can create a pool o
 | ldap.authentication.defaultAdministratorUserNames | Comma separated list of user names who should be considered administrators by default | Administrator |
 | ldap.authentication.escapeCommasInBind | Escape commas entered by the user at bind time Useful when using simple authentication and the CN is part of the DN and contains commas| false |
 | ldap.authentication.escapeCommasInUid | Escape commas entered by the user when setting the authenticated user Useful when using simple authentication and the CN is part of the DN and contains commas, and the escaped \, is pulled in as part of an LDAP sync If this option is set to true it will break the default home folder provider as space names can not contain \ | false |
-| ldap.authentication.java.naming.factory.initial | The LDAP context factory to use | com.sun.jndi.ldap.LdapCtxFactory | 
-| ldap.authentication.java.naming.provider.url | The URL to connect to the LDAP server | ldap://domaincontroller.company.com:389 |
+| ldap.authentication.java.naming.factory.initial | The LDAP context factory to use | com.sun.jndi.ldap.LdapCtxFactory |
+| ldap.authentication.java.naming.provider.url | The URL to connect to the LDAP server | `ldap://domaincontroller.company.com:389` |
 | ldap.authentication.java.naming.read.timeout | equests timeout, in miliseconds, use 0 for none (default) | 0 |
 | ldap.authentication.java.naming.referral | Referrals processing, can be: ignore, follow, throw | follow |
 | ldap.authentication.java.naming.security.authentication | Custom Socket Factory. ldap.java.naming.ldap.factory.socket=org.alfresco.repo.security.authentication.ldap.AlfrescoLdapSSLSocketFactory The authentication mechanism to use for password validation | simple |
-| ldap.authentication.userNameFormat | How to map the user id entered by the user to taht passed through to LDAP In Active Directory, this can either be the user principal name (UPN) or DN. UPNs are in the form <sAMAccountName>@domain and are held in the userPrincipalName attribute of a user| %s@domain | 
+| ldap.authentication.userNameFormat | How to map the user id entered by the user to taht passed through to LDAP In Active Directory, this can either be the user principal name (UPN) or DN. UPNs are in the form `<sAMAccountName>@domain` and are held in the userPrincipalName attribute of a user| %s@domain |
 | ldap.pooling.com.sun.jndi.ldap.connect.pool.authentication | A list of space-separated authentication types of connections that may be pooled. Valid types are "none", "simple", and "DIGEST-MD5". | none simple |
 | ldap.pooling.com.sun.jndi.ldap.connect.pool.debug | A string that indicates the level of debug output to produce. Valid values are "fine" (trace connection creation and removal) and "all" (all debugging information). | |
 | ldap.pooling.com.sun.jndi.ldap.connect.pool.initsize | The string representation of an integer that represents the number of connections per connection identity to create when initially creating a connection for the identity. | 1 |
@@ -1012,25 +1012,25 @@ Note that it is by specifying multiple port numbers that one can create a pool o
 | ldap.pooling.com.sun.jndi.ldap.connect.pool.timeout | The string representation of an integer that represents the number of milliseconds that an idle connection may remain in the pool without being closed and removed from the pool. Empty value means no timeout, connection stays in pool forever. Bad connections are automatically detected and removed from the pool by the LDAP provider | |
 | ldap.pooling.com.sun.jndi.ldap.connect.timeout | The string representation of an integer that represents the number of milliseconds to specify how long to wait for a pooled connection. If you omit this property, the application will wait indefinitely. | |
 | ldap.synchronization.active | This flag enables use of this LDAP subsystem for user and group synchronization. It may be that this subsytem should only be used for authentication, in which case this flag should be set to false. | true |
-| ldap.synchronization.com.sun.jndi.ldap.connect.pool | LDAPS truststore configuration properties ldap.authentication.truststore.path= ldap.authentication.truststore.passphrase= ldap.authentication.truststore.type= Set to 'ssl' to enable truststore configuration via subsystem's properties ldap.authentication.java.naming.security.protocol=ssl Enable/disable connection pooling for synchronization For more information about connection pooling please refer to http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/pool.html. For more information about pool configuration please refer to http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/config.html. | true |
+| ldap.synchronization.com.sun.jndi.ldap.connect.pool | LDAPS truststore configuration properties ldap.authentication.truststore.path= ldap.authentication.truststore.passphrase= ldap.authentication.truststore.type= Set to 'ssl' to enable truststore configuration via subsystem's properties ldap.authentication.java.naming.security.protocol=ssl Enable/disable connection pooling for synchronization For more information about connection pooling please refer to [http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/pool.html](http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/pool.html). For more information about pool configuration please refer to [http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/config.html](http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/config.html). | true |
 ldap.synchronization.defaultHomeFolderProvider | The default home folder provider to use for people created via LDAP import | largeHomeFolderProvider |
 | ldap.synchronization.enableProgressEstimation | If true progress estimation is enabled. When enabled, the user query has to be run twice in order to count entries. | true |
 | ldap.synchronization.groupDifferentialQuery | The query to select objects that represent the groups to import that have changed since a certain time. | (&(objectclass\=group)(!(whenChanged<\={0}))) |
 | ldap.synchronization.groupDisplayNameAttributeName | The attribute on LDAP group objects to map to the authority display name property in Alfresco | displayName |
 | ldap.synchronization.groupIdAttributeName | The attribute on LDAP group objects to map to the authority name property in Alfresco | cn |
 | ldap.synchronization.groupMemberAttributeName | The attribute in LDAP on group objects that defines the DN for its members | member |
-| ldap.synchronization.groupQuery | The query to select all objects that represent the groups to import. | (objectclass\=group) | 
-| ldap.synchronization.groupSearchBase | The group search base restricts the LDAP group query to a sub section of tree on the LDAP server. | ou\=Security Groups,ou\=Alfresco,dc=domain | 
+| ldap.synchronization.groupQuery | The query to select all objects that represent the groups to import. | (objectclass\=group) |
+| ldap.synchronization.groupSearchBase | The group search base restricts the LDAP group query to a sub section of tree on the LDAP server. | ou\=Security Groups,ou\=Alfresco,dc=domain |
 | ldap.synchronization.groupType | The group type in LDAP | group |
 | ldap.synchronization.java.naming.security.authentication | The authentication mechanism to use for synchronization | simple |
 | ldap.synchronization.java.naming.security.credentials | The password for the default principal (only used for LDAP sync) | secret |
-| ldap.synchronization.java.naming.security.principal | The default principal to bind with (only used for LDAP sync). This should be a UPN or DN | alfresco@domain | 
+| ldap.synchronization.java.naming.security.principal | The default principal to bind with (only used for LDAP sync). This should be a UPN or DN | alfresco@domain |
 | ldap.synchronization.modifyTimestampAttributeName | The name of the operational attribute recording the last update time for a group or user. | whenChanged |
-| ldap.synchronization.personDifferentialQuery | The query to select objects that represent the users to import that have changed since a certain time. | (&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512)(!(whenChanged<\={0}))) |
-| ldap.synchronization.personQuery | The query to select all objects that represent the users to import. | (&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512)) | 
+| ldap.synchronization.personDifferentialQuery | The query to select objects that represent the users to import that have changed since a certain time. | `(&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512)(!(whenChanged<\={0})))` |
+| ldap.synchronization.personQuery | The query to select all objects that represent the users to import. | `(&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512))` |
 | ldap.synchronization.personType | The person type in LDAP | user |
 | ldap.synchronization.queryBatchSize | If positive, this property indicates that RFC 2696 paged results should be used to split query results into batches of the specified size. This overcomes any size limits imposed by the LDAP server. | 1000 |
-| ldap.synchronization.timestampFormat | The timestamp format. Unfortunately, this varies between directory servers. | yyyyMMddHHmmss'.0Z' |
+| ldap.synchronization.timestampFormat | The timestamp format. Unfortunately, this varies between directory servers. | `yyyyMMddHHmmss'.0Z'` |
 | ldap.synchronization.userAccountStatusInterpreter | The Account Status Interpreter bean name | ldapadUserAccountStatusInterpreter |
 | ldap.synchronization.userAccountStatusProperty | LDAP-AD property name for user enabled/disabled status | userAccountControl |
 | ldap.synchronization.userEmailAttributeName | The attribute on person objects in LDAP to map to the email property in Alfresco
@@ -1049,8 +1049,8 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | localTransform.core-aio.startupRetryPeriodSeconds | When a local transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | `http://localhost:8090/` |
 | location.license.embedded | Spring resource location of embedded license files | /WEB-INF/alfresco/license/*.lic |
-| location.license.external | Spring resource location of external license files | file://${dir.license.external}/*.lic |
-| location.license.shared | Spring resource location of license files on shared classpath | classpath*:/alfresco/extension/license/*.lic |
+| location.license.external | Spring resource location of external license files | `file://${dir.license.external}/*.lic` |
+| location.license.shared | Spring resource location of license files on shared classpath | `classpath*:/alfresco/extension/license/*.lic` |
 | lucene.commit.lock.timeout | | 100000 |
 | lucene.defaultAnalyserResourceBundleName | | alfresco/model/dataTypeAnalyzers |
 | lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. [http://issues.alfresco.com/browse/AR-1280](http://issues.alfresco.com/browse/AR-1280): Setting this high is the workaround as of 1.4.3. | 1000000 |
@@ -1092,7 +1092,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query | 10000 |
 | lucene.write.lock.timeout | Index locks (mostly deprecated and will be tidied up with the next lucene upgrade) | 10000 |
 | mail.encoding | | UTF-8 |
-| mail.from.default | Default email address used for FROM if no other suitable value can found. | alfresco@demo.alfresco.org | 
+| mail.from.default | Default email address used for FROM if no other suitable value can found. | `alfresco@demo.alfresco.org` |
 | mail.from.enabled | Can the FROM field be specified as a parameter or current user or does it  always need to be the default value - to agree with the username/password? | true |
 | mail.host | Outbound SMTP properties use these properties to configure the out-bound SMTP server. | smtp.example.com |
 | mail.password | | |
@@ -1106,21 +1106,21 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | mail.smtp.starttls.enable | Additional Java Mail properties for SMTP protocol | false |
 | mail.smtp.timeout | Additional Java Mail properties for SMTP protocol | 30000 |
 | mail.testmessage.send | use these properties to send test message during start of subsystem | false |
-| mail.testmessage.subject | use these properties to send test message during start of subsystem | Outbound SMTP | 
-| mail.testmessage.text | use these properties to send test message during start of subsystem | The Outbound SMTP email subsystem is working. | 
+| mail.testmessage.subject | use these properties to send test message during start of subsystem | Outbound SMTP |
+| mail.testmessage.text | use these properties to send test message during start of subsystem | The Outbound SMTP email subsystem is working. |
 | mail.testmessage.to | use these properties to send test message during start of subsystem | |
 | mail.transports.maxActive | transport pool settings | 1 |
 | mail.transports.maxIdle | transport pool settings | 8 |
 | mail.tranports.maxWait | transport pool settings | 30000 |
 | mail.tranports.minEvictableIdleTime | transport pool settings | 30000 |
 | mail.tranports.timeBetweenEvictionRuns | transport pool settings | 30000 |
-| mail.username | | anonymous | 
+| mail.username | | anonymous |
 | mail.validate.addresses | validate email addresses | true |
 | messaging.broker.connections.max | | 8 |
 | messaging.broker.connections.maxActiveSessionsPerConnection | | 1000 |
 | messaging.broker.password | | |
 | messaging.broker.ssl | | false |
-| messaging.broker.url | | failover:(tcp://localhost:61616)?timeout=3000&jms.useCompression=true |
+| messaging.broker.url | | `failover:(tcp://localhost:61616)?timeout=3000&jms.useCompression=true` |
 | messaging.broker.username | | |
 | messaging.camel.context.id | | alfrescoCamelContext |
 | messaging.subsystem.autoStart | Messaging subsystem | true |
@@ -1241,10 +1241,10 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | smart.folders.config.vanilla.processor.classpath | Vanilla JSON templates javascript processor classpath. A java script processor used to convert JSON templates to internal smart folder definitions. | /org/alfresco/repo/virtual/node/vanilla.js |
 | smart.folders.enabled | Smart Folders Config Properties | false |
 | smart.reference.classpath.hash | Smart reference config | ${smart.folders.config.vanilla.processor.classpath}->1,${smart.folders.config.system.templates.classpath}->2 |
-| solr.backup.alfresco.cronExpression | | 0 0 2 * * ? |
+| solr.backup.alfresco.cronExpression | | `0 0 2 * * ?` |
 | solr.backup.alfresco.numberToKeep | | 3 |
 | solr.backup.alfresco.remoteBackupLocation | | ${dir.root}/solr6Backup/alfresco |
-| solr.backup.archive.cronExpression | | 0 0 4 * * ? |
+| solr.backup.archive.cronExpression | | `0 0 4 * * ?` |
 | solr.backup.archive.numberToKeep | | 3 |
 | solr.backup.archive.remoteBackupLocation | | ${dir.root}/solr6Backup/archive |
 | solr.baseUrl | /solr |
@@ -1257,7 +1257,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | solr.port | SOLR port | 8083 |
 | solr.port.ssl | SOLR SSL port | 8446 |
 | solr.query.cmis.queryConsistency | | TRANSACTIONAL_IF_POSSIBLE |
-| solr.query.fts.queryConsistency | | TRANSACTIONAL_IF_POSSIBLE | 
+| solr.query.fts.queryConsistency | | TRANSACTIONAL_IF_POSSIBLE |
 | solr.query.hybrid.enabled | | false |
 | solr.query.includeGroupsForRoleAdmin | | false |
 | solr.query.maximumResultsFromUnlimitedQuery | | ${system.acl.maxPermissionChecks} |
@@ -1308,7 +1308,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | solr_facets.inheritanceHierarchy | Solr Facets Config Properties | default,custom |
 | solr_facets.root | Solr Facets Config Properties | ${solr_facets.root.path}/${spaces.solr_facets.root.childname} |
 | solr_facets.root.path | Solr Facets Config Properties | /app:company_home/app:dictionary |
-| spaces.archive.store | Spaces Archive Configuration | archive://SpacesStore |
+| spaces.archive.store | Spaces Archive Configuration | `archive://SpacesStore` |
 | spaces.company_home.childname | Spaces Configuration | app:company_home |
 | spaces.content_forms.childname | Spaces Configuration | app:forms |
 | spaces.dictionary.childname | Spaces Configuration | app:dictionary |
@@ -1334,7 +1334,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | spaces.smartdownloads.childname | Spaces Configuration | app:smart_downloads |
 | spaces.smartfolders.childname | Spaces Configuration | app:smart_folders |
 | spaces.solr_facets.root.childname | Spaces Configuration |srft:facets |
-| spaces.store | Spaces Configuration | workspace://SpacesStore |
+| spaces.store | Spaces Configuration | `workspace://SpacesStore` |
 | spaces.system.childname | Spaces Configuration | sys:system |
 | spaces.templates.childname | Spaces Configuration | app:space_templates |
 | spaces.templates.content.childname | Spaces Configuration | app:content_templates |
@@ -1370,10 +1370,10 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | synchronization.autoCreatePeopleOnLogin | Should we auto create a missing person on log in? | true |
 | synchronization.externalUserControl | external setting (LDAP systems) - whether users can be enabled; if false then users have to be explicitly disabled in Alfresco | false |
 | synchronization.externalUserControlSubsystemName | Subsystem that will handle the external user control | |
-| synchronization.import.cron | The cron expression defining when imports should take place | 0 0 0 * * ? |
+| synchronization.import.cron | The cron expression defining when imports should take place | `0 0 0 * * ?` |
 | synchronization.loggingInterval | The number of entries to process before logging progress | 100 |
 | synchronization.syncDelete | For large LDAP directories the delete query is expensive and time consuming, needing to read the entire LDAP directory. | true |
-| synchronization.synchronizeChangesOnly | This properties file is used to configure user registry syncronisation (e.g. LDAP) Should the scheduled sync job use differential or full queries on the user registries to determine the set of local users to be updated? When true, each user registry is only queried for those users and groups modified since the most recent modification date of all the objects last queried from that same source. When <code>false</code> then <i>all</i> users and groups are queried from the user registry and updated locally. Nevertheless, a separate query will be run by the scheduled sync job to determine deletions. | true |
+| synchronization.synchronizeChangesOnly | This properties file is used to configure user registry syncronisation (e.g. LDAP) Should the scheduled sync job use differential or full queries on the user registries to determine the set of local users to be updated? When **true**, each user registry is only queried for those users and groups modified since the most recent modification date of all the objects last queried from that same source. When **false** then *all* users and groups are queried from the user registry and updated locally. Nevertheless, a separate query will be run by the scheduled sync job to determine deletions. | true |
 |synchronization.syncOnStartup | Should we trigger a differential sync on startup? | true |
 |synchronization.syncWhenMissingPeopleLogIn | Should we trigger a differential sync when missing people log in? | ture |
 | synchronization.workerThreads | The number of threads to use when doing a batch (scheduled or startup) sync | 1 |
@@ -1457,7 +1457,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | system.reset-password.endTimer | Reset password workflow will expire in an hour | PT1H |
 | system.reset-password.sendEmailAsynchronously | | true |
 | system.serverMode | The server mode. Set value in alfresco-global.properties (UNKNOWN, TEST, BACKUP, PRODUCTION) | UNKNOWN |
-| system.store | System Configuration | system://system |
+| system.store | System Configuration | `system://system` |
 | system.syncset_definition_container.childname | Folder for storing syncset definitions | sys:syncset_definitions |
 | system.system_container.childname | Folders for storing people | sys:system |
 | system.thumbnail.definition.default.maxPages | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
@@ -1509,12 +1509,18 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | ticket.cleanup.cronExpression | | `0 0 * * * ?` |
 | tika.startupRetryPeriodSeconds | When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | tika.url | Legacy tika url to T-Engines to service transform requests via http. Disabled by default. | |
+| trashcan-cleaner.cron | | `* * * * * ? 2099` |
+| trashcan-cleaner.deleteBatchCount | | 1000 |
+| trashcan-cleaner.keepPeriod | | P28D |
+| trashcan.MaxSize | Max size of view trashcan files | 1000 |
 | transferservice.receiver.enabled | Transfer Service | false |
 | transferservice.receiver.lockRefreshTime | How long to wait in mS before refreshing a transfer lock - detects shutdown servers. Default 1 minute. | 60000 |
 | transferservice.receiver.lockRetryCount | How many times to attempt retry the transfer lock | 3 |
 | transferservice.receiver.lockRetryWait | How long to wait, in mS, before retrying the transfer lock | 100 |
 | transferservice.receiver.lockTimeOut | How long to wait, in mS, since the last contact with from the client before timing out a transfer. Needs to be long enough to cope with network delays and "thinking time" for both source and destination. Default 5 minutes. | 300000 |
 | transferservice.receiver.stagingDir | Transfer Service | ${java.io.tmpdir}/alfresco-transfer-staging |
+| transformer.debug.entries | Number of entries to show in debug output | 0 |
+| transformer.log.entries | Number of entries to show in the log | 50 |
 | transform.misc.startupRetryPeriodSeconds | When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. | |
 | transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `6 30 0/1 * * ?` |
@@ -1528,10 +1534,6 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
 | transformer.strict.mimetype.check | Check that the declared mimetype (of the Node) is the same as the derived mimetype of the content (via Tika) before a transformation takes place. Only files in the repository (not intermediate files in a transformer pipeline) are checked. This property provides a trade off between a security check and a relatively expensive (Tika) operation. There are a few issues with the Tika mimetype detection. So that transformations still take place where the detected mimetype is not the same as the declared mimetype, another property (transformer.strict.mimetype.check.whitelist.mimetypes) contains pairs of declared and detected mimetypes that should be allowed. This parameter value is a sequence of ; separated pairs. The declared and derived mimetypes are also ; separated. | true |
 | transformer.strict.mimetype.check.whitelist.mimetypes | A white list of declared and detected mimetypes, that don't match, but should still be transformed. | application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
-| trashcan-cleaner.cron | | `* * * * * ? 2099` |
-| trashcan-cleaner.deleteBatchCount | | 1000 |
-| trashcan-cleaner.keepPeriod | | P28D |
-| trashcan.MaxSize | Max size of view trashcan files | 1000 |
 | trialUid | | |
 | trialUidPattern | | id\d+ |
 | urlshortening.bitly.api.key | URL Shortening Properties | R_ca15c6c89e9b25ccd170bafd209a0d4f |
@@ -1539,11 +1541,11 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | urlshortening.bitly.username | URL Shortening Properties | brianalfresco |
 | user.name.caseSensitive | Are user names case sensitive? | false |
 | version.schema | Schema number | 14001 |
-| version.store.deprecated.lightWeightVersionStore | ADM VersionStore Configuration | workspace://lightWeightVersionStore |
+| version.store.deprecated.lightWeightVersionStore | ADM VersionStore Configuration | `workspace://lightWeightVersionStore` |
 | version.store.enableAutoVersionOnUpdateProps | ADM VersionStore Configuration | false |
 | version.store.enableAutoVersioning | ADM VersionStore Configuration | true |
 | version.store.initialVersion | ADM VersionStore Configuration | true |
-| version.store.version2Store | ADM VersionStore Configuration | workspace://version2Store |
+| version.store.version2Store | ADM VersionStore Configuration | `workspace://version2Store` |
 | version.store.versionComparatorClass | Optional `Comparator<Version>` class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster. | |
 | webscripts.encryptTempFiles | Webscripts config | false |
 | webscripts.memoryThreshold | Webscripts config (4mb) | 4194304 |
