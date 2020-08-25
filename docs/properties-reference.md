@@ -718,15 +718,15 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.Archive.extensions.*.txt.priority | | 50 |
 | content.transformer.Archive.extensions.bin.txt.supported | | false |
 | content.transformer.BinaryPassThrough.priority | | 20 |
-| content.transformer.complex.Any.Image.pipeline | This transformer was called transformer.complex.OOXML.Image, but now the first stage is any transformer to allow failover when there is no embedded thumbnail. | `*|jpg|ImageMagick` |
+| content.transformer.complex.Any.Image.pipeline | This transformer was called transformer.complex.OOXML.Image, but now the first stage is any transformer to allow failover when there is no embedded thumbnail. | *\|jpg\|ImageMagick |
 | content.transformer.complex.Any.Image.priority | | 400 |
-| content.transformer.complex.ArchiveToPdf.pipeline | Archive Zip to PDF | `Archive|txt|*` |
+| content.transformer.complex.ArchiveToPdf.pipeline | Archive Zip to PDF | Archive\|txt\|* |
 | content.transformer.complex.iWorks.Image.extensions.key.png.priority | | 50 |
 | content.transformer.complex.iWorks.Image.extensions.numbers.png.priority | | 50 |
 | content.transformer.complex.iWorks.Image.extensions.pages.png.priority | | 50 |
-| content.transformer.complex.iWorks.Image.pipeline | | `iWorksQuicklooks|jpg|ImageMagick` |
+| content.transformer.complex.iWorks.Image.pipeline | | iWorksQuicklooks\|jpg\|ImageMagick |
 | content.transformer.complex.iWorks.Image.priority | | 400 |
-| content.transformer.complex.JodConverter.Image.pipeline | | `JodConverter.2Pdf|pdf|complex.PDF.Image` |
+| content.transformer.complex.JodConverter.Image.pipeline | | JodConverter.2Pdf\|pdf\|complex.PDF.Image |
 | content.transformer.complex.JodConverter.Image.priority | | 250 |
 | content.transformer.complex.JodConverter.PdfBox.extensions.doc.txt.supported | | false |
 | content.transformer.complex.JodConverter.PdfBox.extensions.docm.txt.supported | | false |
@@ -751,10 +751,10 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.complex.JodConverter.PdfBox.extensions.xlsx.txt.supported | | false |
 | content.transformer.complex.JodConverter.PdfBox.extensions.xltm.txt.supported | | false |
 | content.transformer.complex.JodConverter.PdfBox.extensions.xltx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.pipeline | | `JodConverter.2Pdf|pdf|PdfBox` |
+| content.transformer.complex.JodConverter.PdfBox.pipeline | | JodConverter.2Pdf\|pdf\|PdfBox |
 | content.transformer.complex.JodConverter.PdfBox.priority | | 150 |
 | content.transformer.complex.OutlookMsg2Image.extensions.msg.png.priority | | 395 |
-| content.transformer.complex.OutlookMsg2Image.pipeline | | `OutlookMsg|txt|*` |
+| content.transformer.complex.OutlookMsg2Image.pipeline | | OutlookMsg\|txt\|* |
 | content.transformer.complex.OutlookMsg2Image.priority | | 450 |
 | content.transformer.complex.PDF.Image.extensions.ai.bin.supported | | true |
 | content.transformer.complex.PDF.Image.extensions.ai.bmp.supported | | true |
@@ -801,14 +801,14 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.complex.PDF.Image.extensions.pdf.xbm.supported | | true |
 | content.transformer.complex.PDF.Image.extensions.pdf.xpm.supported | | true |
 | content.transformer.complex.PDF.Image.extensions.pdf.xwd.supported | | true |
-| content.transformer.complex.PDF.Image.failover | | `alfresco-pdf-renderer|alfresco-pdf-renderer.ImageMagick` |
+| content.transformer.complex.PDF.Image.failover | | alfresco-pdf-renderer\|alfresco-pdf-renderer.ImageMagick |
 | content.transformer.complex.PDF.Image.priority | | 60 |
-| content.transformer.complex.Rfc822ToPdf.pipeline | EML to PDF | `RFC822|txt|*` |
+| content.transformer.complex.Rfc822ToPdf.pipeline | EML to PDF | RFC822\|txt\|* |
 | content.transformer.complex.Text.Image.extensions.csv.*.supported | | true |
 | content.transformer.complex.Text.Image.extensions.dita.*.supported | | true |
 | content.transformer.complex.Text.Image.extensions.txt.*.supported | | true |
 | content.transformer.complex.Text.Image.extensions.xml.*.supported | | true |
-| content.transformer.complex.Text.Image.pipeline | | `*|pdf|complex.PDF.Image` |
+| content.transformer.complex.Text.Image.pipeline | | *\|pdf\|complex.PDF.Image |
 | content.transformer.complex.Text.Image.priority | | 350 |
 | content.transformer.default.priority | | 100 |
 | content.transformer.default.thresholdCount | | 3 |
@@ -831,7 +831,7 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.iWorksQuicklooks.extensions.pages.pdf.priority | | 50 |
 | content.transformer.JodConverter.2Pdf.available | This transformer exists because OpenOffice and LibreOffice have a problem going directly from HTML to PDF. Going via ODT appears a much better option. For example \<sub\> tags hang the soffice process. See ALF-14035 | false |
 | content.transformer.JodConverter.2Pdf.extensions.*.pdf.supported | | true |
-| content.transformer.JodConverter.2Pdf.failover | | `JodConverter|JodConverter.Html2Pdf` |
+| content.transformer.JodConverter.2Pdf.failover | | JodConverter\|JodConverter.Html2Pdf |
 | content.transformer.JodConverter.2Pdf.priority | | 150 |
 | content.transformer.JodConverter.extensions.*.docm.supported | | false |
 | content.transformer.JodConverter.extensions.*.docx.supported | | false |
@@ -881,7 +881,7 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.JodConverter.extensions.xltx.pdf.maxSourceSizeKBytes | | 1536 |
 | content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.supported | | true |
 | content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.priority | | 50 |
-| content.transformer.JodConverter.Html2Pdf.pipeline | | `JodConverter|odt|JodConverter` |
+| content.transformer.JodConverter.Html2Pdf.pipeline | | JodConverter\|odt\|JodConverter |
 | content.transformer.JodConverter.priority | | 110 |
 | content.transformer.Office.priority | | 130 |
 | content.transformer.OOXML.priority | | 130 |
