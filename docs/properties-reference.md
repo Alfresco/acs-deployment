@@ -695,9 +695,9 @@ The table below shows the full list of properties (exluding module specific prop
 | cifs.netBIOSSMB.sessionPort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 139 |
 | cifs.pseudoFiles.enabled | Big Switch, are the Desktop Actions and URL shortcuts shown for CIFS ? | true |
 | cifs.pseudoFiles.explorerURL.enabled | CIFS URL for alfresco explorer | false |
-| cifs.pseudoFiles.explorerURL.fileName | CIFS URL for alfresco explorer | __Alfresco.url |
+| cifs.pseudoFiles.explorerURL.fileName | CIFS URL for alfresco explorer | `__Alfresco.url` |
 | cifs.pseudoFiles.shareURL.enabled | Cifs URL for alfresco share | true |
-| cifs.pseudoFiles.shareURL.fileName | Cifs URL for alfresco share | __Share.url |
+| cifs.pseudoFiles.shareURL.fileName | Cifs URL for alfresco share | `__Share.url` |
 | cifs.sessionDebug | CIFS session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels :-    NETBIOS, STATE, RXDATA, TXDATA, DUMPDATA, NEGOTIATE, TREE, SEARCH, INFO, FILE, FILEIO, TRANSACT    ECHO, ERROR, IPC, LOCK, PKTTYPE, DCERPC, STATECACHE, TIMING, NOTIFY, STREAMS, SOCKET, PKTPOOL    PKTSTATS, THREADPOOL, BENCHMARK | |
 | cifs.serverName | CIFS Server Configuration | ${localname}A |
 | cifs.sessionTimeout | Session timeout, in seconds. Defaults to 15 minutes, to match the default Windows client setting. If no I/O is received within that time the session is closed by the server | 900 |
