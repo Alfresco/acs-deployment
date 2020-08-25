@@ -9,10 +9,12 @@ services:
   - docker
 
 stages:
-  - name: 6.1.1.3_support_SP_2.N_values.yaml
-  - name: 6.2.0.2_support_SP_3.N_values.yaml
-  - name: 6.2.1_support_SP_4.N_values.yaml
   - name: 6.2.2_support_SP_4.N_values.yaml
+  - name: 6.2.1_support_SP_4.N_values.yaml
+  - name: 6.2.0.2_support_SP_3.N_values.yaml
+  - name: 6.1.1.3_support_SP_2.N_values.yaml
+  - name: 6.1.0.9_support_HF_1.1_values.yaml
+  - name: 6.1.0.5_support_HF_1.0_values.yaml
 
 import:
   - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master
@@ -347,15 +349,21 @@ jobs:
     - name: Deploy Latest Chart and Run Postman Checks
       stage: test
       <<: *helm_deploy
-    - stage: 6.1.1.3_support_SP_2.N_values.yaml
-      name: 6.1.1.3_support_SP_2.N_values.yaml
-      <<: *helm_deploy
-    - stage: 6.2.0.2_support_SP_3.N_values.yaml
-      name: 6.2.0.2_support_SP_3.N_values.yaml
+    - stage: 6.2.2_support_SP_4.N_values.yaml
+      name: 6.2.2_support_SP_4.N_values.yaml
       <<: *helm_deploy
     - stage: 6.2.1_support_SP_4.N_values.yaml
       name: 6.2.1_support_SP_4.N_values.yaml
       <<: *helm_deploy
-    - stage: 6.2.2_support_SP_4.N_values.yaml
-      name: 6.2.2_support_SP_4.N_values.yaml
+    - stage: 6.2.0.2_support_SP_3.N_values.yaml
+      name: 6.2.0.2_support_SP_3.N_values.yaml
+      <<: *helm_deploy
+    - stage: 6.1.1.3_support_SP_2.N_values.yaml
+      name: 6.1.1.3_support_SP_2.N_values.yaml
+      <<: *helm_deploy
+    - stage: 6.1.0.9_support_HF_1.1_values.yaml
+      name: 6.1.0.9_support_HF_1.1_values.yaml
+      <<: *helm_deploy
+    - stage: 6.1.0.5_support_HF_1.0_values.yaml
+      name: 6.1.0.5_support_HF_1.0_values.yaml
       <<: *helm_deploy

@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.1.1.3"
+    tag: "6.1.0.9"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -289,7 +289,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.5.3"
+    tag: "0.5.2"
     pullPolicy: Always
     internalPort: 8099
   initContainer:
@@ -326,7 +326,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.1.1.1"
+    tag: "6.1.0"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -461,7 +461,7 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.4.0"
+  imageTag: "10.10.0"
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
@@ -484,7 +484,7 @@ postgresql-syncservice:
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
-  imageTag: "11.4.0"
+  imageTag: "10.10.0"
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-sync-services/database-data"
