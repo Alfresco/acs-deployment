@@ -714,7 +714,7 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.alfresco-pdf-renderer.extensions.ai.png.priority | | 50 |
 | content.transformer.alfresco-pdf-renderer.extensions.pdf.png.priority | | 50 |
 | content.transformer.alfresco-pdf-renderer.ImageMagick.available | | false |
-| content.transformer.alfresco-pdf-renderer.ImageMagick.pipeline | | `alfresco-pdf-renderer|png|ImageMagick` |
+| content.transformer.alfresco-pdf-renderer.ImageMagick.pipeline | | alfresco-pdf-renderer\|png\|ImageMagick |
 | content.transformer.Archive.extensions.*.txt.priority | | 50 |
 | content.transformer.Archive.extensions.bin.txt.supported | | false |
 | content.transformer.BinaryPassThrough.priority | | 20 |
