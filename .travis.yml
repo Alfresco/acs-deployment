@@ -259,6 +259,7 @@ jobs:
         helm lint helm/alfresco-content-services/charts/alfresco-sync-service
         helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
     - name: Deploy Docker Compose and Run Postman Checks
+      if: env(GIT_DIFF) =~ /.*docker-compose/
       stage: test
       script: |
         cd docker-compose
@@ -333,7 +334,7 @@ jobs:
       stage: test
       <<: *helm_deploy
     - name: 6.1.1.3_support_SP_2.N_values.yaml
-      # if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
+      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       <<: *helm_deploy
     - name: 6.2.0.2_support_SP_3.N_values.yaml
       if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
