@@ -273,6 +273,12 @@ jobs:
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       script: |
+        deploy=false
+        if [[ "${GIT_DIFF}" == *docker-compose/* ]]
+        then
+          deploy=true
+        fi
+        if $deploy; then
         cd docker-compose
         docker info
         docker-compose --version
@@ -336,6 +342,7 @@ jobs:
         done
         cd ../test/postman/docker-compose
         docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
+        fi
       after_success: |
         echo "nothing to cleanup"
       after_failure: |
