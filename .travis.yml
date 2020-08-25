@@ -8,11 +8,6 @@ dist: xenial
 services:
   - docker
 
-import:
-  - Alfresco/alfresco-process-tools:.travis.helm.yml@master
-  - Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
-  - Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
-
 stages:
   - test
   - name: 6.1.1.3_support_SP_2.N_values.yaml
@@ -20,6 +15,14 @@ stages:
   - name: 6.2.1_support_SP_4.N_values.yaml
   - name: 6.2.2_support_SP_4.N_values.yaml
   - publish
+
+import:
+  - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master
+    mode: merge
+  - source: Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
+    mode: merge
+  - source: Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
+    mode: merge
 
 env:
   global:
@@ -350,4 +353,3 @@ jobs:
       <<: *helm_deploy
     - stage: 6.2.2_support_SP_4.N_values.yaml
       <<: *helm_deploy
-    - stage: publish
