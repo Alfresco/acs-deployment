@@ -16,11 +16,8 @@ stages:
 
 import:
   - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master
-    mode: deep_merge_append
   - source: Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
-    mode: deep_merge_append
   - source: Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
-    mode: deep_merge_append
 
 env:
   global:
