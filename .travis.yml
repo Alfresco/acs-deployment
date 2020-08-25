@@ -329,6 +329,7 @@ jobs:
       after_failure: |
         docker-compose logs --no-color
     - name: Deploy Latest Chart and Run Postman Checks
+      if: env(GIT_DIFF) =~ /.*env(TRAVIS_JOB_NAME)/
       stage: test
       <<: *helm_deploy
     - name: 6.1.1.3_support_SP_2.N_values.yaml
