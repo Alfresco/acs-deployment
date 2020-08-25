@@ -15,6 +15,10 @@ import:
 
 stages:
   - test
+  - name: 6.1.1.3_support_SP_2.N_values.yaml
+  - name: 6.2.0.2_support_SP_3.N_values.yaml
+  - name: 6.2.1_support_SP_4.N_values.yaml
+  - name: 6.2.2_support_SP_4.N_values.yaml
   - publish
 
 env:
@@ -338,11 +342,12 @@ jobs:
     - name: Deploy Latest Chart and Run Postman Checks
       stage: test
       <<: *helm_deploy
-    - name: 6.1.1.3_support_SP_2.N_values.yaml
+    - stage: 6.1.1.3_support_SP_2.N_values.yaml
       <<: *helm_deploy
-    - name: 6.2.0.2_support_SP_3.N_values.yaml
+    - stage: 6.2.0.2_support_SP_3.N_values.yaml
       <<: *helm_deploy
-    - name: 6.2.1_support_SP_4.N_values.yaml
+    - stage: 6.2.1_support_SP_4.N_values.yaml
       <<: *helm_deploy
-    - name: 6.2.2_support_SP_4.N_values.yaml
+    - stage: 6.2.2_support_SP_4.N_values.yaml
       <<: *helm_deploy
+    - stage: publish
