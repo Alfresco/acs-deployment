@@ -1508,17 +1508,17 @@ The table below shows the full list of properties (exluding module specific prop
 | download.maxContentSize | Download Service Limits, in bytes | 2152852358 |
 | email.handler.folder.overwriteDuplicates | Should duplicate messages to a folder overwrite each other or be named with a (number) | true |
 | email.inbound.emailContributorsAuthority | The group authority name that users must be a member of in order to add email. Normally EMAIL_CONTRIBUTORS but may be changed to EVERYONE | EMAIL_CONTRIBUTORS |
-| email.inbound.enabled | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | true |
-| email.inbound.unknownUser | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | anonymous |
-| email.server.allowed.senders | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | .* |
+| email.inbound.enabled | Determines whether inbound email is enabled | true |
+| email.inbound.unknownUser | User to use if there is no match to a person in alfresco | anonymous |
+| email.server.allowed.senders | | .* |
 | email.server.auth.enabled | Is the user required to authenticate to use the smtp server? | false |
-| email.server.blocked.senders | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | |
-| email.server.connections.max | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | 3 |
-| email.server.domain | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | alfresco.com |
-| email.server.enabled | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco | false |
+| email.server.blocked.senders | | |
+| email.server.connections.max | | 3 |
+| email.server.domain | | alfresco.com |
+| email.server.enabled | Determines whether the email server is enabled | false |
 | email.server.enableTLS | Set this to false to turn off TLS, The server will not allow TLS. | true |
 | email.server.hideTLS | Set this to true to accept TLS but not announce it when the EHLO is called. | false |
-| email.server.port | Alfresco Email Service and Email Server - See the subsystem configuration for descriptions of the properties User to use if there is no match to a person in alfresco  | 25 |
+| email.server.port | | 25 |
 | email.server.requireTLS | Set this to true to require TLS | false |
 | encryption.bootstrap.reencrypt | Should encryptable properties be re-encrypted with new encryption keys on botstrap? | false |
 | encryption.cipherAlgorithm | General encryption parameters | AES/CBC/PKCS5Padding |
@@ -1612,13 +1612,13 @@ The table below shows the full list of properties (exluding module specific prop
 | imap.mail.from.default | | alfresco@demo.alfresco.org |
 | imap.mail.to.default | | alfresco@demo.alfresco.org |
 | imap.server.attachments.extraction.enabled | IMAP property | true |
-| imap.server.enabled | IMAP property | false |
+| imap.server.enabled | | false |
 | imap.server.folder.cache.size | | 10000 |
 | imap.server.host | | 0.0.0.0 |
-| imap.server.imap.enabled | IMAP Port | true |
-| imap.server.imaps.enabled | IMAPS Port Keystore used for IMAPS is defined by the following Java system properties. javax.net.ssl.keyStore=mySrvKeystore  javax.net.ssl keyStorePassword=123456 | false |
-| imap.server.imaps.port | IMAPS Port Keystore used for IMAPS is defined by the following Java system properties. javax.net.ssl.keyStore=mySrvKeystore  javax.net.ssl keyStorePassword=123456 | 993 |
-| imap.server.port | IMAP property | 143 |
+| imap.server.imap.enabled | | true |
+| imap.server.imaps.enabled | | false |
+| imap.server.imaps.port | | 993 |
+| imap.server.port | | 143 |
 | imap.server.shuffle.move.delete.delay | | 10000 |
 | img.coders | External executable locations | ${img.root}/modules/coders |
 | img.config | External executable locations | ${img.root}/config |
@@ -1634,13 +1634,13 @@ The table below shows the full list of properties (exluding module specific prop
 | jodconverter.connectTimeout | | 25000 |
 | jodconverter.enabled | External executable locations This property determines whether the jodConverter services are enabled. Allowed values are 'true' or 'false'. | true |
 | jodconverter.maxTasksPerProcess | The maximum number of OOo-related tasks to perform before a process restart | 200 |
-| jodconverter.officeHome | The property jodconverter.officeHome is used to locate LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like:                /Applications/OpenOffice.org.app/Contents For other OSes this should be the directory that contains "program/soffice.bin" Debian/Ubuntu it should be like:     /usr/lib64/libreoffice Fedora it should be like:            /opt/openoffice.org3 Windows it should be like:           C:/Alfresco/libreoffice | /usr/lib64/libreoffice |
+| jodconverter.officeHome | Specifies the location of LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like "/Applications/OpenOffice.org.app/Contents". For other OSes this should be the directory that contains "program/soffice.bin". For Debian/Ubuntu it will be like "/usr/lib64/libreoffice", for Fedora it will be like "/opt/openoffice.org3", for Windows it will be like "C:/Alfresco/libreoffice" | /usr/lib64/libreoffice |
 | jodconverter.portNumbers | 1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003, 2004
 Note that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use. | 2022 |
 | jodconverter.startupRetryPeriodSeconds | When jodconverter.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | jodconverter.taskExecutionTimeout | timeouts are in milliseconds | 120000 |
 | jodconverter.taskQueueTimeout | timeouts are in milliseconds | 30000 |
-| jodconverter.templateProfileDir | OpenOffice user template profile to be used by the JOD started OpenOffice process. Among other settings, the profile contains values set in Tools|Options via the UI This includes the temporary directory: Tools|Options|openOffice.org|Temporary Files If blank, a default profile is created. The user profile is recreated on each restart from the template. May be set to an existing user's profile such as: C:\Users\<username>\AppData\Roaming\OpenOffice.org\3 | |
+| jodconverter.templateProfileDir | OpenOffice user template profile to be used by the JOD started OpenOffice process. If blank, a default profile is created. The user profile is recreated on each restart from the template. May be set to an existing user's profile such as "C:\Users\<username>\AppData\Roaming\OpenOffice.org\3" | |
 | jodconverter.url | Remote server (or docker container) url used to service jodconverter requests. | |
 | kerberos.authentication.authenticateCIFS | | true |
 | kerberos.authentication.authenticateFTP | | true |
@@ -2168,10 +2168,6 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | ticket.cleanup.cronExpression | | `0 0 * * * ?` |
 | tika.startupRetryPeriodSeconds | When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | tika.url | Legacy tika url to T-Engines to service transform requests via http. Disabled by default. | |
-| trashcan-cleaner.cron | | `* * * * * ? 2099` |
-| trashcan-cleaner.deleteBatchCount | | 1000 |
-| trashcan-cleaner.keepPeriod | | P28D |
-| trashcan.MaxSize | Max size of view trashcan files | 1000 |
 | transferservice.receiver.enabled | Transfer Service | false |
 | transferservice.receiver.lockRefreshTime | How long to wait in mS before refreshing a transfer lock - detects shutdown servers. Default 1 minute. | 60000 |
 | transferservice.receiver.lockRetryCount | How many times to attempt retry the transfer lock | 3 |
@@ -2193,6 +2189,10 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | transformer.Archive.includeContents | When transforming archive files (.zip etc) into text representations (such as for full text indexing), should the files within the archive be processed too? If enabled, transformation takes longer, but searches of the files find more. | false |
 | transformer.strict.mimetype.check | Check that the declared mimetype (of the Node) is the same as the derived mimetype of the content (via Tika) before a transformation takes place. Only files in the repository (not intermediate files in a transformer pipeline) are checked. This property provides a trade off between a security check and a relatively expensive (Tika) operation. There are a few issues with the Tika mimetype detection. So that transformations still take place where the detected mimetype is not the same as the declared mimetype, another property (transformer.strict.mimetype.check.whitelist.mimetypes) contains pairs of declared and detected mimetypes that should be allowed. This parameter value is a sequence of ; separated pairs. The declared and derived mimetypes are also ; separated. | true |
 | transformer.strict.mimetype.check.whitelist.mimetypes | A white list of declared and detected mimetypes, that don't match, but should still be transformed. | application/eps;application/postscript;application/illustrator;application/pdf;application/x-tar;application/x-gtar;application/acp;application/zip;application/vnd.stardivision.math;application/x-tika-msoffice |
+| trashcan-cleaner.cron | | `* * * * * ? 2099` |
+| trashcan-cleaner.deleteBatchCount | | 1000 |
+| trashcan-cleaner.keepPeriod | | P28D |
+| trashcan.MaxSize | Max size of view trashcan files | 1000 |
 | trialUid | | |
 | trialUidPattern | | id\d+ |
 | urlshortening.bitly.api.key | URL Shortening Properties | R_ca15c6c89e9b25ccd170bafd209a0d4f |
