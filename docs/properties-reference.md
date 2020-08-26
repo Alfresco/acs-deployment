@@ -6,13 +6,37 @@ The table below shows the full list of properties (exluding module specific prop
 |----------|-------------|---------------|
 | acs.repo.rendition.events.endpoint | Raw events | jms:acs-repo-rendition-events?jmsMessageType=Text |
 | acs.repo.transform.request.endpoint | Transform request events | jms:acs-repo-transform-request?jmsMessageType=Text |
+| activities.feed.cleaner.cronExpression | | `0 0/10 * * * ?` |
+| activities.feed.cleaner.enabled | | true |
+| activities.feed.cleaner.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feed.fetchBatchSize | | 250 |
+| activities.feed.generator.batchSize | | 1000 |
+| activities.feed.generator.cronExpression | | `0/30 * * * * ?` |
+| activities.feed.generator.enabled | | true |
 | activities.feed.generator.jsonFormatOnly | | true |
+| activities.feed.generator.maxItemsPerCycle | | 100 |
+| activities.feed.generator.numThreads | | 4 |
+| activities.feed.generator.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feed.max.ageMins | Feed max age in minutes | 44640 (31 days) |
 | activities.feed.max.idRange | Feed max ID range to limit maximum number of entries | 1000000 |
 | activities.feed.max.size | Feed max size (number of entries) | 200 |
+| activities.feed.notifier.cronExpression | Feed notification period (every 24 hours at 00:00) | `0 0 0 * * ?` |
+| activities.feed.notifier.emailTemplatePath | | /app:company_home/app:dictionary/app:email_templates/cm:activities/cm:activities-email.ftl |
+| activities.feed.notifier.emailTemplateLocationType | | xpath |
+| activities.feed.notifier.enabled | | true |
+| activities.feed.notifier.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
 | activities.feedNotifier.batchSize | | 200 |
 | activities.feedNotifier.numThreads | | 2 |
+| activities.post.cleaner.cronExpression | | `0 0/10 * * * ?` |
+| activities.post.cleaner.enabled | | true |
+| activities.post.cleaner.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
+| activities.post.lookup.cronExpression | | `0/15 * * * * ?` |
+| activities.post.lookup.enabled | | true |
+| activities.post.lookup.maxItemsPerCycle | | 500 |
+| activities.post.lookup.startDelayMilliseconds | | ${system.cronJob.startDelayMilliseconds} |
+| alfresco.authentication.allowGuestLogin | | true |
+| alfresco.authentication.authenticateCIFS | | true |
+| alfresco.authentication.authenticateFTP | | true |
 | alfresco.authentication.gateway.bufferSize | Gateway Authentication | 2048 |
 | alfresco.authentication.gateway.connectTimeout | Gateway Authentication | 10000 |
 | alfresco.authentication.gateway.host | Gateway authentication is disabled if empty host is specified | |
@@ -24,6 +48,7 @@ The table below shows the full list of properties (exluding module specific prop
 | alfresco.authentication.gateway.prefixUrl | Gateway Authentication | /publicapi |
 | alfresco.authentication.gateway.protocol | Gateway Authentication | https |
 | alfresco.authentication.gateway.readTimeout | Gateway Authentication | 120000 |
+| alfresco.authentication.sessionCleanup | | true |
 | alfresco.cluster.enabled | | true |
 | alfresco.cluster.hostname |  | ${localname} |
 | alfresco.cluster.interface | | |
@@ -44,6 +69,10 @@ The table below shows the full list of properties (exluding module specific prop
 | alfresco.hazelcast.port | | 5701 |
 | alfresco.host | Alfresco hostname | ${localname} |
 | alfresco.jmx.connector.enabled | Control Alfresco JMX connectivity | false |
+| alfresco-pdf-renderer.exe | External executable locations | ${alfresco-pdf-renderer.root}/alfresco-pdf-renderer |
+| alfresco-pdf-renderer.root | External executable locations | |
+| alfresco-pdf-renderer.startupRetryPeriodSeconds | When alfresco-pdf-renderer.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| alfresco-pdf-renderer.url | Remote server (or docker container) url used to service alfresco-pdf-renderer requests. | |
 | alfresco.port | Alfresco port | 8080 |
 | alfresco.protocol | Alfresco protocol | http |
 | alfresco.restApi.basicAuthScheme | | false |
@@ -651,13 +680,698 @@ The table below shows the full list of properties (exluding module specific prop
 | cache.zoneToAuthoritySharedCache.tx.statsEnabled | | ${caches.tx.statsEnabled} |
 | caches.tx.statsEnabled | | true |
 | category.queryFetchSize | Maximum query size for category/tag fetch when not explicitly set by paging parameters | 5000 |
+| cifs.bindto | An empty value indicates bind to all available network adapters | |
+| cifs.broadcast | CIFS Server Configuration | 255.255.255.255 |
+| cifs.disableNativeCode | Disable the use of JNI code. Only currently affects Windows | false |
+| cifs.disableNIO | Enable the use of asynchronous sockets/NIO code | false |
+| cifs.domain | CIFS Server Configuration | |
+| cifs.enabled | CIFS Server Configuration | false |
+| cifs.hostannounce | An empty value indicates bind to all available network adapters | true |
+| cifs.ipv6.enabled | An empty value indicates bind to all available network adapters | false |
+| cifs.loadBalancerList | | |
+| cifs.maximumVirtualCircuitsPerSession | Maximum virtual circuits per session Should only be changed when using Terminal Server clients | 16 |
+| cifs.netBIOSSMB.datagramPort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 138 |
+| cifs.netBIOSSMB.namePort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 137 |
+| cifs.netBIOSSMB.sessionPort | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 139 |
+| cifs.pseudoFiles.enabled | Big Switch, are the Desktop Actions and URL shortcuts shown for CIFS ? | true |
+| cifs.pseudoFiles.explorerURL.enabled | CIFS URL for alfresco explorer | false |
+| cifs.pseudoFiles.explorerURL.fileName | CIFS URL for alfresco explorer | `__Alfresco.url` |
+| cifs.pseudoFiles.shareURL.enabled | Cifs URL for alfresco share | true |
+| cifs.pseudoFiles.shareURL.fileName | Cifs URL for alfresco share | `__Share.url` |
+| cifs.sessionDebug | CIFS session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels :-    NETBIOS, STATE, RXDATA, TXDATA, DUMPDATA, NEGOTIATE, TREE, SEARCH, INFO, FILE, FILEIO, TRANSACT    ECHO, ERROR, IPC, LOCK, PKTTYPE, DCERPC, STATECACHE, TIMING, NOTIFY, STREAMS, SOCKET, PKTPOOL    PKTSTATS, THREADPOOL, BENCHMARK | |
+| cifs.serverName | CIFS Server Configuration | ${localname}A |
+| cifs.sessionTimeout | Session timeout, in seconds. Defaults to 15 minutes, to match the default Windows client setting. If no I/O is received within that time the session is closed by the server | 900 |
+| cifs.tcpipSMB.port | Can be mapped to non-privileged ports, then use firewall rules to forward requests from the standard ports | 445 |
+| cifs.terminalServerList | | |
+| cifs.WINS.autoDetectEnabled | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | true |
+| cifs.WINS.primary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 1.2.3.4 |
+| cifs.WINS.secondary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 5.6.7.8 |
 | cmis.disable.hidden.leading.period.files | | false |
 | content.metadataExtracter.default.timeoutMs | The default timeout for metadata mapping extracters | 20000 |
 | content.metadataExtracter.pdf.maxConcurrentExtractionsCount | | 5 |
 | content.metadataExtracter.pdf.maxDocumentSizeMB | | 10 |
 | content.metadataExtracter.pdf.overwritePolicy | The default overwrite policy for PdfBoxMetadataExtracter | PRAGMATIC |
+| content.transformer.alfresco-pdf-renderer.extensions.ai.png.priority | | 50 |
+| content.transformer.alfresco-pdf-renderer.extensions.pdf.png.priority | | 50 |
+| content.transformer.alfresco-pdf-renderer.ImageMagick.available | | false |
+| content.transformer.alfresco-pdf-renderer.ImageMagick.pipeline | | alfresco-pdf-renderer\|png\|ImageMagick |
+| content.transformer.Archive.extensions.*.txt.priority | | 50 |
+| content.transformer.Archive.extensions.bin.txt.supported | | false |
+| content.transformer.BinaryPassThrough.priority | | 20 |
+| content.transformer.complex.Any.Image.pipeline | This transformer was called transformer.complex.OOXML.Image, but now the first stage is any transformer to allow failover when there is no embedded thumbnail. | *\|jpg\|ImageMagick |
+| content.transformer.complex.Any.Image.priority | | 400 |
+| content.transformer.complex.ArchiveToPdf.pipeline | Archive Zip to PDF | Archive\|txt\|* |
+| content.transformer.complex.iWorks.Image.extensions.key.png.priority | | 50 |
+| content.transformer.complex.iWorks.Image.extensions.numbers.png.priority | | 50 |
+| content.transformer.complex.iWorks.Image.extensions.pages.png.priority | | 50 |
+| content.transformer.complex.iWorks.Image.pipeline | | iWorksQuicklooks\|jpg\|ImageMagick |
+| content.transformer.complex.iWorks.Image.priority | | 400 |
+| content.transformer.complex.JodConverter.Image.pipeline | | JodConverter.2Pdf\|pdf\|complex.PDF.Image |
+| content.transformer.complex.JodConverter.Image.priority | | 250 |
+| content.transformer.complex.JodConverter.PdfBox.extensions.doc.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.docm.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.docx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.dotm.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.dotx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.potx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.potm.txt.maxSourceSizeKBytes | | 1024 |
+| content.transformer.complex.JodConverter.PdfBox.extensions.ppam.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.ppsm.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.ppsx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.ppt.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.pptm.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.pptx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.sldm.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.sldx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.txt.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.xlam.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.xlsb.txt.maxSourceSizeKBytes | | 1024 |
+| content.transformer.complex.JodConverter.PdfBox.extensions.xls.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.xlsm.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.xlsx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.xltm.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.extensions.xltx.txt.supported | | false |
+| content.transformer.complex.JodConverter.PdfBox.pipeline | | JodConverter.2Pdf\|pdf\|PdfBox |
+| content.transformer.complex.JodConverter.PdfBox.priority | | 150 |
+| content.transformer.complex.OutlookMsg2Image.extensions.msg.png.priority | | 395 |
+| content.transformer.complex.OutlookMsg2Image.pipeline | | OutlookMsg\|txt\|* |
+| content.transformer.complex.OutlookMsg2Image.priority | | 450 |
+| content.transformer.complex.PDF.Image.extensions.ai.bin.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.bmp.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.cgm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.dwt.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.eps.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.gif.priority | | 50 |
+| content.transformer.complex.PDF.Image.extensions.ai.gif.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.ief.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.jp2.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.jpg.priority | | 50 |
+| content.transformer.complex.PDF.Image.extensions.ai.jpg.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.pbm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.pgm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.png.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.pnm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.ppj.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.ppm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.psd.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.ras.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.tiff.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.xbm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.xpm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.ai.xwd.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.bin.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.bmp.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.cgm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.dwt.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.gif.priority | | 50 |
+| content.transformer.complex.PDF.Image.extensions.pdf.gif.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.ief.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.jp2.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.jpg.priority | | 50 |
+| content.transformer.complex.PDF.Image.extensions.pdf.jpg.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.pbm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.pgm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.png.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.pnm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.ppj.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.ppm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.psd.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.ras.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.tiff.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.xbm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.xpm.supported | | true |
+| content.transformer.complex.PDF.Image.extensions.pdf.xwd.supported | | true |
+| content.transformer.complex.PDF.Image.failover | | alfresco-pdf-renderer\|alfresco-pdf-renderer.ImageMagick |
+| content.transformer.complex.PDF.Image.priority | | 60 |
+| content.transformer.complex.Rfc822ToPdf.pipeline | EML to PDF | RFC822\|txt\|* |
+| content.transformer.complex.Text.Image.extensions.csv.*.supported | | true |
+| content.transformer.complex.Text.Image.extensions.dita.*.supported | | true |
+| content.transformer.complex.Text.Image.extensions.txt.*.supported | | true |
+| content.transformer.complex.Text.Image.extensions.xml.*.supported | | true |
+| content.transformer.complex.Text.Image.pipeline | | *\|pdf\|complex.PDF.Image |
+| content.transformer.complex.Text.Image.priority | | 350 |
+| content.transformer.default.priority | | 100 |
+| content.transformer.default.thresholdCount | | 3 |
+| content.transformer.default.time | | 0 |
+| content.transformer.default.count | | 100000 |
+| content.transformer.default.errorTime | | 120000 |
+| content.transformer.default.timeoutMs | | 120000 |
+| content.transformer.default.readLimitTimeMs | | -1 |
+| content.transformer.default.maxSourceSizeKBytes | | -1 |
+| content.transformer.default.readLimitKBytes | | -1 |
+| content.transformer.default.pageLimit | | -1 |
+| content.transformer.default.maxPages | | -1 |
+| content.transformer.HtmlParser.extensions.html.txt.priority | | 50 |
+| content.transformer.ImageMagick.extensions.png.png.priority | | 50 |
+| content.transformer.iWorksQuicklooks.extensions.key.jpg.priority | | 50 |
+| content.transformer.iWorksQuicklooks.extensions.key.pdf.priority | | 50 |
+| content.transformer.iWorksQuicklooks.extensions.numbers.jpg.priority | | 50 |
+| content.transformer.iWorksQuicklooks.extensions.numbers.pdf.priority | | 50 |
+| content.transformer.iWorksQuicklooks.extensions.pages.jpg.priority | | 50 |
+| content.transformer.iWorksQuicklooks.extensions.pages.pdf.priority | | 50 |
+| content.transformer.JodConverter.2Pdf.available | This transformer exists because OpenOffice and LibreOffice have a problem going directly from HTML to PDF. Going via ODT appears a much better option. For example \<sub\> tags hang the soffice process. See ALF-14035 | false |
+| content.transformer.JodConverter.2Pdf.extensions.*.pdf.supported | | true |
+| content.transformer.JodConverter.2Pdf.failover | | JodConverter\|JodConverter.Html2Pdf |
+| content.transformer.JodConverter.2Pdf.priority | | 150 |
+| content.transformer.JodConverter.extensions.*.docm.supported | | false |
+| content.transformer.JodConverter.extensions.*.docx.supported | | false |
+| content.transformer.JodConverter.extensions.*.dotm.supported | | false |
+| content.transformer.JodConverter.extensions.*.dotx.supported | | false |
+| content.transformer.JodConverter.extensions.*.potm.supported | | false |
+| content.transformer.JodConverter.extensions.*.potx.supported | | false |
+| content.transformer.JodConverter.extensions.*.ppam.supported | | false |
+| content.transformer.JodConverter.extensions.*.ppsm.supported | | false |
+| content.transformer.JodConverter.extensions.*.ppsx.supported | | false |
+| content.transformer.JodConverter.extensions.*.pptm.supported | | false |
+| content.transformer.JodConverter.extensions.*.pptx.supported | | false |
+| content.transformer.JodConverter.extensions.*.sldx.supported | | false |
+| content.transformer.JodConverter.extensions.*.sldm.supported | | false |
+| content.transformer.JodConverter.extensions.*.txt.supported | | false |
+| content.transformer.JodConverter.extensions.*.xlam.supported | | false |
+| content.transformer.JodConverter.extensions.*.xlsb.supported | | false |
+| content.transformer.JodConverter.extensions.*.xlsm.supported | | false |
+| content.transformer.JodConverter.extensions.*.xlsx.supported | | false |
+| content.transformer.JodConverter.extensions.*.xltm.supported | | false |
+| content.transformer.JodConverter.extensions.*.xltx.supported | | false |
+| content.transformer.JodConverter.extensions.doc.pdf.maxSourceSizeKBytes | | 10240 |
+| content.transformer.JodConverter.extensions.docm.pdf.maxSourceSizeKBytes | | 768 |
+| content.transformer.JodConverter.extensions.docx.pdf.maxSourceSizeKBytes | | 768 |
+| content.transformer.JodConverter.extensions.dotm.pdf.maxSourceSizeKBytes | | 768 |
+| content.transformer.JodConverter.extensions.dotx.pdf.maxSourceSizeKBytes | | 768 |
+| content.transformer.JodConverter.extensions.html.pdf.supported | | false |
+| content.transformer.JodConverter.extensions.potm.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.potx.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.ppt.pdf.maxSourceSizeKBytes | | 6144 |
+| content.transformer.JodConverter.extensions.ppam.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.ppsm.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.ppsx.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.pptm.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.pptx.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.sldm.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.sldx.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.txt.pdf.maxSourceSizeKBytes | | 5120 |
+| content.transformer.JodConverter.extensions.vsd.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.vsdx.pdf.maxSourceSizeKBytes | | 4096 |
+| content.transformer.JodConverter.extensions.xlam.pdf.maxSourceSizeKBytes | | 1536 |
+| content.transformer.JodConverter.extensions.xls.pdf.maxSourceSizeKBytes | | 10240 |
+| content.transformer.JodConverter.extensions.xlsb.pdf.maxSourceSizeKBytes | | 1536 |
+| content.transformer.JodConverter.extensions.xlsm.pdf.maxSourceSizeKBytes | | 1536 |
+| content.transformer.JodConverter.extensions.xlsx.pdf.maxSourceSizeKBytes | | 1536 |
+| content.transformer.JodConverter.extensions.xltm.pdf.maxSourceSizeKBytes | | 1536 |
+| content.transformer.JodConverter.extensions.xltx.pdf.maxSourceSizeKBytes | | 1536 |
+| content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.supported | | true |
+| content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.priority | | 50 |
+| content.transformer.JodConverter.Html2Pdf.pipeline | | JodConverter\|odt\|JodConverter |
+| content.transformer.JodConverter.priority | | 110 |
+| content.transformer.Office.priority | | 130 |
+| content.transformer.OOXML.priority | | 130 |
+| content.transformer.OOXMLThumbnail.extensions.dotx.jpg.priority | | 50 |
+| content.transformer.OOXMLThumbnail.extensions.potx.jpg.priority | | 50 |
+| content.transformer.OutlookMsg.priority | | 125 |
+| content.transformer.PdfBox.extensions.pdf.txt.maxSourceSizeKBytes | | 25600 |
+| content.transformer.PdfBox.extensions.pdf.txt.priority | | 50 |
 | content.transformer.PdfBox.extractBookmarksText | True if bookmarks content should be extracted for PDFBox | true |
-| content.transformer.retryOn.different.mimetype | Enable transformation retrying if the file has MIME type differ than file extension. Ignored if transformer.strict.mimetype.check is true as these transformations will not take place. | true |
+| content.transformer.PdfBox.priority | | 110 |
+| content.transformer.PdfBox.TextToPdf.extensions.csv.pdf.supported | | true |
+| content.transformer.PdfBox.TextToPdf.extensions.dita.pdf.supported | | true |
+| content.transformer.PdfBox.TextToPdf.extensions.xml.pdf.supported | | true |
+| content.transformer.PdfBox.TextToPdf.maxSourceSizeKBytes | | 10240 |
+| content.transformer.Poi.priority | | 130 |
+| content.transformer.remote.alfresco.priority | | 30 |
+| content.transformer.remoteServer.extensions.*.*.supported | | false |
+| content.transformer.remoteServer.extensions.*.txt.supported | | false |
+| content.transformer.remoteServer.extensions.bmp.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.gif.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.ief.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.png.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.psd.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.ras.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.bmp.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.ief.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.png.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.psd.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.ras.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.cgm.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.doc.gif.supported | | true |
+| content.transformer.remoteServer.extensions.doc.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.doc.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.doc.png.supported | | true |
+| content.transformer.remoteServer.extensions.doc.swf.supported | | true |
+| content.transformer.remoteServer.extensions.docm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.docm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.docm.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.docm.png.supported | | true |
+| content.transformer.remoteServer.extensions.docm.swf.supported | | true |
+| content.transformer.remoteServer.extensions.docx.gif.supported | | true |
+| content.transformer.remoteServer.extensions.docx.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.docx.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.docx.png.supported | | true |
+| content.transformer.remoteServer.extensions.docx.swf.supported | | true |
+| content.transformer.remoteServer.extensions.dotm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.dotm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.dotm.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.dotm.png.supported | | true |
+| content.transformer.remoteServer.extensions.dotm.swf.supported | | true |
+| content.transformer.remoteServer.extensions.dotx.gif.supported | | true |
+| content.transformer.remoteServer.extensions.dotx.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.dotx.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.dotx.png.supported | | true |
+| content.transformer.remoteServer.extensions.dotx.swf.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.gif.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.ief.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.png.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.psd.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.ras.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.dwt.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.gif.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.gif.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.gif.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.gif.gif.supported | | true |
+| content.transformer.remoteServer.extensions.gif.ief.supported | | true |
+| content.transformer.remoteServer.extensions.gif.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.gif.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.gif.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.gif.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.gif.png.supported | | true |
+| content.transformer.remoteServer.extensions.gif.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.gif.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.gif.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.gif.psd.supported | | true |
+| content.transformer.remoteServer.extensions.gif.ras.supported | | true |
+| content.transformer.remoteServer.extensions.gif.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.gif.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.gif.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.gif.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.ief.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.ief.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.ief.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.ief.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ief.ief.supported | | true |
+| content.transformer.remoteServer.extensions.ief.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.ief.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ief.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.ief.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.ief.png.supported | | true |
+| content.transformer.remoteServer.extensions.ief.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.ief.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.ief.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.ief.psd.supported | | true |
+| content.transformer.remoteServer.extensions.ief.ras.supported | | true |
+| content.transformer.remoteServer.extensions.ief.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.ief.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.ief.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.ief.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.gif.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.ief.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.png.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.psd.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.ras.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.jp2.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.gif.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.ief.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.png.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.psd.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.ras.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.jpg.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.ief.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.png.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.psd.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.ras.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.pbm.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.pdf.gif.supported | | true |
+| content.transformer.remoteServer.extensions.pdf.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.pdf.png.supported | | true |
+| content.transformer.remoteServer.extensions.pdf.swf.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.ief.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.png.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.psd.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.ras.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.pgm.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.png.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.png.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.png.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.png.gif.supported | | true |
+| content.transformer.remoteServer.extensions.png.ief.supported | | true |
+| content.transformer.remoteServer.extensions.png.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.png.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.png.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.png.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.png.png.supported | | true |
+| content.transformer.remoteServer.extensions.png.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.png.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.png.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.png.psd.supported | | true |
+| content.transformer.remoteServer.extensions.png.ras.supported | | true |
+| content.transformer.remoteServer.extensions.png.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.png.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.png.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.png.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.ief.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.png.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.psd.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.ras.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.pnm.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.potm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.potm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.potm.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.potm.png.supported | | true |
+| content.transformer.remoteServer.extensions.potm.swf.supported | | true |
+| content.transformer.remoteServer.extensions.potx.gif.supported | | true |
+| content.transformer.remoteServer.extensions.potx.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.potx.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.potx.png.supported | | true |
+| content.transformer.remoteServer.extensions.potx.swf.supported | | true |
+| content.transformer.remoteServer.extensions.ppam.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ppam.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ppam.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.ppam.png.supported | | true |
+| content.transformer.remoteServer.extensions.ppam.swf.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.ief.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.png.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.psd.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.ras.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.ppj.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.ief.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.png.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.psd.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.ras.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.ppm.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.ppsm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ppsm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ppsm.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.ppsm.png.supported | | true |
+| content.transformer.remoteServer.extensions.ppsm.swf.supported | | true |
+| content.transformer.remoteServer.extensions.ppsx.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ppsx.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ppsx.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.ppsx.png.supported | | true |
+| content.transformer.remoteServer.extensions.ppsx.swf.supported | | true |
+| content.transformer.remoteServer.extensions.ppt.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ppt.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ppt.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.ppt.png.supported | | true |
+| content.transformer.remoteServer.extensions.ppt.swf.supported | | true |
+| content.transformer.remoteServer.extensions.pptm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.pptm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.pptm.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.pptm.png.supported | | true |
+| content.transformer.remoteServer.extensions.pptm.swf.supported | | true |
+| content.transformer.remoteServer.extensions.pptx.gif.supported | | true |
+| content.transformer.remoteServer.extensions.pptx.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.pptx.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.pptx.png.supported | | true |
+| content.transformer.remoteServer.extensions.pptx.swf.supported | | true |
+| content.transformer.remoteServer.extensions.psd.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.psd.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.psd.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.psd.gif.supported | | true |
+| content.transformer.remoteServer.extensions.psd.ief.supported | | true |
+| content.transformer.remoteServer.extensions.psd.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.psd.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.psd.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.psd.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.psd.png.supported | | true |
+| content.transformer.remoteServer.extensions.psd.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.psd.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.psd.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.psd.psd.supported | | true |
+| content.transformer.remoteServer.extensions.psd.ras.supported | | true |
+| content.transformer.remoteServer.extensions.psd.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.psd.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.psd.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.psd.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.ras.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.ras.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.ras.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.ras.gif.supported | | true |
+| content.transformer.remoteServer.extensions.ras.ief.supported | | true |
+| content.transformer.remoteServer.extensions.ras.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.ras.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.ras.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.ras.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.ras.png.supported | | true |
+| content.transformer.remoteServer.extensions.ras.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.ras.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.ras.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.ras.psd.supported | | true |
+| content.transformer.remoteServer.extensions.ras.ras.supported | | true |
+| content.transformer.remoteServer.extensions.ras.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.ras.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.ras.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.ras.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.gif.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.ief.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.png.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.psd.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.ras.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.tiff.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.ief.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.png.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.psd.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.ras.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.xbm.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.xlam.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xlam.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xlam.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.xlam.png.supported | | true |
+| content.transformer.remoteServer.extensions.xlam.swf.supported | | true |
+| content.transformer.remoteServer.extensions.xls.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xls.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xls.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.xls.png.supported | | true |
+| content.transformer.remoteServer.extensions.xls.swf.supported | | true |
+| content.transformer.remoteServer.extensions.xlsb.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xlsb.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xlsb.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.xlsb.png.supported | | true |
+| content.transformer.remoteServer.extensions.xlsb.swf.supported | | true |
+| content.transformer.remoteServer.extensions.xlsm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xlsm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xlsm.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.xlsm.png.supported | | true |
+| content.transformer.remoteServer.extensions.xlsm.swf.supported | | true |
+| content.transformer.remoteServer.extensions.xlsx.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xlsx.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xlsx.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.xlsx.png.supported | | true |
+| content.transformer.remoteServer.extensions.xlsx.swf.supported | | true |
+| content.transformer.remoteServer.extensions.xltm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xltm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xltm.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.xltm.png.supported | | true |
+| content.transformer.remoteServer.extensions.xltm.swf.supported | | true |
+| content.transformer.remoteServer.extensions.xltx.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xltx.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xltx.pdf.supported | | true |
+| content.transformer.remoteServer.extensions.xltx.png.supported | | true |
+| content.transformer.remoteServer.extensions.xltx.swf.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.ief.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.png.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.psd.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.ras.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.xpm.xwd.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.bmp.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.cgm.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.dwt.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.gif.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.ief.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.jp2.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.jpg.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.pbm.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.pgm.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.png.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.pnm.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.ppj.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.ppm.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.psd.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.ras.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.tiff.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.xbm.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.xpm.supported | | true |
+| content.transformer.remoteServer.extensions.xwd.xwd.supported | | true |
+| content.transformer.remoteServer.priority | | 40 |
+| content.transformer.retryOn.different.mimetype | Enable transformation retrying if the file has MIME type differ than file extension. Ignored if `transformer.strict.mimetype.check` is true as these transformations will not take place. | true |
+| content.transformer.TextMining.priority | | 130 |
+| content.transformer.TextMining.extensions.doc.txt.priority | | 50 |
+| content.transformer.TikaAuto.priority | | 120 |
+| content.transformer.TikaAuto.extensions.bin.txt.supported | | false |
+| content.transformer.TikaAuto.extensions.pdf.txt.maxSourceSizeKBytes | | 25600 |
 | contentPropertyRestrictions.enabled | If enabled doesn't allow to set content properties via NodeService | true |
 | contentPropertyRestrictions.whitelist |
 | cors.allowed.headers | CORS settings | Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token |
@@ -704,6 +1418,66 @@ The table below shows the full list of properties (exluding module specific prop
 | default.async.action.corePoolSize | Default Async Action Thread Pool | 8 |
 | default.async.action.maximumPoolSize | Default Async Action Thread Pool | 20 |
 | default.async.action.threadPriority | Default Async Action Thread Pool | 1 |
+| default.cm\\:content.mimetype.displayControl | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | alfresco/search/FacetFilters |
+| default.cm\\:content.mimetype.displayName | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | faceted-search.facet-menu.facet.formats |
+| default.cm\\:content.mimetype.filterID | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | filter_mimetype |
+| default.cm\\:content.mimetype.hitThreshold | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 1 |
+| default.cm\\:content.mimetype.isEnabled | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | true |
+| default.cm\\:content.mimetype.maxFilters | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 5 |
+| default.cm\\:content.mimetype.minFilterValueLength | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | 4 |
+| default.cm\\:content.mimetype.scope | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | ALL |
+| default.cm\\:content.mimetype.scopedSites | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | |
+| default.cm\\:content.mimetype.sortBy | Alfresco default facets Note: If you have changed the filter's default value(s) via Share, then any subsequent changes of those default values won't be applied to the filter on server startup. Field-Facet-Qname => cm:content.mimetype | ASCENDING |
+| default.cm\\:created.displayControl | Field-Facet-Qname => cm:created | alfresco/search/FacetFilters |
+| default.cm\\:created.displayName | Field-Facet-Qname => cm:created | faceted-search.facet-menu.facet.created |
+| default.cm\\:created.filterID | Field-Facet-Qname => cm:created | filter_created |
+| default.cm\\:created.hitThreshold | Field-Facet-Qname => cm:created  | 1 |
+| default.cm\\:created.isEnabled | Field-Facet-Qname => cm:created  | true |
+| default.cm\\:created.maxFilters | Field-Facet-Qname => cm:created  | 5 |
+| default.cm\\:created.minFilterValueLength | Field-Facet-Qname => cm:created  | 4 |
+| default.cm\\:created.scope | Field-Facet-Qname => cm:created  | ALL |
+| default.cm\\:created.scopedSites | Field-Facet-Qname => cm:created  | |
+| default.cm\\:created.sortBy | Field-Facet-Qname => cm:created  | INDEX |
+| default.cm\\:creator.displayControl | Field-Facet-Qname => cm:creator | alfresco/search/FacetFilters |
+| default.cm\\:creator.displayName | Field-Facet-Qname => cm:creator  | faceted-search.facet-menu.facet.creator |
+| default.cm\\:creator.filterID | Field-Facet-Qname => cm:creator | filter_creator |
+| default.cm\\:creator.hitThreshold | Field-Facet-Qname => cm:creator | 1 |
+| default.cm\\:creator.isEnabled | Field-Facet-Qname => cm:creator | true |
+| default.cm\\:creator.maxFilters | Field-Facet-Qname => cm:creator  | 5 |
+| default.cm\\:creator.minFilterValueLength | Field-Facet-Qname => cm:creator | 4 |
+| default.cm\\:creator.scope | Field-Facet-Qname => cm:creator | ALL |
+| default.cm\\:creator.scopedSites | Field-Facet-Qname => cm:creator | |
+| default.cm\\:creator.sortBy | Field-Facet-Qname => cm:creator | ASCENDING |
+| default.cm\\:modified.displayControl | Field-Facet-Qname => cm:modified | alfresco/search/FacetFilters |
+| default.cm\\:modified.displayName | Field-Facet-Qname => cm:modified | faceted-search.facet-menu.facet.modified |
+| default.cm\\:modified.filterID | Field-Facet-Qname => cm:modified | filter_modified |
+| default.cm\\:modified.hitThreshold | Field-Facet-Qname => cm:modified | 1 |
+| default.cm\\:modified.isEnabled | Field-Facet-Qname => cm:modified | true |
+| default.cm\\:modified.maxFilters | Field-Facet-Qname => cm:modified | 5 |
+| default.cm\\:modified.minFilterValueLength | Field-Facet-Qname => cm:modified | 4 |
+| default.cm\\:modified.scope | Field-Facet-Qname => cm:modified  | ALL |
+| default.cm\\:modified.scopedSites | Field-Facet-Qname => cm:modified | |
+| default.cm\\:modified.sortBy | Field-Facet-Qname => cm:modified | INDEX |
+| default.cm\\:modifier.displayControl | Field-Facet-Qname => cm:modifier | alfresco/search/FacetFilters |
+| default.cm\\:modifier.displayName | Field-Facet-Qname => cm:modifier  | faceted-search.facet-menu.facet.modifier |
+| default.cm\\:modifier.filterID | Field-Facet-Qname => cm:modifier | filter_modifier |
+| default.cm\\:modifier.hitThreshold | Field-Facet-Qname => cm:modifier | 1 |
+| default.cm\\:modifier.isEnabled | Field-Facet-Qname => cm:modifier | true |
+| default.cm\\:modifier.maxFilters | Field-Facet-Qname => cm:modifier | 5 |
+| default.cm\\:modifier.minFilterValueLength | Field-Facet-Qname => cm:modifier | 4 |
+| default.cm\\:modifier.scope | Field-Facet-Qname => cm:modifier | ALL |
+| default.cm\\:modifier.scopedSites | Field-Facet-Qname => cm:modifier | |
+| default.cm\\:modifier.sortBy | Field-Facet-Qname => cm:modifier | ASCENDING |
+| default.cm\\:content.size.displayControl | Field-Facet-Qname => cm:content.size | alfresco/search/FacetFilters |
+| default.cm\\:content.size.displayName | Field-Facet-Qname => cm:content.size | faceted-search.facet-menu.facet.size |
+| default.cm\\:content.size.filterID | Field-Facet-Qname => cm:content.size | filter_content_size |
+| default.cm\\:content.size.hitThreshold | Field-Facet-Qname => cm:content.size | 1 |
+| default.cm\\:content.size.isEnabled | Field-Facet-Qname => cm:content.size | true |
+| default.cm\\:content.size.maxFilters | Field-Facet-Qname => cm:content.size | 5 |
+| default.cm\\:content.size.minFilterValueLength | Field-Facet-Qname => cm:content.size | 4 |
+| default.cm\\:content.size.scope | Field-Facet-Qname => cm:content.size | ALL |
+| default.cm\\:content.size.scopedSites | Field-Facet-Qname => cm:content.size | |
+| default.cm\\:content.size.sortBy | Field-Facet-Qname => cm:content.size  | INDEX |
 | deployment.method | Deployment method used to deploy this Alfresco instance (DEFAULT, INSTALLER, DOCKER_COMPOSE, HELM_CHART, ZIP, QUICK_START) | DEFAULT |
 | deployment.service.corePoolSize | Deployment Service | 2 |
 | deployment.service.maximumPoolSize | Deployment Service | 3 |
@@ -711,6 +1485,8 @@ The table below shows the full list of properties (exluding module specific prop
 | deployment.service.targetLockRefreshTime | How long to wait in mS before refreshing a target lock - detects shutdown servers | 60000 |
 | deployment.service.targetLockTimeout | How long to wait in mS from the last communication before deciding that deployment has failed, possibly the destination is no longer available? | 3600000 |
 | deployment.service.threadPriority | Deployment Service | 5 |
+| dev.email.not.sent | If true emails will not be sent | false |
+| dev.email.recipient.address | if provided all emails will be sent to this address (for development purposes) | |
 | dir.cachedcontent | The location of cached content | ${dir.root}/cachedcontent |
 | dir.contentstore | Content store folder path | ${dir.root}/contentstore |
 | dir.contentstore.bucketsPerMinute | | 0 |
@@ -730,6 +1506,20 @@ The table below shows the full list of properties (exluding module specific prop
 | download.cleaner.repeatIntervalMilliseconds | Download Service Cleanup | 3600000 |
 | download.cleaner.startDelayMilliseconds | Download Service Cleanup | 3600000 |
 | download.maxContentSize | Download Service Limits, in bytes | 2152852358 |
+| email.handler.folder.overwriteDuplicates | Should duplicate messages to a folder overwrite each other or be named with a (number) | true |
+| email.inbound.emailContributorsAuthority | The group authority name that users must be a member of in order to add email. Normally EMAIL_CONTRIBUTORS but may be changed to EVERYONE | EMAIL_CONTRIBUTORS |
+| email.inbound.enabled | Determines whether inbound email is enabled | true |
+| email.inbound.unknownUser | User to use if there is no match to a person in alfresco | anonymous |
+| email.server.allowed.senders | | .* |
+| email.server.auth.enabled | Is the user required to authenticate to use the smtp server? | false |
+| email.server.blocked.senders | | |
+| email.server.connections.max | | 3 |
+| email.server.domain | | alfresco.com |
+| email.server.enabled | Determines whether the email server is enabled | false |
+| email.server.enableTLS | Set this to false to turn off TLS, The server will not allow TLS. | true |
+| email.server.hideTLS | Set this to true to accept TLS but not announce it when the EHLO is called. | false |
+| email.server.port | | 25 |
+| email.server.requireTLS | Set this to true to require TLS | false |
 | encryption.bootstrap.reencrypt | Should encryptable properties be re-encrypted with new encryption keys on botstrap? | false |
 | encryption.cipherAlgorithm | General encryption parameters | AES/CBC/PKCS5Padding |
 | encryption.keyAlgorithm | General encryption parameters | AES |
@@ -755,10 +1545,40 @@ The table below shows the full list of properties (exluding module specific prop
 | encryption.ssl.truststore.provider | | |
 | encryption.ssl.truststore.type | | JCEKS |
 | events.subsystem.autoStart | Events subsystem | true |
-| fileFolderService.checkHidden.enabled | | true |
+| external.authentication.defaultAdministratorUserNames | | |
+| external.authentication.enabled | | true |
+| external.authentication.proxyHeader | | X-Alfresco-Remote-User |
+| external.authentication.proxyUserName | | alfresco-system |
+| external.authentication.userIdPattern | | |
 | filecontentstore.subsystem.name | ContentStore subsystem: default choice | unencryptedContentStore |
+| fileFolderService.checkHidden.enabled | | true |
+| filesystem.acl.global.defaultAccessLevel | Alfresco filesystem context | |
+| filesystem.lockKeeperEnabled | Is content open in the file systems locked by the repository? | true |
+| filesystem.lockKeeperRefreshCronExpression | Run refresh job every hour | `0 * */1 * * ?` |
+| filesystem.lockKeeperTimeout | Number of seconds to hold an ephemeral lock - 2 hours | 7200 |
+| filesystem.name | Alfresco filesystem context | Alfresco |
+| filesystem.renameCSVShufflePattern | MNT-211 File name patterns for rename shuffle detection CSV files. | `.*[a-f0-9]{8}+$` |
+| filesystem.renameShufflePattern | ALF-3856 File name patterns that trigger rename shuffle detection pattern is used by rename - tested against full path after it has been lower cased. | `(.*[a-f0-9]{8}+$)|(.*\\.tmp$)|(.*\\.wbk$)|(.*\\.bak$)|(.*\\~$)` |
+| filesystem.rootPath | Root directory to open onto | ${protocols.rootPath} |
+| filesystem.setReadOnlyFlagOnFolders | Should we ever set the read only flag on folders? This may cause problematic behaviour in Windows clients. See ALF-6727. | false |
+| filesystem.storeName | Root directory to open onto | ${spaces.store} |
+| ftp.bindto | An empty value indicates bind to all available network adapters | |
+| ftp.dataPortFrom | FTP data port range, a value of 0:0 disables the data port range and will use the next available port Valid range is 1024-65535 | 0 |
+| ftp.dataPortTo | FTP data port range, a value of 0:0 disables the data port range and will use the next available port Valid range is 1024-65535 | 0 |
 | ftp.enabled | FTP access | false |
+| ftp.externalAddress | FTP external address, the IP address as seen by FTP clients (in case of NAT) | |
 | fts.indexer.batchSize | | 1000 |
+| ftp.keyStore | FTPS support (enabled when the keystore and truststore are set) | |
+| ftp.keyStorePassphrase | FTPS support (enabled when the keystore and truststore are set) | |
+| ftp.keyStoreType | FTPS support (enabled when the keystore and truststore are set) | JKS |
+| ftp.port | FTP Server Configuration | 21 |
+| ftp.requireSecureSession | | true |
+| ftp.sessionDebug | FTP session debug flags (also enable org.alfresco.fileserver=debug logging level) Comma delimeted list of levels: STATE, RXDATA, TXDATA, DUMPDATA, SEARCH, INFO, FILE, FILEIO, ERROR, PKTTYPE, TIMING, DATAPORT, DIRECTORY, SSL | |
+| ftp.sessionTimeout | Timeout for socket, that is waiting response from client | 5000 |
+| ftp.sslEngineDebug | | false |
+| ftp.trustStore | | |
+| ftp.trustStorePassphrase | | |
+| ftp.trustStoreType | | JKS |
 | heartbeat.enabled | HeartBeat | true |
 | heartbeat.target.url | HeartBeat | |
 | hibernate.jdbc.use_get_generated_keys | | false |
@@ -768,6 +1588,13 @@ The table below shows the full list of properties (exluding module specific prop
 | home_folder_provider_synchronizer.keep_empty_parents | Used to move home folders to a new location | false |
 | home_folder_provider_synchronizer.override_provider | Used to move home folders to a new location | |
 | hybridworkflow.enabled | | false |
+| identity-service.authentication.defaultAdministratorUserNames | | admin |
+| identity-service.authentication.enabled | | true |
+| identity-service.auth-server-url | | `http://localhost:8180/auth` |
+| identity-service.realm | | springboot |
+| identity-service.resource | | activiti |
+| identity-service.public-client | | true |
+| identity-service.ssl-required | | none |
 | imap.attachments.folder.folderPath | Imap extraction settings | ${spaces.imap_attachments.childname} |
 | imap.attachments.folder.rootPath | Imap extraction settings | /${spaces.company_home.childname} |
 | imap.attachments.folder.store | Imap extraction settings | ${spaces.store} |
@@ -782,18 +1609,96 @@ The table below shows the full list of properties (exluding module specific prop
 | imap.config.server.mountPoints.default.store | Default IMAP mount points | ${spaces.store} |
 | imap.config.server.mountPoints.value.AlfrescoIMAP.modeName | Default IMAP mount points | MIXED |
 | imap.config.server.mountPoints.value.AlfrescoIMAP.mountPointName | Default IMAP mount points | Alfresco IMAP |
+| imap.mail.from.default | | alfresco@demo.alfresco.org |
+| imap.mail.to.default | | alfresco@demo.alfresco.org |
 | imap.server.attachments.extraction.enabled | IMAP property | true |
-| imap.server.enabled | IMAP property | false |
-| imap.server.port | IMAP property | 143 |
+| imap.server.enabled | | false |
+| imap.server.folder.cache.size | | 10000 |
+| imap.server.host | | 0.0.0.0 |
+| imap.server.imap.enabled | | true |
+| imap.server.imaps.enabled | | false |
+| imap.server.imaps.port | | 993 |
+| imap.server.port | | 143 |
+| imap.server.shuffle.move.delete.delay | | 10000 |
+| img.coders | External executable locations | ${img.root}/modules/coders |
+| img.config | External executable locations | ${img.root}/config |
 | img.dyn | External executable locations | ${img.root}/lib |
 | img.exe | External executable locations | ${img.root}/bin/convert |
 | img.root | External executable locations | ./ImageMagick |
 | img.startupRetryPeriodSeconds | When img.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | img.url | Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default. | |
 | index.backup.cronExpression | | `0 0 3 * * ?` |
-| index.subsystem.name | | noindex |
+| index.subsystem.name | The search subsystem to use (noindex, solr6) | noindex |
 | index.tracking.minRecordPurgeAgeDays | Index tracking information of a certain age is cleaned out by a scheduled job. Any clustered system that has been offline for longer than this period will need to be seeded with a more recent backup of the Lucene indexes or the indexes will have to be fully rebuilt.Use -1 to disable purging. This can be switched on at any stage. | 30 |
 | index.tracking.purgeSize | Unused transactions will be purged in chunks determined by commit time boundaries. 'index.tracking.purgeSize' specifies the size of the chunk (in ms). Default is a couple of hours. | 7200000 |
+| jodconverter.connectTimeout | | 25000 |
+| jodconverter.enabled | External executable locations This property determines whether the jodConverter services are enabled. Allowed values are 'true' or 'false'. | true |
+| jodconverter.maxTasksPerProcess | The maximum number of OOo-related tasks to perform before a process restart | 200 |
+| jodconverter.officeHome | Specifies the location of LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like "/Applications/OpenOffice.org.app/Contents". For other OSes this should be the directory that contains "program/soffice.bin". For Debian/Ubuntu it will be like "/usr/lib64/libreoffice", for Fedora it will be like "/opt/openoffice.org3", for Windows it will be like "C:/Alfresco/libreoffice" | /usr/lib64/libreoffice |
+| jodconverter.portNumbers | 1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003, 2004
+Note that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use. | 2022 |
+| jodconverter.startupRetryPeriodSeconds | When jodconverter.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
+| jodconverter.taskExecutionTimeout | timeouts are in milliseconds | 120000 |
+| jodconverter.taskQueueTimeout | timeouts are in milliseconds | 30000 |
+| jodconverter.templateProfileDir | OpenOffice user template profile to be used by the JOD started OpenOffice process. If blank, a default profile is created. The user profile is recreated on each restart from the template. May be set to an existing user's profile such as "C:\Users\<username>\AppData\Roaming\OpenOffice.org\3" | |
+| jodconverter.url | Remote server (or docker container) url used to service jodconverter requests. | |
+| kerberos.authentication.authenticateCIFS | | true |
+| kerberos.authentication.authenticateFTP | | true |
+| kerberos.authentication.cifs.configEntryName | | AlfrescoCIFS |
+| kerberos.authentication.cifs.password | | secret |
+| kerberos.authentication.defaultAdministratorUserNames | | |
+| kerberos.authentication.realm | | ALFRESCO.ORG |
+| kerberos.authentication.stripUsernameSuffix | | true |
+| kerberos.authentication.user.configEntryName | | Alfresco |
+| ldap.authentication.active | This flag enables use of this LDAP subsystem for authentication. It may be that this subsytem should only be used for synchronization, in which case this flag should be set to false. | true |
+| ldap.authentication.allowGuestLogin | This properties file brings together the common options for LDAP authentication rather than editing the bean definitions | true |
+| ldap.authentication.authenticateFTP | Enable FTP authentication using LDAP | true |
+| ldap.authentication.defaultAdministratorUserNames | Comma separated list of user names who should be considered administrators by default | Administrator |
+| ldap.authentication.escapeCommasInBind | Escape commas entered by the user at bind time Useful when using simple authentication and the CN is part of the DN and contains commas| false |
+| ldap.authentication.escapeCommasInUid | Escape commas entered by the user when setting the authenticated user Useful when using simple authentication and the CN is part of the DN and contains commas, and the escaped \, is pulled in as part of an LDAP sync If this option is set to true it will break the default home folder provider as space names can not contain \ | false |
+| ldap.authentication.java.naming.factory.initial | The LDAP context factory to use | com.sun.jndi.ldap.LdapCtxFactory |
+| ldap.authentication.java.naming.provider.url | The URL to connect to the LDAP server | `ldap://domaincontroller.company.com:389` |
+| ldap.authentication.java.naming.read.timeout | equests timeout, in miliseconds, use 0 for none (default) | 0 |
+| ldap.authentication.java.naming.referral | Referrals processing, can be: ignore, follow, throw | follow |
+| ldap.authentication.java.naming.security.authentication | Custom Socket Factory. ldap.java.naming.ldap.factory.socket=org.alfresco.repo.security.authentication.ldap.AlfrescoLdapSSLSocketFactory The authentication mechanism to use for password validation | simple |
+| ldap.authentication.userNameFormat | How to map the user id entered by the user to taht passed through to LDAP In Active Directory, this can either be the user principal name (UPN) or DN. UPNs are in the form `<sAMAccountName>@domain` and are held in the userPrincipalName attribute of a user| %s@domain |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.authentication | A list of space-separated authentication types of connections that may be pooled. Valid types are "none", "simple", and "DIGEST-MD5". | none simple |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.debug | A string that indicates the level of debug output to produce. Valid values are "fine" (trace connection creation and removal) and "all" (all debugging information). | |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.initsize | The string representation of an integer that represents the number of connections per connection identity to create when initially creating a connection for the identity. | 1 |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.maxsize | The string representation of an integer that represents the maximum number of connections per connection identity that can be maintained concurrently. Empty value means no maximum size. | |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.prefsize | The string representation of an integer that represents the preferred number of connections per connection identity that should be maintained concurrently. Empty value means no preferred size. | |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.protocol | A list of space-separated protocol types of connections that may be pooled. Valid types are "plain" and "ssl". | plain |
+| ldap.pooling.com.sun.jndi.ldap.connect.pool.timeout | The string representation of an integer that represents the number of milliseconds that an idle connection may remain in the pool without being closed and removed from the pool. Empty value means no timeout, connection stays in pool forever. Bad connections are automatically detected and removed from the pool by the LDAP provider | |
+| ldap.pooling.com.sun.jndi.ldap.connect.timeout | The string representation of an integer that represents the number of milliseconds to specify how long to wait for a pooled connection. If you omit this property, the application will wait indefinitely. | |
+| ldap.synchronization.active | This flag enables use of this LDAP subsystem for user and group synchronization. It may be that this subsytem should only be used for authentication, in which case this flag should be set to false. | true |
+| ldap.synchronization.com.sun.jndi.ldap.connect.pool | LDAPS truststore configuration properties ldap.authentication.truststore.path= ldap.authentication.truststore.passphrase= ldap.authentication.truststore.type= Set to 'ssl' to enable truststore configuration via subsystem's properties ldap.authentication.java.naming.security.protocol=ssl Enable/disable connection pooling for synchronization For more information about connection pooling please refer to [http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/pool.html](http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/pool.html). For more information about pool configuration please refer to [http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/config.html](http://docs.oracle.com/javase/jndi/tutorial/ldap/connect/config.html). | true |
+ldap.synchronization.defaultHomeFolderProvider | The default home folder provider to use for people created via LDAP import | largeHomeFolderProvider |
+| ldap.synchronization.enableProgressEstimation | If true progress estimation is enabled. When enabled, the user query has to be run twice in order to count entries. | true |
+| ldap.synchronization.groupDifferentialQuery | The query to select objects that represent the groups to import that have changed since a certain time. | (&(objectclass\=group)(!(whenChanged<\={0}))) |
+| ldap.synchronization.groupDisplayNameAttributeName | The attribute on LDAP group objects to map to the authority display name property in Alfresco | displayName |
+| ldap.synchronization.groupIdAttributeName | The attribute on LDAP group objects to map to the authority name property in Alfresco | cn |
+| ldap.synchronization.groupMemberAttributeName | The attribute in LDAP on group objects that defines the DN for its members | member |
+| ldap.synchronization.groupQuery | The query to select all objects that represent the groups to import. | (objectclass\=group) |
+| ldap.synchronization.groupSearchBase | The group search base restricts the LDAP group query to a sub section of tree on the LDAP server. | ou\=Security Groups,ou\=Alfresco,dc=domain |
+| ldap.synchronization.groupType | The group type in LDAP | group |
+| ldap.synchronization.java.naming.security.authentication | The authentication mechanism to use for synchronization | simple |
+| ldap.synchronization.java.naming.security.credentials | The password for the default principal (only used for LDAP sync) | secret |
+| ldap.synchronization.java.naming.security.principal | The default principal to bind with (only used for LDAP sync). This should be a UPN or DN | alfresco@domain |
+| ldap.synchronization.modifyTimestampAttributeName | The name of the operational attribute recording the last update time for a group or user. | whenChanged |
+| ldap.synchronization.personDifferentialQuery | The query to select objects that represent the users to import that have changed since a certain time. | `(&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512)(!(whenChanged<\={0})))` |
+| ldap.synchronization.personQuery | The query to select all objects that represent the users to import. | `(&(objectclass\=user)(userAccountControl\:1.2.840.113556.1.4.803\:\=512))` |
+| ldap.synchronization.personType | The person type in LDAP | user |
+| ldap.synchronization.queryBatchSize | If positive, this property indicates that RFC 2696 paged results should be used to split query results into batches of the specified size. This overcomes any size limits imposed by the LDAP server. | 1000 |
+| ldap.synchronization.timestampFormat | The timestamp format. Unfortunately, this varies between directory servers. | `yyyyMMddHHmmss'.0Z'` |
+| ldap.synchronization.userAccountStatusInterpreter | The Account Status Interpreter bean name | ldapadUserAccountStatusInterpreter |
+| ldap.synchronization.userAccountStatusProperty | LDAP-AD property name for user enabled/disabled status | userAccountControl |
+| ldap.synchronization.userEmailAttributeName | The attribute on person objects in LDAP to map to the email property in Alfresco
+ | mail |
+| ldap.synchronization.userFirstNameAttributeName | The attribute on person objects in LDAP to map to the first name property in Alfresco | givenName |
+| ldap.synchronization.userIdAttributeName | The attribute name on people objects found in LDAP to use as the uid in Alfresco | sAMAccountName |
+| ldap.synchronization.userLastNameAttributeName | The attribute on person objects in LDAP to map to the last name property in Alfresco | sn |
+| ldap.synchronization.userOrganizationalIdAttributeName | The attribute on person objects in LDAP to map to the organizational id  property in Alfresco | company |
+| ldap.synchronization.userSearchBase | The user search base restricts the LDAP user query to a sub section of tree on the LDAP server. | ou\=User Accounts,ou=\Alfresco,dc=domain |
 | legacy.transform.service.enabled | Used to disable transforms that extend AbstractContentTransformer2 | true |
 | links.protocosl.white.list | Allowed protocols for links | http,https,ftp,mailto |
 | local.tregacy.transform.service.enabledansform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
@@ -803,8 +1708,8 @@ The table below shows the full list of properties (exluding module specific prop
 | localTransform.core-aio.startupRetryPeriodSeconds | When a local transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | localTransform.core-aio.url | Local transformer urls to T-engines to service transform requests via http. Enabled by default. | `http://localhost:8090/` |
 | location.license.embedded | Spring resource location of embedded license files | /WEB-INF/alfresco/license/*.lic |
-| location.license.external | Spring resource location of external license files | file://${dir.license.external}/*.lic |
-| location.license.shared | Spring resource location of license files on shared classpath | classpath*:/alfresco/extension/license/*.lic |
+| location.license.external | Spring resource location of external license files | `file://${dir.license.external}/*.lic` |
+| location.license.shared | Spring resource location of license files on shared classpath | `classpath*:/alfresco/extension/license/*.lic` |
 | lucene.commit.lock.timeout | | 100000 |
 | lucene.defaultAnalyserResourceBundleName | | alfresco/model/dataTypeAnalyzers |
 | lucene.indexer.batchSize | The size of the queue of nodes waiting for index. Events are generated as nodes are changed, this is the maximum size of the queue used to coalesce event. When this size is reached the lists of nodes will be indexed. [http://issues.alfresco.com/browse/AR-1280](http://issues.alfresco.com/browse/AR-1280): Setting this high is the workaround as of 1.4.3. | 1000000 |
@@ -845,14 +1750,36 @@ The table below shows the full list of properties (exluding module specific prop
 | lucene.maxAtomicTransformationTime | Millisecond threshold for text transformations. Slower transformers will force the text extraction to be asynchronous | 100 |
 | lucene.query.maxClauses | The maximum number of clauses that are allowed in a lucene query | 10000 |
 | lucene.write.lock.timeout | Index locks (mostly deprecated and will be tidied up with the next lucene upgrade) | 10000 |
+| mail.encoding | | UTF-8 |
+| mail.from.default | Default email address used for FROM if no other suitable value can found. | `alfresco@demo.alfresco.org` |
+| mail.from.enabled | Can the FROM field be specified as a parameter or current user or does it  always need to be the default value - to agree with the username/password? | true |
+| mail.host | Outbound SMTP properties use these properties to configure the out-bound SMTP server. | smtp.example.com |
+| mail.password | | |
+| mail.port | Outbound SMTP properties use these properties to configure the out-bound SMTP server. | 25 |
+| mail.protocol | Is the email protocol smtp or smtps | smtp |
 | mail.service.corePoolSize | Oubound Mail | 8 |
 | mail.service.maximumPoolSize | Oubound Mail | 20 |
 | mbean.server.locateExistingServerIfPossible | Should the Mbean server bind to an existing server. Set to true for most application servers. false for WebSphere clusters. | true |
+| mail.smtp.auth | Additional Java Mail properties for SMTP protocol | false |
+| mail.smtp.debug | Additional Java Mail properties for SMTP protocol | false |
+| mail.smtp.starttls.enable | Additional Java Mail properties for SMTP protocol | false |
+| mail.smtp.timeout | Additional Java Mail properties for SMTP protocol | 30000 |
+| mail.testmessage.send | use these properties to send test message during start of subsystem | false |
+| mail.testmessage.subject | use these properties to send test message during start of subsystem | Outbound SMTP |
+| mail.testmessage.text | use these properties to send test message during start of subsystem | The Outbound SMTP email subsystem is working. |
+| mail.testmessage.to | use these properties to send test message during start of subsystem | |
+| mail.transports.maxActive | transport pool settings | 1 |
+| mail.transports.maxIdle | transport pool settings | 8 |
+| mail.tranports.maxWait | transport pool settings | 30000 |
+| mail.tranports.minEvictableIdleTime | transport pool settings | 30000 |
+| mail.tranports.timeBetweenEvictionRuns | transport pool settings | 30000 |
+| mail.username | | anonymous |
+| mail.validate.addresses | validate email addresses | true |
 | messaging.broker.connections.max | | 8 |
 | messaging.broker.connections.maxActiveSessionsPerConnection | | 1000 |
 | messaging.broker.password | | |
 | messaging.broker.ssl | | false |
-| messaging.broker.url | | failover:(tcp://localhost:61616)?timeout=3000&jms.useCompression=true |
+| messaging.broker.url | | `failover:(tcp://localhost:61616)?timeout=3000&jms.useCompression=true` |
 | messaging.broker.username | | |
 | messaging.camel.context.id | | alfrescoCamelContext |
 | messaging.subsystem.autoStart | Messaging subsystem | true |
@@ -896,6 +1823,18 @@ The table below shows the full list of properties (exluding module specific prop
 | opencmis.servletpath.value | URL generation overrides | |
 | orphanReaper.lockRefreshTime | OrphanReaper | 60000 |
 | orphanReaper.lockTimeOut | OrphanReaper | 3600000 |
+| passthru.authentication.authenticateCIFS | | true |
+| passthru.authentication.authenticateFTP | | true |
+| passthru.authentication.broadcastMask | | |
+| passthru.authentication.connectTimeout | Timeout value when opening a session to an authentication server, in milliseconds | 5000 |
+| passthru.authentication.defaultAdministratorUserNames | | |
+| passthru.authentication.domain | | DOMAIN |
+| passthru.authentication.guestAccess | | false |
+| passthru.authentication.offlineCheckInterval | Offline server check interval in seconds | 300 |
+| passthru.authentication.protocolOrder | | TCPIP,NetBIOS |
+| passthru.authentication.servers | | |
+| passthru.authentication.sessionCleanup | | true |
+| passthru.authentication.useLocalServer | | false |
 | people.search.honor.hint.useCQ | Use a canned query when requested to search for people if "[hint:useCQ]" is provided in search term | true |
 | policy.content.update.ignoreEmpty | Should we consider zero byte content to be the same as no content when firing content update policies? Prevents 'premature' firing of inbound content rules for some clients such as Mac OS X Finder | true |
 | protocols.rootPath | Default root path for protocols | /${spaces.company_home.childname} |
@@ -905,6 +1844,7 @@ The table below shows the full list of properties (exluding module specific prop
 | rendition.config.initialAndOnError.cronExpression | | `0/10 * * * * ?` |
 | renditionService2.enabled | Rendition Service 2 | true |
 | replication.enabled | Replication Service | false |
+| replication.transfer.readonly | | true |
 | repo.event2.filter.nodeAspects | Repo events2 | |
 | repo.event2.filter.nodeTypes | Repo events2. Type and aspect filters which should be excluded. Note: System folders node types are added by default | sys:*, fm:*, cm:thumbnail, cm:failedThumbnail, cm:rating, rma:rmsite include_subtypes |
 | repo.event2.filter.users | Comma separated list of users which should be excluded. Note: username's case-sensitivity depends on the {user.name.caseSensitive} setting | System, null |
@@ -912,6 +1852,12 @@ The table below shows the full list of properties (exluding module specific prop
 | repo.remote.endpoint | repo.remote.endpoint | /service |
 | repository.name | The name of the repository | Main Repository |
 | sample.site.disabled | | false |
+| search.solrShardRegistry.maxAllowedReplicaTxCountDifference | | 1000 |
+| search.solrShardRegistry.purgeOnInit | | true |
+| search.solrShardRegistry.shardInstanceTimeoutInSeconds | | 300 |
+| search.solrTrackingSupport.enabled | | true |
+| search.solrTrackingSupport.ignorePathsForSpecificAspects | | false |
+| search.solrTrackingSupport.ignorePathsForSpecificTypes | | false |
 | security.anyDenyDenies | Security | true |
 | security.postProcessDenies | Whether to post-process denies. Only applies to solr4+ when anyDenyDenies is true. | false |
 | server.allowedusers | | |
@@ -954,12 +1900,26 @@ The table below shows the full list of properties (exluding module specific prop
 | smart.folders.config.vanilla.processor.classpath | Vanilla JSON templates javascript processor classpath. A java script processor used to convert JSON templates to internal smart folder definitions. | /org/alfresco/repo/virtual/node/vanilla.js |
 | smart.folders.enabled | Smart Folders Config Properties | false |
 | smart.reference.classpath.hash | Smart reference config | ${smart.folders.config.vanilla.processor.classpath}->1,${smart.folders.config.system.templates.classpath}->2 |
+| solr.backup.alfresco.cronExpression | | `0 0 2 * * ?` |
+| solr.backup.alfresco.numberToKeep | | 3 |
+| solr.backup.alfresco.remoteBackupLocation | | ${dir.root}/solr6Backup/alfresco |
+| solr.backup.archive.cronExpression | | `0 0 4 * * ?` |
+| solr.backup.archive.numberToKeep | | 3 |
+| solr.backup.archive.remoteBackupLocation | | ${dir.root}/solr6Backup/archive |
+| solr.baseUrl | /solr |
 | solr.cmis.alternativeDictionary | SOLR connection details (e.g. for JMX) | DEFAULT_DICTIONARY |
+| solr.defaultShardedFacetLimit | \ 20 |
+| solr.defaultUnshardedFacetLimit | | 100 |
 | solr.host | SOLR hostname | localhost |
 | solr.max.host.connections | Maximum number of connections | 40 |
 | solr.max.total.connections | Total number of connections |40 |
-| solr.port | SOLR port | 8983 |
-| solr.port.ssl | SOLR SSL port | 8984 |
+| solr.port | SOLR port | 8083 |
+| solr.port.ssl | SOLR SSL port | 8446 |
+| solr.query.cmis.queryConsistency | | TRANSACTIONAL_IF_POSSIBLE |
+| solr.query.fts.queryConsistency | | TRANSACTIONAL_IF_POSSIBLE |
+| solr.query.hybrid.enabled | | false |
+| solr.query.includeGroupsForRoleAdmin | | false |
+| solr.query.maximumResultsFromUnlimitedQuery | | ${system.acl.maxPermissionChecks} |
 | solr.secureComms | Determines whether to connect to SOLR using HTTPS (none, https) | https |
 | solr.solrConnectTimeout | Solr connect timeout in ms | 5000 |
 | solr.solrPassword | Default SOLR password | solr |
@@ -974,6 +1934,8 @@ The table below shows the full list of properties (exluding module specific prop
 | solr.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR store mappings mappings | solrHttpClientFactory |
 | solr.store.mappings.value.solrMappingArchive.identifier | Default SOLR store mappings mappings | SpacesStore |
 | solr.store.mappings.value.solrMappingArchive.protocol | Default SOLR store mappings mappings | archive |
+| solr.suggester.enabled | Solr Suggester properties | true |
+| solr.useDynamicShardRegistration | | false |
 | solr4.store.mappings | Default SOLR 4 store mappings mappings | solrMappingAlfresco,solrMappingArchive |
 | solr4.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 4 store mappings mappings | /solr4/alfresco |
 | solr4.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
@@ -983,6 +1945,12 @@ The table below shows the full list of properties (exluding module specific prop
 | solr4.store.mappings.value.solrMappingArchive.httpClientFactory | Default SOLR 4 store mappings mappings | solrHttpClientFactory |
 | solr4.store.mappings.value.solrMappingArchive.identifier | Default SOLR 4 store mappings mappings | SpacesStore |
 | solr4.store.mappings.value.solrMappingArchive.protocol | Default SOLR 4 store mappings mappings | archive |
+| solr6.alfresco.nodeString | Default unsharded | |
+| solr6.alfresco.numShards | Default unsharded | 1 |
+| solr6.alfresco.replicationFactor | Default unsharded | 1 |
+| solr6.archive.nodeString | Default unsharded | |
+| solr6.archive.numShards | Default unsharded | 1 |
+| solr6.archive.replicationFactor | Default unsharded | 1 |
 | solr6.store.mappings | Default SOLR 6 store mappings mappings | solrMappingAlfresco,solrMappingArchive,solrMappingHistory |
 | solr6.store.mappings.value.solrMappingAlfresco.baseUrl | Default SOLR 6 store mappings mappings | /solr/alfresco |
 | solr6.store.mappings.value.solrMappingAlfresco.httpClientFactory | Default SOLR 6 store mappings mappings | solrHttpClientFactory |
@@ -999,7 +1967,7 @@ The table below shows the full list of properties (exluding module specific prop
 | solr_facets.inheritanceHierarchy | Solr Facets Config Properties | default,custom |
 | solr_facets.root | Solr Facets Config Properties | ${solr_facets.root.path}/${spaces.solr_facets.root.childname} |
 | solr_facets.root.path | Solr Facets Config Properties | /app:company_home/app:dictionary |
-| spaces.archive.store | Spaces Archive Configuration | archive://SpacesStore |
+| spaces.archive.store | Spaces Archive Configuration | `archive://SpacesStore` |
 | spaces.company_home.childname | Spaces Configuration | app:company_home |
 | spaces.content_forms.childname | Spaces Configuration | app:forms |
 | spaces.dictionary.childname | Spaces Configuration | app:dictionary |
@@ -1025,7 +1993,7 @@ The table below shows the full list of properties (exluding module specific prop
 | spaces.smartdownloads.childname | Spaces Configuration | app:smart_downloads |
 | spaces.smartfolders.childname | Spaces Configuration | app:smart_folders |
 | spaces.solr_facets.root.childname | Spaces Configuration |srft:facets |
-| spaces.store | Spaces Configuration | workspace://SpacesStore |
+| spaces.store | Spaces Configuration | `workspace://SpacesStore` |
 | spaces.system.childname | Spaces Configuration | sys:system |
 | spaces.templates.childname | Spaces Configuration | app:space_templates |
 | spaces.templates.content.childname | Spaces Configuration | app:content_templates |
@@ -1047,6 +2015,9 @@ The table below shows the full list of properties (exluding module specific prop
 | spaces.user_homes.regex.pattern | Spaces Configuration | |
 | spaces.webscripts.childname | Spaces Configuration | cm:webscripts |
 | spaces.workflow.definitions.childname | Spaces Configuration | app:workflow_defs |
+| subscriptions.enabled | Enables the subscription service | true |
+| subscriptions.following.emailTemplateLocationType | | xpath |
+| subscriptions.following.emailTemplatePath | | /app:company_home/app:dictionary/app:email_templates/app:following/cm:following-email.html.ftl
 | subsystems.test.beanProp | Subsystem unit test values. Will not have any effect on production servers | inst1,inst2,inst3 |
 | subsystems.test.beanProp.default.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Default |
 | subsystems.test.beanProp.default.longProperty | Subsystem unit test values. Will not have any effect on production servers | 123456789123456789 |
@@ -1054,6 +2025,17 @@ The table below shows the full list of properties (exluding module specific prop
 | subsystems.test.beanProp.value.inst3.anotherStringProperty | Subsystem unit test values. Will not have any effect on production servers | Global Instance Default |
 | subsystems.test.simpleProp2 | Subsystem unit test values. Will not have any effect on production servers | true |
 | subsystems.test.simpleProp3 | Subsystem unit test values. Will not have any effect on production servers | Global Default3 |
+| synchronization.allowDeletions | Synchronization with deletions | true |
+| synchronization.autoCreatePeopleOnLogin | Should we auto create a missing person on log in? | true |
+| synchronization.externalUserControl | external setting (LDAP systems) - whether users can be enabled; if false then users have to be explicitly disabled in Alfresco | false |
+| synchronization.externalUserControlSubsystemName | Subsystem that will handle the external user control | |
+| synchronization.import.cron | The cron expression defining when imports should take place | `0 0 0 * * ?` |
+| synchronization.loggingInterval | The number of entries to process before logging progress | 100 |
+| synchronization.syncDelete | For large LDAP directories the delete query is expensive and time consuming, needing to read the entire LDAP directory. | true |
+| synchronization.synchronizeChangesOnly | This properties file is used to configure user registry syncronisation (e.g. LDAP) Should the scheduled sync job use differential or full queries on the user registries to determine the set of local users to be updated? When **true**, each user registry is only queried for those users and groups modified since the most recent modification date of all the objects last queried from that same source. When **false** then *all* users and groups are queried from the user registry and updated locally. Nevertheless, a separate query will be run by the scheduled sync job to determine deletions. | true |
+|synchronization.syncOnStartup | Should we trigger a differential sync on startup? | true |
+|synchronization.syncWhenMissingPeopleLogIn | Should we trigger a differential sync when missing people log in? | ture |
+| synchronization.workerThreads | The number of threads to use when doing a batch (scheduled or startup) sync | 1 |
 | system.acl.maxPermissionCheckTimeMillis | Property to limit resources spent on individual searches. The maximum time spent pruning results. | 10000 |
 | system.acl.maxPermissionChecks |Property to limit resources spent on individual searches.The maximum number of search results to perform permission checks against. | 1000 |
 | system.api.discovery.enabled | | true |
@@ -1134,7 +2116,7 @@ The table below shows the full list of properties (exluding module specific prop
 | system.reset-password.endTimer | Reset password workflow will expire in an hour | PT1H |
 | system.reset-password.sendEmailAsynchronously | | true |
 | system.serverMode | The server mode. Set value in alfresco-global.properties (UNKNOWN, TEST, BACKUP, PRODUCTION) | UNKNOWN |
-| system.store | System Configuration | system://system |
+| system.store | System Configuration | `system://system` |
 | system.syncset_definition_container.childname | Folder for storing syncset definitions | sys:syncset_definitions |
 | system.system_container.childname | Folders for storing people | sys:system |
 | system.thumbnail.definition.default.maxPages | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
@@ -1192,6 +2174,8 @@ The table below shows the full list of properties (exluding module specific prop
 | transferservice.receiver.lockRetryWait | How long to wait, in mS, before retrying the transfer lock | 100 |
 | transferservice.receiver.lockTimeOut | How long to wait, in mS, since the last contact with from the client before timing out a transfer. Needs to be long enough to cope with network delays and "thinking time" for both source and destination. Default 5 minutes. | 300000 |
 | transferservice.receiver.stagingDir | Transfer Service | ${java.io.tmpdir}/alfresco-transfer-staging |
+| transformer.debug.entries | Number of entries to show in debug output | 0 |
+| transformer.log.entries | Number of entries to show in the log | 50 |
 | transform.misc.startupRetryPeriodSeconds | When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
 | transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. | |
 | transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `6 30 0/1 * * ?` |
@@ -1216,11 +2200,11 @@ The table below shows the full list of properties (exluding module specific prop
 | urlshortening.bitly.username | URL Shortening Properties | brianalfresco |
 | user.name.caseSensitive | Are user names case sensitive? | false |
 | version.schema | Schema number | 14001 |
-| version.store.deprecated.lightWeightVersionStore | ADM VersionStore Configuration | workspace://lightWeightVersionStore |
+| version.store.deprecated.lightWeightVersionStore | ADM VersionStore Configuration | `workspace://lightWeightVersionStore` |
 | version.store.enableAutoVersionOnUpdateProps | ADM VersionStore Configuration | false |
 | version.store.enableAutoVersioning | ADM VersionStore Configuration | true |
 | version.store.initialVersion | ADM VersionStore Configuration | true |
-| version.store.version2Store | ADM VersionStore Configuration | workspace://version2Store |
+| version.store.version2Store | ADM VersionStore Configuration | `workspace://version2Store` |
 | version.store.versionComparatorClass | Optional `Comparator<Version>` class name to sort versions. Set to: org.alfresco.repo.version.common.VersionLabelComparator. If upgrading from a version that used unordered sequences in a cluster. | |
 | webscripts.encryptTempFiles | Webscripts config | false |
 | webscripts.memoryThreshold | Webscripts config (4mb) | 4194304 |
