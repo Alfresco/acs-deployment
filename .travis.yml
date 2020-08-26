@@ -9,9 +9,9 @@ services:
   - docker
 
 stages:
-  - name: 6.0.N_values.yaml
-  - name: 6.1.N_values.yaml
   - name: 6.2.N_values.yaml
+  - name: 6.1.N_values.yaml
+  - name: 6.0.N_values.yaml
 
 import:
   - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master
@@ -81,7 +81,7 @@ _helm_deploy: &helm_deploy
       values_file="helm/alfresco-content-services/${TRAVIS_JOB_NAME}"
     fi
     deploy=false
-    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_JOB_NAME}* ]] || [[ "${GIT_DIFF}" != *helm/alfresco-content-services* ]]
+    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_JOB_NAME}* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services* ]] && [[ "${GIT_DIFF}" != *helm/alfresco-content-services/*_values.yaml ]] 
     then
       deploy=true
     fi
