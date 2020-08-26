@@ -26,7 +26,7 @@ env:
     - HELM_REPO=incubator
     - KUBERNETES_VERSION=1.18.4
     - HELM_VERSION=${HELM_VERSION:-3.2.4}
-    - GIT_DIFF=$(git diff HEAD~1 --name-only helm/older-versions)
+    - GIT_DIFF=$(git diff HEAD~1 --name-only helm/alfresco-content-services)
 
 branches:
   only:
