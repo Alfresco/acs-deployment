@@ -81,7 +81,7 @@ _helm_deploy: &helm_deploy
       values_file="helm/alfresco-content-services/${TRAVIS_JOB_NAME}"
     fi
     deploy=false
-    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_JOB_NAME}* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services* ]]
+    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_JOB_NAME}* ]] || [[ "${GIT_DIFF}" != *helm/alfresco-content-services* ]]
     then
       deploy=true
     fi
@@ -348,12 +348,12 @@ jobs:
     - name: Deploy Latest Chart and Run Postman Checks
       stage: test
       <<: *helm_deploy
-    - stage: 6.0.N_values.yaml
-      name: 6.0.N_values.yaml
+    - stage: 6.2.N_values.yaml
+      name: 6.2.N_values.yaml
       <<: *helm_deploy
     - stage: 6.1.N_values.yaml
       name: 6.1.N_values.yaml
       <<: *helm_deploy
-    - stage: 6.2.N_values.yaml
-      name: 6.2.N_values.yaml
+    - stage: 6.0.N_values.yaml
+      name: 6.0.N_values.yaml
       <<: *helm_deploy
