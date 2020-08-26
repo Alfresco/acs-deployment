@@ -15,29 +15,29 @@ To avoid license restrictions and private Docker images try the [Community Editi
 
 ## Versioning
 
-The **master** branch of this repository contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
+**NOTE:** **The versioning strategy used in this project has changed, if you have previously used this project please read this section carefully!**
 
-Branches and tags are used for denoting stable releases, to work with a specific release of ACS, please refer to the table below.
+The default options in the **master** branch of this repository contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
 
-|ACS Version|Tag|Branch
-|---|---|---|
-|6.0.1.5|1.2.5|support/HF/1.0
-|6.1.0.9|2.0.3|support/HF/1.1
-|6.1.1.3|2.1.6|support/SP/2.N
-|6.2.0.2|3.0.9|support/SP/3.N
-|6.2.1|4.0.3|support/SP/4.N
-|6.2.2|4.1.0|support/SP/4.N
-|7.0.0|5.0.0|master
+Individual files are now provided in the master branch to deploy the latest hot fix version of each major.minor version of ACS.
 
-NOTE: The last rows (5.0.0) has not been released yet.
+### Docker
 
-Helm charts also have their own [version scheme]((https://docs.helm.sh/developing_charts/#charts-and-versioning)) based on [Semantic Versioning](https://semver.org). The `appVersion` property within the chart describes the version of ACS being deployed. The chart version corresponds to the tag version described in the table above.
+The default docker compose file contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
 
-There are a few ACS specific extensions to the rules:
+To deploy a specific version of ACS several specific major.minor docker compose files are provided.
 
-* Once a chart has been released, the contents of that version MUST NOT be modified. Any modifications MUST be released as a new version. Stable chart version starts with 1.0.0
-* The chart version must be incremented if ACS version is incremented within a Service Pack or Hot Fix.
-* The "appVersion" label must always specify the exact ACS release version, like 6.0.0, 6.1.0, 6.1.1.1, 6.1.1.2. If the "appVersion" was incremented between charts, downgrading to a previous chart is not possible.
+Our tests are executed using the latest version of Docker and Docker Compose provided by Travis.
+
+### Helm
+
+Version 5.0.0 of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
+
+By default the latest version of the chart will always deploy the latest development version of ACS. A set of values files are also provided that can be used to deploy a specific major.minor version.
+
+NOTE: As the Helm chart no longer deploys a specific version of ACS the `appVersion` property within the chart is longer be specified.
+
+Our tests are executed using Helm 3.2.4, kubectl 1.18.4 against an EKS clsuter running Kubernetes 1.17.
 
 ## Documentation
 
@@ -48,4 +48,5 @@ To get started please refer to the [Docker Compose](./docs/docker-compose) and [
 The code in this repository is released under the Apache License, see the [LICENSE](./LICENSE) file for details.
 
 ## Contribution Guide
+
 Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
