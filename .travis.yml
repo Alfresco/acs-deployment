@@ -9,12 +9,9 @@ services:
   - docker
 
 stages:
-  - name: 6.2.2_support_SP_4.N_values.yaml
-  - name: 6.2.1_support_SP_4.N_values.yaml
-  - name: 6.2.0.2_support_SP_3.N_values.yaml
-  - name: 6.1.1.3_support_SP_2.N_values.yaml
-  - name: 6.1.0.9_support_HF_1.1_values.yaml
-  - name: 6.1.0.5_support_HF_1.0_values.yaml
+  - name: 6.0.N_values.yaml
+  - name: 6.1.N_values.yaml
+  - name: 6.2.N_values.yaml
 
 import:
   - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master
@@ -81,10 +78,10 @@ _helm_deploy: &helm_deploy
     export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
     export values_file=helm/alfresco-content-services/values.yaml
     if [[ ${TRAVIS_JOB_NAME} != "Deploy Latest Chart and Run Postman Checks" ]]; then
-      values_file="helm/older-versions/${TRAVIS_JOB_NAME}"
+      values_file="helm/alfresco-content-services/${TRAVIS_JOB_NAME}"
     fi
     deploy=false
-    if [[ "${GIT_DIFF}" == *helm/older-versions/${TRAVIS_JOB_NAME}* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services* ]]
+    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_JOB_NAME}* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services* ]]
     then
       deploy=true
     fi
@@ -240,7 +237,9 @@ _helm_deploy: &helm_deploy
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
     # run sync service checks
-    docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]]; then
+      docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    fi
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgress pods,
     # wait for k8s to recreate them, then check if the data created in the first test run is still there
@@ -349,21 +348,12 @@ jobs:
     - name: Deploy Latest Chart and Run Postman Checks
       stage: test
       <<: *helm_deploy
-    - stage: 6.2.2_support_SP_4.N_values.yaml
-      name: 6.2.2_support_SP_4.N_values.yaml
+    - stage: 6.0.N_values.yaml
+      name: 6.0.N_values.yaml
       <<: *helm_deploy
-    - stage: 6.2.1_support_SP_4.N_values.yaml
-      name: 6.2.1_support_SP_4.N_values.yaml
+    - stage: 6.1.N_values.yaml
+      name: 6.1.N_values.yaml
       <<: *helm_deploy
-    - stage: 6.2.0.2_support_SP_3.N_values.yaml
-      name: 6.2.0.2_support_SP_3.N_values.yaml
-      <<: *helm_deploy
-    - stage: 6.1.1.3_support_SP_2.N_values.yaml
-      name: 6.1.1.3_support_SP_2.N_values.yaml
-      <<: *helm_deploy
-    - stage: 6.1.0.9_support_HF_1.1_values.yaml
-      name: 6.1.0.9_support_HF_1.1_values.yaml
-      <<: *helm_deploy
-    - stage: 6.1.0.5_support_HF_1.0_values.yaml
-      name: 6.1.0.5_support_HF_1.0_values.yaml
+    - stage: 6.2.N_values.yaml
+      name: 6.2.N_values.yaml
       <<: *helm_deploy

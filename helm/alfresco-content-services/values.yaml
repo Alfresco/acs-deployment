@@ -221,6 +221,7 @@ tika:
 # Declares the alfresco-tika service used by the content repository
 # to transform office files
 transformmisc:
+  enabled: true
   replicaCount: 2
   image:
     repository: alfresco/alfresco-transform-misc
@@ -252,6 +253,7 @@ transformmisc:
     maxTransformSeconds: 1800
 
 aiTransformer:
+  enabled: true
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
