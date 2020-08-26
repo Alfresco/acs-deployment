@@ -206,11 +206,11 @@ tika:
   environment:
     JAVA_OPTS: " -Xms256M -Xmx512M"
   readinessProbe:
-    initialDelaySeconds: 20
+    initialDelaySeconds: 60
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
-    initialDelaySeconds: 10
+    initialDelaySeconds: 60
     periodSeconds: 20
     timeoutSeconds: 10
     livenessPercent: 400
@@ -349,7 +349,7 @@ share:
     periodSeconds: 20
     timeoutSeconds: 10
   livenessProbe:
-    initialDelaySeconds: 130
+    initialDelaySeconds: 200
     periodSeconds: 20
     timeoutSeconds: 10
 

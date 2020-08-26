@@ -25,7 +25,9 @@ data:
   PDF_RENDERER_URL: http://{{ template "content-services.shortname" . }}-pdfrenderer:80
   LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
   TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80
+  {{- if .Values.transformmisc.enabled }}
   MISC_URL: http://{{ template "content-services.shortname" . }}-transform-misc:80
+  {{- end }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   {{- if .Values.ai.enabled }}
   TRANSFORMER_URL_AWS_AI: http://{{ template "content-services.shortname" . }}-ai-transformer:80
