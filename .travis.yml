@@ -26,7 +26,7 @@ env:
     - HELM_REPO=incubator
     - KUBERNETES_VERSION=1.18.4
     - HELM_VERSION=${HELM_VERSION:-3.2.4}
-    - GIT_DIFF=$(git diff HEAD~1 --name-only helm/alfresco-content-services)
+    - GIT_DIFF=$(git diff HEAD~1 --name-only .)
 
 branches:
   only:
@@ -81,7 +81,7 @@ _helm_deploy: &helm_deploy
       values_file="helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml"
     fi
     deploy=false
-    helm/alfresco-content-services/6.1.N_values.yaml
+
     if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]]
     then
       deploy=true
