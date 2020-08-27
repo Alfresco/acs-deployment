@@ -240,18 +240,45 @@ kubectl create namespace alfresco
 
 ### Docker Registry Secret
 
-1. Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following commmand (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
+Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following commmand (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
 
-    ```bash
-    kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
-    ```
+```bash
+kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
+```
 
 ### ACS
 
-1. Deploy ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
+Decide whether you want to install the latest version of ACS or a previous version and follow the steps in the relevant section below.
+
+#### Latest Version
+
+Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
+
+```bash
+helm install acs alfresco-incubator/alfresco-content-services \
+--set externalPort="443" \
+--set externalProtocol="https" \
+--set externalHost="acs.YOUR-DOMAIN-NAME" \
+--set persistence.enabled=true \
+--set persistence.storageClass.enabled=true \
+--set persistence.storageClass.name="nfs-client" \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+--atomic \
+--timeout 9m0s \
+--namespace=alfresco
+```
+
+NOTE: The command will wait until the deployment is ready so please be patient.
+
+#### Previous version
+
+1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services).
+
+2. Deploy the specific version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` and `MINOR` with the appropriate values):
 
     ```bash
     helm install acs alfresco-incubator/alfresco-content-services \
+    --values=MAJOR.MINOR.N_values.yaml \
     --set externalPort="443" \
     --set externalProtocol="https" \
     --set externalHost="acs.YOUR-DOMAIN-NAME" \
