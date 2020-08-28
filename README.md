@@ -17,9 +17,9 @@ To avoid license restrictions and private Docker images try the [Community Editi
 
 **NOTE:** **The versioning strategy used in this project has changed, if you have previously used this project please read this section carefully!**
 
-The default options in the **master** branch of this repository contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
+The master branch of this repository now contains the artifacts required to deploy both the the latest work-in-progress development version and previous stable versions of ACS.
 
-Individual files are now provided in the master branch to deploy the latest hot fix version of each major.minor version of ACS.
+The default behaviour of the deployment scripts is to use the latest work-in-progress development version however, individual files are now provided to deploy the latest hot fix version of each major.minor version of ACS. The `support/*` branches will remain in place but will no longer be maintained.
 
 ### Docker
 
@@ -31,7 +31,7 @@ Our tests are executed using the latest version of Docker and Docker Compose pro
 
 ### Helm
 
-Version 5.0.0 of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
+Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
 
 By default the latest version of the chart will always deploy the latest development version of ACS. A set of values files are also provided that can be used to deploy a specific major.minor version.
 

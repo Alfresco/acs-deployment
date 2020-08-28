@@ -274,7 +274,7 @@ NOTE: The command will wait until the deployment is ready so please be patient.
 
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services).
 
-2. Deploy the specific version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` and `MINOR` with the appropriate values):
+2. Deploy the specific version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` & `MINOR` with the appropriate values):
 
     ```bash
     helm install acs alfresco-incubator/alfresco-content-services \
