@@ -219,39 +219,8 @@ tika:
     maxTransforms: 10000
     maxTransformSeconds: 1800
 
-# Declares the alfresco-tika service used by the content repository
-# to transform office files
 transformmisc:
   enabled: false
-  replicaCount: 2
-  image:
-    repository: alfresco/alfresco-transform-misc
-    tag: "2.3.4"
-    pullPolicy: Always
-    internalPort: 8090
-  service:
-    name: transformmisc
-    type: ClusterIP
-    externalPort: 80
-  resources:
-    requests:
-      memory: "1000Mi"
-    limits:
-      memory: "1000Mi"
-  environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 400
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1800
 
 aiTransformer:
   replicaCount: 2

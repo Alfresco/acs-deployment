@@ -219,8 +219,6 @@ tika:
     maxTransforms: 10000
     maxTransformSeconds: 1800
 
-# Declares the alfresco-tika service used by the content repository
-# to transform office files
 transformmisc:
   enabled: false
   replicaCount: 2
