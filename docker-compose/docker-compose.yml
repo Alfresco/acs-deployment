@@ -10,6 +10,7 @@
 # Using version 2 as 3 does not support resource constraint options (cpu_*, mem_* limits) for non swarm mode in Compose
 version: "2"
 
+
 services:
     alfresco:
         image: alfresco/alfresco-content-repository:7.0.0-A2
