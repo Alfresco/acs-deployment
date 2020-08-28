@@ -82,7 +82,7 @@ _helm_deploy: &helm_deploy
     fi
     deploy=false
 
-    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
+    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
     then
       deploy=true
     fi
@@ -261,10 +261,10 @@ _helm_deploy: &helm_deploy
     fi
 _docker_deploy: &docker_deploy
   script: |
-    values_file="docker-compose/docker-compose.yml"
+    export values_file="docker-compose/docker-compose.yml"
     deploy=false
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "Deploy Docker Compose and Run Postman Checks" ]]; then
-      values_file="docker-compose/${TRAVIS_BUILD_STAGE_NAME}-docker-compose.yml"
+      export values_file="docker-compose/${TRAVIS_BUILD_STAGE_NAME}-docker-compose.yml"
     fi
     if [[ "${GIT_DIFF}" == *$values_file* ]] || [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]
     then
