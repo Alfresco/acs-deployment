@@ -1,3 +1,4 @@
+{{- if .Values.transformmisc.enabled }}
 # Defines the properties required by the alfresco-transform-misc container
 apiVersion: v1
 kind: ConfigMap
@@ -26,3 +27,4 @@ data:
   livenessTransformPeriodSeconds: "{{ .Values.transformmisc.livenessProbe.livenessTransformPeriodSeconds }}"
   maxTransforms: "{{ .Values.transformmisc.livenessProbe.maxTransforms }}"
   maxTransformSeconds: "{{ .Values.transformmisc.livenessProbe.maxTransformSeconds }}"
+{{- end }}
