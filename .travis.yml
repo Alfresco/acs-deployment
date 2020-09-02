@@ -208,7 +208,7 @@ _helm_deploy: &helm_deploy
     --set persistence.storageClass.name="nfs-client" \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --wait \
-    --timeout 9m0s \
+    --timeout 20m0s \
     --atomic \
     --namespace=$namespace
 
