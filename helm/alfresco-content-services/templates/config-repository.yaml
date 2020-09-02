@@ -20,15 +20,15 @@ data:
   ALFRESCO_OPTS: " -Dalfresco.host={{ $alfhost }}
       -Dalfresco.protocol={{ $alfprotocol }}
       -Dalfresco.port={{ $alfport }}
-      {{ if or (eq $alfport "80") (eq $alfport "443") }}
+      {{- if or (eq $alfport "80") (eq $alfport "443") }}
       -Daos.baseUrlOverwrite={{ $alfprotocol }}://{{ $alfhost }}/alfresco/aos
       -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}
       -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}/.*
-      {{ else }}
+      {{- else }}
       -Daos.baseUrlOverwrite={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/alfresco/aos
       -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}
       -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*
-      {{ end }}
+      {{- end }}
       -Dshare.protocol={{ tpl (.Values.externalProtocol | default "http") $ }}
       -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
       -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}

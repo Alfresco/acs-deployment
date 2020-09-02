@@ -38,9 +38,7 @@ repository:
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
-
       -Dtransform.service.enabled=true
-
       -Xms2000M -Xmx2000M"
   resources:
     requests:
@@ -346,7 +344,7 @@ share:
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
-    timeoutSeconds: 10
+    timeoutSeconds: 15
   livenessProbe:
     initialDelaySeconds: 200
     periodSeconds: 20
