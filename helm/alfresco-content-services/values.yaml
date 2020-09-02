@@ -344,7 +344,7 @@ share:
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
-    timeoutSeconds: 10
+    timeoutSeconds: 15
   livenessProbe:
     initialDelaySeconds: 200
     periodSeconds: 20
