@@ -41,9 +41,11 @@ spec:
           - secretRef:
               name: {{ template "content-services.shortname" . }}-dbsecret
           {{- if .Values.s3connector.enabled }}
+          {{- if .Values.s3connector.secrets }}
           - secretRef:
               # s3 connector secret keys
               name: {{ template "content-services.shortname" . }}-s3secret
+          {{- end }}
           {{- end }}
           {{- if .Values.email.server.enabled }}
           - secretRef:

@@ -1,3 +1,4 @@
+{{- if .Values.transformmisc.enabled }}
 # Defines the deployment for the transform-misc transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
 apiVersion: apps/v1
@@ -75,3 +76,4 @@ spec:
             periodSeconds: {{ .Values.transformmisc.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.transformmisc.livenessProbe.timeoutSeconds }}
+{{- end }}

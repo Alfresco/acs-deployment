@@ -30,7 +30,17 @@
 									"pm.test(\"validateLicenseTest\", function () {",
 									"    pm.expect(pm.response.text()).to.include(\"ENTERPRISE\");",
 									"});",
-									""
+									"",
+									"var jsonData = pm.response.json();",
+									"var modules = JSON.parse(responseBody).entry.repository.modules; ",
+									"",
+									"for (var module in modules){",
+									"    var module = modules[module]",
+									"    if (module.id == \"alfresco-aos-module\"){",
+									"        console.log(module.version);",
+									"        pm.environment.set(\"AOSversion\",module.version);",
+									"    }",
+									"}"
 								]
 							}
 						}
@@ -1573,13 +1583,20 @@
 							"script": {
 								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
 								"exec": [
-									"pm.test(\"Status code is 207\", function () {",
-									"    pm.response.to.have.status(207);",
-									"});",
 									"",
-									"pm.test(\"Response contains the header MicrosoftSharePointTeamServices\", function () {",
-									"    pm.response.to.have.header(\"MicrosoftSharePointTeamServices\");",
-									"});"
+									"AOSversion = pm.environment.get(\"AOSversion\");",
+									"// Test Disabled for 6.0.1 - 1.2.2 AOS",
+									"console.log(AOSversion);",
+									"if (AOSversion != \"1.2.2\"){",
+									"    pm.test(\"Status code is 207\", function () {",
+									"        pm.response.to.have.status(207);",
+									"    });",
+									"",
+									"    pm.test(\"Response contains the header MicrosoftSharePointTeamServices\", function () {",
+									"        pm.response.to.have.header(\"MicrosoftSharePointTeamServices\");",
+									"    });",
+									"}",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1970,42 +1987,6 @@
 								"search"
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "sync-service-healthcheck",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"pm.globals.get(\"url\");",
-									"",
-									"pm.test(\"syncServiceHealthcheck\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"url": "{{protocol}}://{{url}}/syncservice/healthcheck",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
 					},
 					"response": []
 				}

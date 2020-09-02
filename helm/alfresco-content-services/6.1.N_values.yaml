@@ -9,13 +9,14 @@
 # If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
+
 repository:
   replicaCount: 2
   strategy:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "7.0.0-M1"
+    tag: "6.1.1.3"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -68,7 +69,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.3.1"
+    tag: "1.0.2.1"
     pullPolicy: Always
     internalPort: 8095
   service:
@@ -91,8 +92,8 @@ transformrouter:
 pdfrenderer:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-pdf-renderer
-    tag: "2.3.4"
+    repository: quay.io/alfresco/alfresco-pdf-renderer
+    tag: "2.0.17"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -124,8 +125,8 @@ pdfrenderer:
 imagemagick:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-imagemagick
-    tag: "2.3.4"
+    repository: quay.io/alfresco/alfresco-imagemagick
+    tag: "2.0.17"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -157,8 +158,8 @@ imagemagick:
 libreoffice:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-libreoffice
-    tag: "2.3.4"
+    repository: quay.io/alfresco/alfresco-libreoffice
+    tag: "2.0.17"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -190,46 +191,12 @@ libreoffice:
 tika:
   replicaCount: 2
   image:
-    repository: alfresco/alfresco-tika
-    tag: "2.3.4"
+    repository: quay.io/alfresco/alfresco-tika
+    tag: "2.0.17"
     pullPolicy: Always
     internalPort: 8090
   service:
     name: tika
-    type: ClusterIP
-    externalPort: 80
-  resources:
-    requests:
-      memory: "1000Mi"
-    limits:
-      memory: "1000Mi"
-  environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 400
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1800
-
-# Declares the alfresco-tika service used by the content repository
-# to transform office files
-transformmisc:
-  enabled: true
-  replicaCount: 2
-  image:
-    repository: alfresco/alfresco-transform-misc
-    tag: "2.3.4"
-    pullPolicy: Always
-    internalPort: 8090
-  service:
-    name: transformmisc
     type: ClusterIP
     externalPort: 80
   resources:
@@ -252,11 +219,14 @@ transformmisc:
     maxTransforms: 10000
     maxTransformSeconds: 1800
 
+transformmisc:
+  enabled: false
+
 aiTransformer:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.2.1"
+    tag: "1.0.2"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -289,7 +259,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.10.0"
+    tag: "0.5.3"
     pullPolicy: Always
     internalPort: 8099
   initContainer:
@@ -326,7 +296,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "7.0.0-M2"
+    tag: "6.1.1.1"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -348,7 +318,7 @@ share:
     periodSeconds: 20
     timeoutSeconds: 10
   livenessProbe:
-    initialDelaySeconds: 200
+    initialDelaySeconds: 130
     periodSeconds: 20
     timeoutSeconds: 10
 
@@ -396,7 +366,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "2.0.0"
+    tag: "1.4.0"
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
@@ -426,7 +396,7 @@ alfresco-digital-workspace:
       nginx.ingress.kubernetes.io/rewrite-target: "/"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 1.6.0
+    tag: 1.4.0
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -461,7 +431,7 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.7.0"
+  imageTag: "11.4.0"
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
@@ -484,7 +454,7 @@ postgresql-syncservice:
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
-  imageTag: "11.7.0"
+  imageTag: "11.4.0"
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-sync-services/database-data"
@@ -596,6 +566,9 @@ metadataKeystore:
 alfresco-sync-service:
   syncservice:
     enabled : true
+    image:
+      repository: quay.io/alfresco/service-sync
+      tag: 3.1.2
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:

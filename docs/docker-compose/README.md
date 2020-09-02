@@ -19,10 +19,10 @@ As well as the prerequisites mentioned on the [main README](/README.md#prerequis
 
 ## Deploy
 
-1. Clone this repository or download the [docker-compose](../../docker-compose/docker-compose.yml) file.
-2. Navigate to the folder where the _docker-compose.yml_ file is located.
+1. Clone this repository or download one of the docker compose files from [here](../../docker-compose).
+2. Navigate to the folder where the docker compose file you want to use is located.
 3. Log in to Quay.io with your credentials: ```docker login quay.io```
-4. Run ```docker-compose up```
+4. Run ```docker-compose up``` to use the latest version of ACS or ```docker-compose -f major.minor.N-docker-compose.yml up``` to use a specific version of ACS.
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
    * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
@@ -156,7 +156,6 @@ The provided Docker compose file provides some default configuration, the sectio
 | INCREASE_RETRY_TIMEOUT |  | 10000 |
 | MAX_IN_MEMORY_SIZE |  Double default limit to 512KiB | 524288 |
 | HOSTNAME |  | t-router |
-
 
 ### Alfresco Transform Core AIO (transform-core-aio)
 
