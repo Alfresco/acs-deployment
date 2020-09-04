@@ -51,7 +51,7 @@ The following sections describe how to setup the AWS services and highlights the
 
     The end result should resemble something similar to the screenshot below:
 
-    ![S3 IAM Policy](./diagrams/eks-s3-iam-policy.png)
+    ![S3 IAM Policy](../diagrams/eks-s3-iam-policy.png)
 
 ### RDS
 
@@ -70,11 +70,11 @@ The following sections describe how to setup the AWS services and highlights the
 2. Once the cluster has been created (it can take a few minutes) make a note of the generated master password using the "View credentials details" button in the header banner.
 3. Select the database with the "Writer" role and click on the default security group link (as shown in the screenshot below)
 
-    ![DB Security Group](./diagrams/eks-db-security-group.png)
+    ![DB Security Group](../diagrams/eks-db-security-group.png)
 
 4. Add an inbound rule for PostgreSQL traffic from the VPC CIDR range (it will be the same as the NFS rule setup earlier) as shown in the screenshot below:
 
-    ![DB Inbound Rules](./diagrams/eks-db-inbound-rules.png)
+    ![DB Inbound Rules](../diagrams/eks-db-inbound-rules.png)
 
 5. Finally, take a note of the database Endpoint (shown in the screenshot in step 3)
 
