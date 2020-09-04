@@ -4,7 +4,7 @@ This page describes how to deploy Alfresco Content Services (ACS) using [Helm](h
 
 Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. EKS runs the Kubernetes management infrastructure for you across multiple AWS availability zones to eliminate a single point of failure.
 
-**Note:** You don't need to clone this repository to deploy Alfresco Content Services.
+> **Note:** You don't need to clone this repository to deploy Alfresco Content Services.
 
 ## Prerequisites
 
@@ -142,7 +142,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
 5. Click on the default security group for the VPC (highlighted in the screenshot above) and add an inbound rule for NFS traffic from the VPC CIDR range as shown in the screenshot below:
 
-    ![Inbound Rules](./diagrams/eks-inbound-rules.png)
+    ![NFS Inbound Rules](./diagrams/eks-nfs-inbound-rules.png)
 
 6. Deploy an NFS Client Provisioner with Helm using the following command (replacing `EFS-DNS-NAME` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
 
@@ -236,7 +236,7 @@ kubectl create namespace alfresco
     --namespace alfresco
     ```
 
-    NOTE: The command will wait until the deployment is ready so please be patient.
+    > NOTE: The command will wait until the deployment is ready so please be patient.
 
 ### Docker Registry Secret
 
@@ -268,7 +268,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
 --namespace=alfresco
 ```
 
-NOTE: The command will wait until the deployment is ready so please be patient.
+> NOTE: The command will wait until the deployment is ready so please be patient.
 
 #### Previous version
 
@@ -291,7 +291,7 @@ NOTE: The command will wait until the deployment is ready so please be patient.
     --namespace=alfresco
     ```
 
-    NOTE: The command will wait until the deployment is ready so please be patient.
+    > NOTE: The command will wait until the deployment is ready so please be patient.
 
 ## Access
 

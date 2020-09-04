@@ -91,10 +91,7 @@ TODO
 
 ### Changing Log Levels
 
-The log levels for the specific Java packages in the content-repository can be changed via the Admin Console. Use the following URL to access it:
-```
-https://<host>/alfresco/service/enterprise/admin/admin-log-settings
-```
+The log levels for the specific Java packages in the content-repository can be changed via the Admin Console. Use the following URL to access it: `https://<host>/alfresco/service/enterprise/admin/admin-log-settings`
 
 **Note:** Changes are applied only to one content-repository node, the one from which the Admin console is launched.
 
@@ -110,7 +107,4 @@ Any component of the deployment that is not exposed via ingress rules can be acc
 
 ### JMX Dump
 
-This tool allows you to download a ZIP file containing information useful for troubleshooting and supporting your system. Issue a GET request (Admin only) to:
-```
-https://<host>/alfresco/service/api/admin/jmxdump
-```
+This tool allows you to download a ZIP file containing information useful for troubleshooting and supporting your system. Issue a GET request (Admin only) to: `https://<host>/alfresco/service/api/admin/jmxdump`
