@@ -8,8 +8,6 @@ The diagram below shows the deployment produced by this tutorial:
 
 ![Helm with EKS](./diagrams/helm-components-eks.png)
 
-> **Note:** You don't need to clone this repository to deploy Alfresco Content Services.
-
 ## Prerequisites
 
 As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) we also recommend that you are proficient in AWS and Kubernetes.
