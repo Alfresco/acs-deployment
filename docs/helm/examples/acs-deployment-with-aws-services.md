@@ -2,6 +2,10 @@
 
 This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) and use [S3](https://aws.amazon.com/s3) for content storage, [RDS](https://aws.amazon.com/rds) as an external database and [Amazon MQ](https://aws.amazon.com/amazon-mq) as an external message broker.
 
+The diagram below shows the deployment produced by this example:
+
+![Helm with AWS Services](../diagrams/helm-components-eks-s3-rds-mq.png)
+
 ## Prerequisites
 
 Follow the [EKS deployment](../eks-deployment.md) guide up until the [ACS](../eks-deployment.md#acs) section, once the docker registry secret is installed return to this page.
@@ -80,15 +84,29 @@ The following sections describe how to setup the AWS services and highlights the
 
 ### Amazon MQ
 
-TODO
+1. Create an Amazon MQ broker using the "Create brokers" wizard in the [MQ Console](https://console.aws.amazon.com/amazon-mq/home).
+
+    * Select "Single-instance broker" option and press the Next button
+    * Provide a "Broker name" of your choosing
+    * In the "ActiveMQ Access" section specify `alfresco` as the "Username" and a "Password" of your choice
+    * In the "Additional settings" section choose the "Select existing VPC and subnet(s)" option
+    * Select the VPC created by eksctl that contains your EKS cluster
+    * Choose the "Select existing security groups" option and select the VPC's default security group from the list
+    * Leave all other options set to the default
+    * Press the orange "Create broker" button
+
+2. Once the broker has been created (it can take a few minutes) view the broker details and click on the link to the security group.
+3. Add an inbound rule for ActiveMQ traffic (TCP port 61617) from the VPC CIDR range (it will be the same as the NFS rule setup earlier) as shown in the screenshot below:
+
+    ![MQ Inbound Rules](../diagrams/eks-mq-inbound-rules.png)
+
+4. Finally, take a note of the OpenWire Endpoint displayed in the "Connections" section
 
 ## Deploy
 
-In order to use the S3 connector and external database options, the S3 connector AMP and database drivers are required, respectively. Fortunately, a Docker image has been pre-packaged with the artifacts and can be used as-is for our deployment. To use the image we can override the `repository.image.repository` property.
+In order to use the S3 connector and external database options, the S3 connector AMP and database drivers are required, respectively. Fortunately, a Docker image has been pre-packaged with the artifacts and can be used as-is for our deployment. To use the image we will override the `repository.image.repository` property.
 
-To enable the S3 connector ...
-
-To use an external database ...
+To use the S3 connector, RDS and Amazon MQ we have to disable the internal default components via the Helm "set" command and additionally provide the service endpoints and credentials we made a note of in the previous sections.
 
 When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
 
@@ -111,13 +129,13 @@ helm install acs alfresco-incubator/alfresco-content-services \
 --set database.url="jdbc:postgresql://YOUR-DATABASE-ENDPOINT:5432/" \
 --set database.user="alfresco" \
 --set database.password="YOUR-DATABASE-PASSWORD" \
+--set activemq.enabled=false \
+--set messageBroker.url="YOUR-MQ-ENDPOINT" \
+--set messageBroker.user="alfresco" \
+--set messageBroker.password="YOUR-MQ-PASSWORD" \
 --atomic \
 --timeout 9m0s \
 --namespace=alfresco
 ```
 
-NOTE: S3 can be further configured via [S3 connector documentation] just prefix options with s3connector.config. For example....
-
-NOTE: Alternativly Aurora MySQL can be used, replace ..... with .....
---set database.driver="org.mariadb.jdbc.Driver" \
---set database.url="'jdbc:mariadb:aurora//$RDS_ENDPOINT:3306/alfresco?useUnicode=yes&characterEncoding=UTF-8'" \
+> NOTE: Alternatively, Aurora MySQL can be used instead of PostgreSQL by selecting the "Amazon Aurora with MySQL compatibility" option and version "5.7.12" in the create database wizard. You'll also need to change the `database.driver` value to "org.mariadb.jdbc.Driver" and change the `database.url` to "'jdbc:mariadb:aurora//YOUR-DATABASE-ENDPOINT:3306/alfresco?useUnicode=yes&characterEncoding=UTF-8'".

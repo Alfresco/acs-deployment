@@ -1,6 +1,6 @@
 @startuml
 
-Title: ACS with Intelligence Services on AWS Helm Deployment Overview
+Title: ACS with Intelligence Services on EKS using S3, RDS and MQ Helm Deployment Overview
 
 skinparam componentStyle uml2
 skinparam linetype ortho
@@ -12,14 +12,12 @@ skinparam rectangle {
 
 actor Client
 
-node "nginx-ingress namespace" {
+node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
-}
-
-node "ACS namespace" {
     component "Alfresco Digital Workspace \n (with AI config)" as adw #lightgrey
     component "Alfresco Content Services \n (with AI AMP)" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
+    component "Alfresco Sync Services" as sync #lightgrey
     component "Alfresco Share \n (with AI AMP)" as share #lightgrey
     rectangle "Alfresco Transform Service" {
         component "Transform Router \n (with AI config)" as tr #lightgrey
@@ -77,12 +75,17 @@ img --> sfs
 tika --> sfs
 misc --> sfs
 share --> acs
+
+sync <--> acs
+sync --> db
+sync --> mq
+
 aiEngine --> sfs
 aiEngine --> s3ai
 aiEngine --> comp
 aiEngine --> rek
 aiEngine --> tex
 
-center footer Copyright 2019 Alfresco Software Inc
+center footer Copyright 2020 Alfresco Software Inc
 
 @enduml

@@ -12,20 +12,19 @@ skinparam rectangle {
 
 actor Client
 
-node "nginx-ingress namespace" {
+node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
-}
-
-node "ACS namespace" {
     component "Alfresco Digital Workspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
+    component "Alfresco Sync Services" as sync #lightgrey
+    component "PostgreSQL" as psql #lightgrey
     component "Alfresco Share" as share #lightgrey
+    component "ActiveMQ" as amq #lightgrey
     database "Volume Claim" as vc
     rectangle "Alfresco Transform Service" {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
-        component "ActiveMQ" as amq #lightgrey
         component "Alfresco PDF Renderer" as pdfr #lightgrey
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
@@ -33,8 +32,6 @@ node "ACS namespace" {
         component "TransformMisc" as misc #lightgrey
     }
 }
-
-database "Database" as db
 
 Client --> nginx
 
@@ -44,10 +41,11 @@ nginx --> adw
 
 acs --> vc
 ass --> vc
+psql --> vc
 sfs --> vc
 
 ass <--> acs
-acs --> db
+acs --> psql
 acs --> pdfr
 acs --> libr
 acs --> img
@@ -68,6 +66,10 @@ tika --> sfs
 misc --> sfs
 share --> acs
 
-center footer Copyright 2019 Alfresco Software Inc
+sync <--> acs
+sync --> psql
+sync --> amq
+
+center footer Copyright 2020 Alfresco Software Inc
 
 @enduml

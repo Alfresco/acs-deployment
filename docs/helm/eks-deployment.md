@@ -4,6 +4,10 @@ This page describes how to deploy Alfresco Content Services (ACS) using [Helm](h
 
 Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. EKS runs the Kubernetes management infrastructure for you across multiple AWS availability zones to eliminate a single point of failure.
 
+The diagram below shows the deployment produced by this tutorial:
+
+![Helm with EKS](./diagrams/helm-components-eks.png)
+
 > **Note:** You don't need to clone this repository to deploy Alfresco Content Services.
 
 ## Prerequisites
