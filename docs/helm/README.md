@@ -10,7 +10,7 @@ The system deployed is shown in the diagram below.
 
 Alfresco provides tested Helm charts as a "deployment template" for customers who want to take advantage of the container orchestration benefits of Kubernetes. These Helm charts are undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
 
-The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without changes and are still flexible to be adopted to your actual environment. 
+The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without changes and are still flexible to be adopted to your actual environment.
 
 For your environment, you should use these charts as a starting point and modify them so that ACS integrates into your infrastructure. You typically want to remove the PostgreSQL container and connect the cs-repository directly to your database (might require custom images to get the required JDBC driver in the container).
 
@@ -20,7 +20,7 @@ Another typical change would be the integration of your company-wide monitoring 
 
 For the best results we recommend deploying ACS to AWS EKS following [these steps](./eks-deployment.md). If you have a machine with at least 16GB of memory you can also deploy using [Docker for Desktop](./docker-desktop-deployment.md).
 
-There are also several [examples](./examples) showing how to deploy with various configurations i.e. using an external database.
+There are also several [examples](./examples) showing how to deploy with various configurations i.e. using [S3, RDS and MQ](./examples/acs-deployment-with-aws-services.md).
 
 ## Configure
 
