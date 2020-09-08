@@ -42,7 +42,10 @@ data:
       -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
       {{- end }}
       {{- end }}
+      {{- if eq .Values.repository.edition "Enterprise" }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
+      -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
+      {{- end }}
       -DlocalTransform.pdfrenderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -DlocalTransform.imagemagick.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -DlocalTransform.libreoffice.url=http://{{ template "content-services.shortname" . }}-libreoffice
@@ -104,7 +107,6 @@ data:
       -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
       {{- end }}
       {{- end }}
-      -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
       {{- if .Values.activemq.enabled }}
       -Dmessaging.broker.url=failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
       -Dmessaging.broker.username={{ .Values.activemq.adminUser.username }}

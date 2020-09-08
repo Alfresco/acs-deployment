@@ -1,4 +1,5 @@
 # Defines the properties required by the transform router container
+{{- if eq .Values.repository.edition "Enterprise" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -34,3 +35,4 @@ data:
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
   TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-routes.properties"
   {{- end }}
+{{- end }}

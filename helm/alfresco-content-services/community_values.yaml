@@ -1,7 +1,7 @@
 # This is a YAML-formatted file.  Declare variables to be passed into your templates.
 
 # ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
-# 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
+# 1 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
 
 # Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
 # For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
@@ -10,13 +10,13 @@
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
 repository:
-  edition: Enterprise
-  replicaCount: 2
+  edition: Community
+  replicaCount: 1
   strategy:
     type: Recreate
   image:
-    repository: alfresco/alfresco-content-repository
-    tag: "6.0.1.5"
+    repository: alfresco/alfresco-content-repository-community
+    tag: "6.2.1-A8"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -37,11 +37,7 @@ repository:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
       -Dindex.subsystem.name=solr6
-      -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
-
-      -Dtransform.service.enabled=true
-
       -Xms2000M -Xmx2000M"
   resources:
     requests:
@@ -65,35 +61,13 @@ apiexplorer:
   ingress:
     path: /api-explorer
 
-transformrouter:
-  replicaCount: 2
-  image:
-    repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.0.2.1"
-    pullPolicy: Always
-    internalPort: 8095
-  service:
-    name: transform-router
-    type: ClusterIP
-    externalPort: 80
-  environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
-  readinessProbe:
-    initialDelaySeconds: 140
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 140
-    periodSeconds: 120
-    timeoutSeconds: 60
-
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "1.2"
+    tag: "2.3.1"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -123,10 +97,10 @@ pdfrenderer:
 # Declares the alfresco-imagemagick service used by the content repository
 # to transform image files
 imagemagick:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "1.2"
+    tag: "2.3.1"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -156,10 +130,10 @@ imagemagick:
 # Declares the alfresco-libreoffice service used by the content repository
 # to transform office files
 libreoffice:
-  replicaCount: 2
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "1.2"
+    tag: "2.3.1"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -189,10 +163,10 @@ libreoffice:
 # Declares the alfresco-tika service used by the content repository
 # to transform office files
 tika:
-  replicaCount: 2
+  replicaCount: 1
   image:
-    repository: quay.io/alfresco/alfresco-tika
-    tag: "2.0.17"
+    repository: alfresco/alfresco-tika
+    tag: "2.3.1"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -219,18 +193,18 @@ tika:
     maxTransforms: 10000
     maxTransformSeconds: 1800
 
+# Declares the alfresco-tika service used by the content repository
+# to transform office files
 transformmisc:
-  enabled: false
-
-aiTransformer:
-  replicaCount: 2
+  enabled: true
+  replicaCount: 1
   image:
-    repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.0.2"
+    repository: alfresco/alfresco-transform-misc
+    tag: "2.3.1"
     pullPolicy: Always
     internalPort: 8090
   service:
-    name: ai-transformer
+    name: transformmisc
     type: ClusterIP
     externalPort: 80
   resources:
@@ -253,50 +227,13 @@ aiTransformer:
     maxTransforms: 10000
     maxTransformSeconds: 1800
 
-# Declares the alfresco-shared-file-store used by the content repository
-# and transform service
-filestore:
-  replicaCount: 1
-  image:
-    repository: alfresco/alfresco-shared-file-store
-    tag: "0.5.2"
-    pullPolicy: Always
-    internalPort: 8099
-  initContainer:
-    image:
-      repository: busybox
-      tag: latest
-  service:
-    name: filestore
-    type: ClusterIP
-    externalPort: 80
-  resources:
-    requests:
-      memory: "1000Mi"
-    limits:
-      memory: "1000Mi"
-  environment:
-    scheduler.content.age.millis: "86400000"
-    scheduler.cleanup.interval: "86400000"
-    JAVA_OPTS: " -Xms256M -Xmx512M"
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 150
-    livenessSavePeriodSeconds: 600
-
 # Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
 share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.0.1.1"
+    tag: "6.2.1"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -366,7 +303,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "1.4.0"
+    tag: "2.0.0"
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
@@ -384,34 +321,6 @@ alfresco-search:
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth:
-
-alfresco-digital-workspace:
-  enabled: true
-  nameOverride: "alfresco-dw"
-  ingress:
-    path: /workspace
-    defaultHostNameEnabled: false
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
-      nginx.ingress.kubernetes.io/rewrite-target: "/"
-  image:
-    repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 1.4.0
-    pullPolicy: Always
-  env:
-    APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//{hostname}{:port}"
-
-# choose if you want AI capabilities
-ai:
-  enabled: false
-  # aws:
-  #  accessKey:
-  #  secretAccessKey:
-  #  region:
-  #  s3Bucket:
-  #  comprehendRoleARN:
-
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
@@ -431,7 +340,7 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "10.10.0"
+  imageTag: "11.4.0"
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
@@ -447,128 +356,32 @@ postgresql:
     limits:
       memory: "1500Mi"
 
-postgresql-syncservice:
-  ## If true, install the postgresql chart alongside Alfresco Sync service.
-  # Note: Set this to false if you use an external database.
-  name: postgresql-syncservice
-  enabled: true
-  replicaCount: 1
-  nameOverride: postgresql-syncservice
-  imageTag: "10.10.0"
-  persistence:
-    existingClaim: "alfresco-volume-claim"
-    subPath: "alfresco-sync-services/database-data"
-    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
-  postgresqlUsername: alfresco
-  postgresqlPassword: admin
-  postgresqlDatabase: syncservice-postgresql
-  postgresConfig:
-    max_connections: 450
-    log_min_messages: LOG
-  service:
-    port: 5432
-  resources:
-    requests:
-      memory: "1500Mi"
-    limits:
-      memory: "1500Mi"
-
-# Defines the properties to be used for the S3 Connector
-s3connector:
-  enabled: false
-  # config:
-  #   bucketName:
-  #   bucketLocation:
-  ##   Additional properties can be defined here.
-  ##   For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
-  # secrets:
-  #   accessKey:
-  #   secretKey:
-  #   encryption:
-  #   awsKmsKeyId:
-
-##  For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html
-email:
-  server:
-    enabled: false
-    port: 1125
-    domain:
-    enableTLS: true
-    hideTLS: false
-    requireTLS: false
-    auth:
-      enabled: true
-    connections:
-      max: 3
-    allowed:
-      senders: .*
-    blocked:
-      senders:
-  inbound:
-    enabled: false
-    unknownUser: anonymous
-    emailContributorsAuthority: EMAIL_CONTRIBUTORS
-  handler:
-    folder:
-      overwriteDuplicates: true
-  ssl:
-    secretName:
-
-mail:
-  host:
-  port:
-  protocol: smtps
-  encoding: UTF-8
-  username:
-  password:
-  from:
-    default:
-    enabled: false
-  smtp:
-    auth: true
-    debug: false
-    timeout: 30000
-    starttls:
-      enable: true
-  smtps:
-    auth: true
-    starttls:
-      enable: true
-  # DO NOT USE: It breaks repo pod with Error: Could not find or load main class SMTP Caused by: java.lang.ClassNotFoundException: SMTP
-  # testmessage:
-  #   send: false
-  #   subject: "Outbound SMTP"
-  #   text: "The Outbound SMTP email subsystem is working."
-  #   to:
-
-imap:
-  server:
-    enabled: false
-    host: "0.0.0.0"
-    port: 1143
-    imap:
-      enabled: true
-    imaps:
-      enabled: true
-      port: 1144
-  mail:
-    from:
-      default:
-    to:
-      default:
-
 metadataKeystore:
   # keystorePassword: ""
   # keyPassword: ""
   defaultKeystorePassword: "mp6yc0UD9e"
   defaultKeyPassword: "mp6yc0UD9e"
 
+# Disable features
+alfresco-digital-workspace:
+  enabled: false
 alfresco-sync-service:
   syncservice:
     enabled : false
-    image:
-      repository: quay.io/alfresco/service-sync
-      tag: 3.1.2
+postgresql-syncservice:
+  enabled: false
+ai:
+  enabled: false
+s3connector:
+  enabled: false
+email:
+  server:
+    enabled: false
+  inbound:
+    enabled: false
+imap:
+  server:
+    enabled: false
 
 # If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
@@ -580,9 +393,3 @@ alfresco-sync-service:
 # Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s)
 global:
   alfrescoRegistryPullSecrets:
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-  registryPullSecrets:
-    - quay-registry-secret

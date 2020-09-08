@@ -19,10 +19,10 @@ As well as the prerequisites mentioned on the [main README](/README.md#prerequis
 
 ## Deploy
 
-1. Clone this repository or download one of the docker compose files from [here](../../docker-compose).
-2. Navigate to the folder where the docker compose file you want to use is located.
-3. Log in to Quay.io with your credentials: ```docker login quay.io```
-4. Run ```docker-compose up``` to use the latest version of ACS or ```docker-compose -f major.minor.N-docker-compose.yml up``` to use a specific version of ACS.
+1. Clone this repository or download one of the docker compose files from [here](../../docker-compose)
+2. Navigate to the folder where the docker compose file you want to use is located
+3. Log in to Quay.io with your credentials: ```docker login quay.io``` (only required if you're running an Enterprise version)
+4. Run ```docker-compose up``` to use the latest version of ACS Enterprise or ```docker-compose -f major.minor.N-docker-compose.yml up``` to use a specific version of ACS
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
    * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
