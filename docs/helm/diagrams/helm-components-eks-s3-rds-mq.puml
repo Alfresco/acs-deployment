@@ -1,6 +1,6 @@
 @startuml
 
-Title: ACS Trial Helm Deployment Overview
+Title: ACS on EKS using S3, RDS and MQ Helm Deployment Overview
 
 skinparam componentStyle uml2
 skinparam linetype ortho
@@ -12,21 +12,16 @@ skinparam rectangle {
 
 actor Client
 
-node "nginx-ingress namespace" {
+node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
-}
-
-node "ACS namespace" {
     component "Alfresco Digital Workspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
-    component "PostgreSQL" as psql #lightgrey
+    component "Alfresco Sync Services" as sync #lightgrey
     component "Alfresco Share" as share #lightgrey
-    database "Volume Claim" as vc
     rectangle "Alfresco Transform Service" {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
-        component "ActiveMQ" as amq #lightgrey
         component "Alfresco PDF Renderer" as pdfr #lightgrey
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
@@ -35,32 +30,40 @@ node "ACS namespace" {
     }
 }
 
+cloud "Amazon Web Services" {
+    storage "S3" as s3
+    database "Aurora RDS" as db
+    storage "EBS" as ebs
+    storage "EFS Volume Claim" as vc
+    queue "Amazon MQ" as mq
+
+}
+
 Client --> nginx
 
 nginx --> acs
 nginx --> share
 nginx --> adw
 
-acs --> vc
-ass --> vc
-psql --> vc
+ass --> ebs
 sfs --> vc
+acs --> s3
 
 ass <--> acs
-acs --> psql
+acs --> db
 acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
 acs --> misc
 acs --> sfs
-acs <--> amq
-tr --> pdfr
-tr --> libr
-tr --> img
-tr --> tika
-tr --> misc
-tr <-up-> amq
+acs <--> mq
+tr -up-> pdfr
+tr -up-> libr
+tr -up-> img
+tr -up-> tika
+tr -up-> misc
+tr <--> mq
 pdfr --> sfs
 libr --> sfs
 img --> sfs
@@ -68,6 +71,10 @@ tika --> sfs
 misc --> sfs
 share --> acs
 
-center footer Copyright 2018 Alfresco Software Inc
+sync <--> acs
+sync --> db
+sync --> mq
+
+center footer Copyright 2020 Alfresco Software Inc
 
 @enduml
