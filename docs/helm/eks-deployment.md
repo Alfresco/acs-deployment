@@ -250,9 +250,9 @@ kubectl create secret docker-registry quay-registry-secret --docker-server=quay.
 
 ### ACS
 
-Decide whether you want to install the latest version of ACS or a previous version and follow the steps in the relevant section below.
+Decide whether you want to install the latest version of ACS (Enterprise or Community) or a previous version and follow the steps in the relevant section below.
 
-#### Latest Version
+#### Latest Enterprise Version
 
 Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
@@ -272,7 +272,29 @@ helm install acs alfresco-incubator/alfresco-content-services \
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
 
-#### Previous version
+#### Latest Community Version
+
+1. Download the Community values file from [here](../../helm/alfresco-content-services/community_values.yaml).
+
+2. Deploy ACS Community by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
+
+    ```bash
+    helm install acs alfresco-incubator/alfresco-content-services \
+    --values=community_values.yaml \
+    --set externalPort="443" \
+    --set externalProtocol="https" \
+    --set externalHost="acs.YOUR-DOMAIN-NAME" \
+    --set persistence.enabled=true \
+    --set persistence.storageClass.enabled=true \
+    --set persistence.storageClass.name="nfs-client" \
+    --atomic \
+    --timeout 9m0s \
+    --namespace=alfresco
+    ```
+
+    > NOTE: The command will wait until the deployment is ready so please be patient.
+
+#### Previous Enterprise Version
 
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services).
 
@@ -300,9 +322,12 @@ helm install acs alfresco-incubator/alfresco-content-services \
 When the deployment has completed the following URLs will be available (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
 * Repository: `https://acs.YOUR-DOMAIN-NAME/alfresco`
-* ADW: `https://acs.YOUR-DOMAIN-NAME/workspace/`
 * Share: `https://acs.YOUR-DOMAIN-NAME/share`
 * Api-Explorer: `https://acs.YOUR-DOMAIN-NAME/api-explorer`
+
+If you deployed Enterprise you'll also have access to:
+
+* ADW: `https://acs.YOUR-DOMAIN-NAME/workspace/`
 * Sync service: `https://acs.YOUR-DOMAIN-NAME/syncservice/healthcheck`
 
 If you requested an extended trial license navigate to the Admin Console and apply your license:
