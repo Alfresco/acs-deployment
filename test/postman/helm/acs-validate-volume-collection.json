@@ -1,33 +1,45 @@
 {
 	"info": {
-		"_postman_id": "1f709dca-0da1-4c09-9056-fdb057e5ba29",
+		"_postman_id": "2941db5f-1b4d-45bb-b54b-506e851b337c",
 		"name": "acs-validate-volume-collection",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
-		"schema": "{{protocol}}://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "validate cluster get",
+			"name": "repo-discovery",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "7dbd42b3-8436-4dd0-be64-14236fbfc003",
-						"type": "text/javascript",
+						"id": "3468b6d8-d0d2-419d-bd74-5d2b3796df44",
 						"exec": [
+							"",
 							"pm.globals.get(\"url\");",
 							"",
-							"/*",
-							"if you don't call this method first, the POST alfresco/s/enterprise/admin/admin-clustering-test fails",
-							"*/",
-							"pm.test(\"callGetValidateClusterForInitializationTest\", function () ",
-							"{",
+							"",
+							"pm.test(\"validateStatusCodeTest\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.globals.set(\"alf-csrftoken\", pm.cookies.get(\"alf-csrftoken\"));",
-							""
-						]
+							"var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"validateLicenseTest\", function () {",
+							"    pm.expect(jsonData.entry.repository.edition).to.be.oneOf([\"Enterprise\",\"Community\"]);",
+							"    pm.environment.set(\"repositoryEdition\", jsonData.entry.repository.edition);",
+							"});",
+							"",
+							"var modules = JSON.parse(responseBody).entry.repository.modules; ",
+							"",
+							"for (var module in modules){",
+							"    var module = modules[module]",
+							"    if (module.id == \"alfresco-aos-module\"){",
+							"        console.log(module.version);",
+							"        pm.environment.set(\"AOSversion\",module.version);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -58,10 +70,84 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
+				"url": {
+					"raw": "{{protocol}}://{{url}}/alfresco/api/discovery",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"alfresco",
+						"api",
+						"discovery"
+					]
 				},
+				"description": "This request will validate whether the repo is set up correctly "
+			},
+			"response": []
+		},
+		{
+			"name": "validate cluster get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bae6cca6-c1ab-4a0b-b0a5-f4aa9ece4144",
+						"exec": [
+							"pm.globals.get(\"url\");",
+							"",
+							"// only run this test if it's an Enterprise repo",
+							"if (pm.environment.get(\"repositoryEdition\") == \"Enterprise\")",
+							"{",
+							"    /*",
+							"    if you don't call this method first, the POST alfresco/s/enterprise/admin/admin-clustering-test fails",
+							"    */",
+							"    pm.test(\"callGetValidateClusterForInitializationTest\", function () ",
+							"    {",
+							"        pm.response.to.have.status(200);",
+							"    });",
+							"",
+							"    pm.globals.set(\"alf-csrftoken\", pm.cookies.get(\"alf-csrftoken\"));",
+							"} ",
+							"else",
+							"{",
+							"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+							"    {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"type": "any"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
 					"protocol": "{{protocol}}",
@@ -85,41 +171,50 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e7bafe63-7b54-4f24-8833-f36dadfb0a10",
-						"type": "text/javascript",
+						"id": "4ae1eab4-9c2e-402d-972a-40030d5c4400",
 						"exec": [
 							"",
 							"pm.globals.get(\"url\");",
 							"",
-							"/*",
-							" this will fail if you don't call GET /alfresco/s/enterprise/admin/admin-clustering-test before this POST call",
-							"*/",
-							"pm.test(\"callToTestWasOKTest\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"// only run this test if it's an Enterprise repo",
+							"if (pm.environment.get(\"repositoryEdition\") == \"Enterprise\")",
+							"{",
+							"    /*",
+							"    this will fail if you don't call GET /alfresco/s/enterprise/admin/admin-clustering-test before this POST call",
+							"    */",
+							"    pm.test(\"callToTestWasOKTest\", function () {",
+							"        pm.response.to.have.status(200);",
+							"    });",
 							"",
-							"pm.test(\"validateClusterTest\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    ",
-							"    var nodeNamesArray = jsonData.nodeNames;",
+							"    pm.test(\"validateClusterTest\", function () {",
+							"        var jsonData = pm.response.json();",
+							"        ",
+							"        var nodeNamesArray = jsonData.nodeNames;",
 							"",
-							"    console.log(nodeNamesArray);",
-							"    pm.expect(nodeNamesArray.length).to.eq(2);",
-							"    ",
-							"    var tableDataArray= jsonData.tableData;",
-							"    console.log(tableDataArray[0][0]);",
-							"    console.log(tableDataArray[0][1]);",
-							"    console.log(tableDataArray[1][0]);",
-							"    console.log(tableDataArray[1][1]);",
-							"    ",
-							"    pm.expect(tableDataArray[0][1]).to.contain(\"success\");",
-							"    pm.expect(tableDataArray[1][0]).to.contain(\"success\");",
-							"    ",
-							"    ",
-							"});",
-							"",
-							""
-						]
+							"        console.log(nodeNamesArray);",
+							"        pm.expect(nodeNamesArray.length).to.eq(2);",
+							"        ",
+							"        var tableDataArray= jsonData.tableData;",
+							"        console.log(tableDataArray[0][0]);",
+							"        console.log(tableDataArray[0][1]);",
+							"        console.log(tableDataArray[1][0]);",
+							"        console.log(tableDataArray[1][1]);",
+							"        ",
+							"        pm.expect(tableDataArray[0][1]).to.contain(\"success\");",
+							"        pm.expect(tableDataArray[1][0]).to.contain(\"success\");",
+							"        ",
+							"        ",
+							"    });",
+							"} ",
+							"else",
+							"{",
+							"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+							"    {",
+							"        pm.response.to.have.status(404);",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -183,7 +278,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "620777fd-a195-4a09-b9b7-205d7acef201",
+						"id": "80bdcd79-be67-46ca-868f-26d7f385b8e7",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -230,10 +325,6 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/-my-/children",
 					"protocol": "{{protocol}}",
@@ -262,7 +353,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f26f5a18-c12d-479f-88c8-de7555190df2",
+						"id": "a17e457f-ad9a-4b1e-afbc-cfbfd5e67191",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
@@ -305,10 +396,6 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
 					"protocol": "{{protocol}}",
@@ -337,7 +424,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "eb8f59fe-1940-450a-b77b-10717a0cbfc7",
+						"id": "33ee80e8-5e91-4df5-aafc-af4f47cee44f",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -352,7 +439,7 @@
 					}
 				}
 			],
-			"request": { 
+			"request": {
 				"auth": {
 					"type": "basic",
 					"basic": [
@@ -370,10 +457,6 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
 					"protocol": "{{protocol}}",
@@ -402,7 +485,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
+						"id": "7c546e4d-022b-4bbb-99e5-666a602dbd9b",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
@@ -479,7 +562,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
+						"id": "b0c16dc6-7413-4258-944c-7938a4caf2bd",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
@@ -555,7 +638,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "f55b06ae-44bf-42c8-874c-20fdc4ae60fe",
+				"id": "014bd46e-cac4-4460-a068-cd4e45443158",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -565,12 +648,13 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "0ddef90c-3288-4ac8-b4cf-cc1603ddf758",
+				"id": "cf8695dc-3b0e-41e6-9ff5-82d0ea2c78c4",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
