@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2941db5f-1b4d-45bb-b54b-506e851b337c",
+		"_postman_id": "2b50d421-c5a4-4d0c-9967-242951216c63",
 		"name": "acs-validate-volume-collection",
 		"description": "This collection will test whether content created is still working when the acs pod is deleted and restarted.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -12,7 +12,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3468b6d8-d0d2-419d-bd74-5d2b3796df44",
+						"id": "40b11c33-7dcf-46d2-b946-52552d705df7",
 						"exec": [
 							"",
 							"pm.globals.get(\"url\");",
@@ -92,7 +92,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "bae6cca6-c1ab-4a0b-b0a5-f4aa9ece4144",
+						"id": "166e8a89-e7d8-40ca-8ef9-cc0110041d15",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
@@ -171,7 +171,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4ae1eab4-9c2e-402d-972a-40030d5c4400",
+						"id": "2754bd8c-7dc6-4844-b4d6-0f29356655be",
 						"exec": [
 							"",
 							"pm.globals.get(\"url\");",
@@ -204,13 +204,6 @@
 							"        pm.expect(tableDataArray[1][0]).to.contain(\"success\");",
 							"        ",
 							"        ",
-							"    });",
-							"} ",
-							"else",
-							"{",
-							"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
-							"    {",
-							"        pm.response.to.have.status(404);",
 							"    });",
 							"}"
 						],
@@ -278,7 +271,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "80bdcd79-be67-46ca-868f-26d7f385b8e7",
+						"id": "33485682-f821-4fa3-97aa-c4f966ec0b92",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -353,7 +346,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a17e457f-ad9a-4b1e-afbc-cfbfd5e67191",
+						"id": "367e8e82-0233-4612-ac45-0d6f598e7ac0",
 						"type": "text/javascript",
 						"exec": [
 							"var jsonData = pm.response.json();",
@@ -424,7 +417,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "33ee80e8-5e91-4df5-aafc-af4f47cee44f",
+						"id": "5b2f3d1a-3790-43c1-95a8-b01064015016",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
@@ -485,7 +478,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "7c546e4d-022b-4bbb-99e5-666a602dbd9b",
+						"id": "dc45439a-1398-43db-b23d-b20c0ee41c20",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
@@ -562,7 +555,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b0c16dc6-7413-4258-944c-7938a4caf2bd",
+						"id": "cb41a27f-13de-4595-8554-9f05eec47df5",
 						"exec": [
 							"pm.globals.get(\"url\");",
 							"",
@@ -638,7 +631,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "014bd46e-cac4-4460-a068-cd4e45443158",
+				"id": "e58dd864-a77e-4cdb-b511-8a4f5ee746ec",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -648,7 +641,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "cf8695dc-3b0e-41e6-9ff5-82d0ea2c78c4",
+				"id": "e8f135ff-80af-4524-aa2a-5dfe54551a6c",
 				"type": "text/javascript",
 				"exec": [
 					""
