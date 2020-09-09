@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "26220970-fa1f-45cd-bddc-287d0a223c87",
+		"_postman_id": "8e75949a-909f-430a-b589-f477749ed089",
 		"name": "acs-test-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,7 +15,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1b426f63-5c76-4034-995d-324093beaba4",
+								"id": "9cfdcdb7-e909-483c-a820-54a073678cbc",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
@@ -95,7 +95,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "74929632-cbb2-4a76-8bf9-03da4a292db2",
+								"id": "d700425e-113e-48fd-b975-63417df3813b",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -179,7 +179,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5c895e76-e374-4392-8e96-4274fe7b4e24",
+								"id": "c1af68da-3611-49ab-9112-50d25d711b18",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -240,7 +240,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9ba66732-560f-4625-9dca-100922a6c16b",
+								"id": "2f6af13c-a661-4605-a9af-44193f3675fa",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = pm.response.json();",
@@ -311,7 +311,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "845769fe-1b84-4253-a925-f3b0b004822e",
+								"id": "d6756383-8d28-4f9f-9af6-665b13452569",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -371,7 +371,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "48dc5e24-4bb2-4888-bee7-0b85e83b4afc",
+								"id": "220cf48b-2cdc-4346-82ca-0ce47aa281b5",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -431,7 +431,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "881f955b-3912-4877-a504-f0ad97b2f55b",
+								"id": "76852005-c89f-4b84-b367-16ce889e00be",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -491,7 +491,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a1c1fb5d-ae84-43dc-b652-efa3892031d4",
+								"id": "0e20b23e-f186-421d-aaa8-a1d2a77d21dc",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -570,7 +570,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bcb0d17d-fc3c-4f25-be67-62226e2df1f4",
+								"id": "6d0c2508-f482-491b-b2ba-289081d033ce",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
@@ -603,13 +603,6 @@
 									"        pm.expect(tableDataArray[1][0]).to.contain(\"success\");",
 									"        ",
 									"        ",
-									"    });",
-									"}",
-									"else",
-									"{",
-									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
-									"    {",
-									"        pm.response.to.have.status(404);",
 									"    });",
 									"}"
 								],
@@ -672,27 +665,21 @@
 					"response": []
 				},
 				{
-					"name": "Validate-share module",
+					"name": "Validate Share",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "49e1247d-b8b6-448f-8612-1a995f00310c",
-								"type": "text/javascript",
+								"id": "f04c40db-6bbe-45cf-a9c8-3dbee34a66b8",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"shareIsUpAndRunningTest\", function () {",
 									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"/* Disabled for DEPLOY-401",
-									"pm.test(\"rm is installed part of share\", function () {",
-									"pm.expect(pm.response.text()).to.include(\"Alfresco :: Records Management Global Customization - Enterprise\");",
-									"});",
-									"*/"
-								]
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -724,7 +711,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{protocol}}://{{url}}/share/page/modules/deploy",
+							"raw": "{{protocol}}://{{url}}/share/page/",
 							"protocol": "{{protocol}}",
 							"host": [
 								"{{url}}"
@@ -732,8 +719,7 @@
 							"path": [
 								"share",
 								"page",
-								"modules",
-								"deploy"
+								""
 							]
 						},
 						"description": "Validate Share is deployed correctly"
@@ -746,17 +732,27 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "14a6713e-5418-4dfd-97ea-f3e618d365fb",
-								"type": "text/javascript",
+								"id": "34b7b770-e817-4dc2-ab12-f939a793de08",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
 									"",
-									"pm.test(\"adwIsUpAndRunningTest\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									""
-								]
+									"// only run this test if it's an Enterprise repo",
+									"if (pm.environment.get(\"repositoryEdition\") == \"Enterprise\")",
+									"{",
+									"    pm.test(\"adwIsUpAndRunningTest\", function () {",
+									"        pm.response.to.have.status(200);",
+									"    });",
+									"}",
+									"else",
+									"{",
+									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+									"    {",
+									"        pm.response.to.have.status(404);",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -807,7 +803,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3cfeeda7-5c65-4506-909a-e73a91c49591",
+								"id": "23f01817-9e08-4c43-98ad-c94ec638d07f",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -872,7 +868,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ce8cb567-ed01-40d7-b440-237fdaa332a5",
+								"id": "9d958167-4a8b-4422-91d4-4024eea21dfb",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -952,7 +948,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "407b55f5-bba3-47ec-9218-aa62e92d97e7",
+								"id": "c57a5f6e-a257-4179-aec3-ec4341a9e176",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -1028,7 +1024,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "aa44c630-1b40-4986-86a3-2bd2e1a47821",
+								"id": "e1116aba-f9f0-451e-bf92-23bd5777d312",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -1102,7 +1098,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bf32ca9f-34d4-42f9-a025-542d17edaa7a",
+								"id": "e2aac4c9-5e17-4596-9549-843a69802453",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -1176,7 +1172,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c146e9c4-4a99-4884-a0d1-d1c291518d47",
+								"id": "04c7e900-f277-45dc-948e-1fd2f4519e09",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -1250,7 +1246,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3152ecbb-61f0-4fd0-b9f0-a87644103862",
+								"id": "e411666f-31bd-4ed3-acac-2b43a51407a2",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -1324,7 +1320,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "7a956820-916a-4ea3-b8dc-6339ba510cc7",
+								"id": "6f3343b3-2fa7-4df2-8cc7-dc4c1cc924f4",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -1363,7 +1359,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e65d758c-116c-46a2-8157-16ab8abf50df",
+								"id": "e69b8c13-cc16-41a6-8bfb-29834188c5f9",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -1423,7 +1419,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d71ebbd3-3dd9-4afc-81dc-6b21c2d8e493",
+								"id": "2a1ed4a1-f741-4c6d-83c6-0913c8d0759f",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -1478,7 +1474,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2e87786f-1b3d-4eea-9fc1-5cf727f795fa",
+								"id": "b6aa3d55-2f57-41de-8d6c-0612d0945da9",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -1533,7 +1529,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0df2016d-0893-4308-959a-9b49f7981d5a",
+								"id": "8195992a-6cce-42dc-91d7-d236892ebf41",
 								"exec": [
 									"",
 									"AOSversion = pm.environment.get(\"AOSversion\");",
@@ -1605,7 +1601,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f611fe31-cb0f-4576-ae40-77fd218c7c16",
+								"id": "b1d0fbf0-a01f-437f-8de4-39805bf6e2b6",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1656,7 +1652,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "02c9a857-5135-48bf-a404-b96b0403af60",
+								"id": "d4f1c098-8253-469d-8a8c-467c28bc0ebb",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1718,7 +1714,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d7bcd3cc-89e2-4392-8daf-9e08aac4c3db",
+								"id": "463cb8b4-469a-42a8-bab9-68dc8b880abd",
 								"exec": [
 									"pm.test(\"Status code is 207\", function () {",
 									"    pm.response.to.have.status(207);",
@@ -1786,7 +1782,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "612c2f9f-20c6-4e97-9091-b09aa6b855b4",
+								"id": "f09a13cd-1676-48a5-ad6e-07ee357cfd41",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -1863,7 +1859,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f4dc4133-a0aa-4da3-855e-5562d79192ff",
+								"id": "542eecce-fa2a-4c50-bc9e-41d6f6bdebda",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -1942,7 +1938,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "4f6a6b8e-8ced-4782-9d9c-ab358c5b497b",
+				"id": "55966182-f50d-449e-8c14-795184d52f5d",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1952,7 +1948,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "0acc6ded-ae3a-4042-ad84-cbe25ff73124",
+				"id": "54e5fa8b-4253-4f74-8286-a41f91d10519",
 				"type": "text/javascript",
 				"exec": [
 					""
