@@ -1,16 +1,22 @@
 # Alfresco Content Services Helm Deployment with AWS EKS
 
-This page describes how to deploy Alfresco Content Services (ACS) using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
+This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
 
 Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. EKS runs the Kubernetes management infrastructure for you across multiple AWS availability zones to eliminate a single point of failure.
 
-The diagram below shows the deployment produced by this tutorial:
+The Enterprise configuration will deploy the following system:
 
-![Helm with EKS](./diagrams/helm-components-eks.png)
+![ACS Enterprise on EKS](./diagrams/helm-eks-enterprise.png)
+
+The Community configuration will deploy the following system:
+
+![ACS Community on EKS](./diagrams/helm-eks-community.png)
 
 ## Prerequisites
 
-As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) we also recommend that you are proficient in AWS and Kubernetes.
+* You've read the projects [main README](/README.md#prerequisites) prerequisites section
+* You've read the [main Helm README](./README.md) page
+* You are proficient in AWS and Kubernetes
 
 ## Setup An EKS Cluster
 

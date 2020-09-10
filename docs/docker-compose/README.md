@@ -2,9 +2,13 @@
 
 This page describes how to quickly deploy Alfresco Content Services (ACS) using Docker Compose.
 
-The system deployed is shown in the diagram below.
+Using one of the Enterprise compose files will deploy the following system:
 
-![Docker Compose Deployment Components](/docs/docker-compose/diagrams/docker-compose-components.png)
+![Docker Compose Enterprise](./diagrams/docker-compose-enterprise.png)
+
+Using the Community compose file will deploy the following system:
+
+![Docker Compose Community](./diagrams/docker-compose-community.png)
 
 ## Considerations
 
@@ -80,7 +84,7 @@ The provided Docker compose file provides some default configuration, the sectio
 | APP_BASE_SHARE_URL | Base Share URL. e.g. `'{protocol}//{hostname}{:port}/workspace/#/preview/s'` |   |
 | AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC |
 | PROVIDER |  | ALL |
-| ENVIRONMENT_SUFFIX | Only for Process Cloud instance | _CLOUD |
+| ENVIRONMENT_SUFFIX | Only for Process Cloud instance | `_CLOUD` |
 | API_HOST |  |  |
 | API_CONTENT_HOST |  |  |
 | API_CONTENT_HOST_LOCAL |  | `http://localhost:8080` |

@@ -13,7 +13,6 @@ stages:
   - name: 6.2.N
   - name: 6.1.N
   - name: 6.0.N
-  - name: publish
 
 import:
   - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master

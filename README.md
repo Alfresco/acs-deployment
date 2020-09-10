@@ -11,7 +11,7 @@ By default the Enterprise version of ACS is installed. To accomplish this privat
 
 The images downloaded directly from Docker Hub, or Quay.io are for a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. If you'd like to try Alfresco Content Services for a longer period, request the 30-day [Download Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
 
-To avoid license restrictions and private Docker images try the [Community Edition deployment](https://github.com/Alfresco/acs-community-deployment).
+To avoid license restrictions and private Docker images follow the instructions to deploy the Community Edition.
 
 ## Versioning
 
