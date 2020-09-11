@@ -1,3 +1,4 @@
+{{- if eq .Values.repository.edition "Enterprise" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -81,3 +82,4 @@ spec:
         configMap:
           name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
       {{- end }}
+{{- end }}

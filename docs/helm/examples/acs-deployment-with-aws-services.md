@@ -4,7 +4,7 @@ This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) 
 
 The diagram below shows the deployment produced by this example:
 
-![Helm with AWS Services](../diagrams/helm-components-eks-s3-rds-mq.png)
+![Helm with AWS Services](../diagrams/helm-eks-s3-rds-mq.png)
 
 ## Prerequisites
 

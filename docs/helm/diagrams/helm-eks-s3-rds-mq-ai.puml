@@ -75,6 +75,7 @@ img --> sfs
 tika --> sfs
 misc --> sfs
 share --> acs
+adw --> acs
 
 sync <--> acs
 sync --> db

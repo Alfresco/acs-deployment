@@ -10,6 +10,7 @@
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
 
 repository:
+  edition: Enterprise
   replicaCount: 2
   strategy:
     type: Recreate

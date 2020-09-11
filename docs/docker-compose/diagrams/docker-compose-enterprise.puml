@@ -1,0 +1,52 @@
+@startuml
+
+Title: Docker Compose Deployment Overview (Enterprise)
+
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam rectangle {
+    BorderStyle dashed
+    FontSize 15
+    FontStyle none
+}
+
+actor Client
+
+node "Docker Compose" {
+    component "NGINX proxy" as proxy #lightgrey
+    component "Alfresco Digital Workspace" as adw #lightgrey
+    component "Alfresco Content Services" as acs #lightgrey
+    component "Alfresco Search Services" as ass #lightgrey
+    component "Alfresco Sync Services" as sync #lightgrey
+    component "PostgreSQL" as psql #lightgrey
+    component "Alfresco Share" as share #lightgrey
+    component "ActiveMQ" as amq #lightgrey
+    rectangle "Alfresco Transform Service" {
+        component "Transform Router" as tr #lightgrey
+        component "Shared File Store" as sfs #lightgrey
+        component "Transform Core (AIO)" as tcore #lightgrey
+    }
+}
+
+Client --> proxy
+
+proxy --> acs
+proxy --> share
+proxy --> adw
+
+acs <-left-> ass
+acs --> psql
+acs --> tcore
+acs --> sfs
+acs <--> amq
+tr --> tcore
+tr <-up-> amq
+tcore --> sfs
+share --> acs
+sync <-left-> acs
+sync --> psql
+sync --> amq
+
+center footer Copyright 2020 Alfresco Software Inc
+
+@enduml

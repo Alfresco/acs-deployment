@@ -1,16 +1,22 @@
 # Alfresco Content Services Helm Deployment with AWS EKS
 
-This page describes how to deploy Alfresco Content Services (ACS) using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
+This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
 
 Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. EKS runs the Kubernetes management infrastructure for you across multiple AWS availability zones to eliminate a single point of failure.
 
-The diagram below shows the deployment produced by this tutorial:
+The Enterprise configuration will deploy the following system:
 
-![Helm with EKS](./diagrams/helm-components-eks.png)
+![ACS Enterprise on EKS](./diagrams/helm-eks-enterprise.png)
+
+The Community configuration will deploy the following system:
+
+![ACS Community on EKS](./diagrams/helm-eks-community.png)
 
 ## Prerequisites
 
-As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) we also recommend that you are proficient in AWS and Kubernetes.
+* You've read the projects [main README](/README.md#prerequisites) prerequisites section
+* You've read the [main Helm README](./README.md) page
+* You are proficient in AWS and Kubernetes
 
 ## Setup An EKS Cluster
 
@@ -250,9 +256,9 @@ kubectl create secret docker-registry quay-registry-secret --docker-server=quay.
 
 ### ACS
 
-Decide whether you want to install the latest version of ACS or a previous version and follow the steps in the relevant section below.
+Decide whether you want to install the latest version of ACS (Enterprise or Community) or a previous version and follow the steps in the relevant section below.
 
-#### Latest Version
+#### Latest Enterprise Version
 
 Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
@@ -272,7 +278,29 @@ helm install acs alfresco-incubator/alfresco-content-services \
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
 
-#### Previous version
+#### Latest Community Version
+
+1. Download the Community values file from [here](../../helm/alfresco-content-services/community_values.yaml).
+
+2. Deploy ACS Community by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
+
+    ```bash
+    helm install acs alfresco-incubator/alfresco-content-services \
+    --values=community_values.yaml \
+    --set externalPort="443" \
+    --set externalProtocol="https" \
+    --set externalHost="acs.YOUR-DOMAIN-NAME" \
+    --set persistence.enabled=true \
+    --set persistence.storageClass.enabled=true \
+    --set persistence.storageClass.name="nfs-client" \
+    --atomic \
+    --timeout 9m0s \
+    --namespace=alfresco
+    ```
+
+    > NOTE: The command will wait until the deployment is ready so please be patient.
+
+#### Previous Enterprise Version
 
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services).
 
@@ -300,9 +328,12 @@ helm install acs alfresco-incubator/alfresco-content-services \
 When the deployment has completed the following URLs will be available (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
 * Repository: `https://acs.YOUR-DOMAIN-NAME/alfresco`
-* ADW: `https://acs.YOUR-DOMAIN-NAME/workspace/`
 * Share: `https://acs.YOUR-DOMAIN-NAME/share`
 * Api-Explorer: `https://acs.YOUR-DOMAIN-NAME/api-explorer`
+
+If you deployed Enterprise you'll also have access to:
+
+* ADW: `https://acs.YOUR-DOMAIN-NAME/workspace/`
 * Sync service: `https://acs.YOUR-DOMAIN-NAME/syncservice/healthcheck`
 
 If you requested an extended trial license navigate to the Admin Console and apply your license:

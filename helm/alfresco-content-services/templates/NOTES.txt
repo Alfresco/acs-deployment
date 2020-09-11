@@ -5,18 +5,18 @@
 {{ $alfport := tpl (.Values.externalPort | default .Values.repository.service.externalPort | toString ) $ }}
 {{ $alfurl := printf "%s://%s:%s" $alfprotocol $alfhost $alfport }}
 
-You can access all components of Alfresco Content Services Community using the same root address, but different paths as follows:
+You can access all components of Alfresco Content Services using the same root address, but different paths as follows:
 
   Content: {{ $alfurl }}/alfresco
   Share: {{ $alfurl }}/share
-  Alfresco Digital Workspace: {{ $alfurl }}/workspace/
-  Api-Explorer: {{ $alfurl }}/api-explorer
+  API-Explorer: {{ $alfurl }}/api-explorer
+{{ if eq .Values.repository.edition "Enterprise" }}  Alfresco Digital Workspace: {{ $alfurl }}/workspace/ {{ end }}
 {{ if index .Values "alfresco-search" "ingress" "enabled" }}  Solr: {{ $alfurl }}/solr {{ end }}
 {{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "insightzeppelin") }}{{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "insightzeppelin" "enabled") }}  Zeppelin: {{ $alfurl }}/zeppelin {{ end }}{{ end }}
 {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
   {{ $alfportdsync := tpl (.Values.externalPort | toString ) $ }}
   {{ $alfurldsync := printf "%s://%s:%s" $alfprotocol $alfhost $alfportdsync }}
-   Sync service: {{ $alfurldsync }}/syncservice/healthcheck
+  Sync service: {{ $alfurldsync }}/syncservice/healthcheck
 {{ end }}
 {{ else }}
 If you have a specific DNS address for the cluster please run the following commands to get the application paths and configure ACS:

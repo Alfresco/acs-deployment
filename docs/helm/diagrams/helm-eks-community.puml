@@ -1,6 +1,6 @@
 @startuml
 
-Title: ACS Helm Deployment Overview
+Title: ACS Community on EKS Helm Deployment Overview
 
 skinparam componentStyle uml2
 skinparam linetype ortho
@@ -14,17 +14,13 @@ actor Client
 
 node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
-    component "Alfresco Digital Workspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "Alfresco Sync Services" as sync #lightgrey
     component "PostgreSQL" as psql #lightgrey
     component "Alfresco Share" as share #lightgrey
     component "ActiveMQ" as amq #lightgrey
-    database "Volume Claim" as vc
     rectangle "Alfresco Transform Service" {
-        component "Transform Router" as tr #lightgrey
-        component "Shared File Store" as sfs #lightgrey
         component "Alfresco PDF Renderer" as pdfr #lightgrey
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
@@ -33,40 +29,31 @@ node "alfresco namespace" {
     }
 }
 
+cloud "Amazon Web Services" {
+    storage "EBS" as ebs
+    storage "EFS Volume Claim" as vc
+}
+
 Client --> nginx
 
 nginx --> acs
 nginx --> share
-nginx --> adw
 
 acs --> vc
-ass --> vc
 psql --> vc
-sfs --> vc
+ass --> ebs
 
-ass <--> acs
+ass <-left-> acs
 acs --> psql
 acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
 acs --> misc
-acs --> sfs
 acs <--> amq
-tr --> pdfr
-tr --> libr
-tr --> img
-tr --> tika
-tr --> misc
-tr <-up-> amq
-pdfr --> sfs
-libr --> sfs
-img --> sfs
-tika --> sfs
-misc --> sfs
 share --> acs
 
-sync <--> acs
+sync <-left-> acs
 sync --> psql
 sync --> amq
 

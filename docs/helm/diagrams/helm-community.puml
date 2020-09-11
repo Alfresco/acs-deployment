@@ -1,6 +1,6 @@
 @startuml
 
-Title: ACS on EKS using S3, RDS and MQ Helm Deployment Overview
+Title: ACS Helm Community Deployment
 
 skinparam componentStyle uml2
 skinparam linetype ortho
@@ -14,14 +14,16 @@ actor Client
 
 node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
-    component "Alfresco Digital Workspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "Alfresco Sync Services" as sync #lightgrey
+    component "PostgreSQL" as psql #lightgrey
     component "Alfresco Share" as share #lightgrey
+    component "ActiveMQ" as amq #lightgrey
+    database "Volume Claim" as vc
     rectangle "Alfresco Transform Service" {
-        component "Transform Router" as tr #lightgrey
-        component "Shared File Store" as sfs #lightgrey
+        ' component "Transform Router" as tr #lightgrey
+        ' component "Shared File Store" as sfs #lightgrey
         component "Alfresco PDF Renderer" as pdfr #lightgrey
         component "LibreOffice" as libr #lightgrey
         component "ImageMagick" as img #lightgrey
@@ -30,50 +32,29 @@ node "alfresco namespace" {
     }
 }
 
-cloud "Amazon Web Services" {
-    storage "S3" as s3
-    database "Aurora RDS" as db
-    storage "EBS" as ebs
-    storage "EFS Volume Claim" as vc
-    queue "Amazon MQ" as mq
-
-}
-
 Client --> nginx
 
 nginx --> acs
 nginx --> share
-nginx --> adw
 
-ass --> ebs
-sfs --> vc
-acs --> s3
+acs --> vc
+ass --> vc
+psql --> vc
 
-ass <--> acs
-acs --> db
+ass <-left-> acs
+acs --> psql
 acs --> pdfr
 acs --> libr
 acs --> img
 acs --> tika
 acs --> misc
-acs --> sfs
-acs <--> mq
-tr -up-> pdfr
-tr -up-> libr
-tr -up-> img
-tr -up-> tika
-tr -up-> misc
-tr <--> mq
-pdfr --> sfs
-libr --> sfs
-img --> sfs
-tika --> sfs
-misc --> sfs
+acs <--> amq
+
 share --> acs
 
-sync <--> acs
-sync --> db
-sync --> mq
+sync <-left-> acs
+sync --> psql
+sync --> amq
 
 center footer Copyright 2020 Alfresco Software Inc
 
