@@ -85,6 +85,9 @@ spec:
           - mountPath: /var/run/secrets/certs
             name: email-certs
           {{- end }}
+          {{- if .Values.repository.extraVolumeMounts }}
+{{ toYaml .Values.repository.extraVolumeMounts | indent 10 }}
+          {{- end }}
           {{- end }}
           readinessProbe:
             httpGet:
@@ -198,6 +201,9 @@ spec:
           items:
             - key: ca.crt
               path: ca.crt
+      {{- end }}
+      {{- if .Values.repository.extraVolumes }}
+{{ toYaml .Values.repository.extraVolumes | indent 6 }}
       {{- end }}
       {{- end }}
       {{- end }}
