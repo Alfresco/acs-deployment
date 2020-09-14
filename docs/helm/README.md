@@ -26,7 +26,7 @@ Another typical change would be the integration of your company-wide monitoring 
 
 For the best results we recommend deploying ACS to AWS EKS following [these steps](./eks-deployment.md). If you have a machine with at least 16GB of memory you can also deploy using [Docker for Desktop](./docker-desktop-deployment.md).
 
-There are also several [examples](./examples) showing how to deploy with various configurations i.e. using [S3, RDS and MQ](./examples/acs-deployment-with-aws-services.md).
+There are also several [examples](./examples) showing how to deploy with various configurations i.e. using [S3, RDS and MQ](./examples/with-aws-services.md).
 
 ## Configure
 

@@ -1,60 +1,57 @@
 # Enable Alfresco Search Services External Access
-This example demonstrates how to enable Alfresco Search Services (`/solr`) for external access.
+
+This example demonstrates how to enable Alfresco Search Services (`/solr`) for external access which is disabled by default.
 
 ## Prerequisites
 
-You will need to make sure the [ACS Ingress controller](../helm-deployment-aws_kops.md#deploying-the-ingress-for-alfresco-content-services) is installed.
+## Install ACS Helm Chart With Search External Access
 
-## Deployment
+Follow the [EKS deployment](../eks-deployment.md) guide up until the [ACS](../eks-deployment.md#acs) section, once the docker registry secret is installed return to this page.
 
-By default, the Alfresco Search Services endpoint (`/solr`) is disabled for external access due to security reasons.  But, this can be enabled should you wish.  You may need to adjust the configuration settings as per [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
+When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
 
-See [ACS Deployment](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full reference to ENVIRONMENT variables used in below snippets.
+# Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
 
-### Install ACS Helm Chart with Search external access
 
-Below is the snippet for installing ACS with Search external access.
 
 ```bash
-helm install alfresco-incubator/alfresco-content-services \
---set externalProtocol="https" \
---set externalHost="$EXTERNALHOST" \
+helm install acs alfresco-incubator/alfresco-content-services \
 --set externalPort="443" \
---set repository.adminPassword="$ALF_ADMIN_PWD" \
---set postgresql.postgresPassword="$ALF_DB_PWD" \
---set alfresco-infrastructure.persistence.efs.enabled=true \
---set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
---set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
---set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
+--set externalProtocol="https" \
+--set externalHost="acs.YOUR-DOMAIN-NAME" \
+--set persistence.enabled=true \
+--set persistence.storageClass.enabled=true \
+--set persistence.storageClass.name="nfs-client" \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+--set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
 --set alfresco-search.ingress.enabled=true \
 --set alfresco-search.ingress.basicAuth="YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==" \
 --set alfresco-search.ingress.whitelist_ips="0.0.0.0/0" \
---set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
---set persistence.repository.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/repository-data" \
---set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
---namespace=$DESIREDNAMESPACE
+--atomic \
+--timeout 10m0s \
+--namespace=alfresco
 ```
 
-### Upgrade ACS Helm Chart with Search external access
+## Upgrade ACS Helm Chart With Search External Access
 
+If you've previously deployed ACS
 Below is the snippet for upgrading ACS with Search external access (where it was previously disabled).
 
 ```bash
-helm upgrade \
---set alfresco-infrastructure.persistence.efs.enabled=true \
---set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
+helm upgrade acs alfresco-incubator/alfresco-content-services \
 --set alfresco-search.ingress.enabled=true \
 --set alfresco-search.ingress.basicAuth="YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==" \
 --set alfresco-search.ingress.whitelist_ips="0.0.0.0/0" \
-$ACSRELEASE alfresco-incubator/alfresco-content-services
 ```
 
 **Note:** There are known issues when upgrading a Helm chart relating to Helm cache.
-- https://github.com/kubernetes/helm/issues/3275
-- https://github.com/kubernetes/helm/issues/1193
-- https://github.com/kubernetes/helm/pull/4146
+
+- `https://github.com/kubernetes/helm/issues/3275`
+- `https://github.com/kubernetes/helm/issues/1193`
+- `https://github.com/kubernetes/helm/pull/4146`
 
 If your `helm upgrade` fails due to any of these example errors:
+
 ```bash
 Error: UPGRADE FAILED: no Secret with the name "nosy-tapir-alfresco-search-solr" found
 (or)
@@ -62,10 +59,11 @@ Error: UPGRADE FAILED: no Ingress with the name "nosy-tapir-alfresco-search-solr
 ```
 
 Then, simply delete that resource.  Below is an example:
+
 ```bash
-kubectl delete secret nosy-tapir-alfresco-search-solr --namespace=$DESIREDNAMESPACE
+kubectl delete secret nosy-tapir-alfresco-search-solr --namespace=alfresco
 (or)
-kubectl delete ingress nosy-tapir-alfresco-search-solr --namespace=$DESIREDNAMESPACE
+kubectl delete ingress nosy-tapir-alfresco-search-solr --namespace=alfresco
 ```
- 
+
 And re-try above Upgrade ACS Helm Chart steps which will also re-create the above deleted resource.
