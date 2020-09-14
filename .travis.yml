@@ -47,7 +47,7 @@ before_install:
 
 before_script:
   - |
-    echo ${GIT_DIFF}
+    echo "GIT_DIFF=${GIT_DIFF}"
     REPO_NAME=${TRAVIS_REPO_SLUG##*/}
     PROJECT_NAME=alfresco-content-services
     helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
@@ -86,8 +86,7 @@ _helm_deploy: &helm_deploy
 
     deploy=false
 
-    echo "travis-commit=${TRAVIS_COMMIT_MESSAGE}"
-    if [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
+    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
     then
       deploy=true
     fi
@@ -240,8 +239,9 @@ _helm_deploy: &helm_deploy
 
     pods_ready
 
-    # Give nginx a chance to settle
-    sleep 120
+    # Before running tests make sure we can reach /alfresco and /share
+    curl --retry 10 --retry-max-time 120 https://$namespace.dev.alfresco.me/alfresco
+    curl --retry 10 --retry-max-time 120 https://$namespace.dev.alfresco.me/share
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
