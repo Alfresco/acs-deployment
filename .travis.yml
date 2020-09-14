@@ -74,7 +74,8 @@ after_failure: |
 
 _helm_deploy: &helm_deploy
   script: |
-    export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
+    export STAGE_SUFFIX=$(echo ${TRAVIS_BUILD_STAGE_NAME} | tr -d . | awk '{print tolower($0)}')
+    export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
     export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
     export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
     export values_file=helm/alfresco-content-services/values.yaml
@@ -85,7 +86,7 @@ _helm_deploy: &helm_deploy
 
     deploy=false
 
-    if [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
+    if [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
     then
       deploy=true
     fi
@@ -240,9 +241,11 @@ _helm_deploy: &helm_deploy
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    echo test_result=${TRAVIS_TEST_RESULT}
     # run sync service checks
     if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
       docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+      echo test_result=${TRAVIS_TEST_RESULT}
     fi
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgress pods,
@@ -261,6 +264,7 @@ _helm_deploy: &helm_deploy
 
     # run checks after pod deletion
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    echo test_result=${TRAVIS_TEST_RESULT}
     fi
 _docker_deploy: &docker_deploy
   script: |
