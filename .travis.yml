@@ -75,9 +75,9 @@ after_failure: |
 _helm_deploy: &helm_deploy
   script: |
     export STAGE_SUFFIX=$(echo ${TRAVIS_BUILD_STAGE_NAME} | tr -d . | awk '{print tolower($0)}')
-    export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
-    export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
-    export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
+    export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
+    export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
+    export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
     export values_file=helm/alfresco-content-services/values.yaml
 
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
@@ -199,7 +199,7 @@ _helm_deploy: &helm_deploy
 
     # install acs
     helm dep up helm/alfresco-content-services
-    helm upgrade --install $release_name_acs helm/alfresco-content-services \
+    travis_wait 25 helm upgrade --install $release_name_acs helm/alfresco-content-services \
     --values=$values_file \
     --set externalPort="443" \
     --set externalProtocol="https" \
@@ -239,19 +239,24 @@ _helm_deploy: &helm_deploy
     pods_ready
 
     # Delay running the tests to give ingress & SOLR a chance to fully initialise
-    echo "Waiting 2 minutes before running tests..."
-    date
+    echo "Waiting 2 minutes from $(date) before running tests..."
     # sleep 120
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
     ACS_TEST_RESULT=$?
-    echo "ACS_TEST_RESULT=${ACS_TEST_RESULT}"
+    if [[ "${ACS_TEST_RESULT}" == "1" ]]
+      ACS tests failed, exiting
+      exit 1
+    fi
     # run sync service checks
     if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
       docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
       SYNC_TEST_RESULT=$?
-      echo "SYNC_TEST_RESULT=${SYNC_TEST_RESULT}"
+      if [[ "${SYNC_TEST_RESULT}" == "1" ]]
+        Sync tests failed, exiting
+        exit 1
+      fi
     fi
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgress pods,
@@ -271,7 +276,10 @@ _helm_deploy: &helm_deploy
     # run checks after pod deletion
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
     PERSIST_TEST_RESULT=$?
-    echo "PERSIST_TEST_RESULT=${PERSIST_TEST_RESULT}"
+    if [[ "${PERSIST_TEST_RESULT}" == "1" ]]
+      Persistence tests failed, exiting
+      exit 1
+    fi
     fi
 _docker_deploy: &docker_deploy
   script: |
