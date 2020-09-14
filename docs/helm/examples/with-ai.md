@@ -1,0 +1,54 @@
+# Alfresco Content Services Helm Deployment with Intelligence Services
+
+By default, [Alfresco Intelligence Services](https://docs.alfresco.com/intelligence/concepts/ai-welcome.html) feature is disabled, this example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) with AIS enabled.
+
+The diagram below shows the deployment produced by this example:
+
+![Helm with Intelligence Services](../diagrams/helm-eks-s3-rds-mq-ai.png)
+
+## Prerequisites
+
+Follow the [AWS Services](with-aws-services.md) example up until the [Deploy](with-aws-services.md#deploy) section and return to this page.
+
+## Setup S3 Bucket
+
+Follow the steps in the official documentation to [setup an IAM user and an S3 bucket](https://docs.alfresco.com/intelligence/concepts/aws-setup.html) for use by AIS.
+
+## Deploy
+
+When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
+
+```bash
+helm install acs alfresco-incubator/alfresco-content-services \
+--set externalPort="443" \
+--set externalProtocol="https" \
+--set externalHost="acs.YOUR-DOMAIN-NAME" \
+--set persistence.enabled=true \
+--set persistence.storageClass.enabled=true \
+--set persistence.storageClass.name="nfs-client" \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+--set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
+--set share.image.repository="quay.io/alfresco/alfresco-share-aws" \
+--set s3connector.enabled=true \
+--set s3connector.config.bucketName="YOUR-BUCKET-NAME" \
+--set s3connector.config.bucketLocation="YOUR-AWS-REGION" \
+--set postgresql.enabled=false \
+--set database.external=true \
+--set database.driver="org.postgresql.Driver" \
+--set database.url="jdbc:postgresql://YOUR-DATABASE-ENDPOINT:5432/" \
+--set database.user="alfresco" \
+--set database.password="YOUR-DATABASE-PASSWORD" \
+--set activemq.enabled=false \
+--set messageBroker.url="YOUR-MQ-ENDPOINT" \
+--set messageBroker.user="alfresco" \
+--set messageBroker.password="YOUR-MQ-PASSWORD" \
+--set ai.enabled=true \
+--set ai.aws.accessKey="YOUR-AI-AWS-ACCESS-KEY-ID" \
+--set ai.aws.secretAccessKey="YOUR-AI-AWS-SECRET-KEY" \
+--set ai.aws.region="YOUR-AWS-REGION" \
+--set ai.aws.s3Bucket="YOUR-AI-BUCKET-NAME" \
+--set ai.aws.comprehendRoleARN="YOUR-AI-AWS-COMPREHEND-ROLE-ARN" \
+--atomic \
+--timeout 10m0s \
+--namespace=alfresco
+```

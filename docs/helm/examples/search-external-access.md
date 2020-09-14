@@ -2,17 +2,21 @@
 
 This example demonstrates how to enable Alfresco Search Services (`/solr`) for external access which is disabled by default.
 
-## Prerequisites
+## Prepare Data
+
+1. Obtain the list of IP addresses you want to allow access to `/solr`
+2. Format the IP addresses as a comma separated list of CIDR blocks i.e. "192.168.0.0/16,10.0.0.0/16", to allow access to everyone use "0.0.0.0/0"
+3. Generate a `base64` encoded `htpasswd` formatted string using the following command, where "solradmin" is username and "somepassword" is the password:
+
+    ```bash
+    echo -n "$(htpasswd -nbm solradmin somepassword)" | base64
+    ```
 
 ## Install ACS Helm Chart With Search External Access
 
 Follow the [EKS deployment](../eks-deployment.md) guide up until the [ACS](../eks-deployment.md#acs) section, once the docker registry secret is installed return to this page.
 
-When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
-
-# Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
-
-
+Deploy the latest version of ACS Enterprise by running the command below (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created previously and replacing `YOUR-BASIC-AUTH` and `YOUR-IPS` with the encoded basic authentication string and list of whitelisted IP addresses you prepared in the previous section).
 
 ```bash
 helm install acs alfresco-incubator/alfresco-content-services \
@@ -23,10 +27,9 @@ helm install acs alfresco-incubator/alfresco-content-services \
 --set persistence.storageClass.enabled=true \
 --set persistence.storageClass.name="nfs-client" \
 --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
---set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
 --set alfresco-search.ingress.enabled=true \
---set alfresco-search.ingress.basicAuth="YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==" \
---set alfresco-search.ingress.whitelist_ips="0.0.0.0/0" \
+--set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
+--set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \
 --atomic \
 --timeout 10m0s \
 --namespace=alfresco
@@ -34,14 +37,13 @@ helm install acs alfresco-incubator/alfresco-content-services \
 
 ## Upgrade ACS Helm Chart With Search External Access
 
-If you've previously deployed ACS
-Below is the snippet for upgrading ACS with Search external access (where it was previously disabled).
+If you've previously deployed ACS where external search access was disabled (the default) you can run the following `helm upgrade` command to enable external access for `/solr` (replacing `YOUR-BASIC-AUTH` and `YOUR-IPS` with the encoded basic authentication string and list of whitelisted IP addresses you prepared in the "Prepare Data" section):
 
 ```bash
 helm upgrade acs alfresco-incubator/alfresco-content-services \
 --set alfresco-search.ingress.enabled=true \
---set alfresco-search.ingress.basicAuth="YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==" \
---set alfresco-search.ingress.whitelist_ips="0.0.0.0/0" \
+--set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
+--set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \
 ```
 
 **Note:** There are known issues when upgrading a Helm chart relating to Helm cache.
