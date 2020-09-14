@@ -76,8 +76,8 @@ _helm_deploy: &helm_deploy
   script: |
     export STAGE_SUFFIX=$(echo ${TRAVIS_BUILD_STAGE_NAME} | tr -d . | awk '{print tolower($0)}')
     export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
-    export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
-    export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
+    export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
+    export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
     export values_file=helm/alfresco-content-services/values.yaml
 
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
@@ -239,13 +239,16 @@ _helm_deploy: &helm_deploy
 
     pods_ready
 
+    # Give SOLR a chance to initialise by sleeping for 15 seconds
+    sleep 15
+
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-    echo test_result=${TRAVIS_TEST_RESULT}
+    echo "test_result=${TRAVIS_TEST_RESULT}"
     # run sync service checks
     if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
       docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-      echo test_result=${TRAVIS_TEST_RESULT}
+      echo "test_result=${TRAVIS_TEST_RESULT}"
     fi
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgress pods,
@@ -264,7 +267,7 @@ _helm_deploy: &helm_deploy
 
     # run checks after pod deletion
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-    echo test_result=${TRAVIS_TEST_RESULT}
+    echo "test_result=${TRAVIS_TEST_RESULT}"
     fi
 _docker_deploy: &docker_deploy
   script: |
