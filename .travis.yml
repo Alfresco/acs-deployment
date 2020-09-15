@@ -61,16 +61,16 @@ before_script:
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
 
-after_success: |
-  if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
-    helm delete $release_name_ingress $release_name_acs -n $namespace
-    kubectl delete namespace $namespace
-  fi
-after_failure: |
-  if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
-    helm delete $release_name_ingress $release_name_acs -n $namespace
-    kubectl delete namespace $namespace
-  fi
+# after_success: |
+#   if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
+#     helm delete $release_name_ingress $release_name_acs -n $namespace
+#     kubectl delete namespace $namespace
+#   fi
+# after_failure: |
+#   if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
+#     helm delete $release_name_ingress $release_name_acs -n $namespace
+#     kubectl delete namespace $namespace
+#   fi
 
 _helm_deploy: &helm_deploy
   script: |
@@ -240,20 +240,22 @@ _helm_deploy: &helm_deploy
 
     # Delay running the tests to give ingress & SOLR a chance to fully initialise
     echo "Waiting 2 minutes from $(date) before running tests..."
-    sleep 120
+    # sleep 120
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev2.alfresco.me"
-    ACS_TEST_RESULT=$?
-    if [[ "${ACS_TEST_RESULT}" == "0" ]]; then
-      SYNC_TEST_RESULT=0
+    TEST_RESULT=$?
+    echo "TEST_RESULT=${TEST_RESULT}"
+    if [[ "${TEST_RESULT}" == "0" ]]; then
+      TEST_RESULT=0
       # run sync service checks
       if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-        SYNC_TEST_RESULT=$?
+        TEST_RESULT=$?
+        echo "TEST_RESULT=${TEST_RESULT}"
       fi
 
-      if [[ "${SYNC_TEST_RESULT}" == "0" ]]; then
+      if [[ "${TEST_RESULT}" == "0" ]]; then
         # For checking if persistence failover is correctly working with our deployments
         # in the next phase we delete the acs and postgress pods,
         # wait for k8s to recreate them, then check if the data created in the first test run is still there
@@ -271,8 +273,21 @@ _helm_deploy: &helm_deploy
 
         # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        TEST_RESULT=$?
+        echo "TEST_RESULT=${TEST_RESULT}"
       fi
     fi
+
+    if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
+      helm delete $release_name_ingress $release_name_acs -n $namespace
+      kubectl delete namespace $namespace
+    fi
+
+    if [[ "${TEST_RESULT}" == "1" ]]; then
+      echo "Tests failed, exiting"
+      exit 1
+    fi
+
     fi
 _docker_deploy: &docker_deploy
   script: |
