@@ -229,7 +229,7 @@ _helm_deploy: &helm_deploy
 
     # Delay running the tests to give ingress & SOLR a chance to fully initialise
     echo "Waiting 2 minutes from $(date) before running tests..."
-    # sleep 120
+    sleep 120
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
@@ -261,7 +261,7 @@ _helm_deploy: &helm_deploy
         pods_ready
 
         # run checks after pod deletion
-        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev2.alfresco.me"
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
       fi
