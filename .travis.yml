@@ -244,9 +244,11 @@ _helm_deploy: &helm_deploy
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev2.alfresco.me"
+    echo "TRAVIS_TEST_RESULT=${TRAVIS_TEST_RESULT}"
     # run sync service checks
     if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
       docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+      echo "TRAVIS_TEST_RESULT=${TRAVIS_TEST_RESULT}"
     fi
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgress pods,
@@ -265,6 +267,7 @@ _helm_deploy: &helm_deploy
 
     # run checks after pod deletion
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    echo "TRAVIS_TEST_RESULT=${TRAVIS_TEST_RESULT}"
     fi
 _docker_deploy: &docker_deploy
   script: |
