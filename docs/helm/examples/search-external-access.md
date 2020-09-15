@@ -1,60 +1,59 @@
 # Enable Alfresco Search Services External Access
-This example demonstrates how to enable Alfresco Search Services (`/solr`) for external access.
 
-## Prerequisites
+This example demonstrates how to enable Alfresco Search Services (`/solr`) for external access which is disabled by default.
 
-You will need to make sure the [ACS Ingress controller](../helm-deployment-aws_kops.md#deploying-the-ingress-for-alfresco-content-services) is installed.
+## Prepare Data
 
-## Deployment
+1. Obtain the list of IP addresses you want to allow access to `/solr`
+2. Format the IP addresses as a comma separated list of CIDR blocks i.e. "192.168.0.0/16,10.0.0.0/16", to allow access to everyone use "0.0.0.0/0"
+3. Generate a `base64` encoded `htpasswd` formatted string using the following command, where "solradmin" is username and "somepassword" is the password:
 
-By default, the Alfresco Search Services endpoint (`/solr`) is disabled for external access due to security reasons.  But, this can be enabled should you wish.  You may need to adjust the configuration settings as per [acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration).
+    ```bash
+    echo -n "$(htpasswd -nbm solradmin somepassword)" | base64
+    ```
 
-See [ACS Deployment](../helm-deployment-aws_kops.md#deploying-alfresco-content-services) for full reference to ENVIRONMENT variables used in below snippets.
+## Install ACS Helm Chart With Search External Access
 
-### Install ACS Helm Chart with Search external access
+Follow the [EKS deployment](../eks-deployment.md) guide up until the [ACS](../eks-deployment.md#acs) section, once the docker registry secret is installed return to this page.
 
-Below is the snippet for installing ACS with Search external access.
+Deploy the latest version of ACS Enterprise by running the command below (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created previously and replacing `YOUR-BASIC-AUTH` and `YOUR-IPS` with the encoded basic authentication string and list of whitelisted IP addresses you prepared in the previous section).
 
 ```bash
-helm install alfresco-incubator/alfresco-content-services \
---set externalProtocol="https" \
---set externalHost="$EXTERNALHOST" \
+helm install acs alfresco-incubator/alfresco-content-services \
 --set externalPort="443" \
---set repository.adminPassword="$ALF_ADMIN_PWD" \
---set postgresql.postgresPassword="$ALF_DB_PWD" \
---set alfresco-infrastructure.persistence.efs.enabled=true \
---set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
---set alfresco-search.resources.requests.memory="2500Mi",alfresco-search.resources.limits.memory="2500Mi" \
---set alfresco-search.environment.SOLR_JAVA_MEM="-Xms2000M -Xmx2000M" \
+--set externalProtocol="https" \
+--set externalHost="acs.YOUR-DOMAIN-NAME" \
+--set persistence.enabled=true \
+--set persistence.storageClass.enabled=true \
+--set persistence.storageClass.name="nfs-client" \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --set alfresco-search.ingress.enabled=true \
---set alfresco-search.ingress.basicAuth="YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==" \
---set alfresco-search.ingress.whitelist_ips="0.0.0.0/0" \
---set postgresql.persistence.subPath="$DESIREDNAMESPACE/alfresco-content-services/database-data" \
---set persistence.repository.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/repository-data" \
---set persistence.solr.data.subPath="$DESIREDNAMESPACE/alfresco-content-services/solr-data" \
---namespace=$DESIREDNAMESPACE
+--set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
+--set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \
+--atomic \
+--timeout 10m0s \
+--namespace=alfresco
 ```
 
-### Upgrade ACS Helm Chart with Search external access
+## Upgrade ACS Helm Chart With Search External Access
 
-Below is the snippet for upgrading ACS with Search external access (where it was previously disabled).
+If you've previously deployed ACS where external search access was disabled (the default) you can run the following `helm upgrade` command to enable external access for `/solr` (replacing `YOUR-BASIC-AUTH` and `YOUR-IPS` with the encoded basic authentication string and list of whitelisted IP addresses you prepared in the "Prepare Data" section):
 
 ```bash
-helm upgrade \
---set alfresco-infrastructure.persistence.efs.enabled=true \
---set alfresco-infrastructure.persistence.efs.dns="$EFS_SERVER" \
+helm upgrade acs alfresco-incubator/alfresco-content-services \
 --set alfresco-search.ingress.enabled=true \
---set alfresco-search.ingress.basicAuth="YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==" \
---set alfresco-search.ingress.whitelist_ips="0.0.0.0/0" \
-$ACSRELEASE alfresco-incubator/alfresco-content-services
+--set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
+--set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \
 ```
 
 **Note:** There are known issues when upgrading a Helm chart relating to Helm cache.
-- https://github.com/kubernetes/helm/issues/3275
-- https://github.com/kubernetes/helm/issues/1193
-- https://github.com/kubernetes/helm/pull/4146
+
+- `https://github.com/kubernetes/helm/issues/3275`
+- `https://github.com/kubernetes/helm/issues/1193`
+- `https://github.com/kubernetes/helm/pull/4146`
 
 If your `helm upgrade` fails due to any of these example errors:
+
 ```bash
 Error: UPGRADE FAILED: no Secret with the name "nosy-tapir-alfresco-search-solr" found
 (or)
@@ -62,10 +61,11 @@ Error: UPGRADE FAILED: no Ingress with the name "nosy-tapir-alfresco-search-solr
 ```
 
 Then, simply delete that resource.  Below is an example:
+
 ```bash
-kubectl delete secret nosy-tapir-alfresco-search-solr --namespace=$DESIREDNAMESPACE
+kubectl delete secret nosy-tapir-alfresco-search-solr --namespace=alfresco
 (or)
-kubectl delete ingress nosy-tapir-alfresco-search-solr --namespace=$DESIREDNAMESPACE
+kubectl delete ingress nosy-tapir-alfresco-search-solr --namespace=alfresco
 ```
- 
+
 And re-try above Upgrade ACS Helm Chart steps which will also re-create the above deleted resource.

@@ -134,7 +134,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
 --set messageBroker.user="alfresco" \
 --set messageBroker.password="YOUR-MQ-PASSWORD" \
 --atomic \
---timeout 9m0s \
+--timeout 10m0s \
 --namespace=alfresco
 ```
 

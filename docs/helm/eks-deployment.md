@@ -272,7 +272,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
 --set persistence.storageClass.name="nfs-client" \
 --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --atomic \
---timeout 9m0s \
+--timeout 10m0s \
 --namespace=alfresco
 ```
 
@@ -294,7 +294,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
     --set persistence.storageClass.enabled=true \
     --set persistence.storageClass.name="nfs-client" \
     --atomic \
-    --timeout 9m0s \
+    --timeout 10m0s \
     --namespace=alfresco
     ```
 
@@ -317,7 +317,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
     --set persistence.storageClass.name="nfs-client" \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --atomic \
-    --timeout 9m0s \
+    --timeout 10m0s \
     --namespace=alfresco
     ```
 
