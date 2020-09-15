@@ -239,7 +239,7 @@ _helm_deploy: &helm_deploy
       TEST_RESULT=0
       # run sync service checks
       if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
-        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev2.alfresco.me"
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
       fi
@@ -261,7 +261,7 @@ _helm_deploy: &helm_deploy
         pods_ready
 
         # run checks after pod deletion
-        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev2.alfresco.me"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
       fi
