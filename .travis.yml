@@ -9,7 +9,7 @@ services:
   - docker
 
 stages:
-  # - name: community
+  - name: community
   - name: 6.2.N
   - name: 6.1.N
   - name: 6.0.N
@@ -47,7 +47,7 @@ before_install:
 
 before_script:
   - |
-    echo ${GIT_DIFF}
+    echo "GIT_DIFF=${GIT_DIFF}"
     REPO_NAME=${TRAVIS_REPO_SLUG##*/}
     PROJECT_NAME=alfresco-content-services
     helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
@@ -61,22 +61,12 @@ before_script:
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
 
-after_success: |
-  if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
-    helm delete $release_name_ingress $release_name_acs -n $namespace
-    kubectl delete namespace $namespace
-  fi
-after_failure: |
-  if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
-    helm delete $release_name_ingress $release_name_acs -n $namespace
-    kubectl delete namespace $namespace
-  fi
-
 _helm_deploy: &helm_deploy
   script: |
-    export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}
-    export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}
-    export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}
+    export STAGE_SUFFIX=$(echo ${TRAVIS_BUILD_STAGE_NAME} | tr -d . | awk '{print tolower($0)}')
+    export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
+    export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
+    export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
     export values_file=helm/alfresco-content-services/values.yaml
 
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
@@ -91,7 +81,6 @@ _helm_deploy: &helm_deploy
     fi
 
     if $deploy; then
-    set -e
     # Utility Functions
 
     # pod status
@@ -199,7 +188,7 @@ _helm_deploy: &helm_deploy
 
     # install acs
     helm dep up helm/alfresco-content-services
-    helm upgrade --install $release_name_acs helm/alfresco-content-services \
+    travis_wait 25 helm upgrade --install $release_name_acs helm/alfresco-content-services \
     --values=$values_file \
     --set externalPort="443" \
     --set externalProtocol="https" \
@@ -238,29 +227,56 @@ _helm_deploy: &helm_deploy
 
     pods_ready
 
+    # Delay running the tests to give ingress & SOLR a chance to fully initialise
+    echo "Waiting 2 minutes from $(date) before running tests..."
+    sleep 120
+
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
-    # run sync service checks
-    if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
-      docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    TEST_RESULT=$?
+    echo "TEST_RESULT=${TEST_RESULT}"
+    if [[ "${TEST_RESULT}" == "0" ]]; then
+      TEST_RESULT=0
+      # run sync service checks
+      if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        TEST_RESULT=$?
+        echo "TEST_RESULT=${TEST_RESULT}"
+      fi
+
+      if [[ "${TEST_RESULT}" == "0" ]]; then
+        # For checking if persistence failover is correctly working with our deployments
+        # in the next phase we delete the acs and postgress pods,
+        # wait for k8s to recreate them, then check if the data created in the first test run is still there
+        kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
+        kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
+        helm upgrade $release_name_acs helm/alfresco-content-services \
+        --wait \
+        --timeout 10m0s \
+        --atomic \
+        --reuse-values \
+        --namespace=$namespace
+
+        # check pods
+        pods_ready
+
+        # run checks after pod deletion
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        TEST_RESULT=$?
+        echo "TEST_RESULT=${TEST_RESULT}"
+      fi
     fi
-    # For checking if persistence failover is correctly working with our deployments
-    # in the next phase we delete the acs and postgress pods,
-    # wait for k8s to recreate them, then check if the data created in the first test run is still there
-    kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
-    kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
-    helm upgrade $release_name_acs helm/alfresco-content-services \
-    --wait \
-    --timeout 10m0s \
-    --atomic \
-    --reuse-values \
-    --namespace=$namespace
 
-    # check pods
-    pods_ready
+    if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
+      helm delete $release_name_ingress $release_name_acs -n $namespace
+      kubectl delete namespace $namespace
+    fi
 
-    # run checks after pod deletion
-    docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    if [[ "${TEST_RESULT}" == "1" ]]; then
+      echo "Tests failed, exiting"
+      exit 1
+    fi
+
     fi
 _docker_deploy: &docker_deploy
   script: |
@@ -360,11 +376,11 @@ jobs:
       stage: test
       <<: *helm_deploy
 
-    # - stage: community
-    #   name: community-helm
-    #   <<: *helm_deploy
-    # - name: community-compose
-    #   <<: *docker_deploy
+    - stage: community
+      name: community-helm
+      <<: *helm_deploy
+    - name: community-compose
+      <<: *docker_deploy
 
     - stage: 6.2.N
       name: 6.2.N-helm
