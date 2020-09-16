@@ -9,6 +9,7 @@ services:
   - docker
 
 stages:
+  - name: test
   - name: community
   - name: 6.2.N
   - name: 6.1.N
