@@ -9,6 +9,8 @@ services:
   - docker
 
 stages:
+  - name: first
+  - name: test
   - name: community
   - name: 6.2.N
   - name: 6.1.N
@@ -399,3 +401,13 @@ jobs:
       <<: *helm_deploy
     - name: 6.0.N-compose
       <<: *docker_deploy
+
+    - stage: first
+      name: Testing Stages
+      script: |
+        echo "TRAVIS_BUILD_STAGE_NAME-${TRAVIS_BUILD_STAGE_NAME}"
+        echo "TRAVIS_COMMIT_MESSAGE=${TRAVIS_COMMIT_MESSAGE}"
+        if [[ "${TRAVIS_BRANCH}" != "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]]
+        then
+          echo "All tests should be executed"
+        fi
