@@ -17,7 +17,6 @@ stages:
     if: branch = master OR commit_message = "[publish]"
 
 import:
-  - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
 
