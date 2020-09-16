@@ -404,13 +404,14 @@ jobs:
 
     - stage: first
       name: Testing Stages
+      if: commit_message = "[run all tests]"
       script: |
         echo "TRAVIS_BUILD_STAGE_NAME-${TRAVIS_BUILD_STAGE_NAME}"
         echo "TRAVIS_COMMIT_MESSAGE=${TRAVIS_COMMIT_MESSAGE}"
         # if [[ "${TRAVIS_BRANCH}" != "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]]
-        if [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]]
-        then
-          echo "All tests should be executed"
-        else
-          echo "Only run necessary tests"
-        fi
+        # if [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]]
+        # then
+        echo "All tests should be executed"
+        # else
+        #   echo "Only run necessary tests"
+        # fi
