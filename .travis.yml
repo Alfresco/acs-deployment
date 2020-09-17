@@ -418,19 +418,19 @@ jobs:
           CHART_VERSION=$(cat helm/${PROJECT_NAME}/Chart.yaml | grep version: | awk '{print $2}')
           NON_SUFFIX_VERSION=$(echo "${CHART_VERSION}" | awk -F - '{print $1}')
           ALPHA_BUILD_VERSION="${NON_SUFFIX_VERSION}-A${TRAVIS_BUILD_NUMBER}"
-          echo "Changing Chart version to: ${ALPHA_BUILD_VERSION}..."
+          echo "Changing Chart version to ${ALPHA_BUILD_VERSION} as this is a feature branch..."
           sed -i s,$CHART_VERSION,$ALPHA_BUILD_VERSION,g helm/${PROJECT_NAME}/Chart.yaml
         fi
 
-        # COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
-        # echo using COMMIT_MESSAGE_FIRST_LINE=${COMMIT_MESSAGE_FIRST_LINE}
-        # git clone https://${GITHUB_TOKEN}@github.com/Alfresco/charts.git
-        # echo using HELM_REPO=${HELM_REPO}
+        COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
+        echo using COMMIT_MESSAGE_FIRST_LINE=${COMMIT_MESSAGE_FIRST_LINE}
+        git clone https://${GITHUB_TOKEN}@github.com/Alfresco/charts.git
+        echo using HELM_REPO=${HELM_REPO}
         mkdir repo
         helm package --dependency-update --destination repo helm/${PROJECT_NAME}
-        # helm repo index repo --url ${HELM_REPO_BASE_URL}/${HELM_REPO} --merge charts/${HELM_REPO}/index.yaml
-        # mv repo/* charts/${HELM_REPO}
-        # cd charts
-        # git add ${HELM_REPO}
-        # git commit -m "${COMMIT_MESSAGE_FIRST_LINE}"
-        # git push --quiet origin master
+        helm repo index repo --url ${HELM_REPO_BASE_URL}/${HELM_REPO} --merge charts/${HELM_REPO}/index.yaml
+        mv repo/* charts/${HELM_REPO}
+        cd charts
+        git add ${HELM_REPO}
+        git commit -m "${COMMIT_MESSAGE_FIRST_LINE}"
+        git push --quiet origin master
