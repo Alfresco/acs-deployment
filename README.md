@@ -21,6 +21,8 @@ The master branch of this repository now contains the artifacts required to depl
 
 The default behaviour of the deployment scripts is to use the latest work-in-progress development version however, individual files are now provided to deploy the latest hot fix version of each major.minor version of ACS. The `support/*` branches will remain in place but will no longer be maintained.
 
+A new version numbering scheme is also being introduced, during the development phase one or more milestone releases will be produced indicated by an `M` suffix, for example "5.0.0-M1". Once feature complete one or more RC releases will be produced followed by the final GA release. Upon release the repository will be tagged with the release number.
+
 ### Docker
 
 The default docker compose file contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
@@ -37,9 +39,9 @@ By default the latest version of the chart will always deploy the latest develop
 
 NOTE: As the Helm chart no longer deploys a specific version of ACS the `appVersion` property within the chart is longer be specified.
 
-Our tests are executed using Helm 3.2.4, kubectl 1.18.4 against an EKS clsuter running Kubernetes 1.17.
+Our tests are executed using Helm 3.2.4, kubectl 1.18.4 against an EKS cluster running Kubernetes 1.17.
 
-## Documentation
+## Getting Started
 
 To get started please refer to the [Docker Compose](./docs/docker-compose) and [Helm Chart](./docs/helm) documentation.
 
