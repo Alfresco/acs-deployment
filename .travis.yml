@@ -414,10 +414,10 @@ jobs:
     - name: package and publish chart
       stage: publish
       script: |
-        set
+        cat helm/${PROJECT_NAME}/Chart.yaml
         CHART_VERSION=$(cat helm/${PROJECT_NAME}/Chart.yaml | grep version: | awk '{print $1}')
-        NON_SUFFIX_VERSION=$(echo $CHART_VERSION | awk -F - '{print $1}')
-        ALPHA_BUILD_VERSION=${NON_SUFFIX_VERSION}-A${$TRAVIS_BUILD_NUMBER}
+        NON_SUFFIX_VERSION=$(echo "${CHART_VERSION}" | awk -F - '{print $1}')
+        ALPHA_BUILD_VERSION="${NON_SUFFIX_VERSION}-A${TRAVIS_BUILD_NUMBER}"
 
         echo "CHART_VERSION=${CHART_VERSION}"
         echo "NON_SUFFIX_VERSION=${NON_SUFFIX_VERSION}"
