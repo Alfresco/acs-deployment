@@ -10,10 +10,10 @@ services:
 
 stages:
   - name: test
-  - name: community
-  - name: 6.2.N
-  - name: 6.1.N
-  - name: 6.0.N
+  # - name: community
+  # - name: 6.2.N
+  # - name: 6.1.N
+  # - name: 6.0.N
   - name: publish
     if: branch = master OR commit_message = "[publish]"
 
@@ -380,49 +380,58 @@ jobs:
         helm lint helm/alfresco-content-services/charts/alfresco-sync-service
         helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
 
-    - name: Deploy Docker Compose and Run Postman Checks
-      stage: test
-      <<: *docker_deploy
-    - name: Deploy Latest Chart and Run Postman Checks
-      stage: test
-      <<: *helm_deploy
+    # - name: Deploy Docker Compose and Run Postman Checks
+    #   stage: test
+    #   <<: *docker_deploy
+    # - name: Deploy Latest Chart and Run Postman Checks
+    #   stage: test
+    #   <<: *helm_deploy
 
-    - stage: community
-      name: community-helm
-      <<: *helm_deploy
-    - name: community-compose
-      <<: *docker_deploy
+    # - stage: community
+    #   name: community-helm
+    #   <<: *helm_deploy
+    # - name: community-compose
+    #   <<: *docker_deploy
 
-    - stage: 6.2.N
-      name: 6.2.N-helm
-      <<: *helm_deploy
-    - name: 6.2.N-compose
-      <<: *docker_deploy
+    # - stage: 6.2.N
+    #   name: 6.2.N-helm
+    #   <<: *helm_deploy
+    # - name: 6.2.N-compose
+    #   <<: *docker_deploy
 
-    - stage: 6.1.N
-      name: 6.1.N-helm
-      <<: *helm_deploy
-    - name: 6.1.N-compose
-      <<: *docker_deploy
+    # - stage: 6.1.N
+    #   name: 6.1.N-helm
+    #   <<: *helm_deploy
+    # - name: 6.1.N-compose
+    #   <<: *docker_deploy
 
-    - stage: 6.0.N
-      name: 6.0.N-helm
-      <<: *helm_deploy
-    - name: 6.0.N-compose
-      <<: *docker_deploy
+    # - stage: 6.0.N
+    #   name: 6.0.N-helm
+    #   <<: *helm_deploy
+    # - name: 6.0.N-compose
+    #   <<: *docker_deploy
 
     - name: package and publish chart
       stage: publish
       script: |
-        echo "TRAVIS_BRANCH=${TRAVIS_BRANCH}"
-        COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
-        echo using COMMIT_MESSAGE_FIRST_LINE=${COMMIT_MESSAGE_FIRST_LINE}
-        helm show chart helm/${PROJECT_NAME}
+        set
+        CHART_VERSION=$(cat helm/${PROJECT_NAME}/Chart.yaml | grep version: | awk '{print $1}')
+        NON_SUFFIX_VERSION=$(echo $CHART_VERSION | awk -F - '{print $1}')
+        ALPHA_BUILD_VERSION=${NON_SUFFIX_VERSION}-A${$TRAVIS_BUILD_NUMBER}
 
+        echo "CHART_VERSION=${CHART_VERSION}"
+        echo "NON_SUFFIX_VERSION=${NON_SUFFIX_VERSION}"
+        echo "ALPHA_BUILD_VERSION=${ALPHA_BUILD_VERSION}"
+
+        sed -i -e 's/"${CHART_VERSION}"/'"${ALPHA_BUILD_VERSION}"'/g' helm/${PROJECT_NAME}/Chart.yaml
+        cat helm/${PROJECT_NAME}/Chart.yaml
+
+        # COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
+        # echo using COMMIT_MESSAGE_FIRST_LINE=${COMMIT_MESSAGE_FIRST_LINE}
         # git clone https://${GITHUB_TOKEN}@github.com/Alfresco/charts.git
         # echo using HELM_REPO=${HELM_REPO}
-        # mkdir repo
-        # helm package --dependency-update --destination repo helm/${PROJECT_NAME}
+        mkdir repo
+        helm package --dependency-update --destination repo helm/${PROJECT_NAME}
         # helm repo index repo --url ${HELM_REPO_BASE_URL}/${HELM_REPO} --merge charts/${HELM_REPO}/index.yaml
         # mv repo/* charts/${HELM_REPO}
         # cd charts
