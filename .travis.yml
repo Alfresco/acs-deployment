@@ -9,13 +9,15 @@ services:
   - docker
 
 stages:
+  - name: test
   - name: community
   - name: 6.2.N
   - name: 6.1.N
   - name: 6.0.N
+  - name: publish
+    if: branch = master OR commit_message = "[publish]"
 
 import:
-  - source: Alfresco/alfresco-process-tools:.travis.helm.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
 
@@ -37,6 +39,9 @@ branches:
 before_install:
   - |
     pip install --upgrade awscli
+    curl https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar zx
+    sudo mv linux-amd64/helm /usr/local/bin
+    helm version --client
     curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator
     curl -o aws-iam-authenticator.sha256 https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator.sha256
     openssl sha1 -sha256 aws-iam-authenticator
@@ -361,6 +366,12 @@ _docker_deploy: &docker_deploy
 
 jobs:
   include:
+    - name: test chart
+      stage: test
+      script: |
+        helm dep up helm/${PROJECT_NAME}
+        helm lint helm/${PROJECT_NAME}
+
     - name: Lint for subcharts
       stage: test
       script: |
@@ -399,3 +410,27 @@ jobs:
       <<: *helm_deploy
     - name: 6.0.N-compose
       <<: *docker_deploy
+
+    - name: package and publish chart
+      stage: publish
+      script: |
+        if [[ "${TRAVIS_BRANCH}" != "master" ]]; then
+          CHART_VERSION=$(cat helm/${PROJECT_NAME}/Chart.yaml | grep version: | awk '{print $2}')
+          NON_SUFFIX_VERSION=$(echo "${CHART_VERSION}" | awk -F - '{print $1}')
+          ALPHA_BUILD_VERSION="${NON_SUFFIX_VERSION}-A${TRAVIS_BUILD_NUMBER}"
+          echo "Changing Chart version to ${ALPHA_BUILD_VERSION} as this is a feature branch..."
+          sed -i s,$CHART_VERSION,$ALPHA_BUILD_VERSION,g helm/${PROJECT_NAME}/Chart.yaml
+        fi
+
+        COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
+        echo using COMMIT_MESSAGE_FIRST_LINE=${COMMIT_MESSAGE_FIRST_LINE}
+        git clone https://${GITHUB_TOKEN}@github.com/Alfresco/charts.git
+        echo using HELM_REPO=${HELM_REPO}
+        mkdir repo
+        helm package --dependency-update --destination repo helm/${PROJECT_NAME}
+        helm repo index repo --url ${HELM_REPO_BASE_URL}/${HELM_REPO} --merge charts/${HELM_REPO}/index.yaml
+        mv repo/* charts/${HELM_REPO}
+        cd charts
+        git add ${HELM_REPO}
+        git commit -m "${COMMIT_MESSAGE_FIRST_LINE}"
+        git push --quiet origin master
