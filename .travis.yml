@@ -423,7 +423,7 @@ jobs:
         echo "NON_SUFFIX_VERSION=${NON_SUFFIX_VERSION}"
         echo "ALPHA_BUILD_VERSION=${ALPHA_BUILD_VERSION}"
 
-        sed -i -e 's/"${CHART_VERSION}"/'"${ALPHA_BUILD_VERSION}"'/g' helm/${PROJECT_NAME}/Chart.yaml
+        sed -i s,$CHART_VERSION,$ALPHA_BUILD_VERSION,g helm/${PROJECT_NAME}/Chart.yaml
         cat helm/${PROJECT_NAME}/Chart.yaml
 
         # COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
