@@ -57,6 +57,19 @@ repository:
     initialDelaySeconds: 130
     periodSeconds: 20
     timeoutSeconds: 10
+  extraVolumeMounts: []
+  #- name: alfresco-global-properties-volume
+  #  mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+  #  subPath: alfresco-global.properties
+  #  readOnly: true
+  extraVolumes: []
+  #- name: alfresco-global-properties-volume
+  #  configMap:
+  #    name: alfresco-global-properties-config
+  #    items:
+  #    - key: "alfresco-global.properties"
+  #      path: "alfresco-global.properties"
+  #    optional: true
 
 # Declares the api-explorer service used by the content repository
 apiexplorer:
