@@ -205,7 +205,7 @@ The provided Docker compose file provides some default configuration, the sectio
 
 ## Customise
 
-To customise the Docker Compose deployment, for example applying AMPs, we recommend following the best practice of creating your own custom Docker image(s). The [Customisation Guide](./docs/docker-compose/examples/customisation-guidelines.md) walks you through this process.
+To customise the Docker Compose deployment, for example applying AMPs, we recommend following the best practice of creating your own custom Docker image(s). The [Customisation Guide](./examples/customisation-guidelines.md) walks you through this process.
 
 ## Cleanup
 
