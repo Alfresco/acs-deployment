@@ -219,6 +219,12 @@ If you have issues running ```docker-compose up``` after deleting a previous Doc
 docker-compose down && docker-compose build --no-cache && docker-compose up
 ```
 
+## Example Custom Containers
+
+Here are some examples on common customisations to Alfrescos Docker images
+
+1. Installing AMPS
+
 ## Reference
 
 The table below shows the location of the Dockerfile for each container used in this deployment.
