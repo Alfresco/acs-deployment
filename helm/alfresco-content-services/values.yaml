@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "7.0.0-M1"
+    tag: "7.0.0-A5"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -41,6 +41,12 @@ repository:
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
       -Xms2000M -Xmx2000M"
+    JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
+      -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+      -Dencryption.keyAlgorithm=DESede
+      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+      -Dmetadata-keystore.aliases=metadata
+      -Dmetadata-keystore.metadata.algorithm=DESede"
   resources:
     requests:
       memory: "3000Mi"
@@ -592,7 +598,7 @@ metadataKeystore:
   # keystorePassword: ""
   # keyPassword: ""
   defaultKeystorePassword: "mp6yc0UD9e"
-  defaultKeyPassword: "mp6yc0UD9e"
+  defaultKeyPassword: "oKIWzVdEdA"
 
 alfresco-sync-service:
   syncservice:

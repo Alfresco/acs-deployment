@@ -150,6 +150,4 @@ data:
       {{- end }}
       {{- end }}
       -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
-      -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
-      -Dmetadata-keystore.metadata.algorithm=AES"
+      -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD"
