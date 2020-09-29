@@ -45,9 +45,7 @@ repository:
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
-      -Dmetadata-keystore.password=mp6yc0UD9e
       -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.password=oKIWzVdEdA
       -Dmetadata-keystore.metadata.algorithm=DESede"
   resources:
     requests:
@@ -600,7 +598,7 @@ metadataKeystore:
   # keystorePassword: ""
   # keyPassword: ""
   defaultKeystorePassword: "mp6yc0UD9e"
-  defaultKeyPassword: "mp6yc0UD9e"
+  defaultKeyPassword: "oKIWzVdEdA"
 
 alfresco-sync-service:
   syncservice:

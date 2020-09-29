@@ -39,6 +39,7 @@ repository:
       -Dindex.subsystem.name=solr6
       -Ddeployment.method=HELM_CHART
       -Xms2000M -Xmx2000M"
+    JAVA_TOOL_OPTIONS: " -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=AES"
   resources:
     requests:
       memory: "3000Mi"

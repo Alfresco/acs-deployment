@@ -148,4 +148,6 @@ data:
       -Ds3.awsKmsKeyId=$KMSKEYID
       {{- end }}
       {{- end }}
-      {{- end }}"
+      {{- end }}
+      -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
+      -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD"
