@@ -203,6 +203,10 @@ The provided Docker compose file provides some default configuration, the sectio
 | SYNCSERVICE_URL | Sync service URL inside network. | `http://sync-service:9090` |
 | ACCESS_LOG | Sets the `access_log` value. Set to `off` to switch off logging. | |
 
+## Customise
+
+To customise the Docker Compose deployment, for example applying AMPs, we recommend following the best practice of creating your own custom Docker image(s). The [Customisation Guide](./examples/customisation-guidelines.md) walks you through this process.
+
 ## Cleanup
 
 To bring the system down and cleanup the containers run the following command:
@@ -218,12 +222,6 @@ If you have issues running ```docker-compose up``` after deleting a previous Doc
 ```bash
 docker-compose down && docker-compose build --no-cache && docker-compose up
 ```
-
-## Example Custom Containers
-
-Here are some examples on common customisations to Alfrescos Docker images
-
-1. Installing AMPS
 
 ## Reference
 
