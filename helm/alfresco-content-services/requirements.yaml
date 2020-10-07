@@ -7,7 +7,7 @@ dependencies:
   version: 8.6.4
   repository: https://kubernetes-charts.storage.googleapis.com/
   alias: postgresql-syncservice
-  condition: postgresql-syncservice.enabled
+  condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
 - name: alfresco-adf-app
   alias: alfresco-digital-workspace
   version: 2.2.1
