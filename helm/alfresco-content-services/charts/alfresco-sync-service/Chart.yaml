@@ -1,5 +1,4 @@
 apiVersion: v1
-appVersion: 3.3.3.1
 description: Alfresco Syncservice
 engine: gotpl
 keywords:
@@ -9,4 +8,4 @@ keywords:
 maintainers:
 - name: Alfresco Apps Repo Team
 name: alfresco-sync-service
-version: 3.0.6
+version: 3.0.7
