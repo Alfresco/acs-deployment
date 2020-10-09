@@ -12,4 +12,4 @@ keywords:
 name: alfresco-search
 sources:
 - https://github.com/alfresco/alfresco-search-deployment
-version: 1.0.3
+version: 1.0.4
