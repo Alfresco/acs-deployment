@@ -27,7 +27,7 @@ As we'll be using Helm to deploy the ACS chart follow the [Using Helm with EKS](
 Helm also needs to know where to find charts, run the following commands to add the standard Helm repository and the Alfresco incubator and stable repositories to your machine:
 
 ```bash
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add nginx-stable https://helm.nginx.com/stable
 helm repo add alfresco-stable https://kubernetes-charts.alfresco.com/stable
 helm repo add alfresco-incubator https://kubernetes-charts.alfresco.com/incubator
 ```
@@ -228,7 +228,7 @@ kubectl create namespace alfresco
 3. Deploy the ingress using the following command (replacing `ACM_CERTIFICATE_ARN` and `YOUR-DOMAIN-NAME` with the ARN of the certificate and hosted zone created earlier in the DNS section):
 
     ```bash
-    helm install acs-ingress stable/nginx-ingress \
+    helm install acs-ingress nginx-stable/nginx-ingress \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=alfresco \
     --set rbac.create=true \
