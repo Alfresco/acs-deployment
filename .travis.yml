@@ -55,8 +55,8 @@ before_script:
     echo "GIT_DIFF=${GIT_DIFF}"
     REPO_NAME=${TRAVIS_REPO_SLUG##*/}
     PROJECT_NAME=alfresco-content-services
-    helm repo add nginx-stable https://helm.nginx.com/stable
     helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
+    helm repo add stable https://kubernetes-charts.storage.googleapis.com
     helm repo add alfresco-incubator ${HELM_REPO_BASE_URL}/${HELM_REPO}
     [[ ( "$A" -eq "0" || "$B" -ne "0" ) && "$C" -eq "0" ]];
     if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
@@ -174,7 +174,7 @@ _helm_deploy: &helm_deploy
     EOF
 
     # install ingress
-    helm upgrade --install $release_name_ingress nginx-stable/nginx-ingress \
+    helm upgrade --install $release_name_ingress stable/nginx-ingress \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=$namespace \
     --set rbac.create=true \
