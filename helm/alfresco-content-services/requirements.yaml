@@ -1,11 +1,11 @@
 dependencies:
 - name: postgresql
-  version: 8.6.4
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 8.9.6
+  repository: https://charts.bitnami.com/bitnami
   condition: postgresql.enabled
 - name: postgresql
-  version: 8.6.4
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 8.9.6
+  repository: https://charts.bitnami.com/bitnami
   alias: postgresql-syncservice
   condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
 - name: alfresco-adf-app
