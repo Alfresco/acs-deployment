@@ -433,7 +433,7 @@ alfresco-digital-workspace:
       nginx.ingress.kubernetes.io/rewrite-target: "/"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 1.6.0
+    tag: 2.0.0-M2
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
