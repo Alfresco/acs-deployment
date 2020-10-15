@@ -20,6 +20,7 @@ stages:
 import:
   - source: Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
+  - source: Alfresco/alfresco-process-tools:.travis.pre-commit.yml@master
 
 env:
   global:
@@ -28,8 +29,10 @@ env:
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=incubator
     - KUBERNETES_VERSION=1.18.4
-    - HELM_VERSION=${HELM_VERSION:-3.2.4}
+    - HELM_VERSION=${HELM_VERSION:-3.3.4}
     - GIT_DIFF=$(git diff HEAD~1 --name-only .)
+    - HELM_DOCS_VERSION=${HELM_DOCS_VERSION:-1.3.0}
+    - KUBEPUG_VERSION=${KUBEPUG_VERSION:-1.1.3}
 
 branches:
   only:
@@ -39,16 +42,15 @@ branches:
 before_install:
   - |
     pip install --upgrade awscli
-    curl https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar zx
-    sudo mv linux-amd64/helm /usr/local/bin
-    helm version --client
+    mkdir -p $HOME/bin && export PATH=$PATH:$HOME/bin
+    curl -sSL https://get.helm.sh/helm-v${HELM_VERSION}-$(uname | tr '[:upper:]' '[:lower:]')-amd64.tar.gz | tar xz --strip=1 -C $HOME/bin/ $(uname | tr '[:upper:]' '[:lower:]')-amd64/helm && helm version --client --short
     curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator
     curl -o aws-iam-authenticator.sha256 https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator.sha256
     openssl sha1 -sha256 aws-iam-authenticator
-    chmod +x ./aws-iam-authenticator
-    mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
-    export PATH=$PATH:$HOME/bin
+    chmod +x ./aws-iam-authenticator && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator
     aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
+    curl -sSL https://github.com/norwoodj/helm-docs/releases/download/v$HELM_DOCS_VERSION/helm-docs_${HELM_DOCS_VERSION}_$(uname)_x86_64.tar.gz | tar xz -C $HOME/bin/ helm-docs
+    curl -sSL https://github.com/rikatz/kubepug/releases/download/v$KUBEPUG_VERSION/kubepug_$(uname | tr '[:upper:]' '[:lower:]')_amd64.tar.gz | tar xz -C $HOME/bin/ kubepug
 
 before_script:
   - |
