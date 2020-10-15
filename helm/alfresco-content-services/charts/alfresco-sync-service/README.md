@@ -66,9 +66,9 @@ Alfresco Syncservice
 | syncservice.readinessProbe.initialDelaySeconds | int | `20` |  |
 | syncservice.readinessProbe.periodSeconds | int | `10` |  |
 | syncservice.readinessProbe.timeoutSeconds | int | `10` |  |
-| syncservice.resources.limits.cpu | int | `2` |  |
+| syncservice.resources.limits.cpu | string | `"2"` |  |
 | syncservice.resources.limits.memory | string | `"2000Mi"` |  |
-| syncservice.resources.requests.cpu | int | `2` |  |
+| syncservice.resources.requests.cpu | string | `"2"` |  |
 | syncservice.resources.requests.memory | string | `"2000Mi"` |  |
 | syncservice.service.externalPort | int | `80` |  |
 | syncservice.service.name | string | `"syncservice"` |  |

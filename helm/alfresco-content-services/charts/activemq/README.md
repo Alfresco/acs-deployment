@@ -29,6 +29,7 @@ A Helm chart Providing Apache ActiveMQ.
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
+| replicaCount | int | `1` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
 | services.broker.ports.external.amqp | int | `5672` |  |

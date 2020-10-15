@@ -52,7 +52,6 @@ A Helm chart for deploying Alfresco Content Services
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
 | alfresco-digital-workspace.image.tag | string | `"2.0.0-M2"` |  |
 | alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
-| alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/"` |  |
 | alfresco-digital-workspace.ingress.defaultHostNameEnabled | bool | `false` |  |
 | alfresco-digital-workspace.ingress.path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
@@ -213,6 +212,7 @@ A Helm chart for deploying Alfresco Content Services
 | persistence.storageClass.accessModes[0] | string | `"ReadWriteMany"` |  |
 | persistence.storageClass.enabled | bool | `false` |  |
 | persistence.storageClass.name | string | `"nfs"` |  |
+| postgresql-syncservice.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql-syncservice.enabled | bool | `true` |  |
 | postgresql-syncservice.imageTag | string | `"11.7.0"` |  |
 | postgresql-syncservice.name | string | `"postgresql-syncservice"` |  |
@@ -228,6 +228,7 @@ A Helm chart for deploying Alfresco Content Services
 | postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
+| postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql.enabled | bool | `true` |  |
 | postgresql.imageTag | string | `"11.7.0"` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
