@@ -468,6 +468,8 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   imageTag: "11.7.0"
+  commonAnnotations:
+    application: alfresco-content-services
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
@@ -491,6 +493,8 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   imageTag: "11.7.0"
+  commonAnnotations:
+    application: alfresco-content-services
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-sync-services/database-data"
