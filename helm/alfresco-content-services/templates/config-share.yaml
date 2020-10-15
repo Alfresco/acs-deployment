@@ -10,7 +10,6 @@ data:
   {{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
   {{ $alfport := tpl (.Values.externalPort | default .Values.repository.service.externalPort | toString) $ }}
   {{ $alfproxy := printf "-Dalfresco.proxy=%s://%s:%s" $alfprotocol $alfhost $alfport }}
-  CATALINA_OPTS: {{ index .Values "share" "environment" "CATALINA_OPTS" }}
   REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
   REPO_PORT: "{{ .Values.repository.service.externalPort }}"
   CSRF_FILTER_REFERER: "{{ $alfprotocol }}://{{ $alfhost }}/.*"
