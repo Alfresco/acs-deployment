@@ -19,7 +19,7 @@ Follow the [EKS deployment](../eks-deployment.md) guide up until the [ACS](../ek
 Deploy the latest version of ACS Enterprise by running the command below (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created previously and replacing `YOUR-BASIC-AUTH` and `YOUR-IPS` with the encoded basic authentication string and list of whitelisted IP addresses you prepared in the previous section).
 
 ```bash
-helm install acs alfresco-incubator/alfresco-content-services \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
@@ -40,7 +40,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
 If you've previously deployed ACS where external search access was disabled (the default) you can run the following `helm upgrade` command to enable external access for `/solr` (replacing `YOUR-BASIC-AUTH` and `YOUR-IPS` with the encoded basic authentication string and list of whitelisted IP addresses you prepared in the "Prepare Data" section):
 
 ```bash
-helm upgrade acs alfresco-incubator/alfresco-content-services \
+helm upgrade acs alfreso/alfresco-content-services \
 --set alfresco-search.ingress.enabled=true \
 --set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
 --set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \

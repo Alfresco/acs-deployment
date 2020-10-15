@@ -24,15 +24,7 @@ Follow the [AWS EKS Getting Started Guide](https://docs.aws.amazon.com/eks/lates
 
 As we'll be using Helm to deploy the ACS chart follow the [Using Helm with EKS](https://docs.aws.amazon.com/eks/latest/userguide/helm.html) instructions to setup helm on your local machine.
 
-Helm also needs to know where to find charts, run the following commands to add the standard Helm repository and the Alfresco incubator and stable repositories to your machine:
-
-```bash
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo add alfresco-stable https://kubernetes-charts.alfresco.com/stable
-helm repo add alfresco-incubator https://kubernetes-charts.alfresco.com/incubator
-```
-
-Optionally, follow the tutorial to [deploy the Kubernetes Dashboard](https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html) to your cluster, this can be really useful for troubleshooting issues that may occur.
+Optionally, to help troubleshoot issues with your cluster either follow the tutorial to [deploy the Kubernetes Dashboard](https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html) to your cluster or download and use the [Lens application](https://k8slens.dev) from your local machine.
 
 ## Prepare The Cluster For ACS
 
@@ -152,9 +144,10 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
     ![NFS Inbound Rules](./diagrams/eks-nfs-inbound-rules.png)
 
-6. Deploy an NFS Client Provisioner with Helm using the following command (replacing `EFS-DNS-NAME` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
+6. Deploy an NFS Client Provisioner with Helm using the following commands (replacing `EFS-DNS-NAME` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
 
     ```bash
+    helm repo add stable https://kubernetes-charts.storage.googleapis.com
     helm install alfresco-nfs-provisioner stable/nfs-client-provisioner --set nfs.server="EFS-DNS-NAME" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
     ```
 
@@ -225,9 +218,10 @@ kubectl create namespace alfresco
     kubectl apply -f ingress-rbac.yaml -n alfresco
     ```
 
-3. Deploy the ingress using the following command (replacing `ACM_CERTIFICATE_ARN` and `YOUR-DOMAIN-NAME` with the ARN of the certificate and hosted zone created earlier in the DNS section):
+3. Deploy the ingress using the following commands (replacing `ACM_CERTIFICATE_ARN` and `YOUR-DOMAIN-NAME` with the ARN of the certificate and hosted zone created earlier in the DNS section):
 
     ```bash
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
     helm install acs-ingress ingress-nginx/ingress-nginx \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=alfresco \
@@ -256,14 +250,28 @@ kubectl create secret docker-registry quay-registry-secret --docker-server=quay.
 
 ### ACS
 
-Decide whether you want to install the latest version of ACS (Enterprise or Community) or a previous version and follow the steps in the relevant section below.
+This repository allows you to either deploy a system using released stable artefacts or the latest in-progress development artefacts.
+
+To use a released version of the Helm chart add the stable repository using the following command:
+
+```bash
+helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
+```
+
+Alternatively, to use the latest in-progress development version of the Helm chart add the incubator repository using the following command:
+
+```bash
+helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
+```
+
+Now decide whether you want to install the latest version of ACS (Enterprise or Community) or a previous version and follow the steps in the relevant section below.
 
 #### Latest Enterprise Version
 
 Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
 ```bash
-helm install acs alfresco-incubator/alfresco-content-services \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
@@ -285,7 +293,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
 2. Deploy ACS Community by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
     ```bash
-    helm install acs alfresco-incubator/alfresco-content-services \
+    helm install acs alfresco/alfresco-content-services \
     --values=community_values.yaml \
     --set externalPort="443" \
     --set externalProtocol="https" \
@@ -307,7 +315,7 @@ helm install acs alfresco-incubator/alfresco-content-services \
 2. Deploy the specific version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` & `MINOR` with the appropriate values):
 
     ```bash
-    helm install acs alfresco-incubator/alfresco-content-services \
+    helm install acs alfresco/alfresco-content-services \
     --values=MAJOR.MINOR.N_values.yaml \
     --set externalPort="443" \
     --set externalProtocol="https" \

@@ -19,7 +19,7 @@ Follow the steps in the official documentation to [setup an IAM user and an S3 b
 When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
 
 ```bash
-helm install acs alfresco-incubator/alfresco-content-services \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \

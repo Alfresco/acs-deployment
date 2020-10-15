@@ -225,17 +225,13 @@ docker-compose down && docker-compose build --no-cache && docker-compose up
 
 ## Reference
 
-The table below shows the location of the Dockerfile for each container used in this deployment.
+The table below shows the location of the publicly available `Dockerfile` for the containers used in the Community deployment.
 
 | Container | Dockerfile Location |
 |----------|-------------|
 | alfresco | https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile |
 | share | https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile |
-| solr6 | https://github.com/Alfresco/InsightEngine/blob/master/search-services/packaging/src/docker/Dockerfile |
-| <nobr>digital-workspace</nobr> | https://github.com/Alfresco/alfresco-digital-workspace-app/blob/develop/Dockerfile |
-| activemq | https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile |
-| <nobr>sync-service</nobr> | https://github.com/Alfresco/dsync-services/blob/master/service-sync/packaging/docker/Dockerfile |
-| <nobr>transform-router</nobr> | https://github.com/Alfresco/alfresco-transform-service/blob/master/alfresco-transform-router/src/main/docker/Dockerfile |
+| solr6 | https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile |
 | <nobr>transform-core-aio</nobr> | https://github.com/Alfresco/alfresco-transform-core/blob/master/alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile |
-| <nobr>shared-file-store</nobr> | https://github.com/Alfresco/alfresco-shared-file-store/blob/master/controller/Dockerfile |
+| activemq | https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile |
 | proxy | https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile |

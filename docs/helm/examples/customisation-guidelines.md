@@ -13,5 +13,5 @@ The [docker compose Customisation Guide](../../docker-compose/examples/customisa
 Once you have created your custom image you can either change the default values in the appropriate values file in [this folder](../../../helm/alfresco-content-services) or you can override the values via the `--set` command line option during install as shown below:
 
 ```bash
-helm install alfresco-incubator/alfresco-content-services --set repository.image.repository="yourRegistry" --set repository.image.tag="yourTag" --set share.image.repository="yourRegistry" --set share.image.tag="yourTag"
+helm install alfresco/alfresco-content-services --set repository.image.repository="yourRegistry" --set repository.image.tag="yourTag" --set share.image.repository="yourRegistry" --set share.image.tag="yourTag"
 ```
