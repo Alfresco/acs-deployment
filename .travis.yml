@@ -9,6 +9,7 @@ services:
   - docker
 
 stages:
+  - name: lint
   - name: test
   - name: community
   - name: 6.2.N
@@ -29,7 +30,7 @@ env:
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=incubator
     - KUBERNETES_VERSION=1.18.4
-    - HELM_VERSION=${HELM_VERSION:-3.3.4}
+    - HELM_VERSION=${HELM_VERSION:-3.2.4}
     - GIT_DIFF=$(git diff HEAD~1 --name-only .)
     - HELM_DOCS_VERSION=${HELM_DOCS_VERSION:-1.3.0}
     - KUBEPUG_VERSION=${KUBEPUG_VERSION:-1.1.3}
