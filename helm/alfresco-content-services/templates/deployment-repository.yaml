@@ -13,7 +13,6 @@ spec:
   strategy:
     {{- if eq .Values.repository.strategy.type "Recreate" }}
     type: {{ .Values.repository.strategy.type }}
-    rollingUpdate: null
     {{- else }}
     type: RollingUpdate
     rollingUpdate:
