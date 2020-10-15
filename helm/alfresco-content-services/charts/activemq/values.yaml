@@ -1,6 +1,6 @@
 # Leave this to true to deploy the chart
 enabled: true
-
+replicaCount: 1
 image:
   repository: alfresco/alfresco-activemq
   tag: 5.15.8-java-8-oracle-centos-7-87b15e37ce8b
