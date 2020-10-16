@@ -111,7 +111,7 @@ To use the S3 connector, RDS and Amazon MQ we have to disable the internal defau
 When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
 
 ```bash
-helm install acs alfresco-incubator/alfresco-content-services \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \

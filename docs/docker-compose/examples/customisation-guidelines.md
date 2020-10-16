@@ -44,6 +44,7 @@ You will now need to install the AMP files into the Alfresco Content Repository 
 
     # Customize container: install amps
 
+    ARG ALF_GROUP=Alfresco
     ARG TOMCAT_DIR=/usr/local/tomcat
 
     USER root
@@ -52,6 +53,15 @@ You will now need to install the AMP files into the Alfresco Content Repository 
 
     RUN java -jar ${TOMCAT_DIR}/alfresco-mmt/alfresco-mmt*.jar install \
         ${TOMCAT_DIR}/amps ${TOMCAT_DIR}/webapps/alfresco -directory -nobackup -verbose
+
+    # Restore permissions
+    RUN chgrp -R ${ALF_GROUP} ${TOMCAT_DIR}/webapps && \
+        find ${TOMCAT_DIR}/webapps -type d -exec chmod 0750 {} \; && \
+        find ${TOMCAT_DIR}/webapps -type f -exec chmod 0640 {} \; && \
+        find ${TOMCAT_DIR}/shared -type d -exec chmod 0750 {} \; && \
+        find ${TOMCAT_DIR}/shared -type f -exec chmod 0640 {} \; && \
+        chmod -R g+r ${TOMCAT_DIR}/webapps && \
+        chgrp -R ${ALF_GROUP} ${TOMCAT_DIR}
 
     USER alfresco
     ```

@@ -23,6 +23,12 @@ The default behaviour of the deployment scripts is to use the latest work-in-pro
 
 A new version numbering scheme is also being introduced, during the development phase one or more milestone releases will be produced indicated by an `M` suffix, for example "5.0.0-M1". Once feature complete one or more RC releases will be produced followed by the final GA release. Upon release the repository will be tagged with the release number.
 
+The table below shows the exact version of ACS deployed with each chart version/tag.
+
+| Chart Version/Tag | Default | 6.2.N | 6.1.N | 6.0.N | Community |
+|--|--|--|--|--|--|
+| 5.0.0-M1 | 7.0.0-M2 | 6.2.2.3 | 6.1.1.3 | 6.0.1.5 | 6.2.1-A8 |
+
 ### Docker
 
 The default docker compose file contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
