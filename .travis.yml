@@ -32,7 +32,6 @@ env:
     - KUBERNETES_VERSION=1.18.4
     - HELM_VERSION=${HELM_VERSION:-3.2.4}
     - GIT_DIFF=$(git diff HEAD~1 --name-only .)
-    - HELM_DOCS_VERSION=${HELM_DOCS_VERSION:-1.3.0}
     - KUBEPUG_VERSION=${KUBEPUG_VERSION:-1.1.3}
 
 branches:
@@ -50,7 +49,6 @@ before_install:
     openssl sha1 -sha256 aws-iam-authenticator
     chmod +x ./aws-iam-authenticator && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator
     aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
-    curl -sSL https://github.com/norwoodj/helm-docs/releases/download/v$HELM_DOCS_VERSION/helm-docs_${HELM_DOCS_VERSION}_$(uname)_x86_64.tar.gz | tar xz -C $HOME/bin/ helm-docs
     curl -sSL https://github.com/rikatz/kubepug/releases/download/v$KUBEPUG_VERSION/kubepug_$(uname | tr '[:upper:]' '[:lower:]')_amd64.tar.gz | tar xz -C $HOME/bin/ kubepug
 
 before_script:
