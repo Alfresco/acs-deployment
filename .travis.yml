@@ -33,6 +33,7 @@ env:
     - HELM_VERSION=${HELM_VERSION:-3.2.4}
     - GIT_DIFF=$(git diff HEAD~1 --name-only .)
     - KUBEPUG_VERSION=${KUBEPUG_VERSION:-1.1.3}
+    - AWS_IAM_AUTHENTICATOR_VERSION=${AWS_IAM_AUTHENTICATOR_VERSION:-1.18.8/2020-09-18}
 
 branches:
   only:
@@ -44,10 +45,8 @@ before_install:
     pip install --upgrade awscli
     mkdir -p $HOME/bin && export PATH=$PATH:$HOME/bin
     curl -sSL https://get.helm.sh/helm-v${HELM_VERSION}-$(uname | tr '[:upper:]' '[:lower:]')-amd64.tar.gz | tar xz --strip=1 -C $HOME/bin/ $(uname | tr '[:upper:]' '[:lower:]')-amd64/helm && helm version --client --short
-    curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator
-    curl -o aws-iam-authenticator.sha256 https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/aws-iam-authenticator.sha256
-    openssl sha1 -sha256 aws-iam-authenticator
-    chmod +x ./aws-iam-authenticator && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator
+    curl -sSLO https://amazon-eks.s3.us-west-2.amazonaws.com/$AWS_IAM_AUTHENTICATOR_VERSION/bin/$(uname | tr '[:upper:]' '[:lower:]')/amd64/aws-iam-authenticator{,.sha256} && openssl sha1 -sha256 aws-iam-authenticator &&
+    chmod +x ./aws-iam-authenticator && mv ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator
     aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
     curl -sSL https://github.com/rikatz/kubepug/releases/download/v$KUBEPUG_VERSION/kubepug_$(uname | tr '[:upper:]' '[:lower:]')_amd64.tar.gz | tar xz -C $HOME/bin/ kubepug
 
