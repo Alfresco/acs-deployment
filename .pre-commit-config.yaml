@@ -1,0 +1,23 @@
+repos:
+  - repo: local
+    hooks:
+      - id: helm-deps
+        name: Helm Dependency Update
+        entry: bash -c 'find helm -mindepth 1 -maxdepth 1 -type d | xargs -t -n1 -I% helm dep up %'
+        language: system
+        pass_filenames: false
+      - id: helm-lint
+        name: Helm Lint
+        entry: bash -c 'find helm -mindepth 1 -maxdepth 1 -type d | xargs -t -n1 -I% helm lint %'
+        language: system
+        pass_filenames: false
+      - id: kubepug-1.15
+        name: KubePug - k8s v1.15 minimum
+        entry: env K8S_TARGET_VERSION=v1.15.0 bash -c 'find helm -mindepth 1 -maxdepth 1 -type d | xargs -t -n1 -I% bash -c "helm template % --api-versions $K8S_TARGET_VERSION | kubepug --error-on-deprecated --error-on-deleted --k8s-version $K8S_TARGET_VERSION --input-file /dev/stdin"'
+        language: system
+        pass_filenames: false
+      - id: kubepug-1.17
+        name: KubePug - k8s v1.17 recommended
+        entry: env K8S_TARGET_VERSION=v1.17.0 bash -c 'find helm -mindepth 1 -maxdepth 1 -type d | xargs -t -n1 -I% bash -c "helm template % --api-versions $K8S_TARGET_VERSION | kubepug --error-on-deprecated --error-on-deleted --k8s-version $K8S_TARGET_VERSION --input-file /dev/stdin"'
+        language: system
+        pass_filenames: false

@@ -32,10 +32,10 @@ syncservice:
   resources:
     requests:
       memory: "2000Mi"
-      cpu: 2
+      cpu: "2"
     limits:
       memory: "2000Mi"
-      cpu: 2
+      cpu: "2"
 
   livenessProbe:
     initialDelaySeconds: 150
