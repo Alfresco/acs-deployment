@@ -26,7 +26,7 @@ kubectl create secret tls your-cert-secret --key privkey.pem --cert fullchain.pe
 Deploy the latest version of ACS Enterprise by running the command below (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created and replacing the email values appropriately). For the full list of available options please refer to the table of [configuration options](../../../helm/README.md#configuration).
 
 ```bash
-helm install acs alfresco/alfresco-content-services \
+helm install acs alfresco/alfresco-content-services --devel \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \

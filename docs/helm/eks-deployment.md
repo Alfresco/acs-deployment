@@ -148,6 +148,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
     ```bash
     helm repo add stable https://kubernetes-charts.storage.googleapis.com
+
     helm install alfresco-nfs-provisioner stable/nfs-client-provisioner --set nfs.server="EFS-DNS-NAME" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
     ```
 
@@ -157,7 +158,7 @@ Now the EKS cluster is setup we can deploy ACS.
 
 ### Namespace
 
-Namespaces in Kubernetes isolate workloads from each other, create a namespace to host ACS inside the cluster using the following command (we'll then use the `alfresco` throughout the rest of the tutorial):
+Namespaces in Kubernetes isolate workloads from each other, create a namespace to host ACS inside the cluster using the following command (we'll then use the `alfresco` namespace throughout the rest of the tutorial):
 
 ```bash
 kubectl create namespace alfresco
@@ -222,6 +223,7 @@ kubectl create namespace alfresco
 
     ```bash
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
     helm install acs-ingress ingress-nginx/ingress-nginx \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=alfresco \
@@ -264,6 +266,8 @@ Alternatively, to use the latest in-progress development version of the Helm cha
 helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
 ```
 
+**NOTE**: The Helm charts comptaible with these instructions do not have a GA release yet, until they do the `--devel` option needs to be provided with the helm install command.
+
 Now decide whether you want to install the latest version of ACS (Enterprise or Community) or a previous version and follow the steps in the relevant section below.
 
 #### Latest Enterprise Version
@@ -271,7 +275,7 @@ Now decide whether you want to install the latest version of ACS (Enterprise or 
 Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
 ```bash
-helm install acs alfresco/alfresco-content-services \
+helm install acs alfresco/alfresco-content-services --devel \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
@@ -293,7 +297,7 @@ helm install acs alfresco/alfresco-content-services \
 2. Deploy ACS Community by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
     ```bash
-    helm install acs alfresco/alfresco-content-services \
+    helm install acs alfresco/alfresco-content-services --devel \
     --values=community_values.yaml \
     --set externalPort="443" \
     --set externalProtocol="https" \
@@ -315,7 +319,7 @@ helm install acs alfresco/alfresco-content-services \
 2. Deploy the specific version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` & `MINOR` with the appropriate values):
 
     ```bash
-    helm install acs alfresco/alfresco-content-services \
+    helm install acs alfresco/alfresco-content-services --devel \
     --values=MAJOR.MINOR.N_values.yaml \
     --set externalPort="443" \
     --set externalProtocol="https" \
