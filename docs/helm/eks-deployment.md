@@ -147,9 +147,9 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 6. Deploy an NFS Client Provisioner with Helm using the following commands (replacing `EFS-DNS-NAME` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
 
     ```bash
-    helm repo add stable https://kubernetes-charts.storage.googleapis.com
+    helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
 
-    helm install alfresco-nfs-provisioner stable/nfs-client-provisioner --set nfs.server="EFS-DNS-NAME" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
+    helm install alfresco-nfs-provisioner ckotzbauer/nfs-client-provisioner --set nfs.server="EFS-DNS-NAME" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
     ```
 
 ## Deploy
