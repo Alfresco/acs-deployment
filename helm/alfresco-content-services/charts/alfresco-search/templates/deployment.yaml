@@ -64,7 +64,7 @@ spec:
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           livenessProbe:
             httpGet:
-              path: /solr/alfresco/admin/luke
+              path: /solr/admin/info/system
               port: {{ template "alfresco-search.internalPort" . }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}

@@ -341,12 +341,12 @@ When the deployment has completed the following URLs will be available (replacin
 
 * Repository: `https://acs.YOUR-DOMAIN-NAME/alfresco`
 * Share: `https://acs.YOUR-DOMAIN-NAME/share`
-* Api-Explorer: `https://acs.YOUR-DOMAIN-NAME/api-explorer`
+* API Explorer: `https://acs.YOUR-DOMAIN-NAME/api-explorer`
 
 If you deployed Enterprise you'll also have access to:
 
 * ADW: `https://acs.YOUR-DOMAIN-NAME/workspace/`
-* Sync service: `https://acs.YOUR-DOMAIN-NAME/syncservice/healthcheck`
+* Sync Service: `https://acs.YOUR-DOMAIN-NAME/syncservice/healthcheck`
 
 If you requested an extended trial license navigate to the Admin Console and apply your license:
 
