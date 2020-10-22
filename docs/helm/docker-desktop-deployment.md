@@ -99,7 +99,7 @@ The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster 
 Forutnately this can all be achieved with one, albeit large, command as shown below:
 
 ```bash
-helm install acs alfresco-stable/alfresco-content-services --devel \
+helm install acs alfresco/alfresco-content-services --devel \
 --set externalPort="80" \
 --set externalProtocol="http" \
 --set externalHost="localhost" \
@@ -115,6 +115,8 @@ helm install acs alfresco-stable/alfresco-content-services --devel \
 --set postgresql-syncservice.resources.limits.memory="500Mi" \
 --set postgresql.resources.requests.memory="500Mi" \
 --set postgresql.resources.limits.memory="500Mi" \
+--set alfresco-search.resources.requests.memory="1000Mi" \
+--set alfresco-search.resources.limits.memory="1000Mi" \
 --set share.resources.limits.memory="1500Mi" \
 --set share.resources.requests.memory="1500Mi" \
 --set repository.resources.limits.memory="2500Mi" \
@@ -132,7 +134,7 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
 2. Deploy the specific version of ACS by running the following command:
 
     ```bash
-    helm install acs alfresco-stable/alfresco-content-services --devel \
+    helm install acs alfresco/alfresco-content-services --devel \
     --values=MAJOR.MINOR.N_values.yaml \
     --set externalPort="80" \
     --set externalProtocol="http" \
@@ -149,6 +151,8 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
     --set postgresql-syncservice.resources.limits.memory="500Mi" \
     --set postgresql.resources.requests.memory="500Mi" \
     --set postgresql.resources.limits.memory="500Mi" \
+    --set alfresco-search.resources.requests.memory="1000Mi" \
+    --set alfresco-search.resources.limits.memory="1000Mi" \
     --set share.resources.limits.memory="1500Mi" \
     --set share.resources.requests.memory="1500Mi" \
     --set repository.resources.limits.memory="2500Mi" \
@@ -159,6 +163,19 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
     ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
+
+## Access
+
+When the deployment has completed the following URLs will be available:
+
+* Repository: `http://localhost/alfresco`
+* Share: `http://localhost/share`
+* API Explorer: `http://localhost/api-explorer`
+
+If you deployed Enterprise you'll also have access to:
+
+* ADW: `http://localhost/workspace/`
+* Sync Service: `http://localhost/syncservice/healthcheck`
 
 ## Cleanup
 

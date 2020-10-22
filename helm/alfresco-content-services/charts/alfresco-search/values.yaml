@@ -41,9 +41,9 @@ environment:
   ALFRESCO_SECURE_COMMS: "none"
 resources:
   requests:
-    memory: "250Mi"
+    memory: "2000Mi"
   limits:
-    memory: "1024Mi"
+    memory: "2000Mi"
 # Defines the mounting points for the persistence required by the apps in the cluster
 # the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
 persistence:
