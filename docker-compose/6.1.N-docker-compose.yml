@@ -41,14 +41,14 @@ services:
                 -Dtransform.service.enabled=true
                 -Dcsrf.filter.enabled=false
                 -Ddsync.service.uris=http://localhost:9090/alfresco
-                -Xms1500m -Xmx1500m
+                --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95
                 "
 
     transform-router:
         mem_limit: 512m
         image: quay.io/alfresco/alfresco-transform-router:1.0.2.1
         environment:
-          JAVA_OPTS: " -Xms256m -Xmx512m"
+          JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
           ACTIVEMQ_URL: "nio://activemq:61616"
           IMAGEMAGICK_URL: "http://imagemagick:8090"
           PDF_RENDERER_URL : "http://alfresco-pdf-renderer:8090"
@@ -62,7 +62,7 @@ services:
         image: quay.io/alfresco/alfresco-pdf-renderer:2.0.17
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx512m"
+            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
             ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
@@ -74,7 +74,7 @@ services:
         image: quay.io/alfresco/alfresco-imagemagick:2.0.17
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx512m"
+            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
             ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
@@ -86,7 +86,7 @@ services:
         image: quay.io/alfresco/alfresco-libreoffice:2.0.17
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx512m"
+            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
             ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
@@ -98,7 +98,7 @@ services:
         image: quay.io/alfresco/alfresco-tika:2.0.17
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx512m"
+            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
             ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
@@ -110,7 +110,7 @@ services:
         image: alfresco/alfresco-shared-file-store:0.5.3
         mem_limit: 512m
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx512m"
+            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
             scheduler.content.age.millis: 86400000
             scheduler.cleanup.interval: 86400000
         ports:
@@ -125,8 +125,8 @@ services:
             REPO_HOST: "alfresco"
             REPO_PORT: "8080"
             JAVA_OPTS: "
-                -Xms500m
-                -Xmx500m
+                --XX:MinRAMPercentage=50
+                --XX:MaxRAMPercentage=95
                 -Dalfresco.host=localhost
                 -Dalfresco.port=8080
                 -Dalfresco.context=alfresco
@@ -158,7 +158,7 @@ services:
             - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
             #HTTP by default
             - ALFRESCO_SECURE_COMMS=none
-            - "SOLR_JAVA_MEM=-Xms2g -Xmx2g"
+            - "SOLR_JAVA_MEM=--XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
         ports:
             - 8083:8983 #Browser port
 
@@ -203,7 +203,7 @@ services:
             -Drepo.hostname=alfresco
             -Drepo.port=8080
             -Ddw.server.applicationConnectors[0].type=http
-            -Xms1000m -Xmx1000m
+            --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95
             "
 
         ports:
