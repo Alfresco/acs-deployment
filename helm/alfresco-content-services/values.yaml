@@ -40,7 +40,7 @@ repository:
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
-      --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+      --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
     JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
@@ -83,7 +83,7 @@ transformrouter:
     type: ClusterIP
     externalPort: 80
   environment:
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 140
     periodSeconds: 60
@@ -112,7 +112,7 @@ pdfrenderer:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -145,7 +145,7 @@ imagemagick:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -178,7 +178,7 @@ libreoffice:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -211,7 +211,7 @@ tika:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 60
@@ -245,7 +245,7 @@ transformmisc:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -276,7 +276,7 @@ aiTransformer:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -315,7 +315,7 @@ filestore:
   environment:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
-    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -349,7 +349,7 @@ share:
     limits:
       memory: "2000Mi"
   environment:
-    CATALINA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=95"
+    CATALINA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
