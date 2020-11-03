@@ -38,7 +38,7 @@ repository:
       -Dsolr.secureComms=none
       -Dindex.subsystem.name=solr6
       -Ddeployment.method=HELM_CHART
-      -Xms2000M -Xmx2000M"
+      --XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
     JAVA_TOOL_OPTIONS: " -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=AES"
   resources:
     requests:
@@ -81,7 +81,7 @@ pdfrenderer:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -114,7 +114,7 @@ imagemagick:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -147,7 +147,7 @@ libreoffice:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -180,7 +180,7 @@ tika:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -214,7 +214,7 @@ transformmisc:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -250,7 +250,7 @@ share:
     limits:
       memory: "2000Mi"
   environment:
-    CATALINA_OPTS: " -Xms1000M -Xmx1000M"
+    CATALINA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20

@@ -20,7 +20,7 @@ syncservice:
       -Dsync.metrics.reporter.graphite.enabled=false
       -Dsync.metrics.reporter.graphite.address=127.0.0.1
       -Dsync.metrics.reporter.graphite.port=2003
-      --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90
     EXTRA_JAVA_OPTS: >-
 
   service:

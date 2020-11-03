@@ -33,7 +33,7 @@ services:
                 -Dshare.host=localhost
                 -Ddeployment.method=DOCKER_COMPOSE
                 -Dcsrf.filter.enabled=false
-                --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90
+                -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90
                 "
         ports:
             - 8082:8080 #Browser port
@@ -42,7 +42,7 @@ services:
         image: alfresco/alfresco-pdf-renderer:1.3
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
+            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
         ports:
             - 8090:8090
 
@@ -50,7 +50,7 @@ services:
         image: alfresco/alfresco-imagemagick:1.3
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
+            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
         ports:
             - 8091:8090
 
@@ -58,7 +58,7 @@ services:
         image: alfresco/alfresco-libreoffice:1.3
         mem_limit: 1g
         environment:
-            JAVA_OPTS: " --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
+            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
         ports:
             - 8092:8090
 
@@ -68,7 +68,7 @@ services:
         environment:
             - REPO_HOST=alfresco
             - REPO_PORT=8080
-            - "CATALINA_OPTS= --XX:MinRAMPercentage=50 --XX:MaxRAMPercentage=90"
+            - "CATALINA_OPTS= -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
         ports:
             - 8080:8080
 
@@ -97,6 +97,6 @@ services:
             - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
             #HTTP by default
             - ALFRESCO_SECURE_COMMS=none
-            - "SOLR_JAVA_MEM=-Xms2g -Xmx2g"
+            - "SOLR_JAVA_MEM=-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
         ports:
             - 8083:8983 #Browser port
