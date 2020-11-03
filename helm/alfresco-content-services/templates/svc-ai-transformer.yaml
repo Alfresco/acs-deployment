@@ -1,5 +1,5 @@
-# Defines the service for the ai transformer app
 {{- if .Values.ai.enabled }}
+# Defines the service for the ai transformer app
 apiVersion: v1
 kind: Service
 metadata:

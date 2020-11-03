@@ -345,7 +345,7 @@ postgresql:
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
-  postgresConfig:
+  postgresqlExtendedConf:
     max_connections: 300
     log_min_messages: LOG
   persistence:

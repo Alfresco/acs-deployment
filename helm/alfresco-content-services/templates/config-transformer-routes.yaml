@@ -1,5 +1,5 @@
-# Defines transformer routes
 {{- if .Values.ai.enabled }}
+# Defines transformer routes
 apiVersion: v1
 kind: ConfigMap
 metadata:
