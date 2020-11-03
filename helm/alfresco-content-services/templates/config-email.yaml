@@ -1,5 +1,5 @@
-# Defines the email configmap for the alfresco content repository app
 {{- if .Values.email.server.enabled }}
+# Defines the email configmap for the alfresco content repository app
 apiVersion: v1
 kind: ConfigMap
 metadata:

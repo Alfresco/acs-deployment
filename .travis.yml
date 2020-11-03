@@ -296,13 +296,12 @@ _docker_deploy: &docker_deploy
     cd docker-compose
     docker info
     docker-compose --version
-    docker-compose config
+    docker-compose -f $values_file config
     echo "Starting Alfresco in Docker container"
     docker-compose ps
-    docker-compose pull
+    docker-compose -f $values_file pull
     export COMPOSE_HTTP_TIMEOUT=120
-    docker-compose up -d
-    # docker-compose up
+    docker-compose -f $values_file up -d
     WAIT_INTERVAL=1
     COUNTER=0
     TIMEOUT=300
