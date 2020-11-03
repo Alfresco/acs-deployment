@@ -436,7 +436,7 @@ postgresql:
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
-  postgresConfig:
+  postgresqlExtendedConf:
     max_connections: 300
     log_min_messages: LOG
   persistence:
@@ -463,7 +463,7 @@ postgresql-syncservice:
   postgresqlUsername: alfresco
   postgresqlPassword: admin
   postgresqlDatabase: syncservice-postgresql
-  postgresConfig:
+  postgresqlExtendedConf:
     max_connections: 450
     log_min_messages: LOG
   service:
