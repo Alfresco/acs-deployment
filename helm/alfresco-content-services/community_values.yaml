@@ -38,7 +38,7 @@ repository:
       -Dsolr.secureComms=none
       -Dindex.subsystem.name=solr6
       -Ddeployment.method=HELM_CHART
-      --XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
     JAVA_TOOL_OPTIONS: " -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=AES"
   resources:
     requests:
