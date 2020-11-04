@@ -10,9 +10,19 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository-community:6.2.1-A8
+        image: alfresco/alfresco-content-repository-community:7.0.0-A10
         mem_limit: 1500m
         environment:
+            JAVA_TOOL_OPTIONS: "
+                -Dencryption.keystore.type=JCEKS
+                -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+                -Dencryption.keyAlgorithm=DESede
+                -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+                -Dmetadata-keystore.password=mp6yc0UD9e
+                -Dmetadata-keystore.aliases=metadata
+                -Dmetadata-keystore.metadata.password=oKIWzVdEdA
+                -Dmetadata-keystore.metadata.algorithm=DESede
+                "
             JAVA_OPTS: "
                 -Ddb.driver=org.postgresql.Driver
                 -Ddb.username=alfresco
@@ -49,7 +59,7 @@ services:
             - 8090:8090
 
     share:
-        image: alfresco/alfresco-share:6.2.1
+        image: alfresco/alfresco-share:7.0.0-M2
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"
