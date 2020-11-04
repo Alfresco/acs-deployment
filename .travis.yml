@@ -283,10 +283,10 @@ _helm_deploy: &helm_deploy
     fi
 _docker_deploy: &docker_deploy
   script: |
-    export values_file="docker-compose/docker-compose.yml"
+    export values_file="docker-compose.yml"
     deploy=false
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
-      export values_file="docker-compose/${TRAVIS_BUILD_STAGE_NAME}-docker-compose.yml"
+      export values_file="${TRAVIS_BUILD_STAGE_NAME}-docker-compose.yml"
     fi
     if [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]] || [[ "${GIT_DIFF}" == *$values_file* ]] || [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]
     then
