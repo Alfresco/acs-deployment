@@ -368,6 +368,7 @@ _docker_deploy: &docker_deploy
   after_success: |
     echo "nothing to cleanup"
   after_failure: |
+    cd docker-compose
     docker-compose logs --no-color
 
 jobs:
