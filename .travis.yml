@@ -284,9 +284,13 @@ _helm_deploy: &helm_deploy
 _docker_deploy: &docker_deploy
   script: |
     export values_file="docker-compose.yml"
+    export alf_port=8080
     deploy=false
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
       export values_file="${TRAVIS_BUILD_STAGE_NAME}-docker-compose.yml"
+    fi
+    if [[ ${TRAVIS_BUILD_STAGE_NAME} != "6.0.N" ]]; then
+      export alf_port=8082
     fi
     if [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]] || [[ "${GIT_DIFF}" == *$values_file* ]] || [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]
     then
@@ -308,12 +312,12 @@ _docker_deploy: &docker_deploy
     TIMEOUT=300
     t0=`date +%s`
     echo "Waiting for alfresco to start"
-    response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
+    response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:$alf_port/alfresco/)
     until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
       printf '.'
       sleep $WAIT_INTERVAL
       COUNTER=$((COUNTER + WAIT_INTERVAL))
-      response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:8080/alfresco/)
+      response=$(curl --write-out %{http_code} --output /dev/null --silent http://localhost:$alf_port/alfresco/)
     done
     if (("$COUNTER" < "$TIMEOUT")) ; then
       t1=`date +%s`
@@ -347,15 +351,19 @@ _docker_deploy: &docker_deploy
     COUNTER=0
     TIMEOUT=20
     echo "Waiting more time for SOLR"
-    response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
+    response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:$alf_port/alfresco/s/api/solrstats)
     until [[ "200" -eq "$response" ]] || [[ "$COUNTER" -eq "$TIMEOUT" ]]; do
       printf '.'
       sleep $WAIT_INTERVAL
       COUNTER=$((COUNTER + WAIT_INTERVAL))
-      response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:8080/alfresco/s/api/solrstats)
+      response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:$alf_port/alfresco/s/api/solrstats)
     done
     cd ../test/postman/docker-compose
-    docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --insecure --global-var "protocol=http" --global-var "url=localhost:8080"
+    if [[ ${TRAVIS_BUILD_STAGE_NAME} != "6.0.N" ]]; then
+      docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs60n-test-docker-compose-collection.json"
+    else
+      docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --global-var "protocol=http" --global-var "url=localhost:8080"
+    fi
     fi
   after_success: |
     echo "nothing to cleanup"
