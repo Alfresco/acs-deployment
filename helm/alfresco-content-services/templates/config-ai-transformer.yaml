@@ -1,4 +1,3 @@
-
 {{- if .Values.ai.enabled }}
 # Defines the properties required by the alfresco-ai-transformer container
 apiVersion: v1

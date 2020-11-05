@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: "6.2.1-A8"
+    tag: "7.0.0-A10"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -39,7 +39,12 @@ repository:
       -Dindex.subsystem.name=solr6
       -Ddeployment.method=HELM_CHART
       -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
-    JAVA_TOOL_OPTIONS: " -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=AES"
+    JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
+      -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+      -Dencryption.keyAlgorithm=DESede
+      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+      -Dmetadata-keystore.aliases=metadata
+      -Dmetadata-keystore.metadata.algorithm=DESede"
   resources:
     requests:
       memory: "3000Mi"
@@ -234,7 +239,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.2.1"
+    tag: "7.0.0-M2"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -341,11 +346,11 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.4.0"
+  imageTag: "11.7"
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
-  postgresConfig:
+  postgresqlExtendedConf:
     max_connections: 300
     log_min_messages: LOG
   persistence:
@@ -361,7 +366,7 @@ metadataKeystore:
   # keystorePassword: ""
   # keyPassword: ""
   defaultKeystorePassword: "mp6yc0UD9e"
-  defaultKeyPassword: "mp6yc0UD9e"
+  defaultKeyPassword: "oKIWzVdEdA"
 
 # Disable features
 alfresco-digital-workspace:
