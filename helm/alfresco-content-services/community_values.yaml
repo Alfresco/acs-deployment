@@ -366,7 +366,7 @@ metadataKeystore:
   # keystorePassword: ""
   # keyPassword: ""
   defaultKeystorePassword: "mp6yc0UD9e"
-  defaultKeyPassword: "mp6yc0UD9e"
+  defaultKeyPassword: "oKIWzVdEdA"
 
 # Disable features
 alfresco-digital-workspace:
