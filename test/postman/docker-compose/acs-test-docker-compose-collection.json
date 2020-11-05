@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5d5ad563-4b6a-4b0c-bfbf-ee37971808a3",
+		"_postman_id": "3b8257e1-fb3f-4699-9589-808305a0b4ae",
 		"name": "acs-test-docker-compose-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,8 +15,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "585e1183-573a-4966-86f0-739a8d0b9707",
-								"type": "text/javascript",
+								"id": "3218aa24-59e0-43a2-8289-13823135e1a1",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
@@ -26,12 +25,14 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
+									"var jsonData = pm.response.json();",
 									"",
 									"pm.test(\"validateLicenseTest\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"ENTERPRISE\");",
-									"});",
-									""
-								]
+									"    pm.expect(jsonData.entry.repository.edition).to.be.oneOf([\"Enterprise\",\"Community\"]);",
+									"    pm.environment.set(\"repositoryEdition\", jsonData.entry.repository.edition);",
+									"});"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -62,10 +63,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/alfresco/api/discovery",
 							"protocol": "{{protocol}}",
@@ -88,7 +85,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
+								"id": "35d1998e-0308-4a42-aa30-33eac23d73c3",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -172,7 +169,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "deddc0d6-1e30-46fb-be62-c2a4426f8bde",
+								"id": "46de3060-bd60-425e-8c7a-1aa3c9734dca",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -233,7 +230,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3fab222a-0b9e-481b-a0b6-6610f4686083",
+								"id": "f157f0f3-8a14-4849-9481-405f2622f0f9",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = pm.response.json();",
@@ -276,10 +273,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{folderId}}/children",
 							"protocol": "{{protocol}}",
@@ -308,7 +301,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5c288f73-709e-4911-b747-2248233c58a6",
+								"id": "bba7e131-b715-4ad7-9bc7-9eb3bffc4734",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -368,7 +361,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d69c78e3-28d5-4679-8da9-37be961ede6b",
+								"id": "1e856931-34a4-4118-82de-9b87479c4d53",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -400,10 +393,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/alfresco/api/-default-/public/alfresco/versions/1/nodes/{{contentId}}/content",
 							"protocol": "{{protocol}}",
@@ -432,161 +421,30 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d3c53ffc-ceb0-456d-875d-936587ed644e",
-								"type": "text/javascript",
+								"id": "899304d6-6751-4e27-b6e7-d1628ac4b619",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
-									"/*",
-									"if you don't call this method first, the POST alfresco/s/enterprise/admin/admin-clustering-test fails",
-									"*/",
-									"pm.test(\"callGetValidateClusterForInitializationTest\", function () ",
+									"// only run this test if it's an Enterprise repo",
+									"if (pm.environment.get(\"repositoryEdition\") == \"Enterprise\")",
 									"{",
-									"    pm.response.to.have.status(200);",
-									"});",
+									"    /*",
+									"    if you don't call this method first, the POST alfresco/s/enterprise/admin/admin-clustering-test fails",
+									"    */",
+									"    pm.test(\"callGetValidateClusterForInitializationTest\", function () ",
+									"    {",
+									"        pm.response.to.have.status(200);",
+									"    });",
 									"",
-									"pm.globals.set(\"alf-csrftoken\", pm.cookies.get(\"alf-csrftoken\"));",
-									""
-								]
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"type": "any"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
-							"protocol": "{{protocol}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"alfresco",
-								"s",
-								"enterprise",
-								"admin",
-								"admin-clustering-test"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Validate-share module",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "8d10443d-f20c-4b9a-936e-bd08308c8683",
-								"type": "text/javascript",
-								"exec": [
-									"",
-									"pm.globals.get(\"url\");",
-									"",
-									"pm.test(\"shareIsUpAndRunningTest\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"/* Disabled for DEPLOY-401",
-									"pm.test(\"rm is installed part of share\", function () {",
-									"pm.expect(pm.response.text()).to.include(\"Alfresco :: Records Management Global Customization - Enterprise\");",
-									"});",
-									"*/"
-								]
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "saveHelperData",
-									"type": "any"
-								},
-								{
-									"key": "showPassword",
-									"value": false,
-									"type": "boolean"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "{{protocol}}://{{url}}/share/page/modules/deploy",
-							"protocol": "{{protocol}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"share",
-								"page",
-								"modules",
-								"deploy"
-							]
-						},
-						"description": "Validate Share is deployed correctly"
-					},
-					"response": []
-				},
-				{
-					"name": "Validate Digital Workspace",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d7a23b66-b386-490a-bf8d-aeebed29ad86",
-								"exec": [
-									"",
-									"pm.globals.get(\"url\");",
-									"",
-									"pm.test(\"adwIsUpAndRunningTest\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									""
+									"    pm.globals.set(\"alf-csrftoken\", pm.cookies.get(\"alf-csrftoken\"));",
+									"} ",
+									"else",
+									"{",
+									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+									"    {",
+									"        pm.response.to.have.status(404);",
+									"    });",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -619,10 +477,141 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
+						"url": {
+							"raw": "{{protocol}}://{{url}}/alfresco/s/enterprise/admin/admin-clustering-test",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"s",
+								"enterprise",
+								"admin",
+								"admin-clustering-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Share",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "22e5902c-84a4-4014-b0a3-e98187233cd1",
+								"exec": [
+									"",
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"shareIsUpAndRunningTest\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
 						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{url}}/share/page",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"share",
+								"page"
+							]
+						},
+						"description": "Validate Share is deployed correctly"
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Digital Workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cad8952d-ffc0-49c9-b4a5-645d8c05b438",
+								"exec": [
+									"",
+									"pm.globals.get(\"url\");",
+									"",
+									"// only run this test if it's an Enterprise repo",
+									"if (pm.environment.get(\"repositoryEdition\") == \"Enterprise\")",
+									"{",
+									"    pm.test(\"adwIsUpAndRunningTest\", function () {",
+									"        pm.response.to.have.status(200);",
+									"    });",
+									"}",
+									"else",
+									"{",
+									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+									"    {",
+									"        pm.response.to.have.status(404);",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "{{protocol}}://{{url}}/workspace",
 							"protocol": "{{protocol}}",
@@ -643,7 +632,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "67b4ade6-51d1-4549-9091-ec8c1f2f005d",
+								"id": "5e990981-2486-4cf4-a0d3-2102c33a748f",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -684,10 +673,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/share/res/components/documentlibrary/actions/google-edit-flat-16.png",
 							"protocol": "{{protocol}}",
@@ -712,7 +697,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "96f54e8e-a8bd-4d66-94e5-94e925d8ba6b",
+								"id": "16a3cabb-124f-46ac-92da-b0eb7104e327",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -770,10 +755,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/alfresco/s/api/solrstats",
 							"protocol": "{{protocol}}",
@@ -790,77 +771,84 @@
 					},
 					"response": []
 				},
-                {
-			         "name": "alfresco-prometheus ",
-			         "event": [
-				        {
-					       "listen": "test",
-					       "script": {
-						      "id": "7d0cc14b-b2e9-437d-91ff-5d0329e40dfb",
-                              "type": "text/javascript",
-						      "exec": [
-							     "pm.globals.get(\"url\");",
-							     "",
-							     "pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
-							     "    pm.response.to.have.status(403);",
-							     "});"
-						      ]      
-					       }
-				        }
-			         ],
-			     "request": {
-				    "auth": {
-					   "type": "basic",
-					   "basic": [
-						  {
-							 "key": "password",
-							 "value": "admin",
-							 "type": "string"
-						  },
-						  {
-							 "key": "username",
-							 "value": "admin",
-							 "type": "string"
-						  },
-						  {
-							 "key": "saveHelperData",
-							 "type": "any"
-						  },
-						  {
-							 "key": "showPassword",
-							 "value": false,
-							 "type": "boolean"
-						  }
-					   ]
-				    },
-				    "method": "GET",
-				    "header": [],
-				    "body": {
-					   "mode": "raw",
-					   "raw": ""
-				    },
-				    "url": {
-					    "raw": "{{protocol}}://{{url}}/alfresco/s/prometheus",
-					    "protocol": "{{protocol}}",
-                        "host": [
-						      "{{url}}"
-					       ],
-					       "path": [
-						      "alfresco",
-						      "s",
-						      "prometheus"
-					       ]
-				        }
-			         },
-			         "response": []
-		        },
+				{
+					"name": "alfresco-prometheus ",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4a711803-de47-4b3c-a8dc-c0f978e151b6",
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"// only run this test if it's an Enterprise repo",
+									"if (pm.environment.get(\"repositoryEdition\") == \"Enterprise\")",
+									"{",
+									"    pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
+									"        pm.response.to.have.status(403);",
+									"    });",
+									"}",
+									"else",
+									"{",
+									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+									"    {",
+									"        pm.response.to.have.status(404);",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{url}}/alfresco/s/prometheus",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"alfresco",
+								"s",
+								"prometheus"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "solr-external-access",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "7d0719d6-94f4-4515-bd67-cf2856866fde",
+								"id": "2c623e70-5aca-457a-a2d6-bddd544275c8",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -879,10 +867,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/solr",
 							"protocol": "{{protocol}}",
@@ -903,7 +887,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "00be9c05-0609-4e20-bc1f-55e41082ff10",
+								"id": "546d88cc-de47-4829-b60e-1fe442be1342",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -938,10 +922,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/alfresco/webdav",
 							"protocol": "{{protocol}}",
@@ -962,7 +942,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"id": "9a8394d8-2c23-4db7-9795-d4d18ac1d51d",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -997,10 +977,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/alfresco/aos",
 							"protocol": "{{protocol}}",
@@ -1021,7 +997,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"id": "a8262695-3ec7-4335-baec-ff6e1e0fa2b4",
 								"exec": [
 									"pm.test(\"Status code is 207\", function () {",
 									"    pm.response.to.have.status(207);",
@@ -1086,7 +1062,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"id": "e9fc06ef-952a-4d0b-87ce-1c0573659f2a",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1118,10 +1094,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/_vti_inf.html",
 							"protocol": "{{protocol}}",
@@ -1141,7 +1113,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"id": "38f65ab5-0111-4027-b7a5-7feefb61559f",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1183,10 +1155,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{protocol}}://{{url}}/_vti_bin/",
 							"protocol": "{{protocol}}",
@@ -1207,7 +1175,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "71e66d76-b22b-43b0-a615-e35254b927de",
+								"id": "0ed8f1fc-7fc2-4394-948f-cb3d35b08108",
 								"exec": [
 									"pm.test(\"Status code is 207\", function () {",
 									"    pm.response.to.have.status(207);",
@@ -1276,7 +1244,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5c288f73-709e-4911-b747-2248233c58a6",
+								"id": "57cdd164-977d-475d-8af2-b15742f303a7",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -1336,7 +1304,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
+								"id": "d631a358-d6f6-4cca-a50c-4d3d1115f5b7",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -1413,7 +1381,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "01836bc0-6d20-4e65-83d0-63032d0ac564",
+								"id": "528f78fe-7306-4b05-987f-83f0c577b46f",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -1490,44 +1458,61 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "2c8f9c52-e7d3-437f-a09c-be677190b221",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
-									"pm.test(\"syncServiceHealthcheck\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									""
-								]
+									"// only run this test if it's an Enterprise repo",
+									"if (pm.environment.get(\"repositoryEdition\") == \"Enterprise\")",
+									"{",
+									"    pm.test(\"syncServiceHealthcheck\", function () {",
+									"        pm.response.to.have.status(200);",
+									"    });",
+									"}",
+									"else",
+									"{",
+									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+									"    {",
+									"        pm.response.to.have.status(404);",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
-						"url": "http://localhost:8080/syncservice/healthcheck",
 						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
+								"value": "application/x-www-form-urlencoded"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/syncservice/healthcheck",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"syncservice",
+								"healthcheck"
+							]
+						}
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "d3d29c75-6249-47a2-a5a4-6c565d86521b",
+				"id": "8bf8383a-2f12-41b5-941e-0066948feb7f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1537,12 +1522,13 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "c685c9b9-3ef9-47df-9308-e1001365c38c",
+				"id": "4804fb2f-a9a7-4061-8373-d729194f4f77",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
