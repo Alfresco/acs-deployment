@@ -98,7 +98,6 @@ services:
             - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
             #HTTP by default
             - ALFRESCO_SECURE_COMMS=none
-            - "SOLR_JAVA_MEM=-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
         ports:
             - 8083:8983 #Browser port
 
