@@ -33,7 +33,7 @@ services:
                 -Dshare.host=localhost
                 -Ddeployment.method=DOCKER_COMPOSE
                 -Dcsrf.filter.enabled=false
-                -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90
+                -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
                 "
         ports:
             - 8082:8080 #Browser port
@@ -68,7 +68,7 @@ services:
         environment:
             - REPO_HOST=alfresco
             - REPO_PORT=8080
-            - "CATALINA_OPTS= -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
+            - "CATALINA_OPTS= -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
         ports:
             - 8080:8080
 

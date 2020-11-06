@@ -47,14 +47,14 @@ services:
                 -Dtika.url=http://transform-core-aio:8090/
                 -Dtransform.misc.url=http://transform-core-aio:8090/
                 -Dcsrf.filter.enabled=false
-                -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90
+                -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
                 "
 
     transform-core-aio:
         image: alfresco/alfresco-transform-core-aio:2.3.5
         mem_limit: 1536m
         environment:
-            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=90"
+            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
         ports:
             - 8090:8090
 
@@ -66,7 +66,7 @@ services:
             REPO_PORT: "8080"
             JAVA_OPTS: "
                 -XX:MinRAMPercentage=50 
-                -XX:MaxRAMPercentage=90
+                -XX:MaxRAMPercentage=80
                 -Dalfresco.host=localhost
                 -Dalfresco.port=8080
                 -Dalfresco.context=alfresco
