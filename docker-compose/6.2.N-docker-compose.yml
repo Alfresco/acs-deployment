@@ -43,14 +43,14 @@ services:
                 -Dtransform.misc.url=http://transform-core-aio:8090/
                 -Dcsrf.filter.enabled=false
                 -Ddsync.service.uris=http://localhost:9090/alfresco
-                -Xms1500m -Xmx1500m
+                -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
                 "
 
     transform-router:
         mem_limit: 512m
         image: quay.io/alfresco/alfresco-transform-router:1.3.1
         environment:
-          JAVA_OPTS: " -Xms256m -Xmx512m"
+          JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
           ACTIVEMQ_URL: "nio://activemq:61616"
 
           CORE_AIO_URL : "http://transform-core-aio:8090"
@@ -65,7 +65,7 @@ services:
         image: alfresco/alfresco-transform-core-aio:2.3.5
         mem_limit: 1536m
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx1536m"
+            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
             ACTIVEMQ_URL: "nio://activemq:61616"
             FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
         ports:
@@ -77,7 +77,7 @@ services:
         image: alfresco/alfresco-shared-file-store:0.8.0
         mem_limit: 512m
         environment:
-            JAVA_OPTS: " -Xms256m -Xmx512m"
+            JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
             scheduler.content.age.millis: 86400000
             scheduler.cleanup.interval: 86400000
         ports:
@@ -92,8 +92,8 @@ services:
             REPO_HOST: "alfresco"
             REPO_PORT: "8080"
             JAVA_OPTS: "
-                -Xms500m
-                -Xmx500m
+                -XX:MinRAMPercentage=50
+                -XX:MaxRAMPercentage=80
                 -Dalfresco.host=localhost
                 -Dalfresco.port=8080
                 -Dalfresco.context=alfresco
@@ -125,7 +125,6 @@ services:
             - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
             #HTTP by default
             - ALFRESCO_SECURE_COMMS=none
-            - "SOLR_JAVA_MEM=-Xms2g -Xmx2g"
         ports:
             - 8083:8983 #Browser port
 
@@ -170,7 +169,7 @@ services:
             -Drepo.hostname=alfresco
             -Drepo.port=8080
             -Ddw.server.applicationConnectors[0].type=http
-            -Xms1000m -Xmx1000m
+            -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
             "
 
         ports:

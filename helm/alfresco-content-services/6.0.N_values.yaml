@@ -39,10 +39,8 @@ repository:
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
-
       -Dtransform.service.enabled=true
-
-      -Xms2000M -Xmx2000M"
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
     JAVA_TOOL_OPTIONS: " -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=AES"
   resources:
     requests:
@@ -78,7 +76,7 @@ transformrouter:
     type: ClusterIP
     externalPort: 80
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
     initialDelaySeconds: 140
     periodSeconds: 60
@@ -206,7 +204,7 @@ tika:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -240,7 +238,7 @@ aiTransformer:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -279,7 +277,7 @@ filestore:
   environment:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
-    JAVA_OPTS: " -Xms256M -Xmx512M"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -313,7 +311,7 @@ share:
     limits:
       memory: "2000Mi"
   environment:
-    CATALINA_OPTS: " -Xms1000M -Xmx1000M"
+    CATALINA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
