@@ -39,6 +39,7 @@ branches:
   only:
     - master
     - /feature.*/
+    - /fix.*/
 
 before_install:
   - |
