@@ -15,8 +15,8 @@ repository:
   strategy:
     type: Recreate
   image:
-    repository: alfresco/alfresco-content-repository
-    tag: "6.2.2.3"
+    repository: quay.io/alfresco/alfresco-content-repository
+    tag: "6.2.2.5"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
