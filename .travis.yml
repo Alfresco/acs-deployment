@@ -22,6 +22,7 @@ import:
   - source: Alfresco/alfresco-process-tools:.travis.kubernetes_install.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.helm_install.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.kubepug_install.yml@master
+  - source: Alfresco/alfresco-process-tools:.travis.checkov_install.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.docker_login.yml@master
   - source: Alfresco/alfresco-process-tools:.travis.pre-commit.yml@master
 
