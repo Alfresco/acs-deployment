@@ -39,7 +39,7 @@ kubectl create namespace alfresco
 Deploy an ingress controller into the alfresco namespace using the command below:
 
 ```bash
-helm install acs-ingress ingress-nginx/ingress-nginx \
+helm install acs-ingress ingress-nginx/ingress-nginx --version=3.9.0 \
 --set controller.scope.enabled=true \
 --set controller.scope.namespace=alfresco \
 --set rbac.create=true \

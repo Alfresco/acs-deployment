@@ -19,7 +19,7 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-expires: "604800"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       location ~ ^(/.*/proxy/alfresco/api/solr/.*)$ {return 403 ;}
-                  location ~ ^(/.*/-default-/proxy/alfresco/api/.*)$ {return 403;}
+      location ~ ^(/.*/-default-/proxy/alfresco/api/.*)$ {return 403;}
 {{- if .Values.share.ingress.annotations }}
 {{ toYaml .Values.share.ingress.annotations | indent 4 }}
 {{- end }}
