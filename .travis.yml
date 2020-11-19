@@ -173,7 +173,7 @@ _helm_deploy: &helm_deploy
     EOF
 
     # install ingress
-    helm upgrade --install $release_name_ingress ingress-nginx/ingress-nginx --version=3.9.0 \
+    helm upgrade --install $release_name_ingress ingress-nginx/ingress-nginx --version=3.7.1 \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=$namespace \
     --set rbac.create=true \
