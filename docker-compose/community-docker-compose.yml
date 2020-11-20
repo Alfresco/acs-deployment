@@ -51,7 +51,7 @@ services:
                 "
 
     transform-core-aio:
-        image: alfresco/alfresco-transform-core-aio:2.3.5
+        image: alfresco/alfresco-transform-core-aio:2.3.6
         mem_limit: 1536m
         environment:
             JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
@@ -65,7 +65,7 @@ services:
             REPO_HOST: "alfresco"
             REPO_PORT: "8080"
             JAVA_OPTS: "
-                -XX:MinRAMPercentage=50 
+                -XX:MinRAMPercentage=50
                 -XX:MaxRAMPercentage=80
                 -Dalfresco.host=localhost
                 -Dalfresco.port=8080
