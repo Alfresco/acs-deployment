@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.0.1.5"
+    tag: "6.0.1.6"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -365,7 +365,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "1.4.3.2"
+    tag: "1.4.3"
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
