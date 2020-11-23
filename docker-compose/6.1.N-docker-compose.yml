@@ -13,7 +13,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository:6.1.1.3
+        image: alfresco/alfresco-content-repository:6.1.1
         mem_limit: 1700m
         environment:
             JAVA_OPTS: "
@@ -47,7 +47,7 @@ services:
 
     transform-router:
         mem_limit: 512m
-        image: quay.io/alfresco/alfresco-transform-router:1.0.2.1
+        image: quay.io/alfresco/alfresco-transform-router:1.0.2
         environment:
           JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
           ACTIVEMQ_URL: "nio://activemq:61616"
@@ -120,7 +120,7 @@ services:
             - shared-file-store-volume:/tmp/Alfresco/sfs
 
     share:
-        image: alfresco/alfresco-share:6.1.1.1
+        image: alfresco/alfresco-share:6.1.1
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"
@@ -146,7 +146,7 @@ services:
             - 5432:5432
 
     solr6:
-        image: alfresco/alfresco-search-services:1.4.3.2
+        image: alfresco/alfresco-search-services:1.4.3
         mem_limit: 2g
         environment:
             #Solr needs to know how to register itself with Alfresco
