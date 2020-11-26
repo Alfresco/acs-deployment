@@ -392,7 +392,6 @@ alfresco-digital-workspace:
     defaultHostNameEnabled: false
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
-      nginx.ingress.kubernetes.io/rewrite-target: "/"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 1.4.0
