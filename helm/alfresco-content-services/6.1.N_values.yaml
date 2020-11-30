@@ -389,7 +389,6 @@ alfresco-digital-workspace:
   nameOverride: "alfresco-dw"
   ingress:
     path: /workspace
-    defaultHostNameEnabled: false
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
   image:
