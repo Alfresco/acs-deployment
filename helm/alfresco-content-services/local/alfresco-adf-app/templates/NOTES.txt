@@ -1,0 +1,3 @@
+You can access ADF front-end app using this address:
+
+  {{ .Values.ingress.hostName }}{{ .Values.ingress.path }}

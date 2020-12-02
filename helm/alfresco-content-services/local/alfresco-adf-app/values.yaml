@@ -1,0 +1,79 @@
+# global -- for common values see https://github.com/Activiti/activiti-cloud-common-chart/blob/master/charts/common/README.md
+global:
+
+  # global.registryPullSecrets -- Configure pull secrets for all deployments
+  registryPullSecrets: []
+
+  keycloak:
+    # global.keycloak.host -- Configure Keycloak host template, i.e. "{{ .Release.Namespace }}.{{ .Values.global.gateway.domain }}"
+    host: '{{ template "common.gateway-host" . }}'
+    # global.keycloak.url -- Set full url to configure external Keycloak, https://keycloak.mydomain.com/auth
+    url: ""
+    # global.keycloak.realm -- Configure Keycloak realm
+    realm: alfresco
+    # global.keycloak.resource -- Configure Keycloak resource
+    resource: alfresco
+
+  gateway:
+    # global.gateway.host -- Set to configure single host domain name for all services, i.e. "{{ .Release.Namespace }}.{{ template "common.gateway-domain" . }}"
+    host: '{{ template "common.gateway-domain" . }}'
+    # global.gateway.http -- Set to false enables HTTPS configuration on all urls
+    http: true
+    # global.gateway.tlsacme -- Set to enable automatic TLS for ingress if https is enabled
+    tlsacme: false
+    # global.gateway.domain -- Set to configure gateway domain template, i.e. {{ .Release.Namespace }}.1.3.4.5.nip.io
+    # $ helm upgrade aae . --install --set global.gateway.domain=1.2.3.4.nip.io
+    domain: ""
+    # global.gateway.annotations -- Configure global annotations for all service ingresses
+    annotations: {}
+
+replicaCount: 1
+
+registryPullSecrets: []
+
+image:
+  repository: quay.io/alfresco/alfresco-adf-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  internalPort: &appInternalPort 8080
+
+ingress:
+  enabled: true
+  hostName:
+  path: /{{ .Release.Name }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+probePath:
+livenessProbe:
+  path:
+  initialDelaySeconds: 60
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 4
+  failureThreshold: 40
+readinessProbe:
+  path:
+  initialDelaySeconds: 20
+  periodSeconds: 15
+  successThreshold: 1
+  timeoutSeconds: 3
+  failureThreshold: 5
+
+env:
+  APP_CONFIG_AUTH_TYPE: OAUTH

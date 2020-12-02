@@ -1,0 +1,72 @@
+{{- $ingressPath := include "common.ingress-path" . -}}
+{{- $selectorLabels := include "alfresco-adf-app.selectorLabels" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-adf-app.fullname" . }}
+  labels:
+    {{- include "alfresco-adf-app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- $selectorLabels | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- $selectorLabels | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{ toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      {{- with include "common.registry-pull-secrets" . }}
+      imagePullSecrets:
+        {{- . | nindent 8 -}}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}{{ with .Values.image.tag }}:{{ . }}{{- end}}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: BASE_PATH
+              value: {{ $ingressPath }}
+            {{- if eq .Values.env.APP_CONFIG_AUTH_TYPE "OAUTH" }}
+            - name: APP_CONFIG_OAUTH2_HOST
+              value: {{ include "common.keycloak-url" . }}/realms/{{ include "common.keycloak-realm" . }}
+            - name: APP_CONFIG_OAUTH2_CLIENTID
+              value: {{ include "common.keycloak-resource" . }}
+            - name: APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI
+              value: {{ include "common.ingress-url" . }}/assets/silent-refresh.html
+            - name: APP_CONFIG_OAUTH2_REDIRECT_LOGIN
+              value: {{ $ingressPath }}
+            - name: APP_CONFIG_OAUTH2_REDIRECT_LOGOUT
+              value: {{ $ingressPath }}
+            {{- end }}
+            {{- range $key, $val := .Values.env }}
+            - name: {{ $key }}
+              value: {{ tpl $val $ | quote }}
+            {{- end }}
+            {{- include "common.extra-env" . | nindent 12 -}}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 -}}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: {{ coalesce .Values.probePath .Values.readinessProbe.path $ingressPath }}
+              port: {{ .Values.service.internalPort | default .Values.service.port }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: {{ coalesce .Values.probePath .Values.livenessProbe.path $ingressPath }}
+              port: {{ .Values.service.internalPort | default .Values.service.port }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
