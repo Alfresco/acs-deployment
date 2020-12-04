@@ -12,7 +12,7 @@ This page describes how to deploy Alfresco Content Services (ACS) Enterprise or 
 * Latest version of [Helm](https://helm.sh/docs/intro/install) is installed
 * [Docker for Desktop](https://docs.docker.com/desktop/) is installed
 
-## Configure Deocker for Desktop
+## Configure Docker for Desktop
 
 In order to deploy onto Docker for Desktop we need to configure it with as much CPU and memory as possible on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below.
 
