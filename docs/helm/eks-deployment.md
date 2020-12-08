@@ -223,6 +223,7 @@ kubectl create namespace alfresco
 
     ```bash
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    helm repo update
 
     helm install acs-ingress ingress-nginx/ingress-nginx --version=3.7.1 \
     --set controller.scope.enabled=true \
@@ -258,12 +259,14 @@ To use a released version of the Helm chart add the stable repository using the 
 
 ```bash
 helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
+helm repo update
 ```
 
 Alternatively, to use the latest in-progress development version of the Helm chart add the incubator repository using the following command:
 
 ```bash
 helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
+helm repo update
 ```
 
 **NOTE**: The Helm charts comptaible with these instructions do not have a GA release yet, until they do the `--devel` option needs to be provided with the helm install command.

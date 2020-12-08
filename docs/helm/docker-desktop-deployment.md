@@ -36,6 +36,13 @@ kubectl create namespace alfresco
 
 ### Ingress
 
+Add the chart repository using the following command:
+
+```bash
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+```
+
 Deploy an ingress controller into the alfresco namespace using the command below:
 
 ```bash
@@ -53,16 +60,18 @@ helm install acs-ingress ingress-nginx/ingress-nginx --version=3.7.1 \
 
 This repository allows you to either deploy a system using released stable artefacts or the latest in-progress development artefacts.
 
-To use a released version of the Helm chart add the stable repository using the following command:
+To use a released version of the Helm chart add the stable chart repository using the following command:
 
 ```bash
 helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
+helm repo update
 ```
 
-Alternatively, to use the latest in-progress development version of the Helm chart add the incubator repository using the following command:
+Alternatively, to use the latest in-progress development version of the Helm chart add the incubator chart repository using the following command:
 
 ```bash
 helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
+helm repo update
 ```
 
 **NOTE**: The Helm charts comptaible with these instructions do not have a GA release yet, until they do the `--devel` option needs to be provided with the helm install command.
@@ -126,7 +135,7 @@ helm install acs alfresco/alfresco-content-services --devel \
 --namespace alfresco
 ```
 
-> NOTE: The command will wait until the deployment is ready so please be patient.
+> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
 The command above installs the latest version of ACS Enterprise. To deploy a previous version of ACS Enterprise follow the steps below.
 
@@ -162,7 +171,7 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
     --namespace alfresco
     ```
 
-> NOTE: The command will wait until the deployment is ready so please be patient.
+> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
 ## Access
 
@@ -206,3 +215,20 @@ To save the deployment of two more pods you can also try disabling the Sync Serv
 ```
 
 If you need to reduce the memory footprint further you can manually change the memory allocation settings for several pods. Currently the memory allocation for several pods is also specified via `JAVA_OPTS` environment variables which are cumbersome to change via the `--set` option. Edit the values file you intend to use and reduce the memory settings (ensure the container allocation is higher than the JVM allocation).
+
+### Timeout
+
+If the deployment fails and rollsback with following error:
+
+```bash
+Error: release acs failed, and has been uninstalled due to atomic being set: timed out waiting for the condition
+```
+
+You may should check resources above and then re-run the deployment with either an increased timeout, eg. --timeout 15m0s. Alteratively run without following:
+
+```bash
+    --atomic \
+    --timeout 10m0s
+```
+
+and then monitor the logs for any failing pods. Please also consult the [Helm Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes Dashboard and more generic troubleshooting tips and tricks.
