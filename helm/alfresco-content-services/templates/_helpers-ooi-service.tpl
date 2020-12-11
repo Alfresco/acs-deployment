@@ -5,7 +5,7 @@ component: ooi-service
 {{- end }}
 
 {{- define "ooi-service.labels" -}}
-chart: {{ include "ooi-service.chart" . }}
+chart: {{ include "content-services.chart" . }}
 {{ include "ooi-service.selectorLabels" . }}
 heritage: {{ .Release.Service }}
 {{- end }}

@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "content-services.shortname" . }}-ai-transformer
+  name: {{ template "content-services.shortname" . }}-ooi-service
   labels:
-    {{- include "ai-transformer.selectorLabels" . | nindent 4 }}
+    {{- include "ooi-service.selectorLabels" . | nindent 4 }}
 data:
   APP_CONFIG_MICROSOFT_ONLINE_OOI_URL: {{ .Values.alfresco-digital-workspace.env.ooiurl }}
   APP_CONFIG_MICROSOFT_ONLINE_CLIENTID: {{ .Values.alfresco-digital-workspace.env.ooiclientid }}
