@@ -110,6 +110,9 @@ spec:
                 command: ["/bin/bash", "-c", "sleep 20"]
       {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
       initContainers:
+      {{- if .Values.repository.extraInitContainers }}
+{{ tpl .Values.repository.extraInitContainers . | indent 8 }}
+      {{- end }}
       {{- if eq .Values.database.external false }}
         # wait for the DB to startup before this deployment can start
         - name: init-db
