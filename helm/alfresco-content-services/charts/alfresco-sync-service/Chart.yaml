@@ -1,5 +1,4 @@
 apiVersion: v1
-appVersion: 3.4.0-M2
 description: Alfresco Syncservice
 engine: gotpl
 keywords:
