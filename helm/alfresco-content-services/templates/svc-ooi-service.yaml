@@ -1,0 +1,17 @@
+{{- if .Values.ooi.enabled }}
+# Defines the service for the ai transformer app
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco.shortname" . }}-ooi-service
+  labels:
+    {{- include "ooi-service.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.ooi-service.service.type }}
+  ports:
+    - port: {{ .Values.ooi-service.service.externalPort }}
+      targetPort: {{ .Values.ooi-service.image.internalPort }}
+      name: {{ .Values.ooi-service.service.name }}
+  selector:
+    {{- include "ooi-service.selectorLabels" . | nindent 4 }}
+  {{- end }}

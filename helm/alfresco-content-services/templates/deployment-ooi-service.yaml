@@ -1,0 +1,79 @@
+{{- if .Values.ooi.enabled }}
+# Defines the deployment for the ooi-service app
+# Details: https://github.com/Alfresco/onedrive
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "content-services.shortname" . }}-ooi-service
+  labels:
+    {{- include "ooi-service.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.ooi-service.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "ooi-service.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+  {{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+template:
+  metadata:
+    annotations:
+      checksum/config: {{ include (print $.Template.BasePath "/config-ooi-service.yaml") . | sha256sum }}
+    labels:
+      {{- include "ooi-service.selectorLabels" . | nindent 8 }}
+  spec:
+    {{- if .Values.global.alfrescoRegistryPullSecrets }}
+    # only set this secret if a private docker registry variable is defined
+    imagePullSecrets:
+      - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+    {{- end }}
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - {{ template "content-services.shortname" . }}-ooi-service
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - {{ template "content-services.shortname" . }}-ooi-service
+              topologyKey: kubernetes.io/hostname
+    containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.ooi-service.image.repository }}:{{ .Values.ooi-service.image.tag }}"
+        imagePullPolicy: {{ .Values.ooi-service.image.pullPolicy }}
+        envFrom:
+          - configMapRef:
+              # config map to use, defined in config-ooi-service.yaml
+              name: {{ template "content-services.shortname" . }}-ooi-service-configmap
+        ports:
+            - containerPort: {{ .Values.ooi-service.image.internalPort }}
+        resources:
+  {{ toYaml .Values.ooi-service.resources | indent 12 }}
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: {{ .Values.ooi-service.image.internalPort }}
+  initialDelaySeconds: {{ .Values.ooi-service.readinessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.ooi-service.readinessProbe.periodSeconds }}
+  timeoutSeconds: {{ .Values.ooi-service.readinessProbe.timeoutSeconds }}
+livenessProbe:
+  httpGet:
+    path: /live
+    port: {{ .Values.ooi-service.image.internalPort }}
+  initialDelaySeconds: {{ .Values.ooi-service.livenessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.ooi-service.livenessProbe.periodSeconds }}
+  failureThreshold: 1
+  timeoutSeconds: {{ .Values.ooi-service.livenessProbe.timeoutSeconds }}
+  {{- end }}
