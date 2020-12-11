@@ -33,9 +33,9 @@ spec:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       containers:
-        {{- if .Values.repository.extraSideContainers }}
+      {{- if .Values.repository.extraSideContainers }}
 {{ tpl .Values.repository.extraSideContainers . | indent 8 }}
-        {{- end }}
+      {{- end }}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
