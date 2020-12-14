@@ -465,7 +465,6 @@ alfresco-digital-workspace:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
     {{- if eq .Values.ooi.enabled}}
-    BASE_PATH: ./
     ooiplugin: 'true'
     ooiurl: https://kikod-ooi-dev-test-env.dev.alfresco.me/ooi-service/api/-default-/private/office-integration/versions/1/edit-sessions/
     ooiclientid: fecad0d3-0ed4-40c5-b247-15edfbda3ca7
