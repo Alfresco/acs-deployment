@@ -148,7 +148,7 @@ services:
             - 61613:61613 # STOMP
 
     digital-workspace:
-        image: quay.io/alfresco/alfresco-digital-workspace:2.0.0-M2
+        image: quay.io/alfresco/alfresco-digital-workspace:2.0.0-adw
         mem_limit: 128m
         environment:
             BASE_PATH: ./
