@@ -148,7 +148,7 @@ services:
             - 61613:61613 # STOMP
 
     digital-workspace:
-        image: quay.io/alfresco/alfresco-digital-workspace:2.0.0-M2
+        image: quay.io/alfresco/alfresco-digital-workspace:2.0.0-adw
         mem_limit: 128m
         environment:
             BASE_PATH: ./
@@ -167,7 +167,7 @@ services:
             - share
 
     sync-service:
-        image: quay.io/alfresco/service-sync:3.3.3.1
+        image: quay.io/alfresco/service-sync:3.4.0-M2
         mem_limit: 1g
         environment:
             JAVA_OPTS : "
