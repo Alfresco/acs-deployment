@@ -1,7 +1,7 @@
 {{- define "ooi-service.selectorLabels" -}}
 app: {{ template "content-services.shortname" . }}-ooi-service
 release: {{ .Release.Name }}
-component: ooi-service
+component: ooiservice
 {{- end }}
 
 {{- define "ooi-service.labels" -}}

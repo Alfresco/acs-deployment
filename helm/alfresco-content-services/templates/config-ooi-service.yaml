@@ -1,0 +1,17 @@
+{{- if .Values.ooi.enabled }}
+# Defines the properties required by the alfresco-ooi-service container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "content-services.shortname" . }}-ooi-service-configmap
+  labels:
+    {{- include "ooi-service.labels" . | nindent 4 }}
+data:
+  # The JAVA_OPTS defined in the values.yaml file for "ooi" are set here using proper quotes
+  {{- if .Values.ooiService.environment }}
+  {{- range $key, $val := .Values.ooiService.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}
+  alfresco.base-url: "{{ .Values.ooiService.alfresco.baseUrl }}"
+{{- end }}

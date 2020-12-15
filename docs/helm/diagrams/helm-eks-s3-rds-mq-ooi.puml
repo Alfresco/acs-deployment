@@ -1,0 +1,91 @@
+@startuml
+
+Title: ACS with Office Online Integration (OOI) on EKS using S3, RDS and MQ Helm Deployment Overview
+
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam rectangle {
+    BorderStyle dashed
+    FontSize 15
+    FontStyle none
+}
+
+actor Client
+
+node "alfresco namespace" {
+    component "NGINX ingress-controller" as nginx #lightgrey
+    component "Alfresco Digital Workspace \n (with OOI config)" as adw #lightgrey
+    component "Alfresco Content Services \n" as acs #lightgrey
+    component "Alfresco Search Services" as ass #lightgrey
+    component "Alfresco Sync Services" as sync #lightgrey
+    component "Alfresco Share \n" as share #lightgrey
+    component "Alfresco OOI Service" as ooi #lightgrey
+    rectangle "Alfresco Transform Service" {
+        component "Transform Router" as tr #lightgrey
+        component "Shared File Store" as sfs #lightgrey
+        component "Alfresco PDF Renderer" as pdfr #lightgrey
+        component "LibreOffice" as libr #lightgrey
+        component "ImageMagick" as img #lightgrey
+        component "Tika" as tika #lightgrey
+        component "TransformMisc" as misc #lightgrey
+    }
+}
+
+cloud "Amazon Web Services" {
+    storage "S3 (ACS)" as s3acs
+    database "Aurora RDS" as db
+    storage "EBS" as ebs
+    storage "EFS Volume Claim" as vc
+    queue "Amazon MQ" as mq
+}
+
+cloud "Microsoft 365" {
+    storage "Auth" as msauth
+    storage "Graph Files (OneDrive)" as msgraph
+}
+
+Client --> nginx
+
+nginx --> acs
+nginx --> share
+nginx --> adw
+
+ass --> ebs
+sfs --> vc
+acs --> s3acs
+
+ass <--> acs
+acs --> db
+acs --> pdfr
+acs --> libr
+acs --> img
+acs --> tika
+acs --> misc
+acs --> sfs
+acs <--> mq
+tr -up-> pdfr
+tr -up-> libr
+tr -up-> img
+tr -up-> tika
+tr -up-> misc
+tr <--> mq
+pdfr --> sfs
+libr --> sfs
+img --> sfs
+tika --> sfs
+misc --> sfs
+share --> acs
+adw --> acs
+adw --> ooi
+adw --> msauth
+
+ooi --> acs
+ooi --> msgraph
+
+sync <--> acs
+sync --> db
+sync --> mq
+
+center footer Copyright 2020 Alfresco Software Inc
+
+@enduml
