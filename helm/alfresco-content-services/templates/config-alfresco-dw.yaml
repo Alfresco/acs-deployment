@@ -1,5 +1,5 @@
 {{- if .Values.ooi.enabled }}
-# Defines the service for the ai transformer app
+# Defines the service for the ADW app
 apiVersion: v1
 kind: Service
 metadata:
@@ -7,8 +7,8 @@ metadata:
   labels:
     {{- include "ooi-service.selectorLabels" . | nindent 4 }}
 data:
-  APP_CONFIG_MICROSOFT_ONLINE_OOI_URL: {{ .Values.alfresco-digital-workspace.env.ooiurl }}
-  APP_CONFIG_MICROSOFT_ONLINE_CLIENTID: {{ .Values.alfresco-digital-workspace.env.ooiclientid }}
-  APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY: {{ .Values.alfresco-digital-workspace.env.ooiauthority }}
-  APP_CONFIG_MICROSOFT_ONLINE_REDIRECT: {{ .Values.alfresco-digital-workspace.env.ooiredirect }}
+  APP_CONFIG_MICROSOFT_ONLINE_OOI_URL: {{ .Values.alfrescoDigitalWorkspace.env.ooiurl }}
+  APP_CONFIG_MICROSOFT_ONLINE_CLIENTID: {{ .Values.alfrescoDigitalWorkspace.env.ooiclientid }}
+  APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY: {{ .Values.alfrescoDigitalWorkspace.env.ooiauthority }}
+  APP_CONFIG_MICROSOFT_ONLINE_REDIRECT: {{ .Values.alfrescoDigitalWorkspace.env.ooiredirect }}
 {{- end }}

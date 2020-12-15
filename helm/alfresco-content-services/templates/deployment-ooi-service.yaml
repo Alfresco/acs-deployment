@@ -8,7 +8,7 @@ metadata:
   labels:
     {{- include "ooi-service.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.ooi-service.replicaCount }}
+  replicas: {{ .Values.ooiService.replicaCount }}
   selector:
     matchLabels:
       {{- include "ooi-service.selectorLabels" . | nindent 6 }}
@@ -51,29 +51,29 @@ template:
               topologyKey: kubernetes.io/hostname
     containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.ooi-service.image.repository }}:{{ .Values.ooi-service.image.tag }}"
-        imagePullPolicy: {{ .Values.ooi-service.image.pullPolicy }}
+        image: "{{ .Values.ooiService.image.repository }}:{{ .Values.ooiService.image.tag }}"
+        imagePullPolicy: {{ .Values.ooiService.image.pullPolicy }}
         envFrom:
           - configMapRef:
               # config map to use, defined in config-ooi-service.yaml
               name: {{ template "content-services.shortname" . }}-ooi-service-configmap
         ports:
-            - containerPort: {{ .Values.ooi-service.image.internalPort }}
+            - containerPort: {{ .Values.ooiService.image.internalPort }}
         resources:
-  {{ toYaml .Values.ooi-service.resources | indent 12 }}
+  {{ toYaml .Values.ooiService.resources | indent 12 }}
 readinessProbe:
   httpGet:
     path: /ready
-    port: {{ .Values.ooi-service.image.internalPort }}
-  initialDelaySeconds: {{ .Values.ooi-service.readinessProbe.initialDelaySeconds }}
-  periodSeconds: {{ .Values.ooi-service.readinessProbe.periodSeconds }}
-  timeoutSeconds: {{ .Values.ooi-service.readinessProbe.timeoutSeconds }}
+    port: {{ .Values.ooiService.image.internalPort }}
+  initialDelaySeconds: {{ .Values.ooiService.readinessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.ooiService.readinessProbe.periodSeconds }}
+  timeoutSeconds: {{ .Values.ooiService.readinessProbe.timeoutSeconds }}
 livenessProbe:
   httpGet:
     path: /live
-    port: {{ .Values.ooi-service.image.internalPort }}
-  initialDelaySeconds: {{ .Values.ooi-service.livenessProbe.initialDelaySeconds }}
-  periodSeconds: {{ .Values.ooi-service.livenessProbe.periodSeconds }}
+    port: {{ .Values.ooiService.image.internalPort }}
+  initialDelaySeconds: {{ .Values.ooiService.livenessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.ooiService.livenessProbe.periodSeconds }}
   failureThreshold: 1
-  timeoutSeconds: {{ .Values.ooi-service.livenessProbe.timeoutSeconds }}
+  timeoutSeconds: {{ .Values.ooiService.livenessProbe.timeoutSeconds }}
 {{- end }}

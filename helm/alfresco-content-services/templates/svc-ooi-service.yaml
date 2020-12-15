@@ -7,11 +7,11 @@ metadata:
   labels:
     {{- include "ooi-service.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.ooi-service.service.type }}
+  type: {{ .Values.ooiService.service.type }}
   ports:
-    - port: {{ .Values.ooi-service.service.externalPort }}
-      targetPort: {{ .Values.ooi-service.image.internalPort }}
-      name: {{ .Values.ooi-service.service.name }}
+    - port: {{ .Values.ooiService.service.externalPort }}
+      targetPort: {{ .Values.ooiService.image.internalPort }}
+      name: {{ .Values.ooiService.service.name }}
   selector:
     {{- include "ooi-service.selectorLabels" . | nindent 4 }}
 {{- end }}

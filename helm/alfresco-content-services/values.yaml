@@ -72,7 +72,7 @@ apiexplorer:
   ingress:
     path: /api-explorer
 
-ooi-service:
+ooiService:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
@@ -450,7 +450,7 @@ alfresco-search:
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth:
 
-alfresco-digital-workspace:
+alfrescoDigitalWorkspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:
