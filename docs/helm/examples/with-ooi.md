@@ -1,7 +1,6 @@
 # Alfresco Content Services Helm Deployment with Microsoft 365 Connector (Office Online Integration)
 
-By default, [Alfresco Microsoft 365 Connector](https://docs.alfresco.com/intelligence/concepts/ai-welcome.html) feature is disabled. The Microsoft 365 Connector  
-enables Office Online Integration (OOI) within Alfresco Digital Workspace such that users can share and co-author Office documents stored within ACS using the Microsoft 365.
+By default, [Alfresco Microsoft 365 Connector](https://docs.alfresco.com/officeonline/concepts/office-online-intro.html) feature is disabled. The Microsoft 365 Connector enables Office Online Integration (OOI) within Alfresco Digital Workspace such that users can share and co-author Office documents stored within ACS using the Microsoft 365.
 
 This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) with OOI enabled.
 
