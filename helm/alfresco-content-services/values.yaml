@@ -464,14 +464,12 @@ alfresco-digital-workspace:
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
-  {{ if eq .Values.ooi.enabled}}
     BASE_PATH: "./"
-    ooiplugin: 'true'
-    ooiurl:
-    ooiclientid:
-    ooiauthority:
-    ooiredirect:
-  {{ end }}
+    ooiplugin: 'false'
+    ooiurl: ''
+    ooiclientid: ''
+    ooiauthority: ''
+    ooiredirect: ''
 
 # choose if you want AI capabilities
 ai:

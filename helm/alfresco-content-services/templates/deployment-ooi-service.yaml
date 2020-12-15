@@ -76,4 +76,4 @@ livenessProbe:
   periodSeconds: {{ .Values.ooi-service.livenessProbe.periodSeconds }}
   failureThreshold: 1
   timeoutSeconds: {{ .Values.ooi-service.livenessProbe.timeoutSeconds }}
-  {{- end }}
+{{- end }}
