@@ -16,8 +16,8 @@ repository:
   strategy:
     type: Recreate
   image:
-    repository: alfresco/alfresco-content-repository
-    tag: "7.0.0-M2"
+    repository: quay.io/alfresco/alfresco-content-repository
+    tag: "7.0.0-M3"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -360,8 +360,8 @@ filestore:
 share:
   replicaCount: 1
   image:
-    repository: alfresco/alfresco-share
-    tag: "7.0.0-M2"
+    repository: quay.io/alfresco/alfresco-share
+    tag: "7.0.0-M3"
     pullPolicy: Always
     internalPort: 8080
   service:

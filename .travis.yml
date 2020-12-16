@@ -53,6 +53,7 @@ before_install:
 before_script:
   - |
     echo "GIT_DIFF=${GIT_DIFF}"
+    echo "TRAVIS_COMMIT_MESSAGE=${TRAVIS_COMMIT_MESSAGE}"
     REPO_NAME=${TRAVIS_REPO_SLUG##*/}
     PROJECT_NAME=alfresco-content-services
     helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
