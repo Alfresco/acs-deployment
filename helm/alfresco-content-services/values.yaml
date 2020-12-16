@@ -89,7 +89,7 @@ ooiService:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Dalfresco.base-url=http://alfresco:8080"
+    JAVA_OPTS: " -Dalfresco.base-url=http://alfresco-cs-repository:8080"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
