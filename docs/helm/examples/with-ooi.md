@@ -41,7 +41,7 @@ helm install acs alfresco/alfresco-content-services --devel \
 --set messageBroker.password="YOUR-MQ-PASSWORD" \
 --set ooi.enabled=true \
 --set ooiService.alfresco.baseUrl="https://YOUR-EXTERNAL-HOST" \
---set alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="'true'" \
+--set-string alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="true" \
 --set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_OOI_URL="https://YOUR-EXTERNAL-HOST/ooi-service/api/-default-/private/office-integration/versions/1/edit-sessions/" \
 --set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_CLIENTID="YOUR-ADW-MS-ONLINE-CLIENT-ID" \
 --set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY="https://login.microsoftonline.com/ADW-MS-ONLINE-TENANT-ID" \
@@ -51,9 +51,7 @@ helm install acs alfresco/alfresco-content-services --devel \
 --namespace=alfresco
 ```
 
-NOTE: when specifying --set alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="'true'" make sure you include the extra single-quotes otherwise you may see an error such as
+NOTE: as per the example above, you will need to specify --set-string alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="true" otherwise you may see an error such as
 ```
 Error: template: alfresco-content-services/charts/adw/templates/deployment.yaml:48:28: executing "alfresco-content-services/charts/adw/templates/deployment.yaml" at <$val>: wrong type for value; expected string; got bool
 ```
-
-TODO - test the above ! (and then remove this line)
