@@ -450,7 +450,7 @@ alfresco-search:
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth:
 
-adw:
+alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:

@@ -1,6 +1,6 @@
 # Alfresco Content Services Helm Deployment with Microsoft 365 Connector (Office Online Integration)
 
-By default, [Alfresco Microsoft 365 Connector](https://docs.alfresco.com/officeonline/concepts/office-online-intro.html) feature is disabled. The Microsoft 365 Connector enables Office Online Integration (OOI) within Alfresco Digital Workspace such that users can share and co-author Office documents stored within ACS using the Microsoft 365.
+The [Alfresco Microsoft 365 Connector](https://docs.alfresco.com/officeonline/concepts/office-online-intro.html)enables Office Online Integration (OOI) within Alfresco Digital Workspace such that users can share and co-author Office documents stored within ACS using the Microsoft 365. By default, this feature is disabled. 
 
 This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) with OOI enabled.
 
@@ -41,17 +41,17 @@ helm install acs alfresco/alfresco-content-services --devel \
 --set messageBroker.password="YOUR-MQ-PASSWORD" \
 --set ooi.enabled=true \
 --set ooiService.alfresco.baseUrl="https://YOUR-EXTERNAL-HOST" \
---set adw.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="'true'" \
---set adw.env.APP_CONFIG_MICROSOFT_ONLINE_OOI_URL="https://YOUR-EXTERNAL-HOST/ooi-service/api/-default-/private/office-integration/versions/1/edit-sessions/" \
---set adw.env.APP_CONFIG_MICROSOFT_ONLINE_CLIENTID="YOUR-ADW-MS-ONLINE-CLIENT-ID" \
---set adw.env.APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY="https://login.microsoftonline.com/ADW-MS-ONLINE-TENANT-ID" \
---set adw.env.APP_CONFIG_MICROSOFT_ONLINE_REDIRECT="https://YOUR-EXTERNAL-HOST" \
+--set alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="'true'" \
+--set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_OOI_URL="https://YOUR-EXTERNAL-HOST/ooi-service/api/-default-/private/office-integration/versions/1/edit-sessions/" \
+--set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_CLIENTID="YOUR-ADW-MS-ONLINE-CLIENT-ID" \
+--set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY="https://login.microsoftonline.com/ADW-MS-ONLINE-TENANT-ID" \
+--set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_REDIRECT="https://YOUR-EXTERNAL-HOST" \
 --atomic \
 --timeout 10m0s \
 --namespace=alfresco
 ```
 
-NOTE: when specifying --set adw.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="'true'" make sure you include the extra single-quotes otherwise you may see an error such as
+NOTE: when specifying --set alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="'true'" make sure you include the extra single-quotes otherwise you may see an error such as
 ```
 Error: template: alfresco-content-services/charts/adw/templates/deployment.yaml:48:28: executing "alfresco-content-services/charts/adw/templates/deployment.yaml" at <$val>: wrong type for value; expected string; got bool
 ```
