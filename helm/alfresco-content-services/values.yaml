@@ -66,6 +66,11 @@ repository:
     timeoutSeconds: 10
   extraVolumeMounts: []
   extraVolumes: []
+  # Provide additional log statements by adding
+  # classes and/or packages in a key:value fashion
+  # extraLogStatements:
+  #   org.alfresco.repo.content.transform.TransformerDebug: debug
+  #   org.alfresco.repo.security.authentication.identityservice: debug
 
 # Declares the api-explorer service used by the content repository
 apiexplorer:
