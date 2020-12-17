@@ -10,21 +10,21 @@ metadata:
     {{- include "ooi-service.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/rewrite-target: /ooi-service/$2
+    nginx.ingress.kubernetes.io/rewrite-target: /ooi-service
 {{- if .Values.ooiService.extraAnnotations }}
 {{ toYaml .Values.ooiService.extraAnnotations | indent 4 }}
 {{- end }}
 
 spec:
   rules:
-  {{- if .Values.ooiService.hostName }}
-  - host: {{ tpl .Values.ooiService.hostName $ }}
+  {{- if .Values.ooiService.ingress.hostName }}
+  - host: {{ tpl .Values.ooiService.ingress.hostName $ }}
     http:
   {{- else }}
   - http:
   {{- end }}
       paths:
-      - path: {{ .Values.ooiService.ingress.path }}(/|$)(.*)
+      - path: {{ .Values.ooiService.ingress.path }}
         backend:
           serviceName: {{ template "content-services.shortname" . }}-ooi-service
           servicePort: {{ .Values.ooiService.service.externalPort }}
