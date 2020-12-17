@@ -83,6 +83,8 @@ ooiService:
     name: ooi-service
     type: ClusterIP
     externalPort: 80
+  ingress:
+    path: /ooi-service
   resources:
     requests:
       memory: "1000Mi"
