@@ -1,4 +1,5 @@
-### Contributing
+# Contributing
+
 Thanks for your interest in contributing to this project!
 
 The following is a set of guidelines for contributing to this library. Most of them will make the life of the reviewer easier and therefore decrease the time required for the patch be included in the next version.
@@ -8,8 +9,6 @@ Because this project forms a part of Alfresco Content Services, the guidelines a
 Read an [overview on how this project is goverened](https://community.alfresco.com/docs/DOC-6385-project-overview-repository).
 
 You can also perform the following:
-
-- Report and add issues in the ALF JIRA project of the [Alfresco issue tracker](http://issues.alfresco.com).
 
 - Raise issues directly against the project (GitHub bug).  Please read the [instructions for a good issue report](https://community.alfresco.com/docs/DOC-6263-reporting-an-issue).
 

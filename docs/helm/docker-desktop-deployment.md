@@ -214,7 +214,7 @@ To save the deployment of two more pods you can also try disabling the Sync Serv
 --set alfresco-sync-service.syncservice.enabled=false
 ```
 
-If you need to reduce the memory footprint further you can manually change the memory allocation settings for several pods. Currently the memory allocation for several pods is also specified via `JAVA_OPTS` environment variables which are cumbersome to change via the `--set` option. Edit the values file you intend to use and reduce the memory settings (ensure the container allocation is higher than the JVM allocation).
+If you need to reduce the memory footprint further the JVM memory settings in most pods use the `MaxRAMPercentage` option so lowering the various `limits.memory` and `requests.memory` values will also reduce the JVM memory allocation.
 
 ### Timeout
 
@@ -227,8 +227,7 @@ Error: release acs failed, and has been uninstalled due to atomic being set: tim
 You may should check resources above and then re-run the deployment with either an increased timeout, eg. --timeout 15m0s. Alteratively run without following:
 
 ```bash
-    --atomic \
-    --timeout 10m0s
+--atomic --timeout 10m0s
 ```
 
 and then monitor the logs for any failing pods. Please also consult the [Helm Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes Dashboard and more generic troubleshooting tips and tricks.
