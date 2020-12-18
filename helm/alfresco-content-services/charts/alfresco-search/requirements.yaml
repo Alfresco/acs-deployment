@@ -1,0 +1,3 @@
+dependencies:
+  - name: alfresco-insight-zeppelin
+    version: 1.0.3
