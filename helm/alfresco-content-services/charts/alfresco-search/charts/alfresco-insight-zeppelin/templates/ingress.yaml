@@ -1,5 +1,5 @@
-# Defines the ingress for the Alfresco Insight Zeppelin App
 {{- if .Values.insightzeppelin.enabled }}
+# Defines the ingress for the Alfresco Insight Zeppelin App
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
