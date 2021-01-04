@@ -1,4 +1,5 @@
 {{- if .Values.ingress.enabled }}
+# Defines the ingress for the Alfresco Search (Solr) App
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
