@@ -338,7 +338,7 @@ filestore:
 share:
   replicaCount: 1
   image:
-    repository: quay.io/alfresco/alfresco-share
+    repository: alfresco/alfresco-share
     tag: "7.0.0-M3"
     pullPolicy: Always
     internalPort: 8080
