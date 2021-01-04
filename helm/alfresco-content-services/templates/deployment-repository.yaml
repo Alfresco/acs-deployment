@@ -24,6 +24,7 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-repository.yaml") . | sha256sum }}
         checksum/secretDatabase: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
         checksum/secretS3: {{ include (print $.Template.BasePath "/secret-s3.yaml") . | sha256sum }}
+        checksum/config-log4j: {{ include (print $.Template.BasePath "/config-dev-log4j-properties.yaml") . | sha256sum }}
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
@@ -69,6 +70,10 @@ spec:
 {{ toYaml .Values.repository.resources | indent 12 }}
           {{- if .Values.persistence.repository.enabled }}
           volumeMounts:
+          {{- if .Values.repository.extraLogStatements }}
+          - name: dev-log4j-properties-volume
+            mountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/"
+          {{- end }}
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
@@ -173,6 +178,11 @@ spec:
               mountPath: /var/run/secrets/java.io/keystores
         {{- end }}
       volumes:
+      {{- if .Values.repository.extraLogStatements }}
+      - name : dev-log4j-properties-volume
+        configMap:
+          name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
+      {{- end }}
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
