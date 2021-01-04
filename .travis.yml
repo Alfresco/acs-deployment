@@ -35,7 +35,6 @@ env:
     - KUBERNETES_VERSION=1.18.4
     - GIT_DIFF=$(git diff HEAD~1 --name-only .)
     - AWS_IAM_AUTHENTICATOR_VERSION=${AWS_IAM_AUTHENTICATOR_VERSION:-1.18.8/2020-09-18}
-    - CHECKOV_VERSION=1.0.639
 
 branches:
   only:
