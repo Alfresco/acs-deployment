@@ -2,7 +2,8 @@
 
 The table below shows the full list of properties (excluding module specific properties) that can be figured via alfresco-global.properties ordered alphabetically.
 
-Obsolete entries in the latest version are marked with ~~strikethrough~~ text.
+Obsolete entries in the latest version are marked with ~~strikethrough~~ text. Other entries, although not marked as obsolete will have little affect if
+used in deprecated classes that have been superseded by newer functionality.
 
 | Property | Description | Default value |
 |----------|-------------|---------------|
@@ -1637,8 +1638,7 @@ Obsolete entries in the latest version are marked with ~~strikethrough~~ text.
 | ~~jodconverter.enabled~~ | ~~External executable locations This property determines whether the jodConverter services are enabled. Allowed values are 'true' or 'false'.~~ | ~~true~~ |
 | ~~jodconverter.maxTasksPerProcess~~ | ~~The maximum number of OOo-related tasks to perform before a process restart~~ | ~~200~~ |
 | ~~jodconverter.officeHome~~ | ~~Specifies the location of LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like "/Applications/OpenOffice.org.app/Contents". For other OSes this should be the directory that contains "program/soffice.bin". For Debian/Ubuntu it will be like "/usr/lib64/libreoffice", for Fedora it will be like "/opt/openoffice.org3", for Windows it will be like "C:/Alfresco/libreoffice"~~ | ~~/usr/lib64/libreoffice~~ |
-| ~~jodconverter.portNumbers~~ | ~~1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003,~~ 2004
-Note ~~that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use.~~ | ~~2022~~ |
+| ~~jodconverter.portNumbers~~ | ~~1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003, 2004. Note that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use.~~ | ~~2022~~ |
 | ~~jodconverter.startupRetryPeriodSeconds~~ | ~~When jodconverter.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start.~~ | ~~60~~ |
 | ~~jodconverter.taskExecutionTimeout~~ | ~~timeouts are in milliseconds~~ | ~~120000~~ |
 | ~~jodconverter.taskQueueTimeout~~ | ~~timeouts are in milliseconds~~ | ~~30000~~ |
@@ -2121,21 +2121,21 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | system.store | System Configuration | `system://system` |
 | system.syncset_definition_container.childname | Folder for storing syncset definitions | sys:syncset_definitions |
 | system.system_container.childname | Folders for storing people | sys:system |
-| system.thumbnail.definition.default.maxPages | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
-| system.thumbnail.definition.default.maxSourceSizeKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
-| system.thumbnail.definition.default.pageLimit | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | 1 |
-| system.thumbnail.definition.default.readLimitKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
-| system.thumbnail.definition.default.readLimitTimeMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| ~~system.thumbnail.definition.default.maxPages~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
+| ~~system.thumbnail.definition.default.maxSourceSizeKBytes~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
+| ~~system.thumbnail.definition.default.pageLimit~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~1~~ |
+| ~~system.thumbnail.definition.default.readLimitKBytes~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
+| ~~system.thumbnail.definition.default.readLimitTimeMs~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
 | system.thumbnail.definition.default.timeoutMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
 | system.thumbnail.generate | Thumbnail Service | true |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.docx | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.odp | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.ods | Max mimetype sizes to create thumbnail icons |-1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.odt | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.pdf | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.pptx | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.txt | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.xlsx | Max mimetype sizes to create thumbnail icons | -1 |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.docx~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.odp~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.ods~~ | ~~Max mimetype sizes to create thumbnail icons~~ |-1 |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.odt~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.pdf~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.pptx~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.txt~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.xlsx~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
 | system.thumbnail.quietPeriod | Configuration for handling of failing thumbnails | 604800 |
 | system.thumbnail.quietPeriodRetriesEnabled | Configuration for handling of failing thumbnails | true |
 | system.thumbnail.redeployStaticDefsOnStartup | Configuration for handling of failing thumbnails | true |
