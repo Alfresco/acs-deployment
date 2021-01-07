@@ -711,7 +711,6 @@ The table below shows the full list of properties (exluding module specific prop
 | content.metadataExtracter.pdf.maxConcurrentExtractionsCount | | 5 |
 | content.metadataExtracter.pdf.maxDocumentSizeMB | | 10 |
 | content.metadataExtracter.pdf.overwritePolicy | The default overwrite policy for PdfBoxMetadataExtracter | PRAGMATIC |
-<span style="color:lightgrey">
 | content.transformer.alfresco-pdf-renderer.extensions.ai.png.priority | | 50 |
 | content.transformer.alfresco-pdf-renderer.extensions.pdf.png.priority | | 50 |
 | content.transformer.alfresco-pdf-renderer.ImageMagick.available | | false |
@@ -1373,7 +1372,6 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.TikaAuto.priority | | 120 |
 | content.transformer.TikaAuto.extensions.bin.txt.supported | | false |
 | content.transformer.TikaAuto.extensions.pdf.txt.maxSourceSizeKBytes | | 25600 |
- </span>
 | contentPropertyRestrictions.enabled | If enabled doesn't allow to set content properties via NodeService | true |
 | contentPropertyRestrictions.whitelist |
 | cors.allowed.headers | CORS settings | Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token |
@@ -2214,5 +2212,3 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | webscripts.tempDirectoryName | Webscripts config | Alfresco-WebScripts |
 | webscripts.transaction.preserveHeadersPattern | | Access-Control-.* |
 | xforms.formatCaption | Format caption extracted from the XML Schema. | true |
-
-<span style="color:lightgrey">obsolete - no longer used in the latest version</span>
