@@ -708,11 +708,11 @@ The table below shows the full list of properties (exluding module specific prop
 | cifs.WINS.secondary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 5.6.7.8 |
 | cmis.disable.hidden.leading.period.files | | false |
 | _content.metadataExtracter.default.timeoutMs_ | _The default timeout for metadata mapping extracters_ | _20000_ |
-| _content.metadataExtracter.pdf.maxConcurrentExtractionsCount | | 5 |
+| ~~content.metadataExtracter.pdf.maxConcurrentExtractionsCount~~ | | 5 |
 | content.metadataExtracter.pdf.maxDocumentSizeMB | | 10 |
 | content.metadataExtracter.pdf.overwritePolicy | The default overwrite policy for PdfBoxMetadataExtracter | PRAGMATIC |
 | content.transformer.alfresco-pdf-renderer.extensions.ai.png.priority | | 50 |
-| content.transformer.alfresco-pdf-renderer.extensions.pdf.png.priority | | 50 |
+~~~~| content.transformer.alfresco-pdf-renderer.extensions.pdf.png.priority | | 50 |
 | content.transformer.alfresco-pdf-renderer.ImageMagick.available | | false |
 | content.transformer.alfresco-pdf-renderer.ImageMagick.pipeline | | alfresco-pdf-renderer\|png\|ImageMagick |
 | content.transformer.Archive.extensions.*.txt.priority | | 50 |
@@ -721,7 +721,7 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.complex.Any.Image.pipeline | This transformer was called transformer.complex.OOXML.Image, but now the first stage is any transformer to allow failover when there is no embedded thumbnail. | *\|jpg\|ImageMagick |
 | content.transformer.complex.Any.Image.priority | | 400 |
 | content.transformer.complex.ArchiveToPdf.pipeline | Archive Zip to PDF | Archive\|txt\|* |
-| content.transformer.complex.iWorks.Image.extensions.key.png.priority | | 50 |
+| content.transformer.complex.iWorks.Image.extensions.key.png.priority | | 50 |~~~~
 | content.transformer.complex.iWorks.Image.extensions.numbers.png.priority | | 50 |
 | content.transformer.complex.iWorks.Image.extensions.pages.png.priority | | 50 |
 | content.transformer.complex.iWorks.Image.pipeline | | iWorksQuicklooks\|jpg\|ImageMagick |
