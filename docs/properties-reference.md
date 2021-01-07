@@ -707,7 +707,7 @@ The table below shows the full list of properties (exluding module specific prop
 | cifs.WINS.primary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 1.2.3.4 |
 | cifs.WINS.secondary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 5.6.7.8 |
 | cmis.disable.hidden.leading.period.files | | false |
-~~| content.metadataExtracter.default.timeoutMs | The default timeout for metadata mapping extracters | 20000 |
+| content.metadataExtracter.default.timeoutMs | The default timeout for metadata mapping extracters | 20000 |
 | content.metadataExtracter.pdf.maxConcurrentExtractionsCount | | 5 |
 | content.metadataExtracter.pdf.maxDocumentSizeMB | | 10 |
 | content.metadataExtracter.pdf.overwritePolicy | The default overwrite policy for PdfBoxMetadataExtracter | PRAGMATIC |
@@ -1360,7 +1360,7 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.remoteServer.extensions.xwd.ppj.supported | | true |
 | content.transformer.remoteServer.extensions.xwd.ppm.supported | | true |
 | content.transformer.remoteServer.extensions.xwd.psd.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.ras.supported | | true |
+| ~~content.transformer.remoteServer.extensions.xwd.ras.supported~~ | | ~~true~~ |
 | content.transformer.remoteServer.extensions.xwd.tiff.supported | | true |
 | content.transformer.remoteServer.extensions.xwd.xbm.supported | | true |
 | content.transformer.remoteServer.extensions.xwd.xpm.supported | | true |
@@ -1373,7 +1373,7 @@ The table below shows the full list of properties (exluding module specific prop
 | content.transformer.TikaAuto.extensions.bin.txt.supported | | false |
 | content.transformer.TikaAuto.extensions.pdf.txt.maxSourceSizeKBytes | | 25600 |
 | contentPropertyRestrictions.enabled | If enabled doesn't allow to set content properties via NodeService | true |
-| contentPropertyRestrictions.whitelist |~~
+| ~~contentPropertyRestrictions.whitelist~~ |
 | cors.allowed.headers | CORS settings | Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token |
 | cors.allowed.methods | CORS settings | GET,POST,HEAD,OPTIONS,PUT,DELETE |
 | cors.allowed.origins | CORS settings |
