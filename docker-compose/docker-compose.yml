@@ -12,7 +12,7 @@ version: "2"
 
 services:
     alfresco:
-        image: quay.io/alfresco/alfresco-content-repository:7.0.0-M3
+        image: quay.io/alfresco/alfresco-content-repository:7.0.0-A20
         mem_limit: 1700m
         environment:
             JAVA_TOOL_OPTIONS: "
@@ -46,11 +46,6 @@ services:
                 -Dtransform.service.url=http://transform-router:8095
                 -Dsfs.url=http://shared-file-store:8099/
                 -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-                -Dalfresco-pdf-renderer.url=http://transform-core-aio:8090/
-                -Djodconverter.url=http://transform-core-aio:8090/
-                -Dimg.url=http://transform-core-aio:8090/
-                -Dtika.url=http://transform-core-aio:8090/
-                -Dtransform.misc.url=http://transform-core-aio:8090/
                 -Dcsrf.filter.enabled=false
                 -Ddsync.service.uris=http://localhost:9090/alfresco
                 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
@@ -96,7 +91,7 @@ services:
             - shared-file-store-volume:/tmp/Alfresco/sfs
 
     share:
-        image: quay.io/alfresco/alfresco-share:7.0.0-M3
+        image: quay.io/alfresco/alfresco-share:7.0.0-A20
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"

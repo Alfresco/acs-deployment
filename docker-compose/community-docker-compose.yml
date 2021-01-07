@@ -10,7 +10,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository-community:7.0.0-A10
+        image: alfresco/alfresco-content-repository-community:7.0.0-A20
         mem_limit: 1500m
         environment:
             JAVA_TOOL_OPTIONS: "
@@ -41,11 +41,6 @@ services:
                 -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
                 -Ddeployment.method=DOCKER_COMPOSE
                 -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-                -Dalfresco-pdf-renderer.url=http://transform-core-aio:8090/
-                -Djodconverter.url=http://transform-core-aio:8090/
-                -Dimg.url=http://transform-core-aio:8090/
-                -Dtika.url=http://transform-core-aio:8090/
-                -Dtransform.misc.url=http://transform-core-aio:8090/
                 -Dcsrf.filter.enabled=false
                 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
                 "
@@ -59,7 +54,7 @@ services:
             - 8090:8090
 
     share:
-        image: alfresco/alfresco-share:7.0.0-M3
+        image: alfresco/alfresco-share:7.0.0-A20
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"
