@@ -390,36 +390,36 @@ jobs:
         helm lint helm/alfresco-content-services/charts/alfresco-sync-service
         helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
 
-    - name: Deploy Docker Compose and Run Postman Checks
-      stage: test
-      <<: *docker_deploy
-    - name: Deploy Latest Chart and Run Postman Checks
-      stage: test
-      <<: *helm_deploy
+    # - name: Deploy Docker Compose and Run Postman Checks
+    #   stage: test
+    #   <<: *docker_deploy
+    # - name: Deploy Latest Chart and Run Postman Checks
+    #   stage: test
+    #   <<: *helm_deploy
 
-    - stage: community
-      name: community-helm
-      <<: *helm_deploy
-    - name: community-compose
-      <<: *docker_deploy
+    # - stage: community
+    #   name: community-helm
+    #   <<: *helm_deploy
+    # - name: community-compose
+    #   <<: *docker_deploy
 
-    - stage: 6.2.N
-      name: 6.2.N-helm
-      <<: *helm_deploy
-    - name: 6.2.N-compose
-      <<: *docker_deploy
+    # - stage: 6.2.N
+    #   name: 6.2.N-helm
+    #   <<: *helm_deploy
+    # - name: 6.2.N-compose
+    #   <<: *docker_deploy
 
-    - stage: 6.1.N
-      name: 6.1.N-helm
-      <<: *helm_deploy
-    - name: 6.1.N-compose
-      <<: *docker_deploy
+    # - stage: 6.1.N
+    #   name: 6.1.N-helm
+    #   <<: *helm_deploy
+    # - name: 6.1.N-compose
+    #   <<: *docker_deploy
 
-    - stage: 6.0.N
-      name: 6.0.N-helm
-      <<: *helm_deploy
-    - name: 6.0.N-compose
-      <<: *docker_deploy
+    # - stage: 6.0.N
+    #   name: 6.0.N-helm
+    #   <<: *helm_deploy
+    # - name: 6.0.N-compose
+    #   <<: *docker_deploy
 
     - name: package and publish chart
       stage: publish
