@@ -54,7 +54,7 @@ services:
             - 8090:8090
 
     share:
-        image: alfresco/alfresco-share:7.0.0-A20
+        image: alfresco/alfresco-share:7.0.0-M3
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"
