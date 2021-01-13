@@ -1,6 +1,9 @@
 # Alfresco Content Services Property Reference
 
-The table below shows the full list of properties (exluding module specific properties) that can be figured via alfresco-global.properties ordered alphabetically.
+The table below shows the full list of properties (excluding module specific properties) that can be figured via alfresco-global.properties ordered alphabetically.
+
+Obsolete entries in the latest version are marked with ~~strikethrough~~ text. Other entries, although not marked as obsolete will have little affect if
+used in deprecated classes that have been superseded by newer functionality.
 
 | Property | Description | Default value |
 |----------|-------------|---------------|
@@ -69,10 +72,10 @@ The table below shows the full list of properties (exluding module specific prop
 | alfresco.hazelcast.port | | 5701 |
 | alfresco.host | Alfresco hostname | ${localname} |
 | alfresco.jmx.connector.enabled | Control Alfresco JMX connectivity | false |
-| alfresco-pdf-renderer.exe | External executable locations | ${alfresco-pdf-renderer.root}/alfresco-pdf-renderer |
-| alfresco-pdf-renderer.root | External executable locations | |
-| alfresco-pdf-renderer.startupRetryPeriodSeconds | When alfresco-pdf-renderer.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| alfresco-pdf-renderer.url | Remote server (or docker container) url used to service alfresco-pdf-renderer requests. | |
+| ~~alfresco-pdf-renderer.exe~~ | ~~External executable locations~~ | ~~${alfresco-pdf-renderer.root}/alfresco-pdf-renderer~~ |
+| ~~alfresco-pdf-renderer.root~~ | ~~External executable locations~~ | |
+| ~~alfresco-pdf-renderer.startupRetryPeriodSeconds~~ | ~~When alfresco-pdf-renderer.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start.~~ | ~~60~~ |
+| ~~alfresco-pdf-renderer.url~~ | ~~Remote server (or docker container) url used to service alfresco-pdf-renderer requests.~~ | |
 | alfresco.port | Alfresco port | 8080 |
 | alfresco.protocol | Alfresco protocol | http |
 | alfresco.restApi.basicAuthScheme | | false |
@@ -707,673 +710,673 @@ The table below shows the full list of properties (exluding module specific prop
 | cifs.WINS.primary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 1.2.3.4 |
 | cifs.WINS.secondary | Optional WINS server primary and secondary IP addresses. Ignored if autoDetectEnabled=true | 5.6.7.8 |
 | cmis.disable.hidden.leading.period.files | | false |
-| content.metadataExtracter.default.timeoutMs | The default timeout for metadata mapping extracters | 20000 |
-| content.metadataExtracter.pdf.maxConcurrentExtractionsCount | | 5 |
-| content.metadataExtracter.pdf.maxDocumentSizeMB | | 10 |
-| content.metadataExtracter.pdf.overwritePolicy | The default overwrite policy for PdfBoxMetadataExtracter | PRAGMATIC |
-| content.transformer.alfresco-pdf-renderer.extensions.ai.png.priority | | 50 |
-| content.transformer.alfresco-pdf-renderer.extensions.pdf.png.priority | | 50 |
-| content.transformer.alfresco-pdf-renderer.ImageMagick.available | | false |
-| content.transformer.alfresco-pdf-renderer.ImageMagick.pipeline | | alfresco-pdf-renderer\|png\|ImageMagick |
-| content.transformer.Archive.extensions.*.txt.priority | | 50 |
-| content.transformer.Archive.extensions.bin.txt.supported | | false |
-| content.transformer.BinaryPassThrough.priority | | 20 |
-| content.transformer.complex.Any.Image.pipeline | This transformer was called transformer.complex.OOXML.Image, but now the first stage is any transformer to allow failover when there is no embedded thumbnail. | *\|jpg\|ImageMagick |
-| content.transformer.complex.Any.Image.priority | | 400 |
-| content.transformer.complex.ArchiveToPdf.pipeline | Archive Zip to PDF | Archive\|txt\|* |
-| content.transformer.complex.iWorks.Image.extensions.key.png.priority | | 50 |
-| content.transformer.complex.iWorks.Image.extensions.numbers.png.priority | | 50 |
-| content.transformer.complex.iWorks.Image.extensions.pages.png.priority | | 50 |
-| content.transformer.complex.iWorks.Image.pipeline | | iWorksQuicklooks\|jpg\|ImageMagick |
-| content.transformer.complex.iWorks.Image.priority | | 400 |
-| content.transformer.complex.JodConverter.Image.pipeline | | JodConverter.2Pdf\|pdf\|complex.PDF.Image |
-| content.transformer.complex.JodConverter.Image.priority | | 250 |
-| content.transformer.complex.JodConverter.PdfBox.extensions.doc.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.docm.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.docx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.dotm.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.dotx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.potx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.potm.txt.maxSourceSizeKBytes | | 1024 |
-| content.transformer.complex.JodConverter.PdfBox.extensions.ppam.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.ppsm.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.ppsx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.ppt.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.pptm.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.pptx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.sldm.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.sldx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.txt.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.xlam.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.xlsb.txt.maxSourceSizeKBytes | | 1024 |
-| content.transformer.complex.JodConverter.PdfBox.extensions.xls.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.xlsm.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.xlsx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.xltm.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.extensions.xltx.txt.supported | | false |
-| content.transformer.complex.JodConverter.PdfBox.pipeline | | JodConverter.2Pdf\|pdf\|PdfBox |
-| content.transformer.complex.JodConverter.PdfBox.priority | | 150 |
-| content.transformer.complex.OutlookMsg2Image.extensions.msg.png.priority | | 395 |
-| content.transformer.complex.OutlookMsg2Image.pipeline | | OutlookMsg\|txt\|* |
-| content.transformer.complex.OutlookMsg2Image.priority | | 450 |
-| content.transformer.complex.PDF.Image.extensions.ai.bin.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.bmp.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.cgm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.dwt.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.eps.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.gif.priority | | 50 |
-| content.transformer.complex.PDF.Image.extensions.ai.gif.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.ief.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.jp2.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.jpg.priority | | 50 |
-| content.transformer.complex.PDF.Image.extensions.ai.jpg.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.pbm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.pgm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.png.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.pnm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.ppj.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.ppm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.psd.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.ras.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.tiff.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.xbm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.xpm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.ai.xwd.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.bin.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.bmp.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.cgm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.dwt.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.gif.priority | | 50 |
-| content.transformer.complex.PDF.Image.extensions.pdf.gif.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.ief.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.jp2.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.jpg.priority | | 50 |
-| content.transformer.complex.PDF.Image.extensions.pdf.jpg.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.pbm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.pgm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.png.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.pnm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.ppj.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.ppm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.psd.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.ras.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.tiff.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.xbm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.xpm.supported | | true |
-| content.transformer.complex.PDF.Image.extensions.pdf.xwd.supported | | true |
-| content.transformer.complex.PDF.Image.failover | | alfresco-pdf-renderer\|alfresco-pdf-renderer.ImageMagick |
-| content.transformer.complex.PDF.Image.priority | | 60 |
-| content.transformer.complex.Rfc822ToPdf.pipeline | EML to PDF | RFC822\|txt\|* |
-| content.transformer.complex.Text.Image.extensions.csv.*.supported | | true |
-| content.transformer.complex.Text.Image.extensions.dita.*.supported | | true |
-| content.transformer.complex.Text.Image.extensions.txt.*.supported | | true |
-| content.transformer.complex.Text.Image.extensions.xml.*.supported | | true |
-| content.transformer.complex.Text.Image.pipeline | | *\|pdf\|complex.PDF.Image |
-| content.transformer.complex.Text.Image.priority | | 350 |
-| content.transformer.default.priority | | 100 |
-| content.transformer.default.thresholdCount | | 3 |
-| content.transformer.default.time | | 0 |
-| content.transformer.default.count | | 100000 |
-| content.transformer.default.errorTime | | 120000 |
-| content.transformer.default.timeoutMs | | 120000 |
-| content.transformer.default.readLimitTimeMs | | -1 |
-| content.transformer.default.maxSourceSizeKBytes | | -1 |
-| content.transformer.default.readLimitKBytes | | -1 |
-| content.transformer.default.pageLimit | | -1 |
-| content.transformer.default.maxPages | | -1 |
-| content.transformer.HtmlParser.extensions.html.txt.priority | | 50 |
-| content.transformer.ImageMagick.extensions.png.png.priority | | 50 |
-| content.transformer.iWorksQuicklooks.extensions.key.jpg.priority | | 50 |
-| content.transformer.iWorksQuicklooks.extensions.key.pdf.priority | | 50 |
-| content.transformer.iWorksQuicklooks.extensions.numbers.jpg.priority | | 50 |
-| content.transformer.iWorksQuicklooks.extensions.numbers.pdf.priority | | 50 |
-| content.transformer.iWorksQuicklooks.extensions.pages.jpg.priority | | 50 |
-| content.transformer.iWorksQuicklooks.extensions.pages.pdf.priority | | 50 |
-| content.transformer.JodConverter.2Pdf.available | This transformer exists because OpenOffice and LibreOffice have a problem going directly from HTML to PDF. Going via ODT appears a much better option. For example \<sub\> tags hang the soffice process. See ALF-14035 | false |
-| content.transformer.JodConverter.2Pdf.extensions.*.pdf.supported | | true |
-| content.transformer.JodConverter.2Pdf.failover | | JodConverter\|JodConverter.Html2Pdf |
-| content.transformer.JodConverter.2Pdf.priority | | 150 |
-| content.transformer.JodConverter.extensions.*.docm.supported | | false |
-| content.transformer.JodConverter.extensions.*.docx.supported | | false |
-| content.transformer.JodConverter.extensions.*.dotm.supported | | false |
-| content.transformer.JodConverter.extensions.*.dotx.supported | | false |
-| content.transformer.JodConverter.extensions.*.potm.supported | | false |
-| content.transformer.JodConverter.extensions.*.potx.supported | | false |
-| content.transformer.JodConverter.extensions.*.ppam.supported | | false |
-| content.transformer.JodConverter.extensions.*.ppsm.supported | | false |
-| content.transformer.JodConverter.extensions.*.ppsx.supported | | false |
-| content.transformer.JodConverter.extensions.*.pptm.supported | | false |
-| content.transformer.JodConverter.extensions.*.pptx.supported | | false |
-| content.transformer.JodConverter.extensions.*.sldx.supported | | false |
-| content.transformer.JodConverter.extensions.*.sldm.supported | | false |
-| content.transformer.JodConverter.extensions.*.txt.supported | | false |
-| content.transformer.JodConverter.extensions.*.xlam.supported | | false |
-| content.transformer.JodConverter.extensions.*.xlsb.supported | | false |
-| content.transformer.JodConverter.extensions.*.xlsm.supported | | false |
-| content.transformer.JodConverter.extensions.*.xlsx.supported | | false |
-| content.transformer.JodConverter.extensions.*.xltm.supported | | false |
-| content.transformer.JodConverter.extensions.*.xltx.supported | | false |
-| content.transformer.JodConverter.extensions.doc.pdf.maxSourceSizeKBytes | | 10240 |
-| content.transformer.JodConverter.extensions.docm.pdf.maxSourceSizeKBytes | | 768 |
-| content.transformer.JodConverter.extensions.docx.pdf.maxSourceSizeKBytes | | 768 |
-| content.transformer.JodConverter.extensions.dotm.pdf.maxSourceSizeKBytes | | 768 |
-| content.transformer.JodConverter.extensions.dotx.pdf.maxSourceSizeKBytes | | 768 |
-| content.transformer.JodConverter.extensions.html.pdf.supported | | false |
-| content.transformer.JodConverter.extensions.potm.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.potx.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.ppt.pdf.maxSourceSizeKBytes | | 6144 |
-| content.transformer.JodConverter.extensions.ppam.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.ppsm.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.ppsx.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.pptm.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.pptx.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.sldm.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.sldx.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.txt.pdf.maxSourceSizeKBytes | | 5120 |
-| content.transformer.JodConverter.extensions.vsd.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.vsdx.pdf.maxSourceSizeKBytes | | 4096 |
-| content.transformer.JodConverter.extensions.xlam.pdf.maxSourceSizeKBytes | | 1536 |
-| content.transformer.JodConverter.extensions.xls.pdf.maxSourceSizeKBytes | | 10240 |
-| content.transformer.JodConverter.extensions.xlsb.pdf.maxSourceSizeKBytes | | 1536 |
-| content.transformer.JodConverter.extensions.xlsm.pdf.maxSourceSizeKBytes | | 1536 |
-| content.transformer.JodConverter.extensions.xlsx.pdf.maxSourceSizeKBytes | | 1536 |
-| content.transformer.JodConverter.extensions.xltm.pdf.maxSourceSizeKBytes | | 1536 |
-| content.transformer.JodConverter.extensions.xltx.pdf.maxSourceSizeKBytes | | 1536 |
-| content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.supported | | true |
-| content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.priority | | 50 |
-| content.transformer.JodConverter.Html2Pdf.pipeline | | JodConverter\|odt\|JodConverter |
-| content.transformer.JodConverter.priority | | 110 |
-| content.transformer.Office.priority | | 130 |
-| content.transformer.OOXML.priority | | 130 |
-| content.transformer.OOXMLThumbnail.extensions.dotx.jpg.priority | | 50 |
-| content.transformer.OOXMLThumbnail.extensions.potx.jpg.priority | | 50 |
-| content.transformer.OutlookMsg.priority | | 125 |
-| content.transformer.PdfBox.extensions.pdf.txt.maxSourceSizeKBytes | | 25600 |
-| content.transformer.PdfBox.extensions.pdf.txt.priority | | 50 |
-| content.transformer.PdfBox.extractBookmarksText | True if bookmarks content should be extracted for PDFBox | true |
-| content.transformer.PdfBox.priority | | 110 |
-| content.transformer.PdfBox.TextToPdf.extensions.csv.pdf.supported | | true |
-| content.transformer.PdfBox.TextToPdf.extensions.dita.pdf.supported | | true |
-| content.transformer.PdfBox.TextToPdf.extensions.xml.pdf.supported | | true |
-| content.transformer.PdfBox.TextToPdf.maxSourceSizeKBytes | | 10240 |
-| content.transformer.Poi.priority | | 130 |
-| content.transformer.remote.alfresco.priority | | 30 |
-| content.transformer.remoteServer.extensions.*.*.supported | | false |
-| content.transformer.remoteServer.extensions.*.txt.supported | | false |
-| content.transformer.remoteServer.extensions.bmp.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.gif.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.ief.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.png.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.psd.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.ras.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.bmp.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.ief.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.png.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.psd.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.ras.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.cgm.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.doc.gif.supported | | true |
-| content.transformer.remoteServer.extensions.doc.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.doc.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.doc.png.supported | | true |
-| content.transformer.remoteServer.extensions.doc.swf.supported | | true |
-| content.transformer.remoteServer.extensions.docm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.docm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.docm.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.docm.png.supported | | true |
-| content.transformer.remoteServer.extensions.docm.swf.supported | | true |
-| content.transformer.remoteServer.extensions.docx.gif.supported | | true |
-| content.transformer.remoteServer.extensions.docx.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.docx.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.docx.png.supported | | true |
-| content.transformer.remoteServer.extensions.docx.swf.supported | | true |
-| content.transformer.remoteServer.extensions.dotm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.dotm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.dotm.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.dotm.png.supported | | true |
-| content.transformer.remoteServer.extensions.dotm.swf.supported | | true |
-| content.transformer.remoteServer.extensions.dotx.gif.supported | | true |
-| content.transformer.remoteServer.extensions.dotx.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.dotx.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.dotx.png.supported | | true |
-| content.transformer.remoteServer.extensions.dotx.swf.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.gif.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.ief.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.png.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.psd.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.ras.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.dwt.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.gif.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.gif.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.gif.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.gif.gif.supported | | true |
-| content.transformer.remoteServer.extensions.gif.ief.supported | | true |
-| content.transformer.remoteServer.extensions.gif.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.gif.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.gif.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.gif.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.gif.png.supported | | true |
-| content.transformer.remoteServer.extensions.gif.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.gif.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.gif.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.gif.psd.supported | | true |
-| content.transformer.remoteServer.extensions.gif.ras.supported | | true |
-| content.transformer.remoteServer.extensions.gif.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.gif.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.gif.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.gif.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.ief.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.ief.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.ief.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.ief.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ief.ief.supported | | true |
-| content.transformer.remoteServer.extensions.ief.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.ief.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ief.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.ief.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.ief.png.supported | | true |
-| content.transformer.remoteServer.extensions.ief.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.ief.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.ief.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.ief.psd.supported | | true |
-| content.transformer.remoteServer.extensions.ief.ras.supported | | true |
-| content.transformer.remoteServer.extensions.ief.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.ief.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.ief.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.ief.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.gif.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.ief.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.png.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.psd.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.ras.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.jp2.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.gif.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.ief.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.png.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.psd.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.ras.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.jpg.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.ief.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.png.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.psd.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.ras.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.pbm.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.pdf.gif.supported | | true |
-| content.transformer.remoteServer.extensions.pdf.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.pdf.png.supported | | true |
-| content.transformer.remoteServer.extensions.pdf.swf.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.ief.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.png.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.psd.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.ras.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.pgm.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.png.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.png.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.png.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.png.gif.supported | | true |
-| content.transformer.remoteServer.extensions.png.ief.supported | | true |
-| content.transformer.remoteServer.extensions.png.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.png.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.png.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.png.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.png.png.supported | | true |
-| content.transformer.remoteServer.extensions.png.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.png.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.png.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.png.psd.supported | | true |
-| content.transformer.remoteServer.extensions.png.ras.supported | | true |
-| content.transformer.remoteServer.extensions.png.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.png.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.png.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.png.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.ief.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.png.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.psd.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.ras.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.pnm.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.potm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.potm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.potm.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.potm.png.supported | | true |
-| content.transformer.remoteServer.extensions.potm.swf.supported | | true |
-| content.transformer.remoteServer.extensions.potx.gif.supported | | true |
-| content.transformer.remoteServer.extensions.potx.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.potx.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.potx.png.supported | | true |
-| content.transformer.remoteServer.extensions.potx.swf.supported | | true |
-| content.transformer.remoteServer.extensions.ppam.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ppam.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ppam.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.ppam.png.supported | | true |
-| content.transformer.remoteServer.extensions.ppam.swf.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.ief.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.png.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.psd.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.ras.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.ppj.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.ief.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.png.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.psd.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.ras.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.ppm.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.ppsm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ppsm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ppsm.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.ppsm.png.supported | | true |
-| content.transformer.remoteServer.extensions.ppsm.swf.supported | | true |
-| content.transformer.remoteServer.extensions.ppsx.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ppsx.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ppsx.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.ppsx.png.supported | | true |
-| content.transformer.remoteServer.extensions.ppsx.swf.supported | | true |
-| content.transformer.remoteServer.extensions.ppt.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ppt.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ppt.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.ppt.png.supported | | true |
-| content.transformer.remoteServer.extensions.ppt.swf.supported | | true |
-| content.transformer.remoteServer.extensions.pptm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.pptm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.pptm.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.pptm.png.supported | | true |
-| content.transformer.remoteServer.extensions.pptm.swf.supported | | true |
-| content.transformer.remoteServer.extensions.pptx.gif.supported | | true |
-| content.transformer.remoteServer.extensions.pptx.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.pptx.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.pptx.png.supported | | true |
-| content.transformer.remoteServer.extensions.pptx.swf.supported | | true |
-| content.transformer.remoteServer.extensions.psd.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.psd.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.psd.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.psd.gif.supported | | true |
-| content.transformer.remoteServer.extensions.psd.ief.supported | | true |
-| content.transformer.remoteServer.extensions.psd.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.psd.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.psd.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.psd.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.psd.png.supported | | true |
-| content.transformer.remoteServer.extensions.psd.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.psd.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.psd.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.psd.psd.supported | | true |
-| content.transformer.remoteServer.extensions.psd.ras.supported | | true |
-| content.transformer.remoteServer.extensions.psd.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.psd.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.psd.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.psd.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.ras.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.ras.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.ras.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.ras.gif.supported | | true |
-| content.transformer.remoteServer.extensions.ras.ief.supported | | true |
-| content.transformer.remoteServer.extensions.ras.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.ras.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.ras.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.ras.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.ras.png.supported | | true |
-| content.transformer.remoteServer.extensions.ras.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.ras.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.ras.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.ras.psd.supported | | true |
-| content.transformer.remoteServer.extensions.ras.ras.supported | | true |
-| content.transformer.remoteServer.extensions.ras.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.ras.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.ras.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.ras.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.gif.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.ief.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.png.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.psd.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.ras.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.tiff.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.ief.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.png.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.psd.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.ras.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.xbm.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.xlam.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xlam.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xlam.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.xlam.png.supported | | true |
-| content.transformer.remoteServer.extensions.xlam.swf.supported | | true |
-| content.transformer.remoteServer.extensions.xls.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xls.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xls.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.xls.png.supported | | true |
-| content.transformer.remoteServer.extensions.xls.swf.supported | | true |
-| content.transformer.remoteServer.extensions.xlsb.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xlsb.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xlsb.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.xlsb.png.supported | | true |
-| content.transformer.remoteServer.extensions.xlsb.swf.supported | | true |
-| content.transformer.remoteServer.extensions.xlsm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xlsm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xlsm.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.xlsm.png.supported | | true |
-| content.transformer.remoteServer.extensions.xlsm.swf.supported | | true |
-| content.transformer.remoteServer.extensions.xlsx.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xlsx.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xlsx.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.xlsx.png.supported | | true |
-| content.transformer.remoteServer.extensions.xlsx.swf.supported | | true |
-| content.transformer.remoteServer.extensions.xltm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xltm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xltm.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.xltm.png.supported | | true |
-| content.transformer.remoteServer.extensions.xltm.swf.supported | | true |
-| content.transformer.remoteServer.extensions.xltx.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xltx.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xltx.pdf.supported | | true |
-| content.transformer.remoteServer.extensions.xltx.png.supported | | true |
-| content.transformer.remoteServer.extensions.xltx.swf.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.ief.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.png.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.psd.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.ras.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.xpm.xwd.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.bmp.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.cgm.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.dwt.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.gif.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.ief.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.jp2.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.jpg.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.pbm.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.pgm.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.png.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.pnm.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.ppj.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.ppm.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.psd.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.ras.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.tiff.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.xbm.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.xpm.supported | | true |
-| content.transformer.remoteServer.extensions.xwd.xwd.supported | | true |
-| content.transformer.remoteServer.priority | | 40 |
+| ~~content.metadataExtracter.default.timeoutMs~~ | ~~The default timeout for metadata mapping extracters~~ | ~~20000~~ |
+| ~~content.metadataExtracter.pdf.maxConcurrentExtractionsCount~~ | | ~~5~~ |
+| ~~content.metadataExtracter.pdf.maxDocumentSizeMB~~ | | ~~10~~ |
+| ~~content.metadataExtracter.pdf.overwritePolicy~~ | ~~The default overwrite policy for PdfBoxMetadataExtracter~~ | ~~PRAGMATIC~~ |
+| ~~content.transformer.alfresco-pdf-renderer.extensions.ai.png.priority~~ | | ~~50~~ |
+| ~~content.transformer.alfresco-pdf-renderer.extensions.pdf.png.priority~~ | | ~~50~~ |
+| ~~content.transformer.alfresco-pdf-renderer.ImageMagick.available~~ | | ~~false~~ |
+| ~~content.transformer.alfresco-pdf-renderer.ImageMagick.pipeline~~ | | alfresco-pdf-renderer\|png\|ImageMagick |
+| ~~content.transformer.Archive.extensions.*.txt.priority~~ | | ~~50~~ |
+| ~~content.transformer.Archive.extensions.bin.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.BinaryPassThrough.priority~~ | | ~~20~~ |
+| ~~content.transformer.complex.Any.Image.pipeline~~ | ~~This transformer was called transformer.complex.OOXML.Image, but now the first stage is any transformer to allow failover when there is no embedded thumbnail.~~ | *\|jpg\|ImageMagick |
+| ~~content.transformer.complex.Any.Image.priority~~ | | ~~400~~ |
+| ~~content.transformer.complex.ArchiveToPdf.pipeline~~ | ~~Archive Zip to PDF~~ | Archive\|txt\|* |
+| ~~content.transformer.complex.iWorks.Image.extensions.key.png.priority~~ | | ~~50~~ |
+| ~~content.transformer.complex.iWorks.Image.extensions.numbers.png.priority~~ | | ~~50~~ |
+| ~~content.transformer.complex.iWorks.Image.extensions.pages.png.priority~~ | | ~~50~~ |
+| ~~content.transformer.complex.iWorks.Image.pipeline~~ | | iWorksQuicklooks\|jpg\|ImageMagick |
+| ~~content.transformer.complex.iWorks.Image.priority~~ | | ~~400~~ |
+| ~~content.transformer.complex.JodConverter.Image.pipeline~~ | | JodConverter.2Pdf\|pdf\|complex.PDF.Image |
+| ~~content.transformer.complex.JodConverter.Image.priority~~ | | ~~250~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.doc.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.docm.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.docx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.dotm.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.dotx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.potx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.potm.txt.maxSourceSizeKBytes~~ | | ~~1024~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.ppam.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.ppsm.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.ppsx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.ppt.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.pptm.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.pptx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.sldm.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.sldx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.txt.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.xlam.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.xlsb.txt.maxSourceSizeKBytes~~ | | ~~1024~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.xls.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.xlsm.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.xlsx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.xltm.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.extensions.xltx.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.complex.JodConverter.PdfBox.pipeline~~ | | JodConverter.2Pdf\|pdf\|PdfBox |
+| ~~content.transformer.complex.JodConverter.PdfBox.priority~~ | | ~~150~~ |
+| ~~content.transformer.complex.OutlookMsg2Image.extensions.msg.png.priority~~ | | ~~395~~ |
+| ~~content.transformer.complex.OutlookMsg2Image.pipeline~~ | | OutlookMsg\|txt\|* |
+| ~~content.transformer.complex.OutlookMsg2Image.priority~~ | | ~~450~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.bin.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.eps.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.gif.priority~~ | | ~~50~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.jpg.priority~~ | | ~~50~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.ai.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.bin.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.gif.priority~~ | | ~~50~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.jpg.priority~~ | | ~~50~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.extensions.pdf.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.PDF.Image.failover~~ | | alfresco-pdf-renderer\|alfresco-pdf-renderer.ImageMagick |
+| ~~content.transformer.complex.PDF.Image.priority~~ | | ~~60~~ |
+| ~~content.transformer.complex.Rfc822ToPdf.pipeline~~ | ~~EML to PDF~~ | RFC822\|txt\|* |
+| ~~content.transformer.complex.Text.Image.extensions.csv.*.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.Text.Image.extensions.dita.*.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.Text.Image.extensions.txt.*.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.Text.Image.extensions.xml.*.supported~~ | | ~~true~~ |
+| ~~content.transformer.complex.Text.Image.pipeline~~ | | *\|pdf\|complex.PDF.Image |
+| ~~content.transformer.complex.Text.Image.priority~~ | | ~~350~~ |
+| ~~content.transformer.default.priority~~ | | ~~100~~ |
+| ~~content.transformer.default.thresholdCount~~ | | ~~3~~ |
+| ~~content.transformer.default.time~~ | | ~~0~~ |
+| ~~content.transformer.default.count~~ | | ~~100000~~ |
+| ~~content.transformer.default.errorTime~~ | | ~~120000~~ |
+| ~~content.transformer.default.timeoutMs~~ | | ~~120000~~ |
+| ~~content.transformer.default.readLimitTimeMs~~ | | ~~-1~~ |
+| ~~content.transformer.default.maxSourceSizeKBytes~~ | | ~~-1~~ |
+| ~~content.transformer.default.readLimitKBytes~~ | | ~~-1~~ |
+| ~~content.transformer.default.pageLimit~~ | | ~~-1~~ |
+| ~~content.transformer.default.maxPages~~ | | ~~-1~~ |
+| ~~content.transformer.HtmlParser.extensions.html.txt.priority~~ | | ~~50~~ |
+| ~~content.transformer.ImageMagick.extensions.png.png.priority~~ | | ~~50~~ |
+| ~~content.transformer.iWorksQuicklooks.extensions.key.jpg.priority~~ | | ~~50~~ |
+| ~~content.transformer.iWorksQuicklooks.extensions.key.pdf.priority~~ | | ~~50~~ |
+| ~~content.transformer.iWorksQuicklooks.extensions.numbers.jpg.priority~~ | | ~~50~~ |
+| ~~content.transformer.iWorksQuicklooks.extensions.numbers.pdf.priority~~ | | ~~50~~ |
+| ~~content.transformer.iWorksQuicklooks.extensions.pages.jpg.priority~~ | | ~~50~~ |
+| ~~content.transformer.iWorksQuicklooks.extensions.pages.pdf.priority~~ | | ~~50~~ |
+| ~~content.transformer.JodConverter.2Pdf.available~~ | ~~This transformer exists because OpenOffice and LibreOffice have a problem going directly from HTML to PDF. Going via ODT appears a much better option. For example \<sub\> tags hang the soffice process. See ALF-14035~~ | ~~false~~ |
+| ~~content.transformer.JodConverter.2Pdf.extensions.*.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.JodConverter.2Pdf.failover~~ | | JodConverter\|JodConverter.Html2Pdf |
+| ~~content.transformer.JodConverter.2Pdf.priority~~ | | ~~150~~ |
+| ~~content.transformer.JodConverter.extensions.*.docm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.docx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.dotm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.dotx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.potm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.potx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.ppam.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.ppsm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.ppsx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.pptm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.pptx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.sldx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.sldm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.xlam.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.xlsb.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.xlsm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.xlsx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.xltm.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.*.xltx.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.doc.pdf.maxSourceSizeKBytes~~ | | ~~10240~~ |
+| ~~content.transformer.JodConverter.extensions.docm.pdf.maxSourceSizeKBytes~~ | | ~~768~~ |
+| ~~content.transformer.JodConverter.extensions.docx.pdf.maxSourceSizeKBytes~~ | | ~~768~~ |
+| ~~content.transformer.JodConverter.extensions.dotm.pdf.maxSourceSizeKBytes~~ | | ~~768~~ |
+| ~~content.transformer.JodConverter.extensions.dotx.pdf.maxSourceSizeKBytes~~ | | ~~768~~ |
+| ~~content.transformer.JodConverter.extensions.html.pdf.supported~~ | | ~~false~~ |
+| ~~content.transformer.JodConverter.extensions.potm.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.potx.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.ppt.pdf.maxSourceSizeKBytes~~ | | ~~6144~~ |
+| ~~content.transformer.JodConverter.extensions.ppam.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.ppsm.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.ppsx.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.pptm.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.pptx.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.sldm.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.sldx.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.txt.pdf.maxSourceSizeKBytes~~ | | ~~5120~~ |
+| ~~content.transformer.JodConverter.extensions.vsd.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.vsdx.pdf.maxSourceSizeKBytes~~ | | ~~4096~~ |
+| ~~content.transformer.JodConverter.extensions.xlam.pdf.maxSourceSizeKBytes~~ | | ~~1536~~ |
+| ~~content.transformer.JodConverter.extensions.xls.pdf.maxSourceSizeKBytes~~ | | ~~10240~~ |
+| ~~content.transformer.JodConverter.extensions.xlsb.pdf.maxSourceSizeKBytes~~ | | ~~1536~~ |
+| ~~content.transformer.JodConverter.extensions.xlsm.pdf.maxSourceSizeKBytes~~ | | ~~1536~~ |
+| ~~content.transformer.JodConverter.extensions.xlsx.pdf.maxSourceSizeKBytes~~ | | ~~1536~~ |
+| ~~content.transformer.JodConverter.extensions.xltm.pdf.maxSourceSizeKBytes~~ | | ~~1536~~ |
+| ~~content.transformer.JodConverter.extensions.xltx.pdf.maxSourceSizeKBytes~~ | | ~~1536~~ |
+| ~~content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.JodConverter.Html2Pdf.extensions.html.pdf.priority~~ | | ~~50~~ |
+| ~~content.transformer.JodConverter.Html2Pdf.pipeline~~ | | JodConverter\|odt\|JodConverter |
+| ~~content.transformer.JodConverter.priority~~ | | ~~110~~ |
+| ~~content.transformer.Office.priority~~ | | ~~130~~ |
+| ~~content.transformer.OOXML.priority~~ | | ~~130~~ |
+| ~~content.transformer.OOXMLThumbnail.extensions.dotx.jpg.priority~~ | | ~~50~~ |
+| ~~content.transformer.OOXMLThumbnail.extensions.potx.jpg.priority~~ | | ~~50~~ |
+| ~~content.transformer.OutlookMsg.priority~~ | | ~~125~~ |
+| ~~content.transformer.PdfBox.extensions.pdf.txt.maxSourceSizeKBytes~~ | | ~~25600~~ |
+| ~~content.transformer.PdfBox.extensions.pdf.txt.priority~~ | | ~~50~~ |
+| ~~content.transformer.PdfBox.extractBookmarksText~~ | ~~True if bookmarks content should be extracted for PDFBox~~ | ~~true~~ |
+| ~~content.transformer.PdfBox.priority~~ | | ~~110~~ |
+| ~~content.transformer.PdfBox.TextToPdf.extensions.csv.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.PdfBox.TextToPdf.extensions.dita.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.PdfBox.TextToPdf.extensions.xml.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.PdfBox.TextToPdf.maxSourceSizeKBytes~~ | | ~~10240~~ |
+| ~~content.transformer.Poi.priority~~ | | ~~130~~ |
+| ~~content.transformer.remote.alfresco.priority~~ | | ~~30~~ |
+| ~~content.transformer.remoteServer.extensions.*.*.supported~~ | | ~~false~~ |
+| ~~content.transformer.remoteServer.extensions.*.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.bmp.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.cgm.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.doc.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.doc.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.doc.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.doc.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.doc.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docm.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docm.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docx.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docx.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docx.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docx.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.docx.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotm.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotm.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotx.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotx.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotx.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotx.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dotx.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.dwt.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.gif.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ief.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jp2.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.jpg.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pbm.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pdf.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pdf.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pdf.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pdf.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pgm.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.png.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pnm.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potm.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potm.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potx.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potx.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potx.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potx.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.potx.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppam.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppam.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppam.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppam.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppam.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppj.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppm.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsm.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsm.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsx.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsx.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsx.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsx.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppsx.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppt.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppt.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppt.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppt.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ppt.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptm.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptm.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptx.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptx.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptx.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptx.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.pptx.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.psd.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.ras.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.tiff.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xbm.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlam.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlam.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlam.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlam.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlam.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xls.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xls.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xls.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xls.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xls.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsb.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsb.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsb.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsb.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsb.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsm.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsm.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsx.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsx.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsx.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsx.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xlsx.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltm.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltm.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltx.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltx.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltx.pdf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltx.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xltx.swf.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xpm.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.bmp.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.cgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.dwt.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.gif.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.ief.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.jp2.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.jpg.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.pbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.pgm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.png.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.pnm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.ppj.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.ppm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.psd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.ras.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.tiff.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.xbm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.xpm.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.extensions.xwd.xwd.supported~~ | | ~~true~~ |
+| ~~content.transformer.remoteServer.priority~~ | | ~~40~~ |
 | content.transformer.retryOn.different.mimetype | Enable transformation retrying if the file has MIME type differ than file extension. Ignored if `transformer.strict.mimetype.check` is true as these transformations will not take place. | true |
-| content.transformer.TextMining.priority | | 130 |
-| content.transformer.TextMining.extensions.doc.txt.priority | | 50 |
-| content.transformer.TikaAuto.priority | | 120 |
-| content.transformer.TikaAuto.extensions.bin.txt.supported | | false |
-| content.transformer.TikaAuto.extensions.pdf.txt.maxSourceSizeKBytes | | 25600 |
-| contentPropertyRestrictions.enabled | If enabled doesn't allow to set content properties via NodeService | true |
-| contentPropertyRestrictions.whitelist |
+| ~~content.transformer.TextMining.priority~~ | | ~~130~~ |
+| ~~content.transformer.TextMining.extensions.doc.txt.priority~~ | | ~~50~~ |
+| ~~content.transformer.TikaAuto.priority~~ | | ~~120~~ |
+| ~~content.transformer.TikaAuto.extensions.bin.txt.supported~~ | | ~~false~~ |
+| ~~content.transformer.TikaAuto.extensions.pdf.txt.maxSourceSizeKBytes~~ | | ~~25600~~ |
+| ~~contentPropertyRestrictions.enabled~~ | ~~If enabled doesn't allow to set content properties via NodeService~~ | ~~true~~ |
+| ~~contentPropertyRestrictions.whitelist~~ |
 | cors.allowed.headers | CORS settings | Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token |
 | cors.allowed.methods | CORS settings | GET,POST,HEAD,OPTIONS,PUT,DELETE |
 | cors.allowed.origins | CORS settings |
@@ -1620,28 +1623,27 @@ The table below shows the full list of properties (exluding module specific prop
 | imap.server.imaps.port | | 993 |
 | imap.server.port | | 143 |
 | imap.server.shuffle.move.delete.delay | | 10000 |
-| img.coders | External executable locations | ${img.root}/modules/coders |
-| img.config | External executable locations | ${img.root}/config |
-| img.dyn | External executable locations | ${img.root}/lib |
-| img.exe | External executable locations | ${img.root}/bin/convert |
-| img.root | External executable locations | ./ImageMagick |
-| img.startupRetryPeriodSeconds | When img.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| img.url | Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default. | |
+| ~~img.coders~~ | ~~External executable locations~~ | ~~${img.root}/modules/coders~~ |
+| ~~img.config~~ | ~~External executable locations~~ | ~~${img.root}/config~~ |
+| ~~img.dyn~~ | ~~External executable locations~~ | ~~${img.root}/lib~~ |
+| ~~img.exe~~ | ~~External executable locations~~ | ~~${img.root}/bin/convert~~ |
+| ~~img.root~~ | ~~External executable locations~~ | ~~./ImageMagick~~ |
+| ~~img.startupRetryPeriodSeconds~~ | ~~When img.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start.~~ | ~~60~~ |
+| ~~img.url~~ | ~~Legacy imageMagick transformer url to T-Engine to service transform requests via http. Disabled by default.~~ | |
 | index.backup.cronExpression | | `0 0 3 * * ?` |
 | index.subsystem.name | The search subsystem to use (noindex, solr6) | noindex |
 | index.tracking.minRecordPurgeAgeDays | Index tracking information of a certain age is cleaned out by a scheduled job. Any clustered system that has been offline for longer than this period will need to be seeded with a more recent backup of the Lucene indexes or the indexes will have to be fully rebuilt.Use -1 to disable purging. This can be switched on at any stage. | 30 |
 | index.tracking.purgeSize | Unused transactions will be purged in chunks determined by commit time boundaries. 'index.tracking.purgeSize' specifies the size of the chunk (in ms). Default is a couple of hours. | 7200000 |
-| jodconverter.connectTimeout | | 25000 |
-| jodconverter.enabled | External executable locations This property determines whether the jodConverter services are enabled. Allowed values are 'true' or 'false'. | true |
-| jodconverter.maxTasksPerProcess | The maximum number of OOo-related tasks to perform before a process restart | 200 |
-| jodconverter.officeHome | Specifies the location of LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like "/Applications/OpenOffice.org.app/Contents". For other OSes this should be the directory that contains "program/soffice.bin". For Debian/Ubuntu it will be like "/usr/lib64/libreoffice", for Fedora it will be like "/opt/openoffice.org3", for Windows it will be like "C:/Alfresco/libreoffice" | /usr/lib64/libreoffice |
-| jodconverter.portNumbers | 1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003, 2004
-Note that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use. | 2022 |
-| jodconverter.startupRetryPeriodSeconds | When jodconverter.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| jodconverter.taskExecutionTimeout | timeouts are in milliseconds | 120000 |
-| jodconverter.taskQueueTimeout | timeouts are in milliseconds | 30000 |
-| jodconverter.templateProfileDir | OpenOffice user template profile to be used by the JOD started OpenOffice process. If blank, a default profile is created. The user profile is recreated on each restart from the template. May be set to an existing user's profile such as "C:\Users\<username>\AppData\Roaming\OpenOffice.org\3" | |
-| jodconverter.url | Remote server (or docker container) url used to service jodconverter requests. | |
+| ~~jodconverter.connectTimeout~~ | | ~~25000~~ |
+| ~~jodconverter.enabled~~ | ~~External executable locations This property determines whether the jodConverter services are enabled. Allowed values are 'true' or 'false'.~~ | ~~true~~ |
+| ~~jodconverter.maxTasksPerProcess~~ | ~~The maximum number of OOo-related tasks to perform before a process restart~~ | ~~200~~ |
+| ~~jodconverter.officeHome~~ | ~~Specifies the location of LibreOffice's 'soffice.bin' executable file. For Mac OS X this should be the directory that contains "MacOS/soffice.bin" So it should be like "/Applications/OpenOffice.org.app/Contents". For other OSes this should be the directory that contains "program/soffice.bin". For Debian/Ubuntu it will be like "/usr/lib64/libreoffice", for Fedora it will be like "/opt/openoffice.org3", for Windows it will be like "C:/Alfresco/libreoffice"~~ | ~~/usr/lib64/libreoffice~~ |
+| ~~jodconverter.portNumbers~~ | ~~1 or more unique port numbers can be specified. They must be comma-separated if there are more than one, like so: jodconverter.portNumbers=2002, 2003, 2004. Note that it is by specifying multiple port numbers that one can create a pool of n instances of OOo These port numbers must be available for use.~~ | ~~2022~~ |
+| ~~jodconverter.startupRetryPeriodSeconds~~ | ~~When jodconverter.url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start.~~ | ~~60~~ |
+| ~~jodconverter.taskExecutionTimeout~~ | ~~timeouts are in milliseconds~~ | ~~120000~~ |
+| ~~jodconverter.taskQueueTimeout~~ | ~~timeouts are in milliseconds~~ | ~~30000~~ |
+| ~~jodconverter.templateProfileDir~~ | ~~OpenOffice user template profile to be used by the JOD started OpenOffice process. If blank, a default profile is created. The user profile is recreated on each restart from the template. May be set to an existing user's profile such as "C:\Users\<username>\AppData\Roaming\OpenOffice.org\3"~~ | |
+| ~~jodconverter.url~~ | ~~Remote server (or docker container) url used to service jodconverter requests.~~ | |
 | kerberos.authentication.authenticateCIFS | | true |
 | kerberos.authentication.authenticateFTP | | true |
 | kerberos.authentication.cifs.configEntryName | | AlfrescoCIFS |
@@ -1699,7 +1701,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | ldap.synchronization.userLastNameAttributeName | The attribute on person objects in LDAP to map to the last name property in Alfresco | sn |
 | ldap.synchronization.userOrganizationalIdAttributeName | The attribute on person objects in LDAP to map to the organizational id  property in Alfresco | company |
 | ldap.synchronization.userSearchBase | The user search base restricts the LDAP user query to a sub section of tree on the LDAP server. | ou\=User Accounts,ou=\Alfresco,dc=domain |
-| legacy.transform.service.enabled | Used to disable transforms that extend AbstractContentTransformer2 | true |
+| ~~legacy.transform.service.enabled~~ | ~~Used to disable transforms that extend AbstractContentTransformer2~~ | ~~true~~ |
 | links.protocosl.white.list | Allowed protocols for links | http,https,ftp,mailto |
 | local.tregacy.transform.service.enabledansform.pipeline.config.dir | Optional property to specify an external file or directory that will be read for transformer json config. | shared/classes/alfresco/extension/transform/pipelines |
 | local.transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `4 30 0/1 * * ?` |
@@ -2119,21 +2121,21 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | system.store | System Configuration | `system://system` |
 | system.syncset_definition_container.childname | Folder for storing syncset definitions | sys:syncset_definitions |
 | system.system_container.childname | Folders for storing people | sys:system |
-| system.thumbnail.definition.default.maxPages | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
-| system.thumbnail.definition.default.maxSourceSizeKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
-| system.thumbnail.definition.default.pageLimit | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | 1 |
-| system.thumbnail.definition.default.readLimitKBytes | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
-| system.thumbnail.definition.default.readLimitTimeMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
+| ~~system.thumbnail.definition.default.maxPages~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
+| ~~system.thumbnail.definition.default.maxSourceSizeKBytes~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
+| ~~system.thumbnail.definition.default.pageLimit~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~1~~ |
+| ~~system.thumbnail.definition.default.readLimitKBytes~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
+| ~~system.thumbnail.definition.default.readLimitTimeMs~~ | ~~Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages~~ | ~~-1~~ |
 | system.thumbnail.definition.default.timeoutMs | Default thumbnail limits. When creating thumbnails, only use the first pageLimit pages | -1 |
 | system.thumbnail.generate | Thumbnail Service | true |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.docx | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.odp | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.ods | Max mimetype sizes to create thumbnail icons |-1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.odt | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.pdf | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.pptx | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.txt | Max mimetype sizes to create thumbnail icons | -1 |
-| system.thumbnail.mimetype.maxSourceSizeKBytes.xlsx | Max mimetype sizes to create thumbnail icons | -1 |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.docx~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.odp~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.ods~~ | ~~Max mimetype sizes to create thumbnail icons~~ |-1 |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.odt~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.pdf~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.pptx~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.txt~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
+| ~~system.thumbnail.mimetype.maxSourceSizeKBytes.xlsx~~ | ~~Max mimetype sizes to create thumbnail icons~~ | ~~-1~~ |
 | system.thumbnail.quietPeriod | Configuration for handling of failing thumbnails | 604800 |
 | system.thumbnail.quietPeriodRetriesEnabled | Configuration for handling of failing thumbnails | true |
 | system.thumbnail.redeployStaticDefsOnStartup | Configuration for handling of failing thumbnails | true |
@@ -2166,8 +2168,8 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | system.workflow_container.childname | Folders for storing workflow related info | sys:workflow |
 | system.zones_container.childname | Folders for storing people | sys:zones |
 | ticket.cleanup.cronExpression | | `0 0 * * * ?` |
-| tika.startupRetryPeriodSeconds | When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| tika.url | Legacy tika url to T-Engines to service transform requests via http. Disabled by default. | |
+| ~~tika.startupRetryPeriodSeconds~~ | ~~When the legacy tika .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start.~~ | ~~60~~ |
+| ~~tika.url~~ | ~~Legacy tika url to T-Engines to service transform requests via http. Disabled by default.~~ | |
 | transferservice.receiver.enabled | Transfer Service | false |
 | transferservice.receiver.lockRefreshTime | How long to wait in mS before refreshing a transfer lock - detects shutdown servers. Default 1 minute. | 60000 |
 | transferservice.receiver.lockRetryCount | How many times to attempt retry the transfer lock | 3 |
@@ -2176,8 +2178,8 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | transferservice.receiver.stagingDir | Transfer Service | ${java.io.tmpdir}/alfresco-transfer-staging |
 | transformer.debug.entries | Number of entries to show in debug output | 0 |
 | transformer.log.entries | Number of entries to show in the log | 50 |
-| transform.misc.startupRetryPeriodSeconds | When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start. | 60 |
-| transform.misc.url | Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default. | |
+| ~~transform.misc.startupRetryPeriodSeconds~~ | ~~When the legacy misc transformer .url is set, this value indicates the amount of time to wait after a connection failure before retrying the connection to allow a docker container to (re)start.~~ | ~~60~~ |
+| ~~transform.misc.url~~ | ~~Legacy misc transformer url to T-Engines to service transform requests via http. Disabled by default.~~ | |
 | transform.service.cronExpression | Schedule for reading local transform config, so that T-Engines and local pipeline config is dynamically picked up, or reintegrated after an outage. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `6 30 0/1 * * ?` |
 | transform.service.enabled | Determines whether the transform service is enabled | false |
 | transform.service.initialAndOnError.cronExpression | | `0/10 * * * * ?` |
