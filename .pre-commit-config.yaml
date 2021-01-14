@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.0.0
+    rev: 7eab6b0957d035caa612aeab0d4a66dc37fec97b
     hooks:
       - id: travis-yml-lint
       - id: helm-deps

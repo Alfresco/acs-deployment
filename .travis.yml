@@ -19,12 +19,12 @@ stages:
     if: branch = master OR commit_message = "[publish]"
 
 import:
-  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.0.0
+  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@7eab6b0957d035caa612aeab0d4a66dc37fec97b
+  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@7eab6b0957d035caa612aeab0d4a66dc37fec97b
+  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@7eab6b0957d035caa612aeab0d4a66dc37fec97b
+  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@7eab6b0957d035caa612aeab0d4a66dc37fec97b
+  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@7eab6b0957d035caa612aeab0d4a66dc37fec97b
+  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@7eab6b0957d035caa612aeab0d4a66dc37fec97b
 
 env:
   global:
