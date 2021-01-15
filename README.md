@@ -59,4 +59,3 @@ The code in this repository is released under the Apache License, see the [LICEN
 ## Contribution Guide
 
 Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
-
