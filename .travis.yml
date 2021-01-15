@@ -19,12 +19,12 @@ stages:
     if: branch = master OR commit_message = "[publish]"
 
 import:
-  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.0.0
-  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.0.0
+  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@opsexp-700
+  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@opsexp-700
+  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@opsexp-700
+  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@opsexp-700
+  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@opsexp-700
+  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@opsexp-700
 
 env:
   global:
@@ -49,7 +49,7 @@ before_install:
     curl -sSLO https://amazon-eks.s3.us-west-2.amazonaws.com/$AWS_IAM_AUTHENTICATOR_VERSION/bin/$(uname | tr '[:upper:]' '[:lower:]')/amd64/aws-iam-authenticator{,.sha256} && openssl sha1 -sha256 aws-iam-authenticator &&
     chmod +x ./aws-iam-authenticator && mv ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator
     aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
-    rm -rf rm -rf /home/travis/.cache/pre-commit
+    rm -rf /home/travis/.cache/pre-commit
 
 before_script:
   - |
@@ -67,7 +67,7 @@ before_script:
     fi
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
-    rm -rf rm -rf /home/travis/.cache/pre-commit
+    rm -rf /home/travis/.cache/pre-commit
 
 _helm_deploy: &helm_deploy
   script: |
