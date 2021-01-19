@@ -8,4 +8,4 @@ repos:
       - id: kubepug-minimum
       - id: kubepug-recommended
       # We will re-enable this via OPSEXP-703
-      # - id: checkov-helm 
+      # - id: checkov-helm

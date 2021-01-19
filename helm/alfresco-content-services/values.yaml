@@ -17,7 +17,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: "7.0.0-M3"
+    tag: "7.0.0-A20"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -76,6 +76,35 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
+
+ooiService:
+  replicaCount: 2
+  image:
+    repository: quay.io/alfresco/alfresco-ooi-service
+    tag: "1.0.0"
+    pullPolicy: Always
+    internalPort: 9095
+  service:
+    name: ooi-service
+    type: ClusterIP
+    externalPort: 80
+  ingress:
+    path: /ooi-service
+  resources:
+    requests:
+      memory: "1000Mi"
+    limits:
+      memory: "1000Mi"
+  environment:
+    JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
 
 transformrouter:
   replicaCount: 2
@@ -442,6 +471,11 @@ alfresco-digital-workspace:
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
+    # APP_CONFIG_PLUGIN_MICROSOFT_ONLINE:
+    # APP_CONFIG_MICROSOFT_ONLINE_OOI_URL:
+    # APP_CONFIG_MICROSOFT_ONLINE_CLIENTID:
+    # APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY:
+    # APP_CONFIG_MICROSOFT_ONLINE_REDIRECT:
 
 # choose if you want AI capabilities
 ai:
@@ -453,6 +487,9 @@ ai:
   #  s3Bucket:
   #  comprehendRoleARN:
 
+# choose if you want Office Online Integration capabilities
+ooi:
+  enabled: false
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
