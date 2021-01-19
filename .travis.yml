@@ -19,12 +19,12 @@ stages:
     if: branch = master OR commit_message = "[publish]"
 
 import:
-  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@opsexp-700
-  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@opsexp-700
-  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@opsexp-700
-  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@opsexp-700
-  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@opsexp-700
-  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@opsexp-700
+  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@v1.0.1
+  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.0.1
+  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.0.1
+  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.0.1
+  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.0.1
+  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.0.1
 
 env:
   global:
@@ -67,7 +67,6 @@ before_script:
     fi
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
-    rm -rf /home/travis/.cache/pre-commit
 
 _helm_deploy: &helm_deploy
   script: |
@@ -392,36 +391,36 @@ jobs:
         helm lint helm/alfresco-content-services/charts/alfresco-sync-service
         helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
 
-    # - name: Deploy Docker Compose and Run Postman Checks
-    #   stage: test
-    #   <<: *docker_deploy
-    # - name: Deploy Latest Chart and Run Postman Checks
-    #   stage: test
-    #   <<: *helm_deploy
+    - name: Deploy Docker Compose and Run Postman Checks
+      stage: test
+      <<: *docker_deploy
+    - name: Deploy Latest Chart and Run Postman Checks
+      stage: test
+      <<: *helm_deploy
 
-    # - stage: community
-    #   name: community-helm
-    #   <<: *helm_deploy
-    # - name: community-compose
-    #   <<: *docker_deploy
+    - stage: community
+      name: community-helm
+      <<: *helm_deploy
+    - name: community-compose
+      <<: *docker_deploy
 
-    # - stage: 6.2.N
-    #   name: 6.2.N-helm
-    #   <<: *helm_deploy
-    # - name: 6.2.N-compose
-    #   <<: *docker_deploy
+    - stage: 6.2.N
+      name: 6.2.N-helm
+      <<: *helm_deploy
+    - name: 6.2.N-compose
+      <<: *docker_deploy
 
-    # - stage: 6.1.N
-    #   name: 6.1.N-helm
-    #   <<: *helm_deploy
-    # - name: 6.1.N-compose
-    #   <<: *docker_deploy
+    - stage: 6.1.N
+      name: 6.1.N-helm
+      <<: *helm_deploy
+    - name: 6.1.N-compose
+      <<: *docker_deploy
 
-    # - stage: 6.0.N
-    #   name: 6.0.N-helm
-    #   <<: *helm_deploy
-    # - name: 6.0.N-compose
-    #   <<: *docker_deploy
+    - stage: 6.0.N
+      name: 6.0.N-helm
+      <<: *helm_deploy
+    - name: 6.0.N-compose
+      <<: *docker_deploy
 
     - name: package and publish chart
       stage: publish

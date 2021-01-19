@@ -1,10 +1,11 @@
 repos:
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: opsexp-700
+    rev: v1.0.1
     hooks:
       - id: travis-yml-lint
       - id: helm-deps
       - id: helm-lint
       - id: kubepug-minimum
       - id: kubepug-recommended
-      # - id: checkov-helm
+      # We will re-enable this via OPSEXP-703
+      # - id: checkov-helm 
