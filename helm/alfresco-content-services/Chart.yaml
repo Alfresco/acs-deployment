@@ -6,11 +6,11 @@ name: alfresco-content-services
 version: 5.0.0-M3
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
-- content
-- content services
-- alfresco
-- alfresco content services
+  - content
+  - content services
+  - alfresco
+  - alfresco content services
 home: https://www.alfresco.com
 sources:
-- https://github.com/Alfresco/acs-deployment
+  - https://github.com/Alfresco/acs-deployment
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
