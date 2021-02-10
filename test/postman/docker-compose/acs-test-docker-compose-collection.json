@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3b8257e1-fb3f-4699-9589-808305a0b4ae",
+		"_postman_id": "e5bdcb1a-bd5d-4e2e-bd37-733dcae20374",
 		"name": "acs-test-docker-compose-collection",
 		"description": "The Suite of cases tests ACS basic wiring:\n1) Acs-basic-auth\n* Request to validate the discovery api\n* Request to validate modules are applied correctly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,7 +15,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "3218aa24-59e0-43a2-8289-13823135e1a1",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
@@ -85,7 +84,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "35d1998e-0308-4a42-aa30-33eac23d73c3",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -169,7 +167,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "46de3060-bd60-425e-8c7a-1aa3c9734dca",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -230,7 +227,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f157f0f3-8a14-4849-9481-405f2622f0f9",
 								"type": "text/javascript",
 								"exec": [
 									"var jsonData = pm.response.json();",
@@ -301,7 +297,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "bba7e131-b715-4ad7-9bc7-9eb3bffc4734",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -361,7 +356,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1e856931-34a4-4118-82de-9b87479c4d53",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -421,7 +415,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "899304d6-6751-4e27-b6e7-d1628ac4b619",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -500,7 +493,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "22e5902c-84a4-4014-b0a3-e98187233cd1",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
@@ -561,7 +553,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "cad8952d-ffc0-49c9-b4a5-645d8c05b438",
 								"exec": [
 									"",
 									"pm.globals.get(\"url\");",
@@ -632,7 +623,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "5e990981-2486-4cf4-a0d3-2102c33a748f",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -697,7 +687,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "16a3cabb-124f-46ac-92da-b0eb7104e327",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -772,12 +761,231 @@
 					"response": []
 				},
 				{
+					"name": "share-alfresco-proxy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoProxyStatusCodeTest\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{url}}/share/service/proxy/alfresco/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"share",
+								"service",
+								"proxy",
+								"alfresco",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "share-alfresco-noauth-proxy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoNoauthProxyStatusCodeTest\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{url}}/share/proxy/alfresco-noauth/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"share",
+								"proxy",
+								"alfresco-noauth",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "share-alfresco-feed-proxy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.globals.get(\"url\");",
+									"",
+									"pm.test(\"searchAlfrescoFeedProxyStatusCodeTest\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"type": "any"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{protocol}}://{{url}}/share/proxy/alfresco-feed/api/solr/aclchangesets?fromId=1&maxResults=5",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"share",
+								"proxy",
+								"alfresco-feed",
+								"api",
+								"solr",
+								"aclchangesets"
+							],
+							"query": [
+								{
+									"key": "fromId",
+									"value": "1"
+								},
+								{
+									"key": "maxResults",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "alfresco-prometheus ",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "4a711803-de47-4b3c-a8dc-c0f978e151b6",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -848,7 +1056,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2c623e70-5aca-457a-a2d6-bddd544275c8",
 								"type": "text/javascript",
 								"exec": [
 									"pm.globals.get(\"url\");",
@@ -887,7 +1094,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "546d88cc-de47-4829-b60e-1fe442be1342",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -942,7 +1148,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "9a8394d8-2c23-4db7-9795-d4d18ac1d51d",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -997,7 +1202,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "a8262695-3ec7-4335-baec-ff6e1e0fa2b4",
 								"exec": [
 									"pm.test(\"Status code is 207\", function () {",
 									"    pm.response.to.have.status(207);",
@@ -1062,7 +1266,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e9fc06ef-952a-4d0b-87ce-1c0573659f2a",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1113,7 +1316,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "38f65ab5-0111-4027-b7a5-7feefb61559f",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -1175,7 +1377,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0ed8f1fc-7fc2-4394-948f-cb3d35b08108",
 								"exec": [
 									"pm.test(\"Status code is 207\", function () {",
 									"    pm.response.to.have.status(207);",
@@ -1244,7 +1445,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "57cdd164-977d-475d-8af2-b15742f303a7",
 								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
@@ -1304,7 +1504,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d631a358-d6f6-4cca-a50c-4d3d1115f5b7",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -1381,7 +1580,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "528f78fe-7306-4b05-987f-83f0c577b46f",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -1458,7 +1656,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "2c8f9c52-e7d3-437f-a09c-be677190b221",
 								"exec": [
 									"pm.globals.get(\"url\");",
 									"",
@@ -1504,15 +1701,13 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "8bf8383a-2f12-41b5-941e-0066948feb7f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1522,13 +1717,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "4804fb2f-a9a7-4061-8373-d729194f4f77",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
