@@ -10,7 +10,7 @@ version: "2"
 
 services:
     alfresco:
-        image: alfresco/alfresco-content-repository-community:7.0.0-A20
+        image: alfresco/alfresco-content-repository-community:7.0.0-A27c
         mem_limit: 1500m
         environment:
             JAVA_TOOL_OPTIONS: "
@@ -46,7 +46,7 @@ services:
                 "
 
     transform-core-aio:
-        image: alfresco/alfresco-transform-core-aio:2.3.6
+        image: alfresco/alfresco-transform-core-aio:2.3.8
         mem_limit: 1536m
         environment:
             JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
