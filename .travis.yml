@@ -190,7 +190,6 @@ _helm_deploy: &helm_deploy
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
     --set controller.publishService.enabled=true \
     --wait \
-    --atomic \
     --namespace $namespace
 
     # install acs
@@ -206,7 +205,6 @@ _helm_deploy: &helm_deploy
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --wait \
     --timeout 20m0s \
-    --atomic \
     --namespace=$namespace
 
     # check dns and pods
@@ -260,7 +258,6 @@ _helm_deploy: &helm_deploy
         helm upgrade $release_name_acs helm/alfresco-content-services \
         --wait \
         --timeout 10m0s \
-        --atomic \
         --reuse-values \
         --namespace=$namespace
 
