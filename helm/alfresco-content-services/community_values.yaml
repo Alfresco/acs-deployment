@@ -238,8 +238,8 @@ transformmisc:
 share:
   replicaCount: 1
   image:
-    repository: alfresco/alfresco-share
-    tag: "7.0.0-M3"
+    repository: quay.io/alfresco/alfresco-share
+    tag: "7.0.0-A17"
     pullPolicy: Always
     internalPort: 8080
   service:
