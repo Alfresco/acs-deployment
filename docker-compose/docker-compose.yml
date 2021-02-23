@@ -162,7 +162,7 @@ services:
             - share
 
     sync-service:
-        image: quay.io/alfresco/service-sync:3.4.0-M2
+        image: quay.io/alfresco/service-sync:3.4.0-M5
         mem_limit: 1g
         environment:
             JAVA_OPTS : "
