@@ -70,8 +70,8 @@ before_script:
     fi
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
-    docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
-    docker login -u ${DOCKER_REGISTRY_USERNAME} -p ${DOCKER_REGISTRY_PASSWORD} ${DOCKER_REGISTRY}
+    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY"
 
 _helm_deploy: &helm_deploy
   script: |
@@ -177,7 +177,7 @@ _helm_deploy: &helm_deploy
       name: $release_name_ingress-nginx-ingress
       namespace: $namespace
     ---
-    $(kubectl create secret generic docker-registry quay-registry-secret --from-file=.dockerconfigjson=~/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace -o yaml)
+    $(kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=~/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace -o yaml)
     EOF
 
     # install ingress
@@ -238,8 +238,8 @@ _helm_deploy: &helm_deploy
     pods_ready
 
     # Delay running the tests to give ingress & SOLR a chance to fully initialise
-    echo "Waiting 2 minutes from $(date) before running tests..."
-    sleep 120
+    echo "Waiting 3 minutes from $(date) before running tests..."
+    sleep 180
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
