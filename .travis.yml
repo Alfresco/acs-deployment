@@ -181,8 +181,9 @@ _helm_deploy: &helm_deploy
       name: $release_name_ingress-nginx-ingress
       namespace: $namespace
     ---
-    $(kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=/home/travis/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace -o yaml)
     EOF
+
+    kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=/home/travis/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace
 
     # install ingress
     helm upgrade --install $release_name_ingress ingress-nginx/ingress-nginx --version=3.7.1 \
