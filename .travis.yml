@@ -177,7 +177,7 @@ _helm_deploy: &helm_deploy
       name: $release_name_ingress-nginx-ingress
       namespace: $namespace
     ---
-    $(kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=~/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace -o yaml)
+    $(kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=/home/travis/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace -o yaml)
     EOF
 
     # install ingress
@@ -220,7 +220,6 @@ _helm_deploy: &helm_deploy
 
     echo "Trying to perform a trace DNS query to prevent caching"
     dig +trace $namespace.dev.alfresco.me @8.8.8.8
-
     while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
       host $namespace.dev.alfresco.me 8.8.8.8
       if [ "$?" -eq 1 ]; then
