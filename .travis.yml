@@ -39,6 +39,7 @@ env:
 branches:
   only:
     - master
+    - download-trial
     - /feature.*/
     - /fix.*/
 
