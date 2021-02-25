@@ -72,7 +72,8 @@ spec:
           volumeMounts:
           {{- if .Values.repository.extraLogStatements }}
           - name: dev-log4j-properties-volume
-            mountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/"
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
+            subPath: dev-log4j.properties
           {{- end }}
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
@@ -182,6 +183,9 @@ spec:
       - name : dev-log4j-properties-volume
         configMap:
           name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
+          items:
+          - key: dev-log4j.properties
+            path: dev-log4j.properties
       {{- end }}
       - name: data
         persistentVolumeClaim:
