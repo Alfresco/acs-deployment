@@ -359,7 +359,7 @@ If you requested an extended trial license navigate to the Admin Console and app
 
 ## Configure
 
-By default, this tutorial installs an out-of-the-box setup, however there are many configurations options described [here](../README.md#Configure). There are also several [examples](./examples) covering various use cases.
+By default, this tutorial installs an out-of-the-box setup, however there are many configurations options described [here](./README.md#configure). There are also several [examples](./examples) covering various use cases.
 
 This deployment is also not fully secured by default, to learn about and apply further restrictions including pod security, network policies etc. please refer to the [EKS Best Practices for Security](https://aws.github.io/aws-eks-best-practices/).
 
