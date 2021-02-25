@@ -5,6 +5,9 @@ python:
 os: linux
 dist: xenial
 
+git:
+  depth: false
+
 services:
   - docker
 
@@ -33,7 +36,7 @@ env:
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=incubator
     - KUBERNETES_VERSION=1.18.4
-    - GIT_DIFF=$(git diff HEAD~1 --name-only .)
+    - GIT_DIFF=$(git diff origin/master --name-only .)
     - AWS_IAM_AUTHENTICATOR_VERSION=${AWS_IAM_AUTHENTICATOR_VERSION:-1.18.8/2020-09-18}
 
 branches:
@@ -67,6 +70,8 @@ before_script:
     fi
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
+    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY"
 
 _helm_deploy: &helm_deploy
   script: |
@@ -119,6 +124,10 @@ _helm_deploy: &helm_deploy
       if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
         pod_status
         echo "Pods did not start - exit 1"
+        if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
+          helm delete $release_name_ingress $release_name_acs -n $namespace
+          kubectl delete namespace $namespace
+        fi
         exit 1
       fi
     }
@@ -172,8 +181,9 @@ _helm_deploy: &helm_deploy
       name: $release_name_ingress-nginx-ingress
       namespace: $namespace
     ---
-    $(kubectl create secret docker-registry quay-registry-secret --dry-run=client --docker-server=${DOCKER_REGISTRY} --docker-username=${DOCKER_REGISTRY_USERNAME} --docker-password=${DOCKER_REGISTRY_PASSWORD} -n $namespace -o yaml)
     EOF
+
+    kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=/home/travis/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace
 
     # install ingress
     helm upgrade --install $release_name_ingress ingress-nginx/ingress-nginx --version=3.7.1 \
@@ -190,7 +200,6 @@ _helm_deploy: &helm_deploy
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
     --set controller.publishService.enabled=true \
     --wait \
-    --atomic \
     --namespace $namespace
 
     # install acs
@@ -206,7 +215,6 @@ _helm_deploy: &helm_deploy
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --wait \
     --timeout 20m0s \
-    --atomic \
     --namespace=$namespace
 
     # check dns and pods
@@ -217,7 +225,6 @@ _helm_deploy: &helm_deploy
 
     echo "Trying to perform a trace DNS query to prevent caching"
     dig +trace $namespace.dev.alfresco.me @8.8.8.8
-
     while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
       host $namespace.dev.alfresco.me 8.8.8.8
       if [ "$?" -eq 1 ]; then
@@ -235,8 +242,8 @@ _helm_deploy: &helm_deploy
     pods_ready
 
     # Delay running the tests to give ingress & SOLR a chance to fully initialise
-    echo "Waiting 2 minutes from $(date) before running tests..."
-    sleep 120
+    echo "Waiting 3 minutes from $(date) before running tests..."
+    sleep 180
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
@@ -260,7 +267,6 @@ _helm_deploy: &helm_deploy
         helm upgrade $release_name_acs helm/alfresco-content-services \
         --wait \
         --timeout 10m0s \
-        --atomic \
         --reuse-values \
         --namespace=$namespace
 
