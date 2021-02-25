@@ -31,9 +31,8 @@ acs <-left-> ass
 acs --> psql
 acs --> tcore
 acs <-left-> amq
-tcore <-up-> amq
 share --> acs
 
-center footer Copyright 2020 Alfresco Software Inc
+center footer Copyright 2021 Alfresco Software Inc
 
 @enduml
