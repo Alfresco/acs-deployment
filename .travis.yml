@@ -17,7 +17,6 @@ stages:
   - name: community
   - name: 6.2.N
   - name: 6.1.N
-  - name: 6.0.N
   - name: publish
     if: branch = master OR commit_message = "[publish]"
 
@@ -252,7 +251,7 @@ _helm_deploy: &helm_deploy
     if [[ "${TEST_RESULT}" == "0" ]]; then
       TEST_RESULT=0
       # run sync service checks
-      if [[ "$values_file" != "helm/alfresco-content-services/6.0.N_values.yaml" ]] && [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
+      if [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
@@ -298,9 +297,6 @@ _docker_deploy: &docker_deploy
     deploy=false
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
       export compose_file="${TRAVIS_BUILD_STAGE_NAME}-docker-compose.yml"
-    fi
-    if [[ ${TRAVIS_BUILD_STAGE_NAME} == "6.0.N" ]]; then
-      export alf_port=8082
     fi
     if [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]] || [[ "${GIT_DIFF}" == *$compose_file* ]] || [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]
     then
@@ -369,11 +365,7 @@ _docker_deploy: &docker_deploy
       response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:$alf_port/alfresco/s/api/solrstats)
     done
     cd ../test/postman/docker-compose
-    if [[ ${TRAVIS_BUILD_STAGE_NAME} == "6.0.N" ]]; then
-      docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs60n-test-docker-compose-collection.json"
-    else
-      docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --global-var "protocol=http" --global-var "url=localhost:8080"
-    fi
+    docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --global-var "protocol=http" --global-var "url=localhost:8080"
     fi
   after_success: |
     echo "nothing to cleanup"
@@ -420,12 +412,6 @@ jobs:
       name: 6.1.N-helm
       <<: *helm_deploy
     - name: 6.1.N-compose
-      <<: *docker_deploy
-
-    - stage: 6.0.N
-      name: 6.0.N-helm
-      <<: *helm_deploy
-    - name: 6.0.N-compose
       <<: *docker_deploy
 
     - name: package and publish chart

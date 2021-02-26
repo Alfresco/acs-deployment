@@ -25,10 +25,10 @@ A new version numbering scheme is also being introduced, during the development 
 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
-| Chart Version/Tag | Default | 6.2.N | 6.1.N | 6.0.N | Community |
+| Chart Version/Tag | Default | 6.2.N | 6.1.N | Community |
 |--|--|--|--|--|--|
-| 5.0.0-M1 | 7.0.0-M2 | 6.2.2 | 6.1.1 | 6.0.1 | 6.2.1-A8 |
-| 5.0.0-M2 | 7.0.0-M3 | 6.2.2 | 6.1.1 | 6.0.1 | 7.0.0-A10 |
+| 5.0.0-M1 | 7.0.0-M2 | 6.2.2 | 6.1.1 | 6.2.1-A8 |
+| 5.0.0-M2 | 7.0.0-M3 | 6.2.2 | 6.1.1 | 7.0.0-A10 |
 
 ### Docker
 
