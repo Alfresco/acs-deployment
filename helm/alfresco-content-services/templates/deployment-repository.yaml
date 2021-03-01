@@ -84,6 +84,8 @@ spec:
             mountPath: {{ .Values.persistence.repository.config.transform.renditionsMountPath }}
           - name: custom-mimetype-config-volume
             mountPath: {{ .Values.persistence.repository.config.transform.mimetypesMountPath }}
+          - name: custom-queryset-config-volume
+            mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
           {{- if and .Values.email.server.enabled .Values.email.server.enableTLS }}
           - mountPath: /var/run/secrets/java.io/keystores
             name: email-keystore-volume
@@ -202,6 +204,10 @@ spec:
         configMap:
           optional: true
           name: custom-mimetype-config
+      - name: custom-queryset-config-volume
+        configMap:
+          optional: true
+          name: custom-queryset-config
       {{- if and .Values.email.server.enabled .Values.email.server.enableTLS }}
       - name: email-keystore-volume
         emptyDir: {}
