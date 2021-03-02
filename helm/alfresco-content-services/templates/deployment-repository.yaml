@@ -78,14 +78,14 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+          - name: custom-queryset-config-volume
+            mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
           - name: custom-pipeline-config-volume
             mountPath: {{ .Values.persistence.repository.config.transform.pipelinesMountPath }}
           - name: custom-rendition-config-volume
             mountPath: {{ .Values.persistence.repository.config.transform.renditionsMountPath }}
           - name: custom-mimetype-config-volume
             mountPath: {{ .Values.persistence.repository.config.transform.mimetypesMountPath }}
-          - name: custom-queryset-config-volume
-            mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
           {{- if and .Values.email.server.enabled .Values.email.server.enableTLS }}
           - mountPath: /var/run/secrets/java.io/keystores
             name: email-keystore-volume
