@@ -78,6 +78,8 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
+          - name: custom-queryset-config-volume
+            mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
           - name: custom-pipeline-config-volume
             mountPath: {{ .Values.persistence.repository.config.transform.pipelinesMountPath }}
           - name: custom-rendition-config-volume
@@ -202,6 +204,10 @@ spec:
         configMap:
           optional: true
           name: custom-mimetype-config
+      - name: custom-queryset-config-volume
+        configMap:
+          optional: true
+          name: custom-queryset-config
       {{- if and .Values.email.server.enabled .Values.email.server.enableTLS }}
       - name: email-keystore-volume
         emptyDir: {}
