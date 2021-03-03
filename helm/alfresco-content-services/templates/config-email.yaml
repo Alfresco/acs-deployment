@@ -1,4 +1,4 @@
-{{- if .Values.email.server.enabled }}
+{{- if and .Values.email.server.enabled .Values.email.inbound.enabled }}
 # Defines the email configmap for the alfresco content repository app
 apiVersion: v1
 kind: ConfigMap

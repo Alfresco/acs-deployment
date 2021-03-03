@@ -61,7 +61,7 @@ spec:
             # internal port and the hazelcast port used for clustering
             - containerPort: {{ .Values.repository.image.internalPort }}
             - containerPort: {{ .Values.repository.image.hazelcastPort }}
-            {{- if .Values.email.server.enabled }}
+            {{- if and .Values.email.server.enabled .Values.email.inbound.enabled }}
             - containerPort: {{ .Values.email.server.port }}
             - containerPort: {{ .Values.imap.server.port }}
             - containerPort: {{ .Values.imap.server.imaps.port }}
@@ -86,7 +86,7 @@ spec:
             mountPath: {{ .Values.persistence.repository.config.transform.renditionsMountPath }}
           - name: custom-mimetype-config-volume
             mountPath: {{ .Values.persistence.repository.config.transform.mimetypesMountPath }}
-          {{- if and .Values.email.server.enabled .Values.email.server.enableTLS }}
+          {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
           - mountPath: /var/run/secrets/java.io/keystores
             name: email-keystore-volume
           - mountPath: /var/run/secrets/certs
@@ -133,7 +133,7 @@ spec:
             - name: data
               mountPath: {{ .Values.persistence.repository.data.mountPath }}
               subPath: {{ .Values.persistence.repository.data.subPath }}
-        {{- if and .Values.email.server.enabled .Values.email.server.enableTLS }}
+        {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
           image: registry.access.redhat.com/redhat-sso-7/sso71-openshift:1.1-16
           env:
@@ -208,7 +208,7 @@ spec:
         configMap:
           optional: true
           name: custom-queryset-config
-      {{- if and .Values.email.server.enabled .Values.email.server.enableTLS }}
+      {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
       - name: email-keystore-volume
         emptyDir: {}
       - name: email-certs
