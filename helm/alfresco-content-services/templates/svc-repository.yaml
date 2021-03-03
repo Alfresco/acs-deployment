@@ -11,7 +11,7 @@ spec:
     - port: {{ .Values.repository.service.externalPort }}
       targetPort: {{ .Values.repository.image.internalPort }}
       name: {{ .Values.repository.service.name }}
-    {{- if .Values.email.server.enabled }}
+    {{- if and .Values.email.server.enabled .Values.email.inbound.enabled }}
     - port: {{ .Values.email.server.port }}
       targetPort: {{ .Values.email.server.port }}
       name: {{ .Values.repository.service.name }}-email-inbound
