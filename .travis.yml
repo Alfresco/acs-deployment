@@ -425,6 +425,17 @@ jobs:
           sed -i s,$CHART_VERSION,$ALPHA_BUILD_VERSION,g helm/${PROJECT_NAME}/Chart.yaml
         fi
 
+        if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
+        then
+          git checkout -B "${TRAVIS_BRANCH}"
+          git config --local user.email "alfresco-build@alfresco.com"
+          export VERSION=`cat helm/alfresco-content-services/Chart.yaml | grep version: | awk '{print $2}'`
+          echo "Tagging repository with v$VERSION..."
+          export GIT_TAG="v$VERSION"
+          git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+          git push https://$GITHUB_TOKEN@github.com/Alfresco/acs-deployment $GIT_TAG
+        fi
+
         COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
         echo using COMMIT_MESSAGE_FIRST_LINE=${COMMIT_MESSAGE_FIRST_LINE}
         git clone https://${GITHUB_TOKEN}@github.com/Alfresco/charts.git
