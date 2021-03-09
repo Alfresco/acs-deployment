@@ -8,6 +8,6 @@ repos:
       - id: kubepug-minimum
       - id: kubepug-recommended
   - repo: https://github.com/Alfresco/acs-deployment
-    rev: 53e44f8ab31ed6087097dc9e3d075a28e62e3afe
+    rev: c910d9297520bd45112927678a4e3c07681f9b58
     hooks:
       - id: checkov-helm
