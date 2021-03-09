@@ -33,7 +33,7 @@ spec:
           value: "{{ template "activemq.fullname" . }}"
         - name: ACTIVEMQ_ADMIN_LOGIN
           value: "{{ .Values.adminUser.username }}"
-        - name: ACTIVEMQ_ADMIN_PASSWORD	
+        - name: ACTIVEMQ_ADMIN_PASSWORD
           value: "{{ .Values.adminUser.password }}"
         ports:
         - name: stomp

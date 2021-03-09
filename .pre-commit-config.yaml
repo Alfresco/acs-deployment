@@ -7,5 +7,7 @@ repos:
       - id: helm-lint
       - id: kubepug-minimum
       - id: kubepug-recommended
-      # We will re-enable this via OPSEXP-703
-      # - id: checkov-helm
+  - repo: https://github.com/Alfresco/acs-deployment
+    rev: 2ce224d7398fba01c93c58cca05c887d674a7f06
+    hooks:
+      - id: checkov-helm
