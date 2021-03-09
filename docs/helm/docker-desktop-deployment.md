@@ -115,7 +115,7 @@ kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=
 
 The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster and therefore requires a large amount of resources out-of-the-box. To reduce the size of the deployment so it can run on a single machine we'll need to reduce the number of pods deployed and the memory requirements for serveral others.
 
-Forutnately this can all be achieved with one, albeit large, command as shown below:
+Fortunately this can all be achieved with one, albeit large, command as shown below:
 
 ```bash
 helm install acs alfresco/alfresco-content-services --devel \
