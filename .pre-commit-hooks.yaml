@@ -1,5 +1,5 @@
 - id: checkov-helm
   name: Checkov - Helm check
-  entry: helm template helm/alfresco-content-services --set "alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled"=true > helm/alfresco-content-services.yaml && checkov -f helm/alfresco-content-services.yaml --framework=kubernetes --compact
+  entry: helm template helm/alfresco-content-services --set "alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled"=true > helm/alfresco-content-services.yaml && checkov -f helm/alfresco-content-services.yaml --framework=kubernetes --compact --skip-check CKV_K8S_21,CKV_K8S_20,CKV_K8S_43,CKV_K8S_35,CKV_K8S_31,CKV_K8S_22,CKV_K8S_11,CKV_K8S_10,CKV_K8S_29,CKV_K8S_30,CKV_K8S_23,CKV_K8S_28,CKV_K8S_37,CKV_K8S_38,CKV_K8S_40
   language: system
   pass_filenames: false
