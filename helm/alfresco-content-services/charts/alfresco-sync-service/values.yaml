@@ -95,7 +95,9 @@ postgresql-syncservice:
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
-  imageTag: "11.7.0"
+  image:
+    tag: "11.7.0"
+    pullPolicy: Always
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-sync-services/database-data"

@@ -23,7 +23,7 @@ repository:
   initContainer:
     image:
       repository: busybox
-      tag: latest
+      tag: 1
   service:
     name: alfresco
     type: ClusterIP
@@ -269,7 +269,7 @@ filestore:
   initContainer:
     image:
       repository: busybox
-      tag: latest
+      tag: 1
   service:
     name: filestore
     type: ClusterIP
@@ -434,7 +434,9 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.4.0"
+  image:
+    tag: "11.4.0"
+    pullPolicy: Always
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
@@ -457,7 +459,9 @@ postgresql-syncservice:
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
-  imageTag: "11.4.0"
+  image:
+    tag: "11.4.0"
+    pullPolicy: Always
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-sync-services/database-data"

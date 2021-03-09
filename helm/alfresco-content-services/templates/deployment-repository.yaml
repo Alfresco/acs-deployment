@@ -122,12 +122,14 @@ spec:
         # wait for the DB to startup before this deployment can start
         - name: init-db
           image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
+          imagePullPolicy: Always
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
       {{- if .Values.persistence.repository.enabled }}
         - name: init-fs
           image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
           # command to allow repository to write to EFS volume.
+          imagePullPolicy: Always
           command: ["sh", "-c", "chown -R 33000:1000 {{ .Values.persistence.repository.data.mountPath }}"]
           volumeMounts:
             - name: data
@@ -171,7 +173,7 @@ spec:
             - name: ca-cert
               mountPath: /var/run/secrets/cacert
         - name: set-perms
-          image: busybox
+          image: busybox:1
           env:
             - name: keystore_dir
               value: /var/run/secrets/java.io/keystores

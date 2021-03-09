@@ -23,7 +23,7 @@ repository:
   initContainer:
     image:
       repository: busybox
-      tag: latest
+      tag: 1
   service:
     name: alfresco
     type: ClusterIP
@@ -347,7 +347,9 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "13.1"
+  image:
+    tag: "13.1"
+    pullPolicy: Always
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
