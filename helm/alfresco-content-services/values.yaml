@@ -21,10 +21,27 @@ repository:
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
-  initContainer:
-    image:
-      repository: busybox
-      tag: 1
+  initContainers:
+    db:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
+    fs:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
   service:
     name: alfresco
     type: ClusterIP
@@ -127,6 +144,11 @@ transformrouter:
     initialDelaySeconds: 140
     periodSeconds: 120
     timeoutSeconds: 60
+  resources:
+    requests:
+      memory: "128Mi"
+    limits:
+      memory: "512Mi"
 
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -338,6 +360,12 @@ filestore:
     image:
       repository: busybox
       tag: 1
+      pullPolicy: Always
+    resources:
+      requests:
+        memory: "5Mi"
+      limits:
+        memory: "10Mi"
   service:
     name: filestore
     type: ClusterIP

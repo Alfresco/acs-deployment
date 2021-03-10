@@ -32,6 +32,16 @@ services:
       external:
         webConsole: 8161
     type: NodePort
+
+initContainer:
+  image:
+    repository: busybox:1
+    pullPolicy: Always
+  resources:
+    requests:
+      memory: "5Mi"
+    limits:
+      memory: "10Mi"
 # The ActiveMQ readiness probe is used to check startup only as a failure
 # of the liveness probe later will result in the pod being restarted.
 readinessProbe:

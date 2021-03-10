@@ -77,8 +77,10 @@ spec:
                 command: ["/bin/bash", "-c", "sleep 10"]
       initContainers:
         - name: init-db
-          image: busybox:1
-          imagePullPolicy: Always
+          image: {{ .Values.initContainer.image.repository }}
+          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.initContainer.resources | indent 14 }}
           # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
           command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.persistence.search.data.mountPath }}"]
           volumeMounts:

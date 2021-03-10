@@ -121,15 +121,19 @@ spec:
       {{- if eq .Values.database.external false }}
         # wait for the DB to startup before this deployment can start
         - name: init-db
-          image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
-          imagePullPolicy: Always
+          image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
+          imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.repository.initContainers.db.resources | indent 14 }}
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
       {{- if .Values.persistence.repository.enabled }}
         - name: init-fs
-          image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
+          image: "{{ .Values.repository.initContainers.fs.image.repository }}:{{ .Values.repository.initContainers.fs.image.tag }}"
+          imagePullPolicy: {{ .Values.repository.initContainers.fs.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.repository.initContainers.fs.resources | indent 14 }}
           # command to allow repository to write to EFS volume.
-          imagePullPolicy: Always
           command: ["sh", "-c", "chown -R 33000:1000 {{ .Values.persistence.repository.data.mountPath }}"]
           volumeMounts:
             - name: data

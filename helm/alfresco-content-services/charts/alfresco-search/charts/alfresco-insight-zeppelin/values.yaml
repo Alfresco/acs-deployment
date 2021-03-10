@@ -20,6 +20,11 @@ ingress:
   path: /zeppelin
 # The parent chart will set the values for "repository.host" and "repository.port"
 repository: {}
+resources:
+  requests:
+    memory: "512Mi"
+  limits:
+    memory: "1024Mi"
 readinessProbe:
   initialDelaySeconds: 60
   periodSeconds: 20

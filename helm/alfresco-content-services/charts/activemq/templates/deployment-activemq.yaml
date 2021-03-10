@@ -66,8 +66,10 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
       initContainers:
         - name: init-fs
-          image: busybox:1
-          imagePullPolicy: Always
+          image: {{ .Values.initContainer.image.repository }}
+          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.initContainer.resources | indent 14 }}
           # command to allow repository to write to EFS volume.
           command: ["sh", "-c", "chown -R 33031:1000 {{ .Values.persistence.mountPath }}"]
           volumeMounts:
