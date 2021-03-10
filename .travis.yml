@@ -198,6 +198,7 @@ _helm_deploy: &helm_deploy
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
     --set controller.publishService.enabled=true \
+    --set controller.admissionWebhooks.enabled=false \
     --wait \
     --namespace $namespace
 
