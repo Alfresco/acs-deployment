@@ -430,7 +430,7 @@ alfresco-digital-workspace:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.0.0-adw
+    tag: 2.1.0
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
