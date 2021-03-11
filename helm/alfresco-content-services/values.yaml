@@ -17,7 +17,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: "7.0.0-A28"
+    tag: "7.0.0"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -81,7 +81,7 @@ ooiService:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: "1.1.0-A3"
+    tag: "1.1.0"
     pullPolicy: Always
     internalPort: 9095
   service:
@@ -368,7 +368,7 @@ share:
   replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: "7.0.0-A17"
+    tag: "7.0.0"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -467,7 +467,7 @@ alfresco-digital-workspace:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.0.0-adw
+    tag: 2.1.0
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
