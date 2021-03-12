@@ -91,7 +91,7 @@ services:
             - shared-file-store-volume:/tmp/Alfresco/sfs
 
     share:
-        image: quay.io/alfresco/alfresco-share:7.0.0-A17
+        image: quay.io/alfresco/alfresco-share:7.0.0
         mem_limit: 1g
         environment:
             REPO_HOST: "alfresco"
@@ -143,9 +143,10 @@ services:
             - 61613:61613 # STOMP
 
     digital-workspace:
-        image: quay.io/alfresco/alfresco-digital-workspace:2.0.0-adw
+        image: quay.io/alfresco/alfresco-digital-workspace:2.1.0
         mem_limit: 128m
         environment:
+            APP_CONFIG_AUTH_TYPE: "BASIC"
             BASE_PATH: ./
 
     proxy:
