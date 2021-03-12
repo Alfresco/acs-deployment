@@ -510,8 +510,7 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  image:
-    tag: "13.1.0"
+  imageTag: "13.1"
   commonAnnotations:
     application: alfresco-content-services
   postgresqlUsername: alfresco
@@ -536,8 +535,7 @@ postgresql-syncservice:
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
-  image:
-    tag: "13.1.0"
+  imageTag: "13.1"
   commonAnnotations:
     application: alfresco-content-services
   persistence:
