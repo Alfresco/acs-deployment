@@ -73,7 +73,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.3.2-A2"
+    tag: "1.3.2"
     pullPolicy: Always
     internalPort: 8095
   service:
@@ -97,7 +97,7 @@ pdfrenderer:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -130,7 +130,7 @@ imagemagick:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -163,7 +163,7 @@ libreoffice:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -196,7 +196,7 @@ tika:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -230,7 +230,7 @@ transformmisc:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -294,7 +294,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.12.0"
+    tag: "0.13.0"
     pullPolicy: Always
     internalPort: 8099
   initContainer:
@@ -372,6 +372,7 @@ persistence:
   repository:
     enabled: true
     config:
+      querysetsMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/querysets/"
       transform:
         renditionsMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"
         pipelinesMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/"
@@ -429,7 +430,7 @@ alfresco-digital-workspace:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.0.0-adw
+    tag: 2.1.0
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"

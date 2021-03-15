@@ -251,6 +251,16 @@ Create a docker registry secret to allow the protected images to be pulled from 
 kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
 ```
 
+Alternatively, if you require credentials for more than one docker registry you can login and then create a generic secret using the `--from-file` option, as shown below.
+
+```bash
+docker login docker.io
+docker login quay.io
+kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
+```
+
+> If you use this approach remember to replace `quay-registry-secret` with `my-registry-secrets` in your helm install command!
+
 ### ACS
 
 This repository allows you to either deploy a system using released stable artefacts or the latest in-progress development artefacts.
@@ -359,7 +369,7 @@ If you requested an extended trial license navigate to the Admin Console and app
 
 ## Configure
 
-By default, this tutorial installs an out-of-the-box setup, however there are many configurations options described [here](../README.md#Configure). There are also several [examples](./examples) covering various use cases.
+By default, this tutorial installs an out-of-the-box setup, however there are many configurations options described [here](./README.md#configure). There are also several [examples](./examples) covering various use cases.
 
 This deployment is also not fully secured by default, to learn about and apply further restrictions including pod security, network policies etc. please refer to the [EKS Best Practices for Security](https://aws.github.io/aws-eks-best-practices/).
 

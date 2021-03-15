@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: "7.0.0-A27c"
+    tag: "7.0.0"
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
@@ -73,7 +73,7 @@ pdfrenderer:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -106,7 +106,7 @@ imagemagick:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -139,7 +139,7 @@ libreoffice:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -172,7 +172,7 @@ tika:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -206,7 +206,7 @@ transformmisc:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.3.8"
+    tag: "2.3.10"
     pullPolicy: Always
     internalPort: 8090
   service:
@@ -239,7 +239,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "7.0.0-M3"
+    tag: "7.0.0"
     pullPolicy: Always
     internalPort: 8080
   service:
@@ -280,6 +280,7 @@ persistence:
   repository:
     enabled: true
     config:
+      querysetsMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/querysets/"
       transform:
         renditionsMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"
         pipelinesMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/"
@@ -346,7 +347,7 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.7"
+  imageTag: "11.7.0"
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco

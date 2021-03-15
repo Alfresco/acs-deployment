@@ -1842,8 +1842,7 @@ ldap.synchronization.defaultHomeFolderProvider | The default home folder provide
 | protocols.rootPath | Default root path for protocols | /${spaces.company_home.childname} |
 | protocols.storeName | Default store name| ${spaces.store} |
 | queryAccelerator.enabled | Query Accelerator | false |
-| queryAccelerator.config.path | Location of query set configuration files | alfresco/queryaccelerator |
-| queryAccelerator.populator.startDelayMinutes | Delay on startup before population of query set tables starts or resumes | 3 |
+| queryAccelerator.config.dir | Location of query set configuration files | shared/classes/alfresco/extension/querysets |
 | queryAccelerator.populator.workerBatchSize | The number of nodes in a population batch | 1000 |
 | rendition.config.cronExpression | Schedule for reading rendition config definitions dynamically. Initially checks every 10 seconds and then switches to every hour after the configuration is read successfully. If there is a error later reading the config, the checks return to every 10 seconds. | `2 30 0/1 * * ?` |
 | rendition.config.dir | Optional property to specify an external file or directory that will be read for rendition definitions from YAML files (possibly added to a volume via k8 ConfigMaps). | shared/classes/alfresco/extension/transform/renditions |

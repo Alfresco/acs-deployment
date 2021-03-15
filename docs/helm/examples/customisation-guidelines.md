@@ -15,3 +15,21 @@ Once you have created your custom image you can either change the default values
 ```bash
 helm install alfresco/alfresco-content-services --set repository.image.repository="yourRegistry" --set repository.image.tag="yourTag" --set share.image.repository="yourRegistry" --set share.image.tag="yourTag"
 ```
+
+## Using Images From Multiple Docker Registries
+
+If you create custom images you may well store them in your private registry meaning you need to use multiple sets of credentials.
+
+To achieve this you can login and then create a generic secret using the `--from-file` option, as shown below.
+
+```bash
+docker login docker.io
+docker login quay.io
+kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
+```
+
+You can then provide the secret name via the `--set` option as shown below:
+
+```bash
+helm install alfresco/alfresco-content-services --set global.alfrescoRegistryPullSecrets=my-registry-secrets ...
+```

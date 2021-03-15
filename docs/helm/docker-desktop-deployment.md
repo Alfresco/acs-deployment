@@ -103,9 +103,19 @@ Firstly, create a docker registry secret to allow the protected images to be pul
 kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
 ```
 
+Alternatively, if you require credentials for more than one docker registry you can login and then create a generic secret using the `--from-file` option, as shown below.
+
+```bash
+docker login docker.io
+docker login quay.io
+kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
+```
+
+> If you use this approach remember to replace `quay-registry-secret` with `my-registry-secrets` in the helm install command below!
+
 The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster and therefore requires a large amount of resources out-of-the-box. To reduce the size of the deployment so it can run on a single machine we'll need to reduce the number of pods deployed and the memory requirements for serveral others.
 
-Forutnately this can all be achieved with one, albeit large, command as shown below:
+Fortunately this can all be achieved with one, albeit large, command as shown below:
 
 ```bash
 helm install acs alfresco/alfresco-content-services --devel \
