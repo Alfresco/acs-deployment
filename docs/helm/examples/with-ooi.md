@@ -18,7 +18,7 @@ Follow the [AWS Services](with-aws-services.md) example up until the [Deploy](wi
 When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
 
 ```bash
-helm install acs alfresco/alfresco-content-services --devel \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
