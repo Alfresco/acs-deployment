@@ -330,7 +330,7 @@ aiTransformer:
 filestore:
   replicaCount: 1
   image:
-    repository: alfresco/alfresco-shared-file-store
+    repository: quay.io/alfresco/alfresco-shared-file-store
     tag: "0.13.0"
     pullPolicy: Always
     internalPort: 8099
@@ -467,7 +467,7 @@ alfresco-digital-workspace:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.1.0
+    tag: 2.1.0-adw
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"

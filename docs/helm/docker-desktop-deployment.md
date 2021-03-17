@@ -74,8 +74,6 @@ helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
 helm repo update
 ```
 
-**NOTE**: The Helm charts comptaible with these instructions do not have a GA release yet, until they do the `--devel` option needs to be provided with the helm install command.
-
 Now decide whether you want to install the Community or Enterprise edition and follow the steps in the relevant section below.
 
 #### Community
@@ -83,7 +81,7 @@ Now decide whether you want to install the Community or Enterprise edition and f
 To install the latest version of Community we need to use the [community_values.yaml file](../../helm/alfresco-content-services). Once downloaded execute the command below to deploy.
 
 ```bash
-helm install acs alfresco/alfresco-content-services --devel \
+helm install acs alfresco/alfresco-content-services \
 --values=community_values.yaml \
 --set externalPort="80" \
 --set externalProtocol="http" \
@@ -118,7 +116,7 @@ The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster 
 Fortunately this can all be achieved with one, albeit large, command as shown below:
 
 ```bash
-helm install acs alfresco/alfresco-content-services --devel \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="80" \
 --set externalProtocol="http" \
 --set externalHost="localhost" \
@@ -153,7 +151,7 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
 2. Deploy the specific version of ACS by running the following command:
 
     ```bash
-    helm install acs alfresco/alfresco-content-services --devel \
+    helm install acs alfresco/alfresco-content-services \
     --values=MAJOR.MINOR.N_values.yaml \
     --set externalPort="80" \
     --set externalProtocol="http" \
