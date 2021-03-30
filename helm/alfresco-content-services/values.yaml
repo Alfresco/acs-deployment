@@ -45,7 +45,7 @@ repository:
     JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
-      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keyst
       -Dmetadata-keystore.aliases=metadata
       -Dmetadata-keystore.metadata.algorithm=DESede"
   resources:
@@ -81,7 +81,7 @@ ooiService:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: "1.1.3"
+    tag: "1.1.0"
     pullPolicy: Always
     internalPort: 9095
   service:
