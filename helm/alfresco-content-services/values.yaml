@@ -81,7 +81,7 @@ ooiService:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: "1.1.1"
+    tag: "1.1.3"
     pullPolicy: Always
     internalPort: 9095
   service:
