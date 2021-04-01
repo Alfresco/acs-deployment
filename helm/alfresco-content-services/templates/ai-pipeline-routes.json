@@ -1,0 +1,365 @@
+{
+  "transformers": [
+    {
+      "transformerName": "gifToRekognitionViaJpg",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/gif", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "tiffToRekognitionViaGif",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/gif"},
+        {"transformerName": "gifToRekognitionViaJpg"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/tiff", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "pdfToRekognitionViaPng",
+      "transformerPipeline" : [
+        {"transformerName": "pdfrenderer", "targetMediaType": "image/png"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/pdf", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" }
+      ],
+      "transformOptions": [
+        "pdfRendererOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "officeToRekognitionViaPdf",
+      "transformerPipeline" : [
+        {"transformerName": "libreoffice", "targetMediaType": "application/pdf"},
+        {"transformerName": "pdfToRekognitionViaPng"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/msword",                                                         "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-excel",                                                   "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",          "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-powerpoint",                                              "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.presentationml.presentation", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.labels.v1+json" }
+      ],
+      "transformOptions": [
+        "pdfRendererOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "pdfToComprehendEntityRecognitionViaTextract",
+      "transformerPipeline" : [
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/pdf", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "officeToComprehendEntityRecognitionViaText",
+      "transformerPipeline" : [
+        {"transformerName": "libreoffice", "targetMediaType": "text/plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/msword",                                                         "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-excel",                                                   "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",          "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-powerpoint",                                              "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.presentationml.presentation", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-outlook",                                                "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "pdfToComprehendClassificationViaText",
+      "transformerPipeline" : [
+        {"transformerName": "PdfBox", "targetMediaType": "text/plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/pdf", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" }
+      ],
+      "transformOptions": [
+        "pdfboxOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "officeToComprehendClassificationViaText",
+      "transformerPipeline" : [
+        {"transformerName": "libreoffice", "targetMediaType": "text/plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/msword",                                                         "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-excel",                                                   "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",          "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-powerpoint",                                              "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.presentationml.presentation", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-outlook",                                                "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "gifToTextractPlainViaJpg",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/gif", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "tiffToTextractPlainViaGif",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/gif"},
+        {"transformerName": "gifToTextractPlainViaJpg"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/tiff", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "gifToTextractViaJpg",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/gif", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "tiffToTextractViaGif",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/gif"},
+        {"transformerName": "gifToTextractViaJpg"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/tiff", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "officeToTextractViaPdf",
+      "transformerPipeline" : [
+        {"transformerName": "libreoffice", "targetMediaType": "application/pdf"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/msword",                                                         "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-excel",                                                   "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",          "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-powerpoint",                                              "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.presentationml.presentation", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.textract.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "imageToComprendEntityRecognitionViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/png",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" },
+        {"sourceMediaType": "image/jpeg", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "gifToComprendEntityRecognitionViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/gif",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "tiffToComprendEntityRecognitionViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "gifToComprendEntityRecognitionViaTextractPlain"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/tiff",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.features.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "imageToComprendClassificationViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/png",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" },
+        {"sourceMediaType": "image/jpeg", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "gifToComprendClassificationViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/gif",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "tiffToComprendClassificationViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "gifToComprendClassificationViaTextractPlain"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/tiff",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.classifiers.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "pdfToComprehendPiiEntityTypesViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/pdf", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "officeToComprehendPiiEntityTypesViaText",
+      "transformerPipeline" : [
+        {"transformerName": "libreoffice", "targetMediaType": "text/plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "application/msword",                                                         "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",    "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-excel",                                                   "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",          "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-powerpoint",                                              "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" },
+        {"sourceMediaType": "application/vnd.openxmlformats-officedocument.presentationml.presentation", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" },
+        {"sourceMediaType": "application/vnd.ms-outlook",                                                "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "imageToComprehendPiiEntityTypesViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/png",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" },
+        {"sourceMediaType": "image/jpeg", "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" }
+      ],
+      "transformOptions": [
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "gifToComprehendPiiEntityTypesViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "AWS_AI", "targetMediaType": "application/vnd.alfresco.ai.textract.v1+plain"},
+        {"transformerName": "AWS_AI"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/gif",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    },
+    {
+      "transformerName": "tiffToComprehendPiiEntityTypesViaTextractPlain",
+      "transformerPipeline" : [
+        {"transformerName": "imagemagick", "targetMediaType": "image/jpeg"},
+        {"transformerName": "gifToComprehendPiiEntityTypesViaTextractPlain"}
+      ],
+      "supportedSourceAndTargetList": [
+        {"sourceMediaType": "image/tiff",  "maxSourceSizeBytes": -1, "targetMediaType": "application/vnd.alfresco.ai.pii.entities.v1+json" }
+      ],
+      "transformOptions": [
+        "imageMagickOptions",
+        "awsAiOptions"
+      ]
+    }
+  ]
+}
