@@ -386,3 +386,4 @@ data:
       transformOptions:
         - imageMagickOptions
         - awsAiOptions
+  {{- end }}
