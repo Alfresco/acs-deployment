@@ -45,7 +45,7 @@ repository:
     JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
-      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keysto
+      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
       -Dmetadata-keystore.aliases=metadata
       -Dmetadata-keystore.metadata.algorithm=DESede"
   resources:
