@@ -101,7 +101,7 @@ _helm_deploy: &helm_deploy
 
     # failed pods logs
     failed_pod_logs() {
-      pods_status | grep False | awk '{print $1}' | while read pod; do kubectl logs $pod --namespace $namespace; done
+      pod_status | grep False | awk '{print $1}' | while read pod; do kubectl logs $pod --namespace $namespace; done
     }
 
     # pods ready
