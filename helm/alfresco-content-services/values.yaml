@@ -66,6 +66,9 @@ repository:
     timeoutSeconds: 10
   extraVolumeMounts: []
   extraVolumes: []
+  extraSideContainers: []
+  extraInitContainers: []
+  command: []
   # Provide additional log statements by adding
   # classes and/or packages in a key:value fashion
   # extraLogStatements:
@@ -393,6 +396,11 @@ share:
     initialDelaySeconds: 200
     periodSeconds: 20
     timeoutSeconds: 10
+  extraVolumeMounts: []
+  extraVolumes: []
+  extraSideContainers: []
+  extraInitContainers: []
+  command: []
 
 # Defines the mounting points for the persistence required by the apps in the
 # cluster the alf_data folder from alfresco-content-repository app is mapped to

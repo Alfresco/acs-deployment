@@ -34,9 +34,16 @@ spec:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       containers:
+        {{- if .Values.repository.extraSideContainers }}
+{{ tpl .Values.repository.extraSideContainers . | indent 8 }}
+        {{- end }}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
+          {{- if .Values.repository.command }}
+          command:
+{{ tpl .Values.repository.command . | indent 12 }}
+          {{- end }}
           envFrom:
           - secretRef:
               name: {{ template "content-services.shortname" . }}-dbsecret
@@ -118,6 +125,9 @@ spec:
                 command: ["/bin/bash", "-c", "sleep 20"]
       {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
       initContainers:
+      {{- if .Values.repository.extraInitContainers }}
+{{ tpl .Values.repository.extraInitContainers . | indent 8 }}
+      {{- end }}
       {{- if eq .Values.database.external false }}
         # wait for the DB to startup before this deployment can start
         - name: init-db
