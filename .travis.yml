@@ -99,6 +99,11 @@ _helm_deploy: &helm_deploy
       kubectl get pods --namespace $namespace -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?\(@.type==\'Ready\'\)].status
     }
 
+    # failed pods logs
+    failed_pod_logs() {
+      pod_status | grep False | awk '{print $1}' | while read pod; do echo -e '\e[1;31m' $pod '\e[0m' && kubectl logs $pod --namespace $namespace; done
+    }
+
     # pods ready
     pods_ready() {
       PODS_COUNTER=0
@@ -123,6 +128,7 @@ _helm_deploy: &helm_deploy
       if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
         pod_status
         echo "Pods did not start - exit 1"
+        failed_pod_logs
         if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
           helm delete $release_name_ingress $release_name_acs -n $namespace
           kubectl delete namespace $namespace
