@@ -74,8 +74,6 @@ helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
 helm repo update
 ```
 
-**NOTE**: The Helm charts comptaible with these instructions do not have a GA release yet, until they do the `--devel` option needs to be provided with the helm install command.
-
 Now decide whether you want to install the Community or Enterprise edition and follow the steps in the relevant section below.
 
 #### Community
@@ -83,7 +81,7 @@ Now decide whether you want to install the Community or Enterprise edition and f
 To install the latest version of Community we need to use the [community_values.yaml file](../../helm/alfresco-content-services). Once downloaded execute the command below to deploy.
 
 ```bash
-helm install acs alfresco/alfresco-content-services --devel \
+helm install acs alfresco/alfresco-content-services \
 --values=community_values.yaml \
 --set externalPort="80" \
 --set externalProtocol="http" \
@@ -103,12 +101,22 @@ Firstly, create a docker registry secret to allow the protected images to be pul
 kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
 ```
 
-The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster and therefore requires a large amount of resources out-of-the-box. To reduce the size of the deployment so it can run on a single machine we'll need to reduce the number of pods deployed and the memory requirements for serveral others.
-
-Forutnately this can all be achieved with one, albeit large, command as shown below:
+Alternatively, if you require credentials for more than one docker registry you can login and then create a generic secret using the `--from-file` option, as shown below.
 
 ```bash
-helm install acs alfresco/alfresco-content-services --devel \
+docker login docker.io
+docker login quay.io
+kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
+```
+
+> If you use this approach remember to replace `quay-registry-secret` with `my-registry-secrets` in the helm install command below!
+
+The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster and therefore requires a large amount of resources out-of-the-box. To reduce the size of the deployment so it can run on a single machine we'll need to reduce the number of pods deployed and the memory requirements for serveral others.
+
+Fortunately this can all be achieved with one, albeit large, command as shown below:
+
+```bash
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="80" \
 --set externalProtocol="http" \
 --set externalHost="localhost" \
@@ -143,7 +151,7 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
 2. Deploy the specific version of ACS by running the following command:
 
     ```bash
-    helm install acs alfresco/alfresco-content-services --devel \
+    helm install acs alfresco/alfresco-content-services \
     --values=MAJOR.MINOR.N_values.yaml \
     --set externalPort="80" \
     --set externalProtocol="http" \

@@ -421,6 +421,8 @@ alfresco-search:
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
+  service:
+    envType: frontend
   ingress:
     path: /workspace
     annotations:

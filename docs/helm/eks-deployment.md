@@ -252,6 +252,16 @@ Create a docker registry secret to allow the protected images to be pulled from 
 kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
 ```
 
+Alternatively, if you require credentials for more than one docker registry you can login and then create a generic secret using the `--from-file` option, as shown below.
+
+```bash
+docker login docker.io
+docker login quay.io
+kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
+```
+
+> If you use this approach remember to replace `quay-registry-secret` with `my-registry-secrets` in your helm install command!
+
 ### ACS
 
 This repository allows you to either deploy a system using released stable artefacts or the latest in-progress development artefacts.
@@ -270,8 +280,6 @@ helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
 helm repo update
 ```
 
-**NOTE**: The Helm charts comptaible with these instructions do not have a GA release yet, until they do the `--devel` option needs to be provided with the helm install command.
-
 Now decide whether you want to install the latest version of ACS (Enterprise or Community) or a previous version and follow the steps in the relevant section below.
 
 #### Latest Enterprise Version
@@ -279,7 +287,7 @@ Now decide whether you want to install the latest version of ACS (Enterprise or 
 Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
 ```bash
-helm install acs alfresco/alfresco-content-services --devel \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
@@ -301,7 +309,7 @@ helm install acs alfresco/alfresco-content-services --devel \
 2. Deploy ACS Community by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
     ```bash
-    helm install acs alfresco/alfresco-content-services --devel \
+    helm install acs alfresco/alfresco-content-services \
     --values=community_values.yaml \
     --set externalPort="443" \
     --set externalProtocol="https" \
@@ -323,7 +331,7 @@ helm install acs alfresco/alfresco-content-services --devel \
 2. Deploy the specific version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` & `MINOR` with the appropriate values):
 
     ```bash
-    helm install acs alfresco/alfresco-content-services --devel \
+    helm install acs alfresco/alfresco-content-services \
     --values=MAJOR.MINOR.N_values.yaml \
     --set externalPort="443" \
     --set externalProtocol="https" \

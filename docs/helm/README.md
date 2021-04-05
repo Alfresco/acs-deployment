@@ -50,7 +50,7 @@ Parameter | Description | Default
 `database.driver` | External database driver | ``
 `database.user` | External database user | ``
 `database.password` | External database password | ``
-`database.url` | External database jdbc url | ``
+`database.url` | External database jdbc url. <br/> NOTE: Semi-colons wil need to be escaped.| ``
 `alfresco-search.resources.requests.memory` | Alfresco Search Services requests memory | `250Mi`
 `alfresco-search.ingress.enabled` | Enable external access for Alfresco Search Services | `false`
 `alfresco-search.ingress.basicAuth` | If `alfresco-search.ingress.enabled` is `true`, user needs to provide a `base64` encoded `htpasswd` format user name & password (ex: `echo -n "$(htpasswd -nbm solradmin somepassword)"` where `solradmin` is username and `somepassword` is the password) | None

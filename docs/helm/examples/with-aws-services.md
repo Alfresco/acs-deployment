@@ -111,7 +111,7 @@ To use the S3 connector, RDS and Amazon MQ we have to disable the internal defau
 When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
 
 ```bash
-helm install acs alfresco/alfresco-content-services --devel \
+helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
@@ -138,4 +138,6 @@ helm install acs alfresco/alfresco-content-services --devel \
 --namespace=alfresco
 ```
 
-> NOTE: Alternatively, Aurora MySQL can be used instead of PostgreSQL by selecting the "Amazon Aurora with MySQL compatibility" option and version "5.7.12" in the create database wizard. You'll also need to change the `database.driver` value to "org.mariadb.jdbc.Driver" and change the `database.url` to "'jdbc:mariadb:aurora//YOUR-DATABASE-ENDPOINT:3306/alfresco?useUnicode=yes&characterEncoding=UTF-8'".
+> NOTE: Alternatively, Aurora MySQL can be used instead of PostgreSQL by selecting the "Amazon Aurora with MySQL compatibility" option and version "5.7.12" in the create database wizard. You'll also need to change the `database.driver` value to "org.mariadb.jdbc.Driver" and change the `database.url` to `"jdbc:mariadb:aurora//YOUR-DATABASE-ENDPOINT:3306/alfresco?useUnicode=yes&characterEncoding=UTF-8"`.
+
+> NOTE: If your `database.url` contains semi-colons i.e. for SQL Server, you will need to escape them e.g. `"jdbc:sqlserver://YOUR-DATABASE-ENDPOINT:1433\\;databaseName=alfresco\\;lockTimeout=1000\\;"`
