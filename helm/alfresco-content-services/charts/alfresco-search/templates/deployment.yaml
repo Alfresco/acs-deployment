@@ -77,7 +77,7 @@ spec:
                 command: ["/bin/bash", "-c", "sleep 10"]
       initContainers:
         - name: init-db
-          image: {{ .Values.initContainer.image.repository }}
+          image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
           imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
           resources:
 {{ toYaml .Values.initContainer.resources | indent 14 }}

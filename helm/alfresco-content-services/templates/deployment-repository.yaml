@@ -141,7 +141,8 @@ spec:
               subPath: {{ .Values.persistence.repository.data.subPath }}
         {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
-          image: registry.access.redhat.com/redhat-sso-7/sso71-openshift:1.1-16
+          image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"
+          imagePullPolicy: {{ .Values.email.initContainers.pemToKeystore.image.pullPolicy }}
           env:
             - name: keyfile
               value: /var/run/secrets/certs/tls.key
@@ -161,7 +162,8 @@ spec:
             - mountPath: /var/run/secrets/certs
               name: email-certs
         - name: pem-to-truststore
-          image: registry.access.redhat.com/redhat-sso-7/sso71-openshift:1.1-16
+          image: "{{ .Values.email.initContainers.pemToTruststore.image.repository }}:{{ .Values.email.initContainers.pemToTruststore.image.tag }}"
+          imagePullPolicy: {{ .Values.email.initContainers.pemToTruststore.image.pullPolicy }}
           env:
             - name: ca_bundle
               value: /var/run/secrets/cacert/ca.crt
@@ -177,7 +179,8 @@ spec:
             - name: ca-cert
               mountPath: /var/run/secrets/cacert
         - name: set-perms
-          image: busybox:1
+          image: "{{ .Values.email.initContainers.setPerms.image.repository }}:{{ .Values.email.initContainers.setPerms.image.tag }}"
+          imagePullPolicy: {{ .Values.email.initContainers.setPerms.image.pullPolicy }}
           env:
             - name: keystore_dir
               value: /var/run/secrets/java.io/keystores

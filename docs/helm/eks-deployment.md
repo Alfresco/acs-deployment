@@ -237,6 +237,7 @@ kubectl create namespace alfresco
     --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="acs.YOUR-DOMAIN-NAME" \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
     --set controller.publishService.enabled=true \
+    --set controller.admissionWebhooks.enabled=false \
     --atomic \
     --namespace alfresco
     ```

@@ -578,6 +578,22 @@ email:
       overwriteDuplicates: true
   ssl:
     secretName:
+  initContainers:
+    pemToKeystore:
+      image:
+        repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
+        tag: 1.1-16
+        pullPolicy: Always
+    pemToTruststore:
+      image:
+        repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
+        tag: 1.1-16
+        pullPolicy: Always
+    setPerms:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
 
 mail:
   host:

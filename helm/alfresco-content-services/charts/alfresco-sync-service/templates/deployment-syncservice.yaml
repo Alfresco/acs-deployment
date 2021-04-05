@@ -32,7 +32,7 @@ spec:
       initContainers:
       {{- if eq .Values.activemq.external false }}
       - name: init-activemq
-        image: {{ .Values.initContainers.activemq.image.repository }}
+        image: "{{ .Values.initContainers.activemq.image.repository }}:{{ .Values.initContainers.activemq.image.tag }}"
         imagePullPolicy: {{ .Values.initContainers.activemq.image.pullPolicy }}
         resources:
 {{ toYaml .Values.initContainers.activemq.resources | indent 10 }}
@@ -45,7 +45,7 @@ spec:
       {{- end }}
       {{- if eq .Values.database.external false }}
       - name: init-postgres
-        image: {{ .Values.initContainers.postgres.image.repository }}
+        image: "{{ .Values.initContainers.postgres.image.repository }}:{{ .Values.initContainers.postgres.image.tag }}"
         imagePullPolicy: {{ .Values.initContainers.postgres.image.pullPolicy }}
         resources:
 {{ toYaml .Values.initContainers.postgres.resources | indent 10 }}
