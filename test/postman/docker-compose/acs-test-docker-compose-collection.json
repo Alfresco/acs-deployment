@@ -1002,8 +1002,9 @@
 									"}",
 									"else",
 									"{",
-									"    pm.test(\"Body matches string\", function () {",
-									"        pm.expect(pm.response.text()).to.include(\"Alfresco Digital Workspace\");",
+									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
+									"{",
+									"        pm.response.to.have.status(404);",
 									"    });",
 									"}"
 								],
