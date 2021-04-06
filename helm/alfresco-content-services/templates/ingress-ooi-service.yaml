@@ -16,6 +16,16 @@ metadata:
 {{- end }}
 
 spec:
+  {{- if .Values.ooiService.ingress.tls }}
+  tls:
+    {{- range .Values.ooiService.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
   rules:
   {{- if .Values.ooiService.ingress.hostName }}
   - host: {{ tpl .Values.ooiService.ingress.hostName $ }}

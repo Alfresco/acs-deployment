@@ -27,6 +27,10 @@ service:
 ingress:
   enabled: true
   path: /solr
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
   # -- Default solr basic auth user/password: admin / admin
   # You can create your own with htpasswd utilility & encode it with base640.
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin

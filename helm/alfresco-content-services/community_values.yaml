@@ -46,6 +46,10 @@ repository:
     type: ClusterIP
     externalPort: &repositoryExternalPort 80
   ingress:
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
     path: /
     maxUploadSize: "5g"
     annotations: {}
@@ -82,6 +86,10 @@ repository:
 # Declares the api-explorer service used by the content repository
 apiexplorer:
   ingress:
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
     path: /api-explorer
 
 # Declares the alfresco-pdf-renderer service used by the content repository
@@ -266,6 +274,10 @@ share:
   ingress:
     path: /share
     annotations: {}
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   resources:
     requests:
       memory: "2000Mi"
@@ -345,6 +357,10 @@ alfresco-search:
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth:
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
