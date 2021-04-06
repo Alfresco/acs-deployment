@@ -564,7 +564,7 @@
 									"        pm.response.to.have.status(200);",
 									"    });",
 									"",
-									"    pm.test(\"Body matches string\", function () {",
+									"    pm.test(\"Check that body matches string\", function () {",
 									"        pm.expect(pm.response.text()).to.include(\"Alfresco Digital Workspace\");",
 									"    });",
 									"}",
