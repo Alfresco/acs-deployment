@@ -20,10 +20,27 @@ repository:
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
-  initContainer:
-    image:
-      repository: busybox
-      tag: latest
+  initContainers:
+    db:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
+    fs:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
   service:
     name: alfresco
     type: ClusterIP
@@ -348,6 +365,8 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   imageTag: "11.7.0"
+  image:
+    pullPolicy: Always
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco

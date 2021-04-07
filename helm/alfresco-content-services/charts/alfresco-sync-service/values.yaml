@@ -95,7 +95,9 @@ postgresql-syncservice:
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
-  imageTag: "11.7.0"
+  image:
+    tag: "11.7.0"    
+    pullPolicy: Always
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-sync-services/database-data"
@@ -113,6 +115,28 @@ postgresql-syncservice:
       memory: "1500Mi"
     limits:
       memory: "1500Mi"
+
+initContainers:
+  activemq:
+    image:
+      repository: busybox
+      tag: 1
+      pullPolicy: Always
+    resources:
+      requests:
+        memory: "5Mi"
+      limits:
+        memory: "10Mi"
+  postgres:
+    image:
+      repository: busybox
+      tag: 1
+      pullPolicy: Always
+    resources:
+      requests:
+        memory: "5Mi"
+      limits:
+        memory: "10Mi"
 
 ingress:
   extraAnnotations:

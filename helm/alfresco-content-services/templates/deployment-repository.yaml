@@ -131,12 +131,18 @@ spec:
       {{- if eq .Values.database.external false }}
         # wait for the DB to startup before this deployment can start
         - name: init-db
-          image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
+          image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
+          imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.repository.initContainers.db.resources | indent 14 }}
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
       {{- if .Values.persistence.repository.enabled }}
         - name: init-fs
-          image: "{{ .Values.repository.initContainer.image.repository }}:{{ .Values.repository.initContainer.image.tag }}"
+          image: "{{ .Values.repository.initContainers.fs.image.repository }}:{{ .Values.repository.initContainers.fs.image.tag }}"
+          imagePullPolicy: {{ .Values.repository.initContainers.fs.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.repository.initContainers.fs.resources | indent 14 }}
           # command to allow repository to write to EFS volume.
           command: ["sh", "-c", "chown -R 33000:1000 {{ .Values.persistence.repository.data.mountPath }}"]
           volumeMounts:
@@ -145,7 +151,8 @@ spec:
               subPath: {{ .Values.persistence.repository.data.subPath }}
         {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
-          image: registry.access.redhat.com/redhat-sso-7/sso71-openshift:1.1-16
+          image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"
+          imagePullPolicy: {{ .Values.email.initContainers.pemToKeystore.image.pullPolicy }}
           env:
             - name: keyfile
               value: /var/run/secrets/certs/tls.key
@@ -165,7 +172,8 @@ spec:
             - mountPath: /var/run/secrets/certs
               name: email-certs
         - name: pem-to-truststore
-          image: registry.access.redhat.com/redhat-sso-7/sso71-openshift:1.1-16
+          image: "{{ .Values.email.initContainers.pemToTruststore.image.repository }}:{{ .Values.email.initContainers.pemToTruststore.image.tag }}"
+          imagePullPolicy: {{ .Values.email.initContainers.pemToTruststore.image.pullPolicy }}
           env:
             - name: ca_bundle
               value: /var/run/secrets/cacert/ca.crt
@@ -181,7 +189,8 @@ spec:
             - name: ca-cert
               mountPath: /var/run/secrets/cacert
         - name: set-perms
-          image: busybox
+          image: "{{ .Values.email.initContainers.setPerms.image.repository }}:{{ .Values.email.initContainers.setPerms.image.tag }}"
+          imagePullPolicy: {{ .Values.email.initContainers.setPerms.image.pullPolicy }}
           env:
             - name: keystore_dir
               value: /var/run/secrets/java.io/keystores

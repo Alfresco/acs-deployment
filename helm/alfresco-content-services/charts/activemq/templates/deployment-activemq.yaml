@@ -33,7 +33,7 @@ spec:
           value: "{{ template "activemq.fullname" . }}"
         - name: ACTIVEMQ_ADMIN_LOGIN
           value: "{{ .Values.adminUser.username }}"
-        - name: ACTIVEMQ_ADMIN_PASSWORD	
+        - name: ACTIVEMQ_ADMIN_PASSWORD
           value: "{{ .Values.adminUser.password }}"
         ports:
         - name: stomp
@@ -66,7 +66,10 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
       initContainers:
         - name: init-fs
-          image: busybox
+          image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
+          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.initContainer.resources | indent 14 }}
           # command to allow repository to write to EFS volume.
           command: ["sh", "-c", "chown -R 33031:1000 {{ .Values.persistence.mountPath }}"]
           volumeMounts:

@@ -56,6 +56,8 @@ spec:
               name: {{ template "alfresco.shortname" . }}-router-configmap
           ports:
             - containerPort: {{ .Values.transformrouter.image.internalPort }}
+          resources:
+{{ toYaml .Values.transformrouter.resources | indent 12 }}
           livenessProbe:
             httpGet:
               path: /actuator/health

@@ -68,6 +68,17 @@ livenessProbe:
   periodSeconds: 20
   timeoutSeconds: 10
 
+initContainer:
+  image:
+    repository: busybox
+    tag: 1
+    pullPolicy: Always
+  resources:
+    requests:
+      memory: "5Mi"
+    limits:
+      memory: "10Mi"
+
 # Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
 # Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
 global:

@@ -21,10 +21,27 @@ repository:
     pullPolicy: Always
     internalPort: 8080
     hazelcastPort: 5701
-  initContainer:
-    image:
-      repository: busybox
-      tag: latest
+  initContainers:
+    db:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
+    fs:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
   service:
     name: alfresco
     type: ClusterIP
@@ -130,6 +147,11 @@ transformrouter:
     initialDelaySeconds: 140
     periodSeconds: 120
     timeoutSeconds: 60
+  resources:
+    requests:
+      memory: "128Mi"
+    limits:
+      memory: "512Mi"
 
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -340,7 +362,13 @@ filestore:
   initContainer:
     image:
       repository: busybox
-      tag: latest
+      tag: 1
+      pullPolicy: Always
+    resources:
+      requests:
+        memory: "5Mi"
+      limits:
+        memory: "10Mi"
   service:
     name: filestore
     type: ClusterIP
@@ -487,6 +515,13 @@ alfresco-digital-workspace:
     # APP_CONFIG_MICROSOFT_ONLINE_CLIENTID:
     # APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY:
     # APP_CONFIG_MICROSOFT_ONLINE_REDIRECT:
+  resources:
+    limits:
+      cpu: 1
+      memory: 1024Mi
+    requests:
+      cpu: 150m
+      memory: 256Mi
 
 # choose if you want AI capabilities
 ai:
@@ -521,6 +556,8 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   imageTag: "11.7.0"
+  image:
+    pullPolicy: Always
   commonAnnotations:
     application: alfresco-content-services
   postgresqlUsername: alfresco
@@ -546,6 +583,8 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   imageTag: "11.7.0"
+  image:
+    pullPolicy: Always
   commonAnnotations:
     application: alfresco-content-services
   persistence:
@@ -606,6 +645,22 @@ email:
       overwriteDuplicates: true
   ssl:
     secretName:
+  initContainers:
+    pemToKeystore:
+      image:
+        repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
+        tag: 1.1-16
+        pullPolicy: Always
+    pemToTruststore:
+      image:
+        repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
+        tag: 1.1-16
+        pullPolicy: Always
+    setPerms:
+      image:
+        repository: busybox
+        tag: 1
+        pullPolicy: Always
 
 mail:
   host:

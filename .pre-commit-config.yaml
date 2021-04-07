@@ -1,9 +1,11 @@
 repos:
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.0.1
+    rev: v1.1.0
     hooks:
       - id: travis-yml-lint
       - id: helm-deps
       - id: helm-lint
-      # We will re-enable this via OPSEXP-703
-      # - id: checkov-helm
+  - repo: https://github.com/Alfresco/acs-deployment
+    rev: 5c9347de2a3ec7e3281f1b5e8da71e395f79c2a6
+    hooks:
+      - id: checkov-helm
