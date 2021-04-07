@@ -39,14 +39,14 @@ repository:
     type: ClusterIP
     externalPort: &repositoryExternalPort 80
   ingress:
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
     path: /
     maxUploadSize: "5g"
     annotations: {}
       # nginx.ingress.kubernetes.io/enable-cors: "true"
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
@@ -105,11 +105,11 @@ ooiService:
     type: ClusterIP
     externalPort: 80
   ingress:
+    path: /ooi-service
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-    path: /ooi-service
   resources:
     requests:
       memory: "1000Mi"

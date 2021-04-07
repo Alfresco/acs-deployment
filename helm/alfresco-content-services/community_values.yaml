@@ -46,14 +46,14 @@ repository:
     type: ClusterIP
     externalPort: &repositoryExternalPort 80
   ingress:
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
     path: /
     maxUploadSize: "5g"
     annotations: {}
       # nginx.ingress.kubernetes.io/enable-cors: "true"
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
@@ -86,11 +86,11 @@ repository:
 # Declares the api-explorer service used by the content repository
 apiexplorer:
   ingress:
+    path: /api-explorer
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-    path: /api-explorer
 
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
