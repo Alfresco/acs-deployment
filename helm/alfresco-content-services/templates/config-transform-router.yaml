@@ -33,7 +33,7 @@ data:
   {{- if .Values.ai.enabled }}
   TRANSFORMER_URL_AWS_AI: http://{{ template "content-services.shortname" . }}-ai-transformer:80
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
-  TRANSFORMER_ROUTES_ADDITIONAL_AI: "/ai-pipeline-routes.yaml"
+  TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-pipeline-routes.json"
 
     {{- end }}
 {{- end }}
