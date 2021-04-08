@@ -142,3 +142,7 @@ ingress:
   extraAnnotations:
     # -- useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes
     #nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local

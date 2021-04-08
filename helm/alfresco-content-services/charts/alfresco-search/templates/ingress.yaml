@@ -15,6 +15,16 @@ metadata:
     nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.whitelist_ips }}
 
 spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
   rules:
   - http:
       paths:

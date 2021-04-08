@@ -25,6 +25,16 @@ metadata:
 {{- end }}
 
 spec:
+  {{- if .Values.share.ingress.tls }}
+  tls:
+    {{- range .Values.share.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
   rules:
   {{- if .Values.share.ingress.hostName }}
   - host: {{ tpl .Values.share.ingress.hostName . }}

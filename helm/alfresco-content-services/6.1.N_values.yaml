@@ -50,6 +50,10 @@ repository:
     maxUploadSize: "5g"
     annotations: {}
       # nginx.ingress.kubernetes.io/enable-cors: "true"
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
@@ -338,6 +342,10 @@ share:
   ingress:
     path: /share
     annotations: {}
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   resources:
     requests:
       memory: "2000Mi"
@@ -417,6 +425,10 @@ alfresco-search:
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth:
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 alfresco-digital-workspace:
   enabled: true
@@ -427,6 +439,10 @@ alfresco-digital-workspace:
     path: /workspace
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 1.4.0
