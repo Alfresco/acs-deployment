@@ -32,10 +32,7 @@ A Helm chart Providing Apache ActiveMQ.
 | persistence.existingClaim | string | `"alfresco-volume-claim"` |  |
 | persistence.mountPath | string | `"/opt/activemq/data"` |  |
 | persistence.subPath | string | `"alfresco-infrastructure/activemq-data"` |  |
-| readinessProbe.failureThreshold | int | `6` |  |
-| readinessProbe.initialDelaySeconds | int | `60` |  |
-| readinessProbe.periodSeconds | int | `20` |  |
-| readinessProbe.timeoutSeconds | int | `10` |  |
+| readinessProbe | object | `{"failureThreshold":6,"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":10}` | The ActiveMQ readiness probe is used to check startup only as a failure of the liveness probe later will result in the pod being restarted. |
 | replicaCount | int | `1` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |

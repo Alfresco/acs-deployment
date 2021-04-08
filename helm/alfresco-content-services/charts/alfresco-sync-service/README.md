@@ -20,11 +20,9 @@ Alfresco Syncservice
 | activemq.broker.protocol | string | `"tcp"` |  |
 | activemq.broker.username | string | `nil` |  |
 | activemq.external | bool | `false` |  |
-| contentServices.installationName | string | `nil` |  |
-| database.external | bool | `false` |  |
-| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.strategy.rollingUpdate.maxSurge | int | `1` |  |
-| global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
+| contentServices.installationName | string | `nil` | Specify when installing as a standalone chart, not as a subchart of ACS. This variable will be used to construct the correct hostname for ACS and ActiveMQ |
+| database | object | `{"external":false}` | Defines properties required by sync service for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in TODO - add container path |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | ingress.extraAnnotations | string | `nil` |  |
 | initContainers.activemq.image.pullPolicy | string | `"Always"` |  |
 | initContainers.activemq.image.repository | string | `"busybox"` |  |
@@ -39,7 +37,7 @@ Alfresco Syncservice
 | postgresql-syncservice.enabled | bool | `true` |  |
 | postgresql-syncservice.image.pullPolicy | string | `"Always"` |  |
 | postgresql-syncservice.image.tag | string | `"11.7.0"` |  |
-| postgresql-syncservice.name | string | `"postgresql-syncservice"` |  |
+| postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
 | postgresql-syncservice.persistence.existingClaim | string | `"alfresco-volume-claim"` |  |
 | postgresql-syncservice.persistence.subPath | string | `"alfresco-sync-services/database-data"` |  |

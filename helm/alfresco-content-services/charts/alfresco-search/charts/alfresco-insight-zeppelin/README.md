@@ -14,9 +14,7 @@ A Helm chart for deploying Alfresco Insight Zeppelin
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.strategy.rollingUpdate.maxSurge | int | `1` |  |
-| global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |
@@ -29,8 +27,8 @@ A Helm chart for deploying Alfresco Insight Zeppelin
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
-| replicaCount | int | `1` |  |
-| repository | object | `{}` |  |
+| replicaCount | int | `1` | Define the alfresco-insight-zeppelin properties to use in the k8s cluster This is chart will be installed as part of Alfresco Insight Engine |
+| repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
 | resources.limits.memory | string | `"1024Mi"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
 | service.externalPort | int | `80` |  |
