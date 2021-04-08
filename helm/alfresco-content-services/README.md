@@ -83,24 +83,24 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
-| database | object | `{"external":false}` | Defines properties required by alfresco for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver |
+| database | object | `{"driver":null,"external":false,"password":null,"url":null,"user":null}` | Defines properties required by alfresco for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver |
+| database.driver | string | `nil` | ex: org.postgresql.Driver |
+| database.password | string | `nil` | ex: alfresco   |
+| database.url | string | `nil` | ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco |
+| database.user | string | `nil` | ex: alfresco |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"Always","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"Always","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"Always","repository":"busybox","tag":1}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html |
+| email.server.enabled | bool | `false` | Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html |
 | filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"Always","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.13.0"},"initContainer":{"image":{"pullPolicy":"Always","repository":"busybox","tag":1},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global | object | `{"alfrescoRegistryPullSecrets":null,"registryPullSecrets":["quay-registry-secret"],"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument to the install command: e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret or uncomment the following line if you don't want/need to pass it as a parameter on every install command : global.alfrescoRegistryPullSecrets: quay-registry-secret for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md -- Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s) |
 | imagemagick | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"Always","repository":"alfresco/alfresco-imagemagick","tag":"2.3.10"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":900,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"imagemagick","type":"ClusterIP"}}` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | imap.mail.from.default | string | `nil` |  |
 | imap.mail.to.default | string | `nil` |  |
-| imap.server.enabled | bool | `false` |  |
-| imap.server.host | string | `"0.0.0.0"` |  |
-| imap.server.imap.enabled | bool | `true` |  |
-| imap.server.imaps.enabled | bool | `true` |  |
-| imap.server.imaps.port | int | `1144` |  |
-| imap.server.port | int | `1143` |  |
+| imap.server | object | `{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}` | Replace this value with the IP address (or corresponding DNS name) of your external IP interface - see https://docs.alfresco.com/6.2/tasks/imap-enable.html |
 | libreoffice | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"Always","repository":"alfresco/alfresco-libreoffice","tag":"2.3.10"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":250,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":99999,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"libreoffice","type":"ClusterIP"}}` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | mail.encoding | string | `"UTF-8"` |  |
 | mail.from.default | string | `nil` |  |
 | mail.from.enabled | bool | `false` |  |
-| mail.host | string | `nil` |  |
+| mail.host | string | `nil` | Specifies the host name of the SMTP host, that is, the host name or IP address of the server to which email should be sent - see https://docs.alfresco.com/6.2/concepts/email-outboundsmtp-props.html |
 | mail.password | string | `nil` |  |
 | mail.port | string | `nil` |  |
 | mail.protocol | string | `"smtps"` |  |
@@ -155,6 +155,10 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
 | postgresql.enabled | bool | `true` | If true, install the postgresql chart alongside Alfresco Content Services. Note: Set this to false if you use an external database. |
+| postgresql.postgresqlDatabase | string | `"alfresco"` | Postgresql database name |
+| postgresql.postgresqlPassword | string | `"alfresco"` | Postgresql database password |
+| postgresql.postgresqlUsername | string | `"alfresco"` | Postgresql database user |
+| repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in md5 hash format |
 | repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |
 | repository.environment.JAVA_OPTS | string | `" -Dsolr.base.url=/solr -Dsolr.secureComms=none -Dindex.subsystem.name=solr6 -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |

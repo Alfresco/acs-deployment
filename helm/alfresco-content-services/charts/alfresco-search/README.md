@@ -48,7 +48,7 @@ A Helm chart for deploying Alfresco Search
 | replicaCount | int | `1` | Define the alfresco-search properties to use in the k8s cluster This is the search provider used by alfresco-content-repository |
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
 | resources.limits.memory | string | `"2000Mi"` |  |
-| resources.requests.memory | string | `"2000Mi"` |  |
+| resources.requests.memory | string | `"2000Mi"` | Alfresco Search Services requests memory |
 | searchServicesImage.internalPort | int | `8983` |  |
 | searchServicesImage.pullPolicy | string | `"Always"` |  |
 | searchServicesImage.repository | string | `"alfresco/alfresco-search-services"` |  |

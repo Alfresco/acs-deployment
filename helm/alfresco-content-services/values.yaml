@@ -1,6 +1,8 @@
 # This is a YAML-formatted file.  Declare variables to be passed into your templates.
 
 repository:
+  # -- Administrator password for ACS in md5 hash format
+  adminPassword: "209c6174da490caeb422f3fa5a7ae634"
   edition: Enterprise
   replicaCount: 2
   strategy:
@@ -534,10 +536,14 @@ ooi:
 # Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver
 database:
   external: false
-  # driver:     #ex: org.postgresql.Driver
-  # user:     #ex: alfresco
-  # password:     #ex: alfresco
-  # url:    # ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco
+  # -- ex: org.postgresql.Driver
+  driver: 
+  # -- ex: alfresco
+  user:   
+  # -- ex: alfresco  
+  password:
+  # -- ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco
+  url:    
 
 # -- Defines the properties to be used for the required postgres DB
 # Note: the database (tables) information is also saved in the persistent volume claim
@@ -552,8 +558,11 @@ postgresql:
     pullPolicy: Always
   commonAnnotations:
     application: alfresco-content-services
+  # -- Postgresql database user
   postgresqlUsername: alfresco
+  # -- Postgresql database password
   postgresqlPassword: alfresco
+  # -- Postgresql database name
   postgresqlDatabase: alfresco
   postgresqlExtendedConf:
     max_connections: 300
@@ -604,7 +613,7 @@ s3connector:
   # config:
   #   bucketName:
   #   bucketLocation:
-  ##   Additional properties can be defined here.
+  # -- Additional properties can be defined here.
   # secrets:
   #   accessKey:
   #   secretKey:
@@ -614,6 +623,7 @@ s3connector:
 # -- For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html
 email:
   server:
+    # -- Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html
     enabled: false
     port: 1125
     domain:
@@ -655,6 +665,7 @@ email:
         pullPolicy: Always
 
 mail:
+  # -- Specifies the host name of the SMTP host, that is, the host name or IP address of the server to which email should be sent - see https://docs.alfresco.com/6.2/concepts/email-outboundsmtp-props.html
   host:
   port:
   protocol: smtps
@@ -682,6 +693,7 @@ mail:
   #   to:
 
 imap:
+  # -- Replace this value with the IP address (or corresponding DNS name) of your external IP interface - see https://docs.alfresco.com/6.2/tasks/imap-enable.html
   server:
     enabled: false
     host: "0.0.0.0"

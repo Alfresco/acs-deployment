@@ -41,6 +41,7 @@ environment:
   ALFRESCO_SECURE_COMMS: "none"
 resources:
   requests:
+    # -- Alfresco Search Services requests memory
     memory: "2000Mi"
   limits:
     memory: "2000Mi"
