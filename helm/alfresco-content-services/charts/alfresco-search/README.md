@@ -27,6 +27,7 @@ A Helm chart for deploying Alfresco Search
 | ingress.basicAuth | string | `"YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg=="` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | ingress.enabled | bool | `true` |  |
 | ingress.path | string | `"/solr"` |  |
+| ingress.tls | list | `[]` |  |
 | ingress.whitelist_ips | string | `"0.0.0.0/0"` | Comma separated list of IP CIDR to limit search endpoint over the internet |
 | initContainer.image.pullPolicy | string | `"Always"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
