@@ -60,6 +60,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-digital-workspace.enabled | bool | `true` |  |
 | alfresco-digital-workspace.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-digital-workspace.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
+| alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_AI_SERVICE | string | `"false"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"Always"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
 | alfresco-digital-workspace.image.tag | string | `"2.1.0-adw"` |  |
