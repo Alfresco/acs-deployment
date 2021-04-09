@@ -524,6 +524,7 @@ alfresco-digital-workspace:
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
+    APP_CONFIG_PLUGIN_AI_SERVICE: 'false'
     # APP_CONFIG_PLUGIN_MICROSOFT_ONLINE:
     # APP_CONFIG_MICROSOFT_ONLINE_OOI_URL:
     # APP_CONFIG_MICROSOFT_ONLINE_CLIENTID:
