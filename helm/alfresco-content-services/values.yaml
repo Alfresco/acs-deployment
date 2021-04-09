@@ -530,10 +530,8 @@ alfresco-digital-workspace:
     # APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY:
     # APP_CONFIG_MICROSOFT_ONLINE_REDIRECT:
   extraEnv: |-
-    {{- if .Values.ai.enabled }}
     - name: APP_CONFIG_PLUGIN_AI_SERVICE
-      value: 'ai.enabled'
-    {{- end }}
+      value: 'false'
   resources:
     limits:
       cpu: 1
