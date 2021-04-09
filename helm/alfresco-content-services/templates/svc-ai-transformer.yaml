@@ -1,4 +1,4 @@
-{{- if .Values.ai.enabled }}
+{{- if .Values.global.ai.enabled }}
 # Defines the service for the ai transformer app
 apiVersion: v1
 kind: Service
