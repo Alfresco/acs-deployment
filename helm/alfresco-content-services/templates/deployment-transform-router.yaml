@@ -73,12 +73,12 @@ spec:
             initialDelaySeconds: {{ .Values.transformrouter.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.transformrouter.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.transformrouter.readinessProbe.timeoutSeconds }}
-          {{- if .Values.ai.enabled }}
+          {{- if .Values.global.ai.enabled }}
           volumeMounts:
           - name: config-volume
             mountPath: /mnt/routes
           {{- end }}
-      {{- if .Values.ai.enabled }}
+      {{- if .Values.global.ai.enabled }}
       volumes:
       - name: config-volume
         configMap:

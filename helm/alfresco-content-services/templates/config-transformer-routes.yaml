@@ -1,4 +1,4 @@
-{{- if .Values.ai.enabled }}
+{{- if .Values.global.ai.enabled }}
 # Defines transformer routes
 apiVersion: v1
 kind: ConfigMap
