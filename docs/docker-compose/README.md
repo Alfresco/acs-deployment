@@ -69,7 +69,7 @@ The provided Docker compose file provides some default configuration, the sectio
 | REPO_PORT | Share needs to know how to register itself with Alfresco | 8080 |
 | CSRF_FILTER_REFERER | CSRF Referrer | |
 | CSRF_FILTER_ORIGIN | CSRF Origin | |
-| USE_SSL | `false` | Enables ssl use if set to `"true"` |
+| USE_SSL | Enables ssl use if set to `"true"` | `false` |
 
 ```yml
 share:
@@ -222,7 +222,7 @@ share:
 | SYNCSERVICE_URL | Sync service URL inside network. | `http://sync-service:9090` |
 | ACCESS_LOG | Sets the `access_log` value. Set to `off` to switch off logging. | |
 | USE_SSL | `false` | Enables ssl use if set to `"true"` |
-| DOMAIN | n/a | Set domain value for ssl certificate |
+| DOMAIN | Set domain value for ssl certificate | n/a |
 
 If USE_SSL set to true provide ssl cert in ssl/cert.crt and ssl/cert.key
 
