@@ -380,8 +380,8 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.7.0"
   image:
+    tag: "13.1.0"
     pullPolicy: Always
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco

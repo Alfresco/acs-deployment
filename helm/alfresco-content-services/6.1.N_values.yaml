@@ -480,8 +480,8 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.4.0"
   image:
+    tag: "11.4.0"
     pullPolicy: Always
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
@@ -505,8 +505,8 @@ postgresql-syncservice:
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
-  imageTag: "11.4.0"
   image:
+    tag: "11.4.0"
     pullPolicy: Always
   persistence:
     existingClaim: "alfresco-volume-claim"
