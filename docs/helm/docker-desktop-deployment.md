@@ -216,7 +216,7 @@ If your deployment fails it's most likely to be caused by resource limitations, 
 
 The most common reason for deployment failures with Docker for Desktop is lack of memory or disk space. Check the "Resources" tab in Docker for Desktop's preferences pane, increase the allocation if you can and re-try.
 
-To save the deployment of two more pods you can also try disabling the Sync Service, to do that provide the additonal `--set` option below with your helm install command:
+To save the deployment of two more pods you can also try disabling the Sync Service, to do that provide the additional `--set` option below with your helm install command:
 
 ```bash
 --set alfresco-sync-service.syncservice.enabled=false
@@ -226,7 +226,7 @@ If you need to reduce the memory footprint further the JVM memory settings in mo
 
 ### Timeout
 
-If the deployment fails and rollsback with following error:
+If the deployment fails and rolls back with following error:
 
 ```bash
 Error: release acs failed, and has been uninstalled due to atomic being set: timed out waiting for the condition

@@ -246,7 +246,7 @@ kubectl create namespace alfresco
 
 ### Docker Registry Secret
 
-Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following commmand (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
+Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following command (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
 
 ```bash
 kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco

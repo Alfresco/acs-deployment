@@ -17,7 +17,7 @@ node "alfresco namespace" {
     component "Alfresco Digital Workspace \n (with AI config)" as adw #lightgrey
     component "Alfresco Content Services \n (with AI AMP)" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
-    component "Alfresco Sync Services" as sync #lightgrey
+    component "Alfresco Sync Service" as sync #lightgrey
     component "Alfresco Share \n (with AI AMP)" as share #lightgrey
     rectangle "Alfresco Transform Service" {
         component "Transform Router \n (with AI config)" as tr #lightgrey
@@ -87,6 +87,6 @@ aiEngine --> comp
 aiEngine --> rek
 aiEngine --> tex
 
-center footer Copyright 2020 Alfresco Software Inc
+center footer Copyright 2021 Alfresco Software Inc
 
 @enduml

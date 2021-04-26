@@ -17,7 +17,7 @@ node "alfresco namespace" {
     component "Alfresco Digital Workspace \n (with OOI config)" as adw #lightgrey
     component "Alfresco Content Services \n" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
-    component "Alfresco Sync Services" as sync #lightgrey
+    component "Alfresco Sync Service" as sync #lightgrey
     component "Alfresco Share \n" as share #lightgrey
     component "Alfresco OOI Service" as ooi #lightgrey
     rectangle "Alfresco Transform Service" {
@@ -86,6 +86,6 @@ sync <--> acs
 sync --> db
 sync --> mq
 
-center footer Copyright 2020 Alfresco Software Inc
+center footer Copyright 2021 Alfresco Software Inc
 
 @enduml
