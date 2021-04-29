@@ -50,6 +50,9 @@ services:
                 -Ddsync.service.uris=http://localhost:9090/alfresco
                 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
                 "
+        volumes:
+        - ./models/iptc-model-context.xml:/usr/local/tomcat/shared/classes/alfresco/extension/iptc-model-context.xml
+        - ./models/iptc:/usr/local/tomcat/shared/classes/alfresco/extension/models/iptc
 
     transform-router:
         mem_limit: 512m
@@ -67,7 +70,9 @@ services:
           - activemq
 
     transform-core-aio:
-        image: alfresco/alfresco-transform-core-aio:2.3.10
+ # TODO: ATS-892 - note: temporary (Draft PR - DO NOT MERGE !) ;-)       
+        image: alfresco/alfresco-transform-core-aio:latest
+#        image: alfresco/alfresco-transform-core-aio:2.3.10
         mem_limit: 1536m
         environment:
             JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
