@@ -70,7 +70,7 @@ services:
           - activemq
 
     transform-core-aio:
- # TODO: ATS-892 - note: temporary (Draft PR - DO NOT MERGE !) ;-)       
+# TODO: ATS-892 - note: temporary (Draft PR - DO NOT MERGE !) ;-)       
         image: alfresco/alfresco-transform-core-aio:latest
 #        image: alfresco/alfresco-transform-core-aio:2.3.10
         mem_limit: 1536m

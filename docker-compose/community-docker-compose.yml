@@ -45,9 +45,14 @@ services:
                 -Dcsrf.filter.enabled=false
                 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
                 "
+        volumes:
+            - ./models/iptc-model-context.xml:/usr/local/tomcat/shared/classes/alfresco/extension/iptc-model-context.xml
+            - ./models/iptc:/usr/local/tomcat/shared/classes/alfresco/extension/models/iptc                
 
     transform-core-aio:
-        image: alfresco/alfresco-transform-core-aio:2.3.10
+# TODO: ATS-892 - note: temporary (Draft PR - DO NOT MERGE !) ;-)       
+        image: alfresco/alfresco-transform-core-aio:latest
+#        image: alfresco/alfresco-transform-core-aio:2.3.10
         mem_limit: 1536m
         environment:
             JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"

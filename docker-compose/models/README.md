@@ -3,3 +3,4 @@
 - IPTC Model
   - https://github.com/Alfresco/alfresco-transform-core/tree/master/models
   - https://iptc.org/standards/photo-metadata/iptc-standard/
+  - https://www.iptc.org/std/photometadata/documentation/userguide/#field-reference-table
