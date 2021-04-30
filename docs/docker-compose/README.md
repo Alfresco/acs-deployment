@@ -223,7 +223,7 @@ If you have issues running ```docker-compose up``` after deleting a previous Doc
 docker-compose down && docker-compose build --no-cache && docker-compose up
 ```
 
-If you are experiencing issue running ```docker-compose up``` on Windows environments due to unavailable or reserved ports and get errors such as:
+If you are experiencing issues running ```docker-compose up``` on Windows environments due to unavailable or reserved ports and get errors such as:
 ``` bind: An attempt was made to access a socket in a way forbidden by its access permissions``` would mean that Windows winnat service has reserved 
 the port range that docker compose is trying to use. To remedy the issue execute the following in a terminal:
 
