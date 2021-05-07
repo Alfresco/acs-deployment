@@ -44,7 +44,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
     metadata:
       name: external-dns
     ---
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
       name: external-dns
@@ -59,7 +59,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
       resources: ["nodes"]
       verbs: ["list","watch"]
     ---
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
       name: external-dns-viewer
