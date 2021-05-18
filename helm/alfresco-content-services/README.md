@@ -213,7 +213,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | transformrouter.image.internalPort | int | `8095` |  |
 | transformrouter.image.pullPolicy | string | `"Always"` |  |
 | transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
-| transformrouter.image.tag | string | `"1.4.0-A3"` |  |
+| transformrouter.image.tag | string | `"1.4.0"` |  |
 | transformrouter.livenessProbe.initialDelaySeconds | int | `140` |  |
 | transformrouter.livenessProbe.periodSeconds | int | `120` |  |
 | transformrouter.livenessProbe.timeoutSeconds | int | `60` |  |
