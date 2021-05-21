@@ -73,7 +73,7 @@ The provided Docker compose file provides some default configuration, the sectio
 
 ```yml
 share:
-   image: quay.io/alfresco/alfresco-share:7.0.0
+   image: quay.io/alfresco/alfresco-share:7.1.0-M1
       mem_limit: 1g
       environment:
          REPO_HOST: "alfresco"
