@@ -37,9 +37,7 @@ env:
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=incubator
-    - KUBERNETES_VERSION=1.18.4
     - GIT_DIFF=$(git diff origin/master --name-only .)
-    - CHECKOV_VERSION=1.0.865
 
 branches:
   only:
