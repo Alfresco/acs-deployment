@@ -21,13 +21,15 @@ stages:
     if: branch = master OR commit_message = "[publish]"
 
 import:
-  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@v1.1.0
-  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.1.0
-  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.1.0
-  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.1.0
-  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.1.0
-  - source: Alfresco/alfresco-build-tools:.travis.helm-docs_install.yml@v1.1.0
-  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.1.0
+  - source: Alfresco/alfresco-build-tools:.travis.awscli_install.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.aws-iam-authenticator_install.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.helm-docs_install.yml@v1.1.3
+  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.1.3
 
 env:
   global:
@@ -35,11 +37,7 @@ env:
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
     - HELM_REPO=incubator
-    - KUBERNETES_VERSION=1.18.4
     - GIT_DIFF=$(git diff origin/master --name-only .)
-    - AWS_IAM_AUTHENTICATOR_VERSION=${AWS_IAM_AUTHENTICATOR_VERSION:-1.18.8/2020-09-18}
-    - CHECKOV_VERSION=1.0.865
-    - HELM_DOCS_VERSION=1.5.0
 
 branches:
   only:
@@ -49,10 +47,6 @@ branches:
 
 before_install:
   - |
-    pip install --upgrade awscli
-    mkdir -p $HOME/bin && export PATH=$PATH:$HOME/bin
-    curl -sSLO https://amazon-eks.s3.us-west-2.amazonaws.com/$AWS_IAM_AUTHENTICATOR_VERSION/bin/$(uname | tr '[:upper:]' '[:lower:]')/amd64/aws-iam-authenticator{,.sha256} && openssl sha1 -sha256 aws-iam-authenticator &&
-    chmod +x ./aws-iam-authenticator && mv ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator
     aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
     rm -rf /home/travis/.cache/pre-commit
 
