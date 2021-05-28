@@ -31,6 +31,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.0.0-M2 | 7.0.0-M3 | 6.2.2 | 6.1.1 | 7.0.0-A10 |
 | 5.0.0 | 7.0.0 | 6.2.2 | 6.1.1 | 7.0.0 |
 | 5.0.1 | 7.0.0 | 6.2.2 | 6.1.1 | 7.0.0 |
+| 5.1.0-M1 | 7.1.0-M1 | 6.2.2 | 6.1.1 | 7.1.0-M1 |
 
 ### Docker
 
