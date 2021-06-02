@@ -17,7 +17,7 @@ repository:
   image:
     repository: alfresco/alfresco-content-repository-community
     tag: "7.1.0-M1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
   initContainers:
@@ -25,7 +25,7 @@ repository:
       image:
         repository: busybox
         tag: 1
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
       resources:
         requests:
           memory: "5Mi"
@@ -35,7 +35,7 @@ repository:
       image:
         repository: busybox
         tag: 1
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
       resources:
         requests:
           memory: "5Mi"
@@ -99,7 +99,7 @@ pdfrenderer:
   image:
     repository: alfresco/alfresco-pdf-renderer
     tag: "2.5.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: pdfrenderer
@@ -132,7 +132,7 @@ imagemagick:
   image:
     repository: alfresco/alfresco-imagemagick
     tag: "2.5.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: imagemagick
@@ -165,7 +165,7 @@ libreoffice:
   image:
     repository: alfresco/alfresco-libreoffice
     tag: "2.5.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: libreoffice
@@ -198,7 +198,7 @@ tika:
   image:
     repository: alfresco/alfresco-tika
     tag: "2.5.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: tika
@@ -232,7 +232,7 @@ transformmisc:
   image:
     repository: alfresco/alfresco-transform-misc
     tag: "2.5.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: transformmisc
@@ -265,7 +265,7 @@ share:
   image:
     repository: alfresco/alfresco-share
     tag: "7.1.0-M1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8080
   service:
     name: share
@@ -382,7 +382,7 @@ postgresql:
   nameOverride: postgresql-acs
   image:
     tag: "13.1.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco

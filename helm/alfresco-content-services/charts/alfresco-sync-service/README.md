@@ -25,18 +25,18 @@ Alfresco Syncservice
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | ingress.extraAnnotations | string | `nil` |  |
 | ingress.tls | list | `[]` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
-| initContainers.activemq.image.pullPolicy | string | `"Always"` |  |
+| initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"busybox"` |  |
 | initContainers.activemq.image.tag | int | `1` |  |
 | initContainers.activemq.resources.limits.memory | string | `"10Mi"` |  |
 | initContainers.activemq.resources.requests.memory | string | `"5Mi"` |  |
-| initContainers.postgres.image.pullPolicy | string | `"Always"` |  |
+| initContainers.postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.postgres.image.repository | string | `"busybox"` |  |
 | initContainers.postgres.image.tag | int | `1` |  |
 | initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
 | initContainers.postgres.resources.requests.memory | string | `"5Mi"` |  |
 | postgresql-syncservice.enabled | bool | `true` |  |
-| postgresql-syncservice.image.pullPolicy | string | `"Always"` |  |
+| postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql-syncservice.image.tag | string | `"11.7.0"` |  |
 | postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
@@ -64,7 +64,7 @@ Alfresco Syncservice
 | syncservice.horizontalPodAutoscaling.memory.targetAverageUtilization | int | `60` |  |
 | syncservice.horizontalPodAutoscaling.minReplicas | int | `1` |  |
 | syncservice.image.internalPort | int | `9090` |  |
-| syncservice.image.pullPolicy | string | `"Always"` |  |
+| syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | syncservice.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | syncservice.image.tag | string | `"3.4.0"` |  |
 | syncservice.ingress.path | string | `"/syncservice"` |  |

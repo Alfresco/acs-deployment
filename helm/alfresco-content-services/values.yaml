@@ -10,7 +10,7 @@ repository:
   image:
     repository: quay.io/alfresco/alfresco-content-repository
     tag: "7.1.0-M2"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
   initContainers:
@@ -18,7 +18,7 @@ repository:
       image:
         repository: busybox
         tag: 1
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
       resources:
         requests:
           memory: "5Mi"
@@ -28,7 +28,7 @@ repository:
       image:
         repository: busybox
         tag: 1
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
       resources:
         requests:
           memory: "5Mi"
@@ -98,7 +98,7 @@ ooiService:
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
     tag: "1.1.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 9095
   service:
     name: ooi-service
@@ -131,7 +131,7 @@ transformrouter:
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: "1.4.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8095
   service:
     name: transform-router
@@ -160,7 +160,7 @@ pdfrenderer:
   image:
     repository: alfresco/alfresco-pdf-renderer
     tag: "2.5.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: pdfrenderer
@@ -193,7 +193,7 @@ imagemagick:
   image:
     repository: alfresco/alfresco-imagemagick
     tag: "2.5.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: imagemagick
@@ -226,7 +226,7 @@ libreoffice:
   image:
     repository: alfresco/alfresco-libreoffice
     tag: "2.5.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: libreoffice
@@ -259,7 +259,7 @@ tika:
   image:
     repository: alfresco/alfresco-tika
     tag: "2.5.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: tika
@@ -293,7 +293,7 @@ transformmisc:
   image:
     repository: alfresco/alfresco-transform-misc
     tag: "2.5.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: transformmisc
@@ -324,7 +324,7 @@ aiTransformer:
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: "1.3.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: ai-transformer
@@ -357,13 +357,13 @@ filestore:
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
     tag: "0.14.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
     image:
       repository: busybox
       tag: 1
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     resources:
       requests:
         memory: "5Mi"
@@ -400,7 +400,7 @@ share:
   image:
     repository: quay.io/alfresco/alfresco-share
     tag: "7.1.0-M2"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8080
   service:
     name: share
@@ -523,7 +523,7 @@ alfresco-digital-workspace:
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 2.3.0-adw
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
@@ -573,7 +573,7 @@ postgresql:
   nameOverride: postgresql-acs
   image:
     tag: "13.1.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
   # -- Postgresql database user
@@ -603,7 +603,7 @@ postgresql-syncservice:
   nameOverride: postgresql-syncservice
   image:
     tag: "13.1.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
   persistence:
@@ -669,17 +669,17 @@ email:
       image:
         repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
         tag: 1.1-16
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
     pemToTruststore:
       image:
         repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
         tag: 1.1-16
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
     setPerms:
       image:
         repository: busybox
         tag: 1
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
 
 mail:
   # -- Specifies the host name of the SMTP host, that is, the host name or IP address of the server to which email should be sent - see https://docs.alfresco.com/6.2/concepts/email-outboundsmtp-props.html

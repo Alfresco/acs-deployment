@@ -13,7 +13,7 @@ type: "search-services"
 searchServicesImage:
   repository: alfresco/alfresco-search-services
   tag: "2.0.0"
-  pullPolicy: &searchDockerImagePullPolicy Always
+  pullPolicy: &searchDockerImagePullPolicy IfNotPresent
   internalPort: &searchDockerImageInternalPort 8983
 insightEngineImage:
   repository: quay.io/alfresco/insight-engine
@@ -82,7 +82,7 @@ initContainer:
   image:
     repository: busybox
     tag: 1
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   resources:
     requests:
       memory: "5Mi"
