@@ -485,6 +485,7 @@ alfresco-search:
 #    port: "8983"
   searchServicesImage:
     tag: "2.0.1.1"
+    pullPolicy: IfNotPresent
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
