@@ -51,10 +51,12 @@ spec:
             - containerPort: {{ template "alfresco-search.internalPort" . }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+          {{- if .Values.persistence.dynamicProvisioning }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}
             subPath: {{ .Values.persistence.search.data.subPath }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /solr
@@ -75,6 +77,7 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 10"]
+      {{- if .Values.persistence.dynamicProvisioning }}
       initContainers:
         - name: init-db
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
@@ -91,3 +94,4 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}"
+      {{- end }}

@@ -605,8 +605,7 @@ postgresql-syncservice:
   commonAnnotations:
     application: alfresco-content-services
   persistence:
-    existingClaim: "alfresco-volume-claim"
-    subPath: "alfresco-sync-services/database-data"
+    storageClass: gp2
     #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
   postgresqlUsername: alfresco
   postgresqlPassword: admin

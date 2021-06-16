@@ -76,13 +76,11 @@ spec:
             periodSeconds: {{ .Values.filestore.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
-          {{- if .Values.persistence.filestore.enabled }}
       {{- if and .Values.persistence.filestore.enabled .Values.persistence.dynamicProvisioning }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.filestore.data.mountPath }}
             subPath: {{ .Values.persistence.filestore.data.subPath }}
-          {{- end }}
       initContainers:
         - name: init-fs
           image: "{{ .Values.filestore.initContainer.image.repository }}:{{ .Values.filestore.initContainer.image.tag }}"
