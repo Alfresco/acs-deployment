@@ -60,3 +60,4 @@ persistence:
   existingClaim: "alfresco-volume-claim"
   mountPath: "/opt/activemq/data"
   subPath: "alfresco-infrastructure/activemq-data"
+  dynamicProvisioning: false
