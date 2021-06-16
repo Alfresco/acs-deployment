@@ -490,8 +490,7 @@ postgresql:
     max_connections: 300
     log_min_messages: LOG
   persistence:
-    existingClaim: "alfresco-volume-claim"
-    subPath: "alfresco-content-services/database-data"
+    storageClass: gp2
   resources:
     requests:
       memory: "1500Mi"
@@ -509,8 +508,7 @@ postgresql-syncservice:
     tag: "11.4.0"
     pullPolicy: Always
   persistence:
-    existingClaim: "alfresco-volume-claim"
-    subPath: "alfresco-sync-services/database-data"
+    storageClass: gp2
     #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
   postgresqlUsername: alfresco
   postgresqlPassword: admin

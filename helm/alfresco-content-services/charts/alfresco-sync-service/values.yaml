@@ -96,11 +96,10 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
-    tag: "11.7.0"    
+    tag: "11.7.0"
     pullPolicy: Always
   persistence:
-    existingClaim: "alfresco-volume-claim"
-    subPath: "alfresco-sync-services/database-data"
+    storageClass: gp2
     #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
   postgresqlUsername: alfresco
   postgresqlPassword: admin
