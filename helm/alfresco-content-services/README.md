@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 A Helm chart for deploying Alfresco Content Services
 
-![Version: 5.1.0-M1](https://img.shields.io/badge/Version-5.1.0--M1-informational?style=flat-square)
+![Version: 5.1.0-M1](https://img.shields.io/badge/Version-5.1.0--M1-informational?style=flat-square) 
 
 ## Requirements
 
@@ -23,6 +23,7 @@ A Helm chart for deploying Alfresco Content Services
 
 ## Values
 
+
 ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
 
@@ -31,6 +32,7 @@ For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimenta
 But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
 If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
+
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -140,7 +142,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | ooiService.service.name | string | `"ooi-service"` |  |
 | ooiService.service.type | string | `"ClusterIP"` |  |
 | pdfrenderer | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"Always","repository":"alfresco/alfresco-pdf-renderer","tag":"2.4.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
-| persistence | object | `{"baseSize":"20Gi","enabled":true,"existingClaim":"alfresco-volume-claim","filestore":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"repository":{"config":{"querysetsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/querysets/","transform":{"mimetypesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/","pipelinesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/","renditionsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"}},"data":{"mountPath":"/usr/local/tomcat/alf_data","subPath":"alfresco-content-services/repository-data"},"enabled":true},"storageClass":{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}}` | Defines the mounting points for the persistence required by the apps in the cluster the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data |
+| persistence | object | `{"baseSize":"20Gi","dynamicProvisioning":false,"enabled":true,"existingClaim":"alfresco-volume-claim","filestore":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"repository":{"config":{"querysetsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/querysets/","transform":{"mimetypesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/","pipelinesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/","renditionsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"}},"data":{"mountPath":"/usr/local/tomcat/alf_data","subPath":"alfresco-content-services/repository-data"},"enabled":true},"storageClass":{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}}` | Defines the mounting points for the persistence required by the apps in the cluster the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data |
 | persistence.storageClass | object | `{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}` | Enable and define if you already have a custom storage class defined |
 | persistence.storageClass.name | string | `"nfs"` | Custom storage classs name |
 | postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"Always","tag":"13.1.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":"alfresco-volume-claim","subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
@@ -150,8 +152,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | postgresql-syncservice.image.tag | string | `"13.1.0"` |  |
 | postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.persistence.existingClaim | string | `"alfresco-volume-claim"` |  |
-| postgresql-syncservice.persistence.subPath | string | `"alfresco-sync-services/database-data"` |  |
+| postgresql-syncservice.persistence.storageClass | string | `"gp2"` |  |
 | postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.log_min_messages | string | `"LOG"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.max_connections | int | `450` |  |
