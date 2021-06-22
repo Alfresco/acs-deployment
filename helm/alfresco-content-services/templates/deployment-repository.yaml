@@ -82,11 +82,9 @@ spec:
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
             subPath: dev-log4j.properties
           {{- end }}
-  {{- /*    {{- if .Values.persistence.dynamicProvisioning }} */ -}}
           - name: data
             mountPath: {{ .Values.persistence.repository.data.mountPath }}
             subPath: {{ .Values.persistence.repository.data.subPath }}
-            {{- /*     {{- end }} */ -}}
           - name: custom-queryset-config-volume
             mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
           - name: custom-pipeline-config-volume

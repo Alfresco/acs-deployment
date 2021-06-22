@@ -60,11 +60,11 @@ spec:
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
         resources:
 {{ toYaml .Values.resources | indent 12 }}
-       {{- if .Values.persistence.dynamicProvisioning }}
         volumeMounts:
         - name: data
           mountPath: {{ .Values.persistence.mountPath }}
           subPath: {{ .Values.persistence.subPath }}
+      {{- if .Values.persistence.dynamicProvisioning }}
       initContainers:
         - name: init-fs
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
@@ -77,9 +77,9 @@ spec:
             - name: data
               mountPath: {{ .Values.persistence.mountPath }}
               subPath: {{ .Values.persistence.subPath }}
+      {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
-      {{- end }}
 {{- end }}
