@@ -75,9 +75,8 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 10"]
-      {{- if .Values.persistence.dynamicProvisioning }}
       initContainers:
-        - name: init-db
+        - name: init-fs
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
           imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
           resources:
@@ -88,7 +87,6 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}
             subPath: {{ .Values.persistence.search.data.subPath }}
-      {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:
