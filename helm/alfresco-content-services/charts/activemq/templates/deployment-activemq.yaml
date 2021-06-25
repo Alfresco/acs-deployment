@@ -64,7 +64,7 @@ spec:
         - name: data
           mountPath: {{ .Values.persistence.mountPath }}
           subPath: {{ .Values.persistence.subPath }}
-      {{- if .Values.persistence.dynamicProvisioning }}
+      {{- if .Values.persistence.chownWithDynamicProvisioning }}
       initContainers:
         - name: init-fs
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"

@@ -80,7 +80,7 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.filestore.data.mountPath }}
             subPath: {{ .Values.persistence.filestore.data.subPath }}
-      {{- if and .Values.persistence.filestore.enabled .Values.persistence.dynamicProvisioning }}
+      {{- if and .Values.persistence.filestore.enabled .Values.persistence.chownWithDynamicProvisioning }}
       initContainers:
         - name: init-fs
           image: "{{ .Values.filestore.initContainer.image.repository }}:{{ .Values.filestore.initContainer.image.tag }}"
