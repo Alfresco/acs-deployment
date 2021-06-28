@@ -438,6 +438,11 @@ jobs:
           export GIT_TAG="v$VERSION"
           git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
           git push https://$GITHUB_TOKEN@github.com/Alfresco/acs-deployment $GIT_TAG
+          git tag -d latest
+          git tag -a -m "current latest -> $GIT_TAG" -f latest ${GIT_TAG}^{}
+          for ref in ':refs/tags/latest' 'latest'
+            do git push https://$GITHUB_TOKEN@github.com/Alfresco/acs-deployment $ref
+          done
         fi
 
         COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
