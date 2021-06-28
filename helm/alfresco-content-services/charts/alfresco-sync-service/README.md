@@ -40,8 +40,7 @@ Alfresco Syncservice
 | postgresql-syncservice.image.tag | string | `"11.7.0"` |  |
 | postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.persistence.existingClaim | string | `"alfresco-volume-claim"` |  |
-| postgresql-syncservice.persistence.subPath | string | `"alfresco-sync-services/database-data"` |  |
+| postgresql-syncservice.persistence.storageClass | string | `"gp2"` |  |
 | postgresql-syncservice.postgresConfig.log_min_messages | string | `"LOG"` |  |
 | postgresql-syncservice.postgresConfig.max_connections | int | `450` |  |
 | postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |

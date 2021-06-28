@@ -76,7 +76,7 @@ spec:
               exec:
                 command: ["/bin/bash", "-c", "sleep 10"]
       initContainers:
-        - name: init-db
+        - name: init-fs
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
           imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
           resources:
