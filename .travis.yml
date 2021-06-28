@@ -437,7 +437,7 @@ jobs:
           git tag -d latest
           git tag -a -m "current latest -> $GIT_TAG" -f latest ${GIT_TAG}^{}
           for ref in ':refs/tags/latest' 'latest'
-            do git push https://$GITHUB_TOKEN@github.com/Alfresco/alfresco-ansible-deployment $ref
+            do git push https://$GITHUB_TOKEN@github.com/Alfresco/acs-deployment $ref
           done
         fi
 
