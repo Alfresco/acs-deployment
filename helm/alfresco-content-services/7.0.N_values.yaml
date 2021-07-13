@@ -62,4 +62,4 @@ alfresco-search:
 alfresco-digital-workspace:
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.2.0-adw
+    tag: 2.3.0-adw
