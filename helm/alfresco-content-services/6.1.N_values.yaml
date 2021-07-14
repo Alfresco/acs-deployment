@@ -17,15 +17,15 @@ repository:
   image:
     repository: alfresco/alfresco-content-repository
     tag: "6.1.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
   initContainers:
     db:
       image:
         repository: busybox
-        tag: 1
-        pullPolicy: Always
+        tag: 1.33.1
+        pullPolicy: IfNotPresent
       resources:
         requests:
           memory: "5Mi"
@@ -34,8 +34,8 @@ repository:
     fs:
       image:
         repository: busybox
-        tag: 1
-        pullPolicy: Always
+        tag: 1.33.1
+        pullPolicy: IfNotPresent
       resources:
         requests:
           memory: "5Mi"
@@ -95,7 +95,7 @@ transformrouter:
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: "1.0.2"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8095
   service:
     name: transform-router
@@ -124,7 +124,7 @@ pdfrenderer:
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
     tag: "2.0.17"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: pdfrenderer
@@ -157,7 +157,7 @@ imagemagick:
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
     tag: "2.0.17"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: imagemagick
@@ -190,7 +190,7 @@ libreoffice:
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
     tag: "2.0.17"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: libreoffice
@@ -223,7 +223,7 @@ tika:
   image:
     repository: quay.io/alfresco/alfresco-tika
     tag: "2.0.17"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: tika
@@ -257,7 +257,7 @@ aiTransformer:
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: "1.0.2"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: ai-transformer
@@ -290,13 +290,13 @@ filestore:
   image:
     repository: alfresco/alfresco-shared-file-store
     tag: "0.5.3"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
     image:
       repository: busybox
-      tag: 1
-      pullPolicy: Always
+      tag: 1.33.1
+      pullPolicy: IfNotPresent
     resources:
       requests:
         memory: "5Mi"
@@ -333,7 +333,7 @@ share:
   image:
     repository: alfresco/alfresco-share
     tag: "6.1.1"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 8080
   service:
     name: share
@@ -446,7 +446,7 @@ alfresco-digital-workspace:
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 1.4.0
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
@@ -482,7 +482,7 @@ postgresql:
   nameOverride: postgresql-acs
   image:
     tag: "11.4.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco
@@ -506,7 +506,7 @@ postgresql-syncservice:
   nameOverride: postgresql-syncservice
   image:
     tag: "11.4.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   persistence:
     storageClass: gp2
     #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
@@ -569,17 +569,17 @@ email:
       image:
         repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
         tag: 1.1-16
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
     pemToTruststore:
       image:
         repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
         tag: 1.1-16
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
     setPerms:
       image:
         repository: busybox
-        tag: 1
-        pullPolicy: Always
+        tag: 1.33.1
+        pullPolicy: IfNotPresent
 
 mail:
   host:

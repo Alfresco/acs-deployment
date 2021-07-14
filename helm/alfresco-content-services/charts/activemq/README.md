@@ -17,12 +17,12 @@ A Helm chart Providing Apache ActiveMQ.
 | adminUser.password | string | `"admin"` |  |
 | adminUser.username | string | `"admin"` |  |
 | enabled | bool | `true` |  |
-| image.pullPolicy | string | `"Always"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
 | image.tag | string | `"5.16.1-java-11-openjdk-centos-8-483767720"` |  |
-| initContainer.image.pullPolicy | string | `"Always"` |  |
+| initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
-| initContainer.image.tag | int | `1` |  |
+| initContainer.image.tag | string | `"1.33.1"` |  |
 | initContainer.resources.limits.memory | string | `"10Mi"` |  |
 | initContainer.resources.requests.memory | string | `"5Mi"` |  |
 | livenessProbe.failureThreshold | int | `1` |  |

@@ -13,7 +13,7 @@ syncservice:
   image:
     repository: quay.io/alfresco/service-sync
     tag: 3.4.0
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     internalPort: 9090
   environment:
     JAVA_OPTS: >-
@@ -97,7 +97,7 @@ postgresql-syncservice:
   nameOverride: postgresql-syncservice
   image:
     tag: "11.7.0"
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   persistence:
     storageClass: gp2
     #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
@@ -119,8 +119,8 @@ initContainers:
   activemq:
     image:
       repository: busybox
-      tag: 1
-      pullPolicy: Always
+      tag: 1.33.1
+      pullPolicy: IfNotPresent
     resources:
       requests:
         memory: "5Mi"
@@ -129,8 +129,8 @@ initContainers:
   postgres:
     image:
       repository: busybox
-      tag: 1
-      pullPolicy: Always
+      tag: 1.33.1
+      pullPolicy: IfNotPresent
     resources:
       requests:
         memory: "5Mi"
