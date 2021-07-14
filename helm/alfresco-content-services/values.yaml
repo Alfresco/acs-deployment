@@ -17,7 +17,7 @@ repository:
     db:
       image:
         repository: busybox
-        tag: 1
+        tag: 1.33.1
         pullPolicy: IfNotPresent
       resources:
         requests:
@@ -27,7 +27,7 @@ repository:
     fs:
       image:
         repository: busybox
-        tag: 1
+        tag: 1.33.1
         pullPolicy: IfNotPresent
       resources:
         requests:
@@ -362,7 +362,7 @@ filestore:
   initContainer:
     image:
       repository: busybox
-      tag: 1
+      tag: 1.33.1
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -679,7 +679,7 @@ email:
     setPerms:
       image:
         repository: busybox
-        tag: 1
+        tag: 1.33.1
         pullPolicy: IfNotPresent
 
 mail:

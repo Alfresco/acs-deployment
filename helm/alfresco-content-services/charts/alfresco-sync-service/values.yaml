@@ -119,7 +119,7 @@ initContainers:
   activemq:
     image:
       repository: busybox
-      tag: 1
+      tag: 1.33.1
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -129,7 +129,7 @@ initContainers:
   postgres:
     image:
       repository: busybox
-      tag: 1
+      tag: 1.33.1
       pullPolicy: IfNotPresent
     resources:
       requests:
