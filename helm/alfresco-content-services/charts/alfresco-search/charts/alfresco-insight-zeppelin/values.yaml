@@ -10,7 +10,7 @@ insightzeppelin:
 image:
   repository: quay.io/alfresco/insight-zeppelin
   tag: "1.4.0"
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   internalPort: 9090
 service:
   name: zeppelin

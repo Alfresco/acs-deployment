@@ -4,7 +4,7 @@ replicaCount: 1
 image:
   repository: alfresco/alfresco-activemq
   tag: 5.16.1-java-11-openjdk-centos-8-483767720
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 adminUser:
   username: admin
   password: admin
@@ -36,8 +36,8 @@ services:
 initContainer:
   image:
     repository: busybox
-    tag: 1
-    pullPolicy: Always
+    tag: 1.33.1
+    pullPolicy: IfNotPresent
   resources:
     requests:
       memory: "5Mi"
