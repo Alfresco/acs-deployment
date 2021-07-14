@@ -484,7 +484,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "2.0.1.1"
+    tag: "2.0.2"
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
@@ -522,7 +522,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.2.0-adw
+    tag: 2.3.0-adw
     pullPolicy: Always
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"

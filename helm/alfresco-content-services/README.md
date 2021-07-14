@@ -62,7 +62,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-digital-workspace.extraEnv | string | `"{{- if .Values.global.ai.enabled }}\n- name: APP_CONFIG_PLUGIN_AI_SERVICE\n  value: '{{ .Values.global.ai.enabled }}'\n{{- end }}"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"Always"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
-| alfresco-digital-workspace.image.tag | string | `"2.2.0-adw"` |  |
+| alfresco-digital-workspace.image.tag | string | `"2.3.0-adw"` |  |
 | alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-digital-workspace.ingress.path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
@@ -81,7 +81,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.repository.port | int | `80` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.0.1.1"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.2"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
