@@ -82,7 +82,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-search.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.repository.port | int | `80` |  |
 | alfresco-search.searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.0.1.1"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.2"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |

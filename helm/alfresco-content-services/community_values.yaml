@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: "7.1.0-M1"
+    tag: "7.1.0-A9"
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -98,7 +98,7 @@ pdfrenderer:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.5.0"
+    tag: "2.5.1"
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -131,7 +131,7 @@ imagemagick:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.5.0"
+    tag: "2.5.1"
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -164,7 +164,7 @@ libreoffice:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.5.0"
+    tag: "2.5.1"
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -197,7 +197,7 @@ tika:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.5.0"
+    tag: "2.5.1"
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -231,7 +231,7 @@ transformmisc:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.5.0"
+    tag: "2.5.1"
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -264,7 +264,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "7.1.0-M1"
+    tag: "7.1.0-M2"
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -339,7 +339,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "2.0.1"
+    tag: "2.0.2"
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
