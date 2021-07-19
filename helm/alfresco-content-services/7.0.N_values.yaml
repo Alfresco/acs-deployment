@@ -18,27 +18,27 @@ transformrouter:
 pdfrenderer:
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.5.1"
+    tag: "2.5.2"
 
 imagemagick:
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.5.1"
+    tag: "2.5.2"
 
 libreoffice:
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.5.1"
+    tag: "2.5.2"
 
 tika:
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.5.1"
+    tag: "2.5.2"
 
 transformmisc:
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.5.1"
+    tag: "2.5.2"
 
 aiTransformer:
   image:
