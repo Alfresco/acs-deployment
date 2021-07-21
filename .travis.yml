@@ -34,6 +34,7 @@ import:
 
 env:
   global:
+    - HOSTED_ZONE=dev.envalfresco.com
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
     - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
@@ -198,7 +199,7 @@ _helm_deploy: &helm_deploy
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
-    --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.dev.alfresco.me" \
+    --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.${HOSTED_ZONE}" \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
     --set controller.publishService.enabled=true \
@@ -212,7 +213,7 @@ _helm_deploy: &helm_deploy
     --values=$values_file \
     --set externalPort="443" \
     --set externalProtocol="https" \
-    --set externalHost="$namespace.dev.alfresco.me" \
+    --set externalHost="$namespace.${HOSTED_ZONE}" \
     --set persistence.enabled=true \
     --set persistence.storageClass.enabled=true \
     --set persistence.storageClass.name="nfs-client" \
@@ -228,9 +229,9 @@ _helm_deploy: &helm_deploy
     DNS_SLEEP_SECONDS=10
 
     echo "Trying to perform a trace DNS query to prevent caching"
-    dig +trace $namespace.dev.alfresco.me @8.8.8.8
+    dig +trace $namespace.${HOSTED_ZONE} @8.8.8.8
     while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
-      host $namespace.dev.alfresco.me 8.8.8.8
+      host $namespace.${HOSTED_ZONE} 8.8.8.8
       if [ "$?" -eq 1 ]; then
         DNS_COUNTER=$((DNS_COUNTER + 1))
         echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
@@ -241,7 +242,7 @@ _helm_deploy: &helm_deploy
       fi
     done
 
-    [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.dev.alfresco.me did not propagate within expected time" && exit 1
+    [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.${HOSTED_ZONE} did not propagate within expected time" && exit 1
 
     pods_ready
 
@@ -250,14 +251,14 @@ _helm_deploy: &helm_deploy
     sleep 180
 
     # run acs checks
-    docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+    docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
     TEST_RESULT=$?
     echo "TEST_RESULT=${TEST_RESULT}"
     if [[ "${TEST_RESULT}" == "0" ]]; then
       TEST_RESULT=0
       # run sync service checks
       if [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
-        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
       fi
@@ -278,7 +279,7 @@ _helm_deploy: &helm_deploy
         pods_ready
 
         # run checks after pod deletion
-        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.dev.alfresco.me"
+        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
       fi
