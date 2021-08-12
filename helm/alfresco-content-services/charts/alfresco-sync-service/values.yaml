@@ -12,7 +12,7 @@ syncservice:
   enabled: true
   image:
     repository: quay.io/alfresco/service-sync
-    tag: 3.4.0
+    tag: 3.4.1-A1
     pullPolicy: IfNotPresent
     internalPort: 9090
   environment:
