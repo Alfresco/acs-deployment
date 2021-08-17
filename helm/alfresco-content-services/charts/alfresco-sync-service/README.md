@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 Alfresco Syncservice
 
-![Version: 3.0.8](https://img.shields.io/badge/Version-3.0.8-informational?style=flat-square)
+![Version: 3.0.9](https://img.shields.io/badge/Version-3.0.9-informational?style=flat-square)
 
 ## Values
 
@@ -66,7 +66,7 @@ Alfresco Syncservice
 | syncservice.image.internalPort | int | `9090` |  |
 | syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | syncservice.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| syncservice.image.tag | string | `"3.4.0"` |  |
+| syncservice.image.tag | string | `"3.4.1-A1"` |  |
 | syncservice.ingress.path | string | `"/syncservice"` |  |
 | syncservice.livenessProbe.initialDelaySeconds | int | `150` |  |
 | syncservice.livenessProbe.periodSeconds | int | `30` |  |
