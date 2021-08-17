@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 Alfresco Syncservice
 
-![Version: 3.0.8](https://img.shields.io/badge/Version-3.0.8-informational?style=flat-square)
+![Version: 3.0.9](https://img.shields.io/badge/Version-3.0.9-informational?style=flat-square)
 
 ## Values
 
