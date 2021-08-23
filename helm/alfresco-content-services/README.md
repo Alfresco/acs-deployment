@@ -120,7 +120,27 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | mail.username | string | `nil` |  |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
-| ooi | object | `{"enabled":false}` | Choose if you want Office Online Integration capabilities |
+| msTeams | object | `{"adw":{"contextPath":"/workspace/"},"chat":{"filenameEnabled":true,"imageEnabled":true,"metadataEnabled":true},"enabled":false,"microsoft":{"app":{"id":null,"oauth":{"connectionName":"alfresco"},"password":null}}}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
+| msTeamsService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
+| msTeamsService.image.internalPort | int | `3978` |  |
+| msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
+| msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
+| msTeamsService.image.tag | string | `"0.4.0-A1"` |  |
+| msTeamsService.ingress.path | string | `"/ms-teams-service"` |  |
+| msTeamsService.ingress.tls | list | `[]` |  |
+| msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
+| msTeamsService.livenessProbe.periodSeconds | int | `20` |  |
+| msTeamsService.livenessProbe.timeoutSeconds | int | `10` |  |
+| msTeamsService.readinessProbe.initialDelaySeconds | int | `20` |  |
+| msTeamsService.readinessProbe.periodSeconds | int | `60` |  |
+| msTeamsService.readinessProbe.timeoutSeconds | int | `10` |  |
+| msTeamsService.replicaCount | int | `2` |  |
+| msTeamsService.resources.limits.memory | string | `"1000Mi"` |  |
+| msTeamsService.resources.requests.memory | string | `"1000Mi"` |  |
+| msTeamsService.service.externalPort | int | `80` |  |
+| msTeamsService.service.name | string | `"ms-teams-service"` |  |
+| msTeamsService.service.type | string | `"ClusterIP"` |  |
+| ooi | object | `{"enabled":false}` | Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365) |
 | ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
 | ooiService.image.internalPort | int | `9095` |  |
 | ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
