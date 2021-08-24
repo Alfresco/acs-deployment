@@ -120,7 +120,11 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | mail.username | string | `nil` |  |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
-| msTeams | object | `{"adw":{"contextPath":"/workspace/"},"chat":{"filenameEnabled":true,"imageEnabled":true,"metadataEnabled":true},"enabled":false,"microsoft":{"app":{"id":null,"oauth":{"connectionName":"alfresco"},"password":null}}}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
+| msTeams | object | `{"enabled":false}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
+| msTeamsService.adw.contextPath | string | `"/workspace/"` |  |
+| msTeamsService.chat.filenameEnabled | bool | `true` |  |
+| msTeamsService.chat.imageEnabled | bool | `true` |  |
+| msTeamsService.chat.metadataEnabled | bool | `true` |  |
 | msTeamsService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
 | msTeamsService.image.internalPort | int | `3978` |  |
 | msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -131,6 +135,9 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
 | msTeamsService.livenessProbe.periodSeconds | int | `20` |  |
 | msTeamsService.livenessProbe.timeoutSeconds | int | `10` |  |
+| msTeamsService.microsoft.app.id | string | `"change_me"` |  |
+| msTeamsService.microsoft.app.oauth.connectionName | string | `"alfresco"` |  |
+| msTeamsService.microsoft.app.password | string | `"change_me"` |  |
 | msTeamsService.readinessProbe.initialDelaySeconds | int | `20` |  |
 | msTeamsService.readinessProbe.periodSeconds | int | `60` |  |
 | msTeamsService.readinessProbe.timeoutSeconds | int | `10` |  |
