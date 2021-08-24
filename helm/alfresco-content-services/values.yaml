@@ -126,6 +126,10 @@ ooiService:
     periodSeconds: 20
     timeoutSeconds: 10
 
+# -- Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams)
+msTeams:
+  enabled: false
+
 msTeamsService:
   replicaCount: 2
   image:
@@ -158,6 +162,19 @@ msTeamsService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
+  
+  microsoft:
+    app:
+      id: change_me
+      password: change_me
+      oauth:
+        connectionName: alfresco
+  adw:
+    contextPath: /workspace/
+  chat:
+    filenameEnabled: true
+    metadataEnabled: true
+    imageEnabled: true
 
 transformrouter:
   replicaCount: 2
@@ -582,22 +599,6 @@ alfresco-digital-workspace:
 # -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
 ooi:
   enabled: false
-
-# -- Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams)
-msTeams:
-  enabled: false
-  microsoft:
-    app:
-      id:
-      password:
-      oauth:
-        connectionName: alfresco
-  adw:
-    contextPath: /workspace/
-  chat:
-    filenameEnabled: true
-    metadataEnabled: true
-    imageEnabled: true
 
 # -- Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl

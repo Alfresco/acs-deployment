@@ -41,13 +41,13 @@ helm install acs alfresco/alfresco-content-services \
 --set messageBroker.user="alfresco" \
 --set messageBroker.password="YOUR-MQ-PASSWORD" \
 --set msTeams.enabled=true \
---set msTeams.microsoft.app.id="YOUR-MS-APP-ID" \
---set msTeams.microsoft.app.password="YOUR-MS-APP-PWD" \
---set msTeams.microsoft.app.oauth.connectionName="alfresco" \
---set msTeams.adw.contextPath="/workspace/" \
---set msTeams.chat.filenameEnabled=true \
---set msTeams.chat.metadataEnabled=true \
---set msTeams.chat.imageEnabled=true \
+--set msTeamsService.microsoft.app.id="YOUR-MS-APP-ID" \
+--set msTeamsService.microsoft.app.password="YOUR-MS-APP-PWD" \
+--set msTeamsService.microsoft.app.oauth.connectionName="alfresco" \
+--set msTeamsService.adw.contextPath="/workspace/" \
+--set msTeamsService.chat.filenameEnabled=true \
+--set msTeamsService.chat.metadataEnabled=true \
+--set msTeamsService.chat.imageEnabled=true \
 --atomic \
 --timeout 10m0s \
 --namespace=alfresco
