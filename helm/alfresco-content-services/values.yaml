@@ -126,6 +126,56 @@ ooiService:
     periodSeconds: 20
     timeoutSeconds: 10
 
+# -- Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams)
+msTeams:
+  enabled: false
+
+msTeamsService:
+  replicaCount: 2
+  image:
+    repository: quay.io/alfresco/alfresco-ms-teams-service
+    tag: "0.4.0-A1"
+    pullPolicy: IfNotPresent
+    internalPort: 3978
+  service:
+    name: ms-teams-service
+    type: ClusterIP
+    externalPort: 80
+  ingress:
+    path: /ms-teams-service
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  resources:
+    requests:
+      memory: "1000Mi"
+    limits:
+      memory: "1000Mi"
+  environment:
+    JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+  readinessProbe:
+    initialDelaySeconds: 20
+    periodSeconds: 60
+    timeoutSeconds: 10
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 20
+    timeoutSeconds: 10
+  
+  microsoft:
+    app:
+      id: change_me
+      password: change_me
+      oauth:
+        connectionName: alfresco
+  adw:
+    contextPath: /workspace/
+  chat:
+    filenameEnabled: true
+    metadataEnabled: true
+    imageEnabled: true
+
 transformrouter:
   replicaCount: 2
   image:
@@ -546,7 +596,7 @@ alfresco-digital-workspace:
       cpu: 150m
       memory: 256Mi
 
-# -- Choose if you want Office Online Integration capabilities
+# -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
 ooi:
   enabled: false
 
