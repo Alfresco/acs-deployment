@@ -126,7 +126,6 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.chat.filenameEnabled | bool | `true` |  |
 | msTeamsService.chat.imageEnabled | bool | `true` |  |
 | msTeamsService.chat.metadataEnabled | bool | `true` |  |
-| msTeamsService.environment.JAVA_OPTS | string | `" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | msTeamsService.image.internalPort | int | `3978` |  |
 | msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
