@@ -152,8 +152,6 @@ msTeamsService:
       memory: "1000Mi"
     limits:
       memory: "1000Mi"
-  environment:
-    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
