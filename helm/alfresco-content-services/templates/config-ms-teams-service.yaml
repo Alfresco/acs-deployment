@@ -10,7 +10,7 @@ data:
   # The JAVA_OPTS defined in the values.yaml file for the "msTeamsService" are set here using proper quotes
   {{- if .Values.msTeamsService.environment }}
   {{- range $key, $val := .Values.msTeamsService.environment }}
-  {{ $key }}: {{ tpl $val $ | quote }}
+  {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
   ALFRESCO_BASE_URL: {{ .Values.msTeamsService.alfresco.baseUrl }}
