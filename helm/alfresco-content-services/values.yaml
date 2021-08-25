@@ -153,7 +153,7 @@ msTeamsService:
     limits:
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+    JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -162,15 +162,16 @@ msTeamsService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
-  
+  alfresco:
+    baseUrl: "{protocol}//{hostname}{:port}"
+    adw:
+      contextPath: /workspace/
   microsoft:
     app:
       id: change_me
       password: change_me
       oauth:
         connectionName: alfresco
-  adw:
-    contextPath: /workspace/
   chat:
     filenameEnabled: true
     metadataEnabled: true
