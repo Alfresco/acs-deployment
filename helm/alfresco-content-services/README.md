@@ -122,7 +122,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
 | msTeams | object | `{"enabled":false}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
 | msTeamsService.alfresco.adw.contextPath | string | `"/workspace/"` |  |
-| msTeamsService.alfresco.baseUrl | string | `"{protocol}//{hostname}{:port}"` |  |
+| msTeamsService.alfresco.baseUrl | string | `"change_me_alf_base_url"` |  |
 | msTeamsService.chat.filenameEnabled | bool | `true` |  |
 | msTeamsService.chat.imageEnabled | bool | `true` |  |
 | msTeamsService.chat.metadataEnabled | bool | `true` |  |
@@ -135,9 +135,9 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
 | msTeamsService.livenessProbe.periodSeconds | int | `20` |  |
 | msTeamsService.livenessProbe.timeoutSeconds | int | `10` |  |
-| msTeamsService.microsoft.app.id | string | `"change_me"` |  |
+| msTeamsService.microsoft.app.id | string | `"change_me_app_id"` |  |
 | msTeamsService.microsoft.app.oauth.connectionName | string | `"alfresco"` |  |
-| msTeamsService.microsoft.app.password | string | `"change_me"` |  |
+| msTeamsService.microsoft.app.password | string | `"change_me_app_pwd"` |  |
 | msTeamsService.readinessProbe.initialDelaySeconds | int | `20` |  |
 | msTeamsService.readinessProbe.periodSeconds | int | `60` |  |
 | msTeamsService.readinessProbe.timeoutSeconds | int | `10` |  |

@@ -161,13 +161,13 @@ msTeamsService:
     periodSeconds: 20
     timeoutSeconds: 10
   alfresco:
-    baseUrl: "{protocol}//{hostname}{:port}"
+    baseUrl: change_me_alf_base_url
     adw:
       contextPath: /workspace/
   microsoft:
     app:
-      id: change_me
-      password: change_me
+      id: change_me_app_id
+      password: change_me_app_pwd
       oauth:
         connectionName: alfresco
   chat:
