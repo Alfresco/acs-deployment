@@ -121,11 +121,8 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
 | msTeams | object | `{"enabled":false}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
-| msTeamsService.alfresco.adw.contextPath | string | `"/workspace/"` |  |
 | msTeamsService.alfresco.baseUrl | string | `"change_me_alf_base_url"` |  |
-| msTeamsService.chat.filenameEnabled | bool | `true` |  |
-| msTeamsService.chat.imageEnabled | bool | `true` |  |
-| msTeamsService.chat.metadataEnabled | bool | `true` |  |
+| msTeamsService.alfresco.digitalWorkspace.contextPath | string | `"/workspace/"` |  |
 | msTeamsService.image.internalPort | int | `3978` |  |
 | msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
@@ -147,6 +144,9 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.service.externalPort | int | `80` |  |
 | msTeamsService.service.name | string | `"ms-teams-service"` |  |
 | msTeamsService.service.type | string | `"ClusterIP"` |  |
+| msTeamsService.teams.chat.filenameEnabled | bool | `true` |  |
+| msTeamsService.teams.chat.imageEnabled | bool | `true` |  |
+| msTeamsService.teams.chat.metadataEnabled | bool | `true` |  |
 | ooi | object | `{"enabled":false}` | Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365) |
 | ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
 | ooiService.image.internalPort | int | `9095` |  |
