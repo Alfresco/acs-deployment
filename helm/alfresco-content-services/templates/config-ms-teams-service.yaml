@@ -14,7 +14,7 @@ data:
   {{- end }}
   {{- end }}
   ALFRESCO_BASE_URL: "{{ .Values.msTeamsService.alfresco.baseUrl }}"
-  ALFRESCO_DIGITAL_WORKSPACE_CONTEXT_PATH: "{{ .Values.msTeamsService.alfresco.adw.contextPath }}"
+  ALFRESCO_DIGITAL_WORKSPACE_CONTEXT_PATH: "{{ .Values.msTeamsService.alfresco.digitalWorkspace.contextPath }}"
   MICROSOFT_APP_ID: "{{ .Values.msTeamsService.microsoft.app.id }}"
   MICROSOFT_APP_PASSWORD: "{{ .Values.msTeamsService.microsoft.app.password }}"
   MICROSOFT_APP_OAUTH_CONNECTION_NAME: "{{ .Values.msTeamsService.microsoft.app.oauth.connectionName }}"
