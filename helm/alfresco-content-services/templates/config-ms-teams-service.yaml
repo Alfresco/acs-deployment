@@ -18,7 +18,7 @@ data:
   MICROSOFT_APP_ID: "{{ .Values.msTeamsService.microsoft.app.id }}"
   MICROSOFT_APP_PASSWORD: "{{ .Values.msTeamsService.microsoft.app.password }}"
   MICROSOFT_APP_OAUTH_CONNECTION_NAME: "{{ .Values.msTeamsService.microsoft.app.oauth.connectionName }}"
-  TEAMS_CHAT_FILENAME_ENABLED: "{{ .Values.msTeamsService.chat.filenameEnabled }}"
-  TEAMS_CHAT_METADATA_ENABLED: "{{ .Values.msTeamsService.chat.metadataEnabled }}"
-  TEAMS_CHAT_IMAGE_ENABLED: "{{ .Values.msTeamsService.chat.imageEnabled }}"
+  TEAMS_CHAT_FILENAME_ENABLED: "{{ .Values.msTeamsService.teams.chat.filenameEnabled }}"
+  TEAMS_CHAT_METADATA_ENABLED: "{{ .Values.msTeamsService.teams.chat.metadataEnabled }}"
+  TEAMS_CHAT_IMAGE_ENABLED: "{{ .Values.msTeamsService.teams.chat.imageEnabled }}"
 {{- end }}
