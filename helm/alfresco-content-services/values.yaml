@@ -162,7 +162,7 @@ msTeamsService:
     timeoutSeconds: 10
   alfresco:
     baseUrl: change_me_alf_base_url
-    adw:
+    digitalWorkspace:
       contextPath: /workspace/
   microsoft:
     app:
@@ -170,10 +170,11 @@ msTeamsService:
       password: change_me_app_pwd
       oauth:
         connectionName: alfresco
-  chat:
-    filenameEnabled: true
-    metadataEnabled: true
-    imageEnabled: true
+  teams:
+    chat:
+      filenameEnabled: true
+      metadataEnabled: true
+      imageEnabled: true
 
 transformrouter:
   replicaCount: 2
