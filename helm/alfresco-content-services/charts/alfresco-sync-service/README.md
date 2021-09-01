@@ -84,3 +84,4 @@ Alfresco Syncservice
 | syncservice.service.externalPort | int | `80` |  |
 | syncservice.service.name | string | `"syncservice"` |  |
 | syncservice.service.type | string | `"NodePort"` |  |
+
