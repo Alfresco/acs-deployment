@@ -163,6 +163,7 @@ msTeamsService:
   alfresco:
     baseUrl: change_me_alf_base_url
     digitalWorkspace:
+      baseUrl: change_me_adw_base_url
       contextPath: /workspace/
   microsoft:
     app:

@@ -122,6 +122,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
 | msTeams | object | `{"enabled":false}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
 | msTeamsService.alfresco.baseUrl | string | `"change_me_alf_base_url"` |  |
+| msTeamsService.alfresco.digitalWorkspace.baseUrl | string | `"change_me_adw_base_url"` |  |
 | msTeamsService.alfresco.digitalWorkspace.contextPath | string | `"/workspace/"` |  |
 | msTeamsService.image.internalPort | int | `3978` |  |
 | msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |

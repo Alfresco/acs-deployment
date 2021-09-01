@@ -41,7 +41,8 @@ helm install acs alfresco/alfresco-content-services \
 --set messageBroker.user="alfresco" \
 --set messageBroker.password="YOUR-MQ-PASSWORD" \
 --set msTeams.enabled=true \
---set msTeamsService.alfresco.baseUrl="https://acs.YOUR-DOMAIN-NAME:443"
+--set msTeamsService.alfresco.baseUrl="https://acs.YOUR-DOMAIN-NAME:443" \
+--set msTeamsService.alfresco.digitalWorkspace.baseUrl="https://acs.YOUR-DOMAIN-NAME:443" \
 --set msTeamsService.alfresco.digitalWorkspace.contextPath="/workspace/" \
 --set msTeamsService.microsoft.app.id="YOUR-MS-APP-ID" \
 --set msTeamsService.microsoft.app.password="YOUR-MS-APP-PWD" \
