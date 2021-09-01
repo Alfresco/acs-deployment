@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 A Helm chart for deploying Alfresco Content Services
 
-![Version: 5.1.0-M2](https://img.shields.io/badge/Version-5.1.0--M2-informational?style=flat-square)
+![Version: 5.1.0-M2](https://img.shields.io/badge/Version-5.1.0--M2-informational?style=flat-square) 
 
 ## Requirements
 
@@ -16,12 +16,13 @@ A Helm chart for deploying Alfresco Content Services
 |------------|------|---------|
 |  | activemq | 2.0.0 |
 |  | alfresco-search | 1.0.4 |
-|  | alfresco-sync-service | 3.0.9 |
+|  | alfresco-sync-service | 3.0.10 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.1.0-M12 |
 | https://charts.bitnami.com/bitnami | postgresql | 8.9.6 |
 | https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 8.9.6 |
 
 ## Values
+
 
 ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
@@ -31,6 +32,7 @@ For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimenta
 But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
 If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
+
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
