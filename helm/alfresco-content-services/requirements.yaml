@@ -19,3 +19,4 @@ dependencies:
     version: 1.0.4
   - name: alfresco-sync-service
     version: 3.0.10
+    
