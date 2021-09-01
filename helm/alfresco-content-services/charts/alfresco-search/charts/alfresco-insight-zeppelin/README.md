@@ -36,3 +36,4 @@ A Helm chart for deploying Alfresco Insight Zeppelin
 | service.externalPort | int | `80` |  |
 | service.name | string | `"zeppelin"` |  |
 | service.type | string | `"ClusterIP"` |  |
+
