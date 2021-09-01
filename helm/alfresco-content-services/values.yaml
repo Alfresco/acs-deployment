@@ -406,7 +406,7 @@ filestore:
   replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: "0.14.1"
+    tag: "0.15.0"
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
