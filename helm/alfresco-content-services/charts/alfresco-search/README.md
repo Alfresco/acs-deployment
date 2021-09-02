@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 A Helm chart for deploying Alfresco Search
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) 
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square)
 
 ## Requirements
 
