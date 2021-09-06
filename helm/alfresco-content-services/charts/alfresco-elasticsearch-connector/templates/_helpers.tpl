@@ -68,3 +68,13 @@ Get Alfresco Search Full Name
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- define "content-services.shortname" -}}
+{{- $name := (.Values.nameOverride | default (printf "%s" "alfresco-cs")) -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "alfresco.shortname" -}}
+{{- $name := (.Values.nameOverride | default (printf "%s" "alfresco-")) -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}

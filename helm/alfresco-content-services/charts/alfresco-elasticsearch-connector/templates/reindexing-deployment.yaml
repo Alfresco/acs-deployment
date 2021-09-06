@@ -1,16 +1,8 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: {{ include "alfresco-elasticsearch-connector.fullname" . }}-reindexing
-  labels:
-    {{- include "alfresco-elasticsearch-connector.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
-  selector:
-    matchLabels:
-      {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -24,16 +16,12 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "alfresco-elasticsearch-connector.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing
           image: "{{ .Values.image.repositoryPrefix }}-reindexing:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
-            - secretRef:
-                name: {{ template "content-services.shortname" . }}-dbsecret
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-elasticsearch-connector-reindexing-configmap
           env:
@@ -61,15 +49,3 @@ spec:
               value: http://{{ template "alfresco.shortname" . }}-cs-repository/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
           command: [ "/bin/sh","-c" ]
           args: [ "while [ $(curl -sw '%{http_code}' $ALFRESCO_REPOSITORY_URL -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the Alfresco Repository...'; done" ]
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}

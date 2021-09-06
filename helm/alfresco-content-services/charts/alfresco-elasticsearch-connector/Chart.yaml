@@ -1,6 +1,6 @@
 apiVersion: v2
 name: alfresco-elasticsearch-connector
-description: A Helm chart for deploying Alfresco Search Service 3
+description: A Helm chart for deploying Alfresco Elasticsearch connector
 home: https://www.alfresco.com
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
 keywords:

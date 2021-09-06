@@ -14,8 +14,7 @@ data:
   SPRING_ACTIVEMQ_BROKERURL: nio://{{ .Release.Name }}-activemq-broker:61616
   ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco.shortname" . }}-cs-transform-misc/transform/config
-  SPRING_DATASOURCE_URL: "jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.nameOverride }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}"
-
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.name }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}"
   {{- if .Values.environment }}
   {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
