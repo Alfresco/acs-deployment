@@ -1,0 +1,15 @@
+apiVersion: v2
+name: alfresco-elasticsearch-connector
+description: A Helm chart for deploying Alfresco Search Service 3
+home: https://www.alfresco.com
+icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+keywords:
+  - search
+  - search services
+  - alfresco search services
+  - elasticsearch
+type: application
+version: 0.1.0
+sources:
+  - https://github.com/alfresco/acs-deployment
+appVersion: "1.16.0"

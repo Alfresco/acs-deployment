@@ -1,0 +1,68 @@
+{{- $root := . -}}
+{{- range .Values.liveIndexing.services }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "alfresco-elasticsearch-connector.fullname" $root }}-{{ . }}
+  labels:
+    {{- include "alfresco-elasticsearch-connector.labels" $root | nindent 4 }}
+spec:
+  {{- if not $root.Values.autoscaling.enabled }}
+  replicas: {{ $root.Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-elasticsearch-connector.selectorLabels" $root | nindent 6 }}
+  template:
+    metadata:
+      {{- with $root.Values.podAnnotations }}
+      annotations:
+        {{- toYaml $root | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-elasticsearch-connector.selectorLabels" $root | nindent 8 }}
+    spec:
+      {{- with $root.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml $root | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "alfresco-elasticsearch-connector.serviceAccountName" $root }}
+      securityContext:
+        {{- toYaml $root.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $root.Chart.Name }}-{{ . }}
+          image: "{{ $root.Values.image.repositoryPrefix }}-live-indexing-{{ . }}:{{ $root.Values.image.tag }}"
+          imagePullPolicy: {{ $root.Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-elasticsearch-connector.fullName" $root }}-elasticsearch-connector-configmap
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 300
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+      {{- with $root.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $root | nindent 8 }}
+      {{- end }}
+      {{- with $root.Values.affinity }}
+      affinity:
+        {{- toYaml $root | nindent 8 }}
+      {{- end }}
+      {{- with $root.Values.tolerations }}
+      tolerations:
+        {{- toYaml $root | nindent 8 }}
+      {{- end }}
+---
+{{- end }}
