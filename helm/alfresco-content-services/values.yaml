@@ -180,7 +180,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.4.0"
+    tag: "1.4.1-A3"
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
