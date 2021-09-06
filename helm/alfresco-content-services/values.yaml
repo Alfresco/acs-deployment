@@ -560,15 +560,6 @@ alfresco-search:
 
 alfresco-elasticsearch-connector:
   enabled: false
-  kibana:
-    enabled: true
-  database:
-    external: false
-  reindexing:
-    postgresql:
-      nameOverride: postgresql-acs
-      database: alfresco
-      port: 5432
 
 alfresco-digital-workspace:
   enabled: true

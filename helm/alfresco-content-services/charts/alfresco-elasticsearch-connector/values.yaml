@@ -103,6 +103,12 @@ liveIndexing:
 # -- The parent chart will set the values for "repository.host" and "repository.port"
 repository: {}
 
+reindexing:
+  postgresql:
+    name: postgresql-acs
+    database: alfresco
+    port: 5432
+
 
 elasticsearch:
   enabled: true
