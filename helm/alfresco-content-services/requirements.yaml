@@ -16,6 +16,10 @@ dependencies:
   - name: activemq
     version: 2.0.0
   - name: alfresco-search
+    condition: alfresco-search.enabled
     version: 1.0.4
   - name: alfresco-sync-service
     version: 3.0.9
+  - name: alfresco-elasticsearch-connector
+    version: 0.1.0
+    condition: alfresco-elasticsearch-connector.enabled

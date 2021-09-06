@@ -59,6 +59,9 @@ alfresco-search:
   searchServicesImage:
     tag: "2.0.2"
 
+alfresco-elasticsearch-connector:
+  enabled: false
+
 alfresco-digital-workspace:
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
