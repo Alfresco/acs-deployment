@@ -13,7 +13,7 @@ ooiService:
 transformrouter:
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.4.0"
+    tag: "1.4.1-A3"
 
 pdfrenderer:
   image:
@@ -48,7 +48,7 @@ aiTransformer:
 filestore:
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: "0.14.1"
+    tag: "0.15.0"
 
 share:
   image:
