@@ -43,6 +43,7 @@ data:
       {{- end }}
       {{- if index .Values "alfresco-elasticsearch-connector" "enabled" }}
       -Dindex.subsystem.name=elasticsearch
+      -Delasticsearch.createIndexIfNotExists=true
       -Delasticsearch.host=elasticsearch-master
       -Delasticsearch.indexName={{ index .Values "alfresco-elasticsearch-connector" "indexName" }}
       {{- end }}
