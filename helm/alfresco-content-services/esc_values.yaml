@@ -1,0 +1,7 @@
+# This is a YAML-formatted file.  Declare variables to be passed into your templates.
+
+alfresco-elasticsearch-connector:
+  enabled: true
+
+alfresco-search:
+  enabled: false

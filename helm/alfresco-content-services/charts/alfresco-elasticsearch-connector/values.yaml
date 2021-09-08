@@ -95,16 +95,24 @@ kibana:
   enabled: true
 
 liveIndexing:
-#  All services that must be deployed for live indexing
+#  -- The property liveIndexing.services contains a list of all live indexing services. Mediation service must be always a single instance. Other service can scale up.
   services:
-    - metadata
-    - content
-    - mediation
-    - path
+    -
+      name: mediation
+    -
+      name: content
+      replicaCount: 1
+    -
+      name: metadata
+      replicaCount: 1
+    -
+      name: path
+      replicaCount: 1
 
 # -- The parent chart will set the values for "repository.host" and "repository.port"
 repository: {}
 
+# -- The parent chart will set database username and password.
 reindexing:
   postgresql:
     name: postgresql-acs
