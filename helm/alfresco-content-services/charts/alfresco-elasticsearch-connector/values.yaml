@@ -89,11 +89,13 @@ indexName: alfresco
 pathIndexingComponent:
   enabled: true
 contentMediaTypeCache:
-  enabled: false
+  enabled: true
   refreshTime: 0 0 * * * *
 kibana:
   enabled: true
+
 liveIndexing:
+#  All services that must be deployed for live indexing
   services:
     - metadata
     - content
