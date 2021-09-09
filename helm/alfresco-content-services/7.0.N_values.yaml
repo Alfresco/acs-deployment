@@ -43,7 +43,7 @@ transformmisc:
 aiTransformer:
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.3.0"
+    tag: "1.4.0-A1"
 
 filestore:
   image:
