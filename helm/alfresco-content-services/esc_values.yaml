@@ -5,3 +5,12 @@ alfresco-elasticsearch-connector:
 
 alfresco-search:
   enabled: false
+
+alfresco-digital-workspace:
+  image:
+    repository: quay.io/alfresco/alfresco-digital-workspace
+    tag: latest
+
+global:
+  ai:
+    enabled: false
