@@ -114,7 +114,7 @@ repository: {}
 
 # -- The parent chart will set database username and password.
 reindexing:
-  enabled: true
+  enabled: false
   pathIndexingEnabled: true
   postgresql:
     name: postgresql-acs

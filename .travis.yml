@@ -413,7 +413,7 @@ jobs:
       stage: community
       <<: *docker_deploy
 
-    - name: Deploy Latest Chart with ESC and Run Postman Checks
+    - name: Elasticsearch Connector
       stage: esc
       <<: *helm_deploy
 

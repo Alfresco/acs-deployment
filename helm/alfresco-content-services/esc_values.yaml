@@ -1,16 +1,8 @@
-# This is a YAML-formatted file.  Declare variables to be passed into your templates.
-
 alfresco-elasticsearch-connector:
   enabled: true
 
 alfresco-search:
   enabled: false
 
-alfresco-digital-workspace:
-  image:
-    repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: latest
-
-global:
-  ai:
-    enabled: false
+reindexing:
+  enabled: true
