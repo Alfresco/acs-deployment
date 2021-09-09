@@ -251,7 +251,11 @@ _helm_deploy: &helm_deploy
     sleep 180
 
     # run acs checks
+    if [[ ${TRAVIS_BUILD_STAGE_NAME} == "esc" ]]; then
+    docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "esc-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
+    else
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
+    fi
     TEST_RESULT=$?
     echo "TEST_RESULT=${TEST_RESULT}"
     if [[ "${TEST_RESULT}" == "0" ]]; then
