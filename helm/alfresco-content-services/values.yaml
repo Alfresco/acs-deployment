@@ -134,7 +134,7 @@ msTeamsService:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: "0.4.0-A1"
+    tag: "1.0.0-A2"
     pullPolicy: IfNotPresent
     internalPort: 3978
   service:
