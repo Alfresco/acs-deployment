@@ -2,10 +2,10 @@ dependencies:
   - name: elasticsearch
     alias: elasticsearch
     repository: https://helm.elastic.co
-    version: 7.14.0
+    version: 7.11.1
     condition: elasticsearch.enabled
   - name: kibana
     alias: kibana
     repository: https://helm.elastic.co
-    version: 7.14.0
+    version: 7.11.1
     condition: kibana.enabled

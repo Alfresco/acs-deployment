@@ -114,6 +114,8 @@ repository: {}
 
 # -- The parent chart will set database username and password.
 reindexing:
+  enabled: true
+  pathIndexingEnabled: true
   postgresql:
     name: postgresql-acs
     database: alfresco
