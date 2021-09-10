@@ -15,7 +15,7 @@ spec:
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        - name: { { .Values.global.alfrescoRegistryPullSecrets } }
       {{- end }}
       restartPolicy: Never
       containers:
