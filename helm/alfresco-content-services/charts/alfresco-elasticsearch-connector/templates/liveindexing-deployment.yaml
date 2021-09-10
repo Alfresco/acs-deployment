@@ -25,7 +25,7 @@ spec:
     spec:
       {{- with $.Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml $ | nindent 8 }}
+        - name: { { .Values.global.alfrescoRegistryPullSecrets } }
       {{- end }}
       serviceAccountName: {{ include "alfresco-elasticsearch-connector.serviceAccountName" $ }}
       securityContext:
