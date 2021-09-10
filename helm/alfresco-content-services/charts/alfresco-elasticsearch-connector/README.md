@@ -33,6 +33,7 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | elasticsearch.volumeClaimTemplate.resources.requests.storage | string | `"100M"` |  |
 | elasticsearch.volumeClaimTemplate.storageClassName | string | `"hostpath"` |  |
 | fullnameOverride | string | `""` |  |
+| global | object | `{}` | The parent chart will set the values for "alfrescoRegistryPullSecrets" |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryPrefix | string | `"quay.io/alfresco/alfresco-elasticsearch"` |  |
 | image.tag | string | `"latest"` |  |
