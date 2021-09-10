@@ -4,11 +4,11 @@ The [Alfresco Elasticsearch Connector](https://github.com/Alfresco/alfresco-elas
 
 ## Prerequisites
 
-Depending on where do you want to install Alfresco Content Services (ACS) , you need to follow the corresponding guide, for instance this is the one for a Kubernetes cluster based on [Docker Desktop](..\docker-desktop-deployment.md).
+Depending on where do you want to install Alfresco Content Services (ACS) , you need to follow the corresponding guide, for instance this is the one for a Kubernetes cluster based on [Docker Desktop](../docker-desktop-deployment.md).
 
 ## Deploy
 
-In order to replace Alfresco Search wiht Alfresco Elasticsearch Connector you need to set the `alfresco-elasticsearch-connector.enabled` property to `true` and `alfresco-search.enabled` to `false`.
+In order to replace Alfresco Search with Alfresco Elasticsearch Connector you need to set the `alfresco-elasticsearch-connector.enabled` property to `true` and `alfresco-search.enabled` to `false`.
 You can use the esc_values.yaml file in the Git repository adding more configuration if required.
 
 The Alfresco Elasticsearch Connector will start **4 new Kubernetes deployment** for live indexing:
@@ -59,4 +59,12 @@ kubectl port-forward service/acs-kibana 5601:5601 -n alfresco
 
 and then visiting http://localhost:5601/app/kibana#.
 
-If you need to access to Elasticsearch directly you have to perform the same operation 
+If you need to access to Elasticsearch directly you have to perform the same operation:
+
+```bash
+kubectl port-forward service/elasticsearch-master 9200:9200 -n alfresco
+```
+
+and then visiting http://localhost:9200/.
+
+Properties that can be used to configure the chart are available [here](../../../helm/alfresco-content-services/charts/alfresco-elasticsearch-connector/README.md)

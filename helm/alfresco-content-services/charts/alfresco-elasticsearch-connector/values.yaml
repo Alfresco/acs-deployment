@@ -112,9 +112,8 @@ liveIndexing:
 # -- The parent chart will set the values for "repository.host" and "repository.port"
 repository: {}
 
-# -- The parent chart will set database username and password.
 reindexing:
-  enabled: false
+  enabled: true
   pathIndexingEnabled: true
   postgresql:
     name: postgresql-acs
