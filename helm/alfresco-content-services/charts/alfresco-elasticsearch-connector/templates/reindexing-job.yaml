@@ -13,9 +13,10 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: { { .Values.global.alfrescoRegistryPullSecrets } }
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       restartPolicy: Never
       containers:

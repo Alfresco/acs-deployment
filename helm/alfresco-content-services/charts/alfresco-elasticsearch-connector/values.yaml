@@ -112,6 +112,9 @@ liveIndexing:
 # -- The parent chart will set the values for "repository.host" and "repository.port"
 repository: {}
 
+# -- The parent chart will set the values for "alfrescoRegistryPullSecrets"
+global: {}
+
 reindexing:
   enabled: true
   pathIndexingEnabled: true
