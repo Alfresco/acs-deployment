@@ -560,6 +560,10 @@ alfresco-search:
 
 alfresco-elasticsearch-connector:
   enabled: false
+elasticsearch:
+  enabled: false
+kibana:
+  enabled: false
 
 alfresco-digital-workspace:
   enabled: true
