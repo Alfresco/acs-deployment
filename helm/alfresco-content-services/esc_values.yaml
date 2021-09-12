@@ -1,3 +1,8 @@
+elasticsearch:
+  enabled: true
+kibana:
+  enabled: false
+
 alfresco-elasticsearch-connector:
   enabled: true
   reindexing:
