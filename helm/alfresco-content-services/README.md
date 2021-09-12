@@ -21,6 +21,8 @@ A Helm chart for deploying Alfresco Content Services
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.1.0-M12 |
 | https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 8.9.6 |
 | https://charts.bitnami.com/bitnami | postgresql | 8.9.6 |
+| https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
+| https://helm.elastic.co | kibana(kibana) | 7.10.1 |
 
 ## Values
 
@@ -93,6 +95,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | database.password | string | `nil` | ex: alfresco |
 | database.url | string | `nil` | ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco |
 | database.user | string | `nil` | ex: alfresco |
+| elasticsearch.enabled | bool | `false` |  |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.33.1"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html |
 | email.server.enabled | bool | `false` | Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html |
 | filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.15.0"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.33.1"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
@@ -105,6 +108,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | imap.mail.from.default | string | `nil` |  |
 | imap.mail.to.default | string | `nil` |  |
 | imap.server | object | `{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}` | Replace this value with the IP address (or corresponding DNS name) of your external IP interface - see https://docs.alfresco.com/6.2/tasks/imap-enable.html |
+| kibana.enabled | bool | `false` |  |
 | libreoffice | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-libreoffice","tag":"2.5.3"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":250,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":99999,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"libreoffice","type":"ClusterIP"}}` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | mail.encoding | string | `"UTF-8"` |  |
 | mail.from.default | string | `nil` |  |
