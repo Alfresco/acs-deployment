@@ -1,13 +1,42 @@
-elasticsearch:
-  enabled: true
-kibana:
-  enabled: false
-
 alfresco-elasticsearch-connector:
   enabled: true
   reindexing:
     enabled: true
 
+environment:
+  JAVA_OPTS: " -Dindex.subsystem.name=elasticsearch
+        -Dalfresco.cluster.enabled=true
+        -Ddeployment.method=HELM_CHART
+        -Dtransform.service.enabled=true
+        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
+
 alfresco-search:
+  enabled: false
+
+elasticsearch:
+  enabled: true
+  antiAffinity: "soft"
+
+  # Shrink default JVM heap.
+  esJavaOpts: "-Xmx128m -Xms128m"
+
+  # Allocate smaller chunks of memory per pod.
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512M"
+    limits:
+      cpu: "1000m"
+      memory: "512M"
+
+  # Request smaller persistent volumes.
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: "hostpath"
+    resources:
+      requests:
+        storage: 100M
+
+kibana:
   enabled: false
 

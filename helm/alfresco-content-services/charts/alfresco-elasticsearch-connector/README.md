@@ -22,16 +22,6 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
-| elasticsearch.antiAffinity | string | `"soft"` |  |
-| elasticsearch.enabled | bool | `true` |  |
-| elasticsearch.esJavaOpts | string | `"-Xmx128m -Xms128m"` |  |
-| elasticsearch.resources.limits.cpu | string | `"1000m"` |  |
-| elasticsearch.resources.limits.memory | string | `"512M"` |  |
-| elasticsearch.resources.requests.cpu | string | `"100m"` |  |
-| elasticsearch.resources.requests.memory | string | `"512M"` |  |
-| elasticsearch.volumeClaimTemplate.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| elasticsearch.volumeClaimTemplate.resources.requests.storage | string | `"100M"` |  |
-| elasticsearch.volumeClaimTemplate.storageClassName | string | `"hostpath"` |  |
 | fullnameOverride | string | `""` |  |
 | global | object | `{}` | The parent chart will set the values for "alfrescoRegistryPullSecrets" |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
