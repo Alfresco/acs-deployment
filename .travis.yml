@@ -206,7 +206,7 @@ _helm_deploy: &helm_deploy
 
     # install acs
     helm dep up helm/alfresco-content-services
-    travis_wait 45 helm upgrade --install $release_name_acs helm/alfresco-content-services \
+    travis_wait 25 helm upgrade --install $release_name_acs helm/alfresco-content-services \
     --values=$values_file \
     --set externalPort="443" \
     --set externalProtocol="https" \
@@ -218,7 +218,7 @@ _helm_deploy: &helm_deploy
     --set postgresql-syncservice.persistence.existingClaim="" \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --wait \
-    --timeout 40m0s \
+    --timeout 20m0s \
     --namespace=$namespace
 
     # check dns and pods
