@@ -15,7 +15,7 @@ alfresco-search:
 
 elasticsearch:
   enabled: true
-  antiAffinity: "soft"
+  #antiAffinity: "soft"
 
   # Shrink default JVM heap.
   esJavaOpts: "-Xmx128m -Xms128m"
