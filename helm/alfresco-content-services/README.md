@@ -204,7 +204,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.environment.JAVA_OPTS | string | `" -Dsolr.base.url=/solr -Dsolr.secureComms=none -Dindex.subsystem.name=solr6 -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | repository.environment.JAVA_TOOL_OPTIONS | string | `" -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede"` |  |
 | repository.extraInitContainers | list | `[]` |  |
-| repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value fashion |
+| repository.extraLogStatements | object | `{"org.alfresco.enterprise.license.LicenseComponent":"debug","org.alfresco.repo.importer.ImporterBootstrap":"debug"}` | Provide additional log statements by adding classes and/or packages in a key:value fashion |
 | repository.extraSideContainers | list | `[]` |  |
 | repository.extraVolumeMounts | list | `[]` |  |
 | repository.extraVolumes | list | `[]` |  |
