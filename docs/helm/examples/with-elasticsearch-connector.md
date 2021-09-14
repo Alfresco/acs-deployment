@@ -19,7 +19,7 @@ The Alfresco Elasticsearch Connector will start **4 new Kubernetes deployment** 
 
 Moreover, a **Kubernetes job** will be started in order to reindex existing contents in Elasticsearch. We suggest running this job only at the first startup.
 You can enable or disable it setting the `alfresco-elasticsearch-connector.reindexing.enabled` property to `true` or `false`.
-Currently, this Helm chart supports only the single node version. Feel free to run it manually if you prefer to use a different configuration.
+Currently, this Helm chart supports only the single node reindexing service. Feel free to run it manually if you prefer to use reindexing service with the horizontal scalability support..
 
 To deploy Alfresco with Elasticsearch Connector you can use the command below:
 
@@ -49,6 +49,34 @@ helm install acs alfresco/alfresco-content-services \
 --set repository.resources.requests.memory="2500Mi"\
 --timeout 10m0s \
 --namespace=alfresco
+```
+
+If you are using *Docker Desktop* locally, you have to set `antiAffinity` to `soft` and it is recommended to reduce Elasticsearch resources:
+
+```
+elasticsearch:
+  enabled: true
+  antiAffinity: "soft"
+
+  # Shrink default JVM heap.
+  esJavaOpts: "-Xmx128m -Xms128m"
+
+  # Allocate smaller chunks of memory per pod.
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512M"
+    limits:
+      cpu: "1000m"
+      memory: "512M"
+
+  # Request smaller persistent volumes.
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: "hostpath"
+    resources:
+      requests:
+        storage: 100M
 ```
 
 When the system is up and running, you can access to the Kibana console using port forward:
