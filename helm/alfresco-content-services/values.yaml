@@ -84,7 +84,9 @@ repository:
   command: []
   # -- Provide additional log statements by adding
   # classes and/or packages in a key:value fashion
-  extraLogStatements: {}
+  extraLogStatements:
+    org.alfresco.enterprise.license.LicenseComponent: debug
+    org.alfresco.repo.importer.ImporterBootstrap: debug
   #   org.alfresco.repo.content.transform.TransformerDebug: debug
   #   org.alfresco.repo.security.authentication.identityservice: debug
 
