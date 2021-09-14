@@ -94,7 +94,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.4.1-A3"
+    tag: "1.4.1"
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -320,7 +320,7 @@ filestore:
   replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: "0.15.0"
+    tag: "0.16.0"
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
