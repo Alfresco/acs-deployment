@@ -42,7 +42,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | aiTransformer.image.internalPort | int | `8090` |  |
 | aiTransformer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | aiTransformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| aiTransformer.image.tag | string | `"1.3.0"` |  |
+| aiTransformer.image.tag | string | `"1.4.0-A1"` |  |
 | aiTransformer.livenessProbe.initialDelaySeconds | int | `10` |  |
 | aiTransformer.livenessProbe.livenessPercent | int | `400` |  |
 | aiTransformer.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -132,7 +132,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.image.internalPort | int | `3978` |  |
 | msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
-| msTeamsService.image.tag | string | `"0.4.0-A1"` |  |
+| msTeamsService.image.tag | string | `"1.0.0-A2"` |  |
 | msTeamsService.ingress.path | string | `"/ms-teams-service"` |  |
 | msTeamsService.ingress.tls | list | `[]` |  |
 | msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
