@@ -4,6 +4,9 @@ alfresco-elasticsearch-connector:
     enabled: true
 
 repository:
+  extraLogStatements:
+    org.alfresco.enterprise.license.LicenseComponent: debug
+    org.alfresco.repo.importer.ImporterBootstrap: debug
   environment:
     JAVA_OPTS: " -Dindex.subsystem.name=elasticsearch
           -Dalfresco.cluster.enabled=true
