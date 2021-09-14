@@ -3,12 +3,13 @@ alfresco-elasticsearch-connector:
   reindexing:
     enabled: true
 
-environment:
-  JAVA_OPTS: " -Dindex.subsystem.name=elasticsearch
-        -Dalfresco.cluster.enabled=true
-        -Ddeployment.method=HELM_CHART
-        -Dtransform.service.enabled=true
-        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
+repository:
+  environment:
+    JAVA_OPTS: " -Dindex.subsystem.name=elasticsearch
+          -Dalfresco.cluster.enabled=true
+          -Ddeployment.method=HELM_CHART
+          -Dtransform.service.enabled=true
+          -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
 
 alfresco-search:
   enabled: false
