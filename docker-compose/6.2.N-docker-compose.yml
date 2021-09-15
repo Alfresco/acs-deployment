@@ -48,7 +48,7 @@ services:
 
     transform-router:
         mem_limit: 512m
-        image: quay.io/alfresco/alfresco-transform-router:1.4.1-A3
+        image: quay.io/alfresco/alfresco-transform-router:1.4.1
         environment:
           JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
           ACTIVEMQ_URL: "nio://activemq:61616"
@@ -74,7 +74,7 @@ services:
         - activemq
 
     shared-file-store:
-        image: quay.io/alfresco/alfresco-shared-file-store:0.15.0
+        image: quay.io/alfresco/alfresco-shared-file-store:0.16.0
         mem_limit: 512m
         environment:
             JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
