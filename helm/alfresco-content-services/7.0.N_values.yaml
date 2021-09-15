@@ -8,12 +8,12 @@ repository:
 ooiService:
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: "1.1.0"
+    tag: "1.1.1"
 
 transformrouter:
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.4.1-A3"
+    tag: "1.4.1"
 
 pdfrenderer:
   image:
@@ -43,12 +43,12 @@ transformmisc:
 aiTransformer:
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.4.0-A1"
+    tag: "1.4.0"
 
 filestore:
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: "0.15.0"
+    tag: "0.16.0"
 
 share:
   image:
