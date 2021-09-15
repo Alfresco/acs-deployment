@@ -100,7 +100,7 @@ _helm_deploy: &helm_deploy
 
     # failed pods logs
     failed_pod_logs() {
-      pod_status | grep False | awk '{print $1}' | while read pod; do echo -e '\e[1;31m' $pod '\e[0m' && kubectl logs $pod --namespace $namespace; done
+      pod_status | grep False | grep -v Succeeded | awk '{print $1}' | while read pod; do echo -e '\e[1;31m' $pod '\e[0m' && kubectl logs $pod --namespace $namespace; done
     }
 
     # pods ready
@@ -111,9 +111,9 @@ _helm_deploy: &helm_deploy
 
       while [ "$PODS_COUNTER" -lt "$PODS_COUNTER_MAX" ]; do
         totalpods=$(pod_status | grep -v NAME | wc -l | sed 's/ *//')
-        readypodcount=$(pod_status | grep ' True' | wc -l | sed 's/ *//')
+        readypodcount=$(pod_status | grep -e ' True' -e Succeeded | wc -l | sed 's/ *//')
         if [ "$readypodcount" -eq "$totalpods" ]; then
-              echo "     $readypodcount/$totalpods pods ready now"
+              echo "     $readypodcount/$totalpods pods ready or succeded now"
               pod_status
           echo "All pods are ready!"
           break
