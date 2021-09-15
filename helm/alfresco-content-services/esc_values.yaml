@@ -4,6 +4,7 @@ alfresco-elasticsearch-connector:
     enabled: true
 
 repository:
+  replicaCount: 1
   extraLogStatements:
     org.alfresco.enterprise.license.LicenseComponent: debug
     org.alfresco.repo.importer.ImporterBootstrap: debug
