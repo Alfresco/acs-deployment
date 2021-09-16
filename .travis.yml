@@ -79,6 +79,16 @@ _helm_deploy: &helm_deploy
     export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
     export values_file=helm/alfresco-content-services/values.yaml
 
+    if [[ ${TRAVIS_BUILD_STAGE_NAME} == "esc" ]]; then
+      export search="elasticsearch"
+      export cluster="false"
+    else
+      export search="solr"
+      export cluster="true"
+    fi
+
+    echo "Search subsystem: $search - cluster test enabled: $cluster"
+
     if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
       values_file="helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml"
     fi
@@ -249,14 +259,6 @@ _helm_deploy: &helm_deploy
     # Delay running the tests to give ingress & SOLR a chance to fully initialise
     echo "Waiting 3 minutes from $(date) before running tests..."
     sleep 180
-
-    if [[ ${TRAVIS_BUILD_STAGE_NAME} == "esc" ]]; then
-      export search = "elasticsearch"
-      export cluster = "false"
-    else
-      export search = "solr"
-      export cluster = "true"
-    fi
 
     # run acs checks
     docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}" --global-var "cluster=$cluster" --global-var "search=$search"
