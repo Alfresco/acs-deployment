@@ -250,11 +250,11 @@ _helm_deploy: &helm_deploy
     sleep 180
 
     if [[ ${TRAVIS_BUILD_STAGE_NAME} == "esc" ]]; then
-      search = "elasticsearch"
-      cluster = "false"
+      export search = "elasticsearch"
+      export cluster = "false"
     else
-      search = "solr"
-      cluster = "true"
+      export search = "solr"
+      export cluster = "true"
     fi
 
     # run acs checks
