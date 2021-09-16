@@ -287,6 +287,11 @@ _helm_deploy: &helm_deploy
         # check pods
         pods_ready
 
+        if [[ ${TRAVIS_BUILD_STAGE_NAME} == "esc" ]]; then
+          echo "Waiting 1 minute from before running tests to initialiaze Elasticsearch..."
+          sleep 60
+        fi
+
         # run checks after pod deletion
         docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}" --global-var "cluster=$cluster"
         TEST_RESULT=$?
