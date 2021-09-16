@@ -95,4 +95,4 @@ kubectl port-forward service/elasticsearch-master 9200:9200 -n alfresco
 
 and then visiting http://localhost:9200/.
 
-Properties that can be used to configure the chart are available [here](../../../helm/alfresco-content-services/charts/alfresco-elasticsearch-connector/README.md)
+Properties that can be used to configure the chart are available [here](../../../helm/alfresco-content-services/charts/alfresco-elasticsearch-connector/README.md).
