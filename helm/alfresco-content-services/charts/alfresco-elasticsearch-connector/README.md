@@ -23,7 +23,7 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
 | fullnameOverride | string | `""` |  |
-| global | object | `{}` | The parent chart will set the values for "alfrescoRegistryPullSecrets" |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret"}` | The parent chart will set the values for "alfrescoRegistryPullSecrets" |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryPrefix | string | `"quay.io/alfresco/alfresco-elasticsearch"` |  |
 | image.tag | string | `"latest"` |  |

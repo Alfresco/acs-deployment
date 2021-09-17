@@ -16,8 +16,8 @@ data:
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco.shortname" . }}-cs-transform-misc/transform/config
   ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
   SPRING_DATASOURCE_URL: "jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.name }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}"
-  {{- if .Values.environment }}
-  {{- range $key, $val := .Values.environment }}
+  {{- if .Values.reindexing.environment }}
+  {{- range $key, $val := .Values.reindexing.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}

@@ -17,8 +17,8 @@ The Alfresco Elasticsearch Connector will start **4 new Kubernetes deployment** 
 - **Content**, it is in charge of indexing content.
 - **Path**, this application indexes the path of a node
 
-Moreover, a **Kubernetes job** will be started in order to reindex existing contents in Elasticsearch. We suggest running this job only at the first startup.
-You can enable or disable it setting the `alfresco-elasticsearch-connector.reindexing.enabled` property to `true` or `false`.
+And a **Kubernetes job** will be started in order to reindex existing contents in Elasticsearch. 
+We suggest running this job only at the first startup. You can enable or disable it setting the `alfresco-elasticsearch-connector.reindexing.enabled` property to `true` or `false`.
 Currently, this Helm chart supports only the single node reindexing service. Feel free to run it manually if you prefer to use reindexing service with the horizontal scalability support..
 
 To deploy Alfresco with Elasticsearch Connector you can use the command below:
@@ -79,6 +79,8 @@ elasticsearch:
         storage: 100M
 ```
 
+Please add lines above to _esc_values.yaml_ file.
+
 When the system is up and running, you can access to the Kibana console using port forward:
 
 ```bash
@@ -95,4 +97,44 @@ kubectl port-forward service/elasticsearch-master 9200:9200 -n alfresco
 
 and then visiting http://localhost:9200/.
 
+## Configuration
+
 Properties that can be used to configure the chart are available [here](../../../helm/alfresco-content-services/charts/alfresco-elasticsearch-connector/README.md).
+
+Additional properties for the services can be set using environment variables as below:
+```
+alfresco-elasticsearch-connector:
+  enabled: true
+  liveIndexing:
+    environment:
+      ALFRESCO_EVENT_RETRY_DELAY:20
+  reindexing:
+    enabled: true
+    environment:
+      ALFRESCO_REINDEX_JOBNAME:reindexByIds
+      ALFRESCO_REINDEX_FROMID:100
+      ALFRESCO_REINDEX_TOID:200
+```
+The example above increase the live indexing retry delay to 20 seconds and indexes all documents from id 100 to 200.
+
+Please check Alfresco Elasticsearch Connector documentation for a full list of available properties.
+
+## Known issues
+
+* When starting the Helm chart with multiple instances for Repository service you can have a trial license creation concurrency conflicts. In the log you will have an error similar to:
+
+  ```
+  DEBUG [org.alfresco.enterprise.license.LicenseComponent] [main] Alfresco license: Failed due to de.schlichtherle.license.NoLicenseInstalledException: There is no license certificate installed for Enterprise - v7.1.
+  ```
+  
+  To solve this issue just restart the failed node, then he will read the licence correctly.
+* Search API can return an HTTP error 500 when the system is just started. This happens because at every startup the system checks the index configuration and can load any new configuration. To solve this issue, just wait few seconds until you see the log below:
+  ```
+  INFO  [elasticsearch.contentmodelsync.ContentModelSynchronizer] [elasticsearch-initializer] Successfully loaded analysers.
+  INFO  [elasticsearch.contentmodelsync.ElasticsearchInitialiser] [elasticsearch-initializer] Successfully connected to Elasticsearch index
+  ```
+
+
+
+
+
