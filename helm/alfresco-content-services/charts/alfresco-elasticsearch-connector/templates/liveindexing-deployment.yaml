@@ -23,9 +23,11 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 8 }}
     spec:
+      {{- if $.Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: quay-registry-secret
+        - name: {{ $.Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
       serviceAccountName: {{ include "alfresco-elasticsearch-connector.serviceAccountName" $ }}
       securityContext:
         {{- toYaml $.Values.podSecurityContext | nindent 8 }}

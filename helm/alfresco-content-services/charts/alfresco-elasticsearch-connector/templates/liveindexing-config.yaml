@@ -17,8 +17,8 @@ data:
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_REFRESHTIME: "{{ .Values.contentMediaTypeCache.refreshTime }}"
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_ENABLED: "{{ .Values.contentMediaTypeCache.enabled }}"
   ALFRESCO_PATHINDEXINGCOMPONENT.ENABLED: "{{ .Values.pathIndexingComponent.enabled }}"
-  {{- if .Values.environment }}
-  {{- range $key, $val := .Values.environment }}
+  {{- if .Values.liveIndexing.environment }}
+  {{- range $key, $val := .Values.liveIndexing.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}

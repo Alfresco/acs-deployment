@@ -255,7 +255,7 @@ _helm_deploy: &helm_deploy
 
     pods_ready
 
-    # Delay running the tests to give ingress & SOLR a chance to fully initialise
+    # Delay running the tests to give ingress & Search engine a chance to fully initialise
     echo "Waiting 3 minutes from $(date) before running tests..."
     sleep 180
 
@@ -288,8 +288,8 @@ _helm_deploy: &helm_deploy
         pods_ready
 
         if [[ ${TRAVIS_BUILD_STAGE_NAME} == "esc" ]]; then
-          echo "Waiting 1 minute from before running tests to initialiaze Elasticsearch..."
-          sleep 60
+          echo "Waiting 30 seconds from before running tests to initialiaze Elasticsearch..."
+          sleep 30
         fi
 
         # run checks after pod deletion

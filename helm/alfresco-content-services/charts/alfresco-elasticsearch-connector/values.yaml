@@ -113,7 +113,8 @@ liveIndexing:
 repository: {}
 
 # -- The parent chart will set the values for "alfrescoRegistryPullSecrets"
-global: {}
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
 
 reindexing:
   enabled: true

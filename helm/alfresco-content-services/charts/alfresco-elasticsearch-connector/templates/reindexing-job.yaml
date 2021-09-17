@@ -13,9 +13,11 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 8 }}
     spec:
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: quay-registry-secret
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing
@@ -49,5 +51,5 @@ spec:
               value: http://{{ template "alfresco.shortname" . }}-cs-repository/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
           command: [ "/bin/sh","-c" ]
           # Delay running the reindexing to give Alfresco Repository a chance to fully initialise
-          args: [ "while [ $(curl -sw '%{http_code}' $ALFRESCO_REPOSITORY_URL -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the Alfresco Repository...'; done; echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'; sleep 180; echo 'Reindexing started!'" ]
+          args: [ "while [ $(curl -sw '%{http_code}' $ALFRESCO_REPOSITORY_URL -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the Alfresco Repository...'; done; echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'; sleep 30; echo 'Reindexing started!'" ]
 {{ end}}
