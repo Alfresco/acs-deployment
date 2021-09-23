@@ -21,36 +21,3 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-
-
---alfresco.reindex.partitioning.type=worker \
-  --spring.batch.datasource.url=jdbc:postgresql://localhost:5432/alfresco \
-  --spring.batch.datasource.username=alfresco \
-  --spring.batch.datasource.password=alfresco \
-  --spring.batch.datasource.driver-class-name=org.postgresql.Driver
-  
-  
-apiVersion: v1
-kind: ConfigMap
-labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: search
-spec:
-  containers:
-  - name: search
-    image: search
-    env:
-    - name: ALFRESCO_REINDEX_PARTITIONING_TYPE
-      value: "worker"
-    - name: ALFRESCO_REINDEX_PARTITIONING_TYPE
-      value: "manager"
-    - name: SPRING_BATCH_DATASOURCE_URL
-      value: "jdbc:postgresql://localhost:5432/alfresco"
-    - name: SPRING_BATCH_DATASOURCE_USERNAME
-      value: "alfresco"
-    - name: SPRING_BATCH_DATASOURCE_PASSWORD
-      value: "alfresco"
-    - name: SPRING_BATCH_DATASOURCE_DRIVER_CLASS_NAME
-      value: "org.postgresql.Driver"
