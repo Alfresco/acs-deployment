@@ -112,6 +112,8 @@ liveIndexing:
 # -- The parent chart will set the values for "repository.host" and "repository.port"
 repository: {}
 
+reindexingWorker: {}
+
 # -- The parent chart will set the values for "alfrescoRegistryPullSecrets"
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret

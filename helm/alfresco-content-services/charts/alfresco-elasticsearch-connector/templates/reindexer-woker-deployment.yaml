@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "alfresco-elasticsearch-connector.fullname" . }}-{{ .service.name }}
+  name: name: {{ include "alfresco-elasticsearch-connector.fullname" . }}-reindexing-worker
   labels:
     {{- include "alfresco-elasticsearch-connector.labels" . | nindent 4 }}
 spec:
@@ -27,7 +27,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}-{{ .service.name }}
+        - name: {{ .Chart.Name }}-reindexing-worker
           image: "{{ .Values.image.repositoryPrefix }}-reindexing:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
