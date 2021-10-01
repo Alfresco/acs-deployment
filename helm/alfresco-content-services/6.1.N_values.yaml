@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository
-    tag: "6.1.1"
+    tag: 6.1.1
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -94,7 +94,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.0.2"
+    tag: 1.0.2
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -123,7 +123,7 @@ pdfrenderer:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
-    tag: "2.0.17"
+    tag: 2.0.17
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -156,7 +156,7 @@ imagemagick:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
-    tag: "2.0.17"
+    tag: 2.0.17
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -189,7 +189,7 @@ libreoffice:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
-    tag: "2.0.17"
+    tag: 2.0.17
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -222,7 +222,7 @@ tika:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-tika
-    tag: "2.0.17"
+    tag: 2.0.17
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -256,7 +256,7 @@ aiTransformer:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.0.2"
+    tag: 1.0.2
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -289,7 +289,7 @@ filestore:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-shared-file-store
-    tag: "0.5.3"
+    tag: 0.5.3
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
@@ -332,7 +332,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.1.1"
+    tag: 6.1.1
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -407,7 +407,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "1.4.3"
+    tag: 1.4.3
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
@@ -481,7 +481,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: "11.4.0"
+    tag: 11.4.0
     pullPolicy: IfNotPresent
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
@@ -505,7 +505,7 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
-    tag: "11.4.0"
+    tag: 11.4.0
     pullPolicy: IfNotPresent
   persistence:
     storageClass: gp2

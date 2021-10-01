@@ -12,12 +12,12 @@ replicaCount: 1
 type: "search-services"
 searchServicesImage:
   repository: alfresco/alfresco-search-services
-  tag: "2.0.0"
+  tag: 2.0.0
   pullPolicy: &searchDockerImagePullPolicy IfNotPresent
   internalPort: &searchDockerImageInternalPort 8983
 insightEngineImage:
   repository: quay.io/alfresco/insight-engine
-  tag: "2.0.0"
+  tag: 2.0.0
   pullPolicy: *searchDockerImagePullPolicy
   internalPort: *searchDockerImageInternalPort
 service:

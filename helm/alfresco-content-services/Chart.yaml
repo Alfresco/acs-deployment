@@ -1,9 +1,9 @@
 # Note: The Helm chart from github.com is a limited trial of the Enterprise version of Alfresco Content Services
 # that goes into read-only mode after 2-days.
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/download
-apiVersion: v1
+apiVersion: v2
 name: alfresco-content-services
-version: 5.1.0-M2
+version: 5.1.0
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -13,4 +13,25 @@ keywords:
 home: https://www.alfresco.com
 sources:
   - https://github.com/Alfresco/acs-deployment
+dependencies:
+  - name: postgresql
+    version: 8.9.6
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+  - name: postgresql
+    version: 8.9.6
+    repository: https://charts.bitnami.com/bitnami
+    alias: postgresql-syncservice
+    condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
+  - name: common
+    alias: alfresco-digital-workspace
+    repository: https://activiti.github.io/activiti-cloud-helm-charts
+    version: 7.1.0-M15
+    condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
+  - name: activemq
+    version: 2.0.0
+  - name: alfresco-search
+    version: 1.0.4
+  - name: alfresco-sync-service
+    version: 3.0.9
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

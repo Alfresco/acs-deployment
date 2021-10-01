@@ -1,6 +1,6 @@
 # Alfresco Content Services Containerized Deployment
 
-[![Build Status](https://travis-ci.com/Alfresco/acs-deployment.svg?branch=master)](https://travis-ci.com/Alfresco/acs-deployment)
+[![Build Status](https://app.travis-ci.com/Alfresco/acs-deployment.svg?branch=master)](https://app.travis-ci.com/Alfresco/acs-deployment)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 This project contains the code for starting the entire Alfresco Content Services (ACS) product with [Docker](https://docs.docker.com/get-started) using [Docker Compose](https://docs.docker.com/compose) or [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
@@ -33,6 +33,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.0.1 | 7.0.0 | | 6.2.2 | 6.1.1 | 7.0.0 |
 | 5.1.0-M1 | 7.1.0-M1 | | 6.2.2 | 6.1.1 | 7.1.0-M1 |
 | 5.1.0-M2 | 7.1.0-M2 | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0-M2 |
+| 5.1.0 | 7.1.0 | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0 |
 
 ### Docker
 

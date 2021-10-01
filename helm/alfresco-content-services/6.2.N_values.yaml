@@ -16,7 +16,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: "6.2.2"
+    tag: 6.2.2
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -94,7 +94,7 @@ transformrouter:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: "1.4.1"
+    tag: 1.4.1
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -123,7 +123,7 @@ pdfrenderer:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.5.1"
+    tag: 2.5.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -156,7 +156,7 @@ imagemagick:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.5.1"
+    tag: 2.5.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -189,7 +189,7 @@ libreoffice:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.5.1"
+    tag: 2.5.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -222,7 +222,7 @@ tika:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.5.1"
+    tag: 2.5.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -256,7 +256,7 @@ transformmisc:
   replicaCount: 2
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.5.1"
+    tag: 2.5.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -287,7 +287,7 @@ aiTransformer:
   replicaCount: 2
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: "1.2.0"
+    tag: 1.2.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -320,7 +320,7 @@ filestore:
   replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: "0.16.0"
+    tag: 0.16.0
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
@@ -363,7 +363,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "6.2.2"
+    tag: 6.2.2
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -438,7 +438,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "1.4.3"
+    tag: 1.4.3
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
@@ -476,7 +476,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.3.0-adw
+    tag: 2.4.0-adw
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -511,7 +511,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: "11.4.0"
+    tag: 11.4.0
     pullPolicy: IfNotPresent
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
@@ -535,7 +535,7 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
-    tag: "11.4.0"
+    tag: 11.4.0
     pullPolicy: IfNotPresent
   persistence:
     storageClass: gp2

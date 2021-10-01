@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 A Helm chart Providing Apache ActiveMQ.
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 5.15.8](https://img.shields.io/badge/AppVersion-5.15.8-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 5.16.1](https://img.shields.io/badge/AppVersion-5.16.1-informational?style=flat-square)
 
 ## Values
 
@@ -19,7 +19,7 @@ A Helm chart Providing Apache ActiveMQ.
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
-| image.tag | string | `"5.16.1-java-11-openjdk-centos-8-483767720"` |  |
+| image.tag | string | `"5.16.1"` |  |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
 | initContainer.image.tag | string | `"1.33.1"` |  |
