@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 description: A Helm chart for deploying Alfresco Search
 home: https://www.alfresco.com
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
@@ -13,3 +13,6 @@ name: alfresco-search
 sources:
   - https://github.com/alfresco/alfresco-search-deployment
 version: 1.0.4
+dependencies:
+  - name: alfresco-insight-zeppelin
+    version: 1.0.3

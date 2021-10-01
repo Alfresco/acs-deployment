@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: 5.16.1
 description: A Helm chart Providing Apache ActiveMQ.
 keywords:
