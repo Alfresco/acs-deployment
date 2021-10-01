@@ -138,7 +138,7 @@ services:
             - 61613:61613 # STOMP
 
     digital-workspace:
-        image: quay.io/alfresco/alfresco-digital-workspace:2.3.0-adw
+        image: quay.io/alfresco/alfresco-digital-workspace:2.4.0-adw
         mem_limit: 128m
         environment:
             APP_CONFIG_AUTH_TYPE: "BASIC"
