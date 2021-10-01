@@ -96,7 +96,7 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
-    tag: "11.7.0"
+    tag: 11.7.0
     pullPolicy: IfNotPresent
   persistence:
     storageClass: gp2
