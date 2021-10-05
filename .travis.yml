@@ -46,6 +46,7 @@ branches:
     - master
     - /feature.*/
     - /fix.*/
+    - /OPSEXP-.*/
 
 before_install:
   - |
