@@ -46,6 +46,7 @@ branches:
     - master
     - /feature.*/
     - /fix.*/
+    - /OPSEXP-.*/
 
 before_install:
   - |
@@ -217,6 +218,8 @@ _helm_deploy: &helm_deploy
     --set persistence.enabled=true \
     --set persistence.storageClass.enabled=true \
     --set persistence.storageClass.name="nfs-client" \
+    --set postgresql.persistence.storageClass="gp2" \
+    --set postgresql.persistence.existingClaim="" \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --wait \
     --timeout 20m0s \

@@ -150,14 +150,26 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
     ![NFS Inbound Rules](./diagrams/eks-nfs-inbound-rules.png)
 
-6. Deploy an NFS Client Provisioner with Helm using the following commands (replacing `EFS-DNS-NAME` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
+6. Deploy the AWS EFS csi storage driver using the following commands, replacing `fs-SOMEUUID` with the string "file-system-id" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1" (this step replace previous deployment of the now obsolete nfs-client-provisioner):
 
     ```bash
-    helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
-
-    helm install alfresco-nfs-provisioner ckotzbauer/nfs-client-provisioner --set nfs.server="EFS-DNS-NAME" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
+    cat > aws-efs-values.yml <<EOT
+    storageClasses:
+      - mountOptions:
+        - tls
+        name: nfs-client
+        parameters:
+          directoryPerms: "700"
+          fileSystemId: fs-SOMEUUID
+          provisioningMode: efs-ap
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+    EOT
+    helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
+    helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver -f aws-efs-values.yml
     ```
 
+Make sure the associated storage class
 ## Deploy
 
 Now the EKS cluster is setup we can deploy ACS.
