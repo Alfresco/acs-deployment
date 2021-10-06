@@ -492,7 +492,7 @@ postgresql:
   persistence:
     storageClass: gp2
   volumePermissions:
-    enabled: "true"
+    enabled: true
   resources:
     requests:
       memory: "1500Mi"
@@ -513,7 +513,7 @@ postgresql-syncservice:
     storageClass: gp2
     #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
   volumePermissions:
-    enabled: "true"
+    enabled: true
   postgresqlUsername: alfresco
   postgresqlPassword: admin
   postgresqlDatabase: syncservice-postgresql

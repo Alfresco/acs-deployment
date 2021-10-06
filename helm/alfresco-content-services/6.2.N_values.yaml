@@ -522,7 +522,7 @@ postgresql:
   persistence:
     storageClass: gp2
   volumePermissions:
-    enabled: "true"
+    enabled: true
   resources:
     requests:
       memory: "1500Mi"
