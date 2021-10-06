@@ -63,3 +63,13 @@ alfresco-digital-workspace:
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 2.4.0-adw
+
+postgresql:
+  volumePermissions:
+    enabled: "true"
+  persistence:
+    storageClass: "gp2"
+
+postgresql-syncservice:
+  volumePermissions:
+    enabled: "true"
