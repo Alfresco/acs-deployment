@@ -15,11 +15,11 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: postgresql
-    version: 8.9.6
+    version: 10.4.5
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
   - name: postgresql
-    version: 8.9.6
+    version: 10.4.5
     repository: https://charts.bitnami.com/bitnami
     alias: postgresql-syncservice
     condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
