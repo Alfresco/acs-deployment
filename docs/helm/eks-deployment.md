@@ -169,6 +169,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
     helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver -f aws-efs-values.yml
     ```
 
+Make sure the associated storage class
 ## Deploy
 
 Now the EKS cluster is setup we can deploy ACS.
