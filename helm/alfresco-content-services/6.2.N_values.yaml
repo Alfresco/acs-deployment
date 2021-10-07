@@ -519,8 +519,8 @@ postgresql:
   postgresqlExtendedConf:
     max_connections: 300
     log_min_messages: LOG
-  persistence:
-    storageClass: gp2
+  volumePermissions:
+    enabled: true
   resources:
     requests:
       memory: "1500Mi"
@@ -537,9 +537,8 @@ postgresql-syncservice:
   image:
     tag: 11.4.0
     pullPolicy: IfNotPresent
-  persistence:
-    storageClass: gp2
-    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
+  volumePermissions:
+    enabled: true
   postgresqlUsername: alfresco
   postgresqlPassword: admin
   postgresqlDatabase: syncservice-postgresql
