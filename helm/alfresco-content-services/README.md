@@ -18,8 +18,8 @@ A Helm chart for deploying Alfresco Content Services
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.1.0-M15 |
-| https://charts.bitnami.com/bitnami | postgresql | 8.9.6 |
-| https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 8.9.6 |
+| https://charts.bitnami.com/bitnami | postgresql | 10.4.5 |
+| https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 10.4.5 |
 
 ## Values
 
@@ -171,14 +171,13 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | persistence | object | `{"baseSize":"20Gi","chownWithDynamicProvisioning":false,"enabled":true,"existingClaim":"alfresco-volume-claim","filestore":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"repository":{"config":{"querysetsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/querysets/","transform":{"mimetypesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/","pipelinesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/","renditionsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"}},"data":{"mountPath":"/usr/local/tomcat/alf_data","subPath":"alfresco-content-services/repository-data"},"enabled":true},"storageClass":{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}}` | Defines the mounting points for the persistence required by the apps in the cluster the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data |
 | persistence.storageClass | object | `{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}` | Enable and define if you already have a custom storage class defined |
 | persistence.storageClass.name | string | `"nfs"` | Custom storage classs name |
-| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"13.1.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":"alfresco-volume-claim","subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
+| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"13.3.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":"alfresco-volume-claim","subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
 | postgresql-syncservice.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql-syncservice.enabled | bool | `true` |  |
 | postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql-syncservice.image.tag | string | `"13.1.0"` |  |
+| postgresql-syncservice.image.tag | string | `"13.3.0"` |  |
 | postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.persistence.storageClass | string | `"gp2"` |  |
 | postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.log_min_messages | string | `"LOG"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.max_connections | int | `450` |  |

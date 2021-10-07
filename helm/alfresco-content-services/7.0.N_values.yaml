@@ -63,3 +63,7 @@ alfresco-digital-workspace:
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 2.4.0-adw
+
+postgresql:
+  image:
+    tag: 13.1.0
