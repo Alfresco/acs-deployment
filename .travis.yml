@@ -30,6 +30,7 @@ import:
   - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.1.5
   - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.1.5
   - source: Alfresco/alfresco-build-tools:.travis.helm-docs_install.yml@v1.1.5
+  - source: Alfresco/alfresco-build-tools:.travis.yq_install.yml@v1.1.5
   - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.1.5
 
 env:
@@ -62,11 +63,6 @@ before_script:
     helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
     helm repo add alfresco-incubator ${HELM_REPO_BASE_URL}/${HELM_REPO}
-    [[ ( "$A" -eq "0" || "$B" -ne "0" ) && "$C" -eq "0" ]];
-    if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
-    then
-      export HELM_REPO=stable
-    fi
     helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
     echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
@@ -436,21 +432,18 @@ jobs:
     - name: package and publish chart
       stage: publish
       script: |
-        if [[ "${TRAVIS_BRANCH}" != "master" ]]; then
-          CHART_VERSION=$(cat helm/${PROJECT_NAME}/Chart.yaml | grep version: | awk '{print $2}')
-          NON_SUFFIX_VERSION=$(echo "${CHART_VERSION}" | awk -F - '{print $1}')
-          ALPHA_BUILD_VERSION="${NON_SUFFIX_VERSION}-A${TRAVIS_BUILD_NUMBER}"
+        CHART_VERSION=$(yq eval .version helm/${PROJECT_NAME}/Chart.yaml)
+        ALPHA_BUILD_VERSION="${CHART_VERSION%-*}-A${TRAVIS_BUILD_NUMBER}"
+        if [[ "${TRAVIS_BRANCH}" != "master" ]]
+        then
           echo "Changing Chart version to ${ALPHA_BUILD_VERSION} as this is a feature branch..."
           sed -i s,$CHART_VERSION,$ALPHA_BUILD_VERSION,g helm/${PROJECT_NAME}/Chart.yaml
-        fi
-
-        if [[ "${TRAVIS_BRANCH}" == "master" ]] && [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
-        then
+        elif [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
+        then export HELM_REPO=stable
           git checkout -B "${TRAVIS_BRANCH}"
           git config --local user.email "alfresco-build@alfresco.com"
-          export VERSION=`cat helm/alfresco-content-services/Chart.yaml | grep version: | awk '{print $2}'`
-          echo "Tagging repository with v$VERSION..."
-          export GIT_TAG="v$VERSION"
+          echo "Tagging repository with v$CHART_VERSION..."
+          export GIT_TAG="v$CHART_VERSION"
           git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
           git push https://$GITHUB_TOKEN@github.com/Alfresco/acs-deployment $GIT_TAG
           git tag -d latest
@@ -463,7 +456,7 @@ jobs:
         COMMIT_MESSAGE_FIRST_LINE=$(git log --pretty=format:%s --max-count=1)
         echo using COMMIT_MESSAGE_FIRST_LINE=${COMMIT_MESSAGE_FIRST_LINE}
         git clone https://${GITHUB_TOKEN}@github.com/Alfresco/charts.git
-        echo using HELM_REPO=${HELM_REPO}
+        echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
         mkdir repo
         helm package --dependency-update --destination repo helm/${PROJECT_NAME}
         helm repo index repo --url ${HELM_REPO_BASE_URL}/${HELM_REPO} --merge charts/${HELM_REPO}/index.yaml
