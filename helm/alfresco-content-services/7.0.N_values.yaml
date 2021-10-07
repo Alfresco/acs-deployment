@@ -67,5 +67,3 @@ alfresco-digital-workspace:
 postgresql:
   image:
     tag: 13.1.0
-  persistence:
-    storageClass: "gp2"
