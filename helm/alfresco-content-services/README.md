@@ -178,7 +178,6 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | postgresql-syncservice.image.tag | string | `"13.3.0"` |  |
 | postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.persistence.storageClass | string | `"gp2"` |  |
 | postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.log_min_messages | string | `"LOG"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.max_connections | int | `450` |  |
