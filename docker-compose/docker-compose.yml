@@ -148,6 +148,8 @@ services:
         environment:
             APP_CONFIG_AUTH_TYPE: "BASIC"
             BASE_PATH: ./
+            APP_CONFIG_ECM_HOST: "http://localhost:8080"
+            APP_CONFIG_PROVIDER: "ECM"
 
     proxy:
         image: alfresco/alfresco-acs-nginx:3.1.1
