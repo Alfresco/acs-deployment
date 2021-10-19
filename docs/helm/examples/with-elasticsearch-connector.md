@@ -1,6 +1,6 @@
 # Alfresco Elasticsearch Connector 
 
-The [Alfresco Elasticsearch Connector](https://github.com/Alfresco/alfresco-elasticsearch-connector) (aka Search Service v.3x) aims to replace Alfresco Search in order to index and search Alfresco nodes using Elasticsearch instead of Solr.
+The [Alfresco Elasticsearch Connector](https://github.com/Alfresco/alfresco-elasticsearch-connector) (aka Alfresco Search Enterprise v.3x) aims to replace Alfresco Search in order to index and search Alfresco nodes using Elasticsearch instead of Solr.
 
 ## Prerequisites
 
@@ -11,13 +11,13 @@ Depending on where do you want to install Alfresco Content Services (ACS) , you 
 In order to replace Alfresco Search with Alfresco Elasticsearch Connector you need to set the `alfresco-elasticsearch-connector.enabled` property to `true` and `alfresco-search.enabled` to `false`.
 You can use the esc_values.yaml file in the Git repository adding more configuration if required.
 
-The Alfresco Elasticsearch Connector will start **4 new Kubernetes deployment** for live indexing:
+The Alfresco Elasticsearch Connector will start **4 new Kubernetes pods** for live indexing:
 - **Mediation**, must be always a single node, it orchestrates events from Alfresco Repository.
 - **Metadata**, it is responsible for indexing node metadata.
 - **Content**, it is in charge of indexing content.
 - **Path**, this application indexes the path of a node
 
-And a **Kubernetes job** will be started in order to reindex existing contents in Elasticsearch. 
+And a **Kubernetes job** will be started in order to reindex existing data in Elasticsearch. 
 We suggest running this job only at the first startup. You can enable or disable it setting the `alfresco-elasticsearch-connector.reindexing.enabled` property to `true` or `false`.
 Currently, this Helm chart supports only the single node reindexing service. Feel free to run it manually if you prefer to use reindexing service with the horizontal scalability support..
 

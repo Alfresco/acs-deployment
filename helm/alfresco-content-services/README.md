@@ -15,7 +15,7 @@ A Helm chart for deploying Alfresco Content Services
 | Repository | Name | Version |
 |------------|------|---------|
 |  | activemq | 2.0.0 |
-|  | alfresco-elasticsearch-connector | 0.1.0 |
+|  | alfresco-elasticsearch-connector | 3.0.0 |
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.1.0-M15 |
