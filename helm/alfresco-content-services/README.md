@@ -19,8 +19,10 @@ A Helm chart for deploying Alfresco Content Services
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.1.0-M15 |
-| https://charts.bitnami.com/bitnami | postgresql | 10.4.5 |
 | https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 10.4.5 |
+| https://charts.bitnami.com/bitnami | postgresql | 10.4.5 |
+| https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
+| https://helm.elastic.co | kibana(kibana) | 7.10.1 |
 
 ## Values
 

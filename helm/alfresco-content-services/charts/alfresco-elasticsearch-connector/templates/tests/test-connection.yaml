@@ -9,7 +9,13 @@ metadata:
 spec:
   containers:
     - name: wget
-      image: busybox
+      image: "busybox:1.33.1"
+      imagePullPolicy: IfNotPresent
+      resources:
+        limits:
+          memory: 10Mi
+        requests:
+          memory: 5Mi
       command: ['wget']
       args: ['{{ include "alfresco-elasticsearch-connector.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never

@@ -23,6 +23,11 @@ spec:
         - name: {{ .Chart.Name }}-reindexing
           image: "{{ .Values.image.repositoryPrefix }}-reindexing:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-elasticsearch-connector-reindexing-configmap
@@ -45,7 +50,12 @@ spec:
                 protocol: TCP
       initContainers:
         - name: wait-for-repository
-          image: curlimages/curl:latest
+          image: curlimages/curl:7.79.1
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 128Mi
           env:
             - name: ALFRESCO_REPOSITORY_URL
               value: http://{{ template "alfresco.shortname" . }}-cs-repository/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-

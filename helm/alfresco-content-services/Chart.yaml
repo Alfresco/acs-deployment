@@ -34,4 +34,17 @@ dependencies:
     version: 1.0.4
   - name: alfresco-sync-service
     version: 3.0.9
+  - name: alfresco-elasticsearch-connector
+    version: 3.0.0
+    condition: alfresco-elasticsearch-connector.enabled
+  - name: elasticsearch
+    alias: elasticsearch
+    repository: https://helm.elastic.co
+    version: 7.10.1
+    condition: elasticsearch.enabled
+  - name: kibana
+    alias: kibana
+    repository: https://helm.elastic.co
+    version: 7.10.1
+    condition: kibana.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

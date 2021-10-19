@@ -26,7 +26,7 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret"}` | The parent chart will set the values for "alfrescoRegistryPullSecrets" |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryPrefix | string | `"quay.io/alfresco/alfresco-elasticsearch"` |  |
-| image.tag | string | `"latest"` |  |
+| image.tag | string | `"3.0.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` |  |
 | ingress.annotations | object | `{}` |  |
@@ -50,7 +50,8 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | reindexing.postgresql.port | int | `5432` |  |
 | replicaCount | int | `1` |  |
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
-| resources | object | `{}` |  |
+| resources.limits.memory | string | `"2048Mi"` |  |
+| resources.requests.memory | string | `"256Mi"` |  |
 | securityContext | object | `{}` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |

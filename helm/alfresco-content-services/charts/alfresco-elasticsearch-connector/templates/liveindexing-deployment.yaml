@@ -54,6 +54,11 @@ spec:
             httpGet:
               path: /actuator/health
               port: http
+          resources:
+            limits:
+              memory: {{ $.Values.resources.limits.memory}}
+            requests:
+              memory: {{ $.Values.resources.requests.memory}}
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml $ | nindent 8 }}
