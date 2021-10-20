@@ -32,7 +32,10 @@ spec:
       initContainers:
       {{- if eq .Values.activemq.external false }}
       - name: init-activemq
-        image: busybox
+        image: "{{ .Values.initContainers.activemq.image.repository }}:{{ .Values.initContainers.activemq.image.tag }}"
+        imagePullPolicy: {{ .Values.initContainers.activemq.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.initContainers.activemq.resources | indent 10 }}
         env:
         - name: ACTIVEMQ_HOST
           value: {{ printf "%s-%s" (include "acs.release.name" .) .Values.activemq.broker.host}}
@@ -42,7 +45,10 @@ spec:
       {{- end }}
       {{- if eq .Values.database.external false }}
       - name: init-postgres
-        image: busybox
+        image: "{{ .Values.initContainers.postgres.image.repository }}:{{ .Values.initContainers.postgres.image.tag }}"
+        imagePullPolicy: {{ .Values.initContainers.postgres.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.initContainers.postgres.resources | indent 10 }}
         command: ['sh', '-c', 'until nc -w1 {{ .Release.Name }}-postgresql-syncservice 5432; do echo "waiting for postgresql"; sleep 2; done;']
       {{- end }}
       terminationGracePeriodSeconds: 60

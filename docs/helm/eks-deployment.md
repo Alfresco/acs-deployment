@@ -44,7 +44,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
     metadata:
       name: external-dns
     ---
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
       name: external-dns
@@ -59,7 +59,7 @@ Now we have an EKS cluster up and running there are a few one time steps we need
       resources: ["nodes"]
       verbs: ["list","watch"]
     ---
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
       name: external-dns-viewer
@@ -108,10 +108,16 @@ Now we have an EKS cluster up and running there are a few one time steps we need
    kubectl apply -f external-dns.yaml -n kube-system
    ```
 
-5. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
+4. Find the name of the nodegroup created by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
 
     ```bash
-    aws eks describe-nodegroup --cluster-name YOUR-CLUSTER-NAME --nodegroup-name linux-nodes --query "nodegroup.nodeRole" --output text
+    eksctl get nodegroup --cluster=`YOUR-CLUSTER-NAME` 
+    ```
+
+5. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and `YOUR-NODE-GROUP` with the nodegroup from the step above):
+
+    ```bash
+    aws eks describe-nodegroup --cluster-name YOUR-CLUSTER-NAME --nodegroup-name YOUR-NODE-GROUP --query "nodegroup.nodeRole" --output text
     ```
 
 6. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy as shown in the screenshot below:
@@ -144,14 +150,26 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
     ![NFS Inbound Rules](./diagrams/eks-nfs-inbound-rules.png)
 
-6. Deploy an NFS Client Provisioner with Helm using the following commands (replacing `EFS-DNS-NAME` with the string "file-system-id.efs.aws-region.amazonaws.com" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1.efs.us-east-1.amazonaws.com"):
+6. Deploy the AWS EFS csi storage driver using the following commands, replacing `fs-SOMEUUID` with the string "file-system-id" where file-system-id is the ID retrieved in step 1 and aws-region is the region you're using e.g. "fs-72f5e4f1" (this step replace previous deployment of the now obsolete nfs-client-provisioner):
 
     ```bash
-    helm repo add ckotzbauer https://ckotzbauer.github.io/helm-charts
-
-    helm install alfresco-nfs-provisioner ckotzbauer/nfs-client-provisioner --set nfs.server="EFS-DNS-NAME" --set nfs.path="/" --set storageClass.name="nfs-client" --set storageClass.archiveOnDelete=false -n kube-system
+    cat > aws-efs-values.yml <<EOT
+    storageClasses:
+      - mountOptions:
+        - tls
+        name: nfs-client
+        parameters:
+          directoryPerms: "700"
+          fileSystemId: fs-SOMEUUID
+          provisioningMode: efs-ap
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+    EOT
+    helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
+    helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver -f aws-efs-values.yml
     ```
 
+Make sure the associated storage class
 ## Deploy
 
 Now the EKS cluster is setup we can deploy ACS.
@@ -237,6 +255,7 @@ kubectl create namespace alfresco
     --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="acs.YOUR-DOMAIN-NAME" \
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
     --set controller.publishService.enabled=true \
+    --set controller.admissionWebhooks.enabled=false \
     --atomic \
     --namespace alfresco
     ```
@@ -245,7 +264,7 @@ kubectl create namespace alfresco
 
 ### Docker Registry Secret
 
-Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following commmand (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
+Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following command (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
 
 ```bash
 kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco

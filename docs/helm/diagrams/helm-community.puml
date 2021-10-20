@@ -16,7 +16,7 @@ node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
-    component "Alfresco Sync Services" as sync #lightgrey
+    component "Alfresco Sync Service" as sync #lightgrey
     component "PostgreSQL" as psql #lightgrey
     component "Alfresco Share" as share #lightgrey
     component "ActiveMQ" as amq #lightgrey
@@ -56,6 +56,6 @@ sync <-left-> acs
 sync --> psql
 sync --> amq
 
-center footer Copyright 2020 Alfresco Software Inc
+center footer Copyright 2021 Alfresco Software Inc
 
 @enduml

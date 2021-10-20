@@ -16,14 +16,31 @@ repository:
     type: Recreate
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: "7.0.0"
-    pullPolicy: Always
+    tag: 7.1.0
+    pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
-  initContainer:
-    image:
-      repository: busybox
-      tag: latest
+  initContainers:
+    db:
+      image:
+        repository: busybox
+        tag: 1.33.1
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
+    fs:
+      image:
+        repository: busybox
+        tag: 1.33.1
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "5Mi"
+        limits:
+          memory: "10Mi"
   service:
     name: alfresco
     type: ClusterIP
@@ -33,6 +50,10 @@ repository:
     maxUploadSize: "5g"
     annotations: {}
       # nginx.ingress.kubernetes.io/enable-cors: "true"
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   environment:
     JAVA_OPTS: " -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
@@ -66,6 +87,10 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 # Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -73,8 +98,8 @@ pdfrenderer:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: "2.3.10"
-    pullPolicy: Always
+    tag: 2.5.3
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: pdfrenderer
@@ -106,8 +131,8 @@ imagemagick:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: "2.3.10"
-    pullPolicy: Always
+    tag: 2.5.3
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: imagemagick
@@ -139,8 +164,8 @@ libreoffice:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: "2.3.10"
-    pullPolicy: Always
+    tag: 2.5.3
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: libreoffice
@@ -172,8 +197,8 @@ tika:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-tika
-    tag: "2.3.10"
-    pullPolicy: Always
+    tag: 2.5.3
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: tika
@@ -206,8 +231,8 @@ transformmisc:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: "2.3.10"
-    pullPolicy: Always
+    tag: 2.5.3
+    pullPolicy: IfNotPresent
     internalPort: 8090
   service:
     name: transformmisc
@@ -239,8 +264,8 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: "7.0.0"
-    pullPolicy: Always
+    tag: 7.1.0.1
+    pullPolicy: IfNotPresent
     internalPort: 8080
   service:
     name: share
@@ -249,6 +274,10 @@ share:
   ingress:
     path: /share
     annotations: {}
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   resources:
     requests:
       memory: "2000Mi"
@@ -310,7 +339,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: "2.0.1"
+    tag: 2.0.2
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
@@ -328,6 +357,10 @@ alfresco-search:
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth:
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
 
 # Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
@@ -347,7 +380,9 @@ postgresql:
   # Note: Set this to false if you use an external database.
   enabled: true
   nameOverride: postgresql-acs
-  imageTag: "11.7.0"
+  image:
+    tag: 13.1.0
+    pullPolicy: IfNotPresent
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
   postgresqlDatabase: alfresco

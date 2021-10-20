@@ -1,4 +1,4 @@
-{{- if .Values.ai.enabled }}
+{{- if .Values.global.ai.enabled }}
 # Defines the deployment for the ai transformer app
 # Details: https://github.com/Alfresco/alfresco-ai-transformers/tree/master/alfresco-ai-docker-engine
 apiVersion: apps/v1

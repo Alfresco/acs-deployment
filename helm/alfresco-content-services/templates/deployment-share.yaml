@@ -27,9 +27,16 @@ spec:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
       containers:
+        {{- if .Values.share.extraSideContainers }}
+{{ tpl .Values.share.extraSideContainers . | indent 8 }}
+        {{- end }}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.share.image.repository }}:{{ .Values.share.image.tag }}"
           imagePullPolicy: {{ .Values.share.image.pullPolicy }}
+          {{- if .Values.share.command }}
+          command:
+{{ tpl .Values.share.command . | indent 12 }}
+          {{- end }}
           ports:
             - containerPort: {{ .Values.share.image.internalPort }}
           resources:
@@ -37,6 +44,10 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "content-services.shortname" . }}-share-configmap
+          {{- if .Values.share.extraVolumeMounts }}
+          volumeMounts:
+{{ toYaml .Values.share.extraVolumeMounts | indent 10 }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /share
@@ -56,3 +67,12 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
+      {{- if .Values.share.extraInitContainers }}
+      initContainers:
+{{ tpl .Values.share.extraInitContainers . | indent 8 }}
+      {{- end }}
+      {{- if .Values.share.extraVolumes }}
+      volumes:
+{{ toYaml .Values.share.extraVolumes | indent 6 }}
+      {{- end }}
+

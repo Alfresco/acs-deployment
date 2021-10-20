@@ -69,6 +69,25 @@ The provided Docker compose file provides some default configuration, the sectio
 | REPO_PORT | Share needs to know how to register itself with Alfresco | 8080 |
 | CSRF_FILTER_REFERER | CSRF Referrer | |
 | CSRF_FILTER_ORIGIN | CSRF Origin | |
+| USE_SSL | Enables ssl use if set to `"true"` | `false` |
+
+```yml
+share:
+   image: quay.io/alfresco/alfresco-share:7.1.0-M1
+      mem_limit: 1g
+      environment:
+         REPO_HOST: "alfresco"
+         REPO_PORT: "8080"
+         USE_SSL: "true"
+         JAVA_OPTS: "
+            -XX:MinRAMPercentage=50
+            -XX:MaxRAMPercentage=80
+            -Dalfresco.host=localhost
+            -Dalfresco.port=8080
+            -Dalfresco.context=alfresco
+            -Dalfresco.protocol=http
+            "
+```
 
 ### Alfresco Digital Workspace (digital-workspace)
 
@@ -202,6 +221,30 @@ The provided Docker compose file provides some default configuration, the sectio
 | SHARE_URL | Share URL inside network. | `http://share:8080` |
 | SYNCSERVICE_URL | Sync service URL inside network. | `http://sync-service:9090` |
 | ACCESS_LOG | Sets the `access_log` value. Set to `off` to switch off logging. | |
+| USE_SSL | `false` | Enables ssl use if set to `"true"` |
+| DOMAIN | Set domain value for ssl certificate | n/a |
+
+If USE_SSL set to true provide ssl cert in ssl/cert.crt and ssl/cert.key
+
+```yml
+alfresco-proxy:
+   image: alfresco/alfresco-acs-nginx:3.2.0
+   depends_on:
+      - alfresco
+      - digital-workspace
+   ports:
+      - 443:443 # when USE_SSL="true"
+#     - 8080:8080 #default
+   links:
+      - digital-workspace
+      - alfresco
+      - share
+   volumes:
+      - ${PWD}/ssl/:/etc/nginx/ssl/ # when USE_SSL="true"
+   environment:
+      USE_SSL: "true"
+      DOMAIN: "domain.com" # when USE_SSL="true"
+```
 
 ## Customise
 
@@ -221,6 +264,16 @@ If you have issues running ```docker-compose up``` after deleting a previous Doc
 
 ```bash
 docker-compose down && docker-compose build --no-cache && docker-compose up
+```
+
+If you are experiencing issues running ```docker-compose up``` on Windows environments due to unavailable or reserved ports and get errors such as:
+``` bind: An attempt was made to access a socket in a way forbidden by its access permissions``` would mean that Windows winnat service has reserved 
+the port range that docker compose is trying to use. To remedy the issue execute the following in a terminal:
+
+```bash
+net stop winnat
+docker-compose up
+net start winnat
 ```
 
 ## Reference

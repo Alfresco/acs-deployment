@@ -42,7 +42,7 @@ helm install acs alfresco/alfresco-content-services \
 --set messageBroker.url="YOUR-MQ-ENDPOINT" \
 --set messageBroker.user="alfresco" \
 --set messageBroker.password="YOUR-MQ-PASSWORD" \
---set ai.enabled=true \
+--set global.ai.enabled=true \
 --set ai.aws.accessKey="YOUR-AI-AWS-ACCESS-KEY-ID" \
 --set ai.aws.secretAccessKey="YOUR-AI-AWS-SECRET-KEY" \
 --set ai.aws.region="YOUR-AWS-REGION" \

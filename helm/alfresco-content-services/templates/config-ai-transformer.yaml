@@ -1,4 +1,4 @@
-{{- if .Values.ai.enabled }}
+{{- if .Values.global.ai.enabled }}
 # Defines the properties required by the alfresco-ai-transformer container
 apiVersion: v1
 kind: ConfigMap
