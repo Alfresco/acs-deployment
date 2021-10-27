@@ -288,8 +288,8 @@ _helm_deploy: &helm_deploy
         pods_ready
 
         if [[ ${TRAVIS_BUILD_STAGE_NAME} == "esc" ]]; then
-          echo "Waiting 60 seconds before running tests to initialiaze Elasticsearch..."
-          sleep 60
+          echo "Waiting 30 seconds before running tests to initialiaze Elasticsearch..."
+          sleep 30
         fi
 
         # run checks after pod deletion
