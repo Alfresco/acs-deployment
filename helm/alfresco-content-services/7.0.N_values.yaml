@@ -62,7 +62,7 @@ alfresco-search:
 alfresco-digital-workspace:
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.4.0-adw
+    tag: 2.4.2-adw
 
 postgresql:
   image:
