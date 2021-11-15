@@ -8,9 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 A Helm chart Providing Apache ActiveMQ.
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 5.16.1](https://img.shields.io/badge/AppVersion-5.16.1-informational?style=flat-square) 
-
-
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 5.16.1](https://img.shields.io/badge/AppVersion-5.16.1-informational?style=flat-square)
 
 ## Values
 
