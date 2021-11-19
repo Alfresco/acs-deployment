@@ -163,7 +163,7 @@ services:
             - share
 
     sync-service:
-        image: quay.io/alfresco/service-sync:3.4.0
+        image: quay.io/alfresco/service-sync:3.5.0-M1
         mem_limit: 1g
         environment:
             JAVA_OPTS : "
@@ -185,4 +185,5 @@ volumes:
     shared-file-store-volume:
         driver_opts:
             type: tmpfs
+            
             device: tmpfs
