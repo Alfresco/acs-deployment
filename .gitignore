@@ -38,3 +38,5 @@ helm/alfresco-content-services/charts/alfresco-search.yaml
 helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin.yaml
 helm/alfresco-content-services/charts/alfresco-sync-service.yaml
 helm/alfresco-content-services.yaml
+
+helm/blueprint*
