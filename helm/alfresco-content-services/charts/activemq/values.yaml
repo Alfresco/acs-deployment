@@ -63,3 +63,7 @@ persistence:
   #chown doesn't work with dynamic provisioning so far
   #issue on github: https://github.com/kubernetes-sigs/aws-efs-csi-driver/issues/300
   chownWithDynamicProvisioning: false
+
+nodeSelector: {}
+tolerations: []
+affinity: {}  

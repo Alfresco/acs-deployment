@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   alfresco-content-services:
   - apiVersion: v2
-    created: "2021-11-27T20:27:07.538927392+01:00"
+    created: "2021-11-27T21:07:41.587362597+01:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -28,7 +28,7 @@ entries:
       repository: ""
       version: 3.0.9
     description: A Helm chart for deploying Alfresco Content Services
-    digest: b295a99aefbdf8234584c586b07bfebf7bde6925759ae4a9784e777e517b0d35
+    digest: 493a7bc19cb14327f2760f6fe49bd0600d29b0923f96a7c8442cd4374f209438
     home: https://www.alfresco.com
     icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
     keywords:
@@ -45,12 +45,12 @@ entries:
   blueprint:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-11-27T20:27:07.539609218+01:00"
+    created: "2021-11-27T21:07:41.587902933+01:00"
     description: A Helm chart for Kubernetes
-    digest: 2ca46f2df2586d8fc9eeedc73e6d5fdcd2fb7db219c4ea59413f288c5e97c728
+    digest: 76f813d31e6def291b43dce7f35ada0039ee4863574331cf2d82999d93eb2d73
     name: blueprint
     type: application
     urls:
     - blueprint-0.1.0.tgz
     version: 0.1.0
-generated: "2021-11-27T20:27:07.515556603+01:00"
+generated: "2021-11-27T21:07:41.570796879+01:00"
