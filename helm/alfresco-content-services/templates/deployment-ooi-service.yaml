@@ -29,11 +29,11 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
-      {{- with .Values.repository.nodeSelector }}
+      {{- with .Values.ooiService.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.repository.tolerations }}
+      {{- with .Values.ooiService.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}         
