@@ -372,6 +372,8 @@ transformmisc:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  nodeSelector: {}
+  tolerations: []
 
 aiTransformer:
   replicaCount: 2
@@ -487,6 +489,9 @@ share:
   extraSideContainers: []
   extraInitContainers: []
   command: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 # -- Defines the mounting points for the persistence required by the apps in the
 # cluster the alf_data folder from alfresco-content-repository app is mapped to
