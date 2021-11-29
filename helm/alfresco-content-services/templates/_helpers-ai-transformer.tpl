@@ -9,4 +9,3 @@ chart: {{ include "content-services.chart" . }}
 {{ include "ai-transformer.selectorLabels" . }}
 heritage: {{ .Release.Service }}
 {{- end }}
-

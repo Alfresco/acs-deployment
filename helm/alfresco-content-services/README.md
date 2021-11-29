@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 A Helm chart for deploying Alfresco Content Services
 
-![Version: 5.1.1](https://img.shields.io/badge/Version-5.1.1-informational?style=flat-square)
+![Version: 5.1.0-M2](https://img.shields.io/badge/Version-5.1.0--M2-informational?style=flat-square)
 
 ## Requirements
 
@@ -62,7 +62,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-digital-workspace.extraEnv | string | `"{{- if .Values.global.ai.enabled }}\n- name: APP_CONFIG_PLUGIN_AI_SERVICE\n  value: '{{ .Values.global.ai.enabled }}'\n{{- end }}"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
-| alfresco-digital-workspace.image.tag | string | `"2.4.2-adw"` |  |
+| alfresco-digital-workspace.image.tag | string | `"2.5.0"` |  |
 | alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-digital-workspace.ingress.path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
@@ -91,9 +91,9 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | database.password | string | `nil` | ex: alfresco |
 | database.url | string | `nil` | ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco |
 | database.user | string | `nil` | ex: alfresco |
-| email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.33.1"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html |
+| email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.34.1"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html |
 | email.server.enabled | bool | `false` | Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html |
-| filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.0"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.33.1"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
+| filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.0"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.34.1"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument to the install command: e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret or uncomment the following line if you don't want/need to pass it as a parameter on every install command : global.alfrescoRegistryPullSecrets: quay-registry-secret for more information: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md -- Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s) |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
@@ -205,19 +205,19 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.image.internalPort | int | `8080` |  |
 | repository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| repository.image.tag | string | `"7.1.0.1"` |  |
+| repository.image.tag | string | `"7.2.0-M1"` |  |
 | repository.ingress.annotations | object | `{}` |  |
 | repository.ingress.maxUploadSize | string | `"5g"` |  |
 | repository.ingress.path | string | `"/"` |  |
 | repository.ingress.tls | list | `[]` |  |
 | repository.initContainers.db.image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.initContainers.db.image.repository | string | `"busybox"` |  |
-| repository.initContainers.db.image.tag | string | `"1.33.1"` |  |
+| repository.initContainers.db.image.tag | string | `"1.34.1"` |  |
 | repository.initContainers.db.resources.limits.memory | string | `"10Mi"` |  |
 | repository.initContainers.db.resources.requests.memory | string | `"5Mi"` |  |
 | repository.initContainers.fs.image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.initContainers.fs.image.repository | string | `"busybox"` |  |
-| repository.initContainers.fs.image.tag | string | `"1.33.1"` |  |
+| repository.initContainers.fs.image.tag | string | `"1.34.1"` |  |
 | repository.initContainers.fs.resources.limits.memory | string | `"10Mi"` |  |
 | repository.initContainers.fs.resources.requests.memory | string | `"5Mi"` |  |
 | repository.livenessProbe.initialDelaySeconds | int | `130` |  |
@@ -232,7 +232,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.service.type | string | `"ClusterIP"` |  |
 | repository.strategy.type | string | `"Recreate"` |  |
 | s3connector | object | `{"enabled":false}` | Defines the properties to be used for the S3 Connector For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html |
-| share | object | `{"command":[],"environment":{"CATALINA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.1.0.1"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"memory":"2000Mi"},"requests":{"memory":"2000Mi"}},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
+| share | object | `{"command":[],"environment":{"CATALINA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.2.0-M1"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"memory":"2000Mi"},"requests":{"memory":"2000Mi"}},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
 | tika | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-tika","tag":"2.5.3"},"livenessProbe":{"initialDelaySeconds":60,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"tika","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformmisc | object | `{"enabled":true,"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-transform-misc","tag":"2.5.3"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"transformmisc","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformrouter.environment.JAVA_OPTS | string | `" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
