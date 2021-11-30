@@ -233,8 +233,8 @@ alfresco-proxy:
       - alfresco
       - digital-workspace
    ports:
-      - 443:443 # when USE_SSL="true"
-#     - 8080:8080 #default
+      - "443:443" # when USE_SSL="true"
+#     - "8080:8080" # default
    links:
       - digital-workspace
       - alfresco

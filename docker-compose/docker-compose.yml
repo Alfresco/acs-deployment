@@ -104,7 +104,7 @@ services:
         "
 
   postgres:
-    image: postgres:13.1
+    image: postgres:13.3
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
@@ -148,7 +148,7 @@ services:
       BASE_PATH: ./
 
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.1.1
+    image: alfresco/alfresco-acs-nginx:3.2.0
     mem_limit: 128m
     depends_on:
       - alfresco

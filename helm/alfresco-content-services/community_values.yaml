@@ -381,7 +381,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: 13.1.0
+    tag: 13.3.0
     pullPolicy: IfNotPresent
   postgresqlUsername: alfresco
   postgresqlPassword: alfresco
