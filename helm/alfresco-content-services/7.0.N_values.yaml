@@ -4,10 +4,6 @@ repository:
   image:
     tag: 7.0.1
 
-ooiService:
-  image:
-    tag: 1.1.1
-
 transformrouter:
   image:
     tag: 1.4.1
