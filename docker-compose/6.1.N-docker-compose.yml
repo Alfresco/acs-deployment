@@ -172,13 +172,13 @@ services:
       - "61613:61613" # STOMP
 
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:1.3.0
+    image: quay.io/alfresco/alfresco-digital-workspace:1.4.0
     mem_limit: 128m
     environment:
       BASEPATH: ./
 
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.1.1
+    image: alfresco/alfresco-acs-nginx:3.2.0
     mem_limit: 128m
     depends_on:
       - alfresco
