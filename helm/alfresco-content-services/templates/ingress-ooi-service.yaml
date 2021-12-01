@@ -1,9 +1,5 @@
 {{- if .Values.ooi.enabled }}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+apiVersion: {{ include "common.ingress-apiversion" . }}
 kind: Ingress
 metadata:
   name: {{ template "content-services.shortname" . }}-ooi-service

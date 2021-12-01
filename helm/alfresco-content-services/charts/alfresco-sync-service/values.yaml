@@ -98,9 +98,6 @@ postgresql-syncservice:
   image:
     tag: 11.7.0
     pullPolicy: IfNotPresent
-  persistence:
-    storageClass: gp2
-    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
   postgresqlUsername: alfresco
   postgresqlPassword: admin
   postgresqlDatabase: syncservice-postgresql

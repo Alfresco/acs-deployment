@@ -510,7 +510,7 @@ persistence:
     enabled: false
     accessModes:
       - ReadWriteMany
-    # -- Custom storage classs name
+    # -- Custom storage class name
     name: "nfs"
   existingClaim: "alfresco-volume-claim"
   repository:
