@@ -3,8 +3,7 @@
 # For performance tuning, assign the container memory and give a percentage of it to the JVM.
 # Use either the -Xms,-Xmx flags or the newly added flags in java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage. More details here: https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 
-
-# Note: The docker-compose file from github.com is a limited trial that goes into read-only mode after 2 days.
+# Note: The docker-compose file from GitHub is a limited trial that goes into read-only mode after 2 days.
 # Get the latest docker-compose.yml file with a 30-day trial license by accessing the Alfresco Content Services trial download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 
@@ -13,9 +12,19 @@ version: "2"
 
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository:6.1.1
+    image: quay.io/alfresco/alfresco-content-repository:7.1.0.1
     mem_limit: 1700m
     environment:
+      JAVA_TOOL_OPTIONS: "
+        -Dencryption.keystore.type=JCEKS
+        -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+        -Dencryption.keyAlgorithm=DESede
+        -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+        -Dmetadata-keystore.password=mp6yc0UD9e
+        -Dmetadata-keystore.aliases=metadata
+        -Dmetadata-keystore.metadata.password=oKIWzVdEdA
+        -Dmetadata-keystore.metadata.algorithm=DESede
+        "
       JAVA_OPTS: "
         -Ddb.driver=org.postgresql.Driver
         -Ddb.username=alfresco
@@ -26,11 +35,6 @@ services:
         -Dsolr.secureComms=none
         -Dsolr.base.url=/solr
         -Dindex.subsystem.name=solr6
-        -Dalfresco-pdf-renderer.url=http://alfresco-pdf-renderer:8090/
-        -Djodconverter.url=http://libreoffice:8090/
-        -Dimg.url=http://imagemagick:8090/
-        -Dtika.url=http://tika:8090/
-        -Dsfs.url=http://shared-file-store:8099/
         -Dshare.host=127.0.0.1
         -Dshare.port=8080
         -Dalfresco.host=localhost
@@ -38,8 +42,10 @@ services:
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
         -Ddeployment.method=DOCKER_COMPOSE
-        -Dlocal.transform.service.enabled=true
         -Dtransform.service.enabled=true
+        -Dtransform.service.url=http://transform-router:8095
+        -Dsfs.url=http://shared-file-store:8099/
+        -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -Dcsrf.filter.enabled=false
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
@@ -51,17 +57,16 @@ services:
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
       ACTIVEMQ_URL: "nio://activemq:61616"
-      IMAGEMAGICK_URL: "http://imagemagick:8090"
-      PDF_RENDERER_URL: "http://alfresco-pdf-renderer:8090"
-      LIBREOFFICE_URL: "http://libreoffice:8090"
-      TIKA_URL: "http://tika:8090"
+      CORE_AIO_URL: "http://transform-core-aio:8090"
       FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
+    ports:
+      - "8095:8095"
     links:
       - activemq
 
-  alfresco-pdf-renderer:
-    image: quay.io/alfresco/alfresco-pdf-renderer:2.0.17
-    mem_limit: 1g
+  transform-core-aio:
+    image: alfresco/alfresco-transform-core-aio:2.5.3
+    mem_limit: 1536m
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
       ACTIVEMQ_URL: "nio://activemq:61616"
@@ -71,44 +76,8 @@ services:
     links:
       - activemq
 
-  imagemagick:
-    image: quay.io/alfresco/alfresco-imagemagick:2.0.17
-    mem_limit: 1g
-    environment:
-      JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
-      ACTIVEMQ_URL: "nio://activemq:61616"
-      FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
-    ports:
-      - "8091:8090"
-    links:
-      - activemq
-
-  libreoffice:
-    image: quay.io/alfresco/alfresco-libreoffice:2.0.17
-    mem_limit: 1g
-    environment:
-      JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
-      ACTIVEMQ_URL: "nio://activemq:61616"
-      FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
-    ports:
-      - "8092:8090"
-    links:
-      - activemq
-
-  tika:
-    image: quay.io/alfresco/alfresco-tika:2.0.17
-    mem_limit: 1g
-    environment:
-      JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
-      ACTIVEMQ_URL: "nio://activemq:61616"
-      FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
-    ports:
-      - "8093:8090"
-    links:
-      - activemq
-
   shared-file-store:
-    image: alfresco/alfresco-shared-file-store:0.5.3
+    image: quay.io/alfresco/alfresco-shared-file-store:0.16.0
     mem_limit: 512m
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
@@ -120,7 +89,7 @@ services:
       - shared-file-store-volume:/tmp/Alfresco/sfs
 
   share:
-    image: alfresco/alfresco-share:6.1.1
+    image: quay.io/alfresco/alfresco-share:7.1.0.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -135,7 +104,7 @@ services:
         "
 
   postgres:
-    image: postgres:11.4
+    image: postgres:13.3
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
@@ -146,7 +115,7 @@ services:
       - "5432:5432"
 
   solr6:
-    image: alfresco/alfresco-search-services:1.4.3
+    image: alfresco/alfresco-search-services:2.0.2
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -163,7 +132,7 @@ services:
       - "8083:8983" # Browser port
 
   activemq:
-    image: alfresco/alfresco-activemq:5.15.14
+    image: alfresco/alfresco-activemq:5.16.1
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console
@@ -172,10 +141,11 @@ services:
       - "61613:61613" # STOMP
 
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:1.4.0
+    image: quay.io/alfresco/alfresco-digital-workspace:2.5.0
     mem_limit: 128m
     environment:
-      BASEPATH: ./
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
 
   proxy:
     image: alfresco/alfresco-acs-nginx:3.2.0
@@ -191,7 +161,7 @@ services:
       - share
 
   sync-service:
-    image: quay.io/alfresco/service-sync:3.1.2
+    image: quay.io/alfresco/service-sync:3.4.0
     mem_limit: 1g
     environment:
       JAVA_OPTS: "

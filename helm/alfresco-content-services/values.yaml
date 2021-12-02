@@ -1,5 +1,14 @@
 # This is a YAML-formatted file.  Declare variables to be passed into your templates.
 
+# ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
+# 2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
+
+# Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
+# For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
+# But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
+# If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
+# Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
+
 repository:
   # -- Administrator password for ACS in md5 hash format
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
@@ -9,7 +18,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.1.0.1
+    tag: 7.2.0-M1
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -17,7 +26,7 @@ repository:
     db:
       image:
         repository: busybox
-        tag: 1.33.1
+        tag: 1.34.1
         pullPolicy: IfNotPresent
       resources:
         requests:
@@ -27,7 +36,7 @@ repository:
     fs:
       image:
         repository: busybox
-        tag: 1.33.1
+        tag: 1.34.1
         pullPolicy: IfNotPresent
       resources:
         requests:
@@ -48,19 +57,23 @@ repository:
     #    hosts:
     #      - chart-example.local
   environment:
-    JAVA_OPTS: " -Dsolr.base.url=/solr
+    JAVA_OPTS: "
+      -Dsolr.base.url=/solr
       -Dsolr.secureComms=none
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
-      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
-    JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+      "
+    JAVA_TOOL_OPTIONS: "
+      -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
       -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=DESede"
+      -Dmetadata-keystore.metadata.algorithm=DESede
+      "
   resources:
     requests:
       memory: "3000Mi"
@@ -82,8 +95,7 @@ repository:
   extraSideContainers: []
   extraInitContainers: []
   command: []
-  # -- Provide additional log statements by adding
-  # classes and/or packages in a key:value fashion
+  # -- Provide additional log statements by adding classes and/or packages in a key:value fashion
   extraLogStatements: {}
   #   org.alfresco.repo.content.transform.TransformerDebug: debug
   #   org.alfresco.repo.security.authentication.identityservice: debug
@@ -412,7 +424,7 @@ filestore:
   initContainer:
     image:
       repository: busybox
-      tag: 1.33.1
+      tag: 1.34.1
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -449,7 +461,7 @@ share:
   replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.1.0.1
+    tag: 7.2.0-M1
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -498,7 +510,7 @@ persistence:
     enabled: false
     accessModes:
       - ReadWriteMany
-    # -- Custom storage classs name
+    # -- Custom storage class name
     name: "nfs"
   existingClaim: "alfresco-volume-claim"
   repository:
@@ -573,7 +585,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.4.2-adw
+    tag: 2.5.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -726,7 +738,7 @@ email:
     setPerms:
       image:
         repository: busybox
-        tag: 1.33.1
+        tag: 1.34.1
         pullPolicy: IfNotPresent
 
 mail:
@@ -783,6 +795,9 @@ metadataKeystore:
 alfresco-sync-service:
   syncservice:
     enabled : true
+  image:
+    repository: quay.io/alfresco/service-sync
+    tag: 3.5.0-M1
 
 global:
 
