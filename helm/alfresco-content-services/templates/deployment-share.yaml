@@ -75,4 +75,3 @@ spec:
       volumes:
 {{ toYaml .Values.share.extraVolumes | indent 6 }}
       {{- end }}
-

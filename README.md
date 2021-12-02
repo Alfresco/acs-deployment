@@ -25,16 +25,17 @@ A new version numbering scheme is also being introduced, during the development 
 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
-| Chart Version/Tag | Default | 7.0.N | 6.2.N | 6.1.N | Community |
-|--|--|--|--|--|--|
-| 5.0.0-M1 | 7.0.0-M2 | | 6.2.2 | 6.1.1 | 6.2.1-A8 |
-| 5.0.0-M2 | 7.0.0-M3 | | 6.2.2 | 6.1.1 | 7.0.0-A10 |
-| 5.0.0 | 7.0.0 | | 6.2.2 | 6.1.1 | 7.0.0 |
-| 5.0.1 | 7.0.0 | | 6.2.2 | 6.1.1 | 7.0.0 |
-| 5.1.0-M1 | 7.1.0-M1 | | 6.2.2 | 6.1.1 | 7.1.0-M1 |
-| 5.1.0-M2 | 7.1.0-M2 | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0-M2 |
-| 5.1.0 | 7.1.0.1 | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0 |
-| 5.1.1 | 7.1.0.1 | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0 |
+| Chart Version/Tag | Default  | 7.1.N   | 7.0.N | 6.2.N | 6.1.N | Community |
+|-------------------|----------|---------|-------|-------|-------|-----------|
+| 5.0.0-M1          | 7.0.0-M2 |         |       | 6.2.2 | 6.1.1 | 6.2.1-A8  |
+| 5.0.0-M2          | 7.0.0-M3 |         |       | 6.2.2 | 6.1.1 | 7.0.0-A10 |
+| 5.0.0             | 7.0.0    |         |       | 6.2.2 | 6.1.1 | 7.0.0     |
+| 5.0.1             | 7.0.0    |         |       | 6.2.2 | 6.1.1 | 7.0.0     |
+| 5.1.0-M1          | 7.1.0-M1 |         |       | 6.2.2 | 6.1.1 | 7.1.0-M1  |
+| 5.1.0-M2          | 7.1.0-M2 |         | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0-M2  |
+| 5.1.0             | 7.1.0.1  |         | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0     |
+| 5.1.1             | 7.1.0.1  |         | 7.0.1 | 6.2.2 | 6.1.1 | 7.1.0     |
+| 5.2.0-M1          | 7.2.0-M1 | 7.1.0.1 | 7.0.1 | 6.2.2 | 6.1.1 | 7.2.0-M1  |
 
 ### Docker
 
@@ -52,7 +53,7 @@ By default the latest version of the chart will always deploy the latest develop
 
 NOTE: As the Helm chart no longer deploys a specific version of ACS the `appVersion` property within the chart is longer be specified.
 
-Our tests are executed using Helm 3.2.4, kubectl 1.18.4 against an EKS cluster running Kubernetes 1.17.
+Our tests are executed using Helm 3.5.4, kubectl 1.18.9 against an EKS cluster running Kubernetes 1.21.
 
 ## Getting Started
 
