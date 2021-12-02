@@ -15,7 +15,7 @@ transformrouter:
 
 pdfrenderer:
   image:
-    repository: quay.io/alfresco/alfresco-pdfrenderer
+    repository: quay.io/alfresco/alfresco-pdf-renderer
     tag: 2.0.17
 
 imagemagick:
