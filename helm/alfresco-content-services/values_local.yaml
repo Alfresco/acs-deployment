@@ -8,8 +8,8 @@ repository:
   strategy:
     type: Recreate
   image:
-    repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.1.0.1
+    repository: "020228238701.dkr.ecr.eu-central-1.amazonaws.com/github" # "quay.io/alfresco/alfresco-content-repository-aws"
+    tag: "alfresco-content-repository-aws-7.1.0.1-samlpatch-7"  
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
