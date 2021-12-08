@@ -105,7 +105,7 @@ data:
         {
           "transformerName": "msOutlookToComprehendEntityRecognitionViaText",
           "transformerPipeline" : [
-            {"transformerName": "TikaAuto", "targetMediaType": "text/plain"},
+            {"transformerName": "OutlookMsg", "targetMediaType": "text/plain"},
             {"transformerName": "AWS_AI"}
           ],
           "supportedSourceAndTargetList": [
