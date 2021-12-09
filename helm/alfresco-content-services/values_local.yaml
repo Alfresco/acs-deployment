@@ -63,7 +63,7 @@ repository:
       -Dmetadata-keystore.metadata.algorithm=DESede"
   resources:
     requests:
-      memory: "1024Mi"
+      memory: "2000Mi"
     limits:
       memory: "2000Mi"
   # -- The repository readiness probe is used to check startup only as a failure
@@ -465,9 +465,9 @@ share:
     #      - chart-example.local
   resources:
     requests:
-      memory: "1024Mi"
+      memory: "1500Mi"
     limits:
-      memory: "2000Mi"
+      memory: "1500Mi"
   environment:
     CATALINA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -544,6 +544,11 @@ alfresco-search:
     insightzeppelin:
       enabled: false
     repository: *repositoryHostPort
+  resources:
+    limits:
+      memory: 1000Mi
+    requests:
+      memory: 1000Mi    
   ingress:
     # -- Alfresco Search services endpoint ('/solr') is disabled by default
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
@@ -643,7 +648,7 @@ postgresql:
     requests:
       memory: "500Mi"
     limits:
-      memory: "1500Mi"
+      memory: "500Mi"
 
 postgresql-syncservice:
   # -- If true, install the postgresql chart alongside Alfresco Sync service.
@@ -667,9 +672,9 @@ postgresql-syncservice:
     port: 5432
   resources:
     requests:
-      memory: "1500Mi"
+      memory: "500Mi"
     limits:
-      memory: "1500Mi"
+      memory: "500Mi"
 
 # -- Defines the properties to be used for the S3 Connector
 # For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
