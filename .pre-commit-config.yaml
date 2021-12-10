@@ -1,10 +1,10 @@
 repos:
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.5.0
+    rev: v1.6.0
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.1.5
+    rev: v1.1.6
     hooks:
       - id: travis-yml-lint
       - id: helm-deps
@@ -26,10 +26,10 @@ repos:
     hooks:
       - id: docker-compose-check
   - repo: https://github.com/sirosen/check-jsonschema
-    rev: 0.5.1
+    rev: 0.8.1
     hooks:
       - id: check-travis
   - repo: https://github.com/Alfresco/acs-deployment
-    rev: v5.1.0-M2
+    rev: latest
     hooks:
       - id: checkov-helm
