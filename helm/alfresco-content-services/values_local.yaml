@@ -806,6 +806,7 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
     - quay-registry-secret
+    - regcred
 
   # -- Choose if you want AI capabilities (globally - including ADW AI plugin)
   ai:
