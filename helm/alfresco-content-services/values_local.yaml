@@ -8,7 +8,7 @@ repository:
   strategy:
     type: Recreate
   image:
-    repository: "020228238701.dkr.ecr.eu-central-1.amazonaws.com/github" # "quay.io/alfresco/alfresco-content-repository-aws"
+    repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository:main" # "020228238701.dkr.ecr.eu-central-1.amazonaws.com/github" # "quay.io/alfresco/alfresco-content-repository-aws"
     tag: "alfresco-content-repository-aws-7.1.0.1-samlpatch-7"  
     pullPolicy: IfNotPresent
     internalPort: 8080
