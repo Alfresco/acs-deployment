@@ -36,8 +36,8 @@ repository:
           memory: "10Mi"
   service:
     name: alfresco
-    type: NodePort
-    externalPort: &repositoryExternalPort 8081
+    type: ClusterIP
+    externalPort: &repositoryExternalPort 80
   ingress:
     path: /
     maxUploadSize: "5g"
