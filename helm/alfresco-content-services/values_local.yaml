@@ -9,7 +9,7 @@ repository:
     type: Recreate
   image:
     repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository" 
-    tag: "main"  
+    tag: "latest"  
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
