@@ -324,7 +324,7 @@ data:
         {
           "transformerName": "officeToComprehendPiiEntityTypesViaText",
           "transformerPipeline" : [
-            {"transformerName": "libreoffice", "targetMediaType": "text/plain"},
+            {"transformerName": "TikaAuto", "targetMediaType": "text/plain"},
             {"transformerName": "AWS_AI"}
           ],
           "supportedSourceAndTargetList": [
