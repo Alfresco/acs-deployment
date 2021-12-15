@@ -12,7 +12,7 @@ syncservice:
   enabled: true
   image:
     repository: quay.io/alfresco/service-sync
-    tag: 3.4.0
+    tag: 3.5.0-M1
     pullPolicy: IfNotPresent
     internalPort: 9090
   environment:
@@ -98,9 +98,6 @@ postgresql-syncservice:
   image:
     tag: 11.7.0
     pullPolicy: IfNotPresent
-  persistence:
-    storageClass: gp2
-    #subPath: "ent-featureappsrepo470-9/alfresco-sync-services/database-data"
   postgresqlUsername: alfresco
   postgresqlPassword: admin
   postgresqlDatabase: syncservice-postgresql
