@@ -21,6 +21,12 @@ As well as the prerequisites mentioned on the [main README](/README.md#prerequis
 * [Docker](https://www.docker.com/products/docker-desktop)
 * [Docker Compose](https://docs.docker.com/compose/install)
 
+## Configure Docker for Desktop
+
+In order to deploy onto Docker for Desktop we need to configure it with as much CPU and memory as possible on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below.
+
+![Resources](../../docs/helm/diagrams/dfd-resources.png)
+
 ## Deploy
 
 1. Clone this repository or download one of the docker compose files from [here](../../docker-compose)
