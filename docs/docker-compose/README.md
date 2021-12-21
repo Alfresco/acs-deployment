@@ -23,7 +23,7 @@ As well as the prerequisites mentioned on the [main README](/README.md#prerequis
 
 ## Configure Docker for Desktop
 
-In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](../../docker-compose/docker-compose.yml) (preferably 16 Gb) to the Docker Engine on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below.
+In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](../../docker-compose/docker-compose.yml) (preferably 16 Gb) to the Docker Engine on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below. This is required because insufficient memory will cause containers to exit without warning. 
 
 ![Resources](../../docs/helm/diagrams/dfd-resources.png)
 
