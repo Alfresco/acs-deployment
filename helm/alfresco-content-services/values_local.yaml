@@ -41,8 +41,8 @@ repository:
   ingress:
     path: /
     maxUploadSize: "5g"
-    annotations: {}
-      # nginx.ingress.kubernetes.io/enable-cors: "true"
+    annotations:
+      nginx.ingress.kubernetes.io/enable-cors: "true"
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -582,7 +582,7 @@ alfresco-digital-workspace:
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//localhost:8081"
+    API_URL: "{protocol}//{hostname}{:port}"
     # APP_CONFIG_PLUGIN_MICROSOFT_ONLINE:
     # APP_CONFIG_MICROSOFT_ONLINE_OOI_URL:
     # APP_CONFIG_MICROSOFT_ONLINE_CLIENTID:
