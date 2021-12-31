@@ -10,7 +10,7 @@ realm:
       emailVerified: false
       firstName: test
       lastName: test
-      email: test@test.com
+      email: "test@test.com"
       credentials:
         - type: password
           value: "password"
@@ -40,5 +40,5 @@ keycloak:
   postgresql:
     enabled: true
 ingress:
-  hostName: "localhost"
-  path: "/auth"
+  hostName: "*"
+  path: "/auth*"
