@@ -1,0 +1,44 @@
+realm:
+  alfresco:
+    client:
+      redirectUris:
+        - localhost
+  extraUsers:
+    - username: testuser
+      enabled: true
+      totp: false
+      emailVerified: false
+      firstName: test
+      lastName: test
+      email: test@test.com
+      credentials:
+        - type: password
+          value: "password"
+      realmRoles:
+        - uma_authorization
+        - user
+        - offline_access
+        - test_role
+      clientRoles:
+        account:
+          - manage-account
+          - view-profile
+      groups:
+        - "/admin"
+        - "/testgroup"            
+keycloak:
+  image:
+    repository: alfresco/alfresco-identity-service
+    tag: 1.6.0       
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      value: admin
+    - name: KEYCLOAK_PASSWORD
+      value: admin 
+    - name: KEYCLOAK_IMPORT
+      value: /realm/alfresco-realm.json
+  postgresql:
+    enabled: true
+ingress:
+  hostName: *
+  path: /auth*
