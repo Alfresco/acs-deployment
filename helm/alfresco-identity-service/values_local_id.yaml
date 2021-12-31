@@ -40,4 +40,5 @@ keycloak:
   postgresql:
     enabled: true
 ingress:
-  path: /auth*
+  hostName: "*"
+  path: "/auth*"
