@@ -42,6 +42,29 @@ entries:
     urls:
     - alfresco-content-services-5.1.1.tgz
     version: 5.1.1
+  alfresco-identity-service:
+  - apiVersion: v1
+    appVersion: 1.6.0
+    created: "2021-09-29T18:35:16.908435588Z"
+    dependencies:
+    - name: keycloak
+      repository: https://codecentric.github.io/helm-charts
+      version: 15.0.0
+    description: The Alfresco Identity Service will become the central component responsible for identity-related capabilities needed by other Alfresco software, such as managing users, groups, roles, profiles, and authentication. Currently it deals just with authentication.
+    digest: db8f67c772704537f52bd26da4408d51cb613f6142b9742c54e203b1717fbebe
+    home: https://github.com/Alfresco/alfresco-identity-service/helm
+    keywords:
+    - alfresco
+    - keycloak
+    - identity-service
+    maintainers:
+    - name: Alfresco
+    name: alfresco-identity-service
+    sources:
+    - https://github.com/Alfresco/alfresco-identity-service/helm
+    urls:
+    - https://kubernetes-charts.alfresco.com/stable/alfresco-identity-service-5.0.0.tgz
+    version: 5.0.0    
   blueprint:
   - apiVersion: v2
     appVersion: 1.16.0
