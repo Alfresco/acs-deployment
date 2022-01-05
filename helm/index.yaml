@@ -42,6 +42,7 @@ entries:
     urls:
     - alfresco-content-services-5.1.1.tgz
     version: 5.1.1
+  alfresco-identity-service:
   - apiVersion: v1
     appVersion: 1.6.0
     created: "2021-09-29T18:35:16.908435588Z"
