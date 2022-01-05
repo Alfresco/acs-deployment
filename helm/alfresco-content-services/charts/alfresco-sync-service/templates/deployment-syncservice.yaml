@@ -27,6 +27,18 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-syncservice.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
     spec:
+      {{- with .Values.syncservice.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syncservice.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syncservice.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}          
       imagePullSecrets:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       initContainers:
