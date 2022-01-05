@@ -27,6 +27,14 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       {{- end }}
+      {{- with .Values.imagemagick.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.imagemagick.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}         
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
