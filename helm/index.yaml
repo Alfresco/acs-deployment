@@ -63,7 +63,7 @@ entries:
     sources:
     - https://github.com/Alfresco/alfresco-identity-service/helm
     urls:
-    - https://kubernetes-charts.alfresco.com/stable/alfresco-identity-service-5.0.0.tgz
+    - alfresco-identity-service-5.0.0.tgz
     version: 5.0.0    
   - apiVersion: v1
     appVersion: 1.6.0
