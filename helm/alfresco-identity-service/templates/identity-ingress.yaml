@@ -10,7 +10,7 @@ metadata:
 spec:
   rules:
   {{- if .Values.ingress.hostName }}
-  - host: {{ tpl .Values.ingress.hostName . }}
+  - host: "{{ tpl .Values.ingress.hostName . }}"
     http:
   {{- else }}
   - http:
