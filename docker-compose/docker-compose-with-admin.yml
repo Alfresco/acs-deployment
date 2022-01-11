@@ -150,7 +150,8 @@ services:
             BASE_PATH: ./
 
     admin:
-        image: quay.io/alfresco/alfresco-admin-app:7.1.0-M15.2
+# note: for latest develop-xxxxxx tag, see: https://quay.io/repository/alfresco/alfresco-admin-app?tab=tags
+        image: quay.io/alfresco/alfresco-admin-app:develop-16216
         mem_limit: 128m
         environment:
             APP_CONFIG_AUTH_TYPE: "BASIC"
