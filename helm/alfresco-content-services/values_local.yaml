@@ -8,8 +8,8 @@ repository:
   strategy:
     type: Recreate
   image:
-    repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository" 
-    tag: "7.1.0.1"  
+    repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository-local" 
+    tag: "latest"  
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -54,13 +54,15 @@ repository:
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
-      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=80
+      -Dhttps.protocols=TLSv1.2"
     JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
       -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=DESede"
+      -Dmetadata-keystore.metadata.algorithm=DESede"      
   resources:
     requests:
       memory: "2000Mi"
