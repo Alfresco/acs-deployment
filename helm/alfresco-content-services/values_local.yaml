@@ -8,8 +8,8 @@ repository:
   strategy:
     type: Recreate
   image:
-    repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository" 
-    tag: "latest"  
+    repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository-local" 
+    tag: "AR-262"  
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -585,8 +585,8 @@ alfresco-digital-workspace:
   env:
     API_URL: "{protocol}//{hostname}{:port}"
     APP_CONFIG_AUTH_TYPE: OAUTH
-    APP_CONFIG_OAUTH2_HOST: https://acs.c4.knippskasten.de/auth/realms/alfresco
-    APP_CONFIG_IDENTITY_HOST: https://acs.c4.knippskasten.de/auth/realms/alfresco/auth/admin
+    APP_CONFIG_OAUTH2_HOST: http://localhost/auth/realms/alfresco
+    APP_CONFIG_IDENTITY_HOST: http://localhost/auth/realms/alfresco/auth/admin
     APP_CONFIG_OAUTH2_CLIENTID: alfresco
     APP_CONFIG_OAUTH2_SECRET: f998bd64-5537-4837-bd34-11cf81010f6a
     APP_CONFIG_OAUTH2_IMPLICIT_FLOW: true
