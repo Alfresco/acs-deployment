@@ -797,7 +797,7 @@ alfresco-sync-service:
     enabled : true
   image:
     repository: quay.io/alfresco/service-sync
-    tag: 3.5.0-M1
+    tag: 3.5.0-A4
 
 global:
 
