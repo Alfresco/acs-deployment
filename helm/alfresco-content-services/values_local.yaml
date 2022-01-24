@@ -179,7 +179,7 @@ msTeamsService:
       imageEnabled: true
 
 transformrouter:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: 1.4.1
@@ -208,7 +208,7 @@ transformrouter:
 # -- Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
     tag: 2.5.3
@@ -241,7 +241,7 @@ pdfrenderer:
 # -- Declares the alfresco-imagemagick service used by the content repository
 # to transform image files
 imagemagick:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
     tag: 2.5.3
@@ -274,7 +274,7 @@ imagemagick:
 # -- Declares the alfresco-libreoffice service used by the content repository
 # to transform office files
 libreoffice:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
     tag: 2.5.3
@@ -307,7 +307,7 @@ libreoffice:
 # -- Declares the alfresco-tika service used by the content repository
 # to transform office files
 tika:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-tika
     tag: 2.5.3
@@ -341,7 +341,7 @@ tika:
 # to transform office files
 transformmisc:
   enabled: true
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-transform-misc
     tag: 2.5.3
@@ -372,7 +372,7 @@ transformmisc:
     maxTransformSeconds: 1800
 
 aiTransformer:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 1.4.0
@@ -405,7 +405,7 @@ aiTransformer:
 # -- Declares the alfresco-shared-file-store used by the content repository
 # and transform service
 filestore:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
     tag: 0.16.0
@@ -448,7 +448,7 @@ filestore:
 # -- Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
 share:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-share
     tag: 7.1.0.1
