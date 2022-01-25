@@ -8,7 +8,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 A Helm chart for deploying Alfresco Content Services
 
-![Version: 5.2.0-M1](https://img.shields.io/badge/Version-5.2.0--M1-informational?style=flat-square)
+![Version: 5.2.0-M2](https://img.shields.io/badge/Version-5.2.0--M2-informational?style=flat-square)
 
 ## Requirements
 
