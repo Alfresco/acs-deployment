@@ -4,13 +4,13 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.1.6
+    rev: v1.1.8
     hooks:
       - id: travis-yml-lint
       - id: helm-deps
       - id: helm-lint
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
       - id: check-yaml
         args: [--allow-multiple-documents]
@@ -26,7 +26,7 @@ repos:
     hooks:
       - id: docker-compose-check
   - repo: https://github.com/sirosen/check-jsonschema
-    rev: 0.8.1
+    rev: 0.10.0
     hooks:
       - id: check-travis
   - repo: https://github.com/Alfresco/acs-deployment

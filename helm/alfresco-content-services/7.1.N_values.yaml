@@ -2,31 +2,31 @@
 
 repository:
   image:
-    tag: 7.1.0.1
+    tag: 7.1.1-A5
 
 transformrouter:
   image:
-    tag: 1.4.1
+    tag: 1.5.0-A3
 
 pdfrenderer:
   image:
-    tag: 2.5.3
+    tag: 2.5.5-A3
 
 imagemagick:
   image:
-    tag: 2.5.3
+    tag: 2.5.5-A3
 
 libreoffice:
   image:
-    tag: 2.5.3
+    tag: 2.5.5-A3
 
 tika:
   image:
-    tag: 2.5.3
+    tag: 2.5.5-A3
 
 transformmisc:
   image:
-    tag: 2.5.3
+    tag: 2.5.5-A3
 
 aiTransformer:
   image:
@@ -34,11 +34,11 @@ aiTransformer:
 
 filestore:
   image:
-    tag: 0.16.0
+    tag: 0.16.1-A1
 
 share:
   image:
-    tag: 7.1.0.1
+    tag: 7.1.1-A5
 
 alfresco-search:
   searchServicesImage:
