@@ -2,14 +2,14 @@ apiVersion: v1
 entries:
   alfresco-content-services:
   - apiVersion: v2
-    created: "2021-11-27T21:07:41.587362597+01:00"
+    created: "2022-02-01T20:00:26.922544826+01:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
       repository: https://charts.bitnami.com/bitnami
       version: 10.4.5
     - alias: postgresql-syncservice
-      condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
+      condition: postgresql-syncservice.enabled
       name: postgresql
       repository: https://charts.bitnami.com/bitnami
       version: 10.4.5
@@ -28,7 +28,7 @@ entries:
       repository: ""
       version: 3.0.9
     description: A Helm chart for deploying Alfresco Content Services
-    digest: 493a7bc19cb14327f2760f6fe49bd0600d29b0923f96a7c8442cd4374f209438
+    digest: cd57d18b99bbdcc0354aa74d41fcdcbb8b562ce563da6213c9d44ca79080ac05
     home: https://www.alfresco.com
     icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
     keywords:
@@ -40,18 +40,21 @@ entries:
     sources:
     - https://github.com/Alfresco/acs-deployment
     urls:
-    - alfresco-content-services-5.1.1.tgz
-    version: 5.1.1
+    - alfresco-content-services-5.1.11.tgz
+    version: 5.1.11
   alfresco-identity-service:
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2021-09-29T18:35:16.908435588Z"
+    created: "2022-02-01T20:00:26.93361888+01:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
       version: 15.0.0
-    description: The Alfresco Identity Service will become the central component responsible for identity-related capabilities needed by other Alfresco software, such as managing users, groups, roles, profiles, and authentication. Currently it deals just with authentication.
-    digest: db8f67c772704537f52bd26da4408d51cb613f6142b9742c54e203b1717fbebe
+    description: The Alfresco Identity Service will become the central component responsible
+      for identity-related capabilities needed by other Alfresco software, such as
+      managing users, groups, roles, profiles, and authentication. Currently it deals
+      just with authentication.
+    digest: 0ce697f54a15c721a41f7d03bdacc0f2ac4dd30fdb96030384169f94c00dffd0
     home: https://github.com/Alfresco/alfresco-identity-service/helm
     keywords:
     - alfresco
@@ -63,17 +66,6 @@ entries:
     sources:
     - https://github.com/Alfresco/alfresco-identity-service/helm
     urls:
-    - alfresco-identity-service-5.0.0.tgz
-    version: 5.0.0    
-  blueprint:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2021-11-27T21:07:41.587902933+01:00"
-    description: A Helm chart for Kubernetes
-    digest: 76f813d31e6def291b43dce7f35ada0039ee4863574331cf2d82999d93eb2d73
-    name: blueprint
-    type: application
-    urls:
-    - blueprint-0.1.0.tgz
-    version: 0.1.0
-generated: "2021-11-27T21:07:41.570796879+01:00"
+    - alfresco-identity-service-5.0.1.tgz
+    version: 5.0.1
+generated: "2022-02-01T20:00:26.903471726+01:00"

@@ -8,8 +8,8 @@ repository:
   strategy:
     type: Recreate
   image:
-    repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository" 
-    tag: "7.1.0.1"  
+    repository: "ghcr.io/stadtwerk/c4_docker_images/alfresco-content-repository-local" 
+    tag: "AR-262"  
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -54,13 +54,15 @@ repository:
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
-      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=80
+      -Dhttps.protocols=TLSv1.2"
     JAVA_TOOL_OPTIONS: " -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
       -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=DESede"
+      -Dmetadata-keystore.metadata.algorithm=DESede"      
   resources:
     requests:
       memory: "2000Mi"
@@ -177,7 +179,7 @@ msTeamsService:
       imageEnabled: true
 
 transformrouter:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: 1.4.1
@@ -206,7 +208,7 @@ transformrouter:
 # -- Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-pdf-renderer
     tag: 2.5.3
@@ -239,7 +241,7 @@ pdfrenderer:
 # -- Declares the alfresco-imagemagick service used by the content repository
 # to transform image files
 imagemagick:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-imagemagick
     tag: 2.5.3
@@ -272,7 +274,7 @@ imagemagick:
 # -- Declares the alfresco-libreoffice service used by the content repository
 # to transform office files
 libreoffice:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-libreoffice
     tag: 2.5.3
@@ -305,7 +307,7 @@ libreoffice:
 # -- Declares the alfresco-tika service used by the content repository
 # to transform office files
 tika:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-tika
     tag: 2.5.3
@@ -339,7 +341,7 @@ tika:
 # to transform office files
 transformmisc:
   enabled: true
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: alfresco/alfresco-transform-misc
     tag: 2.5.3
@@ -370,7 +372,7 @@ transformmisc:
     maxTransformSeconds: 1800
 
 aiTransformer:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 1.4.0
@@ -403,7 +405,7 @@ aiTransformer:
 # -- Declares the alfresco-shared-file-store used by the content repository
 # and transform service
 filestore:
-  replicaCount: 0
+  replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
     tag: 0.16.0
@@ -581,8 +583,17 @@ alfresco-digital-workspace:
     tag: 2.4.2-adw
     pullPolicy: IfNotPresent
   env:
-    APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
+    APP_CONFIG_AUTH_TYPE: OAUTH
+    APP_CONFIG_OAUTH2_HOST: http://localhost/auth/realms/alfresco
+    APP_CONFIG_IDENTITY_HOST: http://localhost/auth/realms/alfresco/auth/admin
+    APP_CONFIG_OAUTH2_CLIENTID: alfresco
+    APP_CONFIG_OAUTH2_SECRET: ""
+    APP_CONFIG_OAUTH2_IMPLICIT_FLOW: true
+    APP_CONFIG_OAUTH2_SILENT_LOGIN: true
+    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "http://localhost/workspace/assets/silent-refresh.html"
+    APP_CONFIG_OAUTH2_REDIRECT_LOGIN: /workspace/
+    APP_CONFIG_OAUTH2_REDIRECT_LOGOUT: /workspace/logout
     # APP_CONFIG_PLUGIN_MICROSOFT_ONLINE:
     # APP_CONFIG_MICROSOFT_ONLINE_OOI_URL:
     # APP_CONFIG_MICROSOFT_ONLINE_CLIENTID:
