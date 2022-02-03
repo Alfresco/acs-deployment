@@ -77,7 +77,7 @@ services:
       - activemq
 
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:0.16.1-A1
+    image: quay.io/alfresco/alfresco-shared-file-store:0.16.1
     mem_limit: 512m
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"

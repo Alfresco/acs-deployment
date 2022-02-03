@@ -34,7 +34,7 @@ aiTransformer:
 
 filestore:
   image:
-    tag: 0.16.1-A1
+    tag: 0.16.1
 
 share:
   image:
