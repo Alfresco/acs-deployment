@@ -15,7 +15,6 @@ stages:
   - name: lint
   - name: test
   - name: community
-  - name: 7.1.1.N
   - name: 7.1.N
   - name: 7.0.N
   - name: 6.2.N
@@ -408,13 +407,6 @@ jobs:
       <<: *helm_deploy
     - name: community-compose
       stage: community
-      <<: *docker_deploy
-
-    - name: 7.1.1.N-helm
-      stage: 7.1.1.N
-      <<: *helm_deploy
-    - name: 7.1..1N-compose
-      stage: 7.1.1.N
       <<: *docker_deploy
 
     - name: 7.1.N-helm
