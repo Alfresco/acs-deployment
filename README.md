@@ -38,7 +38,6 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.2.0-M1          | 7.2.0-M1 | 7.1.0.1 | 7.0.1 | 6.2.2 | 6.1.1 | 7.2.0-M1  |
 | 5.2.0-M2          | 7.2.0-M2 | 7.1.1   | 7.0.1 | 6.2.2 | 6.1.1 | 7.2.0-M2  |
 
-
 ### Docker
 
 The default docker compose file contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
