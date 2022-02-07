@@ -12,7 +12,7 @@ version: "2"
 
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.2.0-A22
+    image: quay.io/alfresco/alfresco-content-repository:7.2.0-M2
     mem_limit: 1700m
     environment:
       JAVA_TOOL_OPTIONS: "
@@ -77,7 +77,7 @@ services:
       - activemq
 
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:0.16.1-A1
+    image: quay.io/alfresco/alfresco-shared-file-store:0.16.1
     mem_limit: 512m
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
@@ -89,7 +89,7 @@ services:
       - shared-file-store-volume:/tmp/Alfresco/sfs
 
   share:
-    image: quay.io/alfresco/alfresco-share:7.2.0-A22
+    image: quay.io/alfresco/alfresco-share:7.2.0-M2
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -141,7 +141,7 @@ services:
       - "61613:61613" # STOMP
 
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:2.5.0
+    image: quay.io/alfresco/alfresco-digital-workspace:2.6.0
     mem_limit: 128m
     environment:
       APP_CONFIG_AUTH_TYPE: "BASIC"

@@ -49,6 +49,10 @@ alfresco-search:
   searchServicesImage:
     tag: 1.4.3
 
+alfresco-digital-workspace:
+  image:
+    tag: 2.5.0
+
 postgresql:
   image:
     tag: 11.7.0

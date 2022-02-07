@@ -10,7 +10,7 @@ version: "2"
 
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository-community:7.2.0-A22
+    image: alfresco/alfresco-content-repository-community:7.2.0-M2
     mem_limit: 1500m
     environment:
       JAVA_TOOL_OPTIONS: "
@@ -55,7 +55,7 @@ services:
       - "8090:8090"
 
   share:
-    image: alfresco/alfresco-share:7.2.0-A22
+    image: alfresco/alfresco-share:7.2.0-M2
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
