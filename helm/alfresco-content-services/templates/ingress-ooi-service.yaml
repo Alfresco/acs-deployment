@@ -1,6 +1,6 @@
 {{- if .Values.ooi.enabled }}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: {{ template "ingress.apiVersion" . }}
 {{- else -}}
 apiVersion: extensions/v1beta1
 {{- end }}
@@ -37,6 +37,13 @@ spec:
       paths:
       - path: {{ .Values.ooiService.ingress.path }}
         backend:
+          {{- if semverCompare "<1.19-0" .Capabilities.KubeVersion.GitVersion  }}
           serviceName: {{ template "content-services.shortname" . }}-ooi-service
           servicePort: {{ .Values.ooiService.service.externalPort }}
+          {{- else  }}
+          service:
+            name: {{ template "content-services.shortname" . }}-ooi-service
+            port: 
+              number: {{ .Values.ooiService.service.externalPort }}
+          {{- end }}
 {{- end }}
