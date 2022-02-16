@@ -1,4 +1,6 @@
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
 apiVersion: extensions/v1beta1
@@ -35,6 +37,15 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.msTeamsService.ingress.path }}
+        {{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion }}
+        pathType: Prefix
+        backend:
+          service:
+            Name: {{ template "content-services.shortname" . }}-ms-teams-service
+            port:
+              number: {{ .Values.msTeamsService.service.externalPort }}
+        {{- else }}
         backend:
           serviceName: {{ template "content-services.shortname" . }}-ms-teams-service
           servicePort: {{ .Values.msTeamsService.service.externalPort }}
+        {{- end }}
