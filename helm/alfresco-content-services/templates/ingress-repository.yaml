@@ -1,4 +1,6 @@
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare ">=1.20-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
 apiVersion: extensions/v1beta1
@@ -50,10 +52,17 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.repository.ingress.path }}
+        pathType: Exact
         backend:
-          serviceName: {{ template "content-services.shortname" . }}-repository
-          servicePort: {{ .Values.repository.service.externalPort }}
+          service:
+            name: {{ template "content-services.shortname" . }}-repository
+            port: 
+              number: {{ .Values.repository.service.externalPort }}
       - path: {{ .Values.apiexplorer.ingress.path }}
+        pathType: Exact
         backend:
-          serviceName: {{ template "content-services.shortname" . }}-repository
-          servicePort: {{ .Values.repository.service.externalPort }}
+          service:
+            name: {{ template "content-services.shortname" . }}-repository
+            port: 
+              number: {{ .Values.repository.service.externalPort }}
+   

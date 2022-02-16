@@ -1,5 +1,7 @@
 {{- if .Values.insightzeppelin.enabled }}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+{{- if semverCompare ">=1.20-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
 apiVersion: extensions/v1beta1
@@ -12,9 +14,20 @@ metadata:
 spec:
   rules:
   - http:
+{{- if semverCompare ">=1.20-0" .Capabilities.KubeVersion.GitVersion -}}
+      paths:
+      - path: {{ .Values.ingress.path }}
+        pathType: Exact
+        backend:
+          service:
+            name: {{ template "alfresco-insight-zeppelin.fullName" . }}
+            port:
+              number: {{ .Values.service.externalPort }}
+{{- else -}}
       paths:
       - path: {{ .Values.ingress.path }}
         backend:
           serviceName: {{ template "alfresco-insight-zeppelin.fullName" . }}
           servicePort: {{ .Values.service.externalPort }}
+{{- end }}
 {{- end }}
