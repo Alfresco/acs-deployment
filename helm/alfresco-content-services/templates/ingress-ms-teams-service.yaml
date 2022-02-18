@@ -41,7 +41,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            Name: {{ template "content-services.shortname" . }}-ms-teams-service
+            name: {{ template "content-services.shortname" . }}-ms-teams-service
             port:
               number: {{ .Values.msTeamsService.service.externalPort }}
         {{- else }}

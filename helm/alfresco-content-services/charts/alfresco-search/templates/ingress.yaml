@@ -35,7 +35,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            Name: {{ template "alfresco-search.fullName" . }}-solr
+            name: {{ template "alfresco-search.fullName" . }}-solr
             port:
               number: {{ .Values.service.externalPort }}
         {{- else }}

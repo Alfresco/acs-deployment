@@ -42,7 +42,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            Name: {{ template "content-services.shortname" . }}-ooi-service
+            name: {{ template "content-services.shortname" . }}-ooi-service
             port:
               number: {{ .Values.ooiService.service.externalPort }}
         {{- else }}

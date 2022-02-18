@@ -50,7 +50,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            Name: {{ template "content-services.shortname" . }}-share
+            name: {{ template "content-services.shortname" . }}-share
             port:
               number: {{ .Values.share.service.externalPort }}
         {{- else }}
