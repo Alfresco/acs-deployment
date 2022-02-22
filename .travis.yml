@@ -49,6 +49,8 @@ branches:
     - /feature.*/
     - /fix.*/
     - /OPSEXP-.*/
+    - /ACS-.*/
+    - /ATS-.*/
 
 before_install:
   - |
