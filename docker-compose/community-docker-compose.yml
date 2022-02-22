@@ -96,7 +96,7 @@ services:
       # HTTPS or SECRET
       ALFRESCO_SECURE_COMMS: "secret"
       # SHARED SECRET VALUE
-      SOLR_OPTS: "
+      JAVA_TOOL_OPTIONS: "
           -Dalfresco.secureComms.secret=secret
       "
     ports:
