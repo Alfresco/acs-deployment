@@ -44,6 +44,7 @@ repository: {}
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
   ALFRESCO_SECURE_COMMS: "none"
+  #ALFRESCO_SECURE_COMMS_SHARED_SECRET: "secret"
 resources:
   requests:
     # -- Alfresco Search Services requests memory
