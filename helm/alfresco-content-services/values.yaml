@@ -59,7 +59,8 @@ repository:
   environment:
     JAVA_OPTS: "
       -Dsolr.base.url=/solr
-      -Dsolr.secureComms=none
+      -Dsolr.secureComms=secret
+      -Dsolr.sharedSecret=secret
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART

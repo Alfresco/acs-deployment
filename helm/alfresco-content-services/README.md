@@ -196,7 +196,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in md5 hash format |
 | repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |
-| repository.environment.JAVA_OPTS | string | `" -Dsolr.base.url=/solr -Dsolr.secureComms=none -Dindex.subsystem.name=solr6 -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 "` |  |
+| repository.environment.JAVA_OPTS | string | `" -Dsolr.base.url=/solr -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret -Dindex.subsystem.name=solr6 -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 "` |  |
 | repository.environment.JAVA_TOOL_OPTIONS | string | `" -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede "` |  |
 | repository.extraInitContainers | list | `[]` |  |
 | repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value fashion |

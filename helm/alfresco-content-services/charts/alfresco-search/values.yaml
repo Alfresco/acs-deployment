@@ -11,13 +11,13 @@ replicaCount: 1
 # More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
 type: "search-services"
 searchServicesImage:
-  repository: alfresco/alfresco-search-services
-  tag: 2.0.0
+  repository: quay.io/alfresco/search-services
+  tag: 2.1.0-SNAPSHOT
   pullPolicy: &searchDockerImagePullPolicy IfNotPresent
   internalPort: &searchDockerImageInternalPort 8983
 insightEngineImage:
   repository: quay.io/alfresco/insight-engine
-  tag: 2.0.0
+  tag: 2.1.0-SNAPSHOT
   pullPolicy: *searchDockerImagePullPolicy
   internalPort: *searchDockerImageInternalPort
 service:
@@ -43,8 +43,8 @@ ingress:
 repository: {}
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
-  ALFRESCO_SECURE_COMMS: "none"
-  #ALFRESCO_SECURE_COMMS_SHARED_SECRET: "secret"
+  ALFRESCO_SECURE_COMMS: "secret"
+  ALFRESCO_SECURE_COMMS_SHARED_SECRET: "secret"
 resources:
   requests:
     # -- Alfresco Search Services requests memory

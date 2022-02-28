@@ -21,7 +21,8 @@ A Helm chart for deploying Alfresco Search
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
-| environment.ALFRESCO_SECURE_COMMS | string | `"none"` |  |
+| environment.ALFRESCO_SECURE_COMMS | string | `"secret"` |  |
+| environment.ALFRESCO_SECURE_COMMS_SHARED_SECRET | string | `"secret"` |  |
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | ingress.basicAuth | string | `"YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg=="` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
@@ -37,7 +38,7 @@ A Helm chart for deploying Alfresco Search
 | insightEngineImage.internalPort | int | `8983` |  |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |
 | insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| insightEngineImage.tag | string | `"2.0.0"` |  |
+| insightEngineImage.tag | string | `"2.1.0-SNAPSHOT"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
@@ -52,8 +53,8 @@ A Helm chart for deploying Alfresco Search
 | resources.requests.memory | string | `"2000Mi"` | Alfresco Search Services requests memory |
 | searchServicesImage.internalPort | int | `8983` |  |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
-| searchServicesImage.repository | string | `"alfresco/alfresco-search-services"` |  |
-| searchServicesImage.tag | string | `"2.0.0"` |  |
+| searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
+| searchServicesImage.tag | string | `"2.1.0-SNAPSHOT"` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
