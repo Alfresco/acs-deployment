@@ -10,7 +10,7 @@ chart: {{ include "content-services.chart" . }}
 heritage: {{ .Release.Service }}
 {{- end }}
 
-{{- define "java_tool_option" -}}
+{{- define "repository_java_tool_option" -}}
   {{- if .Values.global.tracking.sharedsecret -}}
     {{- printf "-Dsolr.sharedSecret=%s " .Values.global.tracking.sharedsecret -}}
   {{- end -}}
