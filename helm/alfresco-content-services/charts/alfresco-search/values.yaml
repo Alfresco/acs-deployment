@@ -97,7 +97,7 @@ global:
     # none: work only prior to acs 7.2 (and was the default)
     # secret: use a shared secret (to specify using `tracking.sharedsecret`)
     # https: to use mTLS auth (require appropriate certificate configuration)
-    mode: secret
+    auth: secret
     # -- Shared secret to authenticate repo/solr traffic
     sharedsecret: secret
   alfrescoRegistryPullSecrets: quay-registry-secret
