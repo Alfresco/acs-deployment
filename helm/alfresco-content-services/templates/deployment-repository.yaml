@@ -45,7 +45,7 @@ spec:
 {{ tpl .Values.repository.command . | indent 12 }}
           {{- end }}
           envFrom:
-          {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.mode "secret") }}
+          {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
           - secretRef:
               name: {{ template "alfresco-search.fullName" . }}-solr-tracking
           {{- end }}

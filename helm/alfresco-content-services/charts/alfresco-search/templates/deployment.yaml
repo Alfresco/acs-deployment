@@ -61,7 +61,7 @@ spec:
             httpGet:
               path: /solr
               port: {{ template "alfresco-search.internalPort" . }}
-              {{- if eq .Values.global.tracking.mode "secret" }}
+              {{- if eq .Values.global.tracking.auth "secret" }}
               httpHeaders:
               - name: X-Alfresco-Search-Secret
                 value: {{ .Values.global.tracking.sharedsecret | default "secret" }}
@@ -73,7 +73,7 @@ spec:
             httpGet:
               path: /solr/admin/info/system
               port: {{ template "alfresco-search.internalPort" . }}
-              {{- if eq .Values.global.tracking.mode "secret" }}
+              {{- if eq .Values.global.tracking.auth "secret" }}
               httpHeaders:
               - name: X-Alfresco-Search-Secret
                 value: {{ .Values.global.tracking.sharedsecret | default "secret" }}
