@@ -62,3 +62,12 @@ Get Alfresco Search Docker Image
 {{- printf "%s:%s" .Values.searchServicesImage.repository .Values.searchServicesImage.tag -}}
 {{- end }}
 {{- end -}}
+
+{{/*
+Pass secret as JAVA_TOOL_OPTION props
+*/}}
+{{- define "java_tool_option" -}}
+  {{- if .Values.global.tracking.sharedsecret -}}
+    {{- printf "-Dalfresco.secureComms.secret=%s " .Values.global.tracking.sharedsecret -}}
+  {{- end -}}
+{{- end }}

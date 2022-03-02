@@ -47,6 +47,14 @@ Since the Alfresco Content Services chart also has local chart dependencies you 
 
 **NOTE:** Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.
 
+> :warning: **As of chart version 5.2.0 (ACS 7.2.0) a change in architecture has been introduced to make sorl-to-repo communication more secure. If you want to deploy ACS pre 7.2.0 with charts version 5.2.0+ make sure to add the values below to your `values.yml` file.**
+
+```yaml
+global:
+  tracking:
+    mode: none
+```
+
 ## Customise
 
 To customise the Helm deployment, for example applying AMPs, we recommend following the best practice of creating your own custom Docker image(s). The [Customisation Guide](./examples/customisation-guidelines.md) walks you through this process.

@@ -47,7 +47,6 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-search.fullName" . }}-solr-configmap
-
           - secretRef:
               name: {{ template "alfresco-search.fullName" . }}-solr-secret
           ports:
@@ -62,10 +61,10 @@ spec:
             httpGet:
               path: /solr
               port: {{ template "alfresco-search.internalPort" . }}
-              {{- if eq .Values.environment.ALFRESCO_SECURE_COMMS "secret" }}
+              {{- if eq .Values.global.tracking.mode "secret" }}
               httpHeaders:
               - name: X-Alfresco-Search-Secret
-                value: {{ .Values.environment.ALFRESCO_SECURE_COMMS_SHARED_SECRET }}
+                value: {{ .Values.global.tracking.sharedsecret | default "secret" }}
               {{- end }}
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
@@ -74,10 +73,10 @@ spec:
             httpGet:
               path: /solr/admin/info/system
               port: {{ template "alfresco-search.internalPort" . }}
-              {{- if eq .Values.environment.ALFRESCO_SECURE_COMMS "secret" }}
+              {{- if eq .Values.global.tracking.mode "secret" }}
               httpHeaders:
               - name: X-Alfresco-Search-Secret
-                value: {{ .Values.environment.ALFRESCO_SECURE_COMMS_SHARED_SECRET }}
+                value: {{ .Values.global.tracking.sharedsecret | default "secret" }}
               {{- end }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}

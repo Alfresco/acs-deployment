@@ -21,10 +21,10 @@ A Helm chart for deploying Alfresco Search
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
-| environment.ALFRESCO_SECURE_COMMS | string | `"secret"` |  |
-| environment.ALFRESCO_SECURE_COMMS_SHARED_SECRET | string | `"secret"` |  |
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}},"tracking":{"mode":"secret","sharedsecret":"secret"}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global.tracking.mode | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
+| global.tracking.sharedsecret | string | `"secret"` | Shared secret to authenticate repo/solr traffic |
 | ingress.basicAuth | string | `"YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg=="` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | ingress.enabled | bool | `true` |  |
 | ingress.path | string | `"/solr"` |  |
