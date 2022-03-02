@@ -97,11 +97,12 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | email.server.enabled | bool | `false` | Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html |
 | filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.1"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.34.1"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
-| global.alfrescoRegistryPullSecrets | string | `nil` | Global definition of Docker registry pull secret which can be accessed by dependent ACS Helm chart(s) |
+| global.alfrescoRegistryPullSecrets | string | `nil` |  |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| global.tracking_secret | string | `"secret"` |  |
+| global.tracking.mode | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
+| global.tracking.sharedsecret | string | `"secret"` | Shared secret to authenticate repo/solr traffic |
 | imagemagick | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-imagemagick","tag":"2.5.6"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":900,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"imagemagick","type":"ClusterIP"}}` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | imap.mail.from.default | string | `nil` |  |
 | imap.mail.to.default | string | `nil` |  |
@@ -197,7 +198,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in md5 hash format |
 | repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |
-| repository.environment.JAVA_OPTS | string | `" -Dsolr.base.url=/solr -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret -Dindex.subsystem.name=solr6 -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede "` |  |
+| repository.environment.JAVA_OPTS | string | `" -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6 -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede "` |  |
 | repository.extraInitContainers | list | `[]` |  |
 | repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value fashion |
 | repository.extraSideContainers | list | `[]` |  |

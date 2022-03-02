@@ -11,7 +11,7 @@ heritage: {{ .Release.Service }}
 {{- end }}
 
 {{- define "java_tool_option" -}}
-  {{- if .Values.global.tracking_secret -}}
-    {{- printf "-Dsolr.sharedSecret=%s " .Values.global.tracking_secret -}}
+  {{- if .Values.global.tracking.sharedsecret -}}
+    {{- printf "-Dsolr.sharedSecret=%s " .Values.global.tracking.sharedsecret -}}
   {{- end -}}
 {{- end }}
