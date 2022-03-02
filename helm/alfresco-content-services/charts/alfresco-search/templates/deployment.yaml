@@ -48,7 +48,7 @@ spec:
           - configMapRef:
               name: {{ template "alfresco-search.fullName" . }}-solr-configmap
           - secretRef:
-              name: {{ template "alfresco-search.fullName" . }}-solr-secret
+              name: {{ template "alfresco-search.fullName" . }}-solr-tracking
           ports:
             - containerPort: {{ template "alfresco-search.internalPort" . }}
           resources:
