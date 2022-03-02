@@ -45,6 +45,10 @@ spec:
 {{ tpl .Values.repository.command . | indent 12 }}
           {{- end }}
           envFrom:
+          {{- if .Values.global.tracking_secret }}
+          - secretRef:
+              name: {{ template "alfresco-search.fullName" . }}-solr-tracking
+          {{- end }}
           - secretRef:
               name: {{ template "content-services.shortname" . }}-dbsecret
           {{- if .Values.s3connector.enabled }}

@@ -66,8 +66,6 @@ repository:
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
       -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-      "
-    JAVA_TOOL_OPTIONS: "
       -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
@@ -801,7 +799,8 @@ alfresco-sync-service:
     tag: 3.5.0
 
 global:
-
+# A shared secret is now required in order to authenticate connections between solr and repo (typically: tracking)
+  tracking_secret: secret
 # -- If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret
