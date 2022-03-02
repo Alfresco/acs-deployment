@@ -68,3 +68,7 @@ alfresco-sync-service:
   syncservice:
     image:
       tag: 3.1.2
+
+global:
+  tracking:
+    auth: none

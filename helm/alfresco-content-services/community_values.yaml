@@ -49,3 +49,7 @@ email:
 imap:
   server:
     enabled: false
+
+global:
+  tracking:
+    auth: none
