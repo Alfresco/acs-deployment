@@ -67,5 +67,5 @@ Get Alfresco Search Docker Image
 Pass provided secret or generate one (all charts using this secret requires that helper with the same name)
 */}}
 {{- define "tracking-shared-secret" -}}
-  {{- printf "-Dalfresco.secureComms.secret=%s " (required "You need to provide a shared secret for Solr/repo authentication , see https://github.com/Alfresco/acs-deployment/tree/master/docs/helm" .Values.global.tracking.sharedsecret) -}}
+  {{- required "You need to provide a shared secret for Solr/repo authentication , see https://github.com/Alfresco/acs-deployment/tree/master/docs/helm" .Values.global.tracking.sharedsecret -}}
 {{- end }}
