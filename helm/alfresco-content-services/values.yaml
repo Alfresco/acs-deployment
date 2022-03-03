@@ -804,8 +804,9 @@ global:
     # secret: use a shared secret (to specify using `tracking.sharedsecret`)
     # https: to use mTLS auth (require appropriate certificate configuration)
     auth: secret
-    # -- Shared secret to authenticate repo/solr traffic
-    sharedsecret: F7nRvqh0jKJnGlhzLKsdQiZ3/37x6Yb7f8N8i0HE52Q
+    # -- Shared secret to authenticate repo/solr traffic.
+    # Strong enough secret can be generated with `openssl rand 20 -base64`
+    sharedsecret: "F7Rvqh.j&:nlzLsdQi3/37xYb$f8N80HE52Q"
 # -- If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret
