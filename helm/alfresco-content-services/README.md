@@ -82,7 +82,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-search.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.repository.port | int | `80` |  |
 | alfresco-search.searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.1.0-SNAPSHOT"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.3-RC2"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | alfresco-sync-service.image.tag | string | `"3.5.0"` |  |
