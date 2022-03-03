@@ -29,7 +29,10 @@ repos:
     rev: 0.14.0
     hooks:
       - id: check-travis
-  - repo: https://github.com/Alfresco/acs-deployment
-    rev: latest
+  - repo: local
     hooks:
       - id: checkov-helm
+        name: Checkov - Helm check
+        entry: bash -c "checkov -d helm/alfresco-content-services --framework helm --var-file .checkov/helm_vars.yaml --skip-check $(cat .checkov/skip-list) --quiet"
+        language: system
+        pass_filenames: false

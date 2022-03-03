@@ -1,0 +1,7 @@
+alfresco-search:
+  alfresco-insight-zeppelin:
+    insightzeppelin:
+      enabled: true
+global:
+  tracking:
+    sharedsecret: dummy
