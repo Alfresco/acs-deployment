@@ -47,7 +47,7 @@ spec:
           envFrom:
           {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
           - secretRef:
-              name: {{ printf "%s-solr-tracking-secret" .Release.Name | quote }}
+              name: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
           {{- end }}
           - secretRef:
               name: {{ template "content-services.shortname" . }}-dbsecret

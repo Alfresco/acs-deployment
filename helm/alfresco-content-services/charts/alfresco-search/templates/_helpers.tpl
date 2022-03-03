@@ -64,10 +64,8 @@ Get Alfresco Search Docker Image
 {{- end -}}
 
 {{/*
-Pass secret as JAVA_TOOL_OPTION props
+Pass provided secret or generate one (all charts using this secret requires that helper with the same name)
 */}}
-{{- define "solr_java_tool_option" -}}
-  {{- if .Values.global.tracking.sharedsecret -}}
-    {{- printf "-Dalfresco.secureComms.secret=%s " .Values.global.tracking.sharedsecret -}}
-  {{- end -}}
+{{- define "tracking-shared-secret" -}}
+  {{- printf "-Dalfresco.secureComms.secret=%s " .Values.global.tracking.sharedsecret -}}
 {{- end }}
