@@ -36,6 +36,7 @@ import:
 
 env:
   global:
+    - HELM_DOCS_VERSION=1.7.0
     - HOSTED_ZONE=dev.envalfresco.com
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
