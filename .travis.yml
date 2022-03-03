@@ -210,6 +210,7 @@ _helm_deploy: &helm_deploy
     helm dep up helm/alfresco-content-services
     travis_wait 25 helm upgrade --install $release_name_acs helm/alfresco-content-services \
     --values=$values_file \
+    --set global.tracking.sharedsecret=$(LANG=POSIX grep -ao '\w' /dev/urandom | tr -d '\n' | dd bs=1 count=32 2>/dev/null)
     --set externalPort="443" \
     --set externalProtocol="https" \
     --set externalHost="$namespace.${HOSTED_ZONE}" \
