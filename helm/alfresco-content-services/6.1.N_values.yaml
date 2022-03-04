@@ -4,9 +4,15 @@ repository:
   image:
     tag: 6.1.1
   environment:
-    JAVA_TOOL_OPTIONS: "
-      -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=AES
+    JAVA_OPTS: "
+          -Dsolr.base.url=/solr
+          -Dindex.subsystem.name=solr6
+          -Dalfresco.cluster.enabled=true
+          -Ddeployment.method=HELM_CHART
+          -Dtransform.service.enabled=true
+          -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+          -Dmetadata-keystore.aliases=metadata
+          -Dmetadata-keystore.metadata.algorithm=AES
       "
 
 transformrouter:
@@ -68,3 +74,7 @@ alfresco-sync-service:
   syncservice:
     image:
       tag: 3.1.2
+
+global:
+  tracking:
+    auth: none

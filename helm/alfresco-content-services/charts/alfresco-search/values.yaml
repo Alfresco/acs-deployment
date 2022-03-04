@@ -11,13 +11,13 @@ replicaCount: 1
 # More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
 type: "search-services"
 searchServicesImage:
-  repository: alfresco/alfresco-search-services
-  tag: 2.0.0
+  repository: quay.io/alfresco/search-services
+  tag: 2.0.3-RC2
   pullPolicy: &searchDockerImagePullPolicy IfNotPresent
   internalPort: &searchDockerImageInternalPort 8983
 insightEngineImage:
   repository: quay.io/alfresco/insight-engine
-  tag: 2.0.0
+  tag: 2.0.3-RC2
   pullPolicy: *searchDockerImagePullPolicy
   internalPort: *searchDockerImageInternalPort
 service:
@@ -43,8 +43,6 @@ ingress:
 repository: {}
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
-  ALFRESCO_SECURE_COMMS: "none"
-  #ALFRESCO_SECURE_COMMS_SHARED_SECRET: "secret"
 resources:
   requests:
     # -- Alfresco Search Services requests memory
@@ -93,6 +91,15 @@ initContainer:
 # -- Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
 # Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
 global:
+  # A shared secret is now required in order to authenticate connections between solr and repo (typically: tracking)
+  tracking:
+    # -- Select how solr and repo authenticate to each other
+    # none: work only prior to acs 7.2 (and was the default)
+    # secret: use a shared secret (to specify using `tracking.sharedsecret`)
+    # https: to use mTLS auth (require appropriate certificate configuration)
+    auth: secret
+    # -- Shared secret to authenticate repo/solr traffic
+    #sharedsecret:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:

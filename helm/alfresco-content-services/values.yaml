@@ -59,14 +59,11 @@ repository:
   environment:
     JAVA_OPTS: "
       -Dsolr.base.url=/solr
-      -Dsolr.secureComms=none
       -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
       -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-      "
-    JAVA_TOOL_OPTIONS: "
       -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
@@ -546,7 +543,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: 2.0.2
+    tag: 2.0.3-RC2
     pullPolicy: IfNotPresent
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
@@ -561,7 +558,7 @@ alfresco-search:
     # To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration)
     enabled: false
   # -- Default solr basic auth user/password: admin / admin
-  # You can create your own with htpasswd utilility & encode it with base640.
+  # You can create your own with htpasswd utilility & encode it with base64.
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth:
@@ -800,7 +797,16 @@ alfresco-sync-service:
     tag: 3.5.0
 
 global:
-
+# A shared secret is now required in order to authenticate connections between solr and repo (typically: tracking)
+  tracking:
+    # -- Select how solr and repo authenticate to each other
+    # none: work only prior to acs 7.2 (and was the default)
+    # secret: use a shared secret (to specify using `tracking.sharedsecret`)
+    # https: to use mTLS auth (require appropriate certificate configuration)
+    auth: secret
+    # -- Shared secret to authenticate repo/solr traffic.
+    # Strong enough secret can be generated with `openssl rand 20 -base64`
+    sharedsecret: null
 # -- If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret

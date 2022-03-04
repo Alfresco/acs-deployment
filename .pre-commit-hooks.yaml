@@ -1,5 +1,0 @@
-- id: checkov-helm
-  name: Checkov - Helm check
-  entry: bash -c "helm template helm/alfresco-content-services --set \"alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled\"=true > helm/alfresco-content-services.yaml && checkov -f helm/alfresco-content-services.yaml --framework=kubernetes --skip-check $(cat .checkov-ignore-list) --quiet"
-  language: system
-  pass_filenames: false

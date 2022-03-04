@@ -45,7 +45,24 @@ Since the Alfresco Content Services chart also has local chart dependencies you 
 - [Alfresco Insight Zeppelin Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin/README.md)
 - [Alfresco Sync Service Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-sync-service/README.md)
 
-**NOTE:** Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.
+> :warning: **As of chart version 5.2.0 (ACS 7.2.0) it is now required to pass a shared secret for solr and repo to authenticate to each other** (see below)
+
+```yaml
+global:
+  tracking:
+    auth: secret
+    sharedsecret: 50m3S3cretTh4t!s5tr0n6
+```
+
+> :warning: **If you want to deploy ACS pre 7.2.0 with charts version 5.2.0+ make sure to add the values below to your `values.yml` file.** starting from ACS 7.2.0 the configuration below will not work anymore.
+
+```yaml
+global:
+  tracking:
+    auth: none
+```
+
+> :information_source: **Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.**
 
 ## Customise
 

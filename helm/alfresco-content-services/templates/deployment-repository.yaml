@@ -45,6 +45,10 @@ spec:
 {{ tpl .Values.repository.command . | indent 12 }}
           {{- end }}
           envFrom:
+          {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
+          - secretRef:
+              name: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
+          {{- end }}
           - secretRef:
               name: {{ template "content-services.shortname" . }}-dbsecret
           {{- if .Values.s3connector.enabled }}
