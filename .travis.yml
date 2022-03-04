@@ -23,19 +23,20 @@ stages:
     if: branch = master OR commit_message = "[publish]"
 
 import:
-  - source: Alfresco/alfresco-build-tools:.travis.awscli_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.aws-iam-authenticator_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.helm-docs_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.yq_install.yml@v1.1.5
-  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.1.5
+  - source: Alfresco/alfresco-build-tools:.travis.awscli_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.aws-iam-authenticator_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.kubernetes_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.helm-docs_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.yq_install.yml@v1.2.0
+  - source: Alfresco/alfresco-build-tools:.travis.pre-commit.yml@v1.2.0
 
 env:
   global:
+    - HELM_DOCS_VERSION=1.7.0
     - HOSTED_ZONE=dev.envalfresco.com
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
@@ -211,6 +212,7 @@ _helm_deploy: &helm_deploy
     helm dep up helm/alfresco-content-services
     travis_wait 25 helm upgrade --install $release_name_acs helm/alfresco-content-services \
     --values=$values_file \
+    --set global.tracking.sharedsecret=$(openssl rand 24 -hex) \
     --set externalPort="443" \
     --set externalProtocol="https" \
     --set externalHost="$namespace.${HOSTED_ZONE}" \

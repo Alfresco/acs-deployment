@@ -1,10 +1,10 @@
 repos:
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.6.0
+    rev: v1.7.0
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.1.9
+    rev: v1.2.0
     hooks:
       - id: travis-yml-lint
       - id: helm-deps
@@ -26,10 +26,13 @@ repos:
     hooks:
       - id: docker-compose-check
   - repo: https://github.com/sirosen/check-jsonschema
-    rev: 0.10.2
+    rev: 0.14.0
     hooks:
       - id: check-travis
-  - repo: https://github.com/Alfresco/acs-deployment
-    rev: latest
+  - repo: local
     hooks:
       - id: checkov-helm
+        name: Checkov - Helm check
+        entry: bash -c "checkov -d helm/alfresco-content-services --framework helm --var-file .checkov/helm_vars.yaml --skip-check $(cat .checkov/skip-list) --quiet"
+        language: system
+        pass_filenames: false

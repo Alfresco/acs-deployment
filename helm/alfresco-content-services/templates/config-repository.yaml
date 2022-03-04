@@ -42,6 +42,7 @@ data:
       -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
       {{- end }}
       {{- end }}
+      -Dsolr.secureComms={{ .Values.global.tracking.auth | default "none" }}
       {{- if eq .Values.repository.edition "Enterprise" }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
