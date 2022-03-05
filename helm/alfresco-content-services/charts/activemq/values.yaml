@@ -2,8 +2,8 @@
 enabled: true
 replicaCount: 1
 image:
-  repository: alfresco/alfresco-activemq
-  tag: 5.16.1
+  repository: jnix85/activemq
+  tag: 5.16.4
   pullPolicy: IfNotPresent
 adminUser:
   username: admin
