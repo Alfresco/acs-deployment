@@ -18,7 +18,7 @@ A Helm chart Providing Apache ActiveMQ.
 | adminUser.username | string | `"admin"` |  |
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"jnix85/activemq"` |  |
+| image.repository | string | `"symptoma/activemq"` |  |
 | image.tag | string | `"5.16.4"` |  |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |

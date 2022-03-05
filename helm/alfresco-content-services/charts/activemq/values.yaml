@@ -2,7 +2,7 @@
 enabled: true
 replicaCount: 1
 image:
-  repository: jnix85/activemq
+  repository: symptoma/activemq
   tag: 5.16.4
   pullPolicy: IfNotPresent
 adminUser:
