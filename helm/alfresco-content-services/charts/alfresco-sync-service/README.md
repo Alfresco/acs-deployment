@@ -12,72 +12,72 @@ Alfresco Sync Service
 
 ## Values
 
-| Key | Type | Default                                                                                                                                                                                          | Description |
-|-----|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| activemq.broker.host | string | `"activemq-broker"`                                                                                                                                                                              |  |
-| activemq.broker.password | string | `nil`                                                                                                                                                                                            |  |
-| activemq.broker.port | int | `61616`                                                                                                                                                                                          |  |
-| activemq.broker.protocol | string | `"tcp"`                                                                                                                                                                                          |  |
-| activemq.broker.username | string | `nil`                                                                                                                                                                                            |  |
-| activemq.external | bool | `false`                                                                                                                                                                                          |  |
-| contentServices.installationName | string | `nil`                                                                                                                                                                                            | Specify when installing as a standalone chart, not as a subchart of ACS. This variable will be used to construct the correct hostname for ACS and ActiveMQ |
-| database | object | `{"external":false}`                                                                                                                                                                             | Defines properties required by sync service for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in TODO - add container path |
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}`                                                                          | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
-| ingress.extraAnnotations | string | `nil`                                                                                                                                                                                            |  |
-| ingress.tls | list | `[]`                                                                                                                                                                                             | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
-| initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"`                                                                                                                                                                                 |  |
-| initContainers.activemq.image.repository | string | `"busybox"`                                                                                                                                                                                      |  |
-| initContainers.activemq.image.tag | string | `"1.33.1"`                                                                                                                                                                                       |  |
-| initContainers.activemq.resources.limits.memory | string | `"10Mi"`                                                                                                                                                                                         |  |
-| initContainers.activemq.resources.requests.memory | string | `"5Mi"`                                                                                                                                                                                          |  |
-| initContainers.postgres.image.pullPolicy | string | `"IfNotPresent"`                                                                                                                                                                                 |  |
-| initContainers.postgres.image.repository | string | `"busybox"`                                                                                                                                                                                      |  |
-| initContainers.postgres.image.tag | string | `"1.33.1"`                                                                                                                                                                                       |  |
-| initContainers.postgres.resources.limits.memory | string | `"10Mi"`                                                                                                                                                                                         |  |
-| initContainers.postgres.resources.requests.memory | string | `"5Mi"`                                                                                                                                                                                          |  |
-| postgresql-syncservice.enabled | bool | `true`                                                                                                                                                                                           |  |
-| postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"`                                                                                                                                                                                 |  |
-| postgresql-syncservice.image.tag | string | `"11.7.0"`                                                                                                                                                                                       |  |
-| postgresql-syncservice.name | string | `"postgresql-syncservice"`                                                                                                                                                                       | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
-| postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"`                                                                                                                                                                       |  |
-| postgresql-syncservice.postgresConfig.log_min_messages | string | `"LOG"`                                                                                                                                                                                          |  |
-| postgresql-syncservice.postgresConfig.max_connections | int | `450`                                                                                                                                                                                            |  |
-| postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"`                                                                                                                                                                       |  |
-| postgresql-syncservice.postgresqlPassword | string | `"admin"`                                                                                                                                                                                        |  |
-| postgresql-syncservice.postgresqlUsername | string | `"alfresco"`                                                                                                                                                                                     |  |
-| postgresql-syncservice.replicaCount | int | `1`                                                                                                                                                                                              |  |
-| postgresql-syncservice.resources.limits.memory | string | `"1500Mi"`                                                                                                                                                                                       |  |
-| postgresql-syncservice.resources.requests.memory | string | `"1500Mi"`                                                                                                                                                                                       |  |
-| postgresql-syncservice.service.port | int | `5432`                                                                                                                                                                                           |  |
-| replicaCount | int | `1`                                                                                                                                                                                              |  |
-| repository.host | string | `"alfresco-cs-repository"`                                                                                                                                                                       |  |
-| repository.port | int | `80`                                                                                                                                                                                             |  |
-| syncservice.enabled | bool | `true`                                                                                                                                                                                           |  |
-| syncservice.environment.EXTRA_JAVA_OPTS | string | `""`                                                                                                                                                                                             |  |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| activemq.broker.host | string | `"activemq-broker"` |  |
+| activemq.broker.password | string | `nil` |  |
+| activemq.broker.port | int | `61616` |  |
+| activemq.broker.protocol | string | `"tcp"` |  |
+| activemq.broker.username | string | `nil` |  |
+| activemq.external | bool | `false` |  |
+| contentServices.installationName | string | `nil` | Specify when installing as a standalone chart, not as a subchart of ACS. This variable will be used to construct the correct hostname for ACS and ActiveMQ |
+| database | object | `{"external":false}` | Defines properties required by sync service for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in TODO - add container path |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| ingress.extraAnnotations | string | `nil` |  |
+| ingress.tls | list | `[]` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
+| initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
+| initContainers.activemq.image.repository | string | `"busybox"` |  |
+| initContainers.activemq.image.tag | string | `"1.33.1"` |  |
+| initContainers.activemq.resources.limits.memory | string | `"10Mi"` |  |
+| initContainers.activemq.resources.requests.memory | string | `"5Mi"` |  |
+| initContainers.postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
+| initContainers.postgres.image.repository | string | `"busybox"` |  |
+| initContainers.postgres.image.tag | string | `"1.33.1"` |  |
+| initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
+| initContainers.postgres.resources.requests.memory | string | `"5Mi"` |  |
+| postgresql-syncservice.enabled | bool | `true` |  |
+| postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
+| postgresql-syncservice.image.tag | string | `"11.7.0"` |  |
+| postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
+| postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
+| postgresql-syncservice.postgresConfig.log_min_messages | string | `"LOG"` |  |
+| postgresql-syncservice.postgresConfig.max_connections | int | `450` |  |
+| postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
+| postgresql-syncservice.postgresqlPassword | string | `"admin"` |  |
+| postgresql-syncservice.postgresqlUsername | string | `"alfresco"` |  |
+| postgresql-syncservice.replicaCount | int | `1` |  |
+| postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
+| postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
+| postgresql-syncservice.service.port | int | `5432` |  |
+| replicaCount | int | `1` |  |
+| repository.host | string | `"alfresco-cs-repository"` |  |
+| repository.port | int | `80` |  |
+| syncservice.enabled | bool | `true` |  |
+| syncservice.environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | syncservice.environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -Dsync.metrics.reporter.graphite.address=127.0.0.1 -Dsync.metrics.reporter.graphite.port=2003 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| syncservice.horizontalPodAutoscaling.CPU.enabled | bool | `true`                                                                                                                                                                                           |  |
-| syncservice.horizontalPodAutoscaling.CPU.targetAverageUtilization | int | `80`                                                                                                                                                                                             |  |
-| syncservice.horizontalPodAutoscaling.enabled | bool | `true`                                                                                                                                                                                           |  |
-| syncservice.horizontalPodAutoscaling.maxReplicas | int | `3`                                                                                                                                                                                              |  |
-| syncservice.horizontalPodAutoscaling.memory.enabled | bool | `true`                                                                                                                                                                                           |  |
-| syncservice.horizontalPodAutoscaling.memory.targetAverageUtilization | int | `60`                                                                                                                                                                                             |  |
-| syncservice.horizontalPodAutoscaling.minReplicas | int | `1`                                                                                                                                                                                              |  |
-| syncservice.image.internalPort | int | `9090`                                                                                                                                                                                           |  |
-| syncservice.image.pullPolicy | string | `"IfNotPresent"`                                                                                                                                                                                 |  |
-| syncservice.image.repository | string | `"quay.io/alfresco/service-sync"`                                                                                                                                                                |  |
-| syncservice.image.tag | string | `"3.6.0-A2"`                                                                                                                                                                                     |  |
-| syncservice.ingress.path | string | `"/syncservice"`                                                                                                                                                                                 |  |
-| syncservice.livenessProbe.initialDelaySeconds | int | `150`                                                                                                                                                                                            |  |
-| syncservice.livenessProbe.periodSeconds | int | `30`                                                                                                                                                                                             |  |
-| syncservice.livenessProbe.timeoutSeconds | int | `10`                                                                                                                                                                                             |  |
-| syncservice.readinessProbe.failureThreshold | int | `12`                                                                                                                                                                                             |  |
-| syncservice.readinessProbe.initialDelaySeconds | int | `20`                                                                                                                                                                                             |  |
-| syncservice.readinessProbe.periodSeconds | int | `10`                                                                                                                                                                                             |  |
-| syncservice.readinessProbe.timeoutSeconds | int | `10`                                                                                                                                                                                             |  |
-| syncservice.resources.limits.cpu | string | `"2"`                                                                                                                                                                                            |  |
-| syncservice.resources.limits.memory | string | `"2000Mi"`                                                                                                                                                                                       |  |
-| syncservice.resources.requests.cpu | string | `"2"`                                                                                                                                                                                            |  |
-| syncservice.resources.requests.memory | string | `"2000Mi"`                                                                                                                                                                                       |  |
-| syncservice.service.externalPort | int | `80`                                                                                                                                                                                             |  |
-| syncservice.service.name | string | `"syncservice"`                                                                                                                                                                                  |  |
-| syncservice.service.type | string | `"NodePort"`                                                                                                                                                                                     |  |
+| syncservice.horizontalPodAutoscaling.CPU.enabled | bool | `true` |  |
+| syncservice.horizontalPodAutoscaling.CPU.targetAverageUtilization | int | `80` |  |
+| syncservice.horizontalPodAutoscaling.enabled | bool | `true` |  |
+| syncservice.horizontalPodAutoscaling.maxReplicas | int | `3` |  |
+| syncservice.horizontalPodAutoscaling.memory.enabled | bool | `true` |  |
+| syncservice.horizontalPodAutoscaling.memory.targetAverageUtilization | int | `60` |  |
+| syncservice.horizontalPodAutoscaling.minReplicas | int | `1` |  |
+| syncservice.image.internalPort | int | `9090` |  |
+| syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
+| syncservice.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
+| syncservice.image.tag | string | `"3.6.0-A2"` |  |
+| syncservice.ingress.path | string | `"/syncservice"` |  |
+| syncservice.livenessProbe.initialDelaySeconds | int | `150` |  |
+| syncservice.livenessProbe.periodSeconds | int | `30` |  |
+| syncservice.livenessProbe.timeoutSeconds | int | `10` |  |
+| syncservice.readinessProbe.failureThreshold | int | `12` |  |
+| syncservice.readinessProbe.initialDelaySeconds | int | `20` |  |
+| syncservice.readinessProbe.periodSeconds | int | `10` |  |
+| syncservice.readinessProbe.timeoutSeconds | int | `10` |  |
+| syncservice.resources.limits.cpu | string | `"2"` |  |
+| syncservice.resources.limits.memory | string | `"2000Mi"` |  |
+| syncservice.resources.requests.cpu | string | `"2"` |  |
+| syncservice.resources.requests.memory | string | `"2000Mi"` |  |
+| syncservice.service.externalPort | int | `80` |  |
+| syncservice.service.name | string | `"syncservice"` |  |
+| syncservice.service.type | string | `"NodePort"` |  |
