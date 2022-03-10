@@ -116,7 +116,7 @@ services:
       - "5432:5432"
 
   solr6:
-    image: alfresco/alfresco-search-services:2.0.3-RC3
+    image: alfresco/alfresco-search-services:2.0.3-RC4
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -132,7 +132,7 @@ services:
       # SHARED SECRET VALUE
       JAVA_TOOL_OPTIONS: "
           -Dalfresco.secureComms.secret=secret
-      "
+        "
     ports:
       - "8083:8983" # Browser port
 
