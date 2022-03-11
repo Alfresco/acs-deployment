@@ -6,27 +6,27 @@ repository:
 
 transformrouter:
   image:
-    tag: 1.5.2-A10
+    tag: 1.5.2
 
 pdfrenderer:
   image:
-    tag: 2.5.7-A10
+    tag: 2.5.7
 
 imagemagick:
   image:
-    tag: 2.5.7-A10
+    tag: 2.5.7
 
 libreoffice:
   image:
-    tag: 2.5.7-A10
+    tag: 2.5.7
 
 tika:
   image:
-    tag: 2.5.7-A10
+    tag: 2.5.7
 
 transformmisc:
   image:
-    tag: 2.5.7-A10
+    tag: 2.5.7
 
 aiTransformer:
   image:
