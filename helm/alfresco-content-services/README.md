@@ -39,7 +39,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | aiTransformer.image.internalPort | int | `8090` |  |
 | aiTransformer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | aiTransformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| aiTransformer.image.tag | string | `"1.4.2-A1"` |  |
+| aiTransformer.image.tag | string | `"1.4.2-A11"` |  |
 | aiTransformer.livenessProbe.initialDelaySeconds | int | `10` |  |
 | aiTransformer.livenessProbe.livenessPercent | int | `400` |  |
 | aiTransformer.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
