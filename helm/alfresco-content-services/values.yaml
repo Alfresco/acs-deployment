@@ -794,7 +794,7 @@ alfresco-sync-service:
     enabled : true
   image:
     repository: quay.io/alfresco/service-sync
-    tag: 3.5.0
+    tag: 3.6.0-A2
 
 global:
 # A shared secret is now required in order to authenticate connections between solr and repo (typically: tracking)

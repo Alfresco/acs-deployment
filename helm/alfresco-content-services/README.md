@@ -85,7 +85,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-search.searchServicesImage.tag | string | `"2.0.3-RC4"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| alfresco-sync-service.image.tag | string | `"3.5.0"` |  |
+| alfresco-sync-service.image.tag | string | `"3.6.0-A2"` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
 | database | object | `{"driver":null,"external":false,"password":null,"url":null,"user":null}` | Defines properties required by alfresco for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver |
