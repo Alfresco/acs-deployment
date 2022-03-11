@@ -37,7 +37,7 @@ A Helm chart for deploying Alfresco Search
 | insightEngineImage.internalPort | int | `8983` |  |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |
 | insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| insightEngineImage.tag | string | `"2.0.3-RC4"` |  |
+| insightEngineImage.tag | string | `"2.0.3-RC5"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
@@ -53,7 +53,7 @@ A Helm chart for deploying Alfresco Search
 | searchServicesImage.internalPort | int | `8983` |  |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| searchServicesImage.tag | string | `"2.0.3-RC4"` |  |
+| searchServicesImage.tag | string | `"2.0.3-RC5"` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
