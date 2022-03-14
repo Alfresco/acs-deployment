@@ -99,7 +99,7 @@ global:
     # https: to use mTLS auth (require appropriate certificate configuration)
     auth: secret
     # -- Shared secret to authenticate repo/solr traffic
-    #sharedsecret:
+    sharedsecret: null
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
