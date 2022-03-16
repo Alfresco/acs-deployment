@@ -49,6 +49,7 @@ repository:
     externalPort: &repositoryExternalPort 80
   ingress:
     path: /
+    pathType: Prefix
     maxUploadSize: "5g"
     annotations: {}
       # nginx.ingress.kubernetes.io/enable-cors: "true"
@@ -101,6 +102,7 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
+    pathType: Prefix
 
 ooiService:
   replicaCount: 2
@@ -115,6 +117,7 @@ ooiService:
     externalPort: 80
   ingress:
     path: /ooi-service
+    pathType: Prefix
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -152,6 +155,7 @@ msTeamsService:
     externalPort: 80
   ingress:
     path: /ms-teams-service
+    pathType: Prefix
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -467,6 +471,7 @@ share:
     externalPort: 80
   ingress:
     path: /share
+    pathType: Prefix
     annotations: {}
     tls: []
     #  - secretName: chart-example-tls
@@ -574,6 +579,7 @@ alfresco-digital-workspace:
     envType: frontend
   ingress:
     path: /workspace
+    pathType: Prefix
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []

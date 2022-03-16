@@ -1,0 +1,16 @@
+suite: test volumeMounts
+templates:
+  - deployment.yaml
+tests:
+  - it: should render volumeMounts
+    set:
+      enabled: true
+      volumeMounts:
+        - name: config
+          mountPath: /opt/config
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: config
+            mountPath: /opt/config

@@ -1,0 +1,27 @@
+suite: test service
+templates:
+  - service.yaml
+tests:
+  - it: should render nothing if not enabled
+    set:
+      enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render servce if enabled
+    set:
+      enabled: true
+    asserts:
+      - isKind:
+          of: Service
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-common
+      - contains:
+          path: spec.ports
+          content:
+            port: 80
+            targetPort: 8080
+            protocol: TCP
+            name: http

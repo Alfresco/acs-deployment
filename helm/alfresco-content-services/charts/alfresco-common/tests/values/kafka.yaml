@@ -1,0 +1,12 @@
+global:
+  messaging:
+    broker: kafka
+  kafka:
+    brokers: '{{ include "common.kafka.fullname" $ }}'
+    zkNodes: "{{ .Release.Name }}-zookeeper"
+    extraEnv: |-
+      - name: ACT_AUDIT_PRODUCER_TRANSACTION_ID_PREFIX
+        value: ""
+
+messaging:
+  enabled: true

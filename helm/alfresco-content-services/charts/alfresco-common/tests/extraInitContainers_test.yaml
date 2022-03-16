@@ -1,0 +1,16 @@
+suite: test extraInitContainers
+templates:
+  - deployment.yaml
+tests:
+  - it: should render extraInitContainers
+    set:
+      enabled: true
+      extraInitContainers: |
+        - name: foo
+          image: bar
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            image: bar
+            name: foo

@@ -14,6 +14,9 @@ home: https://www.alfresco.com
 sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
+  - name: common
+    version: 1.11.3
+    repository: https://charts.bitnami.com/bitnami
   - name: postgresql
     version: 10.13.9
     repository: https://charts.bitnami.com/bitnami
@@ -23,10 +26,9 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     alias: postgresql-syncservice
     condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
-  - name: common
+  - name: alfresco-common
     alias: alfresco-digital-workspace
-    repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 7.1.0-M16
+    version: 1.0.0
     condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
   - name: activemq
     version: 2.0.0
@@ -34,4 +36,7 @@ dependencies:
     version: 1.0.4
   - name: alfresco-sync-service
     version: 3.0.9
+  - name: alfresco-common
+    alias: alfresco-digital-workspace
+    version: 1.0.0
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

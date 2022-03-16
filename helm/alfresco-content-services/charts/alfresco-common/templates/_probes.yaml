@@ -1,0 +1,21 @@
+{{- define "common.probes.tpl" -}}
+{{- $ingressPath := include "common.ingress-path" . -}}
+livenessProbe:
+  httpGet:
+    path: {{ tpl (coalesce .Values.livenessProbe.path .Values.probePath $ingressPath) . }}
+    port: {{ .Values.service.internalPort }}
+  initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+  successThreshold: {{ .Values.livenessProbe.successThreshold }}
+  timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+  failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+readinessProbe:
+  httpGet:
+    path: {{ tpl (coalesce .Values.readinessProbe.path .Values.probePath $ingressPath) . }}
+    port: {{ .Values.service.internalPort }}
+  initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+  periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+  successThreshold: {{ .Values.readinessProbe.successThreshold }}
+  timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+  failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+{{- end -}}

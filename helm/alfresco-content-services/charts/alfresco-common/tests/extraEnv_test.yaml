@@ -1,0 +1,37 @@
+suite: test container extraEnv
+templates:
+  - deployment.yaml
+tests:
+  - it: should render extraEnv values
+    set:
+      enabled: true
+      extraEnv: |
+        - name: RELEASE_NAME
+          value: "{{ .Release.Name }}"
+        - name: FOO_BAR
+          value: "{{ .Values.enabled  }}"
+        - name: BAR
+          value: "false"
+        - name: FOO
+          value: "12345"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: RELEASE_NAME
+            value: RELEASE-NAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BAR
+            value: "false"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FOO
+            value: "12345"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: FOO_BAR
+            value: "true"

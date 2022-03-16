@@ -1,0 +1,155 @@
+suite: test deployment with rabbitmq
+templates:
+  - deployment.yaml
+tests:
+  - it: should render default rabbitmq env if given minimal values
+    set:
+      enabled: true
+      messaging.enabled: true
+      global.messaging.broker: rabbitmq
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_MESSAGING_BROKER
+            value: rabbitmq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_HOST
+            value: RELEASE-NAME-rabbitmq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_USERNAME
+            value: guest
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_PASSWORD
+            value: guest
+
+  - it: should not render default rabbitmq env if messaging.enabled=false
+    set:
+      enabled: true
+      messaging.enabled: false
+      global.messaging.broker: rabbitmq
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_MESSAGING_BROKER
+            value: rabbitmq
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_HOST
+            value: RELEASE-NAME-rabbitmq
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_USERNAME
+            value: guest
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_PASSWORD
+            value: guest
+
+  - it: should render rabbitmq env if given custom values
+    values:
+      - values/rabbitmq.yaml
+    set:
+      enabled: true
+    release:
+      name: pr-123-rabbitmq
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_MESSAGING_BROKER
+            value: rabbitmq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_HOST
+            value: pr-123-rabbitmq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_USERNAME
+            value: admin
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_PASSWORD
+            value: password
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_PORT
+            value: "5673"
+
+  - it: should render default rabbitmq env if rabbitmq.enabled=true
+    set:
+      enabled: true
+      rabbitmq.enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_MESSAGING_BROKER
+            value: rabbitmq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_HOST
+            value: RELEASE-NAME-rabbitmq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_USERNAME
+            value: guest
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_PASSWORD
+            value: guest
+
+  - it: should not render rabbitmq env if rabbitmq.enabled=false
+    set:
+      enabled: true
+      rabbitmq.enabled: false
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_MESSAGING_BROKER
+            value: rabbitmq
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_HOST
+            value: RELEASE-NAME-rabbitmq
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_USERNAME
+            value: guest
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_RABBITMQ_PASSWORD
+            value: guest
+
+  - it: should use global.messaging.partitionCount to set replicas for Rabbitmq fixed consumer partitions configuration
+    values:
+      - ./values/rabbitmq.yaml
+      - ./values/consumer-partitioned.yaml
+    set:
+      enabled: true
+      replicaCount: 3 # will be ignored
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 9 # global.messaging.partitionCount

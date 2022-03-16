@@ -1,0 +1,73 @@
+suite: test deployment with kafka
+templates:
+  - deployment.yaml
+tests:
+  - it: should render kafka env if given values
+    values:
+      - ./values/kafka.yaml
+    set:
+      enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_MESSAGING_BROKER
+            value: kafka
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS
+            value: RELEASE-NAME-kafka
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_CLOUD_STREAM_KAFKA_BINDER_DEFAULTBROKERPORT
+            value: "9092"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACT_AUDIT_PRODUCER_TRANSACTION_ID_PREFIX
+            value: ""
+      - equal:
+          path: spec.replicas
+          value: 1 # replicaCount
+
+  - it: should not render kafka env if given values with messaging.enabled=false
+    values:
+      - ./values/kafka.yaml
+    set:
+      enabled: true
+      messaging.enabled: false
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_MESSAGING_BROKER
+            value: kafka
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS
+            value: RELEASE-NAME-kafka
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_CLOUD_STREAM_KAFKA_BINDER_DEFAULTBROKERPORT
+            value: "9092"
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACT_AUDIT_PRODUCER_TRANSACTION_ID_PREFIX
+            value: ""
+
+  - it: should use replicaCount to set replicas to dynamic Kafka consumer auto rebalancing
+    values:
+      - ./values/kafka.yaml
+      - ./values/consumer-partitioned.yaml
+    set:
+      enabled: true
+      replicaCount: 3
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 3 # replicaCount

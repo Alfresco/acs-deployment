@@ -1,0 +1,5 @@
+{{- if .Values.enabled -}}
+{{- template "common.deployment" (list . "activiti.cloud.deployment") -}}
+{{- end -}}
+{{- define "activiti.cloud.deployment" -}}
+{{- end -}}

@@ -1,0 +1,11 @@
+apiVersion: v2
+description: Alfresco Common Template Library
+  This chart is not deployable by itself.
+name: alfresco-common
+icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+version: 1.0.0
+keywords:
+  - common
+  - alfresco
+  - library
+type: library

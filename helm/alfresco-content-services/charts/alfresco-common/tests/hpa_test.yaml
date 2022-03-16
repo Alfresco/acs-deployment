@@ -1,0 +1,142 @@
+suite: test runtime bundle hpa
+templates:
+  - hpa.yaml
+tests:
+  - it: should render nothing when not enabled
+    set:
+      enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should render nothing when hpa.enabled=false
+    set:
+      enabled: true
+      hpa:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should render minReplicas and maxReplicas
+    set:
+      enabled: true
+      hpa:
+        enabled: true
+        minReplicas: 5
+        maxReplicas: 10
+    asserts:
+      - hasDocuments:
+          count: 1
+      - isKind:
+          of: HorizontalPodAutoscaler
+      - equal:
+          path: spec.minReplicas
+          value: 5
+      - equal:
+          path: spec.maxReplicas
+          value: 10
+  - it: should render the releaseName in the metadata.name
+    release:
+      name: rb
+    set:
+      enabled: true
+      hpa:
+        enabled: true
+    asserts:
+     - equal:
+          path: metadata
+          value:
+            name: rb-common
+            namespace: NAMESPACE
+  - it: should render Kind StatefulSet when role is consumer
+    release:
+      name: rb
+    set:
+      enabled: true
+      global:
+        messaging:
+          partitioned: true
+      messaging:
+        enabled: true
+        role: consumer
+      hpa:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.scaleTargetRef
+          value:
+            apiVersion: apps/v1
+            kind: StatefulSet
+            name: rb-common
+  - it: should render Kind Deployment when role is not consumer
+    release:
+      name: rb
+    set:
+      enabled: true
+      hpa:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.scaleTargetRef
+          value:
+            apiVersion: apps/v1
+            kind: Deployment
+            name: rb-common
+  - it: should render the cpu resource
+    set:
+      enabled: true
+      hpa:
+        enabled: true
+        cpu: 60
+    asserts:
+     - contains:
+        path: spec.metrics
+        content:
+          type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 60
+  - it: should render the memory resource
+    set:
+      enabled: true
+      hpa:
+        enabled: true
+        memory: 1500k
+    asserts:
+     - contains:
+        path: spec.metrics
+        content:
+          type: Resource
+          resource:
+            name: memory
+            target:
+              type: AverageValue
+              averageValue: 1500k
+  - it: should render the scaling policies
+    set:
+      enabled: true
+      hpa:
+        enabled: true
+    asserts:
+     - equal:
+        path: spec.behavior
+        value:
+          scaleDown:
+            policies:
+            - type: Pods
+              value: 1
+              periodSeconds: 60
+            - type: Percent
+              value: 15
+              periodSeconds: 60
+            selectPolicy: Max
+  - it: should not render the scaling policies when disabled
+    set:
+      enabled: true
+      hpa:
+        enabled: true
+        scalingPolicesEnabled: false
+    asserts:
+     - isNull:
+        path: spec.behavior

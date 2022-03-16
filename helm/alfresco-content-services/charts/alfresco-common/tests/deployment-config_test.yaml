@@ -1,0 +1,154 @@
+suite: test deployment config init container
+templates:
+  - deployment.yaml
+tests:
+  - it: should render deployment with config for query consumer
+    set:
+      enabled: true
+      messaging.enabled: true
+      messaging.role: consumer
+      global.messaging.broker: rabbitmq
+      global.messaging.partitioned: true
+      global.messaging.partitionCount: 2
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.replicas
+          value: 2
+      - equal:
+          path: spec.serviceName
+          value: RELEASE-NAME-common
+      - equal:
+          path: spec.podManagementPolicy
+          value: Parallel
+      - equal:
+          path: spec.updateStrategy.type
+          value: RollingUpdate
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            args:
+              - -c
+              - |
+                echo activiti.cloud.messaging.broker=rabbitmq >> $APPLICATION_PROPERTIES
+                echo activiti.cloud.messaging.partitioned=true >> $APPLICATION_PROPERTIES
+                echo activiti.cloud.messaging.partition-count=2 >> $APPLICATION_PROPERTIES
+                echo activiti.cloud.messaging.instance-index=${HOSTNAME##*-} >> $APPLICATION_PROPERTIES
+            command:
+              - sh
+            env:
+              - name: APPLICATION_PROPERTIES
+                value: /opt/config/application.properties
+            image: docker.io/busybox:1.32
+            imagePullPolicy: IfNotPresent
+            name: config-consumer
+            resources:
+              limits:
+                cpu: 10m
+                memory: 16Mi
+              requests:
+                cpu: 10m
+                memory: 16Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsGroup: 1000
+              runAsNonRoot: true
+              runAsUser: 1000
+            volumeMounts:
+              - mountPath: /opt/config/
+                name: config
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: config
+            emptyDir: {}
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/config/
+            name: config
+
+  - it: should render deployment with config for producer
+    set:
+      enabled: true
+      messaging.enabled: true
+      messaging.role: producer
+      global.messaging.broker: rabbitmq
+      global.messaging.partitioned: true
+      global.messaging.partitionCount: 2
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.replicas
+          value: 1
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            args:
+              - -c
+              - |
+                echo activiti.cloud.messaging.broker=rabbitmq >> $APPLICATION_PROPERTIES
+                echo activiti.cloud.messaging.partitioned=true >> $APPLICATION_PROPERTIES
+                echo activiti.cloud.messaging.partition-count=2 >> $APPLICATION_PROPERTIES
+            command:
+              - sh
+            env:
+              - name: APPLICATION_PROPERTIES
+                value: /opt/config/application.properties
+            image: docker.io/busybox:1.32
+            imagePullPolicy: IfNotPresent
+            name: config-producer
+            resources:
+              limits:
+                cpu: 10m
+                memory: 16Mi
+              requests:
+                cpu: 10m
+                memory: 16Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsGroup: 1000
+              runAsNonRoot: true
+              runAsUser: 1000
+            volumeMounts:
+              - mountPath: /opt/config/
+                name: config
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: config
+            emptyDir: {}
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/config/
+            name: config
+
+  - it: should render deployment with empty messaging role for connector
+    set:
+      enabled: true
+      messaging.enabled: true
+      messaging.role: ""
+      global.messaging.broker: rabbitmq
+      global.messaging.partitioned: true
+      global.messaging.partitionCount: 2
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: spec.replicas
+          value: 1
+      - isNull:
+          path: spec.template.spec.initContainers
+      - isNull:
+          path: spec.template.spec.volumes
+      - isNull:
+          path: spec.template.spec.containers[0].volumeMounts

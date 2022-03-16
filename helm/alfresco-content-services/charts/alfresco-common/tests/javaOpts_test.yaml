@@ -1,0 +1,30 @@
+suite: test javaOpts
+templates:
+  - deployment.yaml
+tests:
+  - it: should render javaOpts defaults
+    set:
+      enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: JAVA_OPTS
+            value: '-Xmx1024m -Xms256m -XX:+UnlockExperimentalVMOptions -Dsun.zip.disableMemoryMapping=true
+              -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4
+              -XX:AdaptiveSizePolicyWeight=90 '
+  - it: should render javaOpts extra
+    set:
+      enabled: true
+      javaOpts.extra: >-
+        -Djavax.net.ssl.trustStore=/mnt/secrets/cacerts
+        -Djavax.net.ssl.trustStorePassword=changeit
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: JAVA_OPTS
+            value: '-Xmx1024m -Xms256m -XX:+UnlockExperimentalVMOptions -Dsun.zip.disableMemoryMapping=true
+              -XX:+UseParallelGC -XX:MinHeapFreeRatio=5 -XX:MaxHeapFreeRatio=10 -XX:GCTimeRatio=4
+              -XX:AdaptiveSizePolicyWeight=90 -Djavax.net.ssl.trustStore=/mnt/secrets/cacerts
+              -Djavax.net.ssl.trustStorePassword=changeit'

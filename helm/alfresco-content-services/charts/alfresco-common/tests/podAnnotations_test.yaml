@@ -1,0 +1,13 @@
+suite: test podAnnotations
+templates:
+  - deployment.yaml
+tests:
+  - it: should render podAnnotations
+    set:
+      enabled: true
+      podAnnotations:
+        foo: bar
+    asserts:
+      - equal:
+          path: spec.template.metadata.annotations.foo
+          value: bar

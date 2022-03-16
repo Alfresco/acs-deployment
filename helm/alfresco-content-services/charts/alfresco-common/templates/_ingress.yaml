@@ -1,0 +1,63 @@
+{{- define "common.ingress.tpl" -}}
+apiVersion: {{ include "common.ingress-apiversion" . }}
+kind: Ingress
+metadata:
+  name: {{ template "common.fullname" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+  {{- with (include "common.ingress-annotations" .) }}
+  annotations:
+    {{- . | nindent 4 }}
+  {{- end }}
+spec:
+  rules:
+    {{- with (include "common.ingress-host" .) }}
+    - host: {{ . }}
+      http:
+    {{- else }}
+    - http:
+    {{- end }}
+        paths:
+          {{- $serviceName := .Values.service.name -}}
+          {{- $externalPort := coalesce .Values.ingress.servicePort .Values.service.externalPort -}}
+          {{- $ingressPath := include "common.ingress-path" . -}}
+          {{- $serviceNameTemplate := include "common.fullname" . -}}
+          {{- $paths := list }}
+          {{- if .Values.ingress.subPaths -}}
+            {{- $ingressPathNoSlash := ternary $ingressPath "" (ne $ingressPath "/") -}}
+            {{- range .Values.ingress.subPaths }}
+              {{- $path := list $ingressPathNoSlash . | join "" }}
+              {{- $paths = append $paths $path }}
+            {{- end }}
+          {{- else -}}
+            {{- $paths = append $paths $ingressPath }}
+          {{- end -}}
+          {{- range $paths }}
+            - path: {{ . }}
+              {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
+              pathType: Prefix
+              backend:
+                service:
+                  name: {{ coalesce $serviceName $serviceNameTemplate }}
+                  port:
+                    {{ ternary "name" "number" (kindIs "string" $externalPort) }}: {{ $externalPort }}
+              {{- else }}
+              backend:
+                serviceName: {{ coalesce $serviceName $serviceNameTemplate }}
+                servicePort: {{ $externalPort }}
+              {{- end }}
+          {{- end }}
+  {{- if include "common.ingress-tls" . }}
+  tls:
+    - secretName: {{ template "common.ingress-tlssecretname" . }}
+      {{- with (include "common.ingress-host" .) }}
+      hosts:
+        - {{ . }}
+      {{- end }}
+  {{- end }}
+{{- end }}
+{{- define "common.ingress" -}}
+  {{- if index (first .) "Values" "ingress" "enabled" -}}
+    {{- template "common.util.merge" (append . "common.ingress.tpl") -}}
+  {{- end -}}
+{{- end -}}

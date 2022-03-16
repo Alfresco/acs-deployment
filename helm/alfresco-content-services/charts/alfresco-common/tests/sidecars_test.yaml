@@ -1,0 +1,16 @@
+suite: test sidecars
+templates:
+  - deployment.yaml
+tests:
+  - it: should render sidecars
+    set:
+      enabled: true
+      sidecars:
+        - name: sidecar
+          image: gcr.io/google_containers/pause
+    asserts:
+      - contains:
+          path: spec.template.spec.containers
+          content:
+            image: gcr.io/google_containers/pause
+            name: sidecar

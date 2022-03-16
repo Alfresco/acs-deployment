@@ -1,0 +1,17 @@
+{{- define "common.frontend-env" -}}
+{{- $ingressPath := include "common.ingress-path" . -}}
+- name: BASE_PATH
+  value: {{ $ingressPath }}
+{{- if eq .Values.env.APP_CONFIG_AUTH_TYPE "OAUTH" }}
+- name: APP_CONFIG_OAUTH2_HOST
+  value: {{ include "common.keycloak-url" . }}/realms/{{ include "common.keycloak-realm" . }}
+- name: APP_CONFIG_OAUTH2_CLIENTID
+  value: {{ include "common.keycloak-resource" . }}
+- name: APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI
+  value: {{ include "common.ingress-url" . }}/assets/silent-refresh.html
+- name: APP_CONFIG_OAUTH2_REDIRECT_LOGIN
+  value: {{ $ingressPath }}
+- name: APP_CONFIG_OAUTH2_REDIRECT_LOGOUT
+  value: {{ $ingressPath }}
+{{- end }}
+{{- end -}}

@@ -1,0 +1,13 @@
+suite: test podLabels
+templates:
+  - deployment.yaml
+tests:
+  - it: should render podLabels
+    set:
+      enabled: true
+      podLabels:
+        foo: bar
+    asserts:
+      - equal:
+          path: spec.template.metadata.labels.foo
+          value: bar

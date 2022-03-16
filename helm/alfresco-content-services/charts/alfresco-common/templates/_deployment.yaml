@@ -1,0 +1,170 @@
+{{- define "common.deployment.tpl" -}}
+{{ include "common.deployment.head" . }}
+spec:
+  {{- if and .Values.messaging.enabled .Values.global.messaging.partitioned (eq .Values.messaging.role "consumer" ) }}
+    {{- if eq .Values.global.messaging.broker "kafka"}}
+  replicas: {{ .Values.replicaCount }}
+    {{- else }}
+  replicas: {{ .Values.global.messaging.partitionCount }}
+    {{- end }}
+  serviceName: {{ template "common.service.name" . }}
+  podManagementPolicy: {{ .Values.statefulset.podManagementPolicy }}
+  updateStrategy:
+    type: {{ .Values.statefulset.updateStrategyType }}
+  {{- else }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.selectorLabels" . | nindent 8 }}
+        {{- if .Values.podLabels }}
+        {{- include "common.values.tpl" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
+        {{- end }}
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 8 }}
+    {{- end }}
+    spec:
+      {{- with (include "common.registry-pull-secrets" .) }}
+      imagePullSecrets:
+        {{- . | nindent 8 }}
+      {{- end }}
+      {{- if or .Values.postgresql.enabled .Values.liquibase.enabled .Values.extraInitContainers .Values.messaging.enabled .Values.initContainers }}
+      initContainers:
+        {{- if and .Values.messaging.enabled .Values.global.messaging.partitioned (has .Values.messaging.role (list "consumer" "producer"))  }}
+        - name: config-{{ .Values.messaging.role }}
+          image: "{{ .Values.config.image.repository }}:{{ .Values.config.image.tag }}"
+          imagePullPolicy: {{ .Values.config.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.config.securityContext | nindent 14 }}
+          command:
+            - {{ .Values.config.command }}
+          args:
+            {{- $role := get .Values.messaging .Values.messaging.role }}
+            - {{ .Values.config.args }}
+            - | {{ tpl $role.config.script . | nindent 14 }}
+          resources:
+            {{- toYaml .Values.config.resources | nindent 14 }}
+          volumeMounts:
+            - name: {{ .Values.config.volumeName }}
+              mountPath: {{ .Values.config.mountPath }}
+          env:
+            {{- range $key, $val := .Values.config.env }}
+            - name: {{ $key }}
+              value: {{ tpl (toString $val) $ | quote }}
+            {{- end }}
+
+        {{- end }}
+        {{- if .Values.postgresql.enabled }}
+        - name: pgchecker
+          image: "{{ .Values.pgchecker.image.repository }}:{{ .Values.pgchecker.image.tag }}"
+          imagePullPolicy: {{ .Values.pgchecker.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.pgchecker.securityContext | nindent 14 }}
+          command:
+            - sh
+            - -c
+            - |
+              echo 'Waiting for PostgreSQL to become ready...'
+
+              until printf "." && nc -z -w 2 {{ include "common.postgresql.fullname" . }} {{ .Values.postgresql.port }}; do
+                  sleep 2;
+              done;
+
+              echo 'PostgreSQL OK ✓'
+          resources:
+            {{- toYaml .Values.pgchecker.resources | nindent 14 }}
+        {{- end }}
+        {{- if .Values.liquibase.enabled }}
+        - name: liquibase
+          image: {{ .Values.liquibase.image.repository | default .Values.image.repository }}:{{ .Values.liquibase.image.tag | default .Values.image.tag }}
+          imagePullPolicy: {{ .Values.liquibase.image.pullPolicy }}
+          args:
+            {{- toYaml .Values.liquibase.args | nindent 14 }}
+          env:
+            {{- include "common.spring-datasource-env" . | nindent 14 }}
+            {{- range $key, $val := .Values.liquibase.env }}
+            - name: {{ $key }}
+              value: {{ tpl (toString $val) $ | quote }}
+            {{- end }}
+        {{- end }}
+        {{- with .Values.extraInitContainers }}
+          {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 8 }}
+        {{- end -}}
+        {{- with .Values.initContainers }}
+          {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 8 }}
+        {{- end -}}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{ $envTemplate := tpl "common.{{ .Values.service.envType }}-env" . }}
+            {{ include $envTemplate . | nindent 12 }}
+            {{ include "common.extra-env" . | nindent 12 }}
+            {{- range $key, $val := .Values.env }}
+            - name: {{ $key }}
+              value: {{ tpl (toString $val) $ | quote }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.service.internalPort }}
+          {{ include "common.probes.tpl" . | nindent 10 }}
+          {{- with .Values.resources }}
+          resources:
+            {{ toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+          {{- if and .Values.messaging.enabled .Values.global.messaging.partitioned (has .Values.messaging.role (list "consumer" "producer")) }}
+            - name: {{ .Values.config.volumeName }}
+              mountPath: {{ .Values.config.mountPath }}
+          {{- end }}
+          {{- with .Values.extraVolumeMounts }}
+            {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 12 }}
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+            {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 12 }}
+          {{- end }}
+        {{- with .Values.sidecars }}
+        {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 8 }}
+        {{- end }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- if and .Values.messaging.enabled .Values.global.messaging.partitioned (has .Values.messaging.role (list "consumer" "producer")) }}
+        - name: {{ .Values.config.volumeName }}
+          emptyDir: {}
+      {{- end }}
+      {{- with .Values.extraVolumes }}
+        {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 8 }}
+      {{- end }}
+      {{- with .Values.volumes }}
+        {{- include "common.values.tpl" (dict "value" . "context" $) | nindent 8 }}
+      {{- end }}
+      {{- with .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ . }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end -}}
+{{- define "common.deployment" -}}
+{{- template "common.util.merge" (append . "common.deployment.tpl") -}}
+{{- end -}}

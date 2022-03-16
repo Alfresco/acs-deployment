@@ -1,0 +1,13 @@
+global:
+  messaging:
+    broker: rabbitmq
+  rabbitmq:
+    host: '{{ include "common.rabbitmq.fullname" $ }}'
+    username: admin
+    password: password
+    extraEnv: |
+      - name: SPRING_RABBITMQ_PORT
+        value: "5673"
+
+messaging:
+  enabled: true

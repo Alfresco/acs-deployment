@@ -1,0 +1,7 @@
+global:
+  messaging:
+    partitioned: true
+    partitionCount: 9
+
+messaging:
+  role: "consumer"

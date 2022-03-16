@@ -1,0 +1,16 @@
+suite: test volumes
+templates:
+  - deployment.yaml
+tests:
+  - it: should render volumes
+    set:
+      enabled: true
+      volumes:
+        - name: config
+          emptyDir: {}
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            emptyDir: {}
+            name: config

@@ -1,0 +1,33 @@
+{{- define "common.service.tpl" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "common.service.name" . }}
+  labels:
+    {{- include "common.labels" . | nindent 4 }}
+  annotations:
+    {{- include "common.service.annotations" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ .Values.service.externalPort }}
+    targetPort: {{ .Values.service.internalPort }}
+    {{- with .Values.service.nodePort }}
+    nodePort: {{ . }}
+    {{- end }}
+    protocol: {{ .Values.service.portProtocol }}
+    name: {{ .Values.service.portName }}
+  selector:
+    {{- include "common.selectorLabels" . | nindent 4 }}
+{{- end -}}
+{{- define "common.service" -}}
+{{- template "common.util.merge" (append . "common.service.tpl") -}}
+{{- end -}}
+
+{{- define "common.service.name" -}}
+{{ .Values.service.name | default (include "common.fullname" .) | quote }}
+{{- end -}}
+
+{{- define "common.service.annotations" }}
+{{ tpl (toYaml (.Values.service.annotations | default (dict ))) . }}
+{{- end }}

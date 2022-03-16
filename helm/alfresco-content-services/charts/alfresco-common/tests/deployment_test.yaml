@@ -1,0 +1,216 @@
+suite: test deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: should render nothing if not enabled
+    set:
+      enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render deployment if enabled
+    set:
+      enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+
+  - it: should render deployment with extraInitContainers only
+    set:
+      enabled: true
+      liquibase.enabled: false
+      postgresql.enabled: false
+      extraInitContainers: |
+        - name: busybox
+          image: busybox
+          command: ["/bin/sh"]
+          args: |
+            - -c
+            - |
+              echo "test"
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            args: |
+              - -c
+              - |
+                echo "test"
+            command:
+            - /bin/sh
+            image: busybox
+            name: busybox
+      - notContains:
+          path: spec.template.spec.initContainers
+          content:
+            name: pgchecker
+          any: true
+      - notContains:
+          path: spec.template.spec.initContainers
+          content:
+            name: liquibase
+          any: true
+
+  - it: should render deployment with pgchecker, liquibase and extraInitContainers
+    set:
+      enabled: true
+      postgresql.enabled: true
+      liquibase.enabled: true
+      extraInitContainers: |
+        - name: busybox
+          image: busybox
+          command: ["/bin/sh"]
+          args: |
+            - -c
+            - |
+              echo "test"
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: busybox
+          any: true
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: pgchecker
+          any: true
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: liquibase
+          any: true
+
+  - it: should render deployment with postgresql initContainer
+    set:
+      enabled: true
+      postgresql.enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            command:
+              - sh
+              - -c
+              - |
+                echo 'Waiting for PostgreSQL to become ready...'
+
+                until printf "." && nc -z -w 2 RELEASE-NAME-postgresql 5432; do
+                    sleep 2;
+                done;
+
+                echo 'PostgreSQL OK ✓'
+            image: docker.io/busybox:1.32
+            imagePullPolicy: IfNotPresent
+            name: pgchecker
+            resources:
+              limits:
+                cpu: 10m
+                memory: 16Mi
+              requests:
+                cpu: 10m
+                memory: 16Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsGroup: 1000
+              runAsNonRoot: true
+              runAsUser: 1000
+
+  - it: should render deployment with liquibase initContainer
+    set:
+      enabled: true
+      liquibase.enabled: true
+    asserts:
+      - isKind:
+          of: Deployment
+      - hasDocuments:
+          count: 1
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            args:
+              - -jar
+              - liquibase.jar
+            env:
+              - name: SPRING_DATASOURCE_URL
+                value: jdbc:postgresql://RELEASE-NAME-postgresql:5432/postgres
+              - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+                value: org.postgresql.Driver
+              - name: SPRING_DATASOURCE_USERNAME
+                value: postgres
+              - name: SPRING_DATASOURCE_PASSWORD
+                value: ""
+            image: activiti/replaceme:latest
+            imagePullPolicy: IfNotPresent
+            name: liquibase
+  - it: should render global extraEnv
+    release:
+      name: activiti-app
+    set:
+      enabled: true
+      global.extraEnv: |
+        - name: ACTIVITI_CLOUD_APPLICATION_NAME
+          value: "{{ .Release.Name }}"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_CLOUD_APPLICATION_NAME
+            value: activiti-app
+  - it: should render probePath
+    release:
+      name: activiti-app
+    set:
+      enabled: true
+      ingress.path: /rb
+      probePath: "{{ tpl .Values.ingress.path . }}/actuator/health"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /rb/actuator/health
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /rb/actuator/health
+  - it: should render livenessProbe.path
+    release:
+      name: activiti-app
+    set:
+      enabled: true
+      ingress.path: /rb
+      probePath: "{{ tpl .Values.ingress.path . }}/actuator/health"
+      livenessProbe.path: "{{ tpl .Values.ingress.path . }}/actuator/health/liveness"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /rb/actuator/health/liveness
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /rb/actuator/health
+  - it: should render readinessProbe.path
+    release:
+      name: activiti-app
+    set:
+      enabled: true
+      ingress.path: /rb
+      probePath: "{{ tpl .Values.ingress.path . }}/actuator/health"
+      readinessProbe.path: "{{ tpl .Values.ingress.path . }}/actuator/health/readiness"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /rb/actuator/health/readiness
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /rb/actuator/health

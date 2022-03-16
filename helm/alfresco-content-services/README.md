@@ -15,11 +15,13 @@ A Helm chart for deploying Alfresco Content Services
 | Repository | Name | Version |
 |------------|------|---------|
 |  | activemq | 2.0.0 |
+|  | alfresco-digital-workspace(alfresco-common) | 1.0.0 |
+|  | alfresco-digital-workspace(alfresco-common) | 1.0.0 |
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.1.0-M16 |
-| https://charts.bitnami.com/bitnami | postgresql | 10.13.9 |
+| https://charts.bitnami.com/bitnami | common | 1.11.3 |
 | https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 10.13.9 |
+| https://charts.bitnami.com/bitnami | postgresql | 10.13.9 |
 
 ## Values
 
@@ -65,6 +67,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-digital-workspace.image.tag | string | `"2.6.0"` |  |
 | alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-digital-workspace.ingress.path | string | `"/workspace"` |  |
+| alfresco-digital-workspace.ingress.pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
 | alfresco-digital-workspace.resources.limits.cpu | int | `1` |  |
@@ -87,7 +90,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | alfresco-sync-service.image.tag | string | `"3.6.0"` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
-| apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
+| apiexplorer | object | `{"ingress":{"path":"/api-explorer","pathType":"Prefix"}}` | Declares the api-explorer service used by the content repository |
 | database | object | `{"driver":null,"external":false,"password":null,"url":null,"user":null}` | Defines properties required by alfresco for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver |
 | database.driver | string | `nil` | ex: org.postgresql.Driver |
 | database.password | string | `nil` | ex: alfresco |
@@ -132,6 +135,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
 | msTeamsService.image.tag | string | `"1.0.0"` |  |
 | msTeamsService.ingress.path | string | `"/ms-teams-service"` |  |
+| msTeamsService.ingress.pathType | string | `"Prefix"` |  |
 | msTeamsService.ingress.tls | list | `[]` |  |
 | msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
 | msTeamsService.livenessProbe.periodSeconds | int | `20` |  |
@@ -158,6 +162,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | ooiService.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | ooiService.image.tag | string | `"1.1.1"` |  |
 | ooiService.ingress.path | string | `"/ooi-service"` |  |
+| ooiService.ingress.pathType | string | `"Prefix"` |  |
 | ooiService.ingress.tls | list | `[]` |  |
 | ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
 | ooiService.livenessProbe.periodSeconds | int | `20` |  |
@@ -212,6 +217,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.ingress.annotations | object | `{}` |  |
 | repository.ingress.maxUploadSize | string | `"5g"` |  |
 | repository.ingress.path | string | `"/"` |  |
+| repository.ingress.pathType | string | `"Prefix"` |  |
 | repository.ingress.tls | list | `[]` |  |
 | repository.initContainers.db.image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.initContainers.db.image.repository | string | `"busybox"` |  |
@@ -235,7 +241,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.service.type | string | `"ClusterIP"` |  |
 | repository.strategy.type | string | `"Recreate"` |  |
 | s3connector | object | `{"enabled":false}` | Defines the properties to be used for the S3 Connector For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html |
-| share | object | `{"command":[],"environment":{"CATALINA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.2.0-A28"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"memory":"2000Mi"},"requests":{"memory":"2000Mi"}},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
+| share | object | `{"command":[],"environment":{"CATALINA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.2.0-A28"},"ingress":{"annotations":{},"path":"/share","pathType":"Prefix","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"memory":"2000Mi"},"requests":{"memory":"2000Mi"}},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
 | tika | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-tika","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":60,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"tika","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformmisc | object | `{"enabled":true,"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-transform-misc","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"transformmisc","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformrouter.environment.JAVA_OPTS | string | `" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
