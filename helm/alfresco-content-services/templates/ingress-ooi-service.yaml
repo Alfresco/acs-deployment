@@ -35,7 +35,7 @@ spec:
       paths:
       - path: {{ .Values.ooiService.ingress.path }}
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-        pathType: {{ .Values.msTeamsService.ingress.pathType }}
+        pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
 {{- end }}

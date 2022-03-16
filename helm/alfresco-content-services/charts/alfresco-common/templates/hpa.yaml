@@ -1,5 +1,0 @@
-{{- if .Values.enabled -}}
-{{- template "common.hpa" (list . "activiti.cloud.hpa") -}}
-{{- end -}}
-{{- define "activiti.cloud.hpa" -}}
-{{- end -}}

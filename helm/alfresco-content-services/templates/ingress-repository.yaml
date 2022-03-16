@@ -49,11 +49,11 @@ spec:
       paths:
       - path: {{ .Values.repository.ingress.path }}
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-        pathType: {{ .Values.msTeamsService.ingress.pathType }}
+        pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
       - path: {{ .Values.apiexplorer.ingress.path }}
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-        pathType: {{ .Values.msTeamsService.ingress.pathType }}
+        pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}

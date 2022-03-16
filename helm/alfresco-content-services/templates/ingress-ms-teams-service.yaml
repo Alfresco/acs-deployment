@@ -1,3 +1,4 @@
+{{- if .Values.msTeams.enabled }}
 {{- $serviceName :=  printf "%s-%s" (include "content-services.shortname" .) "ms-teams-service" -}}
 {{- $servicePort := .Values.msTeamsService.service.externalPort -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
@@ -34,6 +35,7 @@ spec:
       paths:
       - path: {{ .Values.msTeamsService.ingress.path }}
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-        pathType: {{ .Values.msTeamsService.ingress.pathType }}
+        pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
+{{- end }}

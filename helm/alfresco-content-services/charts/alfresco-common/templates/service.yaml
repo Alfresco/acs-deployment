@@ -1,5 +1,0 @@
-{{- if .Values.enabled -}}
-{{- template "common.service" (list . "activiti.cloud.service") -}}
-{{- end -}}
-{{- define "activiti.cloud.service" -}}
-{{- end -}}

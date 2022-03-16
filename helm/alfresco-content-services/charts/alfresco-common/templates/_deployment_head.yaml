@@ -1,8 +1,0 @@
-{{- define "common.deployment.head" -}}
-apiVersion: apps/v1
-kind: {{ if and .Values.messaging.enabled .Values.global.messaging.partitioned (eq .Values.messaging.role "consumer") }}StatefulSet{{ else }}Deployment{{ end }}
-metadata:
-  name: {{ template "common.fullname" . }}
-  labels:
-    {{- include "common.labels" . | nindent 4 }}
-{{- end -}}
