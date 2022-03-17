@@ -381,20 +381,6 @@ _docker_deploy: &docker_deploy
 
 jobs:
   include:
-    - name: test chart
-      stage: test
-      script: |
-        helm dep up helm/${PROJECT_NAME}
-        helm lint helm/${PROJECT_NAME}
-
-    - name: Lint for subcharts
-      stage: test
-      script: |
-        helm lint helm/alfresco-content-services/charts/activemq
-        helm lint helm/alfresco-content-services/charts/alfresco-search
-        helm lint helm/alfresco-content-services/charts/alfresco-sync-service
-        helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
-
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       <<: *docker_deploy
