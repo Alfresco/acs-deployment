@@ -12,6 +12,10 @@
 repository:
   # -- Administrator password for ACS in md5 hash format
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
+  # -- The name of the secret holding the ACS repository license if any (otherwise the image embeded license is used).
+  # it must be contained within a `data['*.lic']` property
+  # See https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md for details on how to manage license
+  licenseSecret: null
   edition: Enterprise
   replicaCount: 2
   strategy:
@@ -87,8 +91,8 @@ repository:
     initialDelaySeconds: 130
     periodSeconds: 20
     timeoutSeconds: 10
-  extraVolumeMounts: []
   extraVolumes: []
+  extraVolumeMounts: []
   extraSideContainers: []
   extraInitContainers: []
   command: []
