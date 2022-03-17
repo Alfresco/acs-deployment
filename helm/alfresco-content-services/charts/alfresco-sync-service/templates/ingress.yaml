@@ -1,9 +1,7 @@
 {{- if .Values.syncservice.enabled }}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+{{- $serviceName :=  (include "syncservice.fullname" .) -}}
+{{- $servicePort := .Values.syncservice.service.externalPort -}}
+apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ template "syncservice.fullname" . }}-ingress
@@ -37,7 +35,8 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.syncservice.ingress.path }}(/|$)(.*)
-        backend:
-          serviceName: {{ template "syncservice.fullname" . }}
-          servicePort: {{ .Values.syncservice.service.externalPort }}
+        {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
+        pathType: Prefix
+        {{- end }}
+        backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
 {{- end }}

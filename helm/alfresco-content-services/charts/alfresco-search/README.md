@@ -15,6 +15,7 @@ A Helm chart for deploying Alfresco Search
 | Repository | Name | Version |
 |------------|------|---------|
 |  | alfresco-insight-zeppelin | 1.0.3 |
+| https://charts.bitnami.com/bitnami | common | 1.x.x |
 
 ## Values
 

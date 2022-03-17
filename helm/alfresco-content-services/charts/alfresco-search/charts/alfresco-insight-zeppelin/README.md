@@ -10,6 +10,12 @@ A Helm chart for deploying Alfresco Insight Zeppelin
 
 ![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://charts.bitnami.com/bitnami | common | 1.x.x |
+
 ## Values
 
 | Key | Type | Default | Description |

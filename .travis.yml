@@ -65,10 +65,6 @@ before_script:
     echo "TRAVIS_COMMIT_MESSAGE=${TRAVIS_COMMIT_MESSAGE}"
     REPO_NAME=${TRAVIS_REPO_SLUG##*/}
     PROJECT_NAME=alfresco-content-services
-    helm repo add alfresco ${HELM_REPO_BASE_URL}/stable
-    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-    helm repo add alfresco-incubator ${HELM_REPO_BASE_URL}/${HELM_REPO}
-    helm repo update
     echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
     echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
     echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY"
@@ -192,7 +188,7 @@ _helm_deploy: &helm_deploy
     kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=/home/travis/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace
 
     # install ingress
-    helm upgrade --install $release_name_ingress ingress-nginx/ingress-nginx --version=3.7.1 \
+    helm upgrade --install $release_name_ingress --repo https://kubernetes.github.io/ingress-nginx ingress-nginx --version=3.7.1 \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=$namespace \
     --set rbac.create=true \
@@ -212,20 +208,20 @@ _helm_deploy: &helm_deploy
     # install acs
     helm dep up helm/alfresco-content-services
     travis_wait 25 helm upgrade --install $release_name_acs helm/alfresco-content-services \
-    --values=$values_file \
-    --set global.tracking.sharedsecret=$(openssl rand 24 -hex) \
-    --set externalPort="443" \
-    --set externalProtocol="https" \
-    --set externalHost="$namespace.${HOSTED_ZONE}" \
-    --set persistence.enabled=true \
-    --set persistence.storageClass.enabled=true \
-    --set persistence.storageClass.name="nfs-client" \
-    --set postgresql.persistence.existingClaim="" \
-    --set postgresql-syncservice.persistence.existingClaim="" \
-    --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-    --wait \
-    --timeout 20m0s \
-    --namespace=$namespace
+      --values=$values_file \
+      --set global.tracking.sharedsecret=$(openssl rand 24 -hex) \
+      --set externalPort="443" \
+      --set externalProtocol="https" \
+      --set externalHost="$namespace.${HOSTED_ZONE}" \
+      --set persistence.enabled=true \
+      --set persistence.storageClass.enabled=true \
+      --set persistence.storageClass.name="nfs-client" \
+      --set postgresql.persistence.existingClaim="" \
+      --set postgresql-syncservice.persistence.existingClaim="" \
+      --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+      --wait \
+      --timeout 20m0s \
+      --namespace=$namespace
 
     # check dns and pods
     DNS_PROPAGATED=0
@@ -275,10 +271,10 @@ _helm_deploy: &helm_deploy
         kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
         helm upgrade $release_name_acs helm/alfresco-content-services \
-        --wait \
-        --timeout 10m0s \
-        --reuse-values \
-        --namespace=$namespace
+          --wait \
+          --timeout 10m0s \
+          --reuse-values \
+          --namespace=$namespace
 
         # check pods
         pods_ready
@@ -386,20 +382,6 @@ _docker_deploy: &docker_deploy
 
 jobs:
   include:
-    - name: test chart
-      stage: test
-      script: |
-        helm dep up helm/${PROJECT_NAME}
-        helm lint helm/${PROJECT_NAME}
-
-    - name: Lint for subcharts
-      stage: test
-      script: |
-        helm lint helm/alfresco-content-services/charts/activemq
-        helm lint helm/alfresco-content-services/charts/alfresco-search
-        helm lint helm/alfresco-content-services/charts/alfresco-sync-service
-        helm lint helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin
-
     - name: Deploy Docker Compose and Run Postman Checks
       stage: test
       <<: *docker_deploy

@@ -1,9 +1,7 @@
 {{- if .Values.insightzeppelin.enabled }}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+{{- $serviceName :=  (include "alfresco-insight-zeppelin.fullName" .) -}}
+{{- $servicePort := .Values.service.externalPort -}}
+apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ template "alfresco-insight-zeppelin.fullName" . }}
@@ -14,7 +12,8 @@ spec:
   - http:
       paths:
       - path: {{ .Values.ingress.path }}
-        backend:
-          serviceName: {{ template "alfresco-insight-zeppelin.fullName" . }}
-          servicePort: {{ .Values.service.externalPort }}
+        {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
+        pathType: Prefix
+        {{- end }}
+        backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
 {{- end }}
