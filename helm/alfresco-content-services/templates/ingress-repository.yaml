@@ -1,8 +1,6 @@
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+{{- $serviceName :=  printf "%s-%s" (include "content-services.shortname" .) "repository" -}}
+{{- $servicePort := .Values.repository.service.externalPort -}}
+apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ template "content-services.shortname" . }}-repository
@@ -50,10 +48,12 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.repository.ingress.path }}
-        backend:
-          serviceName: {{ template "content-services.shortname" . }}-repository
-          servicePort: {{ .Values.repository.service.externalPort }}
+        {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
+        pathType: Prefix
+        {{- end }}
+        backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
       - path: {{ .Values.apiexplorer.ingress.path }}
-        backend:
-          serviceName: {{ template "content-services.shortname" . }}-repository
-          servicePort: {{ .Values.repository.service.externalPort }}
+        {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
+        pathType: Prefix
+        {{- end }}
+        backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
