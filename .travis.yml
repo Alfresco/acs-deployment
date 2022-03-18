@@ -416,13 +416,6 @@ jobs:
       stage: 6.2.N
       <<: *docker_deploy
 
-    - name: 6.1.N-helm
-      stage: 6.1.N
-      <<: *helm_deploy
-    - name: 6.1.N-compose
-      stage: 6.1.N
-      <<: *docker_deploy
-
     - name: package and publish chart
       stage: publish
       script: |
