@@ -18,7 +18,6 @@ stages:
   - name: 7.1.N
   - name: 7.0.N
   - name: 6.2.N
-  - name: 6.1.N
   - name: publish
     if: branch = master OR commit_message = "[publish]"
 
