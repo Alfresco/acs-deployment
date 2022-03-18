@@ -1,13 +1,13 @@
 # Deploy Alfresco Content Services with the ability to manage licenses
 
-Alfresco content repository Docker images come with an embeded license which last only 2 days. If you've built a custom image, it may have a one year license but in order to change it you would need to biuld a new image.
+Alfresco content repository Docker images come with an embedded license which last only 2 days. If you've built a custom image, it may have a one year license but in order to change it you would need to build a new image.
 You can configure the ACS Helm chart so the license is instead read from a kubernetes secret so that when it's time to renew the license the only thing you need to do is to update that secret as needed.
 
 This rely on 2 steps:
 
-## Create a kuberentes secret to store the license.
+## Create a kubernetes secret to store the license.
 
-Make sure your license available is readable and you have appropriate kuberentes access in order to create a secret in the acs namespace where you want to deploy the helm release.
+Make sure your license available is readable and you have appropriate kubernetes access in order to create a secret in the ACS namespace where you want to deploy the helm release.
 
 ```bash
 ACS_NAMESPACE=acs
@@ -23,7 +23,7 @@ data:
 EOF
 ```
 
-## Configure tha chart to leverage that secret.
+## Configure the chart to leverage that secret.
 
 In the chart value file add the following:
 
