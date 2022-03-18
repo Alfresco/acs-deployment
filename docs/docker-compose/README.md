@@ -41,7 +41,7 @@ In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](
 6. If you requested an extended trial license navigate to the Admin Console and apply your license:
    * [http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (```<machine_ip>``` will usually just be ```localhost```)
    * Default username and password is ```admin```
-   * See [Uploading a new license](https://docs.alfresco.com/6.1/tasks/at-adminconsole-license.html) for more details
+   * See [Uploading a new license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense) for more details
 
 ### Notes
 

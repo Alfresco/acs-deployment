@@ -382,7 +382,7 @@ If you requested an extended trial license navigate to the Admin Console and app
 
 * [https://acs.YOUR-DOMAIN-NAME/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license)
 * Default username and password is ```admin```
-* See [Uploading a new license](https://docs.alfresco.com/6.1/tasks/at-adminconsole-license.html) for more details
+* See [Uploading a new license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense) for more details
 
 ## Configure
 
