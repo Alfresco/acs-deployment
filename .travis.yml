@@ -48,7 +48,7 @@ branches:
     - master
     - /feature.*/
     - /fix.*/
-    - /OPSEXP-.*/
+    - /(?i:OPSEXP)-.*/
     - /ACS-.*/
     - /ATS-.*/
 

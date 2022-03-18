@@ -81,6 +81,10 @@ spec:
 {{ toYaml .Values.repository.resources | indent 12 }}
           {{- if .Values.persistence.repository.enabled }}
           volumeMounts:
+          {{- if .Values.repository.licenseSecret }}
+          - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
+            name: acs-license
+          {{- end }}
           {{- if .Values.repository.extraLogStatements }}
           - name: dev-log4j-properties-volume
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
@@ -206,6 +210,11 @@ spec:
               mountPath: /var/run/secrets/java.io/keystores
         {{- end }}
       volumes:
+      {{- if .Values.repository.licenseSecret }}
+      - name: acs-license
+        secret:
+          secretName: {{ .Values.repository.licenseSecret }}
+      {{- end }}
       {{- if .Values.repository.extraLogStatements }}
       - name : dev-log4j-properties-volume
         configMap:
