@@ -34,6 +34,7 @@ There are also several [examples](./examples) showing how to deploy with various
 * [Enable access to Search Services](./examples/search-external-access.md)
 * [Enable Email Services](./examples/email-enabled.md)
 * [Use a custom metadata keystore](./examples/custom-metadata-keystore.md)
+* [Install ACS license as part of the deployment](./examples/alf_license.md)
 
 ## Configure
 

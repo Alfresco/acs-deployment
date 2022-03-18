@@ -49,7 +49,7 @@ branches:
     - download-trial
     - /feature.*/
     - /fix.*/
-    - /OPSEXP-.*/
+    - /(?i:OPSEXP)-.*/
     - /ACS-.*/
     - /ATS-.*/
 

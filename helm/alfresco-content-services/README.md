@@ -223,6 +223,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.initContainers.fs.image.tag | string | `"1.34.1"` |  |
 | repository.initContainers.fs.resources.limits.memory | string | `"10Mi"` |  |
 | repository.initContainers.fs.resources.requests.memory | string | `"5Mi"` |  |
+| repository.licenseSecret | string | `nil` |  |
 | repository.livenessProbe.initialDelaySeconds | int | `130` |  |
 | repository.livenessProbe.periodSeconds | int | `20` |  |
 | repository.livenessProbe.timeoutSeconds | int | `10` |  |
