@@ -1,4 +1,5 @@
 replicaCount: 1
+nodeSelector: {}
 
 # -- Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
 global:

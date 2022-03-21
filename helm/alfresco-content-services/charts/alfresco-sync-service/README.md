@@ -41,6 +41,7 @@ Alfresco Sync Service
 | initContainers.postgres.image.tag | string | `"1.35.0"` |  |
 | initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
 | initContainers.postgres.resources.requests.memory | string | `"5Mi"` |  |
+| nodeSelector | object | `{}` |  |
 | postgresql-syncservice.enabled | bool | `true` |  |
 | postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql-syncservice.image.tag | string | `"11.7.0"` |  |
