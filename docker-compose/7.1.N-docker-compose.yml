@@ -1,4 +1,4 @@
-# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 13GB Memory to distribute among containers.
+# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 14GB Memory to distribute among containers.
 #
 # For performance tuning, assign the container memory and give a percentage of it to the JVM.
 # Use either the -Xms,-Xmx flags or the newly added flags in java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage. More details here: https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
@@ -13,7 +13,7 @@ version: "2"
 services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:7.1.1
-    mem_limit: 1700m
+    mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: "
         -Dencryption.keystore.type=JCEKS
@@ -146,6 +146,7 @@ services:
     environment:
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
+      APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
 
   proxy:
     image: alfresco/alfresco-acs-nginx:3.2.0
