@@ -25,7 +25,7 @@ spec:
         {{- include "ooi-service.selectorLabels" . | nindent 8 }}
     spec:
     {{- if .Values.ooi.nodeSelector }}
-      nodeSelector: {{- .Values.ooi.odeSelector | toYaml | nindent 8 }}
+      nodeSelector: {{- .Values.ooi.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined

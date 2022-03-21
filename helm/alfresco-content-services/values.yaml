@@ -146,6 +146,7 @@ msTeams:
 
 msTeamsService:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
     tag: 1.0.0
@@ -391,6 +392,7 @@ transformmisc:
 
 aiTransformer:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 1.4.2
@@ -624,6 +626,7 @@ alfresco-digital-workspace:
 # -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
 ooi:
   enabled: false
+  nodeSelector: {}
 
 # -- Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl

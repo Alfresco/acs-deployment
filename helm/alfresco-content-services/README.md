@@ -48,6 +48,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | aiTransformer.livenessProbe.maxTransforms | int | `10000` |  |
 | aiTransformer.livenessProbe.periodSeconds | int | `20` |  |
 | aiTransformer.livenessProbe.timeoutSeconds | int | `10` |  |
+| aiTransformer.nodeSelector | object | `{}` |  |
 | aiTransformer.readinessProbe.initialDelaySeconds | int | `20` |  |
 | aiTransformer.readinessProbe.periodSeconds | int | `60` |  |
 | aiTransformer.readinessProbe.timeoutSeconds | int | `10` |  |
@@ -147,6 +148,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.microsoft.app.id | string | `"change_me_app_id"` |  |
 | msTeamsService.microsoft.app.oauth.connectionName | string | `"alfresco"` |  |
 | msTeamsService.microsoft.app.password | string | `"change_me_app_pwd"` |  |
+| msTeamsService.nodeSelector | object | `{}` |  |
 | msTeamsService.readinessProbe.initialDelaySeconds | int | `20` |  |
 | msTeamsService.readinessProbe.periodSeconds | int | `60` |  |
 | msTeamsService.readinessProbe.timeoutSeconds | int | `10` |  |
@@ -159,7 +161,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.teams.chat.filenameEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.imageEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.metadataEnabled | bool | `true` |  |
-| ooi | object | `{"enabled":false}` | Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365) |
+| ooi | object | `{"enabled":false,"nodeSelector":{}}` | Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365) |
 | ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
 | ooiService.image.internalPort | int | `9095` |  |
 | ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
