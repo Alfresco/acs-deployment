@@ -3,7 +3,7 @@ enabled: true
 replicaCount: 1
 image:
   repository: alfresco/alfresco-activemq
-  tag: 5.16.1
+  tag: 5.16.4-jre11-centos7
   pullPolicy: IfNotPresent
 adminUser:
   username: admin
