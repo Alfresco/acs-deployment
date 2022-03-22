@@ -2,8 +2,8 @@
 enabled: true
 replicaCount: 1
 image:
-  repository: symptoma/activemq
-  tag: 5.16.4
+  repository: alfresco/alfresco-activemq
+  tag: 5.16.4-jre11-centos7
   pullPolicy: IfNotPresent
 adminUser:
   username: admin
