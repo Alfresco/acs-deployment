@@ -39,7 +39,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.2.0-M2          | 7.2.0-M2 | 7.1.1   | 7.0.1 | 6.2.2 | 7.2.0-M2  |
 | 5.2.0             | 7.2.0 | 7.1.1  | 7.0.1 | 6.2.2 | 7.2.0 |
 
-> Although ACS 6.1.x is now unsupported, this repository contains a 6.1 value files (for convenience only) which can be used with the chart up to version 5.2.0 (not included).
+> ACS 6.1.x is currently in [EoM](https://www.alfresco.com/services/subscription/technical-support/product-support-status) and has been removed from this project, if you need to install it please use a former release like [5.1.1](https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1).
 
 ### Docker
 
