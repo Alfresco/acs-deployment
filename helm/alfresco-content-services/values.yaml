@@ -109,6 +109,7 @@ apiexplorer:
 
 ooiService:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
     tag: 1.1.1
@@ -544,6 +545,7 @@ persistence:
 
 activemq:
   enabled: true
+  # --Possibility to choose Node for pod, key-value pair label of a desired node e.g {"kubernetes.io/hostname": multinode-demo-m02}
   nodeSelector: {}
 
 alfresco-search:
@@ -626,7 +628,6 @@ alfresco-digital-workspace:
 # -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
 ooi:
   enabled: false
-  nodeSelector: {}
 
 # -- Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl

@@ -35,7 +35,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | activemq.enabled | bool | `true` |  |
-| activemq.nodeSelector | object | `{}` |  |
+| activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, key-value pair label of a desired node e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | aiTransformer.environment.JAVA_OPTS | string | `" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | aiTransformer.image.internalPort | int | `8090` |  |
 | aiTransformer.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -100,11 +100,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | database.user | string | `nil` | ex: alfresco |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html |
 | email.server.enabled | bool | `false` | Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html |
-<<<<<<< HEAD
-| filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.1"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
-=======
-| filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.1"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.34.1"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
->>>>>>> 0bb919a (Seperate NodeSelector values per pod)
+| filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.1"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` |  |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
@@ -161,7 +157,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.teams.chat.filenameEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.imageEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.metadataEnabled | bool | `true` |  |
-| ooi | object | `{"enabled":false,"nodeSelector":{}}` | Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365) |
+| ooi | object | `{"enabled":false}` | Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365) |
 | ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
 | ooiService.image.internalPort | int | `9095` |  |
 | ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -172,6 +168,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
 | ooiService.livenessProbe.periodSeconds | int | `20` |  |
 | ooiService.livenessProbe.timeoutSeconds | int | `10` |  |
+| ooiService.nodeSelector | object | `{}` |  |
 | ooiService.readinessProbe.initialDelaySeconds | int | `20` |  |
 | ooiService.readinessProbe.periodSeconds | int | `60` |  |
 | ooiService.readinessProbe.timeoutSeconds | int | `10` |  |
