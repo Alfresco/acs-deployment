@@ -22,7 +22,7 @@ A Helm chart Providing Apache ActiveMQ.
 | image.tag | string | `"5.16.4-jre11-centos7"` |  |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
-| initContainer.image.tag | string | `"1.33.1"` |  |
+| initContainer.image.tag | string | `"1.35.0"` |  |
 | initContainer.resources.limits.memory | string | `"10Mi"` |  |
 | initContainer.resources.requests.memory | string | `"5Mi"` |  |
 | livenessProbe.failureThreshold | int | `1` |  |

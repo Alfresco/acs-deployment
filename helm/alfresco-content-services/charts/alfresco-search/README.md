@@ -33,7 +33,7 @@ A Helm chart for deploying Alfresco Search
 | ingress.whitelist_ips | string | `"0.0.0.0/0"` | Comma separated list of IP CIDR to limit search endpoint over the internet |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
-| initContainer.image.tag | string | `"1.33.1"` |  |
+| initContainer.image.tag | string | `"1.35.0"` |  |
 | initContainer.resources.limits.memory | string | `"10Mi"` |  |
 | initContainer.resources.requests.memory | string | `"5Mi"` |  |
 | insightEngineImage.internalPort | int | `8983` |  |

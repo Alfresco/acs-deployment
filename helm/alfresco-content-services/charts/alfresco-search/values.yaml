@@ -80,7 +80,7 @@ livenessProbe:
 initContainer:
   image:
     repository: busybox
-    tag: 1.33.1
+    tag: 1.35.0
     pullPolicy: IfNotPresent
   resources:
     requests:
