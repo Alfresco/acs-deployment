@@ -11,7 +11,7 @@ keywords:
   - alfresco insight engine
 name: alfresco-search
 sources:
-  - https://github.com/alfresco/alfresco-search-deployment
+  - https://github.com/Alfresco/acs-deployment
 version: 1.0.4
 dependencies:
   - name: alfresco-insight-zeppelin
