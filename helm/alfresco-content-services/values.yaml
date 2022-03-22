@@ -22,7 +22,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.2.0-A28
+    tag: 7.2.0
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -462,7 +462,7 @@ share:
   replicaCount: 1
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.2.0-A28
+    tag: 7.2.0
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
