@@ -33,12 +33,12 @@ Alfresco Sync Service
 | ingress.tls | list | `[]` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
 | initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"busybox"` |  |
-| initContainers.activemq.image.tag | string | `"1.33.1"` |  |
+| initContainers.activemq.image.tag | string | `"1.35.0"` |  |
 | initContainers.activemq.resources.limits.memory | string | `"10Mi"` |  |
 | initContainers.activemq.resources.requests.memory | string | `"5Mi"` |  |
 | initContainers.postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.postgres.image.repository | string | `"busybox"` |  |
-| initContainers.postgres.image.tag | string | `"1.33.1"` |  |
+| initContainers.postgres.image.tag | string | `"1.35.0"` |  |
 | initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
 | initContainers.postgres.resources.requests.memory | string | `"5Mi"` |  |
 | postgresql-syncservice.enabled | bool | `true` |  |
