@@ -23,6 +23,9 @@ spec:
       labels:
         {{- include "ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
+    {{- if .Values.aiTransformer.nodeSelector }}
+      nodeSelector: {{- .Values.aiTransformer.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:

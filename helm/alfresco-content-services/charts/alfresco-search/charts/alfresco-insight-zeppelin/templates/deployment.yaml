@@ -28,6 +28,9 @@ spec:
         app: {{ template "alfresco-insight-zeppelin.fullName" . }}
         release: {{ .Release.Name }}
     spec:
+    {{- if .Values.nodeSelector }}
+      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:

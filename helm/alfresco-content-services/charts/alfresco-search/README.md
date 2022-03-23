@@ -43,6 +43,7 @@ A Helm chart for deploying Alfresco Search
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
+| nodeSelector | object | `{}` |  |
 | persistence | object | `{"EbsPvConfiguration":{"fsType":"ext4"},"VolumeSizeRequest":"10Gi","chownWithDynamicProvisioning":false,"enabled":true,"search":{"data":{"mountPath":"/opt/alfresco-search-services/data","subPath":"alfresco-content-services/solr-data"}}}` | Defines the mounting points for the persistence required by the apps in the cluster the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data |
 | persistence.VolumeSizeRequest | string | `"10Gi"` | Only define if you have a specific claim already created existingClaim: "search-master-claim" |
 | readinessProbe.initialDelaySeconds | int | `60` |  |

@@ -30,6 +30,7 @@ A Helm chart for deploying Alfresco Insight Zeppelin
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
+| nodeSelector | object | `{}` |  |
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |

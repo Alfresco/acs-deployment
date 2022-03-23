@@ -5,6 +5,7 @@
 # -- Define the alfresco-insight-zeppelin properties to use in the k8s cluster
 # This is chart will be installed as part of Alfresco Insight Engine
 replicaCount: 1
+nodeSelector: {}
 insightzeppelin:
   enabled: false
 image:

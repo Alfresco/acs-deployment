@@ -22,6 +22,9 @@ spec:
       labels:
         {{- include "libreoffice.selectorLabels" . | nindent 8 }}
     spec:
+    {{- if .Values.libreoffice.nodeSelector }}
+      nodeSelector: {{- .Values.libreoffice.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:

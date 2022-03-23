@@ -29,6 +29,7 @@ A Helm chart Providing Apache ActiveMQ.
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
+| nodeSelector | object | `{}` |  |
 | persistence.chownWithDynamicProvisioning | bool | `false` |  |
 | persistence.existingClaim | string | `"alfresco-volume-claim"` |  |
 | persistence.mountPath | string | `"/opt/activemq/data"` |  |
