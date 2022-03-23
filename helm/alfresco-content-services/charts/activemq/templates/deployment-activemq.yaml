@@ -20,6 +20,9 @@ spec:
         app: {{ template "activemq.fullname" . }}
         release: {{ .Release.Name }}
     spec:
+    {{- if .Values.nodeSelector }}
+      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
       containers:
       - name: activemq
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

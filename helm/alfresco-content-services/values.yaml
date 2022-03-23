@@ -18,6 +18,7 @@ repository:
   licenseSecret: null
   edition: Enterprise
   replicaCount: 2
+  nodeSelector: {}
   strategy:
     type: Recreate
   image:
@@ -108,6 +109,7 @@ apiexplorer:
 
 ooiService:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
     tag: 1.1.1
@@ -145,6 +147,7 @@ msTeams:
 
 msTeamsService:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
     tag: 1.0.0
@@ -191,6 +194,7 @@ msTeamsService:
 
 transformrouter:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: 1.5.2
@@ -220,6 +224,7 @@ transformrouter:
 # to transform pdf files
 pdfrenderer:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: alfresco/alfresco-pdf-renderer
     tag: 2.5.7
@@ -253,6 +258,7 @@ pdfrenderer:
 # to transform image files
 imagemagick:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: alfresco/alfresco-imagemagick
     tag: 2.5.7
@@ -286,6 +292,7 @@ imagemagick:
 # to transform office files
 libreoffice:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: alfresco/alfresco-libreoffice
     tag: 2.5.7
@@ -319,6 +326,7 @@ libreoffice:
 # to transform office files
 tika:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: alfresco/alfresco-tika
     tag: 2.5.7
@@ -353,6 +361,7 @@ tika:
 transformmisc:
   enabled: true
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: alfresco/alfresco-transform-misc
     tag: 2.5.7
@@ -384,6 +393,7 @@ transformmisc:
 
 aiTransformer:
   replicaCount: 2
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 1.4.2
@@ -417,6 +427,7 @@ aiTransformer:
 # and transform service
 filestore:
   replicaCount: 1
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
     tag: 0.16.1
@@ -460,6 +471,7 @@ filestore:
 # This is the default presentation layer(UI) of Alfresco Content Services
 share:
   replicaCount: 1
+  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
     tag: 7.2.0
@@ -532,9 +544,12 @@ persistence:
       subPath: "alfresco-content-services/filestore-data"
 
 activemq:
-    enabled: true
+  enabled: true
+  # --Possibility to choose Node for pod, key-value pair label of a desired node e.g {"kubernetes.io/hostname": multinode-demo-m02}
+  nodeSelector: {}
 
 alfresco-search:
+  nodeSelector: {}
   type: "search-services"
   enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
@@ -572,6 +587,7 @@ alfresco-search:
     #      - chart-example.local
 
 alfresco-digital-workspace:
+  nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-dw"
   service:
@@ -649,6 +665,8 @@ postgresql:
   postgresqlExtendedConf:
     max_connections: 300
     log_min_messages: LOG
+  primary:
+    nodeSelector: {}
   persistence:
     existingClaim: "alfresco-volume-claim"
     subPath: "alfresco-content-services/database-data"
@@ -678,6 +696,8 @@ postgresql-syncservice:
     log_min_messages: LOG
   service:
     port: 5432
+  primary:
+    nodeSelector: {}
   resources:
     requests:
       memory: "1500Mi"
@@ -794,6 +814,7 @@ metadataKeystore:
   defaultKeyPassword: "oKIWzVdEdA"
 
 alfresco-sync-service:
+  nodeSelector: {}
   syncservice:
     enabled : true
   image:

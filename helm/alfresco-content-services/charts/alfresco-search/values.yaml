@@ -5,6 +5,7 @@
 # -- Define the alfresco-search properties to use in the k8s cluster
 # This is the search provider used by alfresco-content-repository
 replicaCount: 1
+nodeSelector: {}
 # -- Define the type of Alfresco Search to use. The default is Alfresco Search Services.
 # The type can be set to use Insight Engine with --set alfresco-search.type="insight-engine",alfresco-search.global.alfrescoRegistryPullSecrets="quay-registry-secret",alfresco-insight-zeppelin.enabled="true"
 # As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set

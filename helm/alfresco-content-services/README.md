@@ -35,6 +35,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | activemq.enabled | bool | `true` |  |
+| activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, key-value pair label of a desired node e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | aiTransformer.environment.JAVA_OPTS | string | `" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | aiTransformer.image.internalPort | int | `8090` |  |
 | aiTransformer.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -47,6 +48,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | aiTransformer.livenessProbe.maxTransforms | int | `10000` |  |
 | aiTransformer.livenessProbe.periodSeconds | int | `20` |  |
 | aiTransformer.livenessProbe.timeoutSeconds | int | `10` |  |
+| aiTransformer.nodeSelector | object | `{}` |  |
 | aiTransformer.readinessProbe.initialDelaySeconds | int | `20` |  |
 | aiTransformer.readinessProbe.periodSeconds | int | `60` |  |
 | aiTransformer.readinessProbe.timeoutSeconds | int | `10` |  |
@@ -67,6 +69,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-digital-workspace.ingress.path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
+| alfresco-digital-workspace.nodeSelector | object | `{}` |  |
 | alfresco-digital-workspace.resources.limits.cpu | int | `1` |  |
 | alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-digital-workspace.resources.requests.cpu | string | `"150m"` |  |
@@ -79,6 +82,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-search.ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base64. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') is disabled by default To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration) |
 | alfresco-search.ingress.tls | list | `[]` |  |
+| alfresco-search.nodeSelector | object | `{}` |  |
 | alfresco-search.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.repository.port | int | `80` |  |
 | alfresco-search.searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
@@ -86,6 +90,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | alfresco-sync-service.image.tag | string | `"3.6.0"` |  |
+| alfresco-sync-service.nodeSelector | object | `{}` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
 | database | object | `{"driver":null,"external":false,"password":null,"url":null,"user":null}` | Defines properties required by alfresco for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver |
@@ -95,7 +100,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | database.user | string | `nil` | ex: alfresco |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html |
 | email.server.enabled | bool | `false` | Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html |
-| filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.1"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
+| filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.1"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` |  |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
@@ -103,11 +108,11 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
 | global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic. Strong enough secret can be generated with `openssl rand 20 -base64` |
-| imagemagick | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-imagemagick","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":900,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"imagemagick","type":"ClusterIP"}}` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
+| imagemagick | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-imagemagick","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":900,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"imagemagick","type":"ClusterIP"}}` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | imap.mail.from.default | string | `nil` |  |
 | imap.mail.to.default | string | `nil` |  |
 | imap.server | object | `{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}` | Replace this value with the IP address (or corresponding DNS name) of your external IP interface - see https://docs.alfresco.com/6.2/tasks/imap-enable.html |
-| libreoffice | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-libreoffice","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":250,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":99999,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"libreoffice","type":"ClusterIP"}}` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
+| libreoffice | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-libreoffice","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":250,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":99999,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"libreoffice","type":"ClusterIP"}}` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | mail.encoding | string | `"UTF-8"` |  |
 | mail.from.default | string | `nil` |  |
 | mail.from.enabled | bool | `false` |  |
@@ -139,6 +144,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.microsoft.app.id | string | `"change_me_app_id"` |  |
 | msTeamsService.microsoft.app.oauth.connectionName | string | `"alfresco"` |  |
 | msTeamsService.microsoft.app.password | string | `"change_me_app_pwd"` |  |
+| msTeamsService.nodeSelector | object | `{}` |  |
 | msTeamsService.readinessProbe.initialDelaySeconds | int | `20` |  |
 | msTeamsService.readinessProbe.periodSeconds | int | `60` |  |
 | msTeamsService.readinessProbe.timeoutSeconds | int | `10` |  |
@@ -162,6 +168,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
 | ooiService.livenessProbe.periodSeconds | int | `20` |  |
 | ooiService.livenessProbe.timeoutSeconds | int | `10` |  |
+| ooiService.nodeSelector | object | `{}` |  |
 | ooiService.readinessProbe.initialDelaySeconds | int | `20` |  |
 | ooiService.readinessProbe.periodSeconds | int | `60` |  |
 | ooiService.readinessProbe.timeoutSeconds | int | `10` |  |
@@ -171,11 +178,11 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | ooiService.service.externalPort | int | `80` |  |
 | ooiService.service.name | string | `"ooi-service"` |  |
 | ooiService.service.type | string | `"ClusterIP"` |  |
-| pdfrenderer | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
+| pdfrenderer | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | persistence | object | `{"baseSize":"20Gi","chownWithDynamicProvisioning":false,"enabled":true,"existingClaim":"alfresco-volume-claim","filestore":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"repository":{"config":{"querysetsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/querysets/","transform":{"mimetypesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/","pipelinesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/","renditionsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"}},"data":{"mountPath":"/usr/local/tomcat/alf_data","subPath":"alfresco-content-services/repository-data"},"enabled":true},"storageClass":{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}}` | Defines the mounting points for the persistence required by the apps in the cluster the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data |
 | persistence.storageClass | object | `{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}` | Enable and define if you already have a custom storage class defined |
 | persistence.storageClass.name | string | `"nfs"` | Custom storage class name |
-| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"13.3.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":"alfresco-volume-claim","subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
+| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"13.3.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":"alfresco-volume-claim","subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","primary":{"nodeSelector":{}},"replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
 | postgresql-syncservice.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql-syncservice.enabled | bool | `true` |  |
 | postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -187,6 +194,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | postgresql-syncservice.postgresqlExtendedConf.max_connections | int | `450` |  |
 | postgresql-syncservice.postgresqlPassword | string | `"admin"` |  |
 | postgresql-syncservice.postgresqlUsername | string | `"alfresco"` |  |
+| postgresql-syncservice.primary.nodeSelector | object | `{}` |  |
 | postgresql-syncservice.replicaCount | int | `1` |  |
 | postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
@@ -227,6 +235,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.livenessProbe.initialDelaySeconds | int | `130` |  |
 | repository.livenessProbe.periodSeconds | int | `20` |  |
 | repository.livenessProbe.timeoutSeconds | int | `10` |  |
+| repository.nodeSelector | object | `{}` |  |
 | repository.readinessProbe | object | `{"failureThreshold":6,"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":10}` | The repository readiness probe is used to check startup only as a failure of the liveness probe later will result in the pod being restarted. |
 | repository.replicaCount | int | `2` |  |
 | repository.resources.limits.memory | string | `"3000Mi"` |  |
@@ -236,9 +245,9 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.service.type | string | `"ClusterIP"` |  |
 | repository.strategy.type | string | `"Recreate"` |  |
 | s3connector | object | `{"enabled":false}` | Defines the properties to be used for the S3 Connector For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html |
-| share | object | `{"command":[],"environment":{"CATALINA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.2.0"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"memory":"2000Mi"},"requests":{"memory":"2000Mi"}},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
-| tika | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-tika","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":60,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"tika","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
-| transformmisc | object | `{"enabled":true,"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-transform-misc","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"transformmisc","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
+| share | object | `{"command":[],"environment":{"CATALINA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.2.0"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"memory":"2000Mi"},"requests":{"memory":"2000Mi"}},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
+| tika | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-tika","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":60,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"tika","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
+| transformmisc | object | `{"enabled":true,"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-transform-misc","tag":"2.5.7"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"transformmisc","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformrouter.environment.JAVA_OPTS | string | `" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformrouter.image.internalPort | int | `8095` |  |
 | transformrouter.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -247,6 +256,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | transformrouter.livenessProbe.initialDelaySeconds | int | `140` |  |
 | transformrouter.livenessProbe.periodSeconds | int | `120` |  |
 | transformrouter.livenessProbe.timeoutSeconds | int | `60` |  |
+| transformrouter.nodeSelector | object | `{}` |  |
 | transformrouter.readinessProbe.initialDelaySeconds | int | `140` |  |
 | transformrouter.readinessProbe.periodSeconds | int | `60` |  |
 | transformrouter.readinessProbe.timeoutSeconds | int | `10` |  |

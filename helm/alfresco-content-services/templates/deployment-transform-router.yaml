@@ -22,6 +22,9 @@ spec:
       labels:
         {{- include "transform-router.selectorLabels" . | nindent 8 }}
     spec:
+    {{- if .Values.transformrouter.nodeSelector }}
+      nodeSelector: {{- .Values.transformrouter.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
