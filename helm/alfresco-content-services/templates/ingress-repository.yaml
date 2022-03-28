@@ -14,14 +14,14 @@ metadata:
     # Default file limit (1m) check, document(s) above this size will throw 413 (Request Entity Too Large) error
     nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.repository.ingress.maxUploadSize }}
     {{- if index .Values "alfresco-search" "enabled" }}
-    nginx.ingress.kubernetes.io/configuration-snippet: |
+    nginx.ingress.kubernetes.io/server-snippet: |
       location ~ ^(/.*/service/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/s/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcservice/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcs/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/s/prometheus)$ {return 403;}
     {{- else }}
-    nginx.ingress.kubernetes.io/configuration-snippet: |
+    nginx.ingress.kubernetes.io/server-snippet: |
       location ~ ^(/.*/s/prometheus)$ {return 403;}
     {{- end }}
 {{- if .Values.repository.ingress.annotations }}
