@@ -17,7 +17,7 @@ A Helm chart for deploying Alfresco Content Services
 |  | activemq | 2.1.0 |
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.1.0-M17 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.2.0 |
 | https://charts.bitnami.com/bitnami | postgresql | 10.16.2 |
 | https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 10.16.2 |
 
