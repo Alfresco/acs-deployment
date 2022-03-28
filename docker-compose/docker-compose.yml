@@ -152,18 +152,28 @@ services:
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
 
+  control-center:
+    image: quay.io/alfresco/alfresco-admin-app:7.2.0
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
+
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.2.0
+    image: alfresco/alfresco-acs-nginx:3.3.0
     mem_limit: 128m
     depends_on:
       - alfresco
       - digital-workspace
+      - control-center
     ports:
       - "8080:8080"
     links:
       - digital-workspace
       - alfresco
       - share
+      - control-center
 
   sync-service:
     image: quay.io/alfresco/service-sync:3.6.0
