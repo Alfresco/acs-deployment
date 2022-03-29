@@ -199,6 +199,7 @@ _helm_deploy: &helm_deploy
     --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
     --set controller.publishService.enabled=true \
     --set controller.admissionWebhooks.enabled=false \
+    --set controller.ingressClassResource.enabled=false \
     --wait \
     --namespace $namespace
 
