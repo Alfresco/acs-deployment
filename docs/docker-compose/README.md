@@ -35,6 +35,7 @@ In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](
 4. Run ```docker-compose up``` to use the latest version of ACS Enterprise or ```docker-compose -f major.minor.N-docker-compose.yml up``` to use a specific version of ACS
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
+   * Control Center: [http://<machine_ip>:8080/admin](http://localhost:8080/admin)
    * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
    * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
    * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
@@ -126,6 +127,14 @@ share:
 | E2E_HOST_CLOUD |  | `http://localhost` |
 | E2E_PORT_CLOUD |  | 4200 |
 | APP_CONFIG_APPS_DEPLOYED | The name of the application deployed (e.g. `"[{"name": "\<the name of the application deployed\>"}]"`) |  |
+
+### Control Center (control-center)
+
+| Property | Description | Default value |
+|----------|-------------|---------------|
+| BASE_PATH |  | `./` |
+| APP_CONFIG_AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC |
+| APP_CONFIG_PROVIDER | config provider | ECM |
 
 ### Alfresco Search Services (solr6)
 
@@ -223,6 +232,7 @@ share:
 | Property | Description | Default value |
 |----------|-------------|---------------|
 | ADW_URL | Digital Workspace URL inside network. | `http://digital-workspace` |
+| CONTROL_CENTER_URL | Control Center URL inside network. | `http://control-center` |
 | REPO_URL | Repository URL inside network. | `http://alfresco:8080` |
 | SHARE_URL | Share URL inside network. | `http://share:8080` |
 | SYNCSERVICE_URL | Sync service URL inside network. | `http://sync-service:9090` |
