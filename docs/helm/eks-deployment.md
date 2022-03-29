@@ -243,7 +243,7 @@ kubectl create namespace alfresco
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
     helm repo update
 
-    helm install acs-ingress ingress-nginx/ingress-nginx --version=3.7.1 \
+    helm install acs-ingress ingress-nginx/ingress-nginx --version=4.0.18 \
     --set controller.scope.enabled=true \
     --set controller.scope.namespace=alfresco \
     --set rbac.create=true \
