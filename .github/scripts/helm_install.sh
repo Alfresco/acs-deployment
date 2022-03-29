@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-
-COMMIT_MESSAGE=$1
 export GIT_DIFF=$(git diff origin/master --name-only .)
 export BRANCH_NAME=$(echo ${GITHUB_REF##*/})
-VALID_VERSION=$(echo ${VERSION} | tr -d '.' | awk '{print tolower($0)}')
+VALID_VERSION=$(echo ${ACS_VERSION} | tr -d '.' | awk '{print tolower($0)}')
 export namespace=$(echo ${BRANCH_NAME} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${GITHUB_RUN_NUMBER}-${VALID_VERSION}
 export release_name_ingress=ing-${GITHUB_RUN_NUMBER}-${VALID_VERSION}
 export release_name_acs=acs-${GITHUB_RUN_NUMBER}-${VALID_VERSION}
@@ -106,22 +104,20 @@ EOF
 
 
 export values_file=helm/alfresco-content-services/values.yaml
-if [[ ${VERSION} != "test" ]]; then
-    values_file="helm/alfresco-content-services/${VERSION}_values.yaml"  #change this later
+if [[ ${ACS_VERSION} != "test" ]]; then
+    values_file="helm/alfresco-content-services/${ACS_VERSION}_values.yaml"
 fi
 
 deploy=false
 
-if [[ "${BRANCH_NAME}" == "master" ]] || [[ "${COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${COMMIT_MESSAGE}" == *"[release]"* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${VERSION}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
+if [[ "${BRANCH_NAME}" == "master" ]] || [[ "${COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${COMMIT_MESSAGE}" == *"[release]"* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${ACS_VERSION}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
 then
     deploy=true
 fi
 
-echo 'mieszko'
-echo $deploy
-deploy=true
+echo "Deploy:" $deploy
 
-
+# Main
 if $deploy; then
 # Utility Functions
 
@@ -129,8 +125,7 @@ if $deploy; then
   kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson=$HOME/.docker/config.json --type=kubernetes.io/dockerconfigjson -n $namespace
 
   # install ingress
-  #AWS_SG is empty???
-  helm upgrade --install $release_name_ingress --repo https://kubernetes.github.io/ingress-nginx ingress-nginx --version=3.7.1 \
+  helm upgrade --install $release_name_ingress --repo https://kubernetes.github.io/ingress-nginx ingress-nginx --version=4.0.18 \
   --set controller.scope.enabled=true \
   --set controller.scope.namespace=$namespace \
   --set rbac.create=true \
@@ -144,6 +139,7 @@ if $deploy; then
   --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
   --set controller.publishService.enabled=true \
   --set controller.admissionWebhooks.enabled=false \
+  --set controller.ingressClassResource.enabled=false \
   --wait \
   --namespace $namespace
 
@@ -151,7 +147,7 @@ if $deploy; then
   helm dep up helm/alfresco-content-services
   helm upgrade --install $release_name_acs helm/alfresco-content-services \
       --values=$values_file \
-      --set global.tracking.sharedsecret=$(openssl rand 24 -hex) \
+      --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
       --set externalPort="443" \
       --set externalProtocol="https" \
       --set externalHost="$namespace.${HOSTED_ZONE}" \
@@ -231,9 +227,9 @@ if $deploy; then
   fi
 
   if [[ "$TRAVIS_COMMIT_MESSAGE" != *"[keep env]"* ]]; then
-      echo "tmp"
       helm delete $release_name_ingress $release_name_acs -n $namespace
       kubectl delete namespace $namespace
+      echo "test"
   fi
 
   if [[ "${TEST_RESULT}" == "1" ]]; then

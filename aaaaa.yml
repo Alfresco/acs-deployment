@@ -206,7 +206,7 @@ _helm_deploy: &helm_deploy
     helm dep up helm/${PROJECT_NAME}
     travis_wait 25 helm upgrade --install $release_name_acs helm/${PROJECT_NAME} \
       --values=$values_file \
-      --set global.tracking.sharedsecret=$(openssl rand 24 -hex) \
+      --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
       --set externalPort="443" \
       --set externalProtocol="https" \
       --set externalHost="${HOST}" \

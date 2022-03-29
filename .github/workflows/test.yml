@@ -2,21 +2,33 @@ name: rafal-test
 
 on:
   pull_request:
+    branches:
+      - '*OPSEXP-*'
+      - '*feature*'
+      - '*fix*'
+      - '*ACS-*'
+      - '*ATS-*'
   push:
+    branches:
+      - '*OPSEXP-*'
+      - '*feature*'
+      - '*fix*'
+      - '*ACS-*'
+      - '*ATS-*'
+
 jobs:
-  rafal-test1:
+  deploy:
     strategy:
+      fail-fast: false
       matrix:
         #version: [6.2.N, 7.0.N, 7.1.N, community, test]
-        version: [6.2.N]
+        acs_version: [6.2.N]
     runs-on: ubuntu-latest
     env:
         HOSTED_ZONE: dev.envalfresco.com
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        HELM_REPO_BASE_URL: https://kubernetes-charts.alfresco.com
-        HELM_REPO: incubator
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,17 +42,39 @@ jobs:
       - name: Setup configs
         run: |
             (umask 066 && aws eks update-kubeconfig --name acs-cluster --region=eu-west-1)
-            echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-            echo "${{ secrets.DOCKER_REGISTRY_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_REGISTRY_USERNAME }}" --password-stdin "${{ secrets.DOCKER_REGISTRY }}"
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+            echo "${{ secrets.QUAY_PASSWORD }}" | docker login -u "${{ secrets.QUAY_USERNAME }}" --password-stdin "quay.io"
       - name: Run Docker compose tests
-        run: .github/workflows/docker_compose.sh ${{ github.event.head_commit.message }}
+        id: compose
+        run: .github/scripts/docker_compose.sh
         shell: bash
         env:
-          VERSION: ${{ matrix.version}}
+          ACS_VERSION: ${{ matrix.acs_version}}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
       - name: Run helm chart tests
-        run: .github/workflows/helm_chart.sh ${{ github.event.head_commit.message }}
+        run: .github/scripts/helm_install.sh
         shell: bash
         env:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
-          VERSION: ${{ matrix.version }}
+          ACS_VERSION: ${{ matrix.acs_version }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+  publish:
+    needs: deploy
+    runs-on: ubuntu-latest
+    env:
+      HELM_REPO_BASE_URL: https://kubernetes-charts.alfresco.com
+      HELM_REPO: incubator
+      PROJECT_NAME: alfresco-content-services
+      GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: test
+      run: .github/scripts/publish_chart.sh
+      shell: bash
+      env:
+        COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+      if: github.ref == 'refs/heads/main' || github.event.head_commit.message == '[publish]'
