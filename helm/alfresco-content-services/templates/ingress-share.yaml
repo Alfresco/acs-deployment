@@ -15,9 +15,6 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-path: "/share"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "604800"
     nginx.ingress.kubernetes.io/session-cookie-expires: "604800"
-    nginx.ingress.kubernetes.io/server-snippet: |
-      location ~ ^(/.*/proxy/.*/api/solr/.*)$ {return 403 ;}
-      location ~ ^(/.*/-default-/proxy/.*/api/.*)$ {return 403;}
 {{- if .Values.share.ingress.annotations }}
 {{ toYaml .Values.share.ingress.annotations | indent 4 }}
 {{- end }}
