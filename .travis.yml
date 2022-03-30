@@ -1,7 +1,3 @@
-language: python
-python:
-  - "3.8.2"
-
 os: linux
 dist: xenial
 
@@ -28,6 +24,7 @@ import:
   - source: Alfresco/alfresco-build-tools:.travis.helm_install.yml@v1.3.0
   - source: Alfresco/alfresco-build-tools:.travis.kubepug_install.yml@v1.3.0
   - source: Alfresco/alfresco-build-tools:.travis.checkov_install.yml@v1.3.0
+  - source: Alfresco/alfresco-build-tools:.travis.docker_hub_login.yml@v1.3.0
   - source: Alfresco/alfresco-build-tools:.travis.docker_login.yml@v1.3.0
   - source: Alfresco/alfresco-build-tools:.travis.helm-docs_install.yml@v1.3.0
   - source: Alfresco/alfresco-build-tools:.travis.yq_install.yml@v1.3.0
@@ -35,11 +32,8 @@ import:
 
 env:
   global:
-    - HOSTED_ZONE=dev.envalfresco.com
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
-    - HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
-    - HELM_REPO=incubator
     - GIT_DIFF=$(git diff origin/master --name-only .)
 
 branches:
@@ -52,54 +46,54 @@ branches:
     - /ACS-.*/
     - /ATS-.*/
 
-before_install:
-  - |
-    (umask 066 && aws eks update-kubeconfig --name acs-cluster --region=eu-west-1)
-    rm -rf /home/travis/.cache/pre-commit
-
 before_script:
   - |
     echo "GIT_DIFF=${GIT_DIFF}"
     echo "TRAVIS_COMMIT_MESSAGE=${TRAVIS_COMMIT_MESSAGE}"
-    REPO_NAME=${TRAVIS_REPO_SLUG##*/}
     PROJECT_NAME=alfresco-content-services
-    echo using PROJECT_NAME=${PROJECT_NAME},BRANCH=${BRANCH},HELM_REPO=${HELM_REPO}
-    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-    echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY"
+    newman() {
+      docker run -a STDOUT --volume $PWD/test/postman:/etc/newman --network host postman/newman:5.3 $*
+    }
 
 _helm_deploy: &helm_deploy
   script: |
-    export STAGE_SUFFIX=$(echo ${TRAVIS_BUILD_STAGE_NAME} | tr -d . | awk '{print tolower($0)}')
-    export namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
-    export release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
-    export release_name_acs=acs-${TRAVIS_BUILD_NUMBER}-${STAGE_SUFFIX}
-    export values_file=helm/alfresco-content-services/values.yaml
+    DOMAIN=dev.envalfresco.com
+    SUFFIX=$(echo ${ACS_VERSION} | tr -d . | awk '{print tolower($0)}')
+    namespace=$(echo ${TRAVIS_BRANCH} | cut -c1-28 | tr /_ - | tr -d '[:punct:]' | awk '{print tolower($0)}')-${TRAVIS_BUILD_NUMBER}-${SUFFIX}
+    HOST=$namespace.${DOMAIN}
+    release_name_ingress=ing-${TRAVIS_BUILD_NUMBER}-${SUFFIX}
+    release_name_acs=acs-${TRAVIS_BUILD_NUMBER}-${SUFFIX}
 
-    if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
-      values_file="helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml"
+    if [[ ${ACS_VERSION} != "latest" ]]; then
+      values_file=helm/${PROJECT_NAME}/${ACS_VERSION}_values.yaml
+    else
+      values_file=helm/${PROJECT_NAME}/values.yaml
     fi
 
-    deploy=false
-
-    if [[ "${TRAVIS_BRANCH}" == "master" ]] || [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/${TRAVIS_BUILD_STAGE_NAME}_values.yaml* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/templates* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/charts* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/requirements* ]] || [[ "${GIT_DIFF}" == *helm/alfresco-content-services/values.yaml* ]] || [[ "${GIT_DIFF}" == *test/postman/helm* ]]
+    if [[ "${TRAVIS_BRANCH}" == "master" ]] || \
+       [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || \
+       [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]] || \
+       [[ "${GIT_DIFF}" == *${values_file}* ]] || \
+       [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/templates* ]] || \
+       [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/charts* ]] || \
+       [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/requirements* ]] || \
+       [[ "${GIT_DIFF}" == *test/postman/helm* ]]
     then
-      deploy=true
+      echo deploying...
+    else
+      exit 0
     fi
 
-    if $deploy; then
     # Utility Functions
 
-    # pod status
     pod_status() {
       kubectl get pods --namespace $namespace -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,READY:.status.conditions[?\(@.type==\'Ready\'\)].status
     }
 
-    # failed pods logs
     failed_pod_logs() {
       pod_status | grep False | awk '{print $1}' | while read pod; do echo -e '\e[1;31m' $pod '\e[0m' && kubectl logs $pod --namespace $namespace; done
     }
 
-    # pods ready
     pods_ready() {
       PODS_COUNTER=0
       PODS_COUNTER_MAX=60
@@ -118,7 +112,7 @@ _helm_deploy: &helm_deploy
           echo "just $readypodcount/$totalpods pods ready now - sleeping $PODS_SLEEP_SECONDS seconds - counter $PODS_COUNTER"
           sleep "$PODS_SLEEP_SECONDS"
           continue
-        done
+      done
 
       if [ "$PODS_COUNTER" -ge "$PODS_COUNTER_MAX" ]; then
         pod_status
@@ -131,6 +125,10 @@ _helm_deploy: &helm_deploy
         exit 1
       fi
     }
+
+    # Main
+
+    aws eks update-kubeconfig --name acs-cluster --region=eu-west-1
 
     cat <<EOF | kubectl apply -f -
     apiVersion: v1
@@ -187,31 +185,31 @@ _helm_deploy: &helm_deploy
 
     # install ingress
     helm upgrade --install $release_name_ingress --repo https://kubernetes.github.io/ingress-nginx ingress-nginx --version=4.0.18 \
-    --set controller.scope.enabled=true \
-    --set controller.scope.namespace=$namespace \
-    --set rbac.create=true \
-    --set controller.config."proxy-body-size"="100m" \
-    --set controller.service.targetPorts.https=80 \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
-    --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="$namespace.${HOSTED_ZONE}" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
-    --set controller.publishService.enabled=true \
-    --set controller.admissionWebhooks.enabled=false \
-    --set controller.ingressClassResource.enabled=false \
-    --wait \
-    --namespace $namespace
+      --set controller.scope.enabled=true \
+      --set controller.scope.namespace=$namespace \
+      --set rbac.create=true \
+      --set controller.config."proxy-body-size"="100m" \
+      --set controller.service.targetPorts.https=80 \
+      --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
+      --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
+      --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
+      --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="${HOST}" \
+      --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
+      --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
+      --set controller.publishService.enabled=true \
+      --set controller.admissionWebhooks.enabled=false \
+      --set controller.ingressClassResource.enabled=false \
+      --wait \
+      --namespace $namespace
 
     # install acs
-    helm dep up helm/alfresco-content-services
-    travis_wait 25 helm upgrade --install $release_name_acs helm/alfresco-content-services \
+    helm dep up helm/${PROJECT_NAME}
+    travis_wait 25 helm upgrade --install $release_name_acs helm/${PROJECT_NAME} \
       --values=$values_file \
       --set global.tracking.sharedsecret=$(openssl rand 24 -hex) \
       --set externalPort="443" \
       --set externalProtocol="https" \
-      --set externalHost="$namespace.${HOSTED_ZONE}" \
+      --set externalHost="${HOST}" \
       --set persistence.enabled=true \
       --set persistence.storageClass.enabled=true \
       --set persistence.storageClass.name="nfs-client" \
@@ -229,9 +227,9 @@ _helm_deploy: &helm_deploy
     DNS_SLEEP_SECONDS=10
 
     echo "Trying to perform a trace DNS query to prevent caching"
-    dig +trace $namespace.${HOSTED_ZONE} @8.8.8.8
+    dig +trace ${HOST} @8.8.8.8
     while [ "$DNS_PROPAGATED" -eq 0 ] && [ "$DNS_COUNTER" -le "$DNS_COUNTER_MAX" ]; do
-      host $namespace.${HOSTED_ZONE} 8.8.8.8
+      host ${HOST} 8.8.8.8
       if [ "$?" -eq 1 ]; then
         DNS_COUNTER=$((DNS_COUNTER + 1))
         echo "DNS Not Propagated - Sleeping $DNS_SLEEP_SECONDS seconds"
@@ -242,7 +240,7 @@ _helm_deploy: &helm_deploy
       fi
     done
 
-    [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for $namespace.${HOSTED_ZONE} did not propagate within expected time" && exit 1
+    [ $DNS_PROPAGATED -ne 1 ] && echo "DNS entry for ${HOST} did not propagate within expected time" && exit 1
 
     pods_ready
 
@@ -251,25 +249,24 @@ _helm_deploy: &helm_deploy
     sleep 180
 
     # run acs checks
-    docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
+    newman run helm/acs-test-helm-collection.json --global-var "protocol=https" --global-var "url=${HOST}"
     TEST_RESULT=$?
     echo "TEST_RESULT=${TEST_RESULT}"
     if [[ "${TEST_RESULT}" == "0" ]]; then
-      TEST_RESULT=0
       # run sync service checks
-      if [[ "$values_file" != "helm/alfresco-content-services/community_values.yaml" ]]; then
-        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
+      if [[ ${ACS_VERSION} != "community" ]]; then
+        newman run "helm/sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
       fi
 
       if [[ "${TEST_RESULT}" == "0" ]]; then
         # For checking if persistence failover is correctly working with our deployments
-        # in the next phase we delete the acs and postgress pods,
+        # in the next phase we delete the acs and postgresql pods,
         # wait for k8s to recreate them, then check if the data created in the first test run is still there
         kubectl delete pod -l app=$release_name_acs-alfresco-cs-repository,component=repository -n $namespace
         kubectl delete pod -l app=postgresql-acs,release=$release_name_acs -n $namespace
-        helm upgrade $release_name_acs helm/alfresco-content-services \
+        helm upgrade $release_name_acs helm/${PROJECT_NAME} \
           --wait \
           --timeout 10m0s \
           --reuse-values \
@@ -279,7 +276,7 @@ _helm_deploy: &helm_deploy
         pods_ready
 
         # run checks after pod deletion
-        docker run -a STDOUT --volume $PWD/test/postman/helm:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=$namespace.${HOSTED_ZONE}"
+        newman run "helm/acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
         TEST_RESULT=$?
         echo "TEST_RESULT=${TEST_RESULT}"
       fi
@@ -295,30 +292,40 @@ _helm_deploy: &helm_deploy
       exit 1
     fi
 
-    fi
 _docker_deploy: &docker_deploy
   script: |
-    export compose_file="docker-compose.yml"
-    export alf_port=8080
-    deploy=false
-    if [[ ${TRAVIS_BUILD_STAGE_NAME} != "test" ]]; then
-      export compose_file="${TRAVIS_BUILD_STAGE_NAME}-docker-compose.yml"
-    fi
-    if [[ "${TRAVIS_BRANCH}" == "master" ]] || [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]] || [[ "${GIT_DIFF}" == *$compose_file* ]] || [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]
+    alf_port=8080
+    if [[ ${ACS_VERSION} == "latest" ]]
     then
-      deploy=true
+      compose_file="docker-compose.yml"
+    else
+      compose_file="${ACS_VERSION}-docker-compose.yml"
     fi
-    if $deploy; then
+
+    if [[ "${TRAVIS_BRANCH}" == "master" ]] || \
+       [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[run all tests]"* ]] || \
+       [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]] || \
+       [[ "${GIT_DIFF}" == *$compose_file* ]] || \
+       [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]
+    then
+      echo deploying...
+    else
+      exit 0
+    fi
+
+    # deploy
     cd docker-compose
     docker info
     docker-compose --version
     docker-compose -f $compose_file config
-    echo "Starting Alfresco in Docker container"
+    echo "Starting Alfresco in Docker Compose"
     docker-compose ps
     docker-compose -f $compose_file pull
     export COMPOSE_HTTP_TIMEOUT=120
     docker-compose -f $compose_file up -d
-    # docker-compose up
+    cd ..
+
+    # test with curl
     WAIT_INTERVAL=1
     COUNTER=0
     TIMEOUT=300
@@ -370,9 +377,9 @@ _docker_deploy: &docker_deploy
       COUNTER=$((COUNTER + WAIT_INTERVAL))
       response=$(curl --write-out %{http_code} --user admin:admin --output /dev/null --silent http://localhost:$alf_port/alfresco/s/api/solrstats)
     done
-    cd ../test/postman/docker-compose
-    docker run -a STDOUT --volume $PWD:/etc/newman --network host postman/newman_alpine33:3.9.2 run "acs-test-docker-compose-collection.json" --global-var "protocol=http" --global-var "url=localhost:8080"
-    fi
+
+    # test with newman
+    newman run "docker-compose/acs-test-docker-compose-collection.json" --global-var "protocol=http" --global-var "url=localhost:8080"
   after_success: |
     echo "nothing to cleanup"
   after_failure: |
@@ -381,52 +388,64 @@ _docker_deploy: &docker_deploy
 
 jobs:
   include:
-    - name: Deploy Docker Compose and Run Postman Checks
+
+    - name: latest-helm
       stage: test
-      <<: *docker_deploy
-    - name: Deploy Latest Chart and Run Postman Checks
-      stage: test
+      env: ACS_VERSION=latest
       <<: *helm_deploy
+    - name: latest-docker-compose
+      stage: test
+      env: ACS_VERSION=latest
+      <<: *docker_deploy
 
     - name: community-helm
       stage: community
+      env: ACS_VERSION=community
       <<: *helm_deploy
-    - name: community-compose
+    - name: community-docker-compose
       stage: community
+      env: ACS_VERSION=community
       <<: *docker_deploy
 
     - name: 7.1.N-helm
       stage: 7.1.N
+      env: ACS_VERSION=7.1.N
       <<: *helm_deploy
-    - name: 7.1.N-compose
+    - name: 7.1.N-docker-compose
       stage: 7.1.N
+      env: ACS_VERSION=7.1.N
       <<: *docker_deploy
 
     - name: 7.0.N-helm
       stage: 7.0.N
+      env: ACS_VERSION=7.0.N
       <<: *helm_deploy
-    - name: 7.0.N-compose
+    - name: 7.0.N-docker-compose
       stage: 7.0.N
+      env: ACS_VERSION=7.0.N
       <<: *docker_deploy
 
     - name: 6.2.N-helm
       stage: 6.2.N
+      env: ACS_VERSION=6.2.N
       <<: *helm_deploy
-    - name: 6.2.N-compose
+    - name: 6.2.N-docker-compose
       stage: 6.2.N
+      env: ACS_VERSION=6.2.N
       <<: *docker_deploy
 
     - name: package and publish chart
       stage: publish
       script: |
+        HELM_REPO_BASE_URL=https://kubernetes-charts.alfresco.com
+        HELM_REPO=incubator
         CHART_VERSION=$(yq eval .version helm/${PROJECT_NAME}/Chart.yaml)
         ALPHA_BUILD_VERSION="${CHART_VERSION%-*}-A${TRAVIS_BUILD_NUMBER}"
-        if [[ "${TRAVIS_BRANCH}" != "master" ]]
-        then
+        if [[ "${TRAVIS_BRANCH}" != "master" ]]; then
           echo "Changing Chart version to ${ALPHA_BUILD_VERSION} as this is a feature branch..."
           sed -i s,$CHART_VERSION,$ALPHA_BUILD_VERSION,g helm/${PROJECT_NAME}/Chart.yaml
-        elif [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]
-        then export HELM_REPO=stable
+        elif [[ "${TRAVIS_COMMIT_MESSAGE}" == *"[release]"* ]]; then
+          export HELM_REPO=stable
           git checkout -B "${TRAVIS_BRANCH}"
           git config --local user.email "alfresco-build@alfresco.com"
           echo "Tagging repository with v$CHART_VERSION..."
