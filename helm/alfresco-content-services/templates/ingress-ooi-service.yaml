@@ -9,7 +9,6 @@ metadata:
     {{- include "ooi-service.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/rewrite-target: /ooi-service
 {{- if .Values.ooiService.extraAnnotations }}
 {{ toYaml .Values.ooiService.extraAnnotations | indent 4 }}
 {{- end }}
