@@ -46,7 +46,7 @@ helm repo update
 Deploy an ingress controller into the alfresco namespace using the command below:
 
 ```bash
-helm install acs-ingress ingress-nginx/ingress-nginx --version=3.7.1 \
+helm install acs-ingress ingress-nginx/ingress-nginx --version=4.0.18 \
 --set controller.scope.enabled=true \
 --set controller.scope.namespace=alfresco \
 --set rbac.create=true \

@@ -1,4 +1,5 @@
 replicaCount: 1
+nodeSelector: {}
 
 # -- Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
 global:
@@ -116,7 +117,7 @@ initContainers:
   activemq:
     image:
       repository: busybox
-      tag: 1.33.1
+      tag: 1.35.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -126,7 +127,7 @@ initContainers:
   postgres:
     image:
       repository: busybox
-      tag: 1.33.1
+      tag: 1.35.0
       pullPolicy: IfNotPresent
     resources:
       requests:

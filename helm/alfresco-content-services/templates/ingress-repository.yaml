@@ -13,17 +13,14 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
     # Default file limit (1m) check, document(s) above this size will throw 413 (Request Entity Too Large) error
     nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.repository.ingress.maxUploadSize }}
-    {{- if index .Values "alfresco-search" "enabled" }}
     nginx.ingress.kubernetes.io/configuration-snippet: |
+    {{- if index .Values "alfresco-search" "enabled" }}
       location ~ ^(/.*/service/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/s/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcservice/api/solr/.*)$ {return 403;}
       location ~ ^(/.*/wcs/api/solr/.*)$ {return 403;}
-      location ~ ^(/.*/s/prometheus)$ {return 403;}
-    {{- else }}
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      location ~ ^(/.*/s/prometheus)$ {return 403;}
     {{- end }}
+      location ~ ^(/.*/s/prometheus)$ {return 403;}
 {{- if .Values.repository.ingress.annotations }}
 {{ toYaml .Values.repository.ingress.annotations | indent 4 }}
 {{- end }}

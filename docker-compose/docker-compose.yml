@@ -12,7 +12,7 @@ version: "2"
 
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.2.0-A28
+    image: quay.io/alfresco/alfresco-content-repository:7.2.0
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: "
@@ -90,7 +90,7 @@ services:
       - shared-file-store-volume:/tmp/Alfresco/sfs
 
   share:
-    image: quay.io/alfresco/alfresco-share:7.2.0-A28
+    image: quay.io/alfresco/alfresco-share:7.2.0
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -137,7 +137,7 @@ services:
       - "8083:8983" # Browser port
 
   activemq:
-    image: alfresco/alfresco-activemq:5.16.1
+    image: alfresco/alfresco-activemq:5.16.4-jre11-centos7
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console
@@ -153,18 +153,28 @@ services:
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
 
+  control-center:
+    image: quay.io/alfresco/alfresco-admin-app:7.2.0
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
+
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.2.0
+    image: alfresco/alfresco-acs-nginx:3.3.0
     mem_limit: 128m
     depends_on:
       - alfresco
       - digital-workspace
+      - control-center
     ports:
       - "8080:8080"
     links:
       - digital-workspace
       - alfresco
       - share
+      - control-center
 
   sync-service:
     image: quay.io/alfresco/service-sync:3.6.0
