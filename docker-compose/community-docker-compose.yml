@@ -1,4 +1,4 @@
-# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 12GB Memory to distribute among containers.
+# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 13GB Memory to distribute among containers.
 # Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
 # For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
 # See Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D).
@@ -11,7 +11,7 @@ version: "2"
 services:
   alfresco:
     image: alfresco/alfresco-content-repository-community:7.2.0
-    mem_limit: 1600m
+    mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: "
         -Dencryption.keystore.type=JCEKS
