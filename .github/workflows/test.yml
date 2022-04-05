@@ -25,10 +25,9 @@ jobs:
         acs_version: [6.2.N]
     runs-on: ubuntu-latest
     env:
-        HOSTED_ZONE: dev.envalfresco.com
+        DOMAIN: dev.envalfresco.com
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -65,7 +64,6 @@ jobs:
     env:
       HELM_REPO_BASE_URL: https://kubernetes-charts.alfresco.com
       HELM_REPO: incubator
-      PROJECT_NAME: alfresco-content-services
       GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
     steps:
     - name: Checkout
