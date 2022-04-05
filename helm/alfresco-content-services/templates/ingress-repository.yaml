@@ -14,6 +14,7 @@ metadata:
     # Default file limit (1m) check, document(s) above this size will throw 413 (Request Entity Too Large) error
     nginx.ingress.kubernetes.io/proxy-body-size: {{ .Values.repository.ingress.maxUploadSize }}
     {{- include "ingress_annotations" .Values.repository }}
+    {{- include "ingress_vhost_annotations" .Values.repository }}
 spec:
   {{- if .Values.repository.ingress.tls }}
   tls:
