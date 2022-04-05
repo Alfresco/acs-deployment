@@ -1,4 +1,4 @@
-name: rafal-test
+name: verify
 
 on:
   pull_request:
@@ -21,8 +21,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #version: [6.2.N, 7.0.N, 7.1.N, community, test]
-        acs_version: [6.2.N]
+        #acs_version: [6.2.N, 7.0.N, 7.1.N, community, test]
+        acs_version: [test]
     runs-on: ubuntu-latest
     env:
         DOMAIN: dev.envalfresco.com
