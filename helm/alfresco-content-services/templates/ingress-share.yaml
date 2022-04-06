@@ -15,13 +15,10 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-path: "/share"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "604800"
     nginx.ingress.kubernetes.io/session-cookie-expires: "604800"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      location ~ ^(/.*/proxy/.*/api/solr/.*)$ {return 403;}
-      location ~ ^(/.*/-default-/proxy/.*/api/.*)$ {return 403;}
-{{- if .Values.share.ingress.annotations }}
-{{ toYaml .Values.share.ingress.annotations | indent 4 }}
-{{- end }}
-
+    {{- include "ingress_annotations" .Values.share }}
+    {{- if ne .Values.share.ingress.hostName .Values.repository.ingress.hostName }}
+    {{- include "ingress_vhost_annotations" .Values.share }}
+    {{- end }}
 spec:
   {{- if .Values.share.ingress.tls }}
   tls:
@@ -34,11 +31,9 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+  - http: 
   {{- if .Values.share.ingress.hostName }}
-  - host: {{ tpl .Values.share.ingress.hostName . }}
-    http:
-  {{- else }}
-  - http:
+    host: {{ tpl .Values.share.ingress.hostName . }}
   {{- end }}
       paths:
       - path: {{ .Values.share.ingress.path }}
