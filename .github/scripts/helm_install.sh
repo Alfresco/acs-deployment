@@ -50,6 +50,16 @@ failed_pod_logs() {
     pod_status | grep False | awk '{print $1}' | while read pod; do echo -e '\e[1;31m' "${pod}" '\e[0m' && kubectl logs "${pod}" --namespace "${namespace}"; done
 }
 
+wait_for_connection() {
+    declare -ir MAX_SECONDS=600
+    declare -ir TIMEOUT=$SECONDS+$MAX_SECONDS
+    while (( $SECONDS < $TIMEOUT )) && [[ "${http_resp}" != "200" ]]; do
+        local http_resp=$(curl -s -o - -I "${HOST}"/alfresco/ | grep HTTP/1.1 | awk '{print $2}')
+        echo "http response=${http_resp} from ${HOST}/alfresco/"
+        sleep 10
+    done
+}
+
 # pods ready
 pods_ready() {
     PODS_COUNTER=0
@@ -163,133 +173,122 @@ echo "Deploy:" "${deploy}"
 if "${deploy}"; then
 # Utility Functions
 
-  i="0"
-  while [ $i -lt 3 ] #if fail try 3 times
-  do
-    echo "mieszko"
-    echo $i
-    prepare_namespace
-    kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "${namespace}"
-    # install ingress
-    helm upgrade --install "${release_name_ingress}" --repo https://kubernetes.github.io/ingress-nginx ingress-nginx --version=4.0.18 \
-    --set controller.scope.enabled=true \
-    --set controller.scope.namespace="${namespace}" \
-    --set rbac.create=true \
-    --set controller.config."proxy-body-size"="100m" \
-    --set controller.service.targetPorts.https=80 \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
-    --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="${HOST}" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
-    --set controller.publishService.enabled=true \
-    --set controller.admissionWebhooks.enabled=false \
-    --set controller.ingressClassResource.enabled=false \
-    --wait \
-    --namespace "${namespace}"
+  prepare_namespace
+  kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "${namespace}"
 
-    # install acs
-    helm dep up helm/alfresco-content-services
-    helm upgrade --install "${release_name_acs}" helm/alfresco-content-services \
-        --values="${values_file}" \
-        --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
-        --set externalPort="443" \
-        --set externalProtocol="https" \
-        --set externalHost="${HOST}" \
-        --set persistence.enabled=true \
-        --set persistence.storageClass.enabled=true \
-        --set persistence.storageClass.name="nfs-client" \
-        --set postgresql.persistence.existingClaim="" \
-        --set postgresql-syncservice.persistence.existingClaim="" \
-        --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-        --wait \
-        --timeout 20m0s \
-        --namespace="${namespace}"
+  # install ingress
+  helm upgrade --install "${release_name_ingress}" --repo https://kubernetes.github.io/ingress-nginx ingress-nginx --version=4.0.18 \
+  --set controller.scope.enabled=true \
+  --set controller.scope.namespace="${namespace}" \
+  --set rbac.create=true \
+  --set controller.config."proxy-body-size"="100m" \
+  --set controller.service.targetPorts.https=80 \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="${ACM_CERTIFICATE}" \
+  --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="${HOST}" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
+  --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-security-groups"="${AWS_SG}" \
+  --set controller.publishService.enabled=true \
+  --set controller.admissionWebhooks.enabled=false \
+  --set controller.ingressClassResource.enabled=false \
+  --wait \
+  --namespace "${namespace}"
+
+  # install acs
+  helm dep up helm/alfresco-content-services
+  helm upgrade --install "${release_name_acs}" helm/alfresco-content-services \
+      --values="${values_file}" \
+      --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
+      --set externalPort="443" \
+      --set externalProtocol="https" \
+      --set externalHost="${HOST}" \
+      --set persistence.enabled=true \
+      --set persistence.storageClass.enabled=true \
+      --set persistence.storageClass.name="nfs-client" \
+      --set postgresql.persistence.existingClaim="" \
+      --set postgresql-syncservice.persistence.existingClaim="" \
+      --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+      --wait \
+      --timeout 20m0s \
+      --namespace="${namespace}"
 
 
-    # check dns and pods
-    DNS_PROPAGATED=0
-    DNS_COUNTER=0
-    DNS_COUNTER_MAX=90
-    DNS_SLEEP_SECONDS=10
+  # check dns and pods
+  DNS_PROPAGATED=0
+  DNS_COUNTER=0
+  DNS_COUNTER_MAX=90
+  DNS_SLEEP_SECONDS=10
 
-    echo "Trying to perform a trace DNS query to prevent caching"
-    dig +trace "${HOST}" @8.8.8.8
-    while [ "${DNS_PROPAGATED}" -eq 0 ] && [ "${DNS_COUNTER}" -le "${DNS_COUNTER_MAX}" ]; do
-        host "${HOST}" 8.8.8.8
-        if [ "$?" -eq 1 ]; then
-        DNS_COUNTER=$((DNS_COUNTER + 1))
-        echo "DNS Not Propagated - Sleeping ${DNS_SLEEP_SECONDS} seconds"
-        sleep "${DNS_SLEEP_SECONDS}"
-        else
-        echo "DNS Propagated"
-        DNS_PROPAGATED=1
-        fi
-    done
+  echo "Trying to perform a trace DNS query to prevent caching"
+  dig +trace "${HOST}" @8.8.8.8
+  while [ "${DNS_PROPAGATED}" -eq 0 ] && [ "${DNS_COUNTER}" -le "${DNS_COUNTER_MAX}" ]; do
+      host "${HOST}" 8.8.8.8
+      if [ "$?" -eq 1 ]; then
+      DNS_COUNTER=$((DNS_COUNTER + 1))
+      echo "DNS Not Propagated - Sleeping ${DNS_SLEEP_SECONDS} seconds"
+      sleep "${DNS_SLEEP_SECONDS}"
+      else
+      echo "DNS Propagated"
+      DNS_PROPAGATED=1
+      fi
+  done
 
-    [ "${DNS_PROPAGATED}" -ne 1 ] && echo "DNS entry for ${HOST} did not propagate within expected time" && exit 1
+  [ "${DNS_PROPAGATED}" -ne 1 ] && echo "DNS entry for ${HOST} did not propagate within expected time" && exit 1
 
-    pods_ready
+  pods_ready
 
-    # Delay running the tests to give ingress & SOLR a chance to fully initialise
-    echo "Waiting 3 minutes from $(date) before running tests..."
-    sleep 180
+  # Delay running the tests to give ingress & SOLR a chance to fully initialise
+  echo "Waiting 3 minutes from $(date) before running tests..."
+  sleep 180
 
-    # run acs checks
-    docker run -a STDOUT --volume "${PWD}"/test/postman/helm:/etc/newman --network host postman/newman:5.3 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
-    TEST_RESULT=$?
-    echo "TEST_RESULT=${TEST_RESULT}"
+  # run acs checks
+  wait_for_connection
+  docker run -a STDOUT --volume "${PWD}"/test/postman/helm:/etc/newman --network host postman/newman:5.3 run "acs-test-helm-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
+  TEST_RESULT=$?
+  echo "TEST_RESULT=${TEST_RESULT}"
+  if [[ "${TEST_RESULT}" == "0" ]]; then
+      TEST_RESULT=0
+      # run sync service checks
+      if [[ "${values_file}" != "helm/alfresco-content-services/community_values.yaml" ]]; then
+          wait_for_connection
+          docker run -a STDOUT --volume "${PWD}"/test/postman/helm:/etc/newman --network host postman/newman:5.3 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
+          TEST_RESULT=$?
+          echo "TEST_RESULT=${TEST_RESULT}"
+      fi
+
+
+      if [[ "${TEST_RESULT}" == "0" ]]; then
+          # For checking if persistence failover is correctly working with our deployments
+          # in the next phase we delete the acs and postgress pods,
+          # wait for k8s to recreate them, then check if the data created in the first test run is still there
+          kubectl delete pod -l app="${release_name_acs}"-alfresco-cs-repository,component=repository -n "${namespace}"
+          kubectl delete pod -l app=postgresql-acs,release="${release_name_acs}" -n "${namespace}"
+          helm upgrade "${release_name_acs}" helm/alfresco-content-services \
+              --wait \
+              --timeout 10m0s \
+              --reuse-values \
+              --namespace="${namespace}"
+
+      # check pods
+      pods_ready
+
+      # run checks after pod deletion
+      wait_for_connection
+      docker run -a STDOUT --volume "${PWD}"/test/postman/helm:/etc/newman --network host postman/newman:5.3 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
+      TEST_RESULT=$?
+      echo "TEST_RESULT=${TEST_RESULT}"
+      fi
+  fi
+   #if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
     if [[ "${TEST_RESULT}" == "0" ]]; then
-        TEST_RESULT=0
-        # run sync service checks
-        if [[ "${values_file}" != "helm/alfresco-content-services/community_values.yaml" ]]; then
-            docker run -a STDOUT --volume "${PWD}"/test/postman/helm:/etc/newman --network host postman/newman:5.3 run "sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
-            TEST_RESULT=$?
-            echo "TEST_RESULT=${TEST_RESULT}"
-        fi
+      helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
+      kubectl delete namespace "${namespace}"
+      echo "test"
+  fi
 
-
-        if [[ "${TEST_RESULT}" == "0" ]]; then
-            # For checking if persistence failover is correctly working with our deployments
-            # in the next phase we delete the acs and postgress pods,
-            # wait for k8s to recreate them, then check if the data created in the first test run is still there
-            kubectl delete pod -l app="${release_name_acs}"-alfresco-cs-repository,component=repository -n "${namespace}"
-            kubectl delete pod -l app=postgresql-acs,release="${release_name_acs}" -n "${namespace}"
-            helm upgrade "${release_name_acs}" helm/alfresco-content-services \
-                --wait \
-                --timeout 10m0s \
-                --reuse-values \
-                --namespace="${namespace}"
-
-        # check pods
-        pods_ready
-
-        # run checks after pod deletion
-        docker run -a STDOUT --volume "${PWD}"/test/postman/helm:/etc/newman --network host postman/newman:5.3 run "acs-validate-volume-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
-        TEST_RESULT=$?
-        echo "TEST_RESULT=${TEST_RESULT}"
-        fi
-    fi
-
-    if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
-        helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
-        kubectl delete namespace "${namespace}"
-    fi
-
-    if [[ "${TEST_RESULT}" == "1" ]]; then
-        echo "Tests failed"
-        i=$[$i+1]
-        if [ "${i}" = "3" ]; then
-            echo "Exiting"
-            exit 1
-        else
-            echo "Try again"
-            sleep 30
-        fi     
-    else
-        #everything works, close loop
-        i='3'
-    fi
-done
+  if [[ "${TEST_RESULT}" == "1" ]]; then
+      echo "Tests failed, exiting"
+      exit 1
+  fi
 fi
