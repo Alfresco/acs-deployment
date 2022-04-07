@@ -2,7 +2,7 @@
 
 repository:
   image:
-    tag: 6.2.2
+    tag: 6.2.2.22
   environment:
     JAVA_OPTS: "
           -Dsolr.base.url=/solr
@@ -21,23 +21,23 @@ transformrouter:
 
 pdfrenderer:
   image:
-    tag: 2.5.1
+    tag: 2.5.3
 
 imagemagick:
   image:
-    tag: 2.5.1
+    tag: 2.5.3
 
 libreoffice:
   image:
-    tag: 2.5.1
+    tag: 2.5.3
 
 tika:
   image:
-    tag: 2.5.1
+    tag: 2.5.3
 
 transformmisc:
   image:
-    tag: 2.5.1
+    tag: 2.5.3
 
 aiTransformer:
   image:
@@ -49,11 +49,11 @@ filestore:
 
 share:
   image:
-    tag: 6.2.2
+    tag: 6.2.2.6
 
 alfresco-search:
   searchServicesImage:
-    tag: 1.4.3
+    tag: 1.4.3.4
 
 alfresco-digital-workspace:
   image:
