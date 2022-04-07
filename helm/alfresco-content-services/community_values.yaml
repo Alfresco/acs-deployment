@@ -29,6 +29,10 @@ share:
   image:
     repository: alfresco/alfresco-share
 
+alfresco-search:
+  searchServicesImage:
+    repository: alfresco/alfresco-search-services
+
 # Disable features
 alfresco-digital-workspace:
   enabled: false

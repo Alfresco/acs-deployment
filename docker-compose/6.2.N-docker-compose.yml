@@ -12,7 +12,7 @@ version: "2"
 
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:6.2.2
+    image: quay.io/alfresco/alfresco-content-repository:6.2.2.22
     mem_limit: 1700m
     environment:
       JAVA_OPTS: "
@@ -84,7 +84,7 @@ services:
       - shared-file-store-volume:/tmp/Alfresco/sfs
 
   share:
-    image: alfresco/alfresco-share:6.2.2
+    image: alfresco/alfresco-share:6.2.2.6
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -110,7 +110,7 @@ services:
       - "5432:5432"
 
   solr6:
-    image: alfresco/alfresco-search-services:1.4.3
+    image: alfresco/alfresco-search-services:1.4.3.4
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco

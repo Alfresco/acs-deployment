@@ -32,12 +32,12 @@ spec:
   {{- end }}
   rules:
   - http: 
-  {{- if .Values.share.ingress.hostName }}
-    host: {{ tpl .Values.share.ingress.hostName . }}
-  {{- end }}
       paths:
       - path: {{ .Values.share.ingress.path }}
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
+  {{- if .Values.share.ingress.hostName }}
+    host: {{ tpl .Values.share.ingress.hostName . }}
+  {{- end }}

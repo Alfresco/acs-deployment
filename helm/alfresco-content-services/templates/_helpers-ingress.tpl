@@ -23,7 +23,8 @@ Define required annotations for secure nginx ingress
 {{- else }}
     nginx.ingress.kubernetes.io/server-snippet: |
 {{- end }}
-      location ~ ^(/.*/(wc)?s(ervice)?/api/solr/.*)$ {return 403;}
-      location ~ ^(/.*/(-default-/)?proxy/.*/api/solr/.*)$ {return 403;}
-      location ~ ^(/.*/s/prometheus)$ {return 403;}
+      location ~ ^/.*/(wc)?s(ervice)?/api/solr/.*$ {return 403;}
+      location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
+      location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
+      location ~ ^/.*/s/prometheus$ {return 403;}
 {{- end }}

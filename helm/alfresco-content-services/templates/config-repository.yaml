@@ -14,12 +14,12 @@ data:
   {{- end }}
   {{- end }}
   RELEASE_NAME: {{ .Release.Name }}
-  {{ $alfhost := tpl (.Values.externalHost | default (printf "%s-repository" (include "content-services.shortname" .))) $ }}
-  {{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
-  {{ $alfport := tpl ((.Values.externalPort | default .Values.repository.service.externalPort) | toString) $ }}
+  {{- $alfhost := tpl (.Values.externalHost | default (printf "%s-repository" (include "content-services.shortname" .))) $ }}
+  {{- $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
+  {{- $alfport := tpl ((.Values.externalPort | default .Values.repository.service.externalPort) | toString) $ }}
   ALFRESCO_OPTS: "
-      {{ if .Values.repository.licenseSecret -}}
-        -Ddir.license.external=/usr/local/tomcat/shared/classes/alfresco/extension/license/
+      {{- if .Values.repository.licenseSecret -}}
+      -Ddir.license.external=/usr/local/tomcat/shared/classes/alfresco/extension/license/
       {{- end }}
       -Dalfresco.host={{ $alfhost }}
       -Dalfresco.protocol={{ $alfprotocol }}
