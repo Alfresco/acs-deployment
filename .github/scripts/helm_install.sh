@@ -148,7 +148,7 @@ EOF
 
 
 export values_file=helm/alfresco-content-services/values.yaml
-if [[ ${ACS_VERSION} != "test" ]]; then
+if [[ ${ACS_VERSION} != "latest" ]]; then
     values_file="helm/alfresco-content-services/${ACS_VERSION}_values.yaml"
 fi
 

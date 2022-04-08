@@ -20,7 +20,7 @@ compose_file="docker-compose.yml"
 alf_port=8080
 deploy=false
 
-if [[ ${ACS_VERSION} != "test" ]]; then
+if [[ ${ACS_VERSION} != "latest" ]]; then
     export compose_file="${ACS_VERSION}-docker-compose.yml"
 fi
 if [[ "${BRANCH_NAME}" == "master" ]] || \
