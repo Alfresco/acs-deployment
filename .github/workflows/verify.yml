@@ -19,11 +19,10 @@ on:
 jobs:
   deploy:
     strategy:
-      max-parallel: 1
+      max-parallel: 1 #cant add more parallel, problem with loadbalancers
       fail-fast: false
       matrix:
-        #acs_version: [6.2.N, 7.0.N, 7.1.N, community, latest]
-        acs_version: [latest, 6.2.N]
+        acs_version: [6.2.N, 7.0.N, 7.1.N, community, latest]
     runs-on: ubuntu-latest
     env:
         DOMAIN: dev.envalfresco.com
@@ -63,8 +62,6 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     env:
-      HELM_REPO_BASE_URL: https://kubernetes-charts.alfresco.com
-      HELM_REPO: incubator
       GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
     steps:
     - name: Checkout

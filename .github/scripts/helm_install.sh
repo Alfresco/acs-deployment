@@ -53,7 +53,7 @@ failed_pod_logs() {
 wait_for_connection() {
     declare -ir MAX_SECONDS=600
     declare -ir TIMEOUT=$SECONDS+$MAX_SECONDS
-    while (( $SECONDS < $TIMEOUT )) && [[ "${http_resp}" != "200" ]]; do
+    while [[ $SECONDS < $TIMEOUT ]] && [[ "${http_resp}" != "200" ]]; do
         local http_resp=$(curl -s -o - -I "${HOST}"/alfresco/ | grep HTTP/1.1 | awk '{print $2}')
         echo "http response=${http_resp} from ${HOST}/alfresco/"
         sleep 10
@@ -280,11 +280,9 @@ if "${deploy}"; then
       echo "TEST_RESULT=${TEST_RESULT}"
       fi
   fi
-   #if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
-    if [[ "${TEST_RESULT}" == "0" ]]; then
+    if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
       helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
       kubectl delete namespace "${namespace}"
-      echo "test"
   fi
 
   if [[ "${TEST_RESULT}" == "1" ]]; then
