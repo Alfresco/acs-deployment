@@ -1,5 +1,4 @@
 name: verify
-
 on:
   pull_request:
     branches:
@@ -17,7 +16,7 @@ on:
       - '*ATS-*'
 
 jobs:
-  deploy:
+  helm:
     strategy:
       max-parallel: 1 #cant add more parallel, problem with loadbalancers
       fail-fast: false
@@ -43,13 +42,6 @@ jobs:
             (umask 066 && aws eks update-kubeconfig --name acs-cluster --region=eu-west-1)
             echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
             echo "${{ secrets.QUAY_PASSWORD }}" | docker login -u "${{ secrets.QUAY_USERNAME }}" --password-stdin "quay.io"
-      - name: Run Docker compose tests
-        id: compose
-        run: .github/scripts/docker_compose.sh
-        shell: bash
-        env:
-          ACS_VERSION: ${{ matrix.acs_version}}
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
       - name: Run helm chart tests
         run: .github/scripts/helm_install.sh
         shell: bash
@@ -58,8 +50,30 @@ jobs:
           AWS_SG: ${{ secrets.AWS_SG }}
           ACS_VERSION: ${{ matrix.acs_version }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+  compose:
+    strategy:
+      fail-fast: false
+      matrix:
+        acs_version: [6.2.N, 7.0.N, 7.1.N, community, latest]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup configs
+        run: |
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+            echo "${{ secrets.QUAY_PASSWORD }}" | docker login -u "${{ secrets.QUAY_USERNAME }}" --password-stdin "quay.io"
+      - name: Run Docker compose tests
+        id: compose
+        run: .github/scripts/docker_compose.sh
+        shell: bash
+        env:
+          ACS_VERSION: ${{ matrix.acs_version}}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
   publish:
-    needs: deploy
+    needs: [compose, helm]
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}

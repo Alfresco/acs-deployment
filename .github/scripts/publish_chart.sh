@@ -36,11 +36,11 @@ then export HELM_REPO=stable
     echo "Tagging repository with v${CHART_VERSION}..."
     export GIT_TAG="v${CHART_VERSION}"
     git tag "${GIT_TAG}" -a -m "Generated tag from github action for build ${GITHUB_RUN_NUMBER}"
-    git push https://${GITHUB_TOKEN}@github.com/Alfresco/acs-deployment ${GIT_TAG}
+    git push https://"${GITHUB_TOKEN}"@github.com/Alfresco/acs-deployment "${GIT_TAG}"
     git tag -d latest || true
     git tag -a -m "current latest -> ${GIT_TAG}" -f latest "${GIT_TAG}"^{}
     for ref in ':refs/tags/latest' 'latest'
-    do git push https://"${GITHUB_TOKEN}"@github.com/Alfresco/acs-deployment $ref
+    do git push https://"${GITHUB_TOKEN}"@github.com/Alfresco/acs-deployment "${ref}"
     done
 fi
 
