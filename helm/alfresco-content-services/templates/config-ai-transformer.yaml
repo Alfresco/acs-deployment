@@ -13,15 +13,7 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  {{- if .Values.activemq.enabled }}
-  ACTIVEMQ_URL: nio://{{ .Release.Name }}-activemq-broker:61616
-  ACTIVEMQ_USER: {{ .Values.activemq.adminUser.username }}
-  ACTIVEMQ_PASSWORD: {{ .Values.activemq.adminUser.password }}
-  {{- else }}
-  ACTIVEMQ_URL: {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name ) }}
-  ACTIVEMQ_USER: {{ .Values.messageBroker.user }}
-  ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password }}
-  {{- end }}
+  {{- include "activemq.config" . | nindent 2 }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   AWS_ACCESS_KEY: {{ .Values.ai.aws.accessKey }}
   AWS_SECRET_ACCESS_KEY: {{ .Values.ai.aws.secretAccessKey }}
