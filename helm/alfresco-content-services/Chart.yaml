@@ -30,6 +30,7 @@ dependencies:
     condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
   - name: activemq
     version: 2.1.0
+    condition: activemq.enabled
   - name: alfresco-search
     version: 1.0.4
     condition: alfresco-search.enabled
