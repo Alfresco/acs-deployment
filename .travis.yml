@@ -35,6 +35,7 @@ env:
     - TRAVIS_WAIT_TIMEOUT=${TRAVIS_WAIT_TIMEOUT:-30}
     - BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-${TRAVIS_BRANCH}}
     - GIT_DIFF=$(git diff origin/master --name-only .)
+    - HELM_DOCS_VERSION=1.8.1
 
 branches:
   only:
