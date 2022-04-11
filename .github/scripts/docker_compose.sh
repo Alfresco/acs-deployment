@@ -17,7 +17,6 @@ BRANCH_NAME=$(echo "${GITHUB_REF##*/}")
 GIT_DIFF=$(git diff origin/master --name-only .)
 compose_file="docker-compose.yml"
 alf_port=8080
-deploy=false
 
 if [[ ${ACS_VERSION} != "latest" ]]; then
     export compose_file="${ACS_VERSION}-docker-compose.yml"
@@ -28,17 +27,16 @@ if [[ "${BRANCH_NAME}" == "master" ]] || \
    [[ "${GIT_DIFF}" == *$compose_file* ]] || \
    [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]
 then
-    deploy=true
+    echo "deploying..."
+else
+    exit 0
 fi
 
-echo "Deploy:" "${deploy}"
-
-if ${deploy}; then
 cd "docker-compose" || { echo "Error: docker compose dir not found"; exit 1; }
 docker info
 docker-compose --version
 docker-compose -f "${compose_file}" config
-echo "Starting Alfresco in Docker container"
+echo "Starting Alfresco in Docker compose"
 docker-compose ps
 docker-compose -f "${compose_file}" pull
 export COMPOSE_HTTP_TIMEOUT=120
@@ -103,5 +101,4 @@ if [ "${retVal}" -ne 0 ]; then
     #Show logs
     docker-compose logs --no-color
     exit 1
-fi
 fi

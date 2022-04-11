@@ -9,6 +9,6 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: Alfresco/alfresco-build-tools/.github/actions/setup-checkov@master
-    - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@master
-    - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
+    - uses: Alfresco/alfresco-build-tools/.github/actions/setup-checkov@166acc98f68cbc5941557c878ee74e527345e111
+    - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@166acc98f68cbc5941557c878ee74e527345e111
+    - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@166acc98f68cbc5941557c878ee74e527345e111
