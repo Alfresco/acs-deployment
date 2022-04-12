@@ -95,7 +95,7 @@ pods_ready() {
 }
 
 newman() {
-      docker run -a STDOUT --volume $PWD/test/postman:/etc/newman --network host postman/newman:5.3 $*
+      docker run -a STDOUT --volume "${PWD}"/test/postman:/etc/newman --network host postman/newman:5.3 "$*"
 }
 prepare_namespace() {
 cat <<EOF | kubectl apply -f -
