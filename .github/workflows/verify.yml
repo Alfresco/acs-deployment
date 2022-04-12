@@ -7,7 +7,14 @@ on:
     branches:
       - 'master'
 jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: Alfresco/alfresco-build-tools/.github/actions/setup-checkov@v1.4.0
+    - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.4.0
+    - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.4.0
   helm:
+    needs: [pre-commit]
     strategy:
       max-parallel: 1 #cant add more parallel, problem with loadbalancers
       fail-fast: false
@@ -51,6 +58,7 @@ jobs:
           AWS_SG: ${{ secrets.AWS_SG }}
           ACS_VERSION: ${{ matrix.acs_version }}
   compose:
+    needs: [pre-commit]
     strategy:
       fail-fast: false
       matrix:
