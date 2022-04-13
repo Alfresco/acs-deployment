@@ -1,0 +1,23 @@
+# Defines the properties required by the Alfresco Search (Solr) App
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: search
+data:
+  ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
+  SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch-master:9200
+  SPRING_ACTIVEMQ_BROKERURL: nio://{{ .Release.Name }}-activemq-broker:61616
+  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco-elasticsearch-connector.name" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco-elasticsearch-connector.name" . }}-cs-transform-misc/transform/config
+  ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.name }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}"
+  {{- if .Values.reindexing.environment }}
+  {{- range $key, $val := .Values.reindexing.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}

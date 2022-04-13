@@ -1,0 +1,74 @@
+{{- range $service := .Values.liveIndexing.services }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "alfresco-elasticsearch-connector.fullName" $ }}-{{ $service.name }}
+  labels:
+    {{- include "alfresco-elasticsearch-connector.labels" $ | nindent 4 }}
+spec:
+  {{- if eq $service.name "mediation"}}
+  replicas: 1
+  {{- else if not $.Values.autoscaling.enabled }}
+  replicas: {{ $service.replicaCount | default 1 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 6 }}
+  template:
+    metadata:
+      {{- with $.Values.podAnnotations }}
+      annotations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 8 }}
+    spec:
+      {{- if $.Values.global.alfrescoRegistryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ $.Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $.Chart.Name }}-{{ $service.name }}
+          image: "{{ $.Values.image.repositoryPrefix }}-live-indexing-{{ $service.name }}:{{ $.Values.image.tag }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-elasticsearch-connector.fullName" $ }}-elasticsearch-connector-configmap
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 300
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          resources:
+            limits:
+              memory: {{ $.Values.resources.limits.memory}}
+            requests:
+              memory: {{ $.Values.resources.requests.memory}}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+---
+{{- end }}
