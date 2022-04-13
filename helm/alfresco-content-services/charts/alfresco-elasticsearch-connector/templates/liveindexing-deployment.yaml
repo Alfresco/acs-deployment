@@ -36,7 +36,7 @@ spec:
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-elasticsearch-connector.fullName" $ }}-elasticsearch-connector-configmap
+                name: {{ template "alfresco-elasticsearch-connector.fullName" $ }}-configmap
           ports:
             - name: http
               containerPort: 8080
