@@ -36,4 +36,12 @@ dependencies:
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     version: 3.0.9
+  - name: alfresco-elasticsearch-connector
+    version: 0.1.0
+    condition: alfresco-elasticsearch-connector.enabled
+  - name: elasticsearch
+    alias: elasticsearch
+    repository: https://helm.elastic.co
+    version: 7.10.1
+    condition: elasticsearch.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

@@ -557,7 +557,7 @@ messageBroker:
 alfresco-search:
   nodeSelector: {}
   type: "search-services"
-  enabled: true
+  enabled: false
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
 # Note: Rule_05-network-policy-search will be disabled.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
@@ -591,6 +591,11 @@ alfresco-search:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+
+alfresco-elasticsearch-connector:
+  enabled: true
+  reindexing:
+    enabled: true
 
 alfresco-digital-workspace:
   nodeSelector: {}
@@ -710,6 +715,11 @@ postgresql-syncservice:
       memory: "1500Mi"
     limits:
       memory: "1500Mi"
+
+elasticsearch:
+  enabled: true
+  image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
+  replicas: 1
 
 # -- Defines the properties to be used for the S3 Connector
 # For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
