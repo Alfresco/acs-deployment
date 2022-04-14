@@ -15,7 +15,7 @@ repository:
   # -- The name of the secret holding the ACS repository license if any (otherwise the image embeded license is used).
   # it must be contained within a `data['*.lic']` property
   # See https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md for details on how to manage license
-  licenseSecret: null
+  licenseSecret: acslicense
   edition: Enterprise
   replicaCount: 2
   nodeSelector: {}
@@ -720,6 +720,7 @@ elasticsearch:
   enabled: true
   image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
   replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 # -- Defines the properties to be used for the S3 Connector
 # For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
@@ -845,10 +846,10 @@ global:
     # none: work only prior to acs 7.2 (and was the default)
     # secret: use a shared secret (to specify using `tracking.sharedsecret`)
     # https: to use mTLS auth (require appropriate certificate configuration)
-    auth: none
+    auth: secret
     # -- Shared secret to authenticate repo/solr traffic.
     # Strong enough secret can be generated with `openssl rand 20 -base64`
-    sharedsecret: null
+    sharedsecret: jPh9ZlxfVvFgsCT5TK0v0kpLHYM
 # -- If there is a need to pull images from a private docker repo, a secret can be defined in helm and passed as an argument
 # to the install command:
 # e.g.: helm install alfresco-content-services --set global.alfrescoRegistryPullSecrets=quay-registry-secret
