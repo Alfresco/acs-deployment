@@ -692,7 +692,7 @@ postgresql-syncservice:
   # -- If true, install the postgresql chart alongside Alfresco Sync service.
   # Note: Set this to false if you use an external database.
   name: postgresql-syncservice
-  enabled: true
+  enabled: false
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
@@ -833,7 +833,7 @@ metadataKeystore:
 alfresco-sync-service:
   nodeSelector: {}
   syncservice:
-    enabled : true
+    enabled : false
   image:
     repository: quay.io/alfresco/service-sync
     tag: 3.7.0-A5
