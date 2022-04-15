@@ -15,7 +15,7 @@ repository:
   # -- The name of the secret holding the ACS repository license if any (otherwise the image embeded license is used).
   # it must be contained within a `data['*.lic']` property
   # See https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md for details on how to manage license
-  licenseSecret: acslicense
+  licenseSecret: null
   edition: Enterprise
   replicaCount: 2
   nodeSelector: {}
