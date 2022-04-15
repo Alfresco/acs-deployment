@@ -108,3 +108,6 @@ reindexing:
 # -- The parent chart will set the values for "alfrescoRegistryPullSecrets"
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
+  database_secret_name:
+  database_secret_username_key:
+  database_secret_password_key:
