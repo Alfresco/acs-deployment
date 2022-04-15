@@ -112,6 +112,9 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"0.16.1"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` |  |
+| global.database_secret_name | string | `"acs-alfresco-cs-dbsecret"` |  |
+| global.database_secret_password_key | string | `"DATABASE_PASSWORD"` |  |
+| global.database_secret_username_key | string | `"DATABASE_USERNAME"` |  |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
@@ -241,7 +244,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | repository.initContainers.fs.image.tag | string | `"1.35.0"` |  |
 | repository.initContainers.fs.resources.limits.memory | string | `"10Mi"` |  |
 | repository.initContainers.fs.resources.requests.memory | string | `"5Mi"` |  |
-| repository.licenseSecret | string | `"acslicense"` |  |
+| repository.licenseSecret | string | `nil` |  |
 | repository.livenessProbe.initialDelaySeconds | int | `130` |  |
 | repository.livenessProbe.periodSeconds | int | `20` |  |
 | repository.livenessProbe.timeoutSeconds | int | `10` |  |
