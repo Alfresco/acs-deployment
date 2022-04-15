@@ -40,13 +40,14 @@ data:
       {{- if index .Values "alfresco-search" "enabled" }}
       -Dsolr.host={{ template "alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
+      -Dsolr.secureComms={{ .Values.global.tracking.auth | default "none" }}
       {{- else }}
       {{- if index .Values "alfresco-search" "external" }}
       -Dsolr.host={{ index .Values "alfresco-search" "external" "host" }}
       -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
-      {{- end }}
-      {{- end }}
       -Dsolr.secureComms={{ .Values.global.tracking.auth | default "none" }}
+      {{- end }}
+      {{- end }}
       {{- if index .Values "alfresco-elasticsearch-connector" "enabled" }}
       -Delasticsearch.createIndexIfNotExists=true
       -Delasticsearch.host=elasticsearch-master
