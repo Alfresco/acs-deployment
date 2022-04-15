@@ -10,9 +10,9 @@ metadata:
 data:
   ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
   SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch-master:9200
-  SPRING_ACTIVEMQ_BROKERURL: nio://{{ .Release.Name }}-activemq-broker:61616
-  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco-elasticsearch-connector.name" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
-  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://acs-alfresco-cs-transform-misc/transform/config
+  SPRING_ACTIVEMQ_BROKERURL: nio://{{ template "alfresco.shortname" . }}-activemq-broker:61616
+  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "content-services.shortname" . }}-transform-misc/transform/config
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_REFRESHTIME: "{{ .Values.contentMediaTypeCache.refreshTime }}"
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_ENABLED: "{{ .Values.contentMediaTypeCache.enabled }}"
   ALFRESCO_PATHINDEXINGCOMPONENT.ENABLED: "{{ .Values.pathIndexingComponent.enabled }}"
