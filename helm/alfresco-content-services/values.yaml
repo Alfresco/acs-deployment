@@ -846,7 +846,7 @@ global:
     # none: work only prior to acs 7.2 (and was the default)
     # secret: use a shared secret (to specify using `tracking.sharedsecret`)
     # https: to use mTLS auth (require appropriate certificate configuration)
-    auth: none
+    auth: secret
     # -- Shared secret to authenticate repo/solr traffic.
     # Strong enough secret can be generated with `openssl rand 20 -base64`
     sharedsecret: null
