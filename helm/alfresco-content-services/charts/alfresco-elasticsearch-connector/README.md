@@ -19,9 +19,9 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.database_secret_name | string | `nil` |  |
-| global.database_secret_password_key | string | `nil` |  |
-| global.database_secret_username_key | string | `nil` |  |
+| global.repo.databaseSecretName | string | `nil` |  |
+| global.repo.databaseSecretPasswordKey | string | `nil` |  |
+| global.repo.databaseSecretUsernameKey | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryPrefix | string | `"quay.io/alfresco/alfresco-elasticsearch"` |  |
 | image.tag | string | `"3.0.0"` |  |

@@ -1,4 +1,3 @@
-# Defines the properties required by the Alfresco Search (Solr) App
 apiVersion: v1
 kind: ConfigMap
 metadata:

@@ -64,7 +64,7 @@ repository:
   environment:
     JAVA_OPTS: "
       -Dsolr.base.url=/solr
-      -Dindex.subsystem.name=elasticsearch
+      -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
@@ -557,7 +557,7 @@ messageBroker:
 alfresco-search:
   nodeSelector: {}
   type: "search-services"
-  enabled: false
+  enabled: true
 # If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
 # Note: Rule_05-network-policy-search will be disabled.
 # Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
@@ -593,7 +593,7 @@ alfresco-search:
     #      - chart-example.local
 
 alfresco-elasticsearch-connector:
-  enabled: true
+  enabled: false
   reindexing:
     enabled: true
 
@@ -717,7 +717,7 @@ postgresql-syncservice:
       memory: "1500Mi"
 
 elasticsearch:
-  enabled: true
+  enabled: false
   image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
@@ -870,9 +870,10 @@ global:
   ai:
     enabled: false
 
-  database_secret_name: acs-alfresco-cs-dbsecret
-  database_secret_username_key: DATABASE_USERNAME
-  database_secret_password_key: DATABASE_PASSWORD
+  repo:
+    databaseSecretName: acs-alfresco-cs-dbsecret
+    databaseSecretUsernameKey: DATABASE_USERNAME
+    databaseSecretPasswordKey: DATABASE_PASSWORD
 
 # ai:
 #   aws:

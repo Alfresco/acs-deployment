@@ -36,14 +36,14 @@ spec:
               name: SPRING_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.global.database_secret_name }}"
-                  key: "{{ .Values.global.database_secret_password_key }}"
+                  name: "{{ .Values.global.repo.databaseSecretName }}"
+                  key: "{{ .Values.global.repo.databaseSecretPasswordKey }}"
             -
               name: SPRING_DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.global.database_secret_name }}"
-                  key: "{{ .Values.global.database_secret_username_key }}"
+                  name: "{{ .Values.global.repo.databaseSecretName }}"
+                  key: "{{ .Values.global.repo.databaseSecretUsernameKey }}"
           ports:
               - name: http
                 containerPort: 8080
