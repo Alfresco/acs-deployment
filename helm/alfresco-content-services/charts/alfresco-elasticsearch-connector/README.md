@@ -15,27 +15,18 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
 | fullnameOverride | string | `""` |  |
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","database_secret_name":null,"database_secret_password_key":null,"database_secret_username_key":null}` | The parent chart will set the values for "alfrescoRegistryPullSecrets" |
+| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.database_secret_name | string | `nil` |  |
+| global.database_secret_password_key | string | `nil` |  |
+| global.database_secret_username_key | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryPrefix | string | `"quay.io/alfresco/alfresco-elasticsearch"` |  |
 | image.tag | string | `"3.0.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.tls | list | `[]` |  |
-| kibana.enabled | bool | `true` |  |
 | liveIndexing.services[0].name | string | `"mediation"` |  |
 | liveIndexing.services[1].name | string | `"content"` |  |
 | liveIndexing.services[1].replicaCount | int | `1` |  |
@@ -53,15 +44,9 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | reindexing.postgresql.database | string | `"alfresco"` |  |
 | reindexing.postgresql.name | string | `"postgresql-acs"` |  |
 | reindexing.postgresql.port | int | `5432` |  |
-| replicaCount | int | `1` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `80` |  |
-| service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------
