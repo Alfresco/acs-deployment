@@ -90,7 +90,7 @@ pods_ready() {
     failed_pod_logs
     if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
       helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
-      kubectl delete namespace "${namespace}"
+      kubectl delete namespace "${namespace}" --graceperiod=1
     fi
     return 1
   fi
@@ -286,7 +286,7 @@ if [[ "${TEST_RESULT}" == "0" ]]; then
 fi
 if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
   helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
-  kubectl delete namespace "${namespace}"
+  kubectl delete namespace "${namespace}" --graceperiod=1
 fi
 
 if [[ "${TEST_RESULT}" == "1" ]]; then
