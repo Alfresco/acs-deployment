@@ -45,7 +45,12 @@ pod_status() {
 
 # failed pods logs
 failed_pod_logs() {
-  pod_status | grep False | awk '{print $1}' | while read pod; do echo -e '\e[1;31m' "${pod}" '\e[0m' && kubectl logs "${pod}" --namespace "${namespace}"; done
+  pod_status | grep False | awk '{print $1}' | \
+    while read pod; do
+      echo -e '\e[1;31m' "${pod}" '\e[0m' && \
+      kubectl get event --namespace "${namespace}" --field-selector involvedObject.name="${pod}"
+      kubectl logs "${pod}" --namespace "${namespace}"
+    done
 }
 
 wait_for_connection() {
