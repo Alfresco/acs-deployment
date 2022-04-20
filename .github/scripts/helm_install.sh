@@ -262,7 +262,7 @@ if [[ "${TEST_RESULT}" == "0" ]]; then
     echo "TEST_RESULT=${TEST_RESULT}"
   fi
 
-  if [[ "${TEST_RESULT}" == "0" ]]; then
+  if [[ "${TEST_RESULT}" == "0" ]] && [[ ${ACS_VERSION} == "latest" ]]; then
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgresql pods,
     # wait for k8s to recreate them, then check if the data created in the first test run is still there
