@@ -99,7 +99,11 @@ pods_ready() {
 newman() {
   # shellcheck disable=SC2048
   # shellcheck disable=SC2086
-  docker run -t -v "${PWD}/test/postman:/etc/newman" postman/newman:5.3 $*
+  for i in {1..5}; do
+    docker run -t -v "${PWD}/test/postman:/etc/newman" postman/newman:5.3 $* && break
+    echo "newman run failed, trying again ($i run)"
+    sleep 10
+  done
 }
 prepare_namespace() {
   cat <<EOF | kubectl apply -f -
