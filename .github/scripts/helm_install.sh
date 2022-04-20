@@ -49,7 +49,7 @@ failed_pod_logs() {
     while read pod; do
       echo -e '\e[1;31m' "${pod}" '\e[0m' && \
       kubectl get event --namespace "${namespace}" --field-selector involvedObject.name="${pod}"
-      kubectl logs "${pod}" --namespace "${namespace}"
+      kubectl logs "${pod}" --namespace "${namespace}" --tail 1024
     done
 }
 
