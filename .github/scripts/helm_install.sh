@@ -87,7 +87,7 @@ pods_ready() {
       helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
       kubectl delete namespace "${namespace}"
     fi
-    exit 1
+    return 1
   fi
 }
 
@@ -232,7 +232,7 @@ done
 
 [ "${DNS_PROPAGATED}" -ne 1 ] && echo "DNS entry for ${HOST} did not propagate within expected time" && exit 1
 
-pods_ready
+pods_ready || exit 1
 
 # Delay running the tests to give ingress & SOLR a chance to fully initialise
 echo "Waiting 3 minutes from $(date) before running tests..."
