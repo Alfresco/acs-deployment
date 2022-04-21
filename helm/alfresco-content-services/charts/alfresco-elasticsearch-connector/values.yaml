@@ -44,7 +44,7 @@ reindexing:
   enabled: true
   pathIndexingEnabled: true
   postgresql:
-    name: postgresql-acs
+    hostname: postgresql-acs
     database: alfresco
     port: 5432
 

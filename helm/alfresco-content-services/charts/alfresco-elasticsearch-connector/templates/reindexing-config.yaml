@@ -14,7 +14,7 @@ data:
   ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "content-services.shortname" . }}-transform-misc/transform/config
   ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
-  SPRING_DATASOURCE_URL: jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.name }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}
+  SPRING_DATASOURCE_URL: jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.hostname }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}
   {{- if .Values.reindexing.environment }}
   {{- range $key, $val := .Values.reindexing.environment }}
   {{ $key }}: {{ $val | quote }}

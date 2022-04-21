@@ -596,6 +596,9 @@ alfresco-elasticsearch-connector:
   enabled: false
   reindexing:
     enabled: true
+    postgresql:
+      hostname: postgresql-acs
+      database: alfresco
   elasticsearch:
     host: elasticsearch-master
     port: 9200

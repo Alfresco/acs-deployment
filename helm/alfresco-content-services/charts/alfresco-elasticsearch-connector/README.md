@@ -42,7 +42,7 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | reindexing.enabled | bool | `true` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
 | reindexing.postgresql.database | string | `"alfresco"` |  |
-| reindexing.postgresql.name | string | `"postgresql-acs"` |  |
+| reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
 | reindexing.postgresql.port | int | `5432` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
