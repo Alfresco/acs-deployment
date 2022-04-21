@@ -107,4 +107,4 @@ jobs:
       - name: Publish
         run: .github/scripts/publish_chart.sh
         shell: bash
-        if: github.ref_name == '${{ github.event.repository.default_branch }}' || env.COMMIT_MESSAGE == '[publish]'
+        if: github.ref_name == github.event.repository.default_branch || env.COMMIT_MESSAGE == '[publish]'
