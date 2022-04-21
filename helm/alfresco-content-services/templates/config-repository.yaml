@@ -51,7 +51,7 @@ data:
       {{- end }}
       {{- if index .Values "alfresco-elasticsearch-connector" "enabled" }}
       -Delasticsearch.createIndexIfNotExists=true
-      -Delasticsearch.host=elasticsearch-master
+      -Delasticsearch.host={{ index .Values "alfresco-elasticsearch-connector" "elasticsearch" "host" }}
       -Delasticsearch.indexName={{ index .Values "alfresco-elasticsearch-connector" "indexName" }}
       {{- end -}}
       {{- if eq .Values.repository.edition "Enterprise" }}

@@ -78,6 +78,8 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-digital-workspace.resources.requests.cpu | string | `"150m"` |  |
 | alfresco-digital-workspace.resources.requests.memory | string | `"256Mi"` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
+| alfresco-elasticsearch-connector.elasticsearch.host | string | `"elasticsearch-master"` |  |
+| alfresco-elasticsearch-connector.elasticsearch.port | int | `9200` |  |
 | alfresco-elasticsearch-connector.enabled | bool | `false` |  |
 | alfresco-elasticsearch-connector.reindexing.enabled | bool | `true` |  |
 | alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
@@ -113,9 +115,6 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` |  |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
-| global.repo.databaseSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
-| global.repo.databaseSecretPasswordKey | string | `"DATABASE_PASSWORD"` |  |
-| global.repo.databaseSecretUsernameKey | string | `"DATABASE_USERNAME"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |

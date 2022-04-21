@@ -48,5 +48,9 @@ reindexing:
     database: alfresco
     port: 5432
 
+elasticsearch:
+  host: elasticsearch-master
+  port: 9200
+
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret

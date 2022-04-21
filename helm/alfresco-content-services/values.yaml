@@ -596,6 +596,9 @@ alfresco-elasticsearch-connector:
   enabled: false
   reindexing:
     enabled: true
+  elasticsearch:
+    host: elasticsearch-master
+    port: 9200
 
 alfresco-digital-workspace:
   nodeSelector: {}

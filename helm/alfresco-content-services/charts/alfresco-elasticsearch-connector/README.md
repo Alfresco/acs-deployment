@@ -17,11 +17,10 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | affinity | object | `{}` |  |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
+| elasticsearch.host | string | `"elasticsearch-master"` |  |
+| elasticsearch.port | int | `9200` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.repo.databaseSecretName | string | `nil` |  |
-| global.repo.databaseSecretPasswordKey | string | `nil` |  |
-| global.repo.databaseSecretUsernameKey | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repositoryPrefix | string | `"quay.io/alfresco/alfresco-elasticsearch"` |  |
 | image.tag | string | `"3.0.0"` |  |
@@ -36,6 +35,7 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 | liveIndexing.services[3].replicaCount | int | `1` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| parentNameOverride | string | `""` |  |
 | pathIndexingComponent.enabled | bool | `true` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
