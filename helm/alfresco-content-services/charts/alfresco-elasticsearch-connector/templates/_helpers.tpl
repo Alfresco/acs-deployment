@@ -38,6 +38,11 @@ Parent chart definitions.
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "alfresco.shortname" -}}
+{{- $name := (.Values.parentNameOverride | default (printf "%s" "alfresco-")) -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{/*
 Common labels
 */}}

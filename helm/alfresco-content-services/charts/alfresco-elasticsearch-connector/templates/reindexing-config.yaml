@@ -11,8 +11,8 @@ data:
   ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
   SPRING_ELASTICSEARCH_REST_URIS: http://{{ .Values.elasticsearch.host }}:{{ .Values.elasticsearch.port }}
   SPRING_ACTIVEMQ_BROKERURL: nio://{{ .Release.Name }}-activemq-broker:61616
-  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ .Release.Name }}-alfresco-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
-  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ .Release.Name }}-alfresco-cs-transform-misc/transform/config
+  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "content-services.shortname" . }}-transform-misc/transform/config
   ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
   SPRING_DATASOURCE_URL: jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.name }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}
   {{- if .Values.reindexing.environment }}
