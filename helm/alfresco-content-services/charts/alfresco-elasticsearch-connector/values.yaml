@@ -6,6 +6,7 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+parentNameOverride: ""
 
 # Common deployment values
 podAnnotations: {}
@@ -49,7 +50,3 @@ reindexing:
 
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-  repo:
-    databaseSecretName:
-    databaseSecretUsernameKey:
-    databaseSecretPasswordKey:

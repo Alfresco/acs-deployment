@@ -870,11 +870,6 @@ global:
   ai:
     enabled: false
 
-  repo:
-    databaseSecretName: acs-alfresco-cs-dbsecret
-    databaseSecretUsernameKey: DATABASE_USERNAME
-    databaseSecretPasswordKey: DATABASE_PASSWORD
-
 # ai:
 #   aws:
 #   accessKey:

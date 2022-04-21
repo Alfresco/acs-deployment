@@ -32,18 +32,16 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
           env:
-            -
-              name: SPRING_DATABASE_PASSWORD
+            - name: SPRING_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.global.repo.databaseSecretName }}"
-                  key: "{{ .Values.global.repo.databaseSecretPasswordKey }}"
-            -
-              name: SPRING_DATABASE_USERNAME
+                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  key: DATABASE_PASSWORD
+            - name: SPRING_DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: "{{ .Values.global.repo.databaseSecretName }}"
-                  key: "{{ .Values.global.repo.databaseSecretUsernameKey }}"
+                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  key: DATABASE_USERNAME
           ports:
               - name: http
                 containerPort: 8080

@@ -53,7 +53,7 @@ spec:
               name: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
           {{- end }}
           - secretRef:
-              name: {{ .Values.global.repo.databaseSecretName }}
+              name: {{ template "content-services.shortname" . }}-dbsecret
           {{- if .Values.s3connector.enabled }}
           {{- if .Values.s3connector.secrets }}
           - secretRef:
