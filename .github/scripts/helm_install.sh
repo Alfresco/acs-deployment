@@ -86,7 +86,7 @@ pods_ready() {
 
   if [ "${PODS_COUNTER}" -ge "${PODS_COUNTER_MAX}" ]; then
     pod_status
-    echo "Pods did not start - exit 1"
+    echo "Pods did not start - failing build"
     failed_pod_logs
     if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
       helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
@@ -276,7 +276,7 @@ if [[ "${TEST_RESULT}" == "0" ]]; then
       --namespace="${namespace}"
 
     # check pods
-    pods_ready
+    pods_ready || exit 1
 
     # run checks after pod deletion
     wait_for_connection
