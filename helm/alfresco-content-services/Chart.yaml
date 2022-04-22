@@ -34,11 +34,11 @@ dependencies:
   - name: alfresco-search
     version: 1.0.4
     condition: alfresco-search.enabled
-  - name: alfresco-sync-service
-    version: 3.0.9
   - name: alfresco-elasticsearch-connector
     version: 0.1.0
     condition: alfresco-elasticsearch-connector.enabled
+  - name: alfresco-sync-service
+    version: 3.0.9
   - name: elasticsearch
     alias: elasticsearch
     repository: https://helm.elastic.co
