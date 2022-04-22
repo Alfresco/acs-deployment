@@ -15,6 +15,7 @@ A Helm chart for deploying Alfresco Content Services
 | Repository | Name | Version |
 |------------|------|---------|
 |  | activemq | 2.1.0 |
+|  | alfresco-common | 0.1.0 |
 |  | alfresco-elasticsearch-connector | 0.1.0 |
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |

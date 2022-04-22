@@ -14,6 +14,8 @@ home: https://www.alfresco.com
 sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
+  - name: alfresco-common
+    version: 0.1.0
   - name: postgresql
     version: 10.16.2
     repository: https://charts.bitnami.com/bitnami

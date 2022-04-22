@@ -8,7 +8,7 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 1.x.x |
+| file://../alfresco-common | alfresco-common | 0.1.0 |
 
 ## Values
 

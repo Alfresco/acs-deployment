@@ -31,19 +31,6 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Parent chart definitions.
-*/}}
-{{- define "content-services.shortname" -}}
-{{- $name := (.Values.parentNameOverride | default (printf "%s" "alfresco-cs")) -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "alfresco.shortname" -}}
-{{- $name := (.Values.parentNameOverride | default (printf "%s" "alfresco-")) -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
 Common labels
 */}}
 {{- define "alfresco-elasticsearch-connector.labels" -}}
