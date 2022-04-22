@@ -164,7 +164,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | ooiService.image.internalPort | int | `9095` |  |
 | ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ooiService.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
-| ooiService.image.tag | string | `"1.1.1"` |  |
+| ooiService.image.tag | string | `"1.1.2"` |  |
 | ooiService.ingress.path | string | `"/ooi-service"` |  |
 | ooiService.ingress.tls | list | `[]` |  |
 | ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
