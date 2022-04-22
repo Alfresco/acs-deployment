@@ -597,6 +597,7 @@ alfresco-elasticsearch-connector:
   reindexing:
     enabled: true
     postgresql:
+      url:
       hostname: postgresql-acs
       database: alfresco
   elasticsearch:

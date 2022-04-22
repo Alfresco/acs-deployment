@@ -85,6 +85,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | alfresco-elasticsearch-connector.reindexing.enabled | bool | `true` |  |
 | alfresco-elasticsearch-connector.reindexing.postgresql.database | string | `"alfresco"` |  |
 | alfresco-elasticsearch-connector.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
+| alfresco-elasticsearch-connector.reindexing.postgresql.url | string | `nil` |  |
 | alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.port | int | `80` |  |
