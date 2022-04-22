@@ -112,7 +112,7 @@ ooiService:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 1.1.1
+    tag: 1.1.2
     pullPolicy: IfNotPresent
     internalPort: 9095
   service:
