@@ -5,3 +5,5 @@ alfresco-search:
 global:
   tracking:
     sharedsecret: dummy
+alfresco-elasticsearch-connector:
+  enabled: true
