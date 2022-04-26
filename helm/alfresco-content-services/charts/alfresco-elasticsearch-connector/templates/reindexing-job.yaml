@@ -21,8 +21,8 @@ spec:
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing
-          image: "{{ .Values.image.repositoryPrefix }}-reindexing:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.reindexing.image.repository }}:{{ .Values.reindexing.image.tag }}"
+          imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
           resources:
             limits:
               memory: {{ .Values.resources.limits.memory }}
