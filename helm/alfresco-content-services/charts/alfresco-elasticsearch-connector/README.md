@@ -8,7 +8,7 @@ A Helm chart for deploying Alfresco Elasticsearch connector
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../alfresco-common | alfresco-common | 0.1.0 |
+| file://../alfresco-content-common | alfresco-content-common | 0.1.0 |
 
 ## Values
 
