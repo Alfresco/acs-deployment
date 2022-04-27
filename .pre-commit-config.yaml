@@ -25,7 +25,7 @@ repos:
     hooks:
       - id: docker-compose-check
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: '2.0.1074'
+    rev: 2.0.1074
     hooks:
     - id: checkov
       args: [--config, .checkov/config.yml]
