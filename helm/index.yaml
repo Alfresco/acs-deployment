@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   alfresco-content-services:
   - apiVersion: v2
-    created: "2022-02-01T20:00:26.922544826+01:00"
+    created: "2022-04-27T20:15:44.519147865+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -28,7 +28,7 @@ entries:
       repository: ""
       version: 3.0.9
     description: A Helm chart for deploying Alfresco Content Services
-    digest: cd57d18b99bbdcc0354aa74d41fcdcbb8b562ce563da6213c9d44ca79080ac05
+    digest: c44f076756d54d7fffc33e46619952ab6e8bd5849ecc03edc09711935fa98dec
     home: https://www.alfresco.com
     icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
     keywords:
@@ -40,12 +40,12 @@ entries:
     sources:
     - https://github.com/Alfresco/acs-deployment
     urls:
-    - alfresco-content-services-5.1.11.tgz
-    version: 5.1.11
+    - alfresco-content-services-5.1.12.tgz
+    version: 5.1.12
   alfresco-identity-service:
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-02-01T20:00:26.93361888+01:00"
+    created: "2022-04-27T20:15:44.529745+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -54,7 +54,7 @@ entries:
       for identity-related capabilities needed by other Alfresco software, such as
       managing users, groups, roles, profiles, and authentication. Currently it deals
       just with authentication.
-    digest: 0ce697f54a15c721a41f7d03bdacc0f2ac4dd30fdb96030384169f94c00dffd0
+    digest: 49c354b088ef143e56c1574bebb1e7a0584453af5c69ba5bf7d2d9d1c04b8654
     home: https://github.com/Alfresco/alfresco-identity-service/helm
     keywords:
     - alfresco
@@ -68,4 +68,4 @@ entries:
     urls:
     - alfresco-identity-service-5.0.1.tgz
     version: 5.0.1
-generated: "2022-02-01T20:00:26.903471726+01:00"
+generated: "2022-04-27T20:15:44.491349778+02:00"
