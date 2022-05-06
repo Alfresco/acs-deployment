@@ -592,6 +592,18 @@ alfresco-search:
     #    hosts:
     #      - chart-example.local
 
+alfresco-elasticsearch-connector:
+  enabled: false
+  reindexing:
+    enabled: true
+    postgresql:
+      url:
+      hostname: postgresql-acs
+      database: alfresco
+  elasticsearch:
+    host: elasticsearch-master
+    port: 9200
+
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -710,6 +722,12 @@ postgresql-syncservice:
       memory: "1500Mi"
     limits:
       memory: "1500Mi"
+
+elasticsearch:
+  enabled: false
+  image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 # -- Defines the properties to be used for the S3 Connector
 # For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html

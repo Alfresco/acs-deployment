@@ -45,7 +45,12 @@ pod_status() {
 
 # failed pods logs
 failed_pod_logs() {
-  pod_status | grep False | awk '{print $1}' | while read pod; do echo -e '\e[1;31m' "${pod}" '\e[0m' && kubectl logs "${pod}" --namespace "${namespace}"; done
+  pod_status | grep False | awk '{print $1}' | \
+    while read pod; do
+      echo -e '\e[1;31m' "${pod}" '\e[0m' && \
+      kubectl get event --namespace "${namespace}" --field-selector involvedObject.name="${pod}"
+      kubectl logs "${pod}" --namespace "${namespace}" --tail 1024
+    done
 }
 
 wait_for_connection() {
@@ -81,20 +86,25 @@ pods_ready() {
 
   if [ "${PODS_COUNTER}" -ge "${PODS_COUNTER_MAX}" ]; then
     pod_status
-    echo "Pods did not start - exit 1"
+    echo "Pods did not start - failing build"
     failed_pod_logs
     if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
       helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
-      kubectl delete namespace "${namespace}"
+      kubectl delete namespace "${namespace}" --grace-period=1
     fi
-    exit 1
+    return 1
   fi
 }
 
 newman() {
   # shellcheck disable=SC2048
   # shellcheck disable=SC2086
-  docker run -t -v "${PWD}/test/postman:/etc/newman" postman/newman:5.3 $*
+  for i in {1..5}; do
+    docker run -t -v "${PWD}/test/postman:/etc/newman" postman/newman:5.3 $* && return 0
+    echo "newman run failed, trying again ($i run)"
+    sleep 10
+  done
+  return 1
 }
 prepare_namespace() {
   cat <<EOF | kubectl apply -f -
@@ -232,7 +242,7 @@ done
 
 [ "${DNS_PROPAGATED}" -ne 1 ] && echo "DNS entry for ${HOST} did not propagate within expected time" && exit 1
 
-pods_ready
+pods_ready || exit 1
 
 # Delay running the tests to give ingress & SOLR a chance to fully initialise
 echo "Waiting 3 minutes from $(date) before running tests..."
@@ -253,7 +263,7 @@ if [[ "${TEST_RESULT}" == "0" ]]; then
     echo "TEST_RESULT=${TEST_RESULT}"
   fi
 
-  if [[ "${TEST_RESULT}" == "0" ]]; then
+  if [[ "${TEST_RESULT}" == "0" ]] && [[ ${ACS_VERSION} == "latest" ]]; then
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgresql pods,
     # wait for k8s to recreate them, then check if the data created in the first test run is still there
@@ -266,7 +276,7 @@ if [[ "${TEST_RESULT}" == "0" ]]; then
       --namespace="${namespace}"
 
     # check pods
-    pods_ready
+    pods_ready || exit 1
 
     # run checks after pod deletion
     wait_for_connection
@@ -277,7 +287,7 @@ if [[ "${TEST_RESULT}" == "0" ]]; then
 fi
 if [[ "${COMMIT_MESSAGE}" != *"[keep env]"* ]]; then
   helm delete "${release_name_ingress}" "${release_name_acs}" -n "${namespace}"
-  kubectl delete namespace "${namespace}"
+  kubectl delete namespace "${namespace}" --grace-period=1
 fi
 
 if [[ "${TEST_RESULT}" == "1" ]]; then

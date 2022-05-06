@@ -7,16 +7,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "content-services.shortname" -}}
-{{- $name := (.Values.nameOverride | default (printf "%s" "alfresco-cs")) -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "content-services.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" -}}
 {{- end }}
-
-{{- define "alfresco.shortname" -}}
-{{- $name := (.Values.nameOverride | default (printf "%s" "alfresco-")) -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}

@@ -1,0 +1,10 @@
+apiVersion: v2
+name: alfresco-elasticsearch-connector
+description: A Helm chart for deploying Alfresco Elasticsearch connector
+type: application
+version: 0.1.0
+appVersion: "3.0.0"
+dependencies:
+  - name: alfresco-content-common
+    version: 0.1.0
+    repository: "file://../alfresco-content-common"

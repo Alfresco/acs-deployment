@@ -1,0 +1,63 @@
+{{- if .Values.reindexing.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "alfresco-elasticsearch-connector.fullName" . }}-reindexing
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
+      restartPolicy: Never
+      containers:
+        - name: {{ .Chart.Name }}-reindexing
+          image: "{{ .Values.reindexing.image.repository }}:{{ .Values.reindexing.image.tag }}"
+          imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
+          resources:
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
+          env:
+            - name: SPRING_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  key: DATABASE_PASSWORD
+            - name: SPRING_DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  key: DATABASE_USERNAME
+          ports:
+              - name: http
+                containerPort: 8080
+                protocol: TCP
+      initContainers:
+        - name: wait-for-repository
+          image: curlimages/curl:7.79.1
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 128Mi
+          env:
+            - name: ALFRESCO_REPOSITORY_URL
+              value: http://{{ template "content-services.shortname" . }}-repository/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+          command: [ "/bin/sh","-c" ]
+          # Delay running the reindexing to give Alfresco Repository a chance to fully initialise
+          args: [ "while [ $(curl -sw '%{http_code}' $ALFRESCO_REPOSITORY_URL -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the Alfresco Repository...'; done; echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'; sleep 30; echo 'Reindexing started!'" ]
+{{ end }}
