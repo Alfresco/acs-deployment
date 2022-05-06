@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
+  labels:
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: search
+data:
+  ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
+  SPRING_ELASTICSEARCH_REST_URIS: http://{{ .Values.elasticsearch.host }}:{{ .Values.elasticsearch.port }}
+  SPRING_ACTIVEMQ_BROKERURL: nio://{{ .Release.Name }}-activemq-broker:61616
+  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "content-services.shortname" . }}-transform-misc/transform/config
+  ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
+  {{- if .Values.reindexing.postgresql.url }}
+  SPRING_DATASOURCE_URL: {{ .Values.reindexing.postgresql.url }}
+  {{- else }}
+  SPRING_DATASOURCE_URL: jdbc:postgresql://{{ .Release.Name }}-{{ .Values.reindexing.postgresql.hostname }}:{{ .Values.reindexing.postgresql.port | default 5432 }}/{{ .Values.reindexing.postgresql.database }}
+  {{- end }}
+  {{- if .Values.reindexing.environment }}
+  {{- range $key, $val := .Values.reindexing.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}

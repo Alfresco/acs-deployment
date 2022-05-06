@@ -14,6 +14,8 @@ home: https://www.alfresco.com
 sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
+  - name: alfresco-content-common
+    version: 0.1.0
   - name: postgresql
     version: 10.16.2
     repository: https://charts.bitnami.com/bitnami
@@ -34,6 +36,14 @@ dependencies:
   - name: alfresco-search
     version: 1.0.4
     condition: alfresco-search.enabled
+  - name: alfresco-elasticsearch-connector
+    version: 0.1.0
+    condition: alfresco-elasticsearch-connector.enabled
   - name: alfresco-sync-service
     version: 3.0.9
+  - name: elasticsearch
+    alias: elasticsearch
+    repository: https://helm.elastic.co
+    version: 7.10.1
+    condition: elasticsearch.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

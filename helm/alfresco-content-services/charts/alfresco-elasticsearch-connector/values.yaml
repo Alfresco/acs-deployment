@@ -1,0 +1,74 @@
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+parentNameOverride: ""
+
+# Common deployment values
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+resources:
+  requests:
+    memory: 256Mi
+  limits:
+    memory: 2048Mi
+
+# Connector properties
+indexName: alfresco
+pathIndexingComponent:
+  enabled: true
+contentMediaTypeCache:
+  enabled: true
+  refreshTime: 0 0 * * * *
+
+liveIndexing:
+  mediation:
+    image:
+      repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation
+      tag: 3.0.0
+      pullPolicy: IfNotPresent
+
+  content:
+    image:
+      repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-content
+      tag: 3.0.0
+      pullPolicy: IfNotPresent
+    replicaCount: 1
+
+  metadata:
+    image:
+      repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata
+      tag: 3.0.0
+      pullPolicy: IfNotPresent
+    replicaCount: 1
+
+  path:
+    image:
+      repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-path
+      tag: 3.0.0
+      pullPolicy: IfNotPresent
+    replicaCount: 1
+
+reindexing:
+  enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-elasticsearch-reindexing
+    tag: 3.0.0
+    pullPolicy: IfNotPresent
+  pathIndexingEnabled: true
+  postgresql:
+    url:
+    hostname: postgresql-acs
+    database: alfresco
+    port: 5432
+
+elasticsearch:
+  host: elasticsearch-master
+  port: 9200
+
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret

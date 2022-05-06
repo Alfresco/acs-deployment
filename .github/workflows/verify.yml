@@ -16,10 +16,10 @@ jobs:
   helm:
     needs: [ pre-commit ]
     strategy:
-      max-parallel: 1 #cant add more parallel, problem with loadbalancers
+      max-parallel: 1 # otherwise flaky problems with aws ELB
       fail-fast: false
       matrix:
-        acs_version: [ 6.2.N, 7.0.N, 7.1.N, community, latest ]
+        acs_version: [ latest, 7.1.N, 7.0.N, 6.2.N, community ]
     runs-on: ubuntu-latest
     env:
       DOMAIN: dev.envalfresco.com
@@ -60,9 +60,9 @@ jobs:
   compose:
     needs: [ pre-commit ]
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        acs_version: [ 6.2.N, 7.0.N, 7.1.N, community, latest ]
+        acs_version: [ latest, 7.1.N, 7.0.N, 6.2.N, community ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
