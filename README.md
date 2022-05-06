@@ -1,6 +1,6 @@
 # Alfresco Content Services Containerized Deployment
 
-[![Build Status](https://app.travis-ci.com/Alfresco/acs-deployment.svg?branch=master)](https://app.travis-ci.com/Alfresco/acs-deployment)
+[![verify](https://github.com/Alfresco/acs-deployment/actions/workflows/verify.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/verify.yml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 This project contains the code for starting the entire Alfresco Content Services (ACS) product with [Docker](https://docs.docker.com/get-started) using [Docker Compose](https://docs.docker.com/compose) or [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
@@ -28,7 +28,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 | Chart Version/Tag | Default  | 7.1.N   | 7.0.N | 6.2.N | Community |
 |-------------------|----------|---------|-------|-------|-----------|
 | 5.0.0-M1          | 7.0.0-M2 |         |       | 6.2.2 | 6.2.1-A8  |
-| 5.0.0-M2          | 7.0.0-M3 |         |       | 6.2.2 | 7.0.0 |
+| 5.0.0-M2          | 7.0.0-M3 |         |       | 6.2.2 | 7.0.0     |
 | 5.0.0             | 7.0.0    |         |       | 6.2.2 | 7.0.0     |
 | 5.0.1             | 7.0.0    |         |       | 6.2.2 | 7.0.0     |
 | 5.1.0-M1          | 7.1.0-M1 |         |       | 6.2.2 | 7.1.0-M1  |
@@ -37,7 +37,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.1.1             | 7.1.0.1  |         | 7.0.1 | 6.2.2 | 7.1.0     |
 | 5.2.0-M1          | 7.2.0-M1 | 7.1.0.1 | 7.0.1 | 6.2.2 | 7.2.0-M1  |
 | 5.2.0-M2          | 7.2.0-M2 | 7.1.1   | 7.0.1 | 6.2.2 | 7.2.0-M2  |
-| 5.2.0             | 7.2.0 | 7.1.1  | 7.0.1 | 6.2.2 | 7.2.0 |
+| 5.2.0             | 7.2.0    | 7.1.1   | 7.0.1 | 6.2.2 | 7.2.0     |
 
 > ACS 6.1.x is currently in [EoM](https://www.alfresco.com/services/subscription/technical-support/product-support-status) and has been removed from this project, if you need to install it please use a former release like [5.1.1](https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1).
 
@@ -47,7 +47,7 @@ The default docker compose file contains the latest work-in-progress deployment 
 
 To deploy a specific version of ACS several specific major.minor docker compose files are provided.
 
-Our tests are executed using the latest version of Docker and Docker Compose provided by Travis.
+Our tests are executed using the latest version of Docker and Docker Compose provided by GitHub Actions.
 
 ### Helm
 
