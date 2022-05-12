@@ -4,7 +4,7 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.3.0
+    rev: v1.4.0
     hooks:
       - id: helm-deps
       - id: helm-lint
@@ -25,7 +25,7 @@ repos:
     hooks:
       - id: docker-compose-check
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 2.0.1074
+    rev: 2.0.1140
     hooks:
     - id: checkov
       args: [--config, .checkov/config.yml]

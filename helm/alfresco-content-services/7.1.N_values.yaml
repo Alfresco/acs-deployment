@@ -47,7 +47,7 @@ alfresco-search:
 alfresco-sync-service:
   syncservice:
     image:
-      tag: 3.5.0
+      tag: 3.7.0
 
 global:
   tracking:

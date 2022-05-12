@@ -46,7 +46,7 @@ alfresco-search:
 
 alfresco-digital-workspace:
   image:
-    tag: 2.5.0
+    tag: 2.8.0
 
 postgresql:
   image:
@@ -59,7 +59,7 @@ postgresql-syncservice:
 alfresco-sync-service:
   syncservice:
     image:
-      tag: 3.4.0
+      tag: 3.7.0
 
 global:
   tracking:
