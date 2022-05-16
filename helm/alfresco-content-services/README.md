@@ -151,7 +151,7 @@ Hence, setting up explicit Container memory and then assigning a percentage of i
 | msTeamsService.image.internalPort | int | `3978` |  |
 | msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
-| msTeamsService.image.tag | string | `"1.0.0"` |  |
+| msTeamsService.image.tag | string | `"1.1.0-M1"` |  |
 | msTeamsService.ingress.path | string | `"/ms-teams-service"` |  |
 | msTeamsService.ingress.tls | list | `[]` |  |
 | msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
