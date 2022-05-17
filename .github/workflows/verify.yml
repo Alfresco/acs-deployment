@@ -21,7 +21,7 @@ jobs:
       max-parallel: 1 # otherwise flaky problems with aws ELB
       fail-fast: false
       matrix:
-        acs_version: [ latest, 7.1.N, 7.0.N, 6.2.N, community ]
+        acs_version: [ latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community ]
     runs-on: ubuntu-latest
     env:
       DOMAIN: dev.envalfresco.com
@@ -65,7 +65,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        acs_version: [ latest, 7.1.N, 7.0.N, 6.2.N, community ]
+        acs_version: [ latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
