@@ -36,7 +36,7 @@ In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
    * Control Center: [http://<machine_ip>:8080/admin](http://localhost:8080/admin)
-   * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
+   * Alfresco Digital Workspace/Content App: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
    * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
    * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
 6. If you requested an extended trial license navigate to the Admin Console and apply your license:
@@ -127,6 +127,39 @@ share:
 | E2E_HOST_CLOUD |  | `http://localhost` |
 | E2E_PORT_CLOUD |  | 4200 |
 | APP_CONFIG_APPS_DEPLOYED | The name of the application deployed (e.g. `"[{"name": "\<the name of the application deployed\>"}]"`) |  |
+
+### Alfresco Content App (content-app, community version)
+
+| Property | Description | Default value |
+|----------|-------------|---------------|
+| BASE_PATH |  | `./` |
+| APP_CONFIG_OAUTH2_HOST | The address of the Identity Service including the realm name configured. |  |
+| APP_CONFIG_AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC |
+| APP_CONFIG_OAUTH2_CLIENTID | The name of the client configured for Digital Workspace |  |
+| APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI | The address that Digital Workspace uses to refresh authorization tokens. |  |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGIN | The URL to redirect to after a user is successfully authenticated |  |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGOUT | The URL to redirect to after a user successfully signs out |  |
+| APP_BASE_SHARE_URL | Base Share URL. e.g. `'{protocol}//{hostname}{:port}/workspace/#/preview/s'` |   |
+| AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC |
+| PROVIDER |  | ALL |
+| ENVIRONMENT_SUFFIX | Only for Process Cloud instance | `_CLOUD` |
+| API_HOST |  |  |
+| API_CONTENT_HOST |  |  |
+| API_CONTENT_HOST_LOCAL |  | `http://localhost:8080` |
+| API_PROCESS_HOST |  |  |
+| OAUTH_HOST |  |  |
+| IDENTITY_HOST | The address of the Identity Service including the realm name configured. |  |
+| E2E_HOST |  | `http://localhost` |
+| E2E_PORT |  | 80 |
+| API_HOST_CLOUD |  |  |
+| API_CONTENT_HOST_CLOUD |  |  |
+| API_PROCESS_HOST_CLOUD |  |  |
+| OAUTH_HOST_CLOUD |  |  |
+| IDENTITY_HOST_CLOUD |  |  |
+| E2E_HOST_CLOUD |  | `http://localhost` |
+| E2E_PORT_CLOUD |  | 4200 |
+| APP_CONFIG_APPS_DEPLOYED | The name of the application deployed (e.g. `"[{"name": "\<the name of the application deployed\>"}]"`) |  |
+
 
 ### Control Center (control-center)
 
@@ -296,11 +329,12 @@ net start winnat
 
 The table below shows the location of the publicly available `Dockerfile` for the containers used in the Community deployment.
 
-| Container | Dockerfile Location |
-|----------|-------------|
-| alfresco | https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile |
-| share | https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile |
-| solr6 | https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile |
+| Container                       | Dockerfile Location                                                                                                                     |
+|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| alfresco                        | https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile                                                        |
+| share                           | https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile                                                               |
+| content-app                     | https://github.com/Alfresco/alfresco-content-app/blob/master/Dockerfile                                                         |
+| solr6                           | https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile                                  |
 | <nobr>transform-core-aio</nobr> | https://github.com/Alfresco/alfresco-transform-core/blob/master/alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile |
-| activemq | https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile |
-| proxy | https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile |
+| activemq                        | https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile                                                             |
+| proxy                           | https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile                                                                          |

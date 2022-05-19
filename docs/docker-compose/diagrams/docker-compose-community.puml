@@ -20,19 +20,22 @@ node "Docker Compose" {
     component "Alfresco Share" as share #lightgrey
     component "ActiveMQ" as amq #lightgrey
     component "Transform Core (AIO)" as tcore #lightgrey
+    component "Alfresco Content App" as aca #lightgrey
 }
 
 Client --> proxy
 
 proxy --> acs
 proxy --> share
+proxy --> aca
 
 acs <-left-> ass
 acs --> psql
 acs --> tcore
 acs <-left-> amq
-share --> acs
+share -left-> acs
+aca -left-> acs
 
-center footer Copyright 2021 Alfresco Software Inc
+center footer Copyright 2022 Alfresco Software Inc
 
 @enduml

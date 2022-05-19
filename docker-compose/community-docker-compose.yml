@@ -13,6 +13,7 @@ services:
     image: alfresco/alfresco-content-repository-community:7.2.0
     mem_limit: 1900m
     environment:
+      CATALINA_OPTS : "-agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n"
       JAVA_TOOL_OPTIONS: "
         -Dencryption.keystore.type=JCEKS
         -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
@@ -111,17 +112,28 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
 
+  content-app:
+    image: quay.io/alfresco/alfresco-content-app:2.10.0
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
+      APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
+
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.2.0
+    image: alfresco/alfresco-acs-nginx:3.3.0
     mem_limit: 128m
     environment:
       DISABLE_PROMETHEUS: "true"
       DISABLE_SYNCSERVICE: "true"
-      DISABLE_ADW: "true"
+      DISABLE_CONTROL_CENTER: "true"
+      ADW_URL: "http://content-app:8080"
     depends_on:
       - alfresco
+      - content-app
     ports:
       - "8080:8080"
     links:
+      - content-app
       - alfresco
       - share
