@@ -116,18 +116,17 @@ services:
     image: quay.io/alfresco/alfresco-content-app:2.10.0
     mem_limit: 128m
     environment:
-      APP_CONFIG_AUTH_TYPE: "BASIC"
-      BASE_PATH: ./
-      APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
+      APP_BASE_SHARE_URL: "http://localhost:8080/content-app/#/preview/s"
 
   proxy:
     image: alfresco/alfresco-acs-nginx:3.3.0
     mem_limit: 128m
     environment:
+      DISABLE_ADW: "true"
       DISABLE_PROMETHEUS: "true"
       DISABLE_SYNCSERVICE: "true"
       DISABLE_CONTROL_CENTER: "true"
-      ADW_URL: "http://content-app:8080"
+      ENABLE_CONTENT_APP: "true"
     depends_on:
       - alfresco
       - content-app

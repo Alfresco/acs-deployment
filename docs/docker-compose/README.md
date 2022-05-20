@@ -128,37 +128,27 @@ share:
 | E2E_PORT_CLOUD |  | 4200 |
 | APP_CONFIG_APPS_DEPLOYED | The name of the application deployed (e.g. `"[{"name": "\<the name of the application deployed\>"}]"`) |  |
 
-### Alfresco Content App (content-app, community version)
+### Alfresco Content App (content-app)
 
-| Property | Description | Default value |
-|----------|-------------|---------------|
-| BASE_PATH |  | `./` |
-| APP_CONFIG_OAUTH2_HOST | The address of the Identity Service including the realm name configured. |  |
-| APP_CONFIG_AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC |
-| APP_CONFIG_OAUTH2_CLIENTID | The name of the client configured for Digital Workspace |  |
-| APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI | The address that Digital Workspace uses to refresh authorization tokens. |  |
-| APP_CONFIG_OAUTH2_REDIRECT_LOGIN | The URL to redirect to after a user is successfully authenticated |  |
-| APP_CONFIG_OAUTH2_REDIRECT_LOGOUT | The URL to redirect to after a user successfully signs out |  |
-| APP_BASE_SHARE_URL | Base Share URL. e.g. `'{protocol}//{hostname}{:port}/workspace/#/preview/s'` |   |
-| AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC |
-| PROVIDER |  | ALL |
-| ENVIRONMENT_SUFFIX | Only for Process Cloud instance | `_CLOUD` |
-| API_HOST |  |  |
-| API_CONTENT_HOST |  |  |
-| API_CONTENT_HOST_LOCAL |  | `http://localhost:8080` |
-| API_PROCESS_HOST |  |  |
-| OAUTH_HOST |  |  |
-| IDENTITY_HOST | The address of the Identity Service including the realm name configured. |  |
-| E2E_HOST |  | `http://localhost` |
-| E2E_PORT |  | 80 |
-| API_HOST_CLOUD |  |  |
-| API_CONTENT_HOST_CLOUD |  |  |
-| API_PROCESS_HOST_CLOUD |  |  |
-| OAUTH_HOST_CLOUD |  |  |
-| IDENTITY_HOST_CLOUD |  |  |
-| E2E_HOST_CLOUD |  | `http://localhost` |
-| E2E_PORT_CLOUD |  | 4200 |
-| APP_CONFIG_APPS_DEPLOYED | The name of the application deployed (e.g. `"[{"name": "\<the name of the application deployed\>"}]"`) |  |
+| Property                                     | Description                                                                                 | Default value                                            |
+|----------------------------------------------|---------------------------------------------------------------------------------------------|----------------------------------------------------------|
+| BASE_PATH                                    |                                                                                             | `./`                                                     |
+| APP_CONFIG_PROVIDER                          | BPM/ECM/ALL                                                                                 | ECM                                                      |
+| APP_CONFIG_AUTH_TYPE                         | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC                                                    |
+| APP_CONFIG_BPM_HOST                          | BPM Host address                                                                            | {protocol}//{hostname}{:port}                            |
+| APP_CONFIG_ECM_HOST                          | ECM Host address                                                                            | {protocol}//{hostname}{:port}                            |
+| APP_CONFIG_IDENTITY_HOST                     |                                                                                             |                                                          |
+| APP_CONFIG_OAUTH2_HOST                       | The address of the Identity Service including the realm name configured.                    | {protocol}//{hostname}{:port}/auth/realms/alfresco       |
+| APP_CONFIG_OAUTH2_CLIENTID                   | The name of the client configured for Content App                                           | alfresco                                                 |
+| APP_CONFIG_OAUTH2_IMPLICIT_FLOW              |                                                                                             | true                                                     |
+| APP_CONFIG_OAUTH2_SILENT_LOGIN               |                                                                                             | true                                                     |
+| APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI | The address that Content App uses to refresh authorization tokens.                          | {protocol}//{hostname}{:port}/assets/silent-refresh.html |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGIN             | The URL to redirect to after a user is successfully authenticated                           | `./`                                                     |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGOUT            | The URL to redirect to after a user successfully signs out                                  | `./`                                                     |
+| APP_BASE_SHARE_URL                           | Base Share URL. e.g. `'{protocol}//{hostname}{:port}/content-app/#/preview/s'`              |                                                          |
+| APP_CONFIG_PLUGIN_AOS                        | Enable AOS plugin                                                                           | true                                                     |
+| APP_CONFIG_PLUGIN_CONTENT_SERVICE            | Enable Content Service plugin                                                               | true                                                     |
+| APP_EXTENSIONS_IGNORE_REFS                   | Plugins references to exclude                                                               |                                                          |
 
 
 ### Control Center (control-center)
