@@ -36,7 +36,7 @@ In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
    * Control Center: [http://<machine_ip>:8080/admin](http://localhost:8080/admin)
-   * Alfresco Digital Workspace/Content App: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
+   * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
    * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
    * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
 6. If you requested an extended trial license navigate to the Admin Console and apply your license:

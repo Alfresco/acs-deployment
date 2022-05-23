@@ -112,7 +112,7 @@ services:
       - "61613:61613" # STOMP
 
   content-app:
-    image: local/alfresco-content-app:1.1.0
+    image: quay.io/alfresco/alfresco-content-app:2.10.0
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/content-app/#/preview/s"
