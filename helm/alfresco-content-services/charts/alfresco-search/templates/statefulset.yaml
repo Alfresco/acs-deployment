@@ -1,6 +1,6 @@
 # Defines the deployment for the Alfresco Search (Solr) App
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ template "alfresco-search.fullName" . }}-solr
   labels:
@@ -10,15 +10,12 @@ metadata:
     heritage: {{ .Release.Service }}
     component: search
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: {{ template "alfresco-search.fullName" . }}-solr
       release: {{ .Release.Name }}
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+  serviceName: {{ template "alfresco-search.fullName" . }}-solr
   template:
     metadata:
       annotations:
