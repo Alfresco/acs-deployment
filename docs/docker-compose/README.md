@@ -145,7 +145,7 @@ share:
 | APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI | The address that Content App uses to refresh authorization tokens.                          | {protocol}//{hostname}{:port}/assets/silent-refresh.html |
 | APP_CONFIG_OAUTH2_REDIRECT_LOGIN             | The URL to redirect to after a user is successfully authenticated                           | `./`                                                     |
 | APP_CONFIG_OAUTH2_REDIRECT_LOGOUT            | The URL to redirect to after a user successfully signs out                                  | `./`                                                     |
-| APP_BASE_SHARE_URL                           | Base Share URL                                                                              | ${APP_CONFIG_ECM_HOST}/#/preview/s                       |
+| APP_BASE_SHARE_URL                           | Base Share URL e.g. `'{protocol}//{hostname}{:port}/aca/#/preview/s'`                       | ${APP_CONFIG_ECM_HOST}/#/preview/s                       |
 | APP_CONFIG_PLUGIN_AOS                        | Enable AOS plugin                                                                           | true                                                     |
 | APP_CONFIG_PLUGIN_CONTENT_SERVICE            | Enable Content Service plugin                                                               | true                                                     |
 | APP_EXTENSIONS_IGNORE_REFS                   | Plugins references to exclude                                                               |                                                          |
