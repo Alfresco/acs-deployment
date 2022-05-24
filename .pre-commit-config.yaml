@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.8.1
+    rev: v1.10.0
     hooks:
       - id: helm-docs-built
   - repo: https://github.com/Alfresco/alfresco-build-tools
