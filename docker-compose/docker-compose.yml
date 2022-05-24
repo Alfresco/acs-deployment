@@ -162,7 +162,7 @@ services:
       BASE_PATH: ./
 
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.3.0
+    image: alfresco/alfresco-acs-nginx:3.4.1
     mem_limit: 128m
     depends_on:
       - alfresco

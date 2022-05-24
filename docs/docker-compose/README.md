@@ -128,6 +128,29 @@ share:
 | E2E_PORT_CLOUD |  | 4200 |
 | APP_CONFIG_APPS_DEPLOYED | The name of the application deployed (e.g. `"[{"name": "\<the name of the application deployed\>"}]"`) |  |
 
+### Alfresco Content App (content-app)
+
+| Property                                     | Description                                                                                 | Default value                                            |
+|----------------------------------------------|---------------------------------------------------------------------------------------------|----------------------------------------------------------|
+| BASE_PATH                                    |                                                                                             | `./`                                                     |
+| APP_CONFIG_PROVIDER                          | BPM/ECM/ALL                                                                                 | ECM                                                      |
+| APP_CONFIG_AUTH_TYPE                         | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC                                                    |
+| APP_CONFIG_BPM_HOST                          | BPM Host address                                                                            | {protocol}//{hostname}{:port}                            |
+| APP_CONFIG_ECM_HOST                          | ECM Host address                                                                            | {protocol}//{hostname}{:port}                            |
+| APP_CONFIG_IDENTITY_HOST                     |                                                                                             |                                                          |
+| APP_CONFIG_OAUTH2_HOST                       | The address of the Identity Service including the realm name configured.                    | {protocol}//{hostname}{:port}/auth/realms/alfresco       |
+| APP_CONFIG_OAUTH2_CLIENTID                   | The name of the client configured for Content App                                           | alfresco                                                 |
+| APP_CONFIG_OAUTH2_IMPLICIT_FLOW              |                                                                                             | true                                                     |
+| APP_CONFIG_OAUTH2_SILENT_LOGIN               |                                                                                             | true                                                     |
+| APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI | The address that Content App uses to refresh authorization tokens.                          | {protocol}//{hostname}{:port}/assets/silent-refresh.html |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGIN             | The URL to redirect to after a user is successfully authenticated                           | `./`                                                     |
+| APP_CONFIG_OAUTH2_REDIRECT_LOGOUT            | The URL to redirect to after a user successfully signs out                                  | `./`                                                     |
+| APP_BASE_SHARE_URL                           | Base Share URL e.g. `'{protocol}//{hostname}{:port}/aca/#/preview/s'`                       | ${APP_CONFIG_ECM_HOST}/#/preview/s                       |
+| APP_CONFIG_PLUGIN_AOS                        | Enable AOS plugin                                                                           | true                                                     |
+| APP_CONFIG_PLUGIN_CONTENT_SERVICE            | Enable Content Service plugin                                                               | true                                                     |
+| APP_EXTENSIONS_IGNORE_REFS                   | Plugins references to exclude                                                               |                                                          |
+
+
 ### Control Center (control-center)
 
 | Property | Description | Default value |
@@ -296,11 +319,12 @@ net start winnat
 
 The table below shows the location of the publicly available `Dockerfile` for the containers used in the Community deployment.
 
-| Container | Dockerfile Location |
-|----------|-------------|
-| alfresco | https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile |
-| share | https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile |
-| solr6 | https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile |
+| Container                       | Dockerfile Location                                                                                                                     |
+|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| alfresco                        | https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile                                                        |
+| share                           | https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile                                                               |
+| content-app                     | https://github.com/Alfresco/alfresco-content-app/blob/master/Dockerfile                                                         |
+| solr6                           | https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile                                  |
 | <nobr>transform-core-aio</nobr> | https://github.com/Alfresco/alfresco-transform-core/blob/master/alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile |
-| activemq | https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile |
-| proxy | https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile |
+| activemq                        | https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile                                                             |
+| proxy                           | https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile                                                                          |
