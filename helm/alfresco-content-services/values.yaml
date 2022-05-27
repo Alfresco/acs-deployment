@@ -81,7 +81,11 @@ repository:
       memory: "3000Mi"
     limits:
       memory: "3000Mi"
-  # -- The repository readiness probe is used to check startup only as a failure
+  # -- The startup probe to cover the worse case startup time for slow start containers
+  startupProbe:
+    periodSeconds: 30
+    failureThreshold: 10
+  # The repository readiness probe is used to check startup only as a failure
   # of the liveness probe later will result in the pod being restarted.
   readinessProbe:
     initialDelaySeconds: 60
