@@ -3,7 +3,7 @@
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 5.2.0
+version: 5.3.0-M1
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -28,7 +28,7 @@ dependencies:
   - name: common
     alias: alfresco-digital-workspace
     repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 7.2.0
+    version: 7.3.0
     condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
   - name: activemq
     version: 2.1.0

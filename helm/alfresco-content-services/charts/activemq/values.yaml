@@ -4,7 +4,7 @@ replicaCount: 1
 nodeSelector: {}
 image:
   repository: alfresco/alfresco-activemq
-  tag: 5.16.4-jre11-centos7
+  tag: 5.17.1-jre11-centos7
   pullPolicy: IfNotPresent
 adminUser:
   username: admin

@@ -1,36 +1,35 @@
 #!/usr/bin/env bash
 
 if [ -z "${ACS_VERSION}" ]; then
-  echo "ACS_VERSION variable is not setup "
+  echo "ACS_VERSION variable is not set"
   exit 2
 fi
 if [ -z "${COMMIT_MESSAGE}" ]; then
-  echo "COMMIT_MESSAGE variable is not setup "
+  echo "COMMIT_MESSAGE variable is not set"
   exit 2
 fi
 if [ -z "${ACM_CERTIFICATE}" ]; then
-  echo "ACM_CERTIFICATE variable is not setup "
+  echo "ACM_CERTIFICATE variable is not set"
   exit 2
 fi
 if [ -z "${AWS_SG}" ]; then
-  echo "AWS_SG variable is not setup "
+  echo "AWS_SG variable is not set"
   exit 2
 fi
 if [ -z "${GITHUB_RUN_NUMBER}" ]; then
-  echo "GITHUB_RUN_NUMBER variable is not setup "
+  echo "GITHUB_RUN_NUMBER variable is not set"
   exit 2
 fi
 if [ -z "${DOMAIN}" ]; then
-  echo "DOMAIN variable is not setup "
+  echo "DOMAIN variable is not set"
   exit 2
 fi
-if [ -z "${GITHUB_REF}" ]; then
-  echo "GITHUB_REF variable is not setup "
+if [ -z "${BRANCH_NAME}" ]; then
+  echo "BRANCH_NAME variable is not set"
   exit 2
 fi
 
 GIT_DIFF="$(git diff origin/master --name-only .)"
-BRANCH_NAME=$(echo "${GITHUB_REF##*/}")
 VALID_VERSION=$(echo "${ACS_VERSION}" | tr -d '.' | awk '{print tolower($0)}')
 namespace=$(echo "${BRANCH_NAME}" | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-"${GITHUB_RUN_NUMBER}"-"${VALID_VERSION}"
 release_name_ingress=ing-"${GITHUB_RUN_NUMBER}"-"${VALID_VERSION}"
