@@ -245,13 +245,17 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.livenessProbe.periodSeconds | int | `20` |  |
 | repository.livenessProbe.timeoutSeconds | int | `10` |  |
 | repository.nodeSelector | object | `{}` |  |
-| repository.readinessProbe | object | `{"failureThreshold":6,"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":10}` | The repository readiness probe is used to check startup only as a failure of the liveness probe later will result in the pod being restarted. |
+| repository.readinessProbe.failureThreshold | int | `6` |  |
+| repository.readinessProbe.initialDelaySeconds | int | `60` |  |
+| repository.readinessProbe.periodSeconds | int | `20` |  |
+| repository.readinessProbe.timeoutSeconds | int | `10` |  |
 | repository.replicaCount | int | `2` |  |
 | repository.resources.limits.memory | string | `"3000Mi"` |  |
 | repository.resources.requests.memory | string | `"3000Mi"` |  |
 | repository.service.externalPort | int | `80` |  |
 | repository.service.name | string | `"alfresco"` |  |
 | repository.service.type | string | `"ClusterIP"` |  |
+| repository.startupProbe | object | `{"failureThreshold":10,"periodSeconds":30}` | The startup probe to cover the worse case startup time for slow start containers |
 | repository.strategy.type | string | `"Recreate"` |  |
 | s3connector | object | `{"enabled":false}` | Defines the properties to be used for the S3 Connector For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html |
 | share | object | `{"command":[],"environment":{"CATALINA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"23.1.0-M1"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"memory":"2000Mi"},"requests":{"memory":"2000Mi"}},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
