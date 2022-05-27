@@ -10,15 +10,13 @@ metadata:
     heritage: {{ .Release.Service }}
     component: search
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: {{ template "alfresco-search.fullName" . }}-solr
       release: {{ .Release.Name }}
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
