@@ -12,8 +12,8 @@ data:
   {{ $alfproxy := printf "-Dalfresco.proxy=%s://%s:%s" $alfprotocol $alfhost $alfport }}
   REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
   REPO_PORT: "{{ .Values.repository.service.externalPort }}"
-  CSRF_FILTER_REFERER: "{{ $alfprotocol }}://{{ $alfhost }}/.*"
-  CSRF_FILTER_ORIGIN: "{{ $alfprotocol }}://{{ $alfhost }}"
+  CSRF_FILTER_REFERER: "{{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*"
+  CSRF_FILTER_ORIGIN: "{{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}"
   # The JAVA_OPTS defined in the values.yaml file for the "share" are set here using proper quotes
   {{- if .Values.share.environment.JAVA_OPTS }}
   JAVA_OPTS: {{ tpl (printf "%s %s" (index .Values "share" "environment" "JAVA_OPTS") $alfproxy) $ | quote }}
