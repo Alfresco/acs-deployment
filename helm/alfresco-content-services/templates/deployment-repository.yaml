@@ -114,6 +114,12 @@ spec:
 {{ toYaml .Values.repository.extraVolumeMounts | indent 10 }}
           {{- end }}
           {{- end }}
+          startupProbe:
+            httpGet:
+              path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+              port: {{ .Values.repository.image.internalPort }}
+            periodSeconds: {{ .Values.repository.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.repository.startupProbe.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
