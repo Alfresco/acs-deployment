@@ -12,7 +12,7 @@ version: "2"
 
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.2.0
+    image: quay.io/alfresco/alfresco-content-repository:7.3.0-A1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: "
@@ -54,7 +54,7 @@ services:
 
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:1.5.2
+    image: quay.io/alfresco/alfresco-transform-router:1.5.3
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
       ACTIVEMQ_URL: "nio://activemq:61616"
@@ -66,7 +66,7 @@ services:
       - activemq
 
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:2.5.7
+    image: alfresco/alfresco-transform-core-aio:2.6.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
@@ -90,7 +90,7 @@ services:
       - shared-file-store-volume:/tmp/Alfresco/sfs
 
   share:
-    image: quay.io/alfresco/alfresco-share:7.2.0
+    image: quay.io/alfresco/alfresco-share:7.3.0-A1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -137,7 +137,7 @@ services:
       - "8083:8983" # Browser port
 
   activemq:
-    image: alfresco/alfresco-activemq:5.16.4-jre11-centos7
+    image: alfresco/alfresco-activemq:5.17.1-jre11-centos7
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console
@@ -146,7 +146,7 @@ services:
       - "61613:61613" # STOMP
 
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:2.7.0
+    image: quay.io/alfresco/alfresco-digital-workspace:2.8.0
     mem_limit: 128m
     environment:
       APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -154,7 +154,7 @@ services:
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
 
   control-center:
-    image: quay.io/alfresco/alfresco-admin-app:7.2.0
+    image: quay.io/alfresco/alfresco-admin-app:7.3.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

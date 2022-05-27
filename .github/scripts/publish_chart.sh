@@ -1,23 +1,22 @@
 #!/usr/bin/env bash
 
 if [ -z "${COMMIT_MESSAGE}" ]; then
-  echo "COMMIT_MESSAGE variable is not setup "
+  echo "COMMIT_MESSAGE variable is not set"
   exit 2
 fi
 if [ -z "${GITHUB_RUN_NUMBER}" ]; then
-  echo "GITHUB_RUN_NUMBER variable is not setup "
+  echo "GITHUB_RUN_NUMBER variable is not set"
   exit 2
 fi
-if [ -z "${GITHUB_REF}" ]; then
-  echo "GITHUB_REF variable is not setup "
+if [ -z "${BRANCH_NAME}" ]; then
+  echo "BRANCH_NAME variable is not set"
   exit 2
 fi
 if [ -z "${GITHUB_TOKEN}" ]; then
-  echo "GITHUB_TOKEN variable is not setup "
+  echo "GITHUB_TOKEN variable is not set"
   exit 2
 fi
 
-BRANCH_NAME=$(echo "${GITHUB_REF##*/}")
 PROJECT_NAME="alfresco-content-services"
 HELM_REPO_BASE_URL="https://kubernetes-charts.alfresco.com"
 HELM_REPO="incubator"
@@ -29,8 +28,8 @@ if [[ "${BRANCH_NAME}" != "master" ]]; then
 elif [[ "${COMMIT_MESSAGE}" == *"[release]"* ]]; then
   export HELM_REPO=stable
   git checkout -B "${BRANCH_NAME}"
-  git config --global user.email "alfresco-build@alfresco.com"
-  git config --global user.name "alfresco-build"
+  git config --global user.name "${GITHUB_USERNAME}"
+  git config --global user.email "${GITHUB_EMAIL}"
   echo "Tagging repository with v${CHART_VERSION}..."
   export GIT_TAG="v${CHART_VERSION}"
   git tag "${GIT_TAG}" -a -m "Generated tag from github action for build ${GITHUB_RUN_NUMBER}"

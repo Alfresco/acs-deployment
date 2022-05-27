@@ -3,7 +3,7 @@
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 5.2.0
+version: 5.3.0-M1
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
