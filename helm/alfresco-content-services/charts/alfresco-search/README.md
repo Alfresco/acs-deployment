@@ -25,7 +25,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |-----|------|---------|-------------|
 | alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}},"tracking":{"auth":"secret","sharedsecret":null}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","tracking":{"auth":"secret","sharedsecret":null}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
 | global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic |
 | ingress.basicAuth | string | `"YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg=="` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
@@ -45,13 +45,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| nodeSelector | object | `{}` |  |
+| nodeSelector | object | `{}` | Define the alfresco-search properties to use in the k8s cluster This is the search provider used by alfresco-content-repository |
 | persistence | object | `{"EbsPvConfiguration":{"fsType":"ext4"},"VolumeSizeRequest":"10Gi","chownWithDynamicProvisioning":false,"enabled":true,"search":{"data":{"mountPath":"/opt/alfresco-search-services/data","subPath":"alfresco-content-services/solr-data"}}}` | Defines the mounting points for the persistence required by the apps in the cluster the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data |
 | persistence.VolumeSizeRequest | string | `"10Gi"` | Only define if you have a specific claim already created existingClaim: "search-master-claim" |
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
-| replicaCount | int | `1` | Define the alfresco-search properties to use in the k8s cluster This is the search provider used by alfresco-content-repository |
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.memory | string | `"2000Mi"` | Alfresco Search Services requests memory |
