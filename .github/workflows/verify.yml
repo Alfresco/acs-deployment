@@ -29,7 +29,13 @@ jobs:
       max-parallel: 1 # otherwise flaky problems with aws ELB
       fail-fast: false
       matrix:
-        acs_version: [ latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community ]
+        acs_version:
+          - latest
+          - 7.2.N
+          - 7.1.N
+          - 7.0.N
+          - 6.2.N
+          - community
     runs-on: ubuntu-latest
     env:
       DOMAIN: dev.envalfresco.com
@@ -68,7 +74,7 @@ jobs:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
           ACS_VERSION: ${{ matrix.acs_version }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}"
+          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
   compose:
     needs: [ pre-commit, branch ]
     strategy:
@@ -102,7 +108,7 @@ jobs:
         shell: bash
         env:
           ACS_VERSION: ${{ matrix.acs_version}}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}"
+          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
   publish:
     needs: [ compose, helm, branch ]
     runs-on: ubuntu-latest
@@ -123,4 +129,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_USERNAME }}
           GITHUB_EMAIL: ${{ secrets.BOT_GITHUB_EMAIL }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}"
+          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
