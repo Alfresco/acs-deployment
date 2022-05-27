@@ -10,16 +10,32 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-checkov@v1.4.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.4.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.4.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-checkov@v1.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.5.0
+  branch:
+    runs-on: ubuntu-latest
+    outputs:
+      branch_name: ${{ steps.branch.outputs.branch_name }}"
+    steps:
+      - id: branch
+        run: |
+          BRANCH_REF=${GITHUB_HEAD_REF:-$GITHUB_REF}
+          BRANCH_NAME=${BRANCH_REF##*\/}
+          echo "::set-output name=branch_name::$BRANCH_NAME"
   helm:
-    needs: [ pre-commit ]
+    needs: [ pre-commit, branch ]
     strategy:
       max-parallel: 1 # otherwise flaky problems with aws ELB
       fail-fast: false
       matrix:
-        acs_version: [ latest, 7.1.N, 7.0.N, 6.2.N, community ]
+        acs_version:
+          - latest
+          - 7.2.N
+          - 7.1.N
+          - 7.0.N
+          - 6.2.N
+          - community
     runs-on: ubuntu-latest
     env:
       DOMAIN: dev.envalfresco.com
@@ -58,12 +74,13 @@ jobs:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
           ACS_VERSION: ${{ matrix.acs_version }}
+          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
   compose:
-    needs: [ pre-commit ]
+    needs: [ pre-commit, branch ]
     strategy:
       fail-fast: true
       matrix:
-        acs_version: [ latest, 7.1.N, 7.0.N, 6.2.N, community ]
+        acs_version: [ latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -91,11 +108,10 @@ jobs:
         shell: bash
         env:
           ACS_VERSION: ${{ matrix.acs_version}}
+          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
   publish:
-    needs: [ compose, helm ]
+    needs: [ compose, helm, branch ]
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -109,3 +125,8 @@ jobs:
         run: .github/scripts/publish_chart.sh
         shell: bash
         if: github.ref_name == github.event.repository.default_branch || env.COMMIT_MESSAGE == '[publish]'
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_USERNAME }}
+          GITHUB_EMAIL: ${{ secrets.BOT_GITHUB_EMAIL }}
+          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
