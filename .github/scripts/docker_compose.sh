@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
 if [ -z "${ACS_VERSION}" ]; then
-  echo "ACS_VERSION variable is not setup "
+  echo "ACS_VERSION variable is not set"
   exit 2
 fi
 if [ -z "${COMMIT_MESSAGE}" ]; then
-  echo "COMMIT_MESSAGE variable is not setup "
+  echo "COMMIT_MESSAGE variable is not set"
   exit 2
 fi
-if [ -z "${GITHUB_REF}" ]; then
-  echo "GITHUB_REF variable is not setup "
+if [ -z "${BRANCH_NAME}" ]; then
+  echo "BRANCH_NAME variable is not set"
   exit 2
 fi
 
-BRANCH_NAME=$(echo "${GITHUB_REF##*/}")
 GIT_DIFF=$(git diff origin/master --name-only .)
 compose_file="docker-compose.yml"
 alf_port=8080
