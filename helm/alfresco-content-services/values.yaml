@@ -434,7 +434,7 @@ filestore:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 0.16.1
+    tag: 1.5.3
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
