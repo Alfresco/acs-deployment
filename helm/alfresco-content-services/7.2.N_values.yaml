@@ -47,4 +47,4 @@ alfresco-search:
 alfresco-sync-service:
   syncservice:
     image:
-      tag: 3.7.0
+      tag: 4.0.0-A1
