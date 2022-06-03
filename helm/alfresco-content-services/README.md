@@ -93,7 +93,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.searchServicesImage.tag | string | `"2.0.3"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| alfresco-sync-service.image.tag | string | `"3.7.0"` |  |
+| alfresco-sync-service.image.tag | string | `"4.0.0-A1"` |  |
 | alfresco-sync-service.nodeSelector | object | `{}` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
