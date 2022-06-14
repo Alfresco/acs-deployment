@@ -16,7 +16,7 @@ jobs:
   branch:
     runs-on: ubuntu-latest
     outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}"
+      branch_name: ${{ steps.branch.outputs.branch_name }}
     steps:
       - id: branch
         run: |
