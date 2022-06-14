@@ -16,12 +16,13 @@ jobs:
   branch:
     runs-on: ubuntu-latest
     outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}"
+      branch_name: ${{ steps.branch.outputs.branch_name }}
     steps:
       - id: branch
+        name: Evaluate branch name and set as output
         run: |
-          BRANCH_REF=${GITHUB_HEAD_REF:-$GITHUB_REF}
-          BRANCH_NAME=${BRANCH_REF##*\/}
+          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
+          echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
   helm:
     needs: [ pre-commit, branch ]
