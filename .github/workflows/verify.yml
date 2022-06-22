@@ -81,6 +81,8 @@ jobs:
       fail-fast: true
       matrix:
         acs_version: [ latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community ]
+         exclude:  
+            acs_version: community
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -88,7 +90,6 @@ jobs:
         with:
           fetch-depth: 0
       - name: Login to Quay.io
-        if:  ${{ matrix.acs_version }} != 'community'
         uses: docker/login-action@v1
         with:
           registry: quay.io
