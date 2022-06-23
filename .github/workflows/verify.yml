@@ -16,12 +16,13 @@ jobs:
   branch:
     runs-on: ubuntu-latest
     outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}"
+      branch_name: ${{ steps.branch.outputs.branch_name }}
     steps:
       - id: branch
+        name: Evaluate branch name and set as output
         run: |
-          BRANCH_REF=${GITHUB_HEAD_REF:-$GITHUB_REF}
-          BRANCH_NAME=${BRANCH_REF##*\/}
+          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
+          echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
   helm:
     needs: [ pre-commit, branch ]
@@ -81,13 +82,14 @@ jobs:
       fail-fast: true
       matrix:
         acs_version: [ latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community ]
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Login to Quay.io
+    if:  matrix.acs_version != 'community'
         uses: docker/login-action@v1
         with:
           registry: quay.io
