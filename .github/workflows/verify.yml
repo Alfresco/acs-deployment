@@ -89,7 +89,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Login to Quay.io
-    if:  matrix.acs_version != 'community'
+        if:  matrix.acs_version != 'community'
         uses: docker/login-action@v1
         with:
           registry: quay.io
