@@ -12,7 +12,7 @@ Alfresco Sync Service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 1.x.x |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 1.x.x |
 
 ## Values
 
@@ -28,7 +28,7 @@ Alfresco Sync Service
 | database | object | `{"external":false}` | Defines properties required by sync service for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in TODO - add container path |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | ingress.extraAnnotations | string | `nil` |  |
-| ingress.tls | list | `[]` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
+| ingress.tls | list | `[]` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
 | initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"busybox"` |  |
 | initContainers.activemq.image.tag | string | `"1.35.0"` |  |
@@ -99,7 +99,7 @@ Alfresco Sync Service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 1.x.x |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 1.x.x |
 
 ## Values
 
@@ -115,7 +115,7 @@ Alfresco Sync Service
 | database | object | `{"external":false}` | Defines properties required by sync service for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl Also make sure that the container has the db driver in TODO - add container path |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | ingress.extraAnnotations | string | `nil` |  |
-| ingress.tls | list | `[]` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
+| ingress.tls | list | `[]` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
 | initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"busybox"` |  |
 | initContainers.activemq.image.tag | string | `"1.35.0"` |  |
