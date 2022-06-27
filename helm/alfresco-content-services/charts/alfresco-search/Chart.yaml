@@ -17,5 +17,5 @@ dependencies:
   - name: alfresco-insight-zeppelin
     version: 1.0.3
   - name: common
-    repository: https://charts.bitnami.com/bitnami
+    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     version: 1.x.x

@@ -18,11 +18,11 @@ dependencies:
     version: 0.1.0
   - name: postgresql
     version: 10.16.2
-    repository: https://charts.bitnami.com/bitnami
+    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     condition: postgresql.enabled
   - name: postgresql
     version: 10.16.2
-    repository: https://charts.bitnami.com/bitnami
+    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     alias: postgresql-syncservice
     condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
   - name: common
