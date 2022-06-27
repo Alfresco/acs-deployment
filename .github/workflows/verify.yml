@@ -53,7 +53,8 @@ jobs:
       - uses: azure/setup-kubectl@v2.0
         with:
           version: 'v1.23.6'
-      - name: Login to Quay.io
+      - if: matrix.acs_version != 'community'
+        name: Login to Quay.io
         uses: docker/login-action@v1
         with:
           registry: quay.io
@@ -77,18 +78,19 @@ jobs:
           ACS_VERSION: ${{ matrix.acs_version }}
           BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
   compose:
-    needs: [ pre-commit, branch ]
+    needs: [pre-commit, branch]
     strategy:
       fail-fast: true
       matrix:
-        acs_version: [ latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community ]
+        acs_version: [latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Login to Quay.io
+      - if: matrix.acs_version != 'community'
+        name: Login to Quay.io
         uses: docker/login-action@v1
         with:
           registry: quay.io
