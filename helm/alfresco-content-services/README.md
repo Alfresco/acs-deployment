@@ -22,9 +22,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.3.0 |
-| https://charts.bitnami.com/bitnami | postgresql-syncservice(postgresql) | 10.16.2 |
-| https://charts.bitnami.com/bitnami | postgresql | 10.16.2 |
 | https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql-syncservice(postgresql) | 10.16.2 |
 
 ## Values
 
