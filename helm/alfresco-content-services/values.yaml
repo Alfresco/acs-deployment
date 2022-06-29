@@ -23,7 +23,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.3.0-A2
+    tag: 7.3.0-M1
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -154,7 +154,7 @@ msTeamsService:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 1.1.0-M1
+    tag: 1.1.0-M2
     pullPolicy: IfNotPresent
     internalPort: 3978
   service:
@@ -478,7 +478,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.3.0-A2
+    tag: 7.3.0-M1
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -625,7 +625,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.8.0
+    tag: 2.9.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -675,7 +675,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: 13.3.0
+    tag: 14.3.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
@@ -707,7 +707,7 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
-    tag: 13.3.0
+    tag: 14.3.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
