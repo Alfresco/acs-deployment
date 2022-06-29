@@ -4,12 +4,12 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.5.0
+    rev: v1.6.0
     hooks:
       - id: helm-deps
       - id: helm-lint
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.2.0
+    rev: v4.3.0
     hooks:
       - id: check-yaml
         args: [--allow-multiple-documents]
@@ -25,7 +25,7 @@ repos:
     hooks:
       - id: docker-compose-check
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 2.0.1182
+    rev: 2.0.1211
     hooks:
     - id: checkov
       args: [--config, .checkov/config.yml]

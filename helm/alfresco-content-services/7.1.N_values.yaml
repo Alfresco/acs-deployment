@@ -44,6 +44,14 @@ alfresco-search:
   searchServicesImage:
     tag: 2.0.2.2
 
+postgresql:
+  image:
+    tag: 13.3.0
+
+postgresql-syncservice:
+  image:
+    tag: 13.3.0
+
 alfresco-sync-service:
   syncservice:
     image:
