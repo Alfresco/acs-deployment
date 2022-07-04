@@ -234,7 +234,7 @@ spec:
       {{- end }}
       - name: data
         persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
+          claimName: {{ .Values.persistence.repository.existingClaim | default .Values.persistence.existingClaim  }}
       - name: custom-pipeline-config-volume
         configMap:
           optional: true

@@ -532,6 +532,8 @@ persistence:
   existingClaim: "alfresco-volume-claim"
   repository:
     enabled: true
+    # -- Override existing claim for repository deployment
+    existingClaim: null
     config:
       querysetsMountPath: "/usr/local/tomcat/shared/classes/alfresco/extension/querysets/"
       transform:
@@ -543,6 +545,8 @@ persistence:
       subPath: "alfresco-content-services/repository-data"
   filestore:
     enabled: true
+    # -- Override existing claim for filestore deployment
+    existingClaim: null
     data:
       mountPath: "/tmp/Alfresco"
       subPath: "alfresco-content-services/filestore-data"
