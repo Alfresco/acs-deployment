@@ -62,7 +62,7 @@ spec:
             subPath: {{ .Values.persistence.search.data.subPath }}
           readinessProbe:
             httpGet:
-              path: /solr
+              path: /solr/alfresco/admin/ping
               port: {{ template "alfresco-search.internalPort" . }}
               {{- if eq .Values.global.tracking.auth "secret" }}
               httpHeaders:
