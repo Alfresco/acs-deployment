@@ -10,7 +10,7 @@ metadata:
 data:
   ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
   SPRING_ELASTICSEARCH_REST_URIS: http://{{ .Values.elasticsearch.host }}:{{ .Values.elasticsearch.port }}
-  SPRING_ACTIVEMQ_BROKERURL: nio://{{ .Release.Name }}-activemq-broker:61616
+  {{ template "spring.activemq.config" . }}
   ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "content-services.shortname" . }}-transform-misc/transform/config
   ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
