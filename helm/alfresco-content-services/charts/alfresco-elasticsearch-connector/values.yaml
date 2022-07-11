@@ -70,5 +70,13 @@ elasticsearch:
   host: elasticsearch-master
   port: 9200
 
+messageBroker:
+  # --  Broker URL formatted as per https://activemq.apache.org/activemq-connection-uris
+  url: null
+  # -- Broker username
+  user: null
+  # -- Broker password
+  password: null
+
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
