@@ -33,8 +33,11 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       initContainers:
-      {{- if eq .Values.activemq.external false }}
-      - name: init-activemq
+      {{- if .Values.activemq }}
+      {{ fail "Using activemq.[host|port|user|password|external] in subcharts is not supported anymore. Use messageBroker.* instead" }}
+      {{- end }}
+      {{/*
+       - name: init-activemq
         image: "{{ .Values.initContainers.activemq.image.repository }}:{{ .Values.initContainers.activemq.image.tag }}"
         imagePullPolicy: {{ .Values.initContainers.activemq.image.pullPolicy }}
         resources:
@@ -46,6 +49,7 @@ spec:
           value: {{ .Values.activemq.broker.ports | default 61616 | quote }}
         command: ['sh', '-c', 'until nc -w1 $ACTIVEMQ_HOST $ACTIVEMQ_PORT; do echo "waiting for activemq"; sleep 5; done;']
       {{- end }}
+      */}}
       {{- if eq .Values.database.external false }}
       - name: init-postgres
         image: "{{ .Values.initContainers.postgres.image.repository }}:{{ .Values.initContainers.postgres.image.tag }}"
