@@ -553,10 +553,10 @@ activemq:
   nodeSelector: {}
 
 # -- external activemq connection setting when activemq.enabled=false
-messageBroker:
-  url: ""
-  user: ""
-  password: ""
+messageBroker: &acs_messageBroker
+  url: null
+  user: null
+  password: null
 
 alfresco-search:
   nodeSelector: {}
@@ -598,6 +598,7 @@ alfresco-search:
 
 alfresco-elasticsearch-connector:
   enabled: false
+  messageBroker: *acs_messageBroker
   reindexing:
     enabled: true
     postgresql:

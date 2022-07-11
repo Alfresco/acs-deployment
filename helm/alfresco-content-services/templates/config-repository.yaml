@@ -124,7 +124,7 @@ data:
       -Dmessaging.broker.username={{ .Values.activemq.adminUser.username }}
       -Dmessaging.broker.password={{ .Values.activemq.adminUser.password }}
       {{- else }}
-      -Dmessaging.broker.url={{ .Values.messageBroker.url | default (printf "failover:(nio://%s-activemq-broker:61616)?timeout=3000&jms.useCompression=true" .Release.Name)}}
+      -Dmessaging.broker.url={{ required "Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url" .Values.messageBroker.url }}
       -Dmessaging.broker.username={{ .Values.messageBroker.user }}
       -Dmessaging.broker.password={{ .Values.messageBroker.password }}
       {{- end }}

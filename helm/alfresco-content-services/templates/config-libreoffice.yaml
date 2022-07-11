@@ -12,7 +12,7 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  {{- include "activemq.config" . | nindent 2 }}
+  {{ template "activemq.config" . }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   livenessPercent: "{{ .Values.libreoffice.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.libreoffice.livenessProbe.livenessTransformPeriodSeconds }}"

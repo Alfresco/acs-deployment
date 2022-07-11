@@ -75,6 +75,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-elasticsearch-connector.elasticsearch.host | string | `"elasticsearch-master"` |  |
 | alfresco-elasticsearch-connector.elasticsearch.port | int | `9200` |  |
 | alfresco-elasticsearch-connector.enabled | bool | `false` |  |
+| alfresco-elasticsearch-connector.messageBroker.password | string | `nil` |  |
+| alfresco-elasticsearch-connector.messageBroker.url | string | `nil` |  |
+| alfresco-elasticsearch-connector.messageBroker.user | string | `nil` |  |
 | alfresco-elasticsearch-connector.reindexing.enabled | bool | `true` |  |
 | alfresco-elasticsearch-connector.reindexing.postgresql.database | string | `"alfresco"` |  |
 | alfresco-elasticsearch-connector.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
@@ -135,7 +138,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | mail.smtps.auth | bool | `true` |  |
 | mail.smtps.starttls.enable | bool | `true` |  |
 | mail.username | string | `nil` |  |
-| messageBroker | object | `{"password":"","url":"","user":""}` | external activemq connection setting when activemq.enabled=false |
+| messageBroker | object | `{"password":null,"url":null,"user":null}` | external activemq connection setting when activemq.enabled=false |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
 | msTeams | object | `{"enabled":false}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
