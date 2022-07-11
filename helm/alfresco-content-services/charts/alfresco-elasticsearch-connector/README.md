@@ -41,7 +41,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | liveIndexing.path.image.tag | string | `"3.1.1"` |  |
 | liveIndexing.path.replicaCount | int | `1` |  |
 | messageBroker.password | string | `nil` | Broker password |
-| messageBroker.url | string | `nil` | Broker URL formated as per https://activemq.apache.org/activemq-connection-uris |
+| messageBroker.url | string | `nil` | Broker URL formatted as per https://activemq.apache.org/activemq-connection-uris |
 | messageBroker.user | string | `nil` | Broker username |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
