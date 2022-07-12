@@ -57,17 +57,24 @@ syncservice:
       targetAverageUtilization: 80
     memory:
       enabled: true
-       # -- For the memory a lower threshold(60) for the targetAverageUtilization is needed.
-       # We need to allow the resource metrics to be queried by the metrics-server,
-       # before the pod is killed # by Kubernetes due to reaching memory limits(the infamous
-       # message one might see  in the pod events history. "Terminated: OOMKilled").
-       # The metrics are checked every 15 seconds by #    # default,  configured by the
-       # global cluster flag --horizontal-pod-autoscaler-sync-period
+      # -- For the memory a lower threshold(60) for the targetAverageUtilization is needed.
+      # We need to allow the resource metrics to be queried by the metrics-server,
+      # before the pod is killed # by Kubernetes due to reaching memory limits(the infamous
+      # message one might see  in the pod events history. "Terminated: OOMKilled").
+      # The metrics are checked every 15 seconds by #    # default,  configured by the
+      # global cluster flag --horizontal-pod-autoscaler-sync-period
       targetAverageUtilization: 60
 
 repository:
   host: alfresco-cs-repository
   port: 80
+
+    # -- `messageBroker` object allow to pass ActiveMQ connection details.
+# `url`: provides URI formatted string (see https://activemq.apache.org/activemq-connection-uris).
+# `user`: username to authenticate as.
+# `password`: credential to use to authenticate to the broker.
+messageBroker:
+  url: null
 
 contentServices:
   # -- Specify when installing as a standalone chart, not as a subchart of ACS.
@@ -82,9 +89,9 @@ database:
   external: false
 
 postgresql-syncservice:
+  name: postgresql-syncservice
   # -- If true, install the postgresql chart alongside Alfresco Sync service.
   # Note: Set this to false if you use an external database.
-  name: postgresql-syncservice
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice
@@ -128,10 +135,10 @@ initContainers:
         memory: "10Mi"
 
 ingress:
+  # -- useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes
+  #nginx.ingress.kubernetes.io/ssl-redirect: "false"
   extraAnnotations:
-    # -- useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes
-    #nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+  tls: []
