@@ -108,8 +108,8 @@ postgresql-syncservice:
 initContainers:
   activemq:
     image:
-      repository: busybox
-      tag: 1.35.0
+      repository: bash
+      tag: 5.1.16
       pullPolicy: IfNotPresent
     resources:
       requests:
