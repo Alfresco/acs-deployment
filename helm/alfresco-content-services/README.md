@@ -174,7 +174,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.image.internalPort | int | `9095` |  |
 | ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ooiService.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
-| ooiService.image.tag | string | `"1.1.2"` |  |
+| ooiService.image.tag | string | `"1.1.3-A1"` |  |
 | ooiService.ingress.path | string | `"/ooi-service"` |  |
 | ooiService.ingress.tls | list | `[]` |  |
 | ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
