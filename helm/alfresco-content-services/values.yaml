@@ -116,7 +116,7 @@ ooiService:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 1.1.3-A1
+    tag: 1.1.3
     pullPolicy: IfNotPresent
     internalPort: 9095
   service:
@@ -154,7 +154,7 @@ msTeamsService:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 1.1.0-M2
+    tag: 1.1.0
     pullPolicy: IfNotPresent
     internalPort: 3978
   service:
