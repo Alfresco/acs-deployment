@@ -137,7 +137,7 @@ services:
       - "8083:8983" # Browser port
 
   activemq:
-    image: alfresco/alfresco-activemq:5.17.1-jre11-centos7
+    image: alfresco/alfresco-activemq:5.17.1-jre11-rockylinux8
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console
