@@ -676,7 +676,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: 14.3.0
+    tag: 14.4.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
@@ -708,7 +708,7 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
-    tag: 14.3.0
+    tag: 14.4.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
