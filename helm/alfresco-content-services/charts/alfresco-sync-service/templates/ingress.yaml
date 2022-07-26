@@ -34,6 +34,8 @@ spec:
       paths:
       - path: {{ .Values.syncservice.ingress.path }}/*
         backend:
-          serviceName: {{ template "syncservice.fullname" . }}
-          servicePort: {{ .Values.syncservice.service.externalPort }}
+          service:
+            name: {{ template "syncservice.fullname" . }}
+            port: 
+              number: {{ .Values.syncservice.service.externalPort }}
 {{- end }}

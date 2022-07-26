@@ -47,9 +47,13 @@ spec:
       paths:
       - path: {{ .Values.repository.ingress.path }}
         backend:
-          serviceName: {{ template "content-services.shortname" . }}-repository
-          servicePort: {{ .Values.repository.service.externalPort }}
+          service:
+            name: {{ template "content-services.shortname" . }}-repository
+            port:
+              number: {{ .Values.repository.service.externalPort }}
       - path: {{ .Values.apiexplorer.ingress.path }}
         backend:
-          serviceName: {{ template "content-services.shortname" . }}-repository
-          servicePort: {{ .Values.repository.service.externalPort }}
+          service:
+            name: {{ template "content-services.shortname" . }}-repository
+            port:
+              number: {{ .Values.repository.service.externalPort }}

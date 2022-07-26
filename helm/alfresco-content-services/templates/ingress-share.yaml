@@ -41,5 +41,7 @@ spec:
       paths:
       - path: {{ .Values.share.ingress.path }}
         backend:
-          serviceName: {{ template "content-services.shortname" . }}-share
-          servicePort: {{ .Values.share.service.externalPort }}
+          service:
+            name: {{ template "content-services.shortname" . }}-share
+            port:
+              number: {{ .Values.share.service.externalPort }}

@@ -18,6 +18,8 @@ spec:
       paths:
       - path: {{ .Values.ingress.path }}
         backend: 
-          serviceName: {{ template "keycloak.fullname" . }}-http
-          servicePort: {{ .Values.keycloak.service.httpPort }}
+          service:
+            name: {{ template "keycloak.fullname" . }}-http
+            port:
+              number: {{ .Values.keycloak.service.httpPort }}
 {{- end }}

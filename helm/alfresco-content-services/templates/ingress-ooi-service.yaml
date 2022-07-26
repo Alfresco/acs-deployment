@@ -32,5 +32,7 @@ spec:
       paths:
       - path: {{ .Values.ooiService.ingress.path }}
         backend:
-          serviceName: {{ template "content-services.shortname" . }}-ooi-service
-          servicePort: {{ .Values.ooiService.service.externalPort }}
+          service: 
+            name: {{ template "content-services.shortname" . }}-ooi-service
+            port:
+              number: {{ .Values.ooiService.service.externalPort }}

@@ -26,6 +26,8 @@ spec:
       paths:
       - path: {{ .Values.ingress.path }}
         backend:
-          serviceName: {{ template "alfresco-search.fullName" . }}-solr
-          servicePort: {{ .Values.service.externalPort }}
+          service:
+            name: {{ template "alfresco-search.fullName" . }}-solr
+            port: 
+              number: {{ .Values.service.externalPort }}
 {{- end }}

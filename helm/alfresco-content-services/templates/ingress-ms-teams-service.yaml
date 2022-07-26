@@ -32,5 +32,7 @@ spec:
       paths:
       - path: {{ .Values.msTeamsService.ingress.path }}
         backend:
-          serviceName: {{ template "content-services.shortname" . }}-ms-teams-service
-          servicePort: {{ .Values.msTeamsService.service.externalPort }}
+          service: 
+            name: {{ template "content-services.shortname" . }}-ms-teams-service
+            port:
+              number: {{ .Values.msTeamsService.service.externalPort }}

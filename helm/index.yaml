@@ -2,7 +2,48 @@ apiVersion: v1
 entries:
   alfresco-content-services:
   - apiVersion: v2
-    created: "2022-07-26T16:43:39.424115741+02:00"
+    created: "2022-07-26T17:08:50.885085917+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.4.5
+    - alias: postgresql-syncservice
+      condition: postgresql-syncservice.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.4.5
+    - alias: alfresco-digital-workspace
+      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
+      name: common
+      repository: https://activiti.github.io/activiti-cloud-helm-charts
+      version: 7.1.0-M15
+    - name: activemq
+      repository: ""
+      version: 2.0.0
+    - name: alfresco-search
+      repository: ""
+      version: 1.0.4
+    - name: alfresco-sync-service
+      repository: ""
+      version: 3.0.9
+    description: A Helm chart for deploying Alfresco Content Services
+    digest: f2854c0836312d0602873014f98b76087b8c41b86d4e543d03da920096f40bc6
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - content
+    - content services
+    - alfresco
+    - alfresco content services
+    name: alfresco-content-services
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    urls:
+    - alfresco-content-services-5.1.17.tgz
+    version: 5.1.17
+  - apiVersion: v2
+    created: "2022-07-26T17:08:50.868791842+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -43,7 +84,7 @@ entries:
     - alfresco-content-services-5.1.16.tgz
     version: 5.1.16
   - apiVersion: v2
-    created: "2022-07-26T16:43:39.40108805+02:00"
+    created: "2022-07-26T17:08:50.849415082+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -86,7 +127,32 @@ entries:
   alfresco-identity-service:
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-07-26T16:43:39.442628525+02:00"
+    created: "2022-07-26T17:08:50.910987516+02:00"
+    dependencies:
+    - name: keycloak
+      repository: https://codecentric.github.io/helm-charts
+      version: 15.0.0
+    description: The Alfresco Identity Service will become the central component responsible
+      for identity-related capabilities needed by other Alfresco software, such as
+      managing users, groups, roles, profiles, and authentication. Currently it deals
+      just with authentication.
+    digest: 926f7352b2426e975848d4fc15daa8fc7726cade1485c4a5a8eac0e37667c12a
+    home: https://github.com/Alfresco/alfresco-identity-service/helm
+    keywords:
+    - alfresco
+    - keycloak
+    - identity-service
+    maintainers:
+    - name: Alfresco
+    name: alfresco-identity-service
+    sources:
+    - https://github.com/Alfresco/alfresco-identity-service/helm
+    urls:
+    - alfresco-identity-service-5.0.3.tgz
+    version: 5.0.3
+  - apiVersion: v1
+    appVersion: 1.6.0
+    created: "2022-07-26T17:08:50.90144525+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -111,7 +177,7 @@ entries:
     version: 5.0.2
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-07-26T16:43:39.433684596+02:00"
+    created: "2022-07-26T17:08:50.893728479+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -134,4 +200,4 @@ entries:
     urls:
     - alfresco-identity-service-5.0.1.tgz
     version: 5.0.1
-generated: "2022-07-26T16:43:39.381170059+02:00"
+generated: "2022-07-26T17:08:50.826076395+02:00"
