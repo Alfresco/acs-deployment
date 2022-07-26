@@ -40,6 +40,7 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.share.ingress.path }}
+        pathType: Prefix
         backend:
           service:
             name: {{ template "content-services.shortname" . }}-share

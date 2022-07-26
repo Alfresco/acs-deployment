@@ -17,6 +17,7 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.ingress.path }}
+        pathType: Prefix
         backend: 
           service:
             name: {{ template "keycloak.fullname" . }}-http

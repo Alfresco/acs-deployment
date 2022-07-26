@@ -31,6 +31,7 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.ooiService.ingress.path }}
+        pathType: Prefix
         backend:
           service: 
             name: {{ template "content-services.shortname" . }}-ooi-service

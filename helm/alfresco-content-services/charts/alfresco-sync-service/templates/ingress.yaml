@@ -33,6 +33,7 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.syncservice.ingress.path }}/*
+        pathType: Prefix
         backend:
           service:
             name: {{ template "syncservice.fullname" . }}

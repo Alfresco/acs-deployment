@@ -46,12 +46,14 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.repository.ingress.path }}
+        pathType: Prefix
         backend:
           service:
             name: {{ template "content-services.shortname" . }}-repository
             port:
               number: {{ .Values.repository.service.externalPort }}
       - path: {{ .Values.apiexplorer.ingress.path }}
+        pathType: Prefix
         backend:
           service:
             name: {{ template "content-services.shortname" . }}-repository
