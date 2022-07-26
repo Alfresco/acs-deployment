@@ -1,5 +1,5 @@
 #!/bin/bash
-rm *.tgz
+#rm *.tgz
 pushd alfresco-content-services
 helm dependency update
 popd

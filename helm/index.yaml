@@ -2,7 +2,48 @@ apiVersion: v1
 entries:
   alfresco-content-services:
   - apiVersion: v2
-    created: "2022-04-28T17:39:15.535788424+02:00"
+    created: "2022-07-26T16:37:12.444823349+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.4.5
+    - alias: postgresql-syncservice
+      condition: postgresql-syncservice.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.4.5
+    - alias: alfresco-digital-workspace
+      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
+      name: common
+      repository: https://activiti.github.io/activiti-cloud-helm-charts
+      version: 7.1.0-M15
+    - name: activemq
+      repository: ""
+      version: 2.0.0
+    - name: alfresco-search
+      repository: ""
+      version: 1.0.4
+    - name: alfresco-sync-service
+      repository: ""
+      version: 3.0.9
+    description: A Helm chart for deploying Alfresco Content Services
+    digest: 023093e286ad27c684b0325a07d7f20310ccd6d95966295ea9c5a2cbaddaa3b4
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - content
+    - content services
+    - alfresco
+    - alfresco content services
+    name: alfresco-content-services
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    urls:
+    - alfresco-content-services-5.1.16.tgz
+    version: 5.1.16
+  - apiVersion: v2
+    created: "2022-07-26T16:37:12.426501149+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -45,7 +86,7 @@ entries:
   alfresco-identity-service:
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-04-28T17:39:15.545574036+02:00"
+    created: "2022-07-26T16:37:12.454888399+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -68,4 +109,4 @@ entries:
     urls:
     - alfresco-identity-service-5.0.1.tgz
     version: 5.0.1
-generated: "2022-04-28T17:39:15.51527408+02:00"
+generated: "2022-07-26T16:37:12.404620213+02:00"
