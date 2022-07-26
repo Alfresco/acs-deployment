@@ -63,7 +63,7 @@ The following sections describe how to setup the AWS services and highlights the
 
     * Select the "Standard Create" option so you can choose the VPC later
     * Select the "Amazon Aurora with PostgreSQL compatibility" Edition
-    * Select "12.4" for the Version
+    * Select "14.3" for the Version
     * Provide a "DB cluster identifier" of your choosing
     * Change the "Master username" to `alfresco`
     * In the "Connectivity" section select the VPC created by eksctl that contains your EKS cluster
