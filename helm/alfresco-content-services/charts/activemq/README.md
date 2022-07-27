@@ -19,7 +19,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
-| image.tag | string | `"5.17.1-jre11-centos7"` |  |
+| image.tag | string | `"5.17.1-jre11-rockylinux8"` |  |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
 | initContainer.image.tag | string | `"1.35.0"` |  |
