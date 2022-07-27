@@ -120,7 +120,7 @@ data:
       {{- end }}
       {{- end }}
       {{- if .Values.activemq.enabled }}
-      -Dmessaging.broker.url=failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+      -Dmessaging.broker.url={{ printf "failover:(nio://%s-broker:61616)?timeout=3000&jms.useCompression=true" (include "activemq.fullname" .) }}
       -Dmessaging.broker.username={{ .Values.activemq.adminUser.username }}
       -Dmessaging.broker.password={{ .Values.activemq.adminUser.password }}
       {{- else }}
