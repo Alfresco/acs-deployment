@@ -86,7 +86,7 @@ The following sections describe how to setup the AWS services and highlights the
 
 1. Create an Amazon MQ broker using the "Create brokers" wizard in the [MQ Console](https://console.aws.amazon.com/amazon-mq/home).
 
-    * Select "Single-instance broker" option and press the Next button
+    * Select "Single-instance broker" or "Active/standby broker" option and press the Next button
     * Provide a "Broker name" of your choosing
     * In the "ActiveMQ Access" section specify `alfresco` as the "Username" and a "Password" of your choice
     * In the "Additional settings" section choose the "Select existing VPC and subnet(s)" option
@@ -102,16 +102,68 @@ The following sections describe how to setup the AWS services and highlights the
 
 4. Finally, take a note of the OpenWire Endpoint displayed in the "Connections" section
 
+>  :warning: make sure to use a failover URL. If you chose to use a "Single -instance broker", still wrap its URL in `failover:()`.
+
 ## Deploy
 
 In order to use the S3 connector and external database options, the S3 connector AMP and database drivers are required, respectively. Fortunately, a Docker image has been pre-packaged with the artifacts and can be used as-is for our deployment. To use the image we will override the `repository.image.repository` property.
 
 To use the S3 connector, RDS and Amazon MQ we have to disable the internal default components via the Helm "set" command and additionally provide the service endpoints and credentials we made a note of in the previous sections.
 
-When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
+When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services).
+Edit your `values.yml`file so it contains below elements:
+
+```yaml
+externalPort: 443
+externalProtocol: https
+externalHost: acs.YOUR-DOMAIN-NAME
+persistence:
+  enabled: true
+  storageClass:
+    enabled: true
+    name: nfs-client
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+repository:
+  image:
+    repository: alfresco-content-repository-aws
+s3connector:
+  enabled: true
+  config:
+    bucketName: YOUR-BUCKET-NAME
+    bucketLocation: YOUR-AWS-REGION
+postgresql:
+  enabled: false
+database:
+  external: true
+  driver: org.postgresql.Driver
+  url: jdbc:postgresql://YOUR-DATABASE-ENDPOINT:5432/
+  user: alfresco
+  password: YOUR-DATABASE-PASSWORD
+messageBroker: &acs_messageBroker
+  url: YOUR-MQ-ENDPOINT
+  user: alfresco
+  password: YOUR-MQ-PASSWORD
+```
+
+Then you can deploy using:
 
 ```bash
-helm install acs alfresco/alfresco-content-services \
+helm -n alfresco install acs ./alfresco/alfresco-content-services --atomic --timeout 10m0s
+```
+
+If you're deploying from the registry of charts you can't update the `values.yml`file. Instead you either:
+
+* use a local copy of the `values.yml`file amended as shown above
+
+* use `--set` options to pass individual values.
+
+Note however that the main `values.yml` file uses [YAML anchors and aliases](https://yaml.org/spec/1.2.2/#3222-anchors-and-aliases) to propagate configuration to subcharts if needed.
+Using `--set` do not fill the yaml file with passed values and so aliases will never point to a node filled with the values passed by the command line.
+That means when using command line you must also pass aliased values as shown below (at the end of the command):
+
+```bash
+helm -n alfresco install acs alfresco-stable/alfresco-content-services --atomic --timeout 10m0s
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
@@ -133,9 +185,9 @@ helm install acs alfresco/alfresco-content-services \
 --set messageBroker.url="YOUR-MQ-ENDPOINT" \
 --set messageBroker.user="alfresco" \
 --set messageBroker.password="YOUR-MQ-PASSWORD" \
---atomic \
---timeout 10m0s \
---namespace=alfresco
+--set alfresco-sync-service.messageBroker.url="YOUR-MQ-ENDPOINT" \
+--set alfresco-sync-service.messageBroker.user="alfresco" \
+--set alfresco-sync-service.messageBroker.password="YOUR-MQ-PASSWORD" \
 ```
 
 > NOTE: Alternatively, Aurora MySQL can be used instead of PostgreSQL by selecting the "Amazon Aurora with MySQL compatibility" option and version "5.7.12" in the create database wizard. You'll also need to change the `database.driver` value to "org.mariadb.jdbc.Driver" and change the `database.url` to `"jdbc:mariadb:aurora//YOUR-DATABASE-ENDPOINT:3306/alfresco?useUnicode=yes&characterEncoding=UTF-8"`.
