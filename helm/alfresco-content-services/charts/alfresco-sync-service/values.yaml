@@ -69,8 +69,8 @@ repository:
   host: alfresco-cs-repository
   port: 80
 
-    # -- `messageBroker` object allow to pass ActiveMQ connection details.
-# `url`: provides URI formatted string (see https://activemq.apache.org/activemq-connection-uris).
+# -- `messageBroker` object allow to pass ActiveMQ connection details.
+# `url`: provides URI formatted string (see https://activemq.apache.org/failover-transport-reference)
 # `user`: username to authenticate as.
 # `password`: credential to use to authenticate to the broker.
 messageBroker:

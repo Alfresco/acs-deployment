@@ -111,7 +111,7 @@ In order to use the S3 connector and external database options, the S3 connector
 To use the S3 connector, RDS and Amazon MQ we have to disable the internal default components via the Helm "set" command and additionally provide the service endpoints and credentials we made a note of in the previous sections.
 
 When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services).
-Edit your `values.yml`file so it contains below elements:
+Edit your `values.yml` file so it contains below elements:
 
 ```yaml
 externalPort: 443
@@ -152,11 +152,10 @@ Then you can deploy using:
 helm -n alfresco install acs ./alfresco/alfresco-content-services --atomic --timeout 10m0s
 ```
 
-If you're deploying from the registry of charts you can't update the `values.yml`file. Instead you either:
+If you're deploying from the registry of charts you can't update the `values.yml` file. Instead you either:
 
-* use a local copy of the `values.yml`file amended as shown above
-
-* use `--set` options to pass individual values.
+    * use a local copy of the `values.yml` file amended as shown above
+    * use `--set` options to pass individual values.
 
 Note however that the main `values.yml` file uses [YAML anchors and aliases](https://yaml.org/spec/1.2.2/#3222-anchors-and-aliases) to propagate configuration to subcharts if needed.
 Using `--set` do not fill the yaml file with passed values and so aliases will never point to a node filled with the values passed by the command line.
