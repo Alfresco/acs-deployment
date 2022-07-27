@@ -12,7 +12,7 @@
 
 {{- define "spring.activemq.config" -}}
   SPRING_ACTIVEMQ_BROKERURL: |-
-    {{ .Values.messageBroker.url | default (printf "nio://%s-activemq-broker:61616" .Release.Name) }}
+    {{ .Values.messageBroker.url | default (printf "failover(nio://%s-activemq-broker:61616)?timeout=3000&jms.useCompression=true" .Release.Name) }}
   {{- if .Values.messageBroker.user }}
   SPRING_ACTIVEMQ_USER: {{ .Values.messageBroker.user | quote }}
   {{- end }}
