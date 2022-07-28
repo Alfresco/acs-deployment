@@ -844,6 +844,7 @@ metadataKeystore:
   defaultKeyPassword: "oKIWzVdEdA"
 
 alfresco-sync-service:
+  messageBroker: *acs_messageBroker
   nodeSelector: {}
   syncservice:
     enabled : true

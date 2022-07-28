@@ -33,19 +33,34 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
       initContainers:
-      {{- if eq .Values.activemq.external false }}
+      {{- if .Values.activemq }}
+      {{ fail "Using activemq.[host|port|user|password|external] in subcharts is not supported anymore. Use messageBroker.* instead" }}
+      {{- end }}
       - name: init-activemq
         image: "{{ .Values.initContainers.activemq.image.repository }}:{{ .Values.initContainers.activemq.image.tag }}"
         imagePullPolicy: {{ .Values.initContainers.activemq.image.pullPolicy }}
         resources:
 {{ toYaml .Values.initContainers.activemq.resources | indent 10 }}
-        env:
-        - name: ACTIVEMQ_HOST
-          value: {{ printf "%s-%s" (include "acs.release.name" .) .Values.activemq.broker.host}}
-        - name: ACTIVEMQ_PORT
-          value: {{ .Values.activemq.broker.ports | default 61616 | quote }}
-        command: ['sh', '-c', 'until nc -w1 $ACTIVEMQ_HOST $ACTIVEMQ_PORT; do echo "waiting for activemq"; sleep 5; done;']
-      {{- end }}
+        envFrom:
+        - configMapRef:
+            name: {{ template "syncservice.fullname" . }}-configmap
+        args:
+          - -c
+          - echo "Checking for ActiveMQ broker availability";
+            IFS=, read -r -a array < <(echo "${SPRING_ACTIVEMQ_BROKERURL}" | sed -r 's/([a-z]+:\()*([^\)]*)(\)?.*)*/\2/');
+            while [ -z $MQREADY ]; do
+              for broker in "${array[@]}"; do broker_socket=${broker%%\?*};
+                [[ "${broker_socket#*://}" == *":"* ]] || NCPORT=61616;
+                echo "Trying ${broker_socket#*://} $NCPORT";
+                nc -w1 ${broker_socket#*://} $NCPORT;
+                if [ $? -eq 0 ]; then echo "ok";
+                  MQREADY=1;
+                  break;
+                else echo "not ok";
+                  sleep 5;
+                fi;
+              done;
+            done
       {{- if eq .Values.database.external false }}
       - name: init-postgres
         image: "{{ .Values.initContainers.postgres.image.repository }}:{{ .Values.initContainers.postgres.image.tag }}"
