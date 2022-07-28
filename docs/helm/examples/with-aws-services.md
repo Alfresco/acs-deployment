@@ -61,15 +61,15 @@ The following sections describe how to setup the AWS services and highlights the
 
 1. Create an Aurora cluster using the "Create database" wizard in the [RDS Console](https://console.aws.amazon.com/rds/home).
 
-    * Select the "Standard Create" option so you can choose the VPC later
-    * Select the "Amazon Aurora with PostgreSQL compatibility" Edition
-    * Select "14.3" for the Version
-    * Provide a "DB cluster identifier" of your choosing
-    * Change the "Master username" to `alfresco`
-    * In the "Connectivity" section select the VPC created by eksctl that contains your EKS cluster
-    * Expand the "Additional configuration" section and provide a "Initial database name" of `alfresco`
-    * Leave all other options set to the default
-    * Press the orange "Create database" button
+*  Select the "Standard Create" option so you can choose the VPC later
+*  Select the "Amazon Aurora with PostgreSQL compatibility" Edition
+*  Select "14.3" for the Version
+*  Provide a "DB cluster identifier" of your choosing
+*  Change the "Master username" to `alfresco`
+*  In the "Connectivity" section select the VPC created by eksctl that contains your EKS cluster
+*  Expand the "Additional configuration" section and provide a "Initial database name" of `alfresco`
+*  Leave all other options set to the default
+*  Press the orange "Create database" button
 
 2. Once the cluster has been created (it can take a few minutes) make a note of the generated master password using the "View credentials details" button in the header banner.
 3. Select the database with the "Writer" role and click on the default security group link (as shown in the screenshot below)
@@ -86,14 +86,14 @@ The following sections describe how to setup the AWS services and highlights the
 
 1. Create an Amazon MQ broker using the "Create brokers" wizard in the [MQ Console](https://console.aws.amazon.com/amazon-mq/home).
 
-    * Select "Single-instance broker" or "Active/standby broker" option and press the Next button
-    * Provide a "Broker name" of your choosing
-    * In the "ActiveMQ Access" section specify `alfresco` as the "Username" and a "Password" of your choice
-    * In the "Additional settings" section choose the "Select existing VPC and subnet(s)" option
-    * Select the VPC created by eksctl that contains your EKS cluster
-    * Choose the "Select existing security groups" option and select the VPC's default security group from the list
-    * Leave all other options set to the default
-    * Press the orange "Create broker" button
+*  Select "Single-instance broker" or "Active/standby broker" option and press the Next button
+*  Provide a "Broker name" of your choosing
+*  In the "ActiveMQ Access" section specify `alfresco` as the "Username" and a "Password" of your choice
+*  In the "Additional settings" section choose the "Select existing VPC and subnet(s)" option
+*  Select the VPC created by eksctl that contains your EKS cluster
+*  Choose the "Select existing security groups" option and select the VPC's default security group from the list
+*  Leave all other options set to the default
+*  Press the orange "Create broker" button
 
 2. Once the broker has been created (it can take a few minutes) view the broker details and click on the link to the security group.
 3. Add an inbound rule for ActiveMQ traffic (TCP port 61617) from the VPC CIDR range (it will be the same as the NFS rule setup earlier) as shown in the screenshot below:
@@ -102,7 +102,7 @@ The following sections describe how to setup the AWS services and highlights the
 
 4. Finally, take a note of the OpenWire Endpoint displayed in the "Connections" section
 
->  :warning: make sure to use a failover URL. If you chose to use a "Single -instance broker", still wrap its URL in `failover:()`.
+> :warning: make sure to use a failover URL. If you chose to use a "Single -instance broker", still wrap its URL in `failover:()`.
 
 ## Deploy
 
@@ -154,15 +154,16 @@ helm -n alfresco install acs ./alfresco/alfresco-content-services --atomic --tim
 
 If you're deploying from the registry of charts you can't update the `values.yml` file. Instead you either:
 
-    * use a local copy of the `values.yml` file amended as shown above
-    * use `--set` options to pass individual values.
+1.  use a local copy of the `values.yml` file amended as shown above (and use the ```helm install -f my-values.yml ...```
+2.  use ```--set``` options to pass individual values.
 
 Note however that the main `values.yml` file uses [YAML anchors and aliases](https://yaml.org/spec/1.2.2/#3222-anchors-and-aliases) to propagate configuration to subcharts if needed.
 Using `--set` do not fill the yaml file with passed values and so aliases will never point to a node filled with the values passed by the command line.
 That means when using command line you must also pass aliased values as shown below (at the end of the command):
 
 ```bash
-helm -n alfresco install acs alfresco-stable/alfresco-content-services --atomic --timeout 10m0s
+helm -n alfresco install acs --repo https://kubernetes-charts.alfresco.com/stable alfresco-content-services \
+--atomic --timeout 10m0s \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
