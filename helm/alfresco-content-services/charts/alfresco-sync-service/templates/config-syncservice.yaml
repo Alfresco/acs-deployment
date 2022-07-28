@@ -10,6 +10,7 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: syncservice
 data:
+  {{ template "spring.activemq.config" . }}
   JAVA_OPTS: >-
       {{- if eq .Values.database.external false }}
       -Dsql.db.driver="org.postgresql.Driver"
@@ -22,15 +23,9 @@ data:
       -Dsql.db.password=$DATABASE_PASSWORD
       -Drepo.hostname={{ printf "%s-%s" (include "acs.release.name" .) .Values.repository.host }}
       -Drepo.port={{ .Values.repository.port }}
-      {{- if eq .Values.activemq.external false }}
-      -Dmessaging.broker.host={{ printf "%s-%s" (include "acs.release.name" .) .Values.activemq.broker.host}}
-      {{- else }}
-      -Dmessaging.broker.host={{ .Values.activemq.broker.host }}
-      {{- end }}
-      -Dmessaging.username={{ .Values.activemq.broker.username }}
-      -Dmessaging.password={{ .Values.activemq.broker.password }}
-      -Dmessaging.broker.port={{ .Values.activemq.broker.port }}
-      -Dmessaging.broker.protocol={{ .Values.activemq.broker.protocol }}
+      -Dmessaging.broker.url=$SPRING_ACTIVEMQ_BROKERURL
+      -Dmessaging.username=$SPRING_ACTIVEMQ_USER
+      -Dmessaging.password=$SPRING_ACTIVEMQ_PASSWORD
       -Ddw.server.applicationConnectors[0].type=http
       {{ .Values.syncservice.environment.JAVA_OPTS }}
       {{ .Values.syncservice.environment.EXTRA_JAVA_OPTS }}

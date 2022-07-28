@@ -10,6 +10,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 * <https://github.com/Alfresco/acs-deployment>
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| file://../alfresco-content-common | alfresco-content-common | 0.1.0 |
+
 ## Values
 
 | Key | Type | Default | Description |
