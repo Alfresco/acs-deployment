@@ -155,6 +155,8 @@ spec:
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
       {{- if .Values.persistence.repository.enabled }}
+        {{- if .Values.persistence.chownWithDynamicProvisioning }}
+        {{- end }}
         {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
           image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"
