@@ -70,6 +70,9 @@ reindexing:
 elasticsearch:
   host: null
   port: null
+  protocol: null
+  user: null
+  password: null
 
 messageBroker:
   # --  Broker URL formatted as per https://activemq.apache.org/failover-transport-reference
@@ -81,8 +84,11 @@ messageBroker:
 
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
+  # -- Shared connections details for ElasticSearch
   elasticsearch:
     host: elasticsearch-master
     port: 9200
+    # -- Valid values are http or https
+    protocol: http
     user: null
     password: null

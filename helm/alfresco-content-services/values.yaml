@@ -609,7 +609,8 @@ alfresco-elasticsearch-connector:
   elasticsearch:
     host: null
     port: null
-    username: null
+    protocol: null
+    user: null
     password: null
 
 alfresco-digital-workspace:
@@ -896,8 +897,11 @@ global:
 #   s3Bucket:
 #   comprehendRoleARN:
 
+  # -- Shared connections details for ElasticSearch, required when alfresco-elasticsearch-connector is enabled
   elasticsearch:
     host: elasticsearch-master
     port: 9200
+    # -- Valid values are http or https
+    protocol: http
     user: null
     password: null
