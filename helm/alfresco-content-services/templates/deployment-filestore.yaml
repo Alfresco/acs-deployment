@@ -83,7 +83,6 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.filestore.data.mountPath }}
             subPath: {{ .Values.persistence.filestore.data.subPath }}
-      
       volumes:
       - name: data
         persistentVolumeClaim:
