@@ -66,9 +66,10 @@ reindexing:
     database: alfresco
     port: 5432
 
+# -- Overrides .Values.global.elasticsearch
 elasticsearch:
-  host: elasticsearch-master
-  port: 9200
+  host: null
+  port: null
 
 messageBroker:
   # --  Broker URL formatted as per https://activemq.apache.org/failover-transport-reference
@@ -80,3 +81,8 @@ messageBroker:
 
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
+  elasticsearch:
+    host: elasticsearch-master
+    port: 9200
+    user: null
+    password: null
