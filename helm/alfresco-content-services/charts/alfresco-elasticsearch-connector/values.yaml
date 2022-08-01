@@ -84,11 +84,15 @@ messageBroker:
 
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-  # -- Shared connections details for ElasticSearch
+  # -- Shared connections details for Elasticsearch/Opensearch
   elasticsearch:
+    # -- The host where service is available
     host: elasticsearch-master
+    # -- The port where service is available
     port: 9200
     # -- Valid values are http or https
     protocol: http
+    # -- The username required to access the service, if any
     user: null
+    # -- The password required to access the service, if any
     password: null
