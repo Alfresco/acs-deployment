@@ -106,3 +106,4 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}"
+          
