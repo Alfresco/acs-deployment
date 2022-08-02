@@ -178,7 +178,6 @@ else
 fi
 
 # Main
-(umask 066 && aws eks update-kubeconfig --name acs-cluster --region=eu-west-1)
 prepare_namespace
 kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "${namespace}"
 
