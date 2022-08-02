@@ -27,6 +27,7 @@ jobs:
     needs: [ pre-commit, branch ]
     strategy:
       fail-fast: true
+      max-parallel: 1
       matrix:
         acs_version:
           - latest
@@ -35,7 +36,7 @@ jobs:
           - 7.0.N
           - 6.2.N
           - community
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
