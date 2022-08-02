@@ -196,12 +196,26 @@ helm upgrade --install "${release_name_acs}" helm/"${PROJECT_NAME}" \
   --set externalPort="80" \
   --set externalProtocol="http" \
   --set externalHost="${HOST}" \
-  --set persistence.enabled=true \
-  --set persistence.storageClass.enabled=true \
-  --set persistence.storageClass.name="nfs-client" \
-  --set postgresql.persistence.existingClaim="" \
-  --set postgresql-syncservice.persistence.existingClaim="" \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set alfresco-sync-service.syncservice.enabled=false \
+  --set postgresql-syncservice.enabled=false \
+  --set repository.replicaCount=1 \
+  --set transformrouter.replicaCount=1 \
+  --set pdfrenderer.replicaCount=1 \
+  --set imagemagick.replicaCount=1 \
+  --set libreoffice.replicaCount=1 \
+  --set tika.replicaCount=1 \
+  --set transformmisc.replicaCount=1 \
+  --set postgresql-syncservice.resources.requests.memory="500Mi" \
+  --set postgresql-syncservice.resources.limits.memory="500Mi" \
+  --set postgresql.resources.requests.memory="500Mi" \
+  --set postgresql.resources.limits.memory="500Mi" \
+  --set alfresco-search.resources.requests.memory="1000Mi" \
+  --set alfresco-search.resources.limits.memory="1000Mi" \
+  --set share.resources.limits.memory="1500Mi" \
+  --set share.resources.requests.memory="1500Mi" \
+  --set repository.resources.limits.memory="2500Mi" \
+  --set repository.resources.requests.memory="2500Mi" \
   --wait \
   --timeout 20m0s \
   --namespace="${namespace}"

@@ -36,10 +36,6 @@ jobs:
           - 6.2.N
           - community
     runs-on: ubuntu-latest
-    env:
-      DOMAIN: dev.envalfresco.com
-      AWS_ACCESS_KEY_ID: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -69,8 +65,6 @@ jobs:
         run: .github/scripts/helm_install.sh
         shell: bash
         env:
-          ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
-          AWS_SG: ${{ secrets.AWS_SG }}
           ACS_VERSION: ${{ matrix.acs_version }}
           BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
   compose:
