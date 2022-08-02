@@ -36,8 +36,10 @@ repository:
       resources:
         requests:
           memory: "5Mi"
+          cpu: 500m
         limits:
           memory: "10Mi"
+          cpu: 1000m
     fs:
       image:
         repository: busybox
@@ -79,8 +81,10 @@ repository:
   resources:
     requests:
       memory: "3000Mi"
+      cpu: 1000m
     limits:
       memory: "3000Mi"
+      cpu: 1000m
   # -- The startup probe to cover the worse case startup time for slow start containers
   startupProbe:
     periodSeconds: 30
@@ -133,8 +137,10 @@ ooiService:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 1000m
   environment:
     JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
   readinessProbe:
@@ -171,8 +177,10 @@ msTeamsService:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 500m
     limits:
       memory: "1000Mi"
+      cpu: 1000m
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -222,8 +230,10 @@ transformrouter:
   resources:
     requests:
       memory: "128Mi"
+      cpu: 500m
     limits:
       memory: "512Mi"
+      cpu: 1000m
 
 # -- Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -242,8 +252,10 @@ pdfrenderer:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -276,8 +288,10 @@ imagemagick:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 2
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -310,8 +324,10 @@ libreoffice:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 2
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -344,8 +360,10 @@ tika:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -379,8 +397,10 @@ transformmisc:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -411,8 +431,10 @@ aiTransformer:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -446,8 +468,10 @@ filestore:
     resources:
       requests:
         memory: "5Mi"
+        cpu: 0.2
       limits:
         memory: "10Mi"
+        cpu: 500m
   service:
     name: filestore
     type: ClusterIP
@@ -455,8 +479,10 @@ filestore:
   resources:
     requests:
       memory: "1000Mi"
+      cpu: 1000m
     limits:
       memory: "1000Mi"
+      cpu: 1000m
   environment:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
@@ -496,8 +522,10 @@ share:
   resources:
     requests:
       memory: "2000Mi"
+      cpu: 1000m
     limits:
       memory: "2000Mi"
+      cpu: 1000m
   environment:
     CATALINA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -646,10 +674,10 @@ alfresco-digital-workspace:
     {{- end }}
   resources:
     limits:
-      cpu: 1
+      cpu: 1000m
       memory: 1024Mi
     requests:
-      cpu: 150m
+      cpu: 1000m50m
       memory: 256Mi
 
 # -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
@@ -703,8 +731,10 @@ postgresql:
   resources:
     requests:
       memory: "1500Mi"
+      cpu: 1000m
     limits:
       memory: "1500Mi"
+      cpu: 1000m
 
 postgresql-syncservice:
   # -- If true, install the postgresql chart alongside Alfresco Sync service.
@@ -731,8 +761,10 @@ postgresql-syncservice:
   resources:
     requests:
       memory: "1500Mi"
+      cpu: 1000m
     limits:
       memory: "1500Mi"
+      cpu: 1000m
 
 elasticsearch:
   enabled: false
