@@ -61,6 +61,10 @@ spec:
               {{- else }}
               name: {{ template "content-services.shortname" . }}-dbsecret
               {{- end }}
+          - secretRef:
+              {{- if .Values.messageBroker.existingSecret }}
+              name: {{ .Values.messageBroker.existingSecret }}
+              {{- end }}
           {{- if .Values.s3connector.enabled }}
           {{- if .Values.s3connector.secrets }}
           - secretRef:
