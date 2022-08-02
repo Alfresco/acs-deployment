@@ -200,6 +200,8 @@ helm upgrade --install "${release_name_acs}" helm/"${PROJECT_NAME}" \
   --set postgresql.resources.limits.memory="500Mi" \
   --set alfresco-search.resources.requests.memory="1000Mi" \
   --set alfresco-search.resources.limits.memory="1000Mi" \
+  --set transformrouter.resources.requests.memory="1000Mi" \
+  --set transformrouter.resources.limits.memory="1000Mi" \
   --set share.resources.limits.memory="1500Mi" \
   --set share.resources.requests.memory="1500Mi" \
   --set repository.resources.limits.memory="3500Mi" \
