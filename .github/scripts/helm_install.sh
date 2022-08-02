@@ -182,18 +182,12 @@ fi
 prepare_namespace
 kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "${namespace}"
 
-# install ingress
-helm upgrade --install "${release_name_ingress}" --repo https://kubernetes.github.io/ingress-nginx ingress-nginx --version=4.0.18 \
-  --set controller.scope.enabled=true \
-  --set controller.scope.namespace="${namespace}" \
-  --set rbac.create=true \
-  --set controller.config."proxy-body-size"="100m" \
-  --set controller.service.targetPorts.https=80 \
-  --set controller.publishService.enabled=true \
-  --set controller.admissionWebhooks.enabled=false \
-  --set controller.ingressClassResource.enabled=false \
-  --wait \
-  --namespace "${namespace}"
+echo "Install kind patched ingress..."
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=90s
 
 # install acs
 helm dep up helm/"${PROJECT_NAME}"
