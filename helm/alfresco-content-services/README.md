@@ -74,6 +74,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
 | alfresco-elasticsearch-connector.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | alfresco-elasticsearch-connector.enabled | bool | `false` |  |
+| alfresco-elasticsearch-connector.messageBroker.existingSecret | string | `nil` |  |
 | alfresco-elasticsearch-connector.messageBroker.password | string | `nil` |  |
 | alfresco-elasticsearch-connector.messageBroker.url | string | `nil` |  |
 | alfresco-elasticsearch-connector.messageBroker.user | string | `nil` |  |
@@ -98,6 +99,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | alfresco-sync-service.image.tag | string | `"3.7.1-A1"` |  |
+| alfresco-sync-service.messageBroker.existingSecret | string | `nil` |  |
 | alfresco-sync-service.messageBroker.password | string | `nil` |  |
 | alfresco-sync-service.messageBroker.url | string | `nil` |  |
 | alfresco-sync-service.messageBroker.user | string | `nil` |  |
@@ -147,7 +149,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | mail.smtps.auth | bool | `true` |  |
 | mail.smtps.starttls.enable | bool | `true` |  |
 | mail.username | string | `nil` |  |
-| messageBroker | object | `{"password":null,"url":null,"user":null}` | external activemq connection setting when activemq.enabled=false |
+| messageBroker | object | `{"existingSecret":null,"password":null,"url":null,"user":null}` | external activemq connection setting when activemq.enabled=false If you pass in the existingSecret value, the secret should have BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD set. |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
 | msTeams | object | `{"enabled":false}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
