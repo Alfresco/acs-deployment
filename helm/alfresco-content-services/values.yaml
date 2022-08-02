@@ -101,6 +101,7 @@ repository:
   extraLogStatements: {}
   #   org.alfresco.repo.content.transform.TransformerDebug: debug
   #   org.alfresco.repo.security.authentication.identityservice: debug
+  serviceAccountName:
 
 # -- Declares the api-explorer service used by the content repository
 apiexplorer:
@@ -651,6 +652,7 @@ ooi:
 # -- Defines properties required by alfresco for connecting to the database
 # Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl
 # Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver
+# If you pass in the existingSecret value, the secret should have DATABASE_URL, DATABASE_USERNAME and DATABASE_PASSWORD set.
 database:
   external: false
   # -- ex: org.postgresql.Driver
@@ -661,6 +663,8 @@ database:
   password:
   # -- ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco
   url:
+  # -- ex: db-secret
+  existingSecret:
 
 # -- Defines the properties to be used for the required postgres DB
 # Note: the database (tables) information is also saved in the persistent volume claim

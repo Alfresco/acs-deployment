@@ -133,7 +133,11 @@ data:
       {{- if eq .Values.database.external false }}
       -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
       {{- else }}
+      {{- if .Values.database.existingSecret }}
+      -Ddb.url=$DATABASE_URL
+      {{- else }}
       -Ddb.url={{ .Values.database.url }}
+      {{- end }}
       {{- end }}
       {{- if .Values.email.server.enabled }}
       -Dmail.password=$MAIL_PASSWORD
