@@ -163,7 +163,7 @@ if [[ ${ACS_VERSION} != "latest" ]]; then
   values_file="helm/${PROJECT_NAME}/${ACS_VERSION}_values.yaml"
 fi
 
-if [[ "${BRANCH_NAME}" == "master" ]] ||
+if [[ "${BRANCH_NAME}" == "OPSEXP-1546-kind" ]] ||
   [[ "${COMMIT_MESSAGE}" == *"[run all tests]"* ]] ||
   [[ "${COMMIT_MESSAGE}" == *"[release]"* ]] ||
   [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/${ACS_VERSION}_values.yaml* ]] ||
