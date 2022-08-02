@@ -12,9 +12,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   ACTIVEMQ_USER: {{ .Values.activemq.adminUser.username | quote | default "" }}
   ACTIVEMQ_PASSWORD: {{ .Values.activemq.adminUser.password |  quote | default "" }}
 {{- else if .Values.messageBroker.existingSecret }}
-  ACTIVEMQ_URL: $BROKER_URL
-  ACTIVEMQ_USER: $BROKER_USER
-  ACTIVEMQ_PASSWORD: $BROKER_PASSWORD
+  ACTIVEMQ_URL: $(BROKER_URL)
+  ACTIVEMQ_USER: $(BROKER_USER)
+  ACTIVEMQ_PASSWORD: $(BROKER_PASSWORD)
 {{- else -}}
   ACTIVEMQ_URL: {{ .Values.messageBroker.url | quote }}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user | quote | default ""  }}
