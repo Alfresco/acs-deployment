@@ -202,8 +202,8 @@ helm upgrade --install "${release_name_acs}" helm/"${PROJECT_NAME}" \
   --set alfresco-search.resources.limits.memory="1000Mi" \
   --set share.resources.limits.memory="1500Mi" \
   --set share.resources.requests.memory="1500Mi" \
-  --set repository.resources.limits.memory="2500Mi" \
-  --set repository.resources.requests.memory="2500Mi" \
+  --set repository.resources.limits.memory="3500Mi" \
+  --set repository.resources.requests.memory="3500Mi" \
   --wait \
   --timeout 20m0s \
   --namespace="${namespace}"
