@@ -122,7 +122,7 @@ data:
       -Dmessaging.broker.username=$BROKER_USERNAME
       -Dmessaging.broker.password=$BROKER_PASSWORD
       {{- else }}
-      -Dmessaging.broker.url={{ required "Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url" .Values.messageBroker.url }}
+      -Dmessaging.broker.url={{ .Values.messageBroker.url }}
       -Dmessaging.broker.username={{ .Values.messageBroker.user }}
       -Dmessaging.broker.password={{ .Values.messageBroker.password }}
       {{- end }}
