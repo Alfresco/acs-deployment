@@ -8,20 +8,8 @@ if [ -z "${COMMIT_MESSAGE}" ]; then
   echo "COMMIT_MESSAGE variable is not set"
   exit 2
 fi
-if [ -z "${ACM_CERTIFICATE}" ]; then
-  echo "ACM_CERTIFICATE variable is not set"
-  exit 2
-fi
-if [ -z "${AWS_SG}" ]; then
-  echo "AWS_SG variable is not set"
-  exit 2
-fi
 if [ -z "${GITHUB_RUN_NUMBER}" ]; then
   echo "GITHUB_RUN_NUMBER variable is not set"
-  exit 2
-fi
-if [ -z "${DOMAIN}" ]; then
-  echo "DOMAIN variable is not set"
   exit 2
 fi
 if [ -z "${BRANCH_NAME}" ]; then
