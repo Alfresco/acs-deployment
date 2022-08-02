@@ -36,7 +36,7 @@ jobs:
           - 7.0.N
           - 6.2.N
           - community
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
