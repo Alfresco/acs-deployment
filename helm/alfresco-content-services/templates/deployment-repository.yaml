@@ -31,6 +31,9 @@ spec:
     {{- if .Values.repository.nodeSelector }}
       nodeSelector: {{- .Values.repository.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
+    {{- if .Values.repository.serviceAccountName }}
+      serviceAccountName: {{ .Values.repository.serviceAccountName }}
+    {{- end }}
       {{- if .Values.global.alfrescoRegistryPullSecrets }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
@@ -53,7 +56,11 @@ spec:
               name: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
           {{- end }}
           - secretRef:
+              {{- if .Values.database.existingSecret }}
+              name: {{ .Values.database.existingSecret }}
+              {{- else }}
               name: {{ template "content-services.shortname" . }}-dbsecret
+              {{- end }}
           {{- if .Values.s3connector.enabled }}
           {{- if .Values.s3connector.secrets }}
           - secretRef:
