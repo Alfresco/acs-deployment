@@ -87,11 +87,11 @@ global:
   # -- Shared connections details for Elasticsearch/Opensearch
   elasticsearch:
     # -- The host where service is available
-    host: elasticsearch-master
+    host: null
     # -- The port where service is available
-    port: 9200
+    port: null
     # -- Valid values are http or https
-    protocol: http
+    protocol: null
     # -- The username required to access the service, if any
     user: null
     # -- The password required to access the service, if any

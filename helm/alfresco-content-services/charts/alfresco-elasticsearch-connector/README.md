@@ -22,11 +22,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch |
-| global.elasticsearch.host | string | `"elasticsearch-master"` | The host where service is available |
+| global.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch |
+| global.elasticsearch.host | string | `nil` | The host where service is available |
 | global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
-| global.elasticsearch.port | int | `9200` | The port where service is available |
-| global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
+| global.elasticsearch.port | string | `nil` | The port where service is available |
+| global.elasticsearch.protocol | string | `nil` | Valid values are http or https |
 | global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` |  |
