@@ -36,10 +36,8 @@ repository:
       resources:
         requests:
           memory: "5Mi"
-          cpu: 500m
         limits:
           memory: "10Mi"
-          cpu: 1000m
     fs:
       image:
         repository: busybox
@@ -77,10 +75,8 @@ repository:
   resources:
     requests:
       memory: "3000Mi"
-      cpu: 1000m
     limits:
       memory: "3000Mi"
-      cpu: 1000m
   # -- The startup probe to cover the worse case startup time for slow start containers
   startupProbe:
     periodSeconds: 30
@@ -106,6 +102,7 @@ repository:
   #   org.alfresco.repo.content.transform.TransformerDebug: debug
   #   org.alfresco.repo.security.authentication.identityservice: debug
   serviceAccountName:
+  securityContext:
 
 # -- Declares the api-explorer service used by the content repository
 apiexplorer:
@@ -133,10 +130,8 @@ ooiService:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
-      cpu: 1000m
   environment:
     JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
   readinessProbe:
@@ -147,6 +142,7 @@ ooiService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
+  securityContext:
 
 # -- Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams)
 msTeams:
@@ -173,10 +169,8 @@ msTeamsService:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 500m
     limits:
       memory: "1000Mi"
-      cpu: 1000m
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -185,6 +179,7 @@ msTeamsService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
+  securityContext:
   alfresco:
     baseUrl: change_me_alf_base_url
     digitalWorkspace:
@@ -226,10 +221,10 @@ transformrouter:
   resources:
     requests:
       memory: "128Mi"
-      cpu: 500m
     limits:
       memory: "512Mi"
-      cpu: 1000m
+
+  securityContext:
 
 # -- Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -248,10 +243,8 @@ pdfrenderer:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
-      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -266,6 +259,7 @@ pdfrenderer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1200
+  securityContext:
 
 # -- Declares the alfresco-imagemagick service used by the content repository
 # to transform image files
@@ -284,7 +278,6 @@ imagemagick:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
       cpu: 2
@@ -302,6 +295,7 @@ imagemagick:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 900
+  securityContext:
 
 # -- Declares the alfresco-libreoffice service used by the content repository
 # to transform office files
@@ -320,7 +314,6 @@ libreoffice:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
       cpu: 2
@@ -338,6 +331,7 @@ libreoffice:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 99999
     maxTransformSeconds: 1800
+  securityContext:
 
 # -- Declares the alfresco-tika service used by the content repository
 # to transform office files
@@ -356,10 +350,8 @@ tika:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
-      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -374,6 +366,7 @@ tika:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  securityContext:
 
 # -- Declares the alfresco-tika service used by the content repository
 # to transform office files
@@ -393,10 +386,8 @@ transformmisc:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
-      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -411,6 +402,7 @@ transformmisc:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  securityContext:
 
 aiTransformer:
   replicaCount: 2
@@ -427,10 +419,8 @@ aiTransformer:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
-      cpu: 1000m
   environment:
     JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -445,6 +435,7 @@ aiTransformer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  securityContext:
 
 # -- Declares the alfresco-shared-file-store used by the content repository
 # and transform service
@@ -467,7 +458,7 @@ filestore:
         cpu: 0.2
       limits:
         memory: "10Mi"
-        cpu: 500m
+
   service:
     name: filestore
     type: ClusterIP
@@ -475,10 +466,8 @@ filestore:
   resources:
     requests:
       memory: "1000Mi"
-      cpu: 1000m
     limits:
       memory: "1000Mi"
-      cpu: 1000m
   environment:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
@@ -493,6 +482,7 @@ filestore:
     timeoutSeconds: 10
     livenessPercent: 150
     livenessSavePeriodSeconds: 600
+  securityContext:
 
 # -- Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
@@ -518,10 +508,8 @@ share:
   resources:
     requests:
       memory: "2000Mi"
-      cpu: 1000m
     limits:
       memory: "2000Mi"
-      cpu: 1000m
   environment:
     CATALINA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
   readinessProbe:
@@ -532,6 +520,7 @@ share:
     initialDelaySeconds: 200
     periodSeconds: 20
     timeoutSeconds: 10
+  securityContext:
   extraVolumeMounts: []
   extraVolumes: []
   extraSideContainers: []
@@ -575,7 +564,7 @@ activemq:
   nodeSelector: {}
 
 # -- external activemq connection setting when activemq.enabled=false
-# If you pass in the existingSecret value, the secret should have BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD set.
+# If you pass in the existingSecret value, the secret should have ACTIVEMQ_URL, ACTIVEMQ_USERNAME and ACTIVEMQ_PASSWORD set.
 messageBroker: &acs_messageBroker
   url: null
   user: null
@@ -669,10 +658,8 @@ alfresco-digital-workspace:
     {{- end }}
   resources:
     limits:
-      cpu: 1000m
       memory: 1024Mi
     requests:
-      cpu: 1000m50m
       memory: 256Mi
 
 # -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
@@ -726,10 +713,8 @@ postgresql:
   resources:
     requests:
       memory: "1500Mi"
-      cpu: 1000m
     limits:
       memory: "1500Mi"
-      cpu: 1000m
 
 postgresql-syncservice:
   # -- If true, install the postgresql chart alongside Alfresco Sync service.
@@ -756,12 +741,14 @@ postgresql-syncservice:
   resources:
     requests:
       memory: "1500Mi"
-      cpu: 1000m
     limits:
       memory: "1500Mi"
+<<<<<<< HEAD
       cpu: 1000m
 
 # -- Embedded ElasticSearch cluster powered by Bitnami charts
+=======
+>>>>>>> - ffeat: Update deployments to accept securityContext
 elasticsearch:
   # -- Enable the embedded ElasticSearch cluster
   enabled: false

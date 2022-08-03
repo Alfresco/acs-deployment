@@ -63,6 +63,9 @@ spec:
             - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
           resources:
 {{ toYaml .Values.pdfrenderer.resources | indent 12 }}
+          {{- with .Values.pdfrenderer.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /ready

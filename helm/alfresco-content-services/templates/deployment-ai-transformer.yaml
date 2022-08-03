@@ -60,6 +60,9 @@ spec:
               - containerPort: {{ .Values.aiTransformer.image.internalPort }}
           resources:
 {{ toYaml .Values.aiTransformer.resources | indent 12 }}
+          {{- with .Values.aiTransformer.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /ready

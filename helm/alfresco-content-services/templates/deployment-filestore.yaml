@@ -60,6 +60,9 @@ spec:
             - containerPort: {{ .Values.filestore.image.internalPort }}
           resources:
 {{ toYaml .Values.filestore.resources | indent 12 }}
+          {{- with .Values.filestore.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /ready

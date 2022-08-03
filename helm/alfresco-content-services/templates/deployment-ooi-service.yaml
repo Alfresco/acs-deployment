@@ -61,6 +61,9 @@ spec:
               - containerPort: {{ .Values.ooiService.image.internalPort }}
           resources:
 {{ toYaml .Values.ooiService.resources | indent 12 }}
+          {{- with .Values.ooiService.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             tcpSocket:
               port: {{ .Values.ooiService.image.internalPort }}
@@ -69,7 +72,7 @@ spec:
             timeoutSeconds: {{ .Values.ooiService.readinessProbe.timeoutSeconds }}
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.ooiService.image.internalPort }}          
+              port: {{ .Values.ooiService.image.internalPort }}
             initialDelaySeconds: {{ .Values.ooiService.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.ooiService.livenessProbe.periodSeconds }}
             failureThreshold: 1

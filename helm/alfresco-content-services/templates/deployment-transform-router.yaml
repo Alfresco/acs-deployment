@@ -63,6 +63,9 @@ spec:
             - containerPort: {{ .Values.transformrouter.image.internalPort }}
           resources:
 {{ toYaml .Values.transformrouter.resources | indent 12 }}
+          {{- with .Values.transformrouter.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /actuator/health
