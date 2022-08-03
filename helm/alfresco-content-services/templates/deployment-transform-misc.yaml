@@ -68,6 +68,9 @@ spec:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
           resources:
 {{ toYaml .Values.transformmisc.resources | indent 12 }}
+          {{- with .Values.transformmisc.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /ready

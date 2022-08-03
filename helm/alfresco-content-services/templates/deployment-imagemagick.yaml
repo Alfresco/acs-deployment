@@ -67,6 +67,9 @@ spec:
             - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources:
 {{ toYaml .Values.imagemagick.resources | indent 12 }}
+          {{- with .Values.imagemagick.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /ready

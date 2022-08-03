@@ -67,6 +67,9 @@ spec:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources:
 {{ toYaml .Values.libreoffice.resources | indent 12 }}
+          {{- with .Values.libreoffice.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             httpGet:
               path: /ready

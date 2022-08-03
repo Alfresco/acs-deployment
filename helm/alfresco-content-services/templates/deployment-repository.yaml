@@ -93,6 +93,9 @@ spec:
             {{- end }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
+          {{- with .Values.repository.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           {{- if .Values.persistence.repository.enabled }}
           volumeMounts:
           {{- if .Values.repository.licenseSecret }}

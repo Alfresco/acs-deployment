@@ -64,6 +64,9 @@ spec:
               - containerPort: {{ .Values.msTeamsService.image.internalPort }}
           resources:
 {{ toYaml .Values.msTeamsService.resources | indent 12 }}
+          {{- with .Values.msTeamsService.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             tcpSocket:
               port: {{ .Values.msTeamsService.image.internalPort }}
@@ -72,7 +75,7 @@ spec:
             timeoutSeconds: {{ .Values.msTeamsService.readinessProbe.timeoutSeconds }}
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.msTeamsService.image.internalPort }}          
+              port: {{ .Values.msTeamsService.image.internalPort }}
             initialDelaySeconds: {{ .Values.msTeamsService.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.msTeamsService.livenessProbe.periodSeconds }}
             failureThreshold: 1
