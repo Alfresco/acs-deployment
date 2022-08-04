@@ -50,9 +50,7 @@ data:
       -Dsolr.secureComms={{ .Values.global.tracking.auth | default "secret" }}
       {{- end }}
       {{- if index .Values "alfresco-elasticsearch-connector" "enabled" }}
-      -Delasticsearch.createIndexIfNotExists=true
-      -Delasticsearch.host={{ index .Values "alfresco-elasticsearch-connector" "elasticsearch" "host" }}
-      -Delasticsearch.indexName={{ index .Values "alfresco-elasticsearch-connector" "indexName" }}
+      {{ template "repo.elasticsearch.config" . }}
       {{- end -}}
       {{- if eq .Values.repository.edition "Enterprise" }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
