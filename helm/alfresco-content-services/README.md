@@ -72,8 +72,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.resources.requests.cpu | string | `"150m"` |  |
 | alfresco-digital-workspace.resources.requests.memory | string | `"256Mi"` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
-| alfresco-elasticsearch-connector.elasticsearch.host | string | `"elasticsearch-master"` |  |
-| alfresco-elasticsearch-connector.elasticsearch.port | int | `9200` |  |
+| alfresco-elasticsearch-connector.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | alfresco-elasticsearch-connector.enabled | bool | `false` |  |
 | alfresco-elasticsearch-connector.messageBroker.password | string | `nil` |  |
 | alfresco-elasticsearch-connector.messageBroker.url | string | `nil` |  |
@@ -108,15 +107,19 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.password | string | `nil` | ex: alfresco |
 | database.url | string | `nil` | ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco |
 | database.user | string | `nil` | ex: alfresco |
-| elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
-| elasticsearch.enabled | bool | `false` |  |
-| elasticsearch.image | string | `"docker.elastic.co/elasticsearch/elasticsearch-oss"` |  |
-| elasticsearch.replicas | int | `1` |  |
+| elasticsearch | object | `{"clusterHealthCheckParams":"wait_for_status=yellow&timeout=1s","enabled":false,"image":"docker.elastic.co/elasticsearch/elasticsearch-oss","replicas":1}` | Embedded ElasticSearch cluster powered by Bitnami charts |
+| elasticsearch.enabled | bool | `false` | Enable the embedded ElasticSearch cluster |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of properties on the email configuration, please view: https://docs.alfresco.com/6.2/concepts/email.html |
 | email.server.enabled | bool | `false` | Enables the email server - see https://docs.alfresco.com/6.2/concepts/email-inboundsmtp-props.html |
 | filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"1.5.3"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` |  |
+| global.elasticsearch | object | `{"host":null,"password":null,"port":443,"protocol":"https","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-elasticsearch-connector.enabled is true |
+| global.elasticsearch.host | string | `nil` | The host where service is available. The provided default is for when elasticsearch.enabled is true |
+| global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
+| global.elasticsearch.port | int | `443` | The port where service is available |
+| global.elasticsearch.protocol | string | `"https"` | Valid values are http or https |
+| global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |

@@ -605,9 +605,13 @@ alfresco-elasticsearch-connector:
       url:
       hostname: postgresql-acs
       database: alfresco
+  # -- Overrides .Values.global.elasticsearch
   elasticsearch:
-    host: elasticsearch-master
-    port: 9200
+    host: null
+    port: null
+    protocol: null
+    user: null
+    password: null
 
 alfresco-digital-workspace:
   nodeSelector: {}
@@ -728,7 +732,9 @@ postgresql-syncservice:
     limits:
       memory: "1500Mi"
 
+# -- Embedded ElasticSearch cluster powered by Bitnami charts
 elasticsearch:
+  # -- Enable the embedded ElasticSearch cluster
   enabled: false
   image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
   replicas: 1
@@ -890,3 +896,16 @@ global:
 #   region:
 #   s3Bucket:
 #   comprehendRoleARN:
+
+  # -- Shared connections details for Elasticsearch/Opensearch, required when alfresco-elasticsearch-connector.enabled is true
+  elasticsearch:
+    # -- The host where service is available. The provided default is for when elasticsearch.enabled is true
+    host: null
+    # -- The port where service is available
+    port: 443
+    # -- Valid values are http or https
+    protocol: https
+    # -- The username required to access the service, if any
+    user: null
+    # -- The password required to access the service, if any
+    password: null
