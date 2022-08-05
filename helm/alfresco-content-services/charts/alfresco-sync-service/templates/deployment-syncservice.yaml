@@ -30,8 +30,11 @@ spec:
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
+      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
         - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- end }}
       initContainers:
       {{- if .Values.activemq }}
       {{ fail "Using activemq.[host|port|user|password|external] in subcharts is not supported anymore. Use messageBroker.* instead" }}
