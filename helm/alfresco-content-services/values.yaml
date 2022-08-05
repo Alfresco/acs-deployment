@@ -743,12 +743,9 @@ postgresql-syncservice:
       memory: "1500Mi"
     limits:
       memory: "1500Mi"
-<<<<<<< HEAD
       cpu: 1000m
 
 # -- Embedded ElasticSearch cluster powered by Bitnami charts
-=======
->>>>>>> - ffeat: Update deployments to accept securityContext
 elasticsearch:
   # -- Enable the embedded ElasticSearch cluster
   enabled: false
