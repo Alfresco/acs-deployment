@@ -44,6 +44,10 @@ spec:
         envFrom:
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
+        {{- if .Values.messageBroker.existingSecret }}
+        - secretRef:
+            name: {{ .Values.messageBroker.existingSecret }}
+        {{- end }}
         args:
           - -c
           - echo "Checking for ActiveMQ broker availability";
@@ -76,7 +80,11 @@ spec:
         imagePullPolicy: {{ .Values.syncservice.image.pullPolicy }}
         envFrom:
         - secretRef:
-            name: {{ template "syncservice.fullname" . }}-dbsecret
+          {{- if .Values.database.existingSecret }}
+            name: {{ .Values.database.existingSecret }}
+            {{- else }}
+            name: {{ template "content-services.shortname" . }}-dbsecret
+            {{- end }}
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
         ports:
