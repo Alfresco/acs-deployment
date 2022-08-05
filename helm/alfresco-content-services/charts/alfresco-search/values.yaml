@@ -49,6 +49,7 @@ resources:
     memory: "2000Mi"
   limits:
     memory: "2000Mi"
+securityContext:
 # -- Defines the mounting points for the persistence required by the apps in the cluster
 # the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
 persistence:
@@ -87,6 +88,7 @@ initContainer:
       memory: "5Mi"
     limits:
       memory: "10Mi"
+  securityContext:
 
 # -- Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
 # Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)

@@ -73,8 +73,11 @@ repository:
 # `url`: provides URI formatted string (see https://activemq.apache.org/failover-transport-reference)
 # `user`: username to authenticate as.
 # `password`: credential to use to authenticate to the broker.
+# existingSecret: secret holding details of external message broker.
+# If you pass in the existingSecret value, the secret should have ACTIVEMQ_URL, ACTIVEMQ_USERNAME ACTIVEMQ_PASSWORD, SPRING_ACTIVEMQ_URL, SPRING_ACTIVEMQ_USERNAME and SPRING_ACTIVEMQ_PASSWORD set.
 messageBroker:
   url: null
+  existingSecret:
 
 contentServices:
   # -- Specify when installing as a standalone chart, not as a subchart of ACS.
@@ -87,6 +90,7 @@ contentServices:
 # Also make sure that the container has the db driver in TODO - add container path
 database:
   external: false
+  existingSecret:
 
 postgresql-syncservice:
   name: postgresql-syncservice

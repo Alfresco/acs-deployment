@@ -52,6 +52,9 @@ spec:
             - containerPort: {{ template "alfresco-search.internalPort" . }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+          {{- with .Values.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}
@@ -94,6 +97,9 @@ spec:
 {{ toYaml .Values.initContainer.resources | indent 14 }}
           # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
           command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.persistence.search.data.mountPath }}"]
+          {{- with .Values.securityContext }}
+          securityContext: {{ toYaml . | nindent 12 }}
+          {{- end }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}

@@ -564,7 +564,7 @@ activemq:
   nodeSelector: {}
 
 # -- external activemq connection setting when activemq.enabled=false
-# If you pass in the existingSecret value, the secret should have ACTIVEMQ_URL, ACTIVEMQ_USERNAME and ACTIVEMQ_PASSWORD set.
+# If you pass in the existingSecret value, the secret should have ACTIVEMQ_URL, ACTIVEMQ_USERNAME ACTIVEMQ_PASSWORD, SPRING_ACTIVEMQ_URL, SPRING_ACTIVEMQ_USERNAME and SPRING_ACTIVEMQ_PASSWORD set.
 messageBroker: &acs_messageBroker
   url: null
   user: null
