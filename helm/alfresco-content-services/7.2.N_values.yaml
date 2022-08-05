@@ -2,11 +2,7 @@
 
 repository:
   image:
-    tag: 7.2.0.2
-
-transformrouter:
-  image:
-    tag: 1.5.3
+    tag: 7.2.1
 
 pdfrenderer:
   image:
@@ -36,13 +32,13 @@ filestore:
   image:
     tag: 0.16.1
 
-share:
-  image:
-    tag: 7.2.0.2
-
 alfresco-search:
   searchServicesImage:
-    tag: 2.0.3
+    tag: 2.0.4
+
+share:
+  image:
+    tag: 7.2.1
 
 postgresql:
   image:

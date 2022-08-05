@@ -23,7 +23,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.3.0-M1
+    tag: 7.3.0-M2
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -231,7 +231,7 @@ pdfrenderer:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: 2.5.7
+    tag: 2.6.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -265,7 +265,7 @@ imagemagick:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: 2.5.7
+    tag: 2.6.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -299,7 +299,7 @@ libreoffice:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: 2.5.7
+    tag: 2.6.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -333,7 +333,7 @@ tika:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-tika
-    tag: 2.5.7
+    tag: 2.6.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -368,7 +368,7 @@ transformmisc:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: 2.5.7
+    tag: 2.6.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -400,7 +400,7 @@ aiTransformer:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 1.4.2
+    tag: 1.4.4
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -478,7 +478,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.3.0-M1
+    tag: 7.3.0-M2
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -572,7 +572,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: 2.0.3
+    tag: 2.0.4
     pullPolicy: IfNotPresent
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
