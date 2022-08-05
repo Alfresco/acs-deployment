@@ -24,7 +24,7 @@ dependencies:
     version: 10.16.2
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     alias: postgresql-syncservice
-    condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
+    condition: alfresco-sync-service.postgresql-syncservice.enabled,postgresql-syncservice.enabled
   - name: common
     alias: alfresco-digital-workspace
     repository: https://activiti.github.io/activiti-cloud-helm-charts
