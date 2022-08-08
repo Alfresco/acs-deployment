@@ -50,9 +50,7 @@ data:
       -Dsolr.secureComms={{ .Values.global.tracking.auth | default "secret" }}
       {{- end }}
       {{- if index .Values "alfresco-elasticsearch-connector" "enabled" }}
-      -Delasticsearch.createIndexIfNotExists=true
-      -Delasticsearch.host={{ index .Values "alfresco-elasticsearch-connector" "elasticsearch" "host" }}
-      -Delasticsearch.indexName={{ index .Values "alfresco-elasticsearch-connector" "indexName" }}
+      {{ template "repo.elasticsearch.config" . }}
       {{- end -}}
       {{- if eq .Values.repository.edition "Enterprise" }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
@@ -120,7 +118,7 @@ data:
       {{- end }}
       {{- end }}
       {{- if .Values.activemq.enabled }}
-      -Dmessaging.broker.url=failover:(nio://{{ .Release.Name }}-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+      -Dmessaging.broker.url={{ printf "failover:(nio://%s-broker:61616)?timeout=3000&jms.useCompression=true" (include "activemq.fullname" .) }}
       -Dmessaging.broker.username={{ .Values.activemq.adminUser.username }}
       -Dmessaging.broker.password={{ .Values.activemq.adminUser.password }}
       {{- else }}
