@@ -11,7 +11,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   ACTIVEMQ_URL: {{ printf "nio://%s-broker:61616" (include "activemq.fullname" .) }}
   ACTIVEMQ_USER: {{ .Values.activemq.adminUser.username | quote | default "" }}
   ACTIVEMQ_PASSWORD: {{ .Values.activemq.adminUser.password |  quote | default "" }}
-{{- else -}}
+{{- else if not .Values.messageBroker.existingSecretName -}}
   ACTIVEMQ_URL: {{ .Values.messageBroker.url | quote }}
   ACTIVEMQ_USER: {{ .Values.messageBroker.user | quote | default ""  }}
   ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password | quote | default "" }}
@@ -19,6 +19,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "spring.activemq.config" -}}
+  {{- if not .Values.messageBroker.existingSecretName }}
   SPRING_ACTIVEMQ_BROKERURL: |-
     {{ .Values.messageBroker.url | default (printf "failover:(nio://%s-broker:61616)?timeout=3000&jms.useCompression=true" (include "activemq.fullname" .)) }}
   {{- if .Values.messageBroker.user }}
@@ -26,5 +27,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   {{- end }}
   {{- if .Values.messageBroker.password }}
   SPRING_ACTIVEMQ_PASSWORD: {{ .Values.messageBroker.password | quote }}
+  {{- end }}
   {{- end }}
 {{- end -}}

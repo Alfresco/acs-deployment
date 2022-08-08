@@ -47,6 +47,10 @@ spec:
         envFrom:
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
+        {{- if .Values.messageBroker.existingSecretName }}
+        - secretRef:
+            name: {{ .Values.messageBroker.existingSecretName }}
+        {{- end }}
         args:
           - -c
           - echo "Checking for ActiveMQ broker availability";

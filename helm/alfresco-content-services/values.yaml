@@ -557,6 +557,7 @@ messageBroker: &acs_messageBroker
   url: null
   user: null
   password: null
+  existingSecretName: null
 
 alfresco-search:
   nodeSelector: {}
