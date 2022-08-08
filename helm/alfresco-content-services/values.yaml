@@ -903,8 +903,6 @@ global:
   ai:
     enabled: false
 
-  ingress:
-
 # ai:
 #   aws:
 #   accessKey:
