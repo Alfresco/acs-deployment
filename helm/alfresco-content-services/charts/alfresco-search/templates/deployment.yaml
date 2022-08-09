@@ -89,6 +89,7 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 10"]
+     {{- if .Values.initContainer.enabled }}
       initContainers:
         - name: init-fs
           image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
@@ -104,6 +105,7 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}
             subPath: {{ .Values.persistence.search.data.subPath }}
+    {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:
