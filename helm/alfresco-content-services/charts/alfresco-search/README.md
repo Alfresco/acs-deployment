@@ -33,11 +33,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ingress.path | string | `"/solr"` |  |
 | ingress.tls | list | `[]` |  |
 | ingress.whitelist_ips | string | `"0.0.0.0/0"` | Comma separated list of IP CIDR to limit search endpoint over the internet |
+| initContainer.enabled | bool | `true` |  |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
 | initContainer.image.tag | string | `"1.35.0"` |  |
 | initContainer.resources.limits.memory | string | `"10Mi"` |  |
 | initContainer.resources.requests.memory | string | `"5Mi"` |  |
+| initContainer.securityContext | string | `nil` |  |
 | insightEngineImage.internalPort | int | `8983` |  |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |
 | insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
@@ -58,6 +60,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | searchServicesImage.tag | string | `"2.0.3"` |  |
+| securityContext | string | `nil` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |

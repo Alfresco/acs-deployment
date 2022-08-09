@@ -79,6 +79,7 @@ livenessProbe:
   timeoutSeconds: 10
 
 initContainer:
+  enabled: true
   image:
     repository: busybox
     tag: 1.35.0

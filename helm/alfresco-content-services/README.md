@@ -143,7 +143,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | mail.smtps.auth | bool | `true` |  |
 | mail.smtps.starttls.enable | bool | `true` |  |
 | mail.username | string | `nil` |  |
-| messageBroker | object | `{"existingSecret":null,"password":null,"url":null,"user":null}` | external activemq connection setting when activemq.enabled=false If you pass in the existingSecret value, the secret should have ACTIVEMQ_URL, ACTIVEMQ_USERNAME and ACTIVEMQ_PASSWORD set. |
+| messageBroker | object | `{"existingSecret":null,"password":null,"url":null,"user":null}` | external activemq connection setting when activemq.enabled=false If you pass in the existingSecret value, the secret should have ACTIVEMQ_URL, ACTIVEMQ_USERNAME ACTIVEMQ_PASSWORD, SPRING_ACTIVEMQ_URL, SPRING_ACTIVEMQ_USERNAME and SPRING_ACTIVEMQ_PASSWORD set. |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
 | msTeams | object | `{"enabled":false}` | Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams) |
