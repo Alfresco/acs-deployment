@@ -114,11 +114,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | filestore | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80","scheduler.cleanup.interval":"86400000","scheduler.content.age.millis":"86400000"},"image":{"internalPort":8099,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"1.5.3"},"initContainer":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"},"resources":{"limits":{"memory":"10Mi"},"requests":{"memory":"5Mi"}}},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessSavePeriodSeconds":600,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":1,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"filestore","type":"ClusterIP"}}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` |  |
-| global.elasticsearch | object | `{"host":null,"password":null,"port":443,"protocol":"https","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-elasticsearch-connector.enabled is true |
-| global.elasticsearch.host | string | `nil` | The host where service is available. The provided default is for when elasticsearch.enabled is true |
+| global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-elasticsearch-connector.enabled is true |
+| global.elasticsearch.host | string | `"elasticsearch-master"` | The host where service is available. The provided default is for when elasticsearch.enabled is true |
 | global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
-| global.elasticsearch.port | int | `443` | The port where service is available |
-| global.elasticsearch.protocol | string | `"https"` | Valid values are http or https |
+| global.elasticsearch.port | int | `9200` | The port where service is available |
+| global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
 | global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
