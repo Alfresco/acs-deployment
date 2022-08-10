@@ -7,6 +7,7 @@ on:
     branches:
       - 'master'
       - pr-*
+      - 'OPSEXP-1545-build-actions'
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -39,45 +40,21 @@ jobs:
           - 6.2.N
           - community
     runs-on: ubuntu-latest
-    env:
-      DOMAIN: dev.envalfresco.com
-      AWS_ACCESS_KEY_ID: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: eu-west-1
-      - uses: azure/setup-kubectl@v2.0
-        with:
-          version: 'v1.23.6'
-      - if: matrix.acs_version != 'community'
-        name: Login to Quay.io
-        uses: docker/login-action@v1
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Get commit msg
-        run: |
-          MSG=$(git log --format=%B -n 1 ${{github.event.after}})
-          echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
       - name: Run helm chart tests
-        run: .github/scripts/helm_install.sh
-        shell: bash
-        env:
-          ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
-          AWS_SG: ${{ secrets.AWS_SG }}
-          ACS_VERSION: ${{ matrix.acs_version }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/verify-helm@OPSEXP-1545-helm-build-actions
+        with:
+          service: 'acs'
+          acs_version: ${{ matrix.acs_version }}
+          aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}
+          quay_username: ${{ secrets.QUAY_USERNAME }}
+          quay_password: ${{ secrets.QUAY_PASSWORD }}
+          branch_name: ${{ needs.branch.outputs.branch_name }}
+          acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
+          aws_sg: ${{ secrets.AWS_SG }}
   compose:
     needs: [pre-commit, branch]
     strategy:
@@ -86,34 +63,15 @@ jobs:
         acs_version: [latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - if: github.repository_owner == 'Alfresco' && matrix.acs_version != 'community'
-        name: Login to Quay.io
-        uses: docker/login-action@v1
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
-      - name: Get commit msg
-        run: |
-          MSG=$(git log --format=%B -n 1 ${{github.event.after}})
-          echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
-      - if: github.repository_owner == 'Alfresco'
-        name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Run Docker Compose tests
-        if: github.repository_owner == 'Alfresco' || matrix.acs_version == 'community'
-        run: .github/scripts/docker_compose.sh
-        shell: bash
-        env:
-          ACS_VERSION: ${{ matrix.acs_version}}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/verify-compose@OPSEXP-1545-helm-build-actions
+        with:
+          acs_version: ${{ matrix.acs_version }}
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}
+          quay_username: ${{ secrets.QUAY_USERNAME }}
+          quay_password: ${{ secrets.QUAY_PASSWORD }}
+          branch_name: ${{ needs.branch.outputs.branch_name }}
   publish:
     needs: [ compose, helm, branch ]
     runs-on: ubuntu-latest
