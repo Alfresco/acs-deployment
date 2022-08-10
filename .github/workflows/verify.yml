@@ -27,7 +27,7 @@ jobs:
           echo "::set-output name=branch_name::$BRANCH_NAME"
   helm:
     needs: [pre-commit]
-    if: github.repository_owner == 'Alfresco'
+    if: github.repository_owner == 'Alfresco' && 1 > 2
     strategy:
       max-parallel: 1 # otherwise flaky problems with aws ELB
       fail-fast: false
