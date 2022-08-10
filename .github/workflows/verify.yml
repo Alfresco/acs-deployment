@@ -71,7 +71,7 @@ jobs:
       - name: Run Docker Compose tests
         uses: Alfresco/alfresco-build-tools/.github/actions/verify-compose@OPSEXP-1545-helm-build-actions
         with:
-          compose_file_path: docker-compose/${{ matrix.compose_file }}
+          compose_file_path: ${{ matrix.compose_file }}
           docker_username: ${{ secrets.DOCKER_USERNAME }}
           docker_password: ${{ secrets.DOCKER_PASSWORD }}
           quay_username: ${{ secrets.QUAY_USERNAME }}
