@@ -60,7 +60,7 @@ jobs:
       fail-fast: true
       matrix:
         compose_file:
-          - docker_compose.yml
+          - docker-compose.yml
           - 7.2.N-docker-compose.yml
           - 7.1.N-docker-compose.yml
           - 7.0.N-docker-compose.yml
