@@ -900,11 +900,11 @@ global:
   # -- Shared connections details for Elasticsearch/Opensearch, required when alfresco-elasticsearch-connector.enabled is true
   elasticsearch:
     # -- The host where service is available. The provided default is for when elasticsearch.enabled is true
-    host: null
+    host: elasticsearch-master
     # -- The port where service is available
-    port: 443
+    port: 9200
     # -- Valid values are http or https
-    protocol: https
+    protocol: http
     # -- The username required to access the service, if any
     user: null
     # -- The password required to access the service, if any
