@@ -26,7 +26,7 @@ jobs:
           echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
   helm:
-    needs: [ pre-commit, branch ]
+    needs: [pre-commit]
     if: github.repository_owner == 'Alfresco'
     strategy:
       max-parallel: 1 # otherwise flaky problems with aws ELB
@@ -44,7 +44,6 @@ jobs:
       - name: Run helm chart tests
         uses: Alfresco/alfresco-build-tools/.github/actions/verify-helm@OPSEXP-1545-helm-build-actions
         with:
-          service: 'acs'
           acs_version: ${{ matrix.acs_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
@@ -56,22 +55,27 @@ jobs:
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
   compose:
-    needs: [pre-commit, branch]
+    needs: [pre-commit]
     strategy:
       fail-fast: true
       matrix:
-        acs_version: [latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community]
+        compose_file:
+          - docker_compose.yml
+          - 7.2.N-docker-compose.yml
+          - 7.1.N-docker-compose.yml
+          - 7.0.N-docker-compose.yml
+          - 6.2.N-docker-compose.yml
+          - community-docker-compose.yml
     runs-on: ubuntu-latest
     steps:
       - name: Run Docker Compose tests
         uses: Alfresco/alfresco-build-tools/.github/actions/verify-compose@OPSEXP-1545-helm-build-actions
         with:
-          acs_version: ${{ matrix.acs_version }}
+          compose_file_path: docker-compose/${{ matrix.compose_file }}
           docker_username: ${{ secrets.DOCKER_USERNAME }}
           docker_password: ${{ secrets.DOCKER_PASSWORD }}
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
-          branch_name: ${{ needs.branch.outputs.branch_name }}
   publish:
     needs: [ compose, helm, branch ]
     runs-on: ubuntu-latest
