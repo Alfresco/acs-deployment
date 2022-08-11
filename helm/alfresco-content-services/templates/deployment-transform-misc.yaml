@@ -60,10 +60,8 @@ spec:
           - configMapRef:
               # config map to use, defined in config-transformmisc.yaml
               name: {{ template "content-services.shortname" . }}-transform-misc-configmap
-          {{- if .Values.messageBroker.existingSecretName }}
           - secretRef:
-              name: {{ .Values.messageBroker.existingSecretName }}
-          {{- end }}
+              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
           ports:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
           resources:
