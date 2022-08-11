@@ -14,17 +14,6 @@ jobs:
     steps:
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.6.0
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.6.0
-  branch:
-    runs-on: ubuntu-latest
-    outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}
-    steps:
-      - id: branch
-        name: Evaluate branch name and set as output
-        run: |
-          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
-          echo "Branch name is $BRANCH_NAME"
-          echo "::set-output name=branch_name::$BRANCH_NAME"
   helm:
     needs: [pre-commit]
     if: github.repository_owner == 'Alfresco'
@@ -76,23 +65,12 @@ jobs:
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
-    needs: [ compose, helm, branch ]
+    needs: [ compose, helm ]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Get commit msg
-        run: |
-          MSG=$(git log --format=%B -n 1 ${{github.event.after}})
-          echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
       - name: Publish
-        run: .github/scripts/publish_chart.sh
-        shell: bash
-        if: github.ref_name == github.event.repository.default_branch || env.COMMIT_MESSAGE == '[publish]'
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-          GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_USERNAME }}
-          GITHUB_EMAIL: ${{ secrets.BOT_GITHUB_EMAIL }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/publish-chart@OPSEXP-1545-helm-build-actions
+        with:
+          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
+          github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
