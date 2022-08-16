@@ -42,6 +42,7 @@ spec:
                 secretKeyRef:
                   name: {{ template "content-services.shortname" . }}-dbsecret
                   key: DATABASE_USERNAME
+            {{- include "spring.activemq.config" . | nindent 12 }}
           ports:
               - name: http
                 containerPort: 8080

@@ -7,13 +7,19 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "activemq.config" -}}
-  ACTIVEMQ_URL: "$BROKER_URL"
-  ACTIVEMQ_USER: "$BROKER_USERNAME"
-  ACTIVEMQ_PASSWORD: "$BROKER_PASSWORD"
+- name: ACTIVEMQ_URL
+  value: $(BROKER_URL)
+- name: ACTIVEMQ_USER
+  value: $(BROKER_USERNAME)
+- name: ACTIVEMQ_PASSWORD
+  value: $(BROKER_PASSWORD)
 {{- end -}}
 
 {{- define "spring.activemq.config" -}}
-  SPRING_ACTIVEMQ_BROKERURL: "$BROKER_URL"
-  SPRING_ACTIVEMQ_USER: "$BROKER_USERNAME"
-  SPRING_ACTIVEMQ_PASSWORD: "$BROKER_PASSWORD"
+- name: SPRING_ACTIVEMQ_BROKERURL
+  value: $(BROKER_URL)
+- name: SPRING_ACTIVEMQ_USER
+  value: $($BROKER_USERNAME)
+- name: SPRING_ACTIVEMQ_PASSWORD
+  value: $(BROKER_PASSWORD)
 {{- end -}}

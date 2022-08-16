@@ -62,6 +62,8 @@ spec:
               name: {{ template "content-services.shortname" . }}-transform-misc-configmap
           - secretRef:
               name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
+          env:
+            {{- include "activemq.config" . | nindent 12 }}
           ports:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
           resources:

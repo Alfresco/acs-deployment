@@ -10,7 +10,6 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: syncservice
 data:
-  {{ template "spring.activemq.config" . }}
   JAVA_OPTS: >-
       {{- if eq .Values.database.external false }}
       -Dsql.db.driver="org.postgresql.Driver"
