@@ -5,7 +5,6 @@ on:
       - 'master'
   push:
     branches:
-      - 'OPSEXP-1656-helm-charts'
       - 'master'
       - pr-*
 jobs:
