@@ -49,8 +49,6 @@ spec:
             name: {{ template "syncservice.fullname" . }}-configmap
         - secretRef:
             name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
-        env:
-          {{- include "spring.activemq.env" . | nindent 12 }}
         args:
           - -c
           - echo "Checking for ActiveMQ broker availability";
@@ -86,6 +84,8 @@ spec:
             name: {{ template "syncservice.fullname" . }}-dbsecret
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
+        env:
+          {{- include "spring.activemq.env" . | nindent 12 }}
         ports:
         - name: serviceport
           containerPort: 9090
