@@ -50,7 +50,7 @@ spec:
         - secretRef:
             name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
         env:
-          {{- include "spring.activemq.config" . | nindent 12 }}
+          {{- include "spring.activemq.env" . | nindent 12 }}
         args:
           - -c
           - echo "Checking for ActiveMQ broker availability";

@@ -6,7 +6,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-activemq" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "activemq.config" -}}
+{{- define "activemq.env" -}}
 - name: ACTIVEMQ_URL
   value: $(BROKER_URL)
 - name: ACTIVEMQ_USER
@@ -15,11 +15,11 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
   value: $(BROKER_PASSWORD)
 {{- end -}}
 
-{{- define "spring.activemq.config" -}}
-- name: SPRING_ACTIVEMQ_BROKERURL
-  value: $(BROKER_URL)
-- name: SPRING_ACTIVEMQ_USER
-  value: $($BROKER_USERNAME)
-- name: SPRING_ACTIVEMQ_PASSWORD
-  value: $(BROKER_PASSWORD)
+{{- define "spring.activemq.env" -}}
+- name: JAVA_OPTS
+  value: >-
+    $(JAVA_OPTS)
+    -Dmessaging.broker.url=$(BROKER_URL)
+    -Dmessaging.username=$(BROKER_USERNAME)
+    -Dmessaging.password=$(BROKER_PASSWORD)
 {{- end -}}

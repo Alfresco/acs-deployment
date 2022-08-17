@@ -38,7 +38,7 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" $ }}-configmap
           env:
-            {{- include "spring.activemq.config" . | nindent 12 }}
+            {{- include "spring.activemq.env" . | nindent 12 }}
           ports:
             - name: http
               containerPort: 8080

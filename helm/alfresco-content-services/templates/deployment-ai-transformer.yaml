@@ -61,7 +61,7 @@ spec:
               # config map to use, defined in config-ai-transformer.yaml
               name: {{ template "content-services.shortname" . }}-ai-transformer-configmap
           env:
-            {{- include "activemq.config" . | nindent 12 }}
+            {{- include "activemq.env" . | nindent 12 }}
           ports:
               - containerPort: {{ .Values.aiTransformer.image.internalPort }}
           resources:
