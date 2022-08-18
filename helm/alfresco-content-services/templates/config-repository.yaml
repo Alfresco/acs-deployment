@@ -147,6 +147,10 @@ data:
       -Ddb.username=$DATABASE_USERNAME
       -Ddb.password=$DATABASE_PASSWORD
       {{- if .Values.s3connector.enabled }}
+      {{- if .Values.s3connector.existingSecret }}
+      -Ds3.accessKey=$ACCESSKEY
+      -Ds3.secretKey=$SECRETKEY
+      {{- end }}
       {{- if .Values.s3connector.secrets }}
       {{- if .Values.s3connector.secrets.accessKey }}
       -Ds3.accessKey=$ACCESSKEY
