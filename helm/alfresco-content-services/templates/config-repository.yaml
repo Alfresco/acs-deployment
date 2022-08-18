@@ -117,15 +117,15 @@ data:
       -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
       {{- end }}
       {{- end }}
-      -Dmessaging.broker.url=$BROKER_URL
-      -Dmessaging.broker.username=$BROKER_USERNAME
-      -Dmessaging.broker.password=$BROKER_PASSWORD
       {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
       -Ddsync.service.uris={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/syncservice
       {{- else }}
       -Devents.subsystem.autoStart=false
       {{- end }}"
   CATALINA_OPTS: " $ALFRESCO_OPTS
+      -Dmessaging.broker.url=$BROKER_URL
+      -Dmessaging.broker.username=$BROKER_USERNAME
+      -Dmessaging.broker.password=$BROKER_PASSWORD
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
       {{- if eq .Values.database.external false }}
       -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
