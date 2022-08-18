@@ -66,6 +66,11 @@ spec:
               name: {{ .Values.messageBroker.existingSecret }}
               {{- end }}
           {{- if .Values.s3connector.enabled }}
+          {{- if .Values.s3connector.existingSecret }}
+          - secretRef:
+              # s3 connector secret keys
+              name: {{ .Values.s3connector.existingSecret }}
+          {{- end }}
           {{- if .Values.s3connector.secrets }}
           - secretRef:
               # s3 connector secret keys
