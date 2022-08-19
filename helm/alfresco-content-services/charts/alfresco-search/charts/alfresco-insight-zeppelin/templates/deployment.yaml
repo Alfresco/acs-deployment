@@ -31,7 +31,7 @@ spec:
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-     {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

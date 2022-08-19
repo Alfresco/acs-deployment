@@ -25,7 +25,7 @@ spec:
     {{- if .Values.transformrouter.nodeSelector }}
       nodeSelector: {{- .Values.transformrouter.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-     {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
