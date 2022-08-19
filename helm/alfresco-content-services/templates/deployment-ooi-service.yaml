@@ -27,7 +27,7 @@ spec:
     {{- if .Values.ooiService.nodeSelector }}
       nodeSelector: {{- .Values.ooiService.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

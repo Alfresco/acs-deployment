@@ -30,7 +30,7 @@ spec:
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       initContainers:
       {{- if .Values.activemq }}
       {{ fail "Using activemq.[host|port|user|password|external] in subcharts is not supported anymore. Use messageBroker.* instead" }}

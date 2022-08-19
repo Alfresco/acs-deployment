@@ -13,7 +13,7 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 8 }}
     spec:
-      {{- include "alfresco-content-services.imagePullSecrets" . }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing

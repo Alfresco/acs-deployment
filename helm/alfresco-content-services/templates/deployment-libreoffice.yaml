@@ -25,7 +25,7 @@ spec:
     {{- if .Values.libreoffice.nodeSelector }}
       nodeSelector: {{- .Values.libreoffice.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

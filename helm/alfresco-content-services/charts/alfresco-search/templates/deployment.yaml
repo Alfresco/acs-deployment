@@ -36,7 +36,7 @@ spec:
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | nindent 6 }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ template "alfresco-search.dockerImage" . }}

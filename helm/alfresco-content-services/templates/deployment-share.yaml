@@ -24,7 +24,7 @@ spec:
     {{- if .Values.share.nodeSelector }}
       nodeSelector: {{- .Values.share.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       containers:
         {{- if .Values.share.extraSideContainers }}
 {{ tpl .Values.share.extraSideContainers . | indent 8 }}
