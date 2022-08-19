@@ -117,11 +117,7 @@ data:
       -Dmessaging.broker.url={{ printf "failover:(nio://%s-broker:61616)?timeout=3000&jms.useCompression=true" (include "activemq.fullname" .) }}
       -Dmessaging.broker.username={{ .Values.activemq.adminUser.username }}
       -Dmessaging.broker.password={{ .Values.activemq.adminUser.password }}
-      {{- else if .Values.messageBroker.existingSecret }}
-      -Dmessaging.broker.url=$BROKER_URL
-      -Dmessaging.broker.username=$BROKER_USERNAME
-      -Dmessaging.broker.password=$BROKER_PASSWORD
-      {{- else }}
+      {{- else if not .Values.messageBroker.existingSecret }}
       -Dmessaging.broker.url={{ .Values.messageBroker.url }}
       -Dmessaging.broker.username={{ .Values.messageBroker.user }}
       -Dmessaging.broker.password={{ .Values.messageBroker.password }}
@@ -165,6 +161,11 @@ data:
       -Ds3.awsKmsKeyId=$KMSKEYID
       {{- end }}
       {{- end }}
+      {{- end }}
+      {{- if .Values.messageBroker.existingSecret }}
+      -Dmessaging.broker.url=$ACTIVEMQ_URL
+      -Dmessaging.broker.username=$ACTIVEMQ_USER
+      -Dmessaging.broker.password=$ACTIVEMQ_PASSWORD
       {{- end }}
       -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
       -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
