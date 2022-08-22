@@ -19,10 +19,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | affinity | object | `{}` |  |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
-| elasticsearch.host | string | `"elasticsearch-master"` |  |
-| elasticsearch.port | int | `9200` |  |
+| elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch |
+| global.elasticsearch.host | string | `nil` | The host where service is available |
+| global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
+| global.elasticsearch.port | string | `nil` | The port where service is available |
+| global.elasticsearch.protocol | string | `nil` | Valid values are http or https |
+| global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` |  |
 | liveIndexing.content.image.pullPolicy | string | `"IfNotPresent"` |  |
