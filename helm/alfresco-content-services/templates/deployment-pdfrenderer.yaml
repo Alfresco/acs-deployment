@@ -25,11 +25,7 @@ spec:
     {{- if .Values.pdfrenderer.nodeSelector }}
       nodeSelector: {{- .Values.pdfrenderer.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- if .Values.global.alfrescoRegistryPullSecrets }}
-      # only set this secret if a private docker registry variable is defined
-      imagePullSecrets:
-        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
-      {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
