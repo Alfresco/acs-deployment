@@ -19,3 +19,6 @@ dependencies:
   - name: common
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     version: 1.x.x
+  - name: alfresco-content-common
+    version: 0.1.0
+    repository: "file://../alfresco-content-common"
