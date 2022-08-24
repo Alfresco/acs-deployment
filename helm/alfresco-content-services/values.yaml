@@ -63,8 +63,6 @@ repository:
     #      - chart-example.local
   environment:
     JAVA_OPTS: "
-      -Dsolr.base.url=/solr
-      -Dindex.subsystem.name=solr6
       -Dalfresco.cluster.enabled=true
       -Ddeployment.method=HELM_CHART
       -Dtransform.service.enabled=true
@@ -568,7 +566,7 @@ alfresco-search:
     # -- Host dns/ip of the external solr6 instance.
     host: null
     # -- Port of the external solr6 instance.
-    port: "8983"
+    port: null
   searchServicesImage:
     tag: 2.0.4
     pullPolicy: IfNotPresent
