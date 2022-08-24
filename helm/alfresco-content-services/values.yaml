@@ -62,9 +62,7 @@ repository:
     #    hosts:
     #      - chart-example.local
   environment:
-    JAVA_OPTS: "
-      -Dalfresco.cluster.enabled=true
-      -Ddeployment.method=HELM_CHART
+    JAVA_OPTS: >-
       -Dtransform.service.enabled=true
       -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
       -Dencryption.keystore.type=JCEKS
@@ -73,7 +71,6 @@ repository:
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
       -Dmetadata-keystore.aliases=metadata
       -Dmetadata-keystore.metadata.algorithm=DESede
-      "
   resources:
     requests:
       memory: "3000Mi"
