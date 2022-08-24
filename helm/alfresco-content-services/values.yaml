@@ -549,7 +549,7 @@ persistence:
 
 activemq:
   enabled: true
-  # --Possibility to choose Node for pod, key-value pair label of a desired node e.g {"kubernetes.io/hostname": multinode-demo-m02}
+  # -- Possibility to choose Node for pod, key-value pair label of a desired node e.g {"kubernetes.io/hostname": multinode-demo-m02}
   nodeSelector: {}
 
 # -- external activemq connection setting when activemq.enabled=false
@@ -562,15 +562,13 @@ alfresco-search:
   nodeSelector: {}
   type: "search-services"
   enabled: true
-# If enabled is set to false, then external host and port need to point to the external instance of SOLR6, and in this case:
-# Note: Rule_05-network-policy-search will be disabled.
-# Note: Rule_04-network-policy-repository internal trafic to SOLR6 instance will be disabled.
-# Note: ingress-repository will not block external trafic to */solr/*
-#  external:
-    # Host dns/ip of the external solr6 instance.
-#    host: "127.0.0.1"
-    # Port of the external solr6 instance.
-#    port: "8983"
+  # If an external Solr service is to be used then enabled must be set to false
+  # and external has to be configured accordingly.
+  external:
+    # -- Host dns/ip of the external solr6 instance.
+    host: null
+    # -- Port of the external solr6 instance.
+    port: "8983"
   searchServicesImage:
     tag: 2.0.4
     pullPolicy: IfNotPresent
