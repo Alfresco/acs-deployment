@@ -1,5 +1,6 @@
 # Defines the properties required by the shared file store container
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- if .Values.filestore.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -15,4 +16,5 @@ data:
   {{- end }}
   livenessPercent: "{{ .Values.filestore.livenessProbe.livenessPercent }}"
   livenessSavePeriodSeconds: "{{ .Values.filestore.livenessProbe.livenessSavePeriodSeconds }}"
+{{- end }}
 {{- end }}

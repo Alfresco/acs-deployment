@@ -1,6 +1,7 @@
 # Defines the deployment for the shared file store
 # Details: https://git.alfresco.com/Repository/alfresco-shared file store
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- if .Values.filestore.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -94,4 +95,5 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim }}
+{{- end }}
 {{- end }}
