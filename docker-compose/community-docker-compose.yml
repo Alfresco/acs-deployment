@@ -10,7 +10,7 @@ version: "2"
 
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository-community:7.3.0-M1
+    image: alfresco/alfresco-content-repository-community:7.3.0-M2
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: "
