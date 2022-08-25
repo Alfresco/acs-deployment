@@ -160,8 +160,8 @@ Now we have an EKS cluster up and running there are a few one time steps we need
         name: nfs-client
         parameters:
           directoryPerms: "700"
-          uid: 33030
-          gid: 33030
+          uid: 33000
+          gid: 1000
           fileSystemId: fs-SOMEUUID
           provisioningMode: efs-ap
         reclaimPolicy: Delete
