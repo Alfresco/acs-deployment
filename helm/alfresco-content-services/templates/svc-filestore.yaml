@@ -1,5 +1,6 @@
 # Defines the service for the shared file store
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- if .Values.filestore.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,4 +15,5 @@ spec:
       name: {{ .Values.filestore.service.name }}
   selector:
     {{- include "filestore.selectorLabels" . | nindent 4 }}
+{{- end }}
 {{- end }}

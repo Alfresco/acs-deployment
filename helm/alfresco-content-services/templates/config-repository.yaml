@@ -53,8 +53,12 @@ data:
       {{ template "repo.elasticsearch.config" . }}
       {{- end -}}
       {{- if eq .Values.repository.edition "Enterprise" }}
+      {{- if .Values.transformrouter.enabled }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
+      {{- end }}
+      {{- if .Values.filestore.enabled }}
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
+      {{- end }}
       {{- end }}
       -DlocalTransform.pdfrenderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -DlocalTransform.imagemagick.url=http://{{ template "content-services.shortname" . }}-imagemagick

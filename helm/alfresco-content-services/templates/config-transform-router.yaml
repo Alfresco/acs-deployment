@@ -1,5 +1,6 @@
 # Defines the properties required by the transform router container
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- if .Values.transformrouter.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -28,4 +29,5 @@ data:
   TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-pipeline-routes.json"
 
     {{- end }}
+{{- end }}
 {{- end }}

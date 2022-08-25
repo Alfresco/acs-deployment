@@ -1,4 +1,5 @@
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- if .Values.transformrouter.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -96,4 +97,5 @@ spec:
         configMap:
           name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
       {{- end }}
+{{- end }}
 {{- end }}

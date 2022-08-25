@@ -201,6 +201,7 @@ msTeamsService:
       imageEnabled: true
 
 transformrouter:
+  enabled: true
   replicaCount: 2
   nodeSelector: {}
   image:
@@ -227,7 +228,6 @@ transformrouter:
       memory: "128Mi"
     limits:
       memory: "512Mi"
-
   securityContext:
 
 # -- Declares the alfresco-pdf-renderer service used by the content repository
@@ -444,6 +444,7 @@ aiTransformer:
 # -- Declares the alfresco-shared-file-store used by the content repository
 # and transform service
 filestore:
+  enabled: true
   replicaCount: 1
   nodeSelector: {}
   image:
@@ -615,6 +616,7 @@ alfresco-search:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  securityContext:
 
 alfresco-elasticsearch-connector:
   enabled: false
@@ -752,7 +754,7 @@ postgresql-syncservice:
       memory: "1500Mi"
     limits:
       memory: "1500Mi"
-      
+
 # -- Embedded ElasticSearch cluster powered by Bitnami charts
 elasticsearch:
   # -- Enable the embedded ElasticSearch cluster
