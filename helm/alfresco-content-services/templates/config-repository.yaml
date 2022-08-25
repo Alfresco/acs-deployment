@@ -46,7 +46,7 @@ data:
       -Dsolr.port={{ template "alfresco-search.port" . }}
       -Dsolr.secureComms={{ .Values.global.tracking.auth | default "secret" }}
       {{- else if index .Values "alfresco-elasticsearch-connector" "enabled" }}
-      {{ template "repo.elasticsearch.config" . }}
+      {{ include "repo.elasticsearch.config" . | nindent 6 }}
       {{- end }}
       {{- if eq .Values.repository.edition "Enterprise" }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router

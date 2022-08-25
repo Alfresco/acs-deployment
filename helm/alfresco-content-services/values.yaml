@@ -64,7 +64,8 @@ repository:
   environment:
     JAVA_OPTS: >-
       -Dtransform.service.enabled=true
-      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=80
       -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
