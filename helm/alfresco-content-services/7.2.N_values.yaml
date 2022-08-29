@@ -51,4 +51,4 @@ postgresql-syncservice:
 alfresco-sync-service:
   syncservice:
     image:
-      tag: 4.0.0-M2
+      tag: 3.7.1-A1
