@@ -17,7 +17,9 @@ data:
   {{- $alfhost := tpl (.Values.externalHost | default (printf "%s-repository" (include "content-services.shortname" .))) $ }}
   {{- $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
   {{- $alfport := tpl ((.Values.externalPort | default .Values.repository.service.externalPort) | toString) $ }}
-  ALFRESCO_OPTS: "
+  ALFRESCO_OPTS: >-
+      -Ddeployment.method=HELM_CHART
+      -Dalfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
       {{- if .Values.repository.licenseSecret -}}
       -Ddir.license.external=/usr/local/tomcat/shared/classes/alfresco/extension/license/
       {{- end }}
@@ -37,21 +39,15 @@ data:
       -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
       -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
       -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
-      {{- if index .Values "alfresco-search" "enabled" }}
+      {{- if or (index .Values "alfresco-search" "enabled") (index .Values "alfresco-search" "external" "host") }}
+      -Dindex.subsystem.name=solr6
+      -Dsolr.base.url={{ template "alfresco-search.baseurl" . }}
       -Dsolr.host={{ template "alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
-      {{- else }}
-      {{- if index .Values "alfresco-search" "external" }}
-      -Dsolr.host={{ index .Values "alfresco-search" "external" "host" }}
-      -Dsolr.port={{ index .Values "alfresco-search" "external" "port" }}
-      {{- end }}
-      {{- end }}
-      {{- if or (index .Values "alfresco-search" "enabled") (index .Values "alfresco-search" "external") }}
       -Dsolr.secureComms={{ .Values.global.tracking.auth | default "secret" }}
+      {{- else if index .Values "alfresco-elasticsearch-connector" "enabled" }}
+      {{ include "repo.elasticsearch.config" . | nindent 6 }}
       {{- end }}
-      {{- if index .Values "alfresco-elasticsearch-connector" "enabled" }}
-      {{ template "repo.elasticsearch.config" . }}
-      {{- end -}}
       {{- if eq .Values.repository.edition "Enterprise" }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
@@ -130,8 +126,9 @@ data:
       -Ddsync.service.uris={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/syncservice
       {{- else }}
       -Devents.subsystem.autoStart=false
-      {{- end }}"
-  CATALINA_OPTS: " $ALFRESCO_OPTS
+      {{- end }}
+  CATALINA_OPTS: >-
+      $ALFRESCO_OPTS
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
       {{- if eq .Values.database.external false }}
       -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
@@ -160,4 +157,4 @@ data:
       {{- end }}
       {{- end }}
       -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
-      -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD"
+      -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
