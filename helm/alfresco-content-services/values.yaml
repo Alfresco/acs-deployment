@@ -513,9 +513,6 @@ share:
 # cluster the alf_data folder from alfresco-content-repository app is mapped to
 # alfresco-content-services/repository-data
 persistence:
-  #chown doesn't work with dynamic provisioning so far
-  #issue on github: https://github.com/kubernetes-sigs/aws-efs-csi-driver/issues/300
-  chownWithDynamicProvisioning: false
   enabled: true
   baseSize: 20Gi
   # -- Enable and define if you already have a custom storage class defined
