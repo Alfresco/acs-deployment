@@ -31,11 +31,6 @@ spec:
     {{- if .Values.filestore.serviceAccountName }}
       serviceAccountName: {{ .Values.repository.serviceAccountName }}
     {{- end }}
-      {{- if .Values.global.alfrescoRegistryPullSecrets }}
-      # only set this secret if a private docker registry variable is defined
-      imagePullSecrets:
-        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
-      {{- end }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
