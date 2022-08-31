@@ -20,7 +20,7 @@ data:
   ALFRESCO_OPTS: >-
       -Ddeployment.method=HELM_CHART
       -Dalfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
-      {{- if .Values.repository.licenseSecret -}}
+      {{- if .Values.repository.licenseSecret }}
       -Ddir.license.external=/usr/local/tomcat/shared/classes/alfresco/extension/license/
       {{- end }}
       -Dalfresco.host={{ $alfhost }}
