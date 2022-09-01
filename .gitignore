@@ -32,7 +32,6 @@ hs_err_pid*
 
 # Helm
 *.lock
-*.tgz
 helm/alfresco-content-services/charts/activemq.yaml
 helm/alfresco-content-services/charts/alfresco-search.yaml
 helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin.yaml
