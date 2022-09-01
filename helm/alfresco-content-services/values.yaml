@@ -8,11 +8,11 @@
 # But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
 # If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
 # Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
-
+---
 repository:
   # -- Administrator password for ACS in md5 hash format
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
-  # -- The name of the secret holding the ACS repository license if any (otherwise the image embeded license is used).
+  # -- The name of the secret holding the ACS repository license if any.
   # it must be contained within a `data['*.lic']` property
   # See https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md for details on how to manage license
   licenseSecret: null
@@ -56,7 +56,7 @@ repository:
     path: /
     maxUploadSize: "5g"
     annotations: {}
-      # nginx.ingress.kubernetes.io/enable-cors: "true"
+    #   nginx.ingress.kubernetes.io/enable-cors: "true"
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -687,7 +687,12 @@ postgresql:
   primary:
     nodeSelector: {}
   persistence:
-    existingClaim: "alfresco-volume-claim"
+    # -- set the storageClass to use for dynamic provisioning.
+    # setting it to null means "default storageClass".
+    storageClass: null
+    # -- provide an existing persistent volume claim name to persist SQL data
+    # Make sure the root folder has the appropriate permissions/ownhership set.
+    existingClaim: null
     subPath: "alfresco-content-services/database-data"
   resources:
     requests:
