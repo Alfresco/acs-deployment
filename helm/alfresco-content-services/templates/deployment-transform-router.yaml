@@ -26,8 +26,21 @@ spec:
       nodeSelector: {{- .Values.transformrouter.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
       # only set this secret if a private docker registry variable is defined
+      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
+      # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+      {{- with .Values.transformrouter.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.transformrouter.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}           
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

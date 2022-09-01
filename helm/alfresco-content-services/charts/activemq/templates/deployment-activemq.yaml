@@ -20,9 +20,25 @@ spec:
         app: {{ template "activemq.fullname" . }}
         release: {{ .Release.Name }}
     spec:
-    {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
+      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}    
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}          
       containers:
       - name: activemq
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

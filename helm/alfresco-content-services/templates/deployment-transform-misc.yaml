@@ -23,14 +23,21 @@ spec:
       labels:
         {{- include "transform-misc.selectorLabels" . | nindent 8 }}
     spec:
-    {{- if .Values.transformmisc.nodeSelector }}
-      nodeSelector: {{- .Values.transformmisc.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- end }}
+      {{- with .Values.transformmisc.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.transformmisc.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}          
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

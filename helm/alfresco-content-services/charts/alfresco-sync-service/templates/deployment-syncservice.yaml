@@ -27,11 +27,25 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-syncservice.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
     spec:
-    {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
+      {{- with .Values.syncservice.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syncservice.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syncservice.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}          
+      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
+      # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
       initContainers:
       {{- if eq .Values.activemq.external false }}
       - name: init-activemq

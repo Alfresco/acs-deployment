@@ -1,0 +1,102 @@
+ingress:
+  enabled: true
+  path: /auth
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "identity_affinity_route"
+    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+
+realm:
+  alfresco:
+    client:
+      redirectUris:
+        - "*"
+      webOrigins:
+        - "http://localhost*"
+        - "https://localhost*"
+    extraRealmRoles:
+      - name: test_role
+        scopeParamRequired: true
+        composite: false
+        clientRole: false
+        containerId: "alfresco"
+    extraGroups:
+      - name: testgroup
+        path: "/testgroup"
+        attributes: {}
+        realmRoles: []
+        clientRoles: {}
+        subGroups: []
+    extraUsers:
+      - username: testuser
+        enabled: true
+        totp: false
+        emailVerified: false
+        firstName: test
+        lastName: test
+        email: test@test.com
+        credentials:
+          - type: password
+            id: "cc7155cc-b438-4085-907b-3d5250810c0c"
+            secretData: "{\"value\":\"+A2UrlK6T33IHVutjQj9k8S8kMco1IMnmCTngEg+PE+2vO4jJScux6wcltsRIYILv5ggcS3PI7tbsynq5u39sQ==\",\"salt\":\"IyVlItIo27bmACSLi4yQkA==\"}"
+            credentialData: "{\"hashIterations\":20000,\"algorithm\":\"pbkdf2\",\"additionalParameters\":{}}"
+            hashedSaltedValue: "+A2UrlK6T33IHVutjQj9k8S8kMco1IMnmCTngEg+PE+2vO4jJScux6wcltsRIYILv5ggcS3PI7tbsynq5u39sQ=="
+        disableableCredentialTypes:
+          - password
+        realmRoles:
+          - uma_authorization
+          - user
+          - offline_access
+          - test_role
+        clientRoles:
+          account:
+            - manage-account
+            - view-profile
+        groups:
+          - "/admin"
+          - "/testgroup"
+
+keycloak:
+  rbac:
+    create: false
+  image:
+    repository: quay.io/alfresco/alfresco-identity-service
+    tag: 1.6.0
+    pullPolicy: Always
+  imagePullSecrets:
+      - name: quay-registry-secret
+  serviceAccount:
+    create: true
+  service:
+    httpPort: 80
+  extraVolumes: |
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+  extraVolumeMounts: |
+    - name: realm-secret
+      mountPath: "/realm/"
+      readOnly: true
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      value: admin
+    - name: KEYCLOAK_PASSWORD
+      value: admin
+    - name: KEYCLOAK_IMPORT
+      value: /realm/alfresco-realm.json
+  ###
+  postgresql:
+    enabled: true
+    nameOverride: postgresql-id
+    postgresqlPassword: "keycloak"
+    persistence:
+      enabled: true
+      existingClaim: "alfresco-volume-claim"
+      subPath: "alfresco-identity-service/database-data"
+    resources:
+      requests:
+        memory: "250Mi"
+      limits:
+        memory: "500Mi"

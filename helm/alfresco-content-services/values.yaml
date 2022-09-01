@@ -101,6 +101,10 @@ repository:
   extraLogStatements: {}
   #   org.alfresco.repo.content.transform.TransformerDebug: debug
   #   org.alfresco.repo.security.authentication.identityservice: debug
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
 
 # -- Declares the api-explorer service used by the content repository
 apiexplorer:
@@ -140,6 +144,8 @@ ooiService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
+  nodeSelector: {}
+  tolerations: []
 
 # -- Choose if you want Microsoft Teams Integration capabilities (Alfresco Content Connector for Microsoft Teams)
 msTeams:
@@ -191,6 +197,8 @@ msTeamsService:
       filenameEnabled: true
       metadataEnabled: true
       imageEnabled: true
+  nodeSelector: {}
+  tolerations: []
 
 transformrouter:
   replicaCount: 2
@@ -219,6 +227,8 @@ transformrouter:
       memory: "128Mi"
     limits:
       memory: "512Mi"
+  nodeSelector: {}
+  tolerations: []      
 
 # -- Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -253,6 +263,8 @@ pdfrenderer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1200
+  nodeSelector: {}
+  tolerations: []    
 
 # -- Declares the alfresco-imagemagick service used by the content repository
 # to transform image files
@@ -287,6 +299,8 @@ imagemagick:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 900
+  nodeSelector: {}
+  tolerations: []
 
 # -- Declares the alfresco-libreoffice service used by the content repository
 # to transform office files
@@ -321,6 +335,8 @@ libreoffice:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 99999
     maxTransformSeconds: 1800
+  nodeSelector: {}
+  tolerations: []
 
 # -- Declares the alfresco-tika service used by the content repository
 # to transform office files
@@ -355,6 +371,8 @@ tika:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  nodeSelector: {}
+  tolerations: []
 
 # -- Declares the alfresco-tika service used by the content repository
 # to transform office files
@@ -390,6 +408,8 @@ transformmisc:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  nodeSelector: {}
+  tolerations: []
 
 aiTransformer:
   replicaCount: 2
@@ -422,6 +442,8 @@ aiTransformer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  nodeSelector: {}
+  tolerations: []
 
 # -- Declares the alfresco-shared-file-store used by the content repository
 # and transform service
@@ -466,6 +488,8 @@ filestore:
     timeoutSeconds: 10
     livenessPercent: 150
     livenessSavePeriodSeconds: 600
+  nodeSelector: {}
+  tolerations: []
 
 # -- Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
@@ -508,6 +532,9 @@ share:
   extraSideContainers: []
   extraInitContainers: []
   command: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 # -- Defines the mounting points for the persistence required by the apps in the
 # cluster the alf_data folder from alfresco-content-repository app is mapped to

@@ -108,6 +108,10 @@ global:
       maxUnavailable: 0
 # -- Define Affinity and Tolerations used for scheduling SOLR on Pod and PV level
 
+nodeSelector: {}
+tolerations: []
+affinity: {}  
+
 # affinity: |
 #   nodeAffinity:
 #     requiredDuringSchedulingIgnoredDuringExecution:

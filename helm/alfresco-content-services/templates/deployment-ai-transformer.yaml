@@ -23,14 +23,21 @@ spec:
       labels:
         {{- include "ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
-    {{- if .Values.aiTransformer.nodeSelector }}
-      nodeSelector: {{- .Values.aiTransformer.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- if .Values.global.alfrescoRegistryPullSecrets }}
+      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
-        - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- end }}
+      {{- with .Values.aiTransformer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.aiTransformer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}         
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

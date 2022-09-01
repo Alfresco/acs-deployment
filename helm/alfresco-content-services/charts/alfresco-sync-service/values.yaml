@@ -11,6 +11,9 @@ global:
 
 syncservice:
   enabled: true
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}  
   image:
     repository: quay.io/alfresco/service-sync
     tag: 3.6.0
