@@ -212,8 +212,6 @@ helm upgrade --install "${release_name_acs}" helm/"${PROJECT_NAME}" \
   --set persistence.enabled=true \
   --set persistence.storageClass.enabled=true \
   --set persistence.storageClass.name="nfs-client" \
-  --set postgresql.persistence.existingClaim="" \
-  --set postgresql-syncservice.persistence.existingClaim="" \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --wait \
   --timeout 20m0s \
