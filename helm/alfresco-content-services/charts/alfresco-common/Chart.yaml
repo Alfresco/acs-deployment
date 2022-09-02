@@ -1,0 +1,7 @@
+apiVersion: v2
+name: alfresco-common
+description: |
+  A helper subchart to avoid duplication in alfresco charts and set common
+  external dependencies
+type: library
+version: 0.1.0
