@@ -14,7 +14,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../alfresco-content-common | alfresco-content-common | 0.1.0 |
+| file://../alfresco-common | alfresco-common | 0.1.0 |
 
 ## Values
 

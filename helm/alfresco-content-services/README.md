@@ -17,7 +17,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 |  | activemq | 2.1.0 |
-|  | alfresco-content-common | 0.1.0 |
+|  | alfresco-common | 0.1.0 |
 |  | alfresco-elasticsearch-connector | 0.1.0 |
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |

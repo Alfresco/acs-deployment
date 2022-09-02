@@ -1,5 +1,0 @@
-apiVersion: v2
-name: alfresco-content-common
-description: A helper subchart to avoid duplication in alfresco-content-services chart and subcharts
-type: library
-version: 0.1.0
