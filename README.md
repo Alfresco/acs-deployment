@@ -54,6 +54,11 @@ Our tests are executed using the latest version of Docker and Docker Compose pro
 
 ### Helm
 
+Version 5.3.0 changes the way the default persistence is set up for the
+PostgreSQL database. If you did not customize the database persistance (which
+was not recommanded for serious workloads). Please take a look at [this](./storage.md)
+ before trying to upgrade.
+
 Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
 
 By default the latest version of the chart will always deploy the latest development version of ACS. A set of values files are also provided that can be used to deploy a specific major.minor version.
