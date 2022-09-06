@@ -23,4 +23,4 @@ dependencies:
     version: 1.x.x
   - name: alfresco-common
     version: 0.1.0
-    repository: file://../alfresco-common
+    repository: file://../../../alfresco-common
