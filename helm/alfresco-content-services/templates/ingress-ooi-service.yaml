@@ -33,17 +33,8 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.ooiService.ingress.path }}
-<<<<<<< HEAD
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
 {{- end }}
-=======
-        pathType: Prefix
-        backend:
-          service: 
-            name: {{ template "content-services.shortname" . }}-ooi-service
-            port:
-              number: {{ .Values.ooiService.service.externalPort }}
->>>>>>> helmrepo

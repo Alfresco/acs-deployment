@@ -33,17 +33,8 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.msTeamsService.ingress.path }}
-<<<<<<< HEAD
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
 {{- end }}
-=======
-        pathType: Prefix
-        backend:
-          service: 
-            name: {{ template "content-services.shortname" . }}-ms-teams-service
-            port:
-              number: {{ .Values.msTeamsService.service.externalPort }}
->>>>>>> helmrepo

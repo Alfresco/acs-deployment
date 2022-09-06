@@ -16,9 +16,6 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "604800"
     nginx.ingress.kubernetes.io/session-cookie-expires: "604800"
     {{- include "ingress_annotations" .Values.share }}
-    {{- if ne .Values.share.ingress.hostName .Values.repository.ingress.hostName }}
-    {{- include "ingress_vhost_annotations" .Values.share }}
-    {{- end }}
 spec:
   {{- if .Values.share.ingress.tls }}
   tls:

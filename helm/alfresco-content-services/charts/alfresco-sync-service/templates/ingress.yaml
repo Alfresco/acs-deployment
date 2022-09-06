@@ -34,19 +34,9 @@ spec:
   - http:
   {{- end }}
       paths:
-<<<<<<< HEAD
       - path: {{ .Values.syncservice.ingress.path }}(/|$)(.*)
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
-=======
-      - path: {{ .Values.syncservice.ingress.path }}/*
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ template "syncservice.fullname" . }}
-            port: 
-              number: {{ .Values.syncservice.service.externalPort }}
->>>>>>> helmrepo
 {{- end }}

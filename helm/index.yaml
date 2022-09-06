@@ -2,7 +2,48 @@ apiVersion: v1
 entries:
   alfresco-content-services:
   - apiVersion: v2
-    created: "2022-09-06T17:57:41.481608388+02:00"
+    created: "2022-09-06T19:42:12.583585368+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.16.2
+    - alias: postgresql-syncservice
+      condition: postgresql-syncservice.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.16.2
+    - alias: alfresco-digital-workspace
+      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
+      name: common
+      repository: https://activiti.github.io/activiti-cloud-helm-charts
+      version: 7.2.0
+    - name: activemq
+      repository: ""
+      version: 2.1.0
+    - name: alfresco-search
+      repository: ""
+      version: 1.0.4
+    - name: alfresco-sync-service
+      repository: ""
+      version: 3.0.9
+    description: A Helm chart for deploying Alfresco Content Services
+    digest: 14201c00b82ddad55cb777979aa9f254811f4c67ef3d3610fe6475c7e36f77e4
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - content
+    - content services
+    - alfresco
+    - alfresco content services
+    name: alfresco-content-services
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    urls:
+    - alfresco-content-services-5.2.2.tgz
+    version: 5.2.2
+  - apiVersion: v2
+    created: "2022-09-06T19:42:12.566214206+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -43,7 +84,7 @@ entries:
     - alfresco-content-services-5.2.1.tgz
     version: 5.2.1
   - apiVersion: v2
-    created: "2022-09-06T17:57:41.456802584+02:00"
+    created: "2022-09-06T19:42:12.54954226+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -84,7 +125,7 @@ entries:
     - alfresco-content-services-5.2.0.tgz
     version: 5.2.0
   - apiVersion: v2
-    created: "2022-09-06T17:57:41.437348412+02:00"
+    created: "2022-09-06T19:42:12.536197919+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -125,7 +166,7 @@ entries:
     - alfresco-content-services-5.1.18.tgz
     version: 5.1.18
   - apiVersion: v2
-    created: "2022-09-06T17:57:41.418379099+02:00"
+    created: "2022-09-06T19:42:12.522500603+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -166,7 +207,7 @@ entries:
     - alfresco-content-services-5.1.17.tgz
     version: 5.1.17
   - apiVersion: v2
-    created: "2022-09-06T17:57:41.396707792+02:00"
+    created: "2022-09-06T19:42:12.506556484+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -207,7 +248,7 @@ entries:
     - alfresco-content-services-5.1.16.tgz
     version: 5.1.16
   - apiVersion: v2
-    created: "2022-09-06T17:57:41.378016851+02:00"
+    created: "2022-09-06T19:42:12.487744088+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -250,7 +291,7 @@ entries:
   alfresco-identity-service:
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-09-06T17:57:41.510400841+02:00"
+    created: "2022-09-06T19:42:12.613367739+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -275,7 +316,7 @@ entries:
     version: 5.0.3
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-09-06T17:57:41.502182505+02:00"
+    created: "2022-09-06T19:42:12.604268685+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -300,7 +341,7 @@ entries:
     version: 5.0.2
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-09-06T17:57:41.492280707+02:00"
+    created: "2022-09-06T19:42:12.592874043+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -326,7 +367,7 @@ entries:
   pgo:
   - apiVersion: v2
     appVersion: 5.1.2
-    created: "2022-09-06T17:57:41.514721297+02:00"
+    created: "2022-09-06T19:42:12.616945529+02:00"
     description: Installer for PGO, the open source Postgres Operator from Crunchy
       Data
     digest: f35911c42ec0134173b360932bdbade48ae732b22c1cfc4dc83c0a30a3ccd972
@@ -338,7 +379,7 @@ entries:
   postgrescluster:
   - apiVersion: v2
     appVersion: 5.1.2
-    created: "2022-09-06T17:57:41.515267794+02:00"
+    created: "2022-09-06T19:42:12.617536907+02:00"
     description: A Helm chart for Kubernetes
     digest: 9edc8e7cfaafbad59ff324bc7ebe46c2c1b1a1026ce175fa232a50f1f7b36f10
     name: postgrescluster
@@ -346,4 +387,4 @@ entries:
     urls:
     - postgrescluster-0.2.5.tgz
     version: 0.2.5
-generated: "2022-09-06T17:57:41.345548619+02:00"
+generated: "2022-09-06T19:42:12.464813116+02:00"
