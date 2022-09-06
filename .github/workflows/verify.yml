@@ -124,10 +124,15 @@ jobs:
           BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
   publish:
     needs:
-      - compose
       - helm
       - branch
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chart:
+          - alfresco-common
+          - alfresco-content-service
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -138,11 +143,11 @@ jobs:
           MSG=$(git log --format=%B -n 1 ${{github.event.after}})
           echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
       - name: Publish
-        run: .github/scripts/publish_chart.sh
+        run: .github/scripts/publish_chart.sh ${{ matrix.chart }}
         shell: bash
         if: >-
           github.ref_name == github.event.repository.default_branch ||
-          env.COMMIT_MESSAGE == '[publish]'
+          contains(env.COMMIT_MESSAGE, format('[publish {0}]', matrix.chart))
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_USERNAME }}
