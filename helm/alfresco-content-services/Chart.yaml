@@ -18,6 +18,7 @@ sources:
 dependencies:
   - name: alfresco-common
     version: 0.1.0
+    repository: file://../alfresco-common
   - name: postgresql
     version: 10.16.2
     repository: >-

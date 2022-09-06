@@ -8,4 +8,4 @@ appVersion: 3.0.0
 dependencies:
   - name: alfresco-common
     version: 0.1.0
-    repository: file://../alfresco-common
+    repository: file://../../../alfresco-common
