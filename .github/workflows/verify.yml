@@ -1,3 +1,4 @@
+---
 name: verify
 on:
   pull_request:
@@ -14,10 +15,11 @@ jobs:
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.14.0
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.14.0
   helm:
-    needs: [pre-commit]
+    needs:
+      - pre-commit
     if: '! github.event.pull_request.head.repo.fork'
     strategy:
-      max-parallel: 1 # otherwise flaky problems with aws ELB
+      max-parallel: 1  # otherwise flaky problems with aws ELB
       fail-fast: false
       matrix:
         acs_version:
@@ -62,6 +64,7 @@ jobs:
           - community-docker-compose.yml
     runs-on: ubuntu-latest
     steps:
+<<<<<<< HEAD
       - name: Run Docker Compose tests
         if: ${{ ! github.event.pull_request.head.repo.fork || matrix.compose_file == 'community-docker-compose.yml' }}
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
@@ -72,8 +75,10 @@ jobs:
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
-    needs: [ compose, helm ]
     if: github.event.head_commit.message == '[publish]'
+    needs:
+      - compose
+      - helm
     runs-on: ubuntu-latest
     steps:
       - name: Evalute type of release
@@ -85,6 +90,7 @@ jobs:
             echo "::set-output name=type::incubator"
           fi
       - name: Publish
+<<<<<<< HEAD
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@master
         with:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
