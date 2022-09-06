@@ -64,7 +64,6 @@ jobs:
           - community-docker-compose.yml
     runs-on: ubuntu-latest
     steps:
-<<<<<<< HEAD
       - name: Run Docker Compose tests
         if: ${{ ! github.event.pull_request.head.repo.fork || matrix.compose_file == 'community-docker-compose.yml' }}
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
@@ -77,9 +76,14 @@ jobs:
   publish:
     if: github.event.head_commit.message == '[publish]'
     needs:
-      - compose
       - helm
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chart:
+          - alfresco-common
+          - alfresco-content-service
     steps:
       - name: Evalute type of release
         id: release
@@ -90,7 +94,6 @@ jobs:
             echo "::set-output name=type::incubator"
           fi
       - name: Publish
-<<<<<<< HEAD
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@master
         with:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
