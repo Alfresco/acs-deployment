@@ -3,7 +3,7 @@
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 5.2.2
+version: 5.2.3
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -34,4 +34,7 @@ dependencies:
     version: 1.0.4
   - name: alfresco-sync-service
     version: 3.0.9
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 1.8.0    
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
