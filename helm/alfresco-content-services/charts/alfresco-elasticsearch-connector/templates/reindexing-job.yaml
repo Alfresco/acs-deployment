@@ -31,6 +31,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
+            - secretRef:
+                name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
           env:
             - name: SPRING_DATABASE_PASSWORD
               valueFrom:
