@@ -1,0 +1,19 @@
+---
+suite: test rendering with external message Broker for ACS
+templates:
+  - config-repository.yaml
+tests:
+  - it: should work
+    values:
+      - test-values.yml
+      - externalBroker-values.yml
+    set:
+      messageBroker:
+        url: failover(nio://broker.domain.local:61616)
+    asserts:
+      - isKind:
+          of: ConfigMap
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: >-
+            \ -Dmessaging.broker.url=failover\(nio://broker.domain.local:61616\)\ 
