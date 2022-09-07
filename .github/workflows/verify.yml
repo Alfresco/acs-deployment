@@ -16,7 +16,7 @@ jobs:
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.6.0
   helm:
     needs: [pre-commit]
-    if: github.repository_owner == 'Alfresco'
+    if: '! github.event.pull_request.head.repo.fork'
     strategy:
       max-parallel: 1 # otherwise flaky problems with aws ELB
       fail-fast: false
