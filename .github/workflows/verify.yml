@@ -26,6 +26,26 @@ jobs:
           BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
           echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
+  helm_unit_test:
+    needs:
+      - pre-commit
+    strategy:
+      matrix:
+        charts:
+          - alfresco-common
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: helm/alfresco-content-services
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: |
+          helm plugin install https://github.com/vbehar/helm3-unittest && \
+          helm dep up && \
+          helm unittest -f tests/${{ matrix.charts }}*_test.yaml --color .
   helm:
     needs:
       - pre-commit
