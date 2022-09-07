@@ -16,10 +16,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "spring.activemq.env" -}}
-- name: JAVA_OPTS
-  value: >-
-    $(JAVA_OPTS)
-    -Dmessaging.broker.url=$(BROKER_URL)
-    -Dmessaging.username=$(BROKER_USERNAME)
-    -Dmessaging.password=$(BROKER_PASSWORD)
+- name: SPRING_ACTIVEMQ_BROKERURL
+  value: $(BROKER_URL)
+- name: SPRING_ACTIVEMQ_USER
+  value: $(BROKER_USERNAME)
+- name: SPRING_ACTIVEMQ_PASSWORD
+  value: $(BROKER_PASSWORD)
 {{- end -}}
