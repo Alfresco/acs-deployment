@@ -23,10 +23,10 @@ jobs:
       matrix:
         acs_version:
           - latest
-          # - 7.2.N
-          # - 7.1.N
-          # - 7.0.N
-          # - 6.2.N
+          - 7.2.N
+          - 7.1.N
+          - 7.0.N
+          - 6.2.N
           - community
     runs-on: ubuntu-latest
     steps:
