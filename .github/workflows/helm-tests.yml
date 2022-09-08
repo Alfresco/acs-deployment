@@ -1,0 +1,101 @@
+---
+name: Helm tests
+on:
+  workflow_call:
+    inputs:
+      chartname:
+        required: true
+        type: string
+      app_version_matrix:
+        required: false
+        type: string
+    secrets:
+      ACM_CERTIFICATE:
+        required: true
+      AWS_SG:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
+      DOCKER_USERNAME:
+        required: true
+      QUAY_PASSWORD:
+        required: false
+      QUAY_USERNAME:
+        required: false
+      ACS_CLUSTER_AWS_ACCESS_KEY_ID:
+        required: true
+      ACS_CLUSTER_AWS_SECRET_ACCESS_KEY:
+        required: true
+jobs:
+  unit_tests:
+    name: Helm Unit tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: helm/${{ inputs.chartname }}
+    outputs:
+      chart-type: ${{ steps.get-chart-type.type }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - use: >-
+          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
+      - id: helm_unit_test
+        name: Run Helm unit tests
+        run: |
+          helm plugin install https://github.com/vbehar/helm3-unittest && \
+          helm unittest -f tests/${{ inputs.chartname }}*_test.yaml --color .
+      - id: get-chart-type
+        run: |
+          echo "::set-output name=type::$(yq e .type Chart.yaml)"
+  integration_tests:
+    needs:
+      - unit_tests
+    if: >-
+      needs.unit_tests.outputs.chart-type != 'library' &&
+      inputs.app_version_matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app_version: ${{ fromJSON(inputs.app_version_matrix) }}
+    env:
+      DOMAIN: dev.envalfresco.com
+      AWS_ACCESS_KEY_ID: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: eu-west-1
+      - uses: azure/setup-kubectl@v2.0
+        with:
+          version: 'v1.23.6'
+      - if: matrix.acs_version != 'community'
+        name: Login to Quay.io
+        uses: docker/login-action@v1
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Get commit msg
+        run: |
+          MSG=$(git log --format=%B -n 1 ${{github.event.after}})
+          echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
+      - name: Run helm chart tests
+        run: .github/scripts/helm_install.sh
+        shell: bash
+        env:
+          ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
+          AWS_SG: ${{ secrets.AWS_SG }}
+          ACS_VERSION: ${{ matrix.acs_version }}
+          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
