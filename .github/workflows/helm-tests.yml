@@ -53,7 +53,6 @@ jobs:
           helm unittest -f tests/${{ inputs.chartname }}*_test.yaml --color .
       - id: get-chart-type
         run: |
-          echo "${{ inputs.app_versions_matrix }}"
           echo "::set-output name=type::$(yq e .type Chart.yaml)"
   integration_tests:
     needs:
@@ -95,8 +94,9 @@ jobs:
           MSG=$(git log --format=%B -n 1 ${{github.event.after}})
           echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
       - name: Run helm chart tests
-        run: .github/scripts/helm_install.sh
-        shell: bash
+        run: |
+          echo "${{ needs.unit_tests.outputs.chart-type }}"
+          .github/scripts/helm_install.sh
         env:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
