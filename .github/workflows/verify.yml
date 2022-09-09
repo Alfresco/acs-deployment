@@ -66,7 +66,7 @@ jobs:
           quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
     needs: [ compose, helm ]
-    if: github.ref_name == github.event.repository.default_branch || github.event.head_commit.message == '[publish]'
+    # if: github.ref_name == github.event.repository.default_branch || github.event.head_commit.message == '[publish]'
     runs-on: ubuntu-latest
     steps:
       - name: Publish
