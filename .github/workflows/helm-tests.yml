@@ -6,7 +6,7 @@ on:
       chartname:
         required: true
         type: string
-      app_version_matrix:
+      app_versions_matrix:
         required: false
         type: string
     secrets:

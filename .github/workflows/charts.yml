@@ -24,7 +24,18 @@ jobs:
     uses: ./.github/workflows/helm-tests.yml
     with:
       chartname: ${{ matrix.charts.name }}
-      app_versions: ${{ matrix.charts.app_versions }}
+      app_versions_matrix: ${{ matrix.charts.app_versions }}
+    secrets:
+      ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
+      AWS_SG: ${{ secrets.AWS_SG }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+      QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      ACS_CLUSTER_AWS_ACCESS_KEY_ID: |-
+        ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
+      ACS_CLUSTER_AWS_SECRET_ACCESS_KEY: |-
+        ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
     needs:
       - branch
     strategy:
