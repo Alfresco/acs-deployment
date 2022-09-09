@@ -7,8 +7,9 @@ on:
         required: true
         type: string
       app_versions_matrix:
-        required: true
+        required: false
         type: string
+        default: '{"version":[]}'
     secrets:
       ACM_CERTIFICATE:
         required: true
