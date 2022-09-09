@@ -8,6 +8,7 @@ on:
         type: string
       app_versions_matrix:
         required: false
+        default: none
         type: string
     secrets:
       ACM_CERTIFICATE:
@@ -58,7 +59,7 @@ jobs:
       - unit_tests
     if: >-
       needs.unit_tests.outputs.chart-type != 'library' &&
-      inputs.app_version_matrix
+      inputs.app_version_matrix != 'none'
     runs-on: ubuntu-latest
     strategy:
       matrix:
