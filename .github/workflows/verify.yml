@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run helm chart tests
-        uses: Alfresco/alfresco-build-tools/.github/actions/verify-helm@OPSEXP-1545-helm-build-actions
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1545-helm-build-actions
         with:
           acs_version: ${{ matrix.acs_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Docker Compose tests
-        uses: Alfresco/alfresco-build-tools/.github/actions/verify-compose@OPSEXP-1545-helm-build-actions
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@OPSEXP-1545-helm-build-actions
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           docker_username: ${{ secrets.DOCKER_USERNAME }}
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Publish
-        uses: Alfresco/alfresco-build-tools/.github/actions/publish-chart@OPSEXP-1545-helm-build-actions
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@OPSEXP-1545-helm-build-actions
         with:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
