@@ -8,10 +8,6 @@ if [ -z "${COMMIT_MESSAGE}" ]; then
   echo "COMMIT_MESSAGE variable is not set"
   exit 2
 fi
-if [ -z "${BRANCH_NAME}" ]; then
-  echo "BRANCH_NAME variable is not set"
-  exit 2
-fi
 
 GIT_DIFF=$(git diff origin/master --name-only .)
 compose_file="docker-compose.yml"
@@ -19,15 +15,6 @@ alf_port=8080
 
 if [[ ${ACS_VERSION} != "latest" ]]; then
   export compose_file="${ACS_VERSION}-docker-compose.yml"
-fi
-if [[ "${BRANCH_NAME}" == "master" ]] ||
-  [[ "${COMMIT_MESSAGE}" == *"[run all tests]"* ]] ||
-  [[ "${COMMIT_MESSAGE}" == *"[release]"* ]] ||
-  [[ "${GIT_DIFF}" == *$compose_file* ]] ||
-  [[ "${GIT_DIFF}" == *test/postman/docker-compose* ]]; then
-  echo "deploying..."
-else
-  exit 0
 fi
 
 cd "docker-compose" || {

@@ -11,17 +11,6 @@ on:
     branches:
       - 'master'
 jobs:
-  branch:
-    runs-on: ubuntu-latest
-    outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}
-    steps:
-      - id: branch
-        name: Evaluate branch name and set as output
-        run: |
-          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
-          echo "Branch name is $BRANCH_NAME"
-          echo "::set-output name=branch_name::$BRANCH_NAME"
   compose:
     needs: [pre-commit, branch]
     strategy:
@@ -31,8 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       contains(github.event.head_commit.message, '[run all tests]') || 
-      contains(github.event.head_commit.message, '[release]') || 
-
+      contains(github.event.head_commit.message, '[release]')
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -65,4 +53,3 @@ jobs:
         shell: bash
         env:
           ACS_VERSION: ${{ matrix.acs_version}}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
