@@ -7,8 +7,7 @@ on:
         required: true
         type: string
       app_versions_matrix:
-        required: false
-        default: '[{"version":"none"}]'
+        required: true
         type: string
     secrets:
       ACM_CERTIFICATE:
@@ -53,14 +52,13 @@ jobs:
           helm unittest -f tests/${{ inputs.chartname }}*_test.yaml --color .
       - id: get-chart-type
         run: |
-          echo ${{ inputs.app_versions_matrix }}
+          echo "${{ inputs.app_versions_matrix }}"
           echo "::set-output name=type::$(yq e .type Chart.yaml)"
   integration_tests:
     needs:
       - unit_tests
     if: >-
-      needs.unit_tests.outputs.chart-type != 'library' &&
-      inputs.app_versions_matrix.version != '[{"version":"none"}]'
+      needs.unit_tests.outputs.chart-type != 'library'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(inputs.app_versions_matrix) }}
