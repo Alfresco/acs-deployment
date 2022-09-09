@@ -43,13 +43,13 @@ jobs:
         charts:
           - name: alfresco-common
             app_versions: >-
-              []
+              [{"version": "latest"}]
           - name: alfresco-content-services
             app_versions: >-
-              [
-                {"version": "latest"},
-                {"version": "7.2.N"},
-                {"version": "7.1.N"},
-                {"version": "7.0.N"},
-                {"version": "6.2.N"}
-              ]
+              [{"version": "latest"}]
+#app_versions: >-
+#  [{"version": "latest"},
+#    {"version": "7.2.N"},
+#    {"version": "7.1.N"},
+#    {"version": "7.0.N"},
+#    {"version": "6.2.N"}]
