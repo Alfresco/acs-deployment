@@ -23,11 +23,11 @@ jobs:
       matrix:
         acs_version:
           - latest
-          - 7.2.N
-          - 7.1.N
-          - 7.0.N
-          - 6.2.N
-          - community
+          # - 7.2.N
+          # - 7.1.N
+          # - 7.0.N
+          # - 6.2.N
+          # - community
     runs-on: ubuntu-latest
     steps:
       - name: Run helm chart tests
@@ -49,10 +49,10 @@ jobs:
       matrix:
         compose_file:
           - docker-compose.yml
-          - 7.2.N-docker-compose.yml
-          - 7.1.N-docker-compose.yml
-          - 7.0.N-docker-compose.yml
-          - 6.2.N-docker-compose.yml
+          # - 7.2.N-docker-compose.yml
+          # - 7.1.N-docker-compose.yml
+          # - 7.0.N-docker-compose.yml
+          # - 6.2.N-docker-compose.yml
           - community-docker-compose.yml
     runs-on: ubuntu-latest
     steps:
