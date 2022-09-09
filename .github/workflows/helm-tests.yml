@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - use: >-
+      - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
       - id: helm_unit_test
         name: Run Helm unit tests

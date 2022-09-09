@@ -5,9 +5,9 @@ on:
     branches:
       - 'master'
   push:
-    branches:
-      - 'master'
-      - pr-*
+    paths:
+      - helm/**
+      - test/postman/helm/**
 jobs:
   branch:
     runs-on: ubuntu-latest
@@ -21,6 +21,10 @@ jobs:
           echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
   helm_tests:
+    uses: ./.github/workflows/helm-tests.yml
+    with:
+      chartname: ${{ matrix.charts.name }}
+      app_versions: ${{ matrix.charts.app_versions }}
     needs:
       - branch
     strategy:
@@ -30,9 +34,3 @@ jobs:
           - name: alfresco-content-services
             app_versions: |-
               ["latest","7.2.N","7.1.N","7.0.N","6.2.N"]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: Alfresco/acs-deployment/.github/workflows/helm_tests.yml@${{ needs.branch.outputs.branch_name }}
-        with:
-          chartname: ${{ matrix.charts.name }}
-          app_versions: ${{ matrix.charts.app_versions }}
