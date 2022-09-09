@@ -8,7 +8,7 @@ on:
         type: string
       app_versions_matrix:
         required: false
-        default: '[]'
+        default: '[{"version":"none"}]'
         type: string
     secrets:
       ACM_CERTIFICATE:
@@ -60,7 +60,7 @@ jobs:
       - unit_tests
     if: >-
       needs.unit_tests.outputs.chart-type != 'library' &&
-      inputs.app_versions_matrix.version != '[]'
+      inputs.app_versions_matrix.version != '[{"version":"none"}]'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(inputs.app_versions_matrix) }}
