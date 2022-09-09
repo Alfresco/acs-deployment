@@ -48,6 +48,7 @@ jobs:
           chart-dir: helm/${{ inputs.chartname }}
       - id: chartmanifest
         run: |
+          yq e .type Chart.yaml
           echo "::set-output name=type::$(yq e .type Chart.yaml)"
       - id: helm_unit_test
         if: steps.chartmanifest.type != 'library'
