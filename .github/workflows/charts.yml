@@ -1,0 +1,38 @@
+---
+name: Helm charts builds
+on:
+  pull_request:
+    branches:
+      - 'master'
+  push:
+    branches:
+      - 'master'
+      - pr-*
+jobs:
+  branch:
+    runs-on: ubuntu-latest
+    outputs:
+      branch_name: ${{ steps.branch.outputs.branch_name }}
+    steps:
+      - id: branch
+        name: Evaluate branch name and set as output
+        run: |
+          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
+          echo "Branch name is $BRANCH_NAME"
+          echo "::set-output name=branch_name::$BRANCH_NAME"
+  helm_tests:
+    needs:
+      - branch
+    strategy:
+      matrix:
+        charts:
+          - name: alfresco-common
+          - name: alfresco-content-services
+            app_versions: |-
+              ["latest","7.2.N","7.1.N","7.0.N","6.2.N"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Alfresco/acs-deployment/.github/workflows/helm_tests.yml@${{ needs.branch.outputs.branch_name }}
+        with:
+          chartname: ${{ matrix.charts.name }}
+          app_versions: ${{ matrix.charts.app_versions }}
