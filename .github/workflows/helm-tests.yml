@@ -8,7 +8,7 @@ on:
         type: string
       app_versions_matrix:
         required: false
-        default: none
+        default: '[]'
         type: string
     secrets:
       ACM_CERTIFICATE:
@@ -59,11 +59,10 @@ jobs:
       - unit_tests
     if: >-
       needs.unit_tests.outputs.chart-type != 'library' &&
-      inputs.app_versions_matrix != 'none'
+      inputs.app_versions_matrix.version != '[]'
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        app_version: ${{ fromJSON(inputs.app_versions_matrix) }}
+      matrix: ${{ fromJSON(inputs.app_versions_matrix) }}
     env:
       DOMAIN: dev.envalfresco.com
       AWS_ACCESS_KEY_ID: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
