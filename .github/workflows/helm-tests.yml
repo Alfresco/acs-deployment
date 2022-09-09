@@ -63,6 +63,7 @@ jobs:
       needs.unit_tests.outputs.charttype != 'library'
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 1
       matrix: ${{ fromJSON(inputs.app_versions_matrix) }}
     env:
       DOMAIN: dev.envalfresco.com
