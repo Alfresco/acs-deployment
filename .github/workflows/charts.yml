@@ -42,6 +42,16 @@ jobs:
       matrix:
         charts:
           - name: alfresco-common
+            app_versions: >-
+              {
+                "version": [
+                  "latest",
+                  "7.2.N",
+                  "7.1.N",
+                  "7.0.N",
+                  "6.2.N"
+                ]
+              }
           - name: alfresco-content-services
             app_versions: >-
               {
