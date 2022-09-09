@@ -3,6 +3,9 @@ name: Helm tests
 on:
   workflow_call:
     inputs:
+      branch_name:
+        required: true
+        type: string
       chartname:
         required: true
         type: string
@@ -104,4 +107,4 @@ jobs:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
           ACS_VERSION: ${{ matrix.version }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+          BRANCH_NAME: ${{ inputs.branch_name }}

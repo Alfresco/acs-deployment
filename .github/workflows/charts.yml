@@ -25,6 +25,7 @@ jobs:
     with:
       chartname: ${{ matrix.charts.name }}
       app_versions_matrix: ${{ matrix.charts.app_versions }}
+      branch_name: ${{ needs.branch.outputs.branch_name }}
     secrets:
       ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
       AWS_SG: ${{ secrets.AWS_SG }}
@@ -42,16 +43,6 @@ jobs:
       matrix:
         charts:
           - name: alfresco-common
-            app_versions: >-
-              {
-                "version": [
-                  "latest",
-                  "7.2.N",
-                  "7.1.N",
-                  "7.0.N",
-                  "6.2.N"
-                ]
-              }
           - name: alfresco-content-services
             app_versions: >-
               {
