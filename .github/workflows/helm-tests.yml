@@ -35,7 +35,7 @@ jobs:
       run:
         working-directory: helm/${{ inputs.chartname }}
     outputs:
-      chart-type: ${{ steps.get-chart-type.type }}
+      charttype: ${{ steps.chartmanifest.type }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,19 +46,20 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
         with:
           chart-dir: helm/${{ inputs.chartname }}
+      - id: chartmanifest
+        run: |
+          echo "::set-output name=type::$(yq e .type Chart.yaml)"
       - id: helm_unit_test
+        if: steps.chartmanifest.type != 'library'
         name: Run Helm unit tests
         run: |
           helm plugin install https://github.com/vbehar/helm3-unittest && \
           helm unittest -f tests/${{ inputs.chartname }}*_test.yaml --color .
-      - id: get-chart-type
-        run: |
-          echo "::set-output name=type::$(yq e .type Chart.yaml)"
   integration_tests:
     needs:
       - unit_tests
     if: >-
-      needs.unit_tests.outputs.chart-type != 'library'
+      needs.unit_tests.outputs.charttype != 'library'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(inputs.app_versions_matrix) }}
@@ -95,7 +96,7 @@ jobs:
           echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
       - name: Run helm chart tests
         run: |
-          echo "${{ needs.unit_tests.outputs.chart-type }}"
+          echo "${{ needs.unit_tests.outputs.charttype }}"
           .github/scripts/helm_install.sh
         env:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
