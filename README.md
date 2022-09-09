@@ -38,9 +38,9 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.2.0-M1          | 7.2.0-M1  |           | 7.1.0.1   | 7.0.1     | 6.2.2     | 7.2.0-M1  |
 | 5.2.0-M2          | 7.2.0-M2  |           | 7.1.1     | 7.0.1     | 6.2.2     | 7.2.0-M2  |
 | 5.2.0             | 7.2.0     |           | 7.1.1     | 7.0.1     | 6.2.2     | 7.2.0     |
-| 5.3.0-M1          | 23.1.0-M1 | 7.2.0.2   | 7.1.1.2   | 7.0.1.3   | 6.2.2.22  | 23.1.0-M1 |
-| 5.3.0-M2          | 7.3.0-M1  | 7.2.0.2   | 7.1.1.2   | 7.0.1.3   | 6.2.2.22  | 7.3.0-M1  |
-| 5.3.0-M3          | 7.3.0-M2  | 7.2.1     | 7.1.1.2   | 7.0.1.3   | 6.2.2.22  | 7.3.0-M2  |
+| 5.3.0-M1          | 23.1.0-M1 | 7.2.1     | 7.1.1.5   | 7.0.1.3   | 6.2.2.24  | 23.1.0-M1 |
+| 5.3.0-M2          | 7.3.0-M1  | 7.2.1     | 7.1.1.5   | 7.0.1.3   | 6.2.2.24  | 7.3.0-M2  |
+| 5.3.0-M3          | 7.3.0-M2  | 7.2.1     | 7.1.1.5   | 7.0.1.3   | 6.2.2.24  | 7.3.0-M2  |
 
 > ACS 6.1.x is currently in [EoM](https://www.alfresco.com/services/subscription/technical-support/product-support-status) and has been removed from this project, if you need to install it please use a former release like [5.1.1](https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1).
 
@@ -53,6 +53,11 @@ To deploy a specific version of ACS several specific major.minor docker compose 
 Our tests are executed using the latest version of Docker and Docker Compose provided by GitHub Actions.
 
 ### Helm
+
+Version 5.3.0 changes the way the default persistence is set up for the
+PostgreSQL database. If you did not customize the database persistance (which
+was not recommanded for serious workloads). Please take a look at [this](./storage.md)
+ before trying to upgrade.
 
 Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
 

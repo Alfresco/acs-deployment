@@ -160,16 +160,19 @@ Now we have an EKS cluster up and running there are a few one time steps we need
         name: nfs-client
         parameters:
           directoryPerms: "700"
+          uid: 33000
+          gid: 1000
           fileSystemId: fs-SOMEUUID
           provisioningMode: efs-ap
-        reclaimPolicy: Delete
+        reclaimPolicy: Retain
         volumeBindingMode: Immediate
     EOT
     helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
     helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver -f aws-efs-values.yml
     ```
 
-Make sure the associated storage class
+> Note: the `storageClass` is set to `Retain` for obvious safety reasons. That however means kubernetes administrator need to take care of volume cleanup.
+
 ## Deploy
 
 Now the EKS cluster is setup we can deploy ACS.

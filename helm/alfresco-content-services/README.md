@@ -86,6 +86,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.alfresco-insight-zeppelin.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.port | int | `80` |  |
 | alfresco-search.enabled | bool | `true` |  |
+| alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
+| alfresco-search.external.port | string | `nil` | Port of the external solr6 instance. |
 | alfresco-search.ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base64. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64` # i.e. admin / admin basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') is disabled by default To enable it please see: acs-deployment configuration table](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services#configuration) |
 | alfresco-search.ingress.tls | list | `[]` |  |
@@ -96,8 +98,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.searchServicesImage.tag | string | `"2.0.4"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| alfresco-sync-service.image.tag | string | `"4.0.0-M2"` |  |
-| alfresco-sync-service.messageBroker.existingSecretName | string | `nil` |  |
+| alfresco-sync-service.image.tag | string | `"4.0.0-M3"` |  |
 | alfresco-sync-service.messageBroker.password | string | `nil` |  |
 | alfresco-sync-service.messageBroker.url | string | `nil` |  |
 | alfresco-sync-service.messageBroker.user | string | `nil` |  |
@@ -199,10 +200,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.service.name | string | `"ooi-service"` |  |
 | ooiService.service.type | string | `"ClusterIP"` |  |
 | pdfrenderer | object | `{"environment":{"JAVA_OPTS":" -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"2.6.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
-| persistence | object | `{"baseSize":"20Gi","chownWithDynamicProvisioning":false,"enabled":true,"existingClaim":"alfresco-volume-claim","filestore":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"repository":{"config":{"querysetsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/querysets/","transform":{"mimetypesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/","pipelinesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/","renditionsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"}},"data":{"mountPath":"/usr/local/tomcat/alf_data","subPath":"alfresco-content-services/repository-data"},"enabled":true},"storageClass":{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}}` | Defines the mounting points for the persistence required by the apps in the cluster the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data |
+| persistence | object | `{"baseSize":"20Gi","enabled":true,"existingClaim":"alfresco-volume-claim","filestore":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"repository":{"config":{"querysetsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/querysets/","transform":{"mimetypesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/mimetypes/","pipelinesMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/pipelines/","renditionsMountPath":"/usr/local/tomcat/shared/classes/alfresco/extension/transform/renditions/"}},"data":{"mountPath":"/usr/local/tomcat/alf_data","subPath":"alfresco-content-services/repository-data"},"enabled":true},"storageClass":{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}}` | Defines the mounting points for the persistence required by the apps in the cluster the alf_data folder from alfresco-content-repository app is mapped to alfresco-content-services/repository-data |
 | persistence.storageClass | object | `{"accessModes":["ReadWriteMany"],"enabled":false,"name":"nfs"}` | Enable and define if you already have a custom storage class defined |
 | persistence.storageClass.name | string | `"nfs"` | Custom storage class name |
-| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"14.4.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":"alfresco-volume-claim","subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","primary":{"nodeSelector":{}},"replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
+| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"14.4.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":null,"storageClass":null,"subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","primary":{"nodeSelector":{}},"replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
 | postgresql-syncservice.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql-syncservice.enabled | bool | `true` |  |
 | postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -220,13 +221,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
 | postgresql.enabled | bool | `true` | If true, install the postgresql chart alongside Alfresco Content Services. Note: Set this to false if you use an external database. |
+| postgresql.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownhership set. |
+| postgresql.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
 | postgresql.postgresqlDatabase | string | `"alfresco"` | Postgresql database name |
 | postgresql.postgresqlPassword | string | `"alfresco"` | Postgresql database password |
 | postgresql.postgresqlUsername | string | `"alfresco"` | Postgresql database user |
 | repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in md5 hash format |
 | repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |
-| repository.environment.JAVA_OPTS | string | `" -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6 -Dalfresco.cluster.enabled=true -Ddeployment.method=HELM_CHART -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede "` |  |
+| repository.environment.JAVA_OPTS | string | `"-Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede"` |  |
 | repository.extraInitContainers | list | `[]` |  |
 | repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value fashion |
 | repository.extraSideContainers | list | `[]` |  |
@@ -251,7 +254,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.initContainers.fs.image.tag | string | `"1.35.0"` |  |
 | repository.initContainers.fs.resources.limits.memory | string | `"10Mi"` |  |
 | repository.initContainers.fs.resources.requests.memory | string | `"5Mi"` |  |
-| repository.licenseSecret | string | `nil` |  |
+| repository.licenseSecret | string | `nil` | The name of the secret holding the ACS repository license if any. it must be contained within a `data['*.lic']` property See https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md for details on how to manage license |
 | repository.livenessProbe.initialDelaySeconds | int | `130` |  |
 | repository.livenessProbe.periodSeconds | int | `20` |  |
 | repository.livenessProbe.timeoutSeconds | int | `10` |  |

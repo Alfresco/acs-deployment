@@ -1,6 +1,6 @@
 @startuml
 
-Title: ACS on EKS using S3, RDS and MQ Helm Deployment Overview
+Title: ACS on EKS using S3, RDS, MQ & OpenSearch Helm Deployment Overview
 
 skinparam componentStyle uml2
 skinparam linetype ortho
@@ -16,7 +16,15 @@ node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
     component "Alfresco Digital Workspace" as adw #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
-    component "Alfresco Search Services" as ass #lightgrey
+    rectangle "Alfresco Search Enterprise 3" as se3 {
+        frame "LiveIndexing" as se3liveidx {
+            component "mediation" as se3mediation
+            component "content" as se3content
+            component "metadata" as se3metadata
+            component "path" as se3path
+        }
+        component "ReIndexing" as se3reidx
+    }
     component "Alfresco Sync Service" as sync #lightgrey
     component "Alfresco Share" as share #lightgrey
     rectangle "Alfresco Transform Service" {
@@ -31,12 +39,11 @@ node "alfresco namespace" {
 }
 
 cloud "Amazon Web Services" {
-    storage "S3" as s3
     database "Aurora RDS" as db
-    storage "EBS" as ebs
+    storage "S3" as s3
     storage "EFS Volume Claim" as vc
     queue "Amazon MQ" as mq
-
+    collections "OpenSearch" as osearch
 }
 
 Client --> nginx
@@ -45,11 +52,21 @@ nginx --> acs
 nginx --> share
 nginx --> adw
 
-ass --> ebs
-sfs --> vc
+se3 -[hidden]- sync
 acs --> s3
+acs --> osearch
+se3content --> osearch
+se3metadata --> osearch
+se3path --> osearch
+se3content --> se3mediation
+se3metadata --> se3mediation
+se3path --> se3mediation
+se3mediation --> mq
+se3reidx --> db
+se3reidx --> osearch
+sfs --> vc
 
-ass <--> acs
+se3 <-- acs
 acs --> db
 acs --> pdfr
 acs --> libr
