@@ -27,7 +27,7 @@ jobs:
           # - 7.1.N
           # - 7.0.N
           # - 6.2.N
-          # - community
+          - community
     runs-on: ubuntu-latest
     steps:
       - name: Run helm chart tests
