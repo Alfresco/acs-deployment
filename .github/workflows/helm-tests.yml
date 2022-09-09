@@ -35,7 +35,7 @@ jobs:
       run:
         working-directory: helm/${{ inputs.chartname }}
     outputs:
-      charttype: ${{ steps.chartmanifest.type }}
+      charttype: ${{ steps.chartmanifest.outputs.type }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
           yq e .type Chart.yaml
           echo "::set-output name=type::$(yq e .type Chart.yaml)"
       - id: helm_unit_test
-        if: steps.chartmanifest.type != 'library'
+        if: steps.chartmanifest.outputs.type != 'library'
         name: Run Helm unit tests
         run: |
           helm plugin install https://github.com/vbehar/helm3-unittest && \
