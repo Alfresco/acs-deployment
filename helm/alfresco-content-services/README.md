@@ -97,7 +97,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.searchServicesImage.tag | string | `"2.0.4"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| alfresco-sync-service.image.tag | string | `"4.0.0-M3"` |  |
+| alfresco-sync-service.image.tag | string | `"3.7.2"` |  |
 | alfresco-sync-service.messageBroker.password | string | `nil` |  |
 | alfresco-sync-service.messageBroker.url | string | `nil` |  |
 | alfresco-sync-service.messageBroker.user | string | `nil` |  |
