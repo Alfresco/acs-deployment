@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ]; then
-  echo "Pass the value file to use as first argument"
+if [ -z "$VALUES_FILE" ]; then
+  echo "VALUES_FILE variable is not set"
   exit 2
-else
-  ACS_VERSION="$1"
 fi
 if [ -z "${COMMIT_MESSAGE}" ]; then
   echo "COMMIT_MESSAGE variable is not set"
@@ -31,8 +29,16 @@ if [ -z "${BRANCH_NAME}" ]; then
   exit 2
 fi
 
+acs_ver_valid() {
+  VALUES_FILENAME=$(basename $1)
+  if [ "$VALUES_FILENAME" == "values.yaml" ]; then echo 'latest'
+  else
+    echo ${VALUES_FILENAME%%_*} | sed -e 's/\.//g' -e 's/[A-Z]/\L&/g'
+  fi
+}
+
 GIT_DIFF="$(git diff origin/master --name-only .)"
-VALID_VERSION=$(echo "${ACS_VERSION}" | tr -d '.' | awk '{print tolower($0)}')
+VALID_VERSION=$(acs_ver_valid $VALUES_FILE)
 namespace=$(echo "${BRANCH_NAME}" | cut -c1-28 | tr /_ - | tr -d [:punct:] | awk '{print tolower($0)}')-"${GITHUB_RUN_NUMBER}"-"${VALID_VERSION}"
 release_name_ingress=ing-"${GITHUB_RUN_NUMBER}"-"${VALID_VERSION}"
 release_name_acs=acs-"${GITHUB_RUN_NUMBER}"-"${VALID_VERSION}"
@@ -160,15 +166,10 @@ subjects:
 EOF
 }
 
-export values_file=helm/"${PROJECT_NAME}"/values.yaml
-if [[ ${ACS_VERSION} != "latest" ]]; then
-  values_file="helm/${PROJECT_NAME}/${ACS_VERSION}_values.yaml"
-fi
-
 if [[ "${BRANCH_NAME}" == "master" ]] ||
   [[ "${COMMIT_MESSAGE}" == *"[run all tests]"* ]] ||
   [[ "${COMMIT_MESSAGE}" == *"[release]"* ]] ||
-  [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/${ACS_VERSION}_values.yaml* ]] ||
+  [[ "${GIT_DIFF}" == *${VALUES_FILE}* ]] ||
   [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/templates* ]] ||
   [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/charts* ]] ||
   [[ "${GIT_DIFF}" == *helm/${PROJECT_NAME}/requirements* ]] ||
@@ -206,7 +207,7 @@ helm upgrade --install "${release_name_ingress}" --repo https://kubernetes.githu
 # install acs
 helm dep up helm/"${PROJECT_NAME}"
 helm upgrade --install "${release_name_acs}" helm/"${PROJECT_NAME}" \
-  --values="${values_file}" \
+  --values="${VALUES_FILE}" \
   --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
   --set externalPort="443" \
   --set externalProtocol="https" \
@@ -255,14 +256,14 @@ echo "TEST_RESULT=${TEST_RESULT}"
 if [[ "${TEST_RESULT}" == "0" ]]; then
   TEST_RESULT=0
   # run sync service checks
-  if [[ ${ACS_VERSION} != "community" ]]; then
+  if [[ ${VALID_VERSION} != "community" ]]; then
     wait_for_connection
     newman run "helm/sync-service-test-helm-collection.json" --global-var "protocol=https" --global-var "url=${HOST}"
     TEST_RESULT=$?
     echo "TEST_RESULT=${TEST_RESULT}"
   fi
 
-  if [[ "${TEST_RESULT}" == "0" ]] && [[ ${ACS_VERSION} == "latest" ]]; then
+  if [[ "${TEST_RESULT}" == "0" ]] && [[ ${VALID_VERSION} == "latest" ]]; then
     # For checking if persistence failover is correctly working with our deployments
     # in the next phase we delete the acs and postgresql pods,
     # wait for k8s to recreate them, then check if the data created in the first test run is still there

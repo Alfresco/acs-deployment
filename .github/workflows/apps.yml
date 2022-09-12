@@ -81,6 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
+      fail-fast: false
       matrix: ${{ fromJSON(needs.build_matrix.outputs.test_matrix) }}
     env:
       DOMAIN: dev.envalfresco.com
@@ -115,9 +116,9 @@ jobs:
           echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
       - name: Run helm chart tests
         run: |
-          echo "${{ inputs.charttype }}"
-          .github/scripts/helm_install.sh ${{ matrix.values }}
+          .github/scripts/helm_install.sh
         env:
+          VALUES_FILE: helm/${{ inputs.chartname }}/${{ matrix.values }}
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
           BRANCH_NAME: ${{ inputs.branch_name }}
