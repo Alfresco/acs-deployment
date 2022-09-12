@@ -31,8 +31,7 @@ jobs:
           YQ_FILTER: >
             {"name": .name,"type": .type, "version": .version} | to_json
         run: |
-          set -x
-          for CHART_ROOT in helm/alfresco-content-services/; do
+          for CHART_ROOT in helm/*/; do
             MATRIX_TMP_FILE=$(mktemp /tmp/matrix.XXXXXX)
             CHART=$(basename $CHART_ROOT)
             VALUES_FILES=$(ls helm/"${CHART}"/*values.yaml 2>/dev/null || true)
@@ -41,17 +40,6 @@ jobs:
             jq -c --arg v "${VALUES:-[]}" '.values=$v' > $MATRIX_TMP_FILE
           done
           echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/matrix.*)"
-  debug_job:
-    runs-on: ubuntu-latest
-    needs:
-      - branch
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.branch.outputs.json_charts) }}
-    steps:
-      - name: debug
-        run: |
-          echo "${{ toJSON(matrix.charts) }}"
   helm_tests:
     name: Helm tests
     uses: ./.github/workflows/helm-tests.yml
