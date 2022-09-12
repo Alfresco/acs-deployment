@@ -28,22 +28,17 @@ jobs:
       - id: getcharts
         name: Get main Charts and parse Chart.yaml
         env:
-          CHART_FILE: /tmp/chart.json
+          YQ_FILTER: >
+            {"name": .name,"type": .type, "version": .version} | to_json
         run: |
           set -x
           for CHART_ROOT in helm/alfresco-content-services/; do
             MATRIX_TMP_FILE=$(mktemp /tmp/matrix.XXXXXX)
             CHART=$(basename $CHART_ROOT)
-            yq e '{"name": .name,"type": .type, "version": .version} | to_json'\
-              "helm/${CHART}/Chart.yaml" | jq '.values=[]' -c \
-              > $CHART_FILE
             VALUES_FILES=$(ls helm/"${CHART}"/*values.yaml 2>/dev/null || true)
             VALUES=${VALUES_FILES//${CHART_ROOT}/}
-            [ -n "$VALUES" ] \
-              && cat <<< \
-              $(jq -c --arg v "$VALUES" '.values=($v | split("\n"))' \
-                ${CHART_FILE}) > $CHART_FILE
-            jq -cs 'add' ${CHART_FILE} >> $MATRIX_TMP_FILE
+            yq e "$YQ_FILTER" "helm/${CHART}/Chart.yaml" | \
+            jq -c --arg v "${VALUES:-[]}" '.values=$v' > $MATRIX_TMP_FILE
           done
           echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/matrix.*)"
   debug_job:

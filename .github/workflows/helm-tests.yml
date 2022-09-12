@@ -66,15 +66,31 @@ jobs:
     steps:
       - run: |
           echo "${{ inputs.app_versions_matrix }}"
+  build_matrix:
+    if: >-
+      inputs.charttype != 'library'
+    runs-on: ubuntu-latest
+    outputs:
+      test_matrix: ${{ steps.versions.outputs.matrix }}
+    steps:
+      - id: versions
+        env:
+          VALUES: >
+            ${{ inputs.app_versions_matrix }}
+        name: Build application version matrix
+        run: |
+          TEST_MATRIX=$(jq -nc --arg v "$VALUES" '{values: $v | split("\n")}')
+          echo "::set-output name=test_matrix::$TEST_MATRIX"
   integration_tests:
     needs:
+      - build_matrix
       - unit_tests
     if: >-
       inputs.charttype != 'library'
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
-      matrix: ${{ fromJSON(inputs.app_versions_matrix) }}
+      matrix: ${{ fromJSON(needs.build_matrix.outputs.test_matrix) }}
     env:
       DOMAIN: dev.envalfresco.com
       AWS_ACCESS_KEY_ID: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
