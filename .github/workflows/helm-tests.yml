@@ -16,7 +16,7 @@ on:
       app_versions_matrix:
         required: false
         type: string
-        default: '{"version":[]}'
+        default: values.yml
     secrets:
       ACM_CERTIFICATE:
         required: true
