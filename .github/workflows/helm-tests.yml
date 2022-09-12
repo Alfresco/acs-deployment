@@ -72,7 +72,7 @@ jobs:
         name: Build application version matrix
         run: |
           TEST_MATRIX=$(jq -nc --arg v "$VALUES" '{values: $v | split("\n")}')
-          echo "::set-output name=test_matrix::$TEST_MATRIX"
+          echo "::set-output name=matrix::$TEST_MATRIX"
   integration_tests:
     needs:
       - build_matrix
