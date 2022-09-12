@@ -57,6 +57,15 @@ jobs:
         run: |
           helm plugin install https://github.com/vbehar/helm3-unittest && \
           helm unittest -f tests/${{ inputs.chartname }}*_test.yaml --color .
+  integration_tests_debug:
+    needs:
+      - unit_tests
+    if: >-
+      inputs.charttype != 'library'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ inputs.app_versions_matrix }}"
   integration_tests:
     needs:
       - unit_tests

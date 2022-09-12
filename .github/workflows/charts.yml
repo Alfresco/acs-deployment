@@ -27,31 +27,45 @@ jobs:
           echo "::set-output name=branch_name::$BRANCH_NAME"
       - id: getcharts
         name: Get main Charts and parse Chart.yaml
+        env:
+          CHART_FILE: /tmp/chart.json
         run: |
           set -x
           for CHART_ROOT in helm/alfresco-content-services/; do
             MATRIX_TMP_FILE=$(mktemp /tmp/matrix.XXXXXX)
             CHART=$(basename $CHART_ROOT)
             yq e '{"name": .name,"type": .type, "version": .version} | to_json'\
-              "helm/${CHART}/Chart.yaml" | jq '{chart:.,values:null}' -c \
-              > /tmp/chart.json
+              "helm/${CHART}/Chart.yaml" | jq '.values=[]' -c \
+              > $CHART_FILE
             VALUES_FILES=$(ls helm/"${CHART}"/*values.yaml 2>/dev/null || true)
             VALUES=${VALUES_FILES//${CHART_ROOT}/}
             [ -n "$VALUES" ] \
-              && jq -c --arg v "$VALUES" '.values=($v | split("\n"))' \
-              /tmp/chart.json
-            jq -cs 'add' /tmp/chart.json >> $MATRIX_TMP_FILE
+              && cat <<< \
+              $(jq -c --arg v "$VALUES" '.values=($v | split("\n"))' \
+                ${CHART_FILE}) > $CHART_FILE
+            jq -cs 'add' ${CHART_FILE} >> $MATRIX_TMP_FILE
           done
           echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/matrix.*)"
+  debug_job:
+    runs-on: ubuntu-latest
+    needs:
+      - branch
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.branch.outputs.json_charts) }}
+    steps:
+      - name: debug
+        run: |
+          echo "${{ toJSON(matrix.charts) }}"
   helm_tests:
     name: Helm tests
     uses: ./.github/workflows/helm-tests.yml
     if: |
       ! contains(github.event.head_commit.message, '[skip tests]')
     with:
-      chartname: ${{ matrix.charts.chart.name }}
-      charttype: ${{ matrix.charts.chart.type }}
-      app_versions_matrix: ${{ matrix.values }}
+      chartname: ${{ matrix.charts.name }}
+      charttype: ${{ matrix.charts.type }}
+      app_versions_matrix: ${{ matrix.charts.values }}
       branch_name: ${{ needs.branch.outputs.branch_name }}
     secrets:
       ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
