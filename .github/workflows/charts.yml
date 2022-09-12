@@ -19,8 +19,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Debug action
-        uses: hmarr/debug-action@v2.0.1
       - id: branch
         name: Evaluate branch name and set as output
         run: |
@@ -35,16 +33,14 @@ jobs:
             MATRIX_TMP_FILE=$(mktemp /tmp/matrix.XXXXXX)
             CHART=$(basename $CHART_ROOT)
             yq e '{"name": .name,"type": .type, "version": .version} | to_json'\
-              "helm/${CHART}/Chart.yaml" | jq -c > /tmp/chart.json
+              "helm/${CHART}/Chart.yaml" | jq '{chart:.,values:null}' -c \
+              > /tmp/chart.json
             VALUES_FILES=$(ls helm/"${CHART}"/*values.yaml 2>/dev/null || true)
             VALUES=${VALUES_FILES//${CHART_ROOT}/}
-            echo $VALUES_FILES
-            echo $VALUES
             [ -n "$VALUES" ] \
-              && jq -n --arg v "$VALUES" '{values: $v | split("\n")}' \
-              > /tmp/values.json \
-              || > /tmp/values.json
-            jq -cs 'add' /tmp/chart.json /tmp/values.json >> $MATRIX_TMP_FILE
+              && jq -c --arg v "$VALUES" '.values=($v | split("\n"))' \
+              /tmp/chart.json
+            jq -cs 'add' /tmp/chart.json >> $MATRIX_TMP_FILE
           done
           echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/matrix.*)"
   helm_tests:
@@ -53,9 +49,9 @@ jobs:
     if: |
       ! contains(github.event.head_commit.message, '[skip tests]')
     with:
-      chartname: ${{ matrix.charts.name }}
-      charttype: ${{ matrix.charts.type }}
-      app_versions_matrix: ${{ matrix.charts.values }}
+      chartname: ${{ matrix.charts.chart.name }}
+      charttype: ${{ matrix.charts.chart.type }}
+      app_versions_matrix: ${{ matrix.values }}
       branch_name: ${{ needs.branch.outputs.branch_name }}
     secrets:
       ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
