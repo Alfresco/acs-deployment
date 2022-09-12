@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-if [ -z "${ACS_VERSION}" ]; then
-  echo "ACS_VERSION variable is not set"
+if [ -z "$1" ]; then
+  echo "Pass the value file to use as first argument"
   exit 2
+else
+  ACS_VERSION="$1"
 fi
 if [ -z "${COMMIT_MESSAGE}" ]; then
   echo "COMMIT_MESSAGE variable is not set"

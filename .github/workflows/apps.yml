@@ -116,9 +116,8 @@ jobs:
       - name: Run helm chart tests
         run: |
           echo "${{ inputs.charttype }}"
-          .github/scripts/helm_install.sh
+          .github/scripts/helm_install.sh ${{ matrix.values }}
         env:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
-          ACS_VERSION: ${{ matrix.version }}
           BRANCH_NAME: ${{ inputs.branch_name }}
