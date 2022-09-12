@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-
-if [ -z "$VALUES_FILE" ]; then
-  echo "VALUES_FILE variable is not set"
+if [ ! -r "$VALUES_FILE" ]; then
+  echo "VALUES_FILE variable is not set or cannot be read"
   exit 2
 fi
 if [ -z "${COMMIT_MESSAGE}" ]; then
