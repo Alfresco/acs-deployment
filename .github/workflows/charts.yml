@@ -14,14 +14,31 @@ jobs:
     outputs:
       branch_name: ${{ steps.branch.outputs.branch_name }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Debug action
+        uses: hmarr/debug-action@v2.0.1
       - id: branch
         name: Evaluate branch name and set as output
         run: |
           BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
           echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
+      - id: getcharts
+        name: Get main Charts and parse Chart.yaml
+        run: |
+          CHARTS=$(find helm -maxdepth 2 -type f -name Chart.yaml -exec yq e \
+          '{"name": .name,"type": .type, "version": .version} | to_json' {} \;)
+          echo $CHARTS
+          echo "::set-output name=charts::$CHARTS"
+            # jq -n --arg v $VALUES '{"values": $v | split("\n")}'
   helm_tests:
+    name: Helm tests
     uses: ./.github/workflows/helm-tests.yml
+    if: |
+      ! contains(github.event.head_commit.message, '[skip tests]')
     with:
       chartname: ${{ matrix.charts.name }}
       app_versions_matrix: ${{ matrix.charts.app_versions }}
