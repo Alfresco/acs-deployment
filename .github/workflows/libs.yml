@@ -1,0 +1,31 @@
+---
+name: Helm tests
+on:
+  workflow_call:
+    inputs:
+      chartname:
+        required: true
+        type: string
+jobs:
+  unit_tests:
+    name: Helm Unit tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: helm/${{ inputs.chartname }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Lint
+        uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
+        with:
+          chart-dir: helm/${{ inputs.chartname }}
+      - id: helm_unit_test
+        if: steps.chartmanifest.outputs.type != 'library'
+        name: Run Helm unit tests
+        run: |
+          helm plugin install https://github.com/vbehar/helm3-unittest && \
+          helm unittest -f tests/${{ inputs.chartname }}*_test.yaml --color .

@@ -40,10 +40,22 @@ jobs:
             jq -c --arg v "${VALUES:-[]}" '.values=$v' > $MATRIX_TMP_FILE
           done
           echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/${CHART}.*)"
-  helm_tests:
-    name: Helm tests
-    uses: ./.github/workflows/helm-tests.yml
+  libraries:
+    name: Helm libraries testing
+    uses: ./.github/workflows/libs.yml
     if: |
+      ! contains(github.event.head_commit.message, '[skip tests]')
+    with:
+      chartname: ${{ matrix.charts.name }}
+    needs:
+      - branch
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.branch.outputs.json_charts) }}
+  applications:
+    name: Helm Applications charts testing
+    uses: ./.github/workflows/apps.yml
+    if: >
       ! contains(github.event.head_commit.message, '[skip tests]')
     with:
       chartname: ${{ matrix.charts.name }}
