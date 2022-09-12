@@ -9,6 +9,10 @@ on:
       chartname:
         required: true
         type: string
+      charttype:
+        required: false
+        default: application
+        type: string
       app_versions_matrix:
         required: false
         type: string
@@ -37,8 +41,6 @@ jobs:
     defaults:
       run:
         working-directory: helm/${{ inputs.chartname }}
-    outputs:
-      charttype: ${{ steps.chartmanifest.outputs.type }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -49,10 +51,6 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
         with:
           chart-dir: helm/${{ inputs.chartname }}
-      - id: chartmanifest
-        run: |
-          yq e .type Chart.yaml
-          echo "::set-output name=type::$(yq e .type Chart.yaml)"
       - id: helm_unit_test
         if: steps.chartmanifest.outputs.type != 'library'
         name: Run Helm unit tests
@@ -63,7 +61,7 @@ jobs:
     needs:
       - unit_tests
     if: >-
-      needs.unit_tests.outputs.charttype != 'library'
+      inputs.charttype != 'library'
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 1
@@ -101,7 +99,7 @@ jobs:
           echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
       - name: Run helm chart tests
         run: |
-          echo "${{ needs.unit_tests.outputs.charttype }}"
+          echo "${{ inputs.charttype }}"
           .github/scripts/helm_install.sh
         env:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}

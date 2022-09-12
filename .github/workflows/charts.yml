@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       branch_name: ${{ steps.branch.outputs.branch_name }}
+      json_charts: ${{ steps.getcharts.outputs.json }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -29,11 +30,23 @@ jobs:
       - id: getcharts
         name: Get main Charts and parse Chart.yaml
         run: |
-          CHARTS=$(find helm -maxdepth 2 -type f -name Chart.yaml -exec yq e \
-          '{"name": .name,"type": .type, "version": .version} | to_json' {} \;)
-          echo $CHARTS
-          echo "::set-output name=charts::$CHARTS"
-            # jq -n --arg v $VALUES '{"values": $v | split("\n")}'
+          set -x
+          for CHART_ROOT in helm/alfresco-content-services/; do
+            MATRIX_TMP_FILE=$(mktemp /tmp/matrix.XXXXXX)
+            CHART=$(basename $CHART_ROOT)
+            yq e '{"name": .name,"type": .type, "version": .version} | to_json'\
+              "helm/${CHART}/Chart.yaml" | jq -c > /tmp/chart.json
+            VALUES_FILES=$(ls helm/"${CHART}"/*values.yaml 2>/dev/null || true)
+            VALUES=${VALUES_FILES//${CHART_ROOT}/}
+            echo $VALUES_FILES
+            echo $VALUES
+            [ -n "$VALUES" ] \
+              && jq -n --arg v "$VALUES" '{values: $v | split("\n")}' \
+              > /tmp/values.json \
+              || > /tmp/values.json
+            jq -cs 'add' /tmp/chart.json /tmp/values.json >> $MATRIX_TMP_FILE
+          done
+          echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/matrix.*)"
   helm_tests:
     name: Helm tests
     uses: ./.github/workflows/helm-tests.yml
@@ -41,7 +54,8 @@ jobs:
       ! contains(github.event.head_commit.message, '[skip tests]')
     with:
       chartname: ${{ matrix.charts.name }}
-      app_versions_matrix: ${{ matrix.charts.app_versions }}
+      charttype: ${{ matrix.charts.type }}
+      app_versions_matrix: ${{ matrix.charts.values }}
       branch_name: ${{ needs.branch.outputs.branch_name }}
     secrets:
       ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
@@ -57,17 +71,5 @@ jobs:
     needs:
       - branch
     strategy:
-      matrix:
-        charts:
-          - name: alfresco-common
-          - name: alfresco-content-services
-            app_versions: >-
-              {
-                "version": [
-                  "latest",
-                  "7.2.N",
-                  "7.1.N",
-                  "7.0.N",
-                  "6.2.N"
-                ]
-              }
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.branch.outputs.json_charts) }}
