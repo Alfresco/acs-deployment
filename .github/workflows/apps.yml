@@ -66,11 +66,10 @@ jobs:
     steps:
       - id: versions
         env:
-          VALUES: >
+          VALUES: >-
             ${{ inputs.app_versions_matrix }}
         name: Build application version matrix
         run: |
-          echo $VALUES
           TEST_MATRIX=$(jq -nc --arg v "$VALUES" '{values: $v | split("\n")}')
           echo "::set-output name=matrix::$TEST_MATRIX"
   integration_tests:
