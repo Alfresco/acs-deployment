@@ -34,12 +34,12 @@ jobs:
           for CHART_ROOT in helm/*/; do
             CHART=$(basename $CHART_ROOT)
             MATRIX_TMP_FILE=$(mktemp /tmp/${CHART}.XXXXXX)
-            VALUES_FILES=$(ls helm/"${CHART}"/*values.yaml 2>/dev/null || true)
+            VALUES_FILES=$(ls -r helm/"${CHART}"/*values.yaml 2>/dev/null || true)
             VALUES=${VALUES_FILES//${CHART_ROOT}/}
             yq e "$YQ_FILTER" "helm/${CHART}/Chart.yaml" | \
             jq -c --arg v "${VALUES:-[]}" '.values=$v' > $MATRIX_TMP_FILE
           done
-          echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/${CHART}.*)"
+          echo "::set-output name=json::$(jq -sc '{charts:.}' $MATRIX_TMP_FILE)"
   libraries:
     name: Helm libraries testing
     uses: ./.github/workflows/libs.yml
