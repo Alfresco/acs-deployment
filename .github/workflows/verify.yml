@@ -68,16 +68,10 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.14.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
-      - run: |
-          helm plugin install https://github.com/vbehar/helm3-unittest && \
-          helm dep up && \
-          if [ -d tests ]; then echo "${{ matrix.charts.name }}: Unit tests"
-            helm unittest --color .
-          else
-            [ "${{ matrix.charts.type }}" != "library" ] && \
-            echo "No Unit tests implemented for ${{ matrix.charts.name }}!"
-          fi
-        working-directory: helm/${{ matrix.charts.name }}
+      - uses: ./.github/actions/helm-unit-test.yml
+        with:
+          chart-dir: helm/${{ matrix.charts.name }}
+          chart-type: ${{ matrix.charts.type }}
   helm:
     needs:
       - pre-commit

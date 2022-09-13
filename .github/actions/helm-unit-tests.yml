@@ -1,0 +1,27 @@
+---
+name: Helm Unit tests
+description: >
+  Look for helm-unittest files and run them
+inputs:
+  chart-dir:
+    required: false
+    default: .
+    type: string
+  chart-type:
+    required: false
+    default: application
+    type: string
+runs:
+  using: composite
+  steps:
+    - working-directory: helm/${{ inputs.chart-dir }}
+      if: ${{ inputs.chart-type }} != 'library'
+      run: |
+        set -e
+        if [ -d tests ]; then echo "${{ inputs.chart-dir }}: Unit tests"
+          helm plugin install https://github.com/vbehar/helm3-unittest
+          helm dep up
+          helm unittest --color .
+        else
+          echo "No Unit tests implemented for ${{ inputs.chart-dir }}!"
+        fi
