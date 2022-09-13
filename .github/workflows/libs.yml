@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
       - name: Lint
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
+          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.14.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - id: helm_unit_test
@@ -34,6 +34,8 @@ jobs:
   upload_artifacts:
     name: Upload publication artifacts
     runs-on: ubuntu-latest
+    needs:
+      - unit_tests
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,7 +48,7 @@ jobs:
           ARTIFACT: artifacts/charts.json
         run: |
           mkdir -p $(dirname "$ARTIFACT")
-          echo -n "${{ inputs.chart_matrix }}" > "$ARTIFACT"
+          echo -n "${{ toJSON(fromJSON(inputs.chart_matrix)) }}" > "$ARTIFACT"
           cat "$ARTIFACT"
       - uses: actions/upload-artifact@v3
         if: >

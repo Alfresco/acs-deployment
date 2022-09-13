@@ -48,7 +48,7 @@ jobs:
           fetch-depth: 0
       - name: Lint
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
+          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.14.0
         with:
           chart-dir: helm/${{ inputs.chartname }}
       - id: helm_unit_test

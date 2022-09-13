@@ -3,16 +3,19 @@ name: Helm charts builds
 on:
   pull_request:
     branches:
-      - 'master'
+      - master
   push:
+    branches:
+      - master
     paths:
       - helm/**
       - test/postman/helm/**
 jobs:
-  branch:
+  build_vars:
     runs-on: ubuntu-latest
     outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}
+      branch_name: ${{ steps.compute_vars.outputs.branch_name }}
+      commit_message: ${{ steps.compute_vars.outputs.commit_message }}
       json_charts: ${{ steps.getcharts.outputs.json }}
     steps:
       - name: Debug action
@@ -21,10 +24,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - id: branch
-        name: Evaluate branch name and set as output
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.14.0
+      - id: compute_vars
+        name: Evaluate build vars and set to ENV
         run: |
           BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
+          echo "Commit message is $COMMIT_MESSAGE"
+          echo "::set-output name=commit_message::$COMMIT_MESSAGE"
           echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
       - id: getcharts
@@ -45,22 +52,23 @@ jobs:
   libraries:
     name: Helm libraries testing
     uses: ./.github/workflows/libs.yml
-    if: |
-      ! contains(github.event.head_commit.message, '[skip tests]')
+    if: >
+      ! contains(needs.build_vars.outputs.commit_message, '[skip tests]')
     with:
-      chart_matrix: ${{ needs.branch.outputs.json_charts }}
+      chart_matrix: ${{ needs.build_vars.outputs.json_charts }}
     needs:
-      - branch
+      - build_vars
   applications:
     name: Helm Applications charts testing
     uses: ./.github/workflows/apps.yml
+    # remove after tests and set to 'skip tests'
     if: >
-      ! contains(github.event.head_commit.message, '[skip tests]')
+      ! contains(needs.build_vars.outputs.commit_message, '[publish]')
     with:
       chartname: ${{ matrix.charts.name }}
       charttype: ${{ matrix.charts.type }}
       app_versions_matrix: ${{ matrix.charts.values }}
-      branch_name: ${{ needs.branch.outputs.branch_name }}
+      branch_name: ${{ needs.build_vars.outputs.branch_name }}
     secrets:
       ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
       AWS_SG: ${{ secrets.AWS_SG }}
@@ -73,7 +81,7 @@ jobs:
       ACS_CLUSTER_AWS_SECRET_ACCESS_KEY: |-
         ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
     needs:
-      - branch
+      - build_vars
     strategy:
       fail-fast: false
-      matrix: ${{ fromJSON(needs.branch.outputs.json_charts) }}
+      matrix: ${{ fromJSON(needs.build_vars.outputs.json_charts) }}

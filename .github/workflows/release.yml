@@ -17,6 +17,10 @@ jobs:
     name: Release Helm chart to repo
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
+    env:
+      GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+      GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_USERNAME }}
+      GITHUB_EMAIL: ${{ secrets.BOT_GITHUB_EMAIL }}
     steps:
       - name: 'Download artifact'
         uses: actions/github-script@v6
@@ -37,18 +41,15 @@ jobs:
                archive_format: 'zip',
             });
             let fs = require('fs');
-            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/pr_number.zip`, Buffer.from(download.data));
-      - name: get version tag
-        run: |
-          if [ "${GITHUB_REF}" == 'master' ]; echo -n "Setting version tag to "
-            echo 
-          fi
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/lib-charts.zip`, Buffer.from(download.data));
+      - name: 'Unzip artifact'
+        run: unzip lib-charts.zip
       - uses: |-
-          Alfresco/alfresco-build-tools/.github/actions/publish-helm-chart@v1.13.0
+          Alfresco/alfresco-build-tools/.github/actions/publish-helm-chart@v1.14.0
         with:
-          chart-package:
-          helm-charts-repo:
-          helm-charts-repo-branch:
-          helm-charts-repo-subfolder:
-          helm-charts-repo-base-url:
-          token:
+          chart-package: alfresco-common
+          helm-charts-repo: incubator
+          helm-charts-repo-branch: OPSEXP-1447
+          helm-charts-repo-subfolder: incubator
+          helm-charts-repo-base-url: https://kubernetes-charts.alfresco.com
+          token: ${{ github.env.GITHUB_TOKEN }}
