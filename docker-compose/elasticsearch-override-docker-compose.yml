@@ -55,6 +55,7 @@ services:
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
       ALFRESCO_SHAREDFILESTORE_BASEURL: http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
 
+  # Disable the default solr6 service
   solr6:
     image: alpine:latest
     command: "true"

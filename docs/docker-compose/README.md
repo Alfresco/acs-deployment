@@ -23,7 +23,7 @@ As well as the prerequisites mentioned on the [main README](/README.md#prerequis
 
 ## Configure Docker for Desktop
 
-In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](../../docker-compose/docker-compose.yml) (preferably 16 Gb) to the Docker Engine on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below. This is required because insufficient memory will cause containers to exit without warning. 
+In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](../../docker-compose/docker-compose.yml) (preferably 16 Gb) to the Docker Engine on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below. This is required because insufficient memory will cause containers to exit without warning.
 
 ![Resources](../../docs/helm/diagrams/dfd-resources.png)
 
@@ -44,7 +44,15 @@ In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](
    * Default username and password is ```admin```
    * See [Uploading a new license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense) for more details
 
-### Notes
+### Search Enterprise 3.0 (Elasticsearch)
+
+You can provision the latest Alfresco with the new search subsystem based on Elasticsearch rather than solr with:
+
+```bash
+docker-compose -f docker-compose.yml -f elasticsearch-override-docker-compose.yml up -d
+```
+
+### Troubleshooting
 
 Make sure that exposed ports are open on your host. Check the _docker-compose.yml_ file to determine the exposed ports - refer to the ```host:container``` port definitions. You'll see they include 5432, 8080, 8083 and others.
 
@@ -299,15 +307,17 @@ docker-compose down
 
 ## Troubleshooting
 
-If you have issues running ```docker-compose up``` after deleting a previous Docker Compose cluster, try replacing step 4 with the following command:
+If you have issues running `docker-compose up` after deleting a previous Docker Compose cluster, try replacing step 4 with the following command:
 
 ```bash
 docker-compose down && docker-compose build --no-cache && docker-compose up
 ```
 
-If you are experiencing issues running ```docker-compose up``` on Windows environments due to unavailable or reserved ports and get errors such as:
-``` bind: An attempt was made to access a socket in a way forbidden by its access permissions``` would mean that Windows winnat service has reserved 
-the port range that docker compose is trying to use. To remedy the issue execute the following in a terminal:
+If you are experiencing issues running `docker-compose up` on Windows environments due to unavailable or reserved ports and get errors such as:
+
+> bind: An attempt was made to access a socket in a way forbidden by its access permissions
+
+would mean that Windows winnat service has reserved the port range that docker compose is trying to use. To remedy the issue execute the following in a terminal:
 
 ```bash
 net stop winnat
