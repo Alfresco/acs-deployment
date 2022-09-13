@@ -12,8 +12,8 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.6.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.6.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.14.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.14.0
   helm:
     needs: [pre-commit]
     if: '! github.event.pull_request.head.repo.fork'
@@ -23,15 +23,15 @@ jobs:
       matrix:
         acs_version:
           - latest
-          # - 7.2.N
-          # - 7.1.N
-          # - 7.0.N
-          # - 6.2.N
+          - 7.2.N
+          - 7.1.N
+          - 7.0.N
+          - 6.2.N
           - community
     runs-on: ubuntu-latest
     steps:
       - name: Run helm chart tests
-        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1545-helm-build-actions
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.14.0
         with:
           acs_version: ${{ matrix.acs_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
@@ -49,15 +49,15 @@ jobs:
       matrix:
         compose_file:
           - docker-compose.yml
-          # - 7.2.N-docker-compose.yml
-          # - 7.1.N-docker-compose.yml
-          # - 7.0.N-docker-compose.yml
-          # - 6.2.N-docker-compose.yml
+          - 7.2.N-docker-compose.yml
+          - 7.1.N-docker-compose.yml
+          - 7.0.N-docker-compose.yml
+          - 6.2.N-docker-compose.yml
           - community-docker-compose.yml
     runs-on: ubuntu-latest
     steps:
       - name: Run Docker Compose tests
-        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@OPSEXP-1545-helm-build-actions
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.14.0
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           docker_username: ${{ secrets.DOCKER_USERNAME }}
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Publish
-        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@OPSEXP-1545-helm-build-actions
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.14.0
         with:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
