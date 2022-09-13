@@ -3,7 +3,7 @@ name: Libs Build
 on:
   workflow_call:
     inputs:
-      chartname:
+      chart_matrix:
         required: true
         type: string
 jobs:
@@ -12,7 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: helm/${{ inputs.chartname }}
+        working-directory: helm/${{ matrix.charts.name }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(inputs.chart_matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,9 +25,33 @@ jobs:
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.13.0
         with:
-          chart-dir: helm/${{ inputs.chartname }}
+          chart-dir: helm/${{ matrix.charts.name }}
       - id: helm_unit_test
         name: Run Helm unit tests
         run: |
           helm plugin install https://github.com/vbehar/helm3-unittest && \
-          helm unittest -f tests/${{ inputs.chartname }}*_test.yaml --color .
+          helm unittest -f tests/${{ matrix.charts.name }}*_test.yaml --color .
+  upload_artifacts:
+    name: Upload publication artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.14.0
+      - name: create artifacts
+        env:
+          ARTIFACT: artifacts/charts.json
+        run: |
+          mkdir -p $(dirname "$ARTIFACT")
+          echo -n "${{ inputs.chart_matrix }}" > "$ARTIFACT"
+          cat "$ARTIFACT"
+      - uses: actions/upload-artifact@v3
+        if: >
+          contains(env.COMMIT_MESSAGE, '[release]') ||
+          contains(env.COMMIT_MESSAGE, '[publish]')
+        with:
+          name: lib-charts
+          path: artifacts/

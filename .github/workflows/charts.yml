@@ -15,6 +15,8 @@ jobs:
       branch_name: ${{ steps.branch.outputs.branch_name }}
       json_charts: ${{ steps.getcharts.outputs.json }}
     steps:
+      - name: Debug action
+        uses: hmarr/debug-action@v2.0.1
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -46,12 +48,9 @@ jobs:
     if: |
       ! contains(github.event.head_commit.message, '[skip tests]')
     with:
-      chartname: ${{ matrix.charts.name }}
+      chart_matrix: ${{ needs.branch.outputs.json_charts }}
     needs:
       - branch
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.branch.outputs.json_charts) }}
   applications:
     name: Helm Applications charts testing
     uses: ./.github/workflows/apps.yml

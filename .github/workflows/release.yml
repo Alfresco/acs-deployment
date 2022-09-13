@@ -1,0 +1,54 @@
+---
+name: publish charts
+on:
+  workflow_run:
+    workflows:
+      - Libs Build
+    types:
+      - completed
+jobs:
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug action
+        uses: hmarr/debug-action@v2.0.1
+  release_chart:
+    name: Release Helm chart to repo
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: 'Download artifact'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: context.payload.workflow_run.id,
+            });
+            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "lib-charts"
+            })[0];
+            let download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            let fs = require('fs');
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/pr_number.zip`, Buffer.from(download.data));
+      - name: get version tag
+        run: |
+          if [ "${GITHUB_REF}" == 'master' ]; echo -n "Setting version tag to "
+            echo 
+          fi
+      - uses: |-
+          Alfresco/alfresco-build-tools/.github/actions/publish-helm-chart@v1.13.0
+        with:
+          chart-package:
+          helm-charts-repo:
+          helm-charts-repo-branch:
+          helm-charts-repo-subfolder:
+          helm-charts-repo-base-url:
+          token:
