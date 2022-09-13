@@ -1,5 +1,5 @@
 ---
-name: Helm tests
+name: Libs Build
 on:
   workflow_call:
     inputs:
@@ -24,7 +24,6 @@ jobs:
         with:
           chart-dir: helm/${{ inputs.chartname }}
       - id: helm_unit_test
-        if: steps.chartmanifest.outputs.type != 'library'
         name: Run Helm unit tests
         run: |
           helm plugin install https://github.com/vbehar/helm3-unittest && \
