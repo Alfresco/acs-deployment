@@ -15,17 +15,42 @@ jobs:
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.6.0
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.6.0
-  branch:
+  build_vars:
     runs-on: ubuntu-latest
     outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}
+      commit_message: ${{ steps.compute_vars.outputs.commit_message }}
+      branch_name: ${{ steps.compute_vars.outputs.branch_name }}
+      json_charts: ${{ steps.getcharts.outputs.json }}
     steps:
-      - id: branch
-        name: Evaluate branch name and set as output
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.14.0
+      - id: compute_vars
+        name: Evaluate build vars and set to ENV
         run: |
           BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
+          echo "Commit message is $COMMIT_MESSAGE"
+          echo "::set-output name=commit_message::$COMMIT_MESSAGE"
           echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
+      - id: getcharts
+        name: Get main Charts and parse manifest
+        env:
+          YQ_FILTER: >
+            {"name": .name,"type": .type, "version": .version} | to_json
+        run: |
+          for CHART_ROOT in helm/*/; do
+            CHART=$(basename $CHART_ROOT)
+            MATRIX_TMP_FILE=$(mktemp /tmp/${CHART}.XXXXXX)
+            VALUES_FILES=$(ls -r helm/"${CHART}"/*values.yaml 2>/dev/null || true)
+            VALUES=${VALUES_FILES//${CHART_ROOT}/}
+            yq e "$YQ_FILTER" "helm/${CHART}/Chart.yaml" | \
+            jq -c --arg v "${VALUES:-[]}" '.values=$v' > $MATRIX_TMP_FILE
+          done
+          echo "::set-output name=json::$(jq -sc '{charts:.}' $MATRIX_TMP_FILE)"
   helm_unit_test:
     needs:
       - pre-commit
@@ -51,7 +76,7 @@ jobs:
   helm:
     needs:
       - pre-commit
-      - branch
+      - build_vars
     if: '! github.event.pull_request.head.repo.fork'
     strategy:
       max-parallel: 1  # otherwise flaky problems with aws ELB
@@ -103,11 +128,11 @@ jobs:
           ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
           AWS_SG: ${{ secrets.AWS_SG }}
           ACS_VERSION: ${{ matrix.acs_version }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+          BRANCH_NAME: ${{ needs.build_vars.outputs.branch_name }}
   publish:
     needs:
       - helm
-      - branch
+      - build_vars
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -134,4 +159,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_USERNAME }}
           GITHUB_EMAIL: ${{ secrets.BOT_GITHUB_EMAIL }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+          BRANCH_NAME: ${{ needs.build_vars.outputs.branch_name }}
