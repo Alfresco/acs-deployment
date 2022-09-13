@@ -16,6 +16,8 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.6.0
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.6.0
   build_vars:
+    needs:
+      - pre-commit
     runs-on: ubuntu-latest
     outputs:
       commit_message: ${{ steps.compute_vars.outputs.commit_message }}
@@ -53,15 +55,10 @@ jobs:
           echo "::set-output name=json::$(jq -sc '{charts:.}' $MATRIX_TMP_FILE)"
   helm_unit_test:
     needs:
-      - pre-commit
+      - build_vars
     strategy:
-      matrix:
-        charts:
-          - alfresco-common
+      matrix: ${{ fromJSON(needs.build_vars.outputs.json_charts) }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: helm/alfresco-content-services
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -69,10 +66,18 @@ jobs:
           fetch-depth: 0
       - uses: >
           Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.14.0
+        with:
+          chart-dir: helm/${{ matrix.charts.name }}
       - run: |
           helm plugin install https://github.com/vbehar/helm3-unittest && \
           helm dep up && \
-          helm unittest -f tests/${{ matrix.charts }}*_test.yaml --color .
+          if [ -d tests ]; then echo "${{ matrix.charts.name }}: Unit tests"
+            helm unittest --color .
+          else
+            [ "${{ matrix.charts.type }}" != "library" ] && \
+            echo "No Unit tests implemented for ${{ matrix.charts.name }}!"
+          fi
+        working-directory: helm/${{ matrix.charts.name }}
   helm:
     needs:
       - pre-commit
