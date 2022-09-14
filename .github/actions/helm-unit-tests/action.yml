@@ -14,7 +14,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - working-directory: helm/${{ inputs.chart-dir }}
+    - name: Run Helm Unit tests
+      shell: bash
+      working-directory: ${{ inputs.chart-dir }}
       if: ${{ inputs.chart-type }} != 'library'
       run: |
         set -e
