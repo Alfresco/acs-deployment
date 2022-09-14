@@ -24,6 +24,7 @@ repos:
     rev: v2.1.0
     hooks:
       - id: docker-compose-check
+        exclude: override-docker-compose.yml
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: 2.0.1211
     hooks:
