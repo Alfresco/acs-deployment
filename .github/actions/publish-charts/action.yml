@@ -1,0 +1,39 @@
+---
+name: "Publish helm chart on GitHub "
+description: "Publish new version of helm chart and update repository tags"
+inputs:
+  chart:
+    description: Name of the chart to publish
+    required: true
+    type: true
+  github_token:
+    description: GitHub token
+    required: true
+  github_username:
+    description: git config username
+    required: true
+  github_email:
+    description: git config email
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Get branch name
+      uses: >-
+        Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.14.0
+    - name: Get commit msg
+      uses: >-
+        Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.14.0
+    - name: Publish
+      run: ${{ github.action_path }}/publish_chart.sh
+      shell: bash
+      env:
+        PROJECT_NAME: ${{ inputs.chart }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        GITHUB_USERNAME: ${{ inputs.github_username }}
+        GITHUB_EMAIL: ${{ inputs.github_email }}

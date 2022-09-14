@@ -53,7 +53,6 @@ jobs:
     outputs:
       releases: ${{ steps.read_releases.outputs.json }}
     steps:
-      - name: build release tag
-        id: release_tag
-        run: |
-          echo "${{ matrix.charts.name }}"
+      - name: publish chart
+        uses: >-
+          ./.github/actions/publish-charts
