@@ -69,3 +69,8 @@ jobs:
       - name: publish chart
         uses: >-
           ./.github/actions/publish-charts
+        with:
+          chart: ${{ matrix.charts.name }}
+          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
+          github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
