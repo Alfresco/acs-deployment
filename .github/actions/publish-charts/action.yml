@@ -30,7 +30,7 @@ runs:
       uses: >-
         Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.14.0
     - name: Publish
-      run: ${{ github.action_path }}/publish_chart.sh
+      run: ${{ github.action_path }}/publish-charts.sh
       shell: bash
       env:
         PROJECT_NAME: ${{ inputs.chart }}

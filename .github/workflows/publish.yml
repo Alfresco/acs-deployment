@@ -3,7 +3,7 @@ name: publish
 on:
   workflow_run:
     workflows:
-      - verify
+      - helm
     types:
       - completed
 jobs:
@@ -63,6 +63,9 @@ jobs:
     outputs:
       releases: ${{ steps.read_releases.outputs.json }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: publish chart
         uses: >-
           ./.github/actions/publish-charts
