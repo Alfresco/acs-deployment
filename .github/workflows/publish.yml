@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows:
       - helm
+      - integration-tests
     types:
       - completed
 jobs:
