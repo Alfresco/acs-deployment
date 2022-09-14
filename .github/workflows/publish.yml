@@ -1,5 +1,5 @@
 ---
-name: release
+name: publish
 on:
   workflow_run:
     workflows:
@@ -8,7 +8,12 @@ on:
       - completed
 jobs:
   prepare_releases:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      (
+        contains(github.event.workflow_run.head_commit.message, '[publish]') ||
+        github.ref_name == github.event.repository.default_branch
+      )
     runs-on: ubuntu-latest
     outputs:
       releases: ${{ steps.read_releases.outputs.json }}
@@ -44,7 +49,12 @@ jobs:
           RELEASES=$(unzip -p ${{ github.event.workflow.name }}.zip | jq -c '.')
           echo "::set-output name=json::$RELEASES"
   publish:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      (
+        contains(github.event.workflow_run.head_commit.message, '[publish]') ||
+        github.ref_name == github.event.repository.default_branch
+      )
     runs-on: ubuntu-latest
     needs:
       - prepare_releases
