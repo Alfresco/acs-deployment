@@ -7,9 +7,11 @@ on:
     types:
       - completed
 jobs:
-  publish:
+  prepare_releases:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    outputs:
+      releases: ${{ steps.read_releases.outputs.json }}
     steps:
       - name: Debug action
         uses: hmarr/debug-action@v2.0.1
@@ -36,7 +38,22 @@ jobs:
               `${process.env.GITHUB_WORKSPACE}/${{ github.event.workflow.name }}.zip`,
               Buffer.from(download.data)
             );
-      - name: 'Unzip artifact'
-        run: >
-          unzip -p ${{ github.event.workflow.name }}.zip |
-          jq '.'
+      - name: Build release matrix
+        id: read_releases
+        run: |
+          RELEASES=$(unzip -p ${{ github.event.workflow.name }}.zip | jq -c '.')
+          echo "::set-output name=json::$RELEASES"
+  publish:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    needs:
+      - prepare_releases
+    strategy:
+      matrix: ${{ fromJSON(needs.prepare_releases.outputs.releases) }}
+    outputs:
+      releases: ${{ steps.read_releases.outputs.json }}
+    steps:
+      - name: build release tag
+        id: release_tag
+        run: |
+          echo "${{ matrix.charts.name }}"
