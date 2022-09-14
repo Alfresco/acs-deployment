@@ -30,20 +30,10 @@ jobs:
           echo "Branch name is $BRANCH_NAME"
           echo "::set-output name=branch_name::$BRANCH_NAME"
       - id: getcharts
-        name: Get main Charts and parse manifest
-        env:
-          YQ_FILTER: >
-            {"name": .name,"type": .type, "version": .version} | to_json
-        run: |
-          for CHART_ROOT in helm/*/; do
-            CHART=$(basename $CHART_ROOT)
-            MATRIX_TMP_FILE=$(mktemp /tmp/${GITHUB_WORKFLOW}.XXXXXX)
-            VALUES_FILES=$(ls -r helm/"${CHART}"/*values.yaml 2>/dev/null || true)
-            VALUES=${VALUES_FILES//${CHART_ROOT}/}
-            yq e "$YQ_FILTER" "helm/${CHART}/Chart.yaml" | \
-            jq -c --arg v "${VALUES:-[]}" '.values=$v' > $MATRIX_TMP_FILE
-          done
-          echo "::set-output name=json::$(jq -sc '{charts:.}' /tmp/${GITHUB_WORKFLOW}.*)"
+        uses: >-
+          ./.github/actions/charts-as-json
+        with:
+          charts-root: helm
   helm_unit_test:
     needs:
       - build_vars
