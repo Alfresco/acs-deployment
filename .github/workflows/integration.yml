@@ -13,6 +13,9 @@ jobs:
       app_json: ${{ steps.app_charts.outputs.json }}
       ver_json: ${{ steps.app_versions.outputs.json }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - id: getcharts
         uses: >-
           ./.github/actions/charts-as-json
@@ -35,6 +38,8 @@ jobs:
     needs:
       - app_charts
     strategy:
+      fail-fast: false
+      max-parallel: 1
       matrix:
         acs_version: ${{ fromJSON(needs.app_charts.outputs.ver_json) }}
     steps:

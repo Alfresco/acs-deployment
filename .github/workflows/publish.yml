@@ -12,8 +12,11 @@ jobs:
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
       (
-        contains(github.event.workflow_run.head_commit.message, '[publish]') ||
-        github.ref_name == github.event.repository.default_branch
+        contains(github.event.workflow_run.head_commit.message,'[publish]') ||
+        (
+          contains(github.event.workflow_run.head_commit.message,'[release]') &&
+          github.ref_name == github.event.repository.default_branch
+        )
       )
     runs-on: ubuntu-latest
     outputs:
@@ -31,8 +34,11 @@ jobs:
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
       (
-        contains(github.event.workflow_run.head_commit.message, '[publish]') ||
-        github.ref_name == github.event.repository.default_branch
+        contains(github.event.workflow_run.head_commit.message,'[publish]') ||
+        (
+          contains(github.event.workflow_run.head_commit.message,'[release]') &&
+          github.ref_name == github.event.repository.default_branch
+        )
       )
     runs-on: ubuntu-latest
     needs:
