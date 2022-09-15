@@ -21,12 +21,12 @@ jobs:
       fail-fast: false
       matrix:
         acs_version:
-          - latest
+          # - latest
           # - 7.2.N
           # - 7.1.N
           # - 7.0.N
           - 6.2.N
-          - community
+          # - community
     runs-on: ubuntu-latest
     steps:
       - name: Run helm chart tests
@@ -41,9 +41,10 @@ jobs:
           quay_password: ${{ secrets.QUAY_PASSWORD }}
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
-          release_prefix: acs-${{ matrix.acs_version }}
+          release_prefix: acs-${{ echo matrix.acs_version || sed 's/\.//g' }}
   compose:
     needs: [pre-commit]
+    if: 1 > 2
     strategy:
       fail-fast: true
       matrix:
