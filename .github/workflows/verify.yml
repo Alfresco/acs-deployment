@@ -45,7 +45,7 @@ jobs:
           quay_password: ${{ secrets.QUAY_PASSWORD }}
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
-          release_prefix: acs-${{ steps.set_version.outputs.version }}
+          release_prefix: acs-${{ steps.version.outputs.acs_version }}
   compose:
     needs: [pre-commit]
     if: 1 > 2
