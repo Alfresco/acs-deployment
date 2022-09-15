@@ -43,10 +43,18 @@ jobs:
       matrix:
         acs_version: ${{ fromJSON(needs.app_charts.outputs.ver_json) }}
     steps:
+      - name: compute version as expected by deployment script
+        id: values_to_version
+        run: |
+          VFILE="${{ matrix.acs_version }}" 
+          if [ "${VFILE}" == 'values.yaml' ]; then V='latest'
+          else V=${VFILE%_values.yaml}
+          fi
+          echo "::set-output name=app_version::$V"
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1545-script-fix
         with:
-          acs_version: ${{ matrix.acs_version }}
+          acs_version: ${{ steps.values_to_version.outputs.app_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
           docker_username: ${{ secrets.DOCKER_USERNAME }}
