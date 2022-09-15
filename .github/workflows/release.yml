@@ -34,9 +34,9 @@ jobs:
             echo $d
             cd $d
             helm dependency list | grep -v "REPOSITORY" | grep -v -e '^$' | awk '{ system("helm repo add " $1 " " $3)}'
+            helm dependency update
             cd ../..
           done
-          helm dependency update
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
