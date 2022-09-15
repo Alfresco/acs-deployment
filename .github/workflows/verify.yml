@@ -21,12 +21,12 @@ jobs:
       fail-fast: false
       matrix:
         acs_version:
-          # - latest
-          # - 7.2.N
+          - latest
+          - 7.2.N
           # - 7.1.N
           # - 7.0.N
           - 6.2.N
-          # - community
+          - community
     runs-on: ubuntu-latest
     steps:
       - name: Create valid version string
@@ -46,6 +46,8 @@ jobs:
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
           release_prefix: acs-${{ steps.version.outputs.acs_version }}
+          chart_name: alfresco-content-services
+          test_newman: "true"
   compose:
     needs: [pre-commit]
     if: 1 > 2
