@@ -32,7 +32,7 @@ jobs:
       - name: Create valid version string
         id: version
         run: |
-          echo "::set-output name=acs_version::$(echo ${{ matrix.acs_version }} | sed 's/\.//g')"
+          echo "::set-output name=acs_version::$(echo ${{ matrix.acs_version }} | sed 's/\.//g' | tr '[:upper:]' '[:lower:]')"
       - name: Run helm chart tests
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1545-script-fix
         with:
