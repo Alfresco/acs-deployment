@@ -12,6 +12,7 @@ jobs:
     outputs:
       app_json: ${{ steps.app_charts.outputs.json }}
       ver_json: ${{ steps.app_versions.outputs.json }}
+      name_json: ${{ steps.app_versions.outputs.json }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -29,7 +30,12 @@ jobs:
       - id: app_versions
         run: |
           APPS=$(echo '${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}' |\
-          jq -c 'del(.charts[] | select(.type=="library")) | .charts[].values | split("\n")')
+          jq -c 'del(.charts[] | select(.type=="library")) | .charts[].version | split("\n")')
+          echo "::set-output name=json::$APPS"
+      - id: app_names
+        run: |
+          APPS=$(echo '${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}' |\
+          jq -c 'del(.charts[] | select(.type=="library")) | .charts[].name | split("\n")')
           echo "::set-output name=json::$APPS"
   helm_integration:
     if: >-
@@ -42,19 +48,16 @@ jobs:
       max-parallel: 1
       matrix:
         acs_version: ${{ fromJSON(needs.app_charts.outputs.ver_json) }}
+        acs_name: ${{ fromJSON(needs.app_charts.outputs.name_json) }}
     steps:
-      - name: compute version as expected by deployment script
-        id: values_to_version
+      - name: Create valid version string
+        id: version
         run: |
-          VFILE="${{ matrix.acs_version }}" 
-          if [ "${VFILE}" == 'values.yaml' ]; then V='latest'
-          else V=${VFILE%_values.yaml}
-          fi
-          echo "::set-output name=app_version::$V"
+          echo "::set-output name=acs_version::$(echo ${{ matrix.acs_version }} | sed 's/\.//g' | tr '[:upper:]' '[:lower:]')"
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1545-script-fix
         with:
-          acs_version: ${{ steps.values_to_version.outputs.app_version }}
+          acs_version: ${{ matrix.acs_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
           docker_username: ${{ secrets.DOCKER_USERNAME }}
@@ -63,6 +66,9 @@ jobs:
           quay_password: ${{ secrets.QUAY_PASSWORD }}
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
+          release_prefix: acs-${{ steps.version.outputs.acs_version }}
+          chart_name: ${{ matrix.acs_name }}
+          test_newman: 'true'
   applications_outcome:
     needs:
       - app_charts
