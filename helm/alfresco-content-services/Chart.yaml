@@ -3,7 +3,7 @@
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 5.2.6
+version: 5.2.7
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -29,12 +29,12 @@ dependencies:
     version: 1.0.4
   - name: alfresco-sync-service
     version: 3.0.9
-  - name: common
-    repository: https://charts.bitnami.com/bitnami
-    version: 1.x.x    
+  # - name: common
+  #   repository: https://charts.bitnami.com/bitnami
+  #   version: 1.x.x    
   - name: common
     alias: alfresco-digital-workspace
     repository: https://activiti.github.io/activiti-cloud-helm-charts
     version: 7.2.0
-    condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled    
+    #condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled    
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
