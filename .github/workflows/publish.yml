@@ -61,7 +61,7 @@ jobs:
           fi
       - name: publish chart
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@OPSEXP-1545-script-fix
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@master
         with:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}

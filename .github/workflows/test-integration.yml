@@ -55,7 +55,7 @@ jobs:
         run: |
           echo "::set-output name=acs_version::$(echo ${{ matrix.acs_version }} | sed 's/\.//g' | tr '[:upper:]' '[:lower:]')"
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1545-script-fix
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@master
         with:
           acs_version: ${{ matrix.acs_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
