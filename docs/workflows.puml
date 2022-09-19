@@ -1,0 +1,79 @@
+@startuml workflows
+'left to right direction
+
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam defaultFontColor #DimGrey                                                                                                                                                                                                                                           
+skinparam defaultFontName Cantarell
+skinparam rectangle {
+    BorderColor     #DimGrey
+    BackgroundColor #LightBlue
+}
+skinparam node {
+    BorderColor     #Black
+    BackgroundColor #LightGrey
+}
+skinparam control {
+    BorderColor     #White
+    BackgroundColor #Green
+}
+
+rectangle "docker-compose" as compose {
+	node "verify-compose"
+}
+
+rectangle "helm" as helm {
+	node "build_vars" #LightGrey
+	control "json_charts"
+	node "helm_unittests1"
+	node "helm_unittests2"
+	node "helm_unittests3"
+	node "libraries_outcome"
+}
+rectangle "integration" as itg {
+	node "app_charts"
+	control "app_json"
+	node "helm_integration1"
+	node "helm_integration2"
+	node "application_outcome" {
+		control "ver_json"
+	}
+}
+rectangle "publish" as pub  {
+	node "prepare_release"
+	control "releases"
+	node "publish1"
+	node "publish2"
+	node "publish3"
+}
+
+cloud "gha_artfiacts" {
+	artifact "lib_artifact"
+	artifact "app_artifact"
+}
+
+compose -[hidden] helm
+'app_artifact -[hidden]- lib_artifact
+helm ~r~ itg
+helm ~d~ pub
+build_vars --( json_charts
+json_charts --> helm_unittests1
+json_charts --> helm_unittests2
+json_charts --> helm_unittests3
+helm_unittests1 --> libraries_outcome
+helm_unittests2 --> libraries_outcome
+helm_unittests3 --> libraries_outcome
+libraries_outcome ..> lib_artifact
+
+gha_artfiacts .> prepare_release
+prepare_release --( releases
+releases --> publish1
+releases --> publish2
+releases --> publish3
+
+app_charts --( app_json
+app_charts ---( ver_json
+app_json --> helm_integration1
+app_json --> helm_integration2
+application_outcome ..> app_artifact
+@endum
