@@ -5,7 +5,7 @@ inputs:
   chart:
     description: Name of the chart to publish
     required: true
-    type: true
+    type: string
   github_token:
     description: GitHub token
     required: true
