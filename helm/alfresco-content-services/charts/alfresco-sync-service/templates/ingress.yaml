@@ -1,7 +1,7 @@
 {{- if .Values.syncservice.enabled }}
 {{- $serviceName :=  (include "syncservice.fullname" .) -}}
 {{- $servicePort := .Values.syncservice.service.externalPort -}}
-apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "syncservice.fullname" . }}-ingress
