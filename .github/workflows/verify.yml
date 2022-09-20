@@ -11,21 +11,10 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.6.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.6.0
-  branch:
-    runs-on: ubuntu-latest
-    outputs:
-      branch_name: ${{ steps.branch.outputs.branch_name }}
-    steps:
-      - id: branch
-        name: Evaluate branch name and set as output
-        run: |
-          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
-          echo "Branch name is $BRANCH_NAME"
-          echo "::set-output name=branch_name::$BRANCH_NAME"
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.14.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.14.0
   helm:
-    needs: [ pre-commit, branch ]
+    needs: [pre-commit]
     if: '! github.event.pull_request.head.repo.fork'
     strategy:
       max-parallel: 1 # otherwise flaky problems with aws ELB
@@ -39,99 +28,67 @@ jobs:
           - 6.2.N
           - community
     runs-on: ubuntu-latest
-    env:
-      DOMAIN: dev.envalfresco.com
-      AWS_ACCESS_KEY_ID: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: eu-west-1
-      - uses: azure/setup-kubectl@v2.0
-        with:
-          version: 'v1.23.6'
-      - if: matrix.acs_version != 'community'
-        name: Login to Quay.io
-        uses: docker/login-action@v1
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Get commit msg
+      - name: Create valid version string
+        id: version
         run: |
-          MSG=$(git log --format=%B -n 1 ${{github.event.after}})
-          echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
+          echo "::set-output name=acs_version::$(echo ${{ matrix.acs_version }} | sed 's/\.//g' | tr '[:upper:]' '[:lower:]')"
       - name: Run helm chart tests
-        run: .github/scripts/helm_install.sh
-        shell: bash
-        env:
-          ACM_CERTIFICATE: ${{ secrets.ACM_CERTIFICATE }}
-          AWS_SG: ${{ secrets.AWS_SG }}
-          ACS_VERSION: ${{ matrix.acs_version }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@master
+        with:
+          acs_version: ${{ matrix.acs_version }}
+          aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}
+          quay_username: ${{ secrets.QUAY_USERNAME }}
+          quay_password: ${{ secrets.QUAY_PASSWORD }}
+          acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
+          aws_sg: ${{ secrets.AWS_SG }}
+          release_prefix: acs-${{ steps.version.outputs.acs_version }}
+          chart_name: 'alfresco-content-services'
+          test_newman: 'true'
   compose:
-    needs: [pre-commit, branch]
+    needs: [pre-commit]
     strategy:
       fail-fast: true
       matrix:
-        acs_version: [latest, 7.2.N, 7.1.N, 7.0.N, 6.2.N, community]
+        compose_file:
+          - docker-compose.yml
+          - 7.2.N-docker-compose.yml
+          - 7.1.N-docker-compose.yml
+          - 7.0.N-docker-compose.yml
+          - 6.2.N-docker-compose.yml
+          - community-docker-compose.yml
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - if: matrix.acs_version != 'community' && ! github.event.pull_request.head.repo.fork
-        name: Login to Quay.io
-        uses: docker/login-action@v1
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
-      - name: Get commit msg
-        run: |
-          MSG=$(git log --format=%B -n 1 ${{github.event.after}})
-          echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
-      - if: '! github.event.pull_request.head.repo.fork'
-        name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Run Docker Compose tests
-        if: matrix.acs_version == 'community' || ! github.event.pull_request.head.repo.fork
-        run: .github/scripts/docker_compose.sh
-        shell: bash
-        env:
-          ACS_VERSION: ${{ matrix.acs_version}}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
+        with:
+          compose_file_path: docker-compose/${{ matrix.compose_file }}
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}
+          quay_username: ${{ secrets.QUAY_USERNAME }}
+          quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
-    needs: [ compose, helm, branch ]
+    needs: [ compose, helm ]
+    if: github.event.head_commit.message == '[publish]'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Get commit msg
+      - name: Evalute type of release
+        id: release
         run: |
-          MSG=$(git log --format=%B -n 1 ${{github.event.after}})
-          echo COMMIT_MESSAGE=\"$MSG\" >> $GITHUB_ENV
+          if [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" ]]; then
+            echo "::set-output name=type::stable"
+          else
+            echo "::set-output name=type::incubator"
+          fi
       - name: Publish
-        run: .github/scripts/publish_chart.sh
-        shell: bash
-        if: github.ref_name == github.event.repository.default_branch || env.COMMIT_MESSAGE == '[publish]'
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-          GITHUB_USERNAME: ${{ secrets.BOT_GITHUB_USERNAME }}
-          GITHUB_EMAIL: ${{ secrets.BOT_GITHUB_EMAIL }}
-          BRANCH_NAME: ${{ needs.branch.outputs.branch_name }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@master
+        with:
+          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
+          github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
+          chart_name: 'alfresco-content-services'
+          chart_repo: 'Alfresco/acs-deployment'
+          release_type: ${{ steps.release.outputs.type }}
