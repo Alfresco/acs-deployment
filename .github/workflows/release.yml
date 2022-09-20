@@ -30,7 +30,7 @@ jobs:
 
       - name: Add repo dependencies
         run: |
-          cd ./helm/*/ ; do
+          for d in ./charts/*/ ; do
             echo $d
             cd $d
             helm dependency list | grep -v "REPOSITORY" | grep -v -e '^$' | awk '{ system("helm repo add " $1 " " $3)}'
