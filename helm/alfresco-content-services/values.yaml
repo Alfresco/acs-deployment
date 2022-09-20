@@ -92,6 +92,7 @@ repository:
     initialDelaySeconds: 130
     periodSeconds: 20
     timeoutSeconds: 10
+  extraEnvFrom: []
   extraVolumes: []
   extraVolumeMounts: []
   extraSideContainers: []

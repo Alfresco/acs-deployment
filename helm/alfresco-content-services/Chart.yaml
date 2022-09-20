@@ -3,7 +3,7 @@
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 5.3.0-M3-mintel.0.0.2-alpha-2
+version: 5.3.0-M3-mintel.0.0.2-alpha-3
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -24,7 +24,10 @@ dependencies:
     version: 10.16.2
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     alias: postgresql-syncservice
-    condition: alfresco-sync-service.postgresql-syncservice.enabled,postgresql-syncservice.enabled
+    condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
+  - name: common
+    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+    version: 2.0.3
   - name: common
     alias: alfresco-digital-workspace
     repository: https://activiti.github.io/activiti-cloud-helm-charts
