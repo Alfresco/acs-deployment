@@ -7,7 +7,6 @@ on:
     branches:
       - 'master'
       - pr-*
-      - 'OPSEXP-1545-actions'
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -24,8 +23,8 @@ jobs:
         acs_version:
           - latest
           - 7.2.N
-          # - 7.1.N
-          # - 7.0.N
+          - 7.1.N
+          - 7.0.N
           - 6.2.N
           - community
     runs-on: ubuntu-latest
