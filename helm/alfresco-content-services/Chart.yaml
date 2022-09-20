@@ -26,6 +26,7 @@ dependencies:
     alias: postgresql-syncservice
     condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
   - name: common
+    alias: bitnami-common
     repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     version: 2.0.3
   - name: common
