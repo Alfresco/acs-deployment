@@ -67,10 +67,10 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@OPSEXP-1545-community-fix
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
-          docker_username: ${{ secrets.DOCKER_USERNAME }}
-          docker_password: ${{ secrets.DOCKER_PASSWORD }}
-          quay_username: ${{ secrets.QUAY_USERNAME }}
-          quay_password: ${{ secrets.QUAY_PASSWORD }}
+          # docker_username: ${{ secrets.DOCKER_USERNAME }}
+          # docker_password: ${{ secrets.DOCKER_PASSWORD }}
+          # quay_username: ${{ secrets.QUAY_USERNAME }}
+          # quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
     needs: [ compose, helm ]
     if: github.event.head_commit.message == '[publish]'
