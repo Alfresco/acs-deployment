@@ -62,9 +62,6 @@ jobs:
           - community-docker-compose.yml
     runs-on: ubuntu-latest
     steps:
-      - name: 'debug'
-        run: |
-          echo "${{ github.event.pull_request.head.repo.fork }}"
       - name: Run Docker Compose tests
         if: ${{ ! github.event.pull_request.head.repo.fork || matrix.compose_file == 'community-docker-compose.yml' }}
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
