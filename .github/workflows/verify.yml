@@ -63,6 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Docker Compose tests
+        if: ! github.event.pull_request.head.repo.fork || matrix.compose_file == 'community-docker-compose.yml'
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
