@@ -514,6 +514,11 @@ share:
       memory: "2000Mi"
   environment:
     CATALINA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
+  # -- The startup probe to cover the worse case startup time for slow start containers
+  startupProbe:
+    initialDelaySeconds: 300
+    periodSeconds: 20
+    failureThreshold: 10
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20

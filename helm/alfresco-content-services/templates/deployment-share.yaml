@@ -50,6 +50,13 @@ spec:
           volumeMounts:
 {{ toYaml .Values.share.extraVolumeMounts | indent 10 }}
           {{- end }}
+          startupProbe:
+            httpGet:
+              path: /share
+              port: {{ .Values.share.image.internalPort }}
+            periodSeconds: {{ .Values.share.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.share.startupProbe.failureThreshold }}
+            initialDelaySeconds: {{ .Values.share.startupProbe.initialDelaySeconds }}
           readinessProbe:
             httpGet:
               path: /share
