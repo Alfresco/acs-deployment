@@ -66,6 +66,7 @@ jobs:
         run: |
           echo "${{ github.event.pull_request.head.repo.fork }}"
       - name: Run Docker Compose tests
+        if: ${{ ! github.event.pull_request.head.repo.fork || matrix.compose_file == 'community-docker-compose.yml' }}
         uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@OPSEXP-1545-community-fix
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
