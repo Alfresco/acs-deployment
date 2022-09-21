@@ -26,14 +26,16 @@ dependencies:
     alias: postgresql-syncservice
     condition: alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
   - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 1.x.x
     alias: bitnami-common
-    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
-    version: 2.0.3
-  - name: common
-    alias: alfresco-digital-workspace
-    repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 7.3.0
-    condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
+#  Common below is not used as the above one is needed due to https://github.com/Alfresco/acs-deployment/issues/716
+#  and both can not be supported because of https://github.com/helm/helm/issues/7413
+#  - name: common
+#    alias: alfresco-digital-workspace
+#    repository: https://activiti.github.io/activiti-cloud-helm-charts
+#    version: 7.3.0
+#    condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
   - name: activemq
     version: 2.1.0
     condition: activemq.enabled
