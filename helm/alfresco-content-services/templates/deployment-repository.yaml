@@ -83,6 +83,9 @@ spec:
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap
+          {{- if .Values.repository.extraEnvFrom }}
+{{ toYaml .Values.repository.extraEnvFrom | indent 10 }}
+          {{- end }}
           ports:
             # internal port and the hazelcast port used for clustering
             - containerPort: {{ .Values.repository.image.internalPort }}

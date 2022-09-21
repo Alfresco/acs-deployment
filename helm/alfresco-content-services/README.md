@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 5.3.0-M3-mintel.0.0.2-alpha-3](https://img.shields.io/badge/Version-5.3.0--M3--mintel.0.0.2--alpha--3-informational?style=flat-square)
+![Version: 5.3.0-M3-mintel.0.0.3](https://img.shields.io/badge/Version-5.3.0--M3--mintel.0.0.3-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -21,7 +21,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |  | alfresco-elasticsearch-connector | 0.1.0 |
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.3.0 |
+| https://charts.bitnami.com/bitnami | bitnami-common(common) | 1.x.x |
 | https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql-syncservice(postgresql) | 10.16.2 |
@@ -233,6 +233,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |
 | repository.environment.JAVA_OPTS | string | `"-Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede"` |  |
+| repository.extraEnvFrom | list | `[]` |  |
 | repository.extraInitContainers | list | `[]` |  |
 | repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value fashion |
 | repository.extraSideContainers | list | `[]` |  |
