@@ -34,7 +34,7 @@ Alfresco Sync Service
 | initContainers.postgres.image.tag | string | `"1.35.0"` |  |
 | initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
 | initContainers.postgres.resources.requests.memory | string | `"5Mi"` |  |
-| messageBroker | object | `{"url":null}` | `messageBroker` object allow to pass ActiveMQ connection details. `url`: provides URI formatted string (see https://activemq.apache.org/failover-transport-reference) `user`: username to authenticate as. `password`: credential to use to authenticate to the broker. |
+| messageBroker | object | `{"existingSecretName":null,"url":null}` | `messageBroker` object allow to pass ActiveMQ connection details. `url`: provides URI formatted string (see https://activemq.apache.org/failover-transport-reference) `user`: username to authenticate as. `password`: credential to use to authenticate to the broker. |
 | nodeSelector | object | `{}` |  |
 | postgresql-syncservice.enabled | bool | `true` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
 | postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |

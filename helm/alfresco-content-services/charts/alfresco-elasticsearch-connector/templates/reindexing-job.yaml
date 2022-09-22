@@ -27,6 +27,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
+            - secretRef:
+                name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
           env:
             - name: SPRING_DATABASE_PASSWORD
               valueFrom:
@@ -38,6 +40,7 @@ spec:
                 secretKeyRef:
                   name: {{ template "content-services.shortname" . }}-dbsecret
                   key: DATABASE_USERNAME
+            {{- include "spring.activemq.env" . | nindent 12 }}
           ports:
               - name: http
                 containerPort: 8080

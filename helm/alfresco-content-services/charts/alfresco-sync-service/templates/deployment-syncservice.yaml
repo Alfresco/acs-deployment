@@ -43,10 +43,12 @@ spec:
         envFrom:
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
+        - secretRef:
+            name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
         args:
           - -c
           - echo "Checking for ActiveMQ broker availability";
-            IFS=, read -r -a array < <(echo "${SPRING_ACTIVEMQ_BROKERURL}" | sed -r 's/([a-z]+:\()*([^\)]*)(\)?.*)*/\2/');
+            IFS=, read -r -a array < <(echo "${BROKER_URL}" | sed -r 's/([a-z]+:\()*([^\)]*)(\)?.*)*/\2/');
             while [ -z $MQREADY ]; do
               for broker in "${array[@]}"; do broker_socket=${broker%%\?*};
                 [[ "${broker_socket#*://}" == *":"* ]] || NCPORT=61616;
@@ -78,6 +80,8 @@ spec:
             name: {{ template "syncservice.fullname" . }}-dbsecret
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
+        - secretRef:
+            name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
         ports:
         - name: serviceport
           containerPort: 9090

@@ -13,7 +13,6 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  {{ template "activemq.config" . }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   livenessPercent: "{{ .Values.transformmisc.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.transformmisc.livenessProbe.livenessTransformPeriodSeconds }}"

@@ -113,15 +113,6 @@ data:
       -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
       {{- end }}
       {{- end }}
-      {{- if .Values.activemq.enabled }}
-      -Dmessaging.broker.url={{ printf "failover:(nio://%s-broker:61616)?timeout=3000&jms.useCompression=true" (include "activemq.fullname" .) }}
-      -Dmessaging.broker.username={{ .Values.activemq.adminUser.username }}
-      -Dmessaging.broker.password={{ .Values.activemq.adminUser.password }}
-      {{- else }}
-      -Dmessaging.broker.url={{ required "Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url" .Values.messageBroker.url }}
-      -Dmessaging.broker.username={{ .Values.messageBroker.user }}
-      -Dmessaging.broker.password={{ .Values.messageBroker.password }}
-      {{- end }}
       {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
       -Ddsync.service.uris={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/syncservice
       {{- else }}
@@ -158,3 +149,6 @@ data:
       {{- end }}
       -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
       -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
+      -Dmessaging.broker.url=$BROKER_URL
+      -Dmessaging.broker.username=$BROKER_USERNAME
+      -Dmessaging.broker.password=$BROKER_PASSWORD
