@@ -64,6 +64,8 @@ spec:
           {{- end }}
           - secretRef:
               name: {{ template "content-services.shortname" . }}-metadata-keystore-secret
+          - secretRef:
+              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap

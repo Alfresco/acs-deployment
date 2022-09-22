@@ -75,6 +75,7 @@ repository:
 # `password`: credential to use to authenticate to the broker.
 messageBroker:
   url: null
+  existingSecretName: null
 
 contentServices:
   # -- Specify when installing as a standalone chart, not as a subchart of ACS.

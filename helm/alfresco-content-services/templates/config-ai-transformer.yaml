@@ -13,7 +13,6 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  {{ template "activemq.config" . }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   AWS_ACCESS_KEY: {{ .Values.ai.aws.accessKey }}
   AWS_SECRET_ACCESS_KEY: {{ .Values.ai.aws.secretAccessKey }}

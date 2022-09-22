@@ -13,7 +13,6 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  {{ template "activemq.config" . }}
   IMAGEMAGICK_URL: http://{{ template "content-services.shortname" . }}-imagemagick:80
   PDF_RENDERER_URL: http://{{ template "content-services.shortname" . }}-pdfrenderer:80
   LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
