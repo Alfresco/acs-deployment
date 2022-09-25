@@ -2,7 +2,47 @@ apiVersion: v1
 entries:
   alfresco-content-services:
   - apiVersion: v2
-    created: "2022-09-25T15:42:44.305629477+02:00"
+    created: "2022-09-25T20:25:23.642026679+02:00"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.16.2
+    - alias: postgresql-syncservice
+      condition: postgresql-syncservice.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.16.2
+    - name: activemq
+      repository: ""
+      version: 2.1.0
+    - name: alfresco-search
+      repository: ""
+      version: 1.0.6
+    - name: alfresco-sync-service
+      repository: ""
+      version: 3.0.9
+    - alias: alfresco-digital-workspace
+      name: common
+      repository: https://activiti.github.io/activiti-cloud-helm-charts
+      version: 7.2.0
+    description: A Helm chart for deploying Alfresco Content Services
+    digest: db684f1e767e955cce9fd524b51e1a936e6910925c269abdd4da232ac59fbc55
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - content
+    - content services
+    - alfresco
+    - alfresco content services
+    name: alfresco-content-services
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    urls:
+    - alfresco-content-services-5.2.11.tgz
+    version: 5.2.11
+  - apiVersion: v2
+    created: "2022-09-25T20:25:23.627562923+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -42,7 +82,7 @@ entries:
     - alfresco-content-services-5.2.10.tgz
     version: 5.2.10
   - apiVersion: v2
-    created: "2022-09-25T15:42:44.502611486+02:00"
+    created: "2022-09-25T20:25:23.659447045+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -82,386 +122,7 @@ entries:
     - alfresco-content-services-5.2.9.tgz
     version: 5.2.9
   - apiVersion: v2
-    created: "2022-09-25T15:42:44.472345705+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    - alias: alfresco-digital-workspace
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: c4ea376e0cb75f1824706c32dd5e01b730b49885447ea12983d208145e4e2a79
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.8.tgz
-    version: 5.2.8
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.452841516+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    - alias: alfresco-digital-workspace
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: 3d948f29b77b43b1792e8c80a1f367f85fc7d6965acd717ba3ac22b7f5e17d5e
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.7.tgz
-    version: 5.2.7
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.414555184+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    - name: common
-      repository: https://charts.bitnami.com/bitnami
-      version: 1.x.x
-    - alias: alfresco-digital-workspace
-      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: 8cc3570d2efdb35a122aa7dab6af0a1eb09a32b6930bef2a7d11bdb8c53d6a09
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.6.tgz
-    version: 5.2.6
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.396064941+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    - name: common
-      repository: https://charts.bitnami.com/bitnami
-      version: 1.x.x
-    - alias: alfresco-digital-workspace
-      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: fc5e80a1e21d805b2f3ea692b6ff827929c935e72a3f753f64b4df88c1593a2e
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.5.tgz
-    version: 5.2.5
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.375587424+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    - name: common
-      repository: https://charts.bitnami.com/bitnami
-      version: 1.x.x
-    - alias: alfresco-digital-workspace
-      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: a45f1ff7cbfd539a7588ed8b1db8a5178faeac470801e0d8a50eded93bf3d2c4
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.4.tgz
-    version: 5.2.4
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.357963312+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: alfresco-digital-workspace
-      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    - name: common
-      repository: https://charts.bitnami.com/bitnami
-      version: 1.8.0
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: a58aad166991f550b218d8a97df7d2ac6ced217ca82e2832866c81129a82fa11
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.3.tgz
-    version: 5.2.3
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.325803198+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: alfresco-digital-workspace
-      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: 14201c00b82ddad55cb777979aa9f254811f4c67ef3d3610fe6475c7e36f77e4
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.2.tgz
-    version: 5.2.2
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.273655441+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: alfresco-digital-workspace
-      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: 18dd1e60e55ab36245210df29b18c1df13b7730f4f00e7a0ee3fd7aba26a1fd3
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.1.tgz
-    version: 5.2.1
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.243885734+02:00"
-    dependencies:
-    - condition: postgresql.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: postgresql-syncservice
-      condition: postgresql-syncservice.enabled
-      name: postgresql
-      repository: https://charts.bitnami.com/bitnami
-      version: 10.16.2
-    - alias: alfresco-digital-workspace
-      condition: alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
-      name: common
-      repository: https://activiti.github.io/activiti-cloud-helm-charts
-      version: 7.2.0
-    - name: activemq
-      repository: ""
-      version: 2.1.0
-    - name: alfresco-search
-      repository: ""
-      version: 1.0.4
-    - name: alfresco-sync-service
-      repository: ""
-      version: 3.0.9
-    description: A Helm chart for deploying Alfresco Content Services
-    digest: f699e938e829ef065d5d3dcc278eddb6e5e4104432b459c80d384f58b09ff7d3
-    home: https://www.alfresco.com
-    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
-    keywords:
-    - content
-    - content services
-    - alfresco
-    - alfresco content services
-    name: alfresco-content-services
-    sources:
-    - https://github.com/Alfresco/acs-deployment
-    urls:
-    - alfresco-content-services-5.2.0.tgz
-    version: 5.2.0
-  - apiVersion: v2
-    created: "2022-09-25T15:42:44.218567365+02:00"
+    created: "2022-09-25T20:25:23.613141409+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -502,7 +163,7 @@ entries:
     - alfresco-content-services-5.1.18.tgz
     version: 5.1.18
   - apiVersion: v2
-    created: "2022-09-25T15:42:44.197900682+02:00"
+    created: "2022-09-25T20:25:23.598960279+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -543,7 +204,7 @@ entries:
     - alfresco-content-services-5.1.17.tgz
     version: 5.1.17
   - apiVersion: v2
-    created: "2022-09-25T15:42:44.162155067+02:00"
+    created: "2022-09-25T20:25:23.583870477+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -584,7 +245,7 @@ entries:
     - alfresco-content-services-5.1.16.tgz
     version: 5.1.16
   - apiVersion: v2
-    created: "2022-09-25T15:42:44.142929581+02:00"
+    created: "2022-09-25T20:25:23.566945372+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -627,7 +288,7 @@ entries:
   alfresco-identity-service:
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-09-25T15:42:44.546544432+02:00"
+    created: "2022-09-25T20:25:23.684334955+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -652,7 +313,7 @@ entries:
     version: 5.0.3
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-09-25T15:42:44.530775193+02:00"
+    created: "2022-09-25T20:25:23.676378453+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -677,7 +338,7 @@ entries:
     version: 5.0.2
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2022-09-25T15:42:44.511116396+02:00"
+    created: "2022-09-25T20:25:23.667970196+02:00"
     dependencies:
     - name: keycloak
       repository: https://codecentric.github.io/helm-charts
@@ -703,7 +364,7 @@ entries:
   pgo:
   - apiVersion: v2
     appVersion: 5.1.2
-    created: "2022-09-25T15:42:44.556021576+02:00"
+    created: "2022-09-25T20:25:23.687763097+02:00"
     description: Installer for PGO, the open source Postgres Operator from Crunchy
       Data
     digest: f35911c42ec0134173b360932bdbade48ae732b22c1cfc4dc83c0a30a3ccd972
@@ -715,7 +376,7 @@ entries:
   postgrescluster:
   - apiVersion: v2
     appVersion: 5.1.2
-    created: "2022-09-25T15:42:44.557581432+02:00"
+    created: "2022-09-25T20:25:23.688262351+02:00"
     description: A Helm chart for Kubernetes
     digest: 9edc8e7cfaafbad59ff324bc7ebe46c2c1b1a1026ce175fa232a50f1f7b36f10
     name: postgrescluster
@@ -723,4 +384,4 @@ entries:
     urls:
     - postgrescluster-0.2.5.tgz
     version: 0.2.5
-generated: "2022-09-25T15:42:44.108749883+02:00"
+generated: "2022-09-25T20:25:23.547906138+02:00"
