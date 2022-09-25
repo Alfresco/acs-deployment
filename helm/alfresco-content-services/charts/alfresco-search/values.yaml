@@ -50,6 +50,7 @@ resources:
     memory: "2000Mi"
   limits:
     memory: "2000Mi"
+securityContext: {}
 # -- Defines the mounting points for the persistence required by the apps in the cluster
 # the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
 persistence:
