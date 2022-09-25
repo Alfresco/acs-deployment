@@ -3,7 +3,7 @@
 # Request an extended 30-day trial at https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 5.2.10
+version: 5.2.11
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -26,7 +26,7 @@ dependencies:
   - name: activemq
     version: 2.1.0
   - name: alfresco-search
-    version: 1.0.5
+    version: 1.0.6
   - name: alfresco-sync-service
     version: 3.0.9
   # - name: common
