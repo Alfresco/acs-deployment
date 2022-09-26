@@ -12,7 +12,8 @@ Alfresco Sync Service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.1.0-A417 |
+| file://../../../alfresco-common/ | alfresco-common | 0.1.0 |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 1.x.x |
 
 ## Values
 

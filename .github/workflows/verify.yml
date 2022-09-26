@@ -5,13 +5,11 @@ on:
     branches:
       - 'master'
   push:
-    branches:
-      - 'master'
-      - pr-*
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action@v2.0.1
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.14.0
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.14.0
   helm:
@@ -74,7 +72,7 @@ jobs:
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
-    if: github.event.head_commit.message == '[publish]'
+    if: contains(github.event.head_commit.message, '[publish]')
     needs:
       - helm
     runs-on: ubuntu-latest
@@ -83,7 +81,7 @@ jobs:
       matrix:
         chart:
           - alfresco-common
-          - alfresco-content-service
+          - alfresco-content-services
     steps:
       - name: Evalute type of release
         id: release
@@ -99,6 +97,6 @@ jobs:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
           github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
-          chart_name: 'alfresco-content-services'
+          chart_name: ${{ matrix.chart }}
           chart_repo: 'Alfresco/acs-deployment'
           release_type: ${{ steps.release.outputs.type }}

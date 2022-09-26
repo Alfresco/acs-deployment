@@ -18,5 +18,9 @@ dependencies:
   - name: alfresco-insight-zeppelin
     version: 1.0.3
   - name: alfresco-common
-    version: 0.1.0-A417
-    repository: https://kubernetes-charts.alfresco.com/incubator
+    version: 0.1.0
+    repository: file://../../../alfresco-common/
+  - name: common
+    repository: >-
+      https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+    version: 1.x.x
