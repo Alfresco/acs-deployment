@@ -4,8 +4,7 @@ Define annotations as provided in values
 {{- define "ingress_annotations" }}
 {{- range $annotation, $value := .ingress.annotations }}
   {{- if ne $annotation "nginx.ingress.kubernetes.io/server-snippet" }}
-  {{- $annotation | nindent 4 }}: |
-    {{- $value | nindent 6 }}
+  {{- $annotation | nindent 4 }}: {{ $value }}
   {{- end }}
 {{- end }}
 {{- end }}
