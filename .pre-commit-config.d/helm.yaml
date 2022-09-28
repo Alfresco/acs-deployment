@@ -16,8 +16,8 @@ repos:
         args: [--allow-multiple-documents]
         exclude: |
           (?x)^(
-            (helm/.*/templates)|
-            (docker-compose/.*)
+            docker-compose/.*\.ya?ml|
+            helm/.*/templates/.*\.ya?ml
           )$
       - id: check-json
       - id: fix-byte-order-marker
