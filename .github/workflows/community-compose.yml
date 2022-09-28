@@ -1,0 +1,22 @@
+---
+name: Docker Compose (Community)
+on:
+  pull_request:
+    branches:
+      - 'master'
+    paths:
+      - docker-compose/**
+      - test/postman/docker-compose/**
+      - .github/workflows/community-compose.yml
+  push:
+    branches:
+      - 'master'
+jobs:
+  compose_community:
+    name: docker-compose community
+    runs-on: ubuntu-latest
+    steps:
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
+        with:
+          compose_file_path: docker-compose/community-docker-compose.yml
