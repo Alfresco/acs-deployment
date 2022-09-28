@@ -1,3 +1,4 @@
+---
 apiVersion: v2
 description: A Helm chart for deploying Alfresco Search
 home: https://www.alfresco.com
@@ -16,9 +17,6 @@ version: 1.0.4
 dependencies:
   - name: alfresco-insight-zeppelin
     version: 1.0.3
-  - name: common
-    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
-    version: 1.x.x
-  - name: alfresco-content-common
-    version: 0.1.0
-    repository: "file://../alfresco-content-common"
+  - name: alfresco-common
+    version: 0.1.0-SNAPSHOT
+    repository: https://kubernetes-charts.alfresco.com/incubator

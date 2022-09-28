@@ -1,0 +1,73 @@
+# alfresco-common is a library so can only be tested from
+# another chart
+---
+suite: test alfresco-common library
+templates:
+  - ingress-repository.yaml
+  - secret-repo-jtoolopt.yaml
+  - config-transform-router.yaml
+  - deployment-repository.yaml
+  - config-repository.yaml
+  - secret-database.yaml
+  - secret-s3.yaml
+  - config-dev-log4j-properties.yaml
+tests:
+  - it: should render with default value alfresco-cs
+    values: &testvalues
+      - test-values.yml
+    asserts:
+      - equal:
+          path: data.JAVA_TOOL_OPTIONS
+          #  harcoded value. Can't encode on the fly
+          value: |
+            LURzb2xyLnNoYXJlZFNlY3JldD1kdW1teSA=
+        template: secret-repo-jtoolopt.yaml
+      - matchRegex:
+          path: metadata.name
+          pattern: ^RELEASE-NAME-alfresco-cs-
+  - it: should render with value set
+    values: *testvalues
+    set:
+      NameOverride: myacstest
+    asserts:
+      - matchRegex:
+          path: metadata.name
+          pattern: ^RELEASE-NAME-myacstest-
+  - it: should render default activeMQ vars
+    values:
+      - test-values.yml
+    asserts:
+      - equal:
+          path: data.ACTIVEMQ_URL
+          value: nio://RELEASE-NAME-activemq-broker:61616
+        template: config-transform-router.yaml
+      - equal:
+          path: data.ACTIVEMQ_USER
+          value: admin
+        template: config-transform-router.yaml
+      - equal:
+          path: data.ACTIVEMQ_PASSWORD
+          value: admin
+        template: config-transform-router.yaml
+  - it: should render custom activeMQ vars
+    values:
+      - test-values.yml
+      - externalBroker-values.yml
+    asserts:
+      - contains:
+          path: spec.template.spec.imagePullSecrets
+          content:
+            name: secretsecret
+        template: deployment-repository.yaml
+      - equal:
+          path: data.ACTIVEMQ_URL
+          value: failover(nio://somebroker:61616)
+        template: config-transform-router.yaml
+      - equal:
+          path: data.ACTIVEMQ_USER
+          value: alfresco
+        template: config-transform-router.yaml
+      - equal:
+          path: data.ACTIVEMQ_PASSWORD
+          value: alfresco
+        template: config-transform-router.yaml

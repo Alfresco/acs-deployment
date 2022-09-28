@@ -14,7 +14,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../alfresco-content-common | alfresco-content-common | 0.1.0 |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.1.0-SNAPSHOT |
 
 ## Values
 

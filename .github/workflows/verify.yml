@@ -1,3 +1,4 @@
+---
 name: verify
 on:
   pull_request:
@@ -14,10 +15,11 @@ jobs:
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.14.0
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.14.0
   helm:
-    needs: [pre-commit]
+    needs:
+      - pre-commit
     if: '! github.event.pull_request.head.repo.fork'
     strategy:
-      max-parallel: 1 # otherwise flaky problems with aws ELB
+      max-parallel: 1  # otherwise flaky problems with aws ELB
       fail-fast: false
       matrix:
         acs_version:
@@ -72,9 +74,17 @@ jobs:
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
-    needs: [ compose, helm ]
-    if: github.event.head_commit.message == '[publish]'
+    if: contains(github.event.head_commit.message, '[publish]')
+    needs:
+      - helm
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        chart:
+          - alfresco-common
+          - alfresco-content-services
     steps:
       - name: Evalute type of release
         id: release
@@ -90,6 +100,6 @@ jobs:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
           github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
-          chart_name: 'alfresco-content-services'
+          chart_name: ${{ matrix.chart }}
           chart_repo: 'Alfresco/acs-deployment'
           release_type: ${{ steps.release.outputs.type }}

@@ -1,3 +1,4 @@
+---
 apiVersion: v2
 description: Alfresco Sync Service
 keywords:
@@ -10,9 +11,10 @@ sources:
 version: 3.0.9
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
 dependencies:
-  - name: alfresco-content-common
-    version: 0.1.0
-    repository: "file://../alfresco-content-common"
   - name: common
-    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+    repository: >-
+      https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     version: 1.x.x
+  - name: alfresco-common
+    version: 0.1.0-SNAPSHOT
+    repository: https://kubernetes-charts.alfresco.com/incubator
