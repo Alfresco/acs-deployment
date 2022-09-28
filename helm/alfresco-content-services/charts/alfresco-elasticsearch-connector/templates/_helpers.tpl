@@ -49,14 +49,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "alfresco-elasticsearch-connector.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "alfresco-elasticsearch-connector.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "alfresco-elasticsearch-connector.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
