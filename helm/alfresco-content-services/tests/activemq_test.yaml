@@ -1,0 +1,35 @@
+# alfresco-common is a library so can only be tested from
+# another chart
+---
+suite: test alfresco-common library
+templates:
+  - secret-message-broker.yaml
+  - deployment-repository.yaml
+  - config-repository.yaml
+  - secret-database.yaml
+  - secret-s3.yaml
+  - config-dev-log4j-properties.yaml
+tests:
+  - it: should render activeMQ embeded secret
+    values:
+      - test-values.yml
+      - externalBroker-values.yml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[3].secretRef.name
+          value: RELEASE-NAME-alfresco-cs-brokersecret
+        template: deployment-repository.yaml
+      - equal:
+          path: data.BROKER_URL
+          value: ZmFpbG92ZXIobmlvOi8vc29tZWJyb2tlcjo2MTYxNik=
+  - it: should render custom secret
+    values:
+      - test-values.yml
+    set:
+      messageBroker:
+        existingSecretName: acs-credentials
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[3].secretRef.name
+          value: acs-credentials
+        template: deployment-repository.yaml
