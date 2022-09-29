@@ -23,6 +23,9 @@ jobs:
     steps:
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.15.0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.15.0
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.15.0
