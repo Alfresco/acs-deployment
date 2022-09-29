@@ -1,5 +1,5 @@
 ---
-name: helm-tests
+name: helm-test
 on:
   pull_request:
     branches:
