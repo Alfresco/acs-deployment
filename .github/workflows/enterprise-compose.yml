@@ -1,0 +1,43 @@
+---
+name: Docker Compose (Enterprise)
+on:
+  pull_request:
+    branches:
+      - 'master'
+    paths:
+      - '! docker-compose/community-docker-compose.yml'
+      - 'docker-compose/**'
+      - 'test/postman/docker-compose/**'
+      - '.github/workflows/enterprise-compose.yml'
+      - '.pre-commit-config.d/compose.yaml'
+  push:
+    branches:
+      - 'master'
+jobs:
+  pre_commit:
+    name: Run pre-commit compose checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
+        with:
+          pre-commit-all-files: false
+          pre-commit-args: -c .pre-commit-config.d/compose.yaml
+  compose_enterprise:
+    name: docker-compose enterprise
+    strategy:
+      fail-fast: true
+      matrix:
+        compose_file:
+          - docker-compose.yml
+          - 7.2.N-docker-compose.yml
+          - 7.1.N-docker-compose.yml
+          - 7.0.N-docker-compose.yml
+          - 6.2.N-docker-compose.yml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
+        with:
+          compose_file_path: docker-compose/${{ matrix.compose_file }}
+          quay_username: ${{ secrets.QUAY_USERNAME }}
+          quay_password: ${{ secrets.QUAY_PASSWORD }}
