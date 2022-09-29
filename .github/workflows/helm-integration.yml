@@ -8,6 +8,10 @@ on:
       - completed
 jobs:
   app_charts:
+    if: >-
+      ! github.event.workflow_run.head_repository.fork
+      && github.event.workflow_run.head_repository.owner.login == 'Alfresco'
+      && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     outputs:
       app_json: ${{ steps.app_charts.outputs.json }}
@@ -34,7 +38,9 @@ jobs:
           echo "::set-output name=json::$APPS"
   helm_integration:
     if: >-
-      github.event.workflow_run.conclusion == 'success'
+      ! github.event.workflow_run.head_repository.fork
+      && github.event.workflow_run.head_repository.owner.login == 'Alfresco'
+      && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     needs:
       - app_charts
@@ -65,6 +71,12 @@ jobs:
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
   applications_outcome:
+    if: >-
+      (
+        ! github.event.workflow_run.head_repository.fork
+        || github.event.workflow_run.head_repository.owner.login == 'Alfresco'
+      )
+      && github.event.workflow_run.conclusion == 'success'
     needs:
       - app_charts
       - helm_integration
