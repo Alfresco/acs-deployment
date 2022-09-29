@@ -1,0 +1,72 @@
+---
+name: helm
+on:
+  pull_request:
+    branches:
+      - 'master'
+  push:
+    branches:
+      - 'master'
+      - pr-*
+jobs:
+  build_vars:
+    runs-on: ubuntu-latest
+    outputs:
+      commit_message: ${{ steps.compute_vars.outputs.commit_message }}
+      branch_name: ${{ steps.compute_vars.outputs.branch_name }}
+      json_charts: ${{ steps.getcharts.outputs.json }}
+    steps:
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.15.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.15.0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.15.0
+      - id: compute_vars
+        name: Evaluate build vars and set to ENV
+        run: |
+          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
+          echo "Commit message is $COMMIT_MESSAGE"
+          echo "::set-output name=commit_message::$COMMIT_MESSAGE"
+          echo "Branch name is $BRANCH_NAME"
+          echo "::set-output name=branch_name::$BRANCH_NAME"
+      - id: getcharts
+        uses: >-
+          ./.github/actions/charts-as-json
+        with:
+          charts-root: helm
+  helm_unit_test:
+    needs:
+      - build_vars
+    strategy:
+      matrix: ${{ fromJSON(needs.build_vars.outputs.json_charts) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.15.0
+        with:
+          chart-dir: helm/${{ matrix.charts.name }}
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@OPSEXP-1746-helm-unittests
+        with:
+          chart-dir: helm/${{ matrix.charts.name }}
+          chart-type: ${{ matrix.charts.type }}
+  libraries_outcome:
+    needs:
+      - build_vars
+      - helm_unit_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare library charts artifact
+        run: |
+          mkdir -p "${{ needs.build_vars.outputs.branch_name }}"
+          echo '${{ toJSON(fromJSON(needs.build_vars.outputs.json_charts)) }}' \
+          | jq 'del(.charts[] | select(.type!="library"))' >\
+          ${{ needs.build_vars.outputs.branch_name }}/${GITHUB_WORKFLOW}.json
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.workflow }}
+          path: ${{ needs.build_vars.outputs.branch_name }}/
