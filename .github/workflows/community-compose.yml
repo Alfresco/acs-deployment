@@ -1,0 +1,31 @@
+---
+name: Docker Compose (Community)
+on:
+  pull_request:
+    branches:
+      - 'master'
+    paths:
+      - 'docker-compose/community-docker-compose.yml'
+      - 'test/postman/docker-compose/**'
+      - '.github/workflows/community-compose.yml'
+      - '.pre-commit-config.d/compose.yaml'
+  push:
+    branches:
+      - 'master'
+jobs:
+  pre_commit:
+    name: Run pre-commit compose checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
+        with:
+          pre-commit-all-files: false
+          pre-commit-args: -c .pre-commit-config.d/compose.yaml
+  compose_community:
+    name: docker-compose community
+    runs-on: ubuntu-latest
+    steps:
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
+        with:
+          compose_file_path: docker-compose/community-docker-compose.yml

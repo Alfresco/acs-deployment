@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.14.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.14.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
+        with:
+          pre-commit-args: -c .pre-commit-config.d/helm.yaml
   helm:
     needs:
       - pre-commit
@@ -50,29 +52,6 @@ jobs:
           release_prefix: acs-${{ steps.version.outputs.acs_version }}
           chart_name: 'alfresco-content-services'
           test_newman: 'true'
-  compose:
-    needs: [pre-commit]
-    strategy:
-      fail-fast: true
-      matrix:
-        compose_file:
-          - docker-compose.yml
-          - 7.2.N-docker-compose.yml
-          - 7.1.N-docker-compose.yml
-          - 7.0.N-docker-compose.yml
-          - 6.2.N-docker-compose.yml
-          - community-docker-compose.yml
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Docker Compose tests
-        if: ${{ ! github.event.pull_request.head.repo.fork || matrix.compose_file == 'community-docker-compose.yml' }}
-        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
-        with:
-          compose_file_path: docker-compose/${{ matrix.compose_file }}
-          docker_username: ${{ secrets.DOCKER_USERNAME }}
-          docker_password: ${{ secrets.DOCKER_PASSWORD }}
-          quay_username: ${{ secrets.QUAY_USERNAME }}
-          quay_password: ${{ secrets.QUAY_PASSWORD }}
   publish:
     if: contains(github.event.head_commit.message, '[publish]')
     needs:
