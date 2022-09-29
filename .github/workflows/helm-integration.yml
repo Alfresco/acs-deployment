@@ -1,5 +1,5 @@
 ---
-name: integration-test
+name: helm-integration
 on:
   workflow_run:
     workflows:
@@ -13,6 +13,8 @@ jobs:
       app_json: ${{ steps.app_charts.outputs.json }}
       ver_json: ${{ steps.app_versions.outputs.json }}
     steps:
+      - name: Debug action
+        uses: hmarr/debug-action@v2.0.1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
