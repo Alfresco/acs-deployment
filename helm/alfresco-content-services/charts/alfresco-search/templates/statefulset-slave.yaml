@@ -1,0 +1,114 @@
+{{ if .Values.replication.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "alfresco-search.fullName" . }}-solr-slave
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "alfresco-search.fullName" . }}-solr-slave
+      chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+      release: {{ .Release.Name }}
+      heritage: {{ .Release.Service }}
+      component: search
+  serviceName: {{ template "alfresco-search.fullName" . }}-solr-slave-headless
+  replicas: {{ .Values.replication.replicaCount }}
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: {{ template "alfresco-search.fullName" . }}-solr-slave
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
+        heritage: {{ .Release.Service }}
+        component: search
+    spec:
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - {{ template "alfresco-search.fullName" . }}-solr-slave
+              weight: 100
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ template "alfresco-search.dockerImage" . }}
+          imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-search.fullName" . }}-solr-slave-configmap
+          {{- if and (eq .Values.global.tracking.auth "secret") (.Values.global.tracking.sharedsecret) }}
+            - secretRef:
+                name: {{ printf "%s-solr-jtoolopts" .Release.Name | quote }}
+          {{- end }}
+          ports:
+            - containerPort: {{ template "alfresco-search.internalPort" . }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.search.data.mountPath }}
+              subPath: {{ .Values.persistence.search.data.subPath }}
+          readinessProbe:
+            httpGet:
+              path: /solr/alfresco/admin/ping
+              port: {{ template "alfresco-search.internalPort" . }}
+              {{- if eq .Values.global.tracking.auth "secret" }}
+              httpHeaders:
+                - name: X-Alfresco-Search-Secret
+                  value: "{{ .Values.global.tracking.sharedsecret }}"
+              {{- end }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /solr/admin/info/system
+              port: {{ template "alfresco-search.internalPort" . }}
+              {{- if eq .Values.global.tracking.auth "secret" }}
+              httpHeaders:
+                - name: X-Alfresco-Search-Secret
+                  value: "{{ .Values.global.tracking.sharedsecret }}"
+              {{- end }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          # sleep to drain any existing connections
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/bash", "-c", "sleep 10"]
+      initContainers:
+        - name: init-fs
+          image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
+          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.initContainer.resources | indent 14 }}
+          # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
+          command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.persistence.search.data.mountPath }}"]
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.search.data.mountPath }}
+              subPath: {{ .Values.persistence.search.data.subPath }}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.replication.persistence.storageClassName}}
+        resources:
+          requests:
+            storage: {{ .Values.replication.persistence.volumeSizeRequest }}
+
+{{ end }}

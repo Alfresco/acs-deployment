@@ -1,8 +1,9 @@
 # Defines the properties required by the Alfresco Search (Solr) App
+{{ if .Values.replication.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+  name: {{ template "alfresco-search.fullName" . }}-solr-slave-configmap
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -12,16 +13,15 @@ data:
   ALFRESCO_SECURE_COMMS: {{ .Values.global.tracking.auth | default "secret" }}
   SOLR_ALFRESCO_HOST: "{{ .Release.Name }}-{{ .Values.repository.host }}-repository"
   SOLR_ALFRESCO_PORT: "{{ .Values.repository.port }}"
-  SOLR_SOLR_HOST: "{{ template "alfresco-search.fullName" . }}-solr"
+  SOLR_SOLR_HOST: "{{ template "alfresco-search.fullName" . }}-solr-slave"
   SOLR_SOLR_PORT: "{{ .Values.service.externalPort }}"
-  {{- if .Values.replication.enabled }}
-  REPLICATION_TYPE: "master"
-  REPLICATION_AFTER: "commit,startup"
-  REPLICATION_CONFIG_FILES: "schema.xml,stopwords.txt"
-  {{- end }}
+  REPLICATION_TYPE: "slave"
+  REPLICATION_MASTER_HOST: "{{ template "alfresco-search.fullName" . }}-solr"
+  REPLICATION_MASTER_PORT: "80"
   # The values for SOLR_CREATE_ALFRESCO_DEFAULTS and SOLR_OPTS, defined in the values.yaml for "search" are set next:
   {{- if .Values.environment }}
   {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
+{{ end }}
