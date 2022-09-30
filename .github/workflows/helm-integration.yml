@@ -30,16 +30,15 @@ jobs:
         env:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}
         run: |
-          APPS=$(jq -nc --argjson json "$JSON" \
+          APPS=$(jq -nc --argjson json '${{ env.JSON }}' \
             '$json | del(.charts[] | select(.type=="library"))')
           echo "::set-output name=json::$APPS"
       - id: app_versions
         env:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}
         run: |
-          VERS=$(jq -nc --argjson json "$JSON" \
-            '$json | del(.charts[] | select(.type=="library")) \
-            | .charts[].values | split("\n") | del(.[] | select(.=="community"))')
+          VERS=$(jq -nc --argjson json '${{ env.JSON }}' \
+            '$json | del(.charts[] | select(.type=="library")) | .charts[].values | split("\n") | del(.[] | select(.=="community"))')
           echo "::set-output name=json::$VERS"
   helm_integration:
     if: >-
