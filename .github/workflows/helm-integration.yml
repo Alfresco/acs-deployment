@@ -27,15 +27,20 @@ jobs:
         with:
           charts-root: helm
       - id: app_charts
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}
         run: |
-          APPS=$(echo '${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}' |\
-          jq -c 'del(.charts[] | select(.type=="library"))')
+          APPS=$(jq -nc --argjson json "$JSON" \
+            '$json | del(.charts[] | select(.type=="library"))')
           echo "::set-output name=json::$APPS"
       - id: app_versions
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}
         run: |
-          APPS=$(echo '${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}' |\
-          jq -c 'del(.charts[] | select(.type=="library")) | .charts[].values | split("\n")')
-          echo "::set-output name=json::$APPS"
+          VERS=$(jq -nc --argjson json "$JSON" \
+            '$json | del(.charts[] | select(.type=="library")) \
+            | .charts[].values | split("\n") | del(.[] | select(.=="community"))')
+          echo "::set-output name=json::$VERS"
   helm_integration:
     if: >-
       ! github.event.workflow_run.head_repository.fork
@@ -53,7 +58,7 @@ jobs:
       - name: compute version as expected by deployment script
         id: values_to_version
         run: |
-          VFILE="${{ matrix.acs_version }}" 
+          VFILE="${{ matrix.acs_version }}"
           if [ "${VFILE}" == 'values.yaml' ]; then V='latest'
           else V=${VFILE%_values.yaml}
           fi
