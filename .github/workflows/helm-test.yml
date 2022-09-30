@@ -22,13 +22,13 @@ jobs:
       json_charts: ${{ steps.getcharts.outputs.json }}
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.15.0
+          Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.16.0
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.15.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.16.0
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.15.0
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.16.0
       - id: compute_vars
         name: Evaluate build vars and set to ENV
         run: |
@@ -54,11 +54,11 @@ jobs:
         with:
           fetch-depth: 0
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.15.0
+          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.16.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@OPSEXP-1746-helm-unittests
+          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@v1.16.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           chart-type: ${{ matrix.charts.type }}
