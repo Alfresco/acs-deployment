@@ -12,8 +12,8 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.15.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.15.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@relese-downgrade-test
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@relese-downgrade-test
         with:
           pre-commit-args: -c .pre-commit-config.d/helm.yaml
   helm:
@@ -38,7 +38,7 @@ jobs:
         run: |
           echo "::set-output name=acs_version::$(echo ${{ matrix.acs_version }} | sed 's/\.//g' | tr '[:upper:]' '[:lower:]')"
       - name: Run helm chart tests
-        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.15.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@relese-downgrade-test
         with:
           acs_version: ${{ matrix.acs_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
@@ -74,7 +74,7 @@ jobs:
             echo "::set-output name=type::incubator"
           fi
       - name: Publish
-        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.15.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@relese-downgrade-test
         with:
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
