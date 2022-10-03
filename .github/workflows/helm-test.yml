@@ -73,7 +73,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Community local deployment
         run: |
-          helm install ./helm/alfresco-content-services/ --values community-integration-test.yml -g
+          helm dep up ./helm/alfresco-content-services
+          helm install ./helm/alfresco-content-services --values community-integration-test.yaml -g
   libraries_outcome:
     needs:
       - build_vars
