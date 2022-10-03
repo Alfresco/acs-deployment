@@ -62,6 +62,17 @@ jobs:
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           chart-type: ${{ matrix.charts.type }}
+  community_charts:
+    needs:
+      - build_vars
+      - helm_unit_test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.4.0
+      - name: Community local deployment
+        run: |
+          helm install ./helm/alfresco-content-services/ --values community-integration-test.yml -g
   libraries_outcome:
     needs:
       - build_vars
