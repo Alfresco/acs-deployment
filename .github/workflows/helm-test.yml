@@ -70,6 +70,7 @@ jobs:
     steps:
       - name: Kind Cluster
         uses: helm/kind-action@v1.4.0
+      - uses: actions/checkout@v3
       - name: Community local deployment
         run: |
           helm install ./helm/alfresco-content-services/ --values community-integration-test.yml -g
