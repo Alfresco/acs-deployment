@@ -1,0 +1,111 @@
+---
+name: helm-community
+on:
+  workflow_run:
+    workflows:
+      - helm-test
+    types:
+      - completed
+  push:
+    branches:
+      - 'master'
+      - pr-*
+jobs:
+  community_charts:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Kind Cluster
+        uses: helm/kind-action@v1.4.0
+      - uses: actions/checkout@v3
+      - name: Community local deployment
+        env:
+          VALUES: |
+            repository:
+              resources:
+                requests:
+                  memory: "1024Mi"
+                limits:
+                  memory: "1560Mi"
+              edition: Community
+              replicaCount: 1
+              image:
+                repository: alfresco/alfresco-content-repository-community
+            share:
+              resources:
+                requests:
+                  memory: "256Mi"
+                limits:
+                  memory: "512Mi"
+              replicaCount: 1
+              image:
+                repository: alfresco/alfresco-share
+            pdfrenderer:
+              resources:
+                requests:
+                  memory: "256Mi"
+                limits:
+                  memory: "512Mi"
+              replicaCount: 1
+            imagemagick:
+              resources:
+                requests:
+                  memory: "256Mi"
+                limits:
+                  memory: "512Mi"
+              replicaCount: 1
+            libreoffice:
+              resources:
+                requests:
+                  memory: "512Mi"
+                limits:
+                  memory: "1024Mi"
+              replicaCount: 1
+            tika:
+              resources:
+                requests:
+                  memory: "256Mi"
+                limits:
+                  memory: "512Mi"
+              replicaCount: 1
+            transformmisc:
+              resources:
+                requests:
+                  memory: "256Mi"
+                limits:
+                  memory: "512Mi"
+              replicaCount: 1
+            alfresco-search:
+              resources:
+                requests:
+                  memory: "512Mi"
+                limits:
+                  memory: "1024Mi"
+              searchServicesImage:
+                repository: alfresco/alfresco-search-services
+            # Disable features
+            alfresco-digital-workspace:
+              enabled: false
+            alfresco-sync-service:
+              syncservice:
+                enabled: false
+            postgresql-syncservice:
+              enabled: false
+            ai:
+              enabled: false
+            s3connector:
+              enabled: false
+            email:
+              server:
+                enabled: false
+              inbound:
+                enabled: false
+            imap:
+              server:
+                enabled: false
+        run: |
+          helm dep up ./helm/alfresco-content-services
+          helm install ./helm/alfresco-content-services -g \
+            --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
+            --wait --timeout 10m0s --values - < <(echo "$VALUES")
+          kubectl get all

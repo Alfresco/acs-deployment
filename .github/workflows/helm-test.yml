@@ -62,23 +62,6 @@ jobs:
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           chart-type: ${{ matrix.charts.type }}
-  community_charts:
-    needs:
-      - build_vars
-      - helm_unit_test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Kind Cluster
-        uses: helm/kind-action@v1.4.0
-      - uses: actions/checkout@v3
-      - name: Community local deployment
-        run: |
-          helm dep up ./helm/alfresco-content-services
-          helm install ./helm/alfresco-content-services -g \
-            --values community-integration-test.yaml \
-            --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
-            --wait --timeout 10m0s
-            kubectl get all
   libraries_outcome:
     needs:
       - build_vars
