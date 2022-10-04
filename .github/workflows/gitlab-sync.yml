@@ -3,6 +3,7 @@ name: gitlab-sync
 on: 
   - push
   - delete
+  - workflow_dispatch
 
 jobs:
   sync:
