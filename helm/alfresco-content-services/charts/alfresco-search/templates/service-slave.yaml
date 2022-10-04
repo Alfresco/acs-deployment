@@ -1,0 +1,21 @@
+# Defines the service for the Alfresco Search (Solr) App slaves
+{{ if .Values.replication.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-search.fullName" . }}-solr-slave
+  labels:
+    app: {{ template "alfresco-search.fullName" . }}-solr-slave
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.externalPort }}
+      targetPort: {{ template "alfresco-search.internalPort" . }}
+      name: {{ .Values.service.name }}
+  selector:
+    app: {{ template "alfresco-search.fullName" . }}-solr-slave
+    release: {{ .Release.Name }}
+{{ end }}

@@ -127,3 +127,12 @@ global:
 #         operator: In
 #         values:
 #         - "true"
+
+# -- Define replication settings for User-Managed Index Replication
+# https://solr.apache.org/guide/solr/latest/deployment-guide/user-managed-index-replication.html
+replication:
+  enabled: false
+  replicaCount: 2
+  persistence:
+    volumeSizeRequest: 10Gi
+    storageClassName: "default"

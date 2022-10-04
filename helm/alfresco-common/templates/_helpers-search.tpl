@@ -10,7 +10,11 @@ Alfresco Search2 Host
 */}}
 {{- define "alfresco-search.host" -}}
 {{- if index $.Values "alfresco-search" "enabled" -}}
+  {{- if index $.Values "alfresco-search" "replication" "enabled" -}}
+  {{ printf "%s-solr-slave" (include "alfresco-search.fullName" .) -}}
+  {{- else -}}
   {{ printf "%s-solr" (include "alfresco-search.fullName" .) -}}
+  {{- end -}}
 {{- else -}}
   {{ index $.Values "alfresco-search" "external" "host" | default "localhost" -}}
 {{- end -}}
