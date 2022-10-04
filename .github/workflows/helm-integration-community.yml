@@ -6,18 +6,22 @@ on:
       - helm-test
     types:
       - completed
-  push:
-    branches:
-      - 'master'
-      - pr-*
 jobs:
   community_charts:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
     steps:
+      - uses: actions/checkout@v3
       - name: Kind Cluster
         uses: helm/kind-action@v1.4.0
-      - uses: actions/checkout@v3
+        with:
+          config: test/kind-ingress-enabled-cluster.yaml
+      - name: Install NGINX ingress
+        env:
+          NGINX_MANIFEST: |
+            https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+        run: |
+          kubectl apply -f ${{ env.NGINX_MANIFEST }}
       - name: Community local deployment
         env:
           VALUES: |
@@ -105,7 +109,23 @@ jobs:
                 enabled: false
         run: |
           helm dep up ./helm/alfresco-content-services
-          helm install ./helm/alfresco-content-services -g \
+          helm install acs ./helm/alfresco-content-services \
             --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
-            --wait --timeout 10m0s --values - < <(echo "$VALUES")
+            --set externalPort="80" --set externalProtocol="http" \
+            --set externalHost="localhost" --wait --timeout 10m0s --values - \
+            < <(echo "$VALUES")
+      - name: Spit cluster status
+        if: always()
+        run: |
           kubectl get all
+          kubectl -n ingress-nginx logs services/ingress-nginx-controller
+      - name: run Postman tests
+        uses: matt-ball/newman-action@v1.0.4
+        with:
+          collection: test/postman/helm/acs-validate-volume-collection.json
+          insecure: true
+          globalVar: >-
+            [
+              {"key": "protocol", "value": "http"},
+              {"key": "url", "value": "localhost"}
+            ]
