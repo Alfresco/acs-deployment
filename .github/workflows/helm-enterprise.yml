@@ -1,17 +1,20 @@
 ---
-name: helm-integration
+name: helm-enterprise
 on:
-  workflow_run:
-    workflows:
-      - helm-test
-    types:
-      - completed
+  pull_request:
+    branches:
+      - 'master'
+    paths:
+      - 'helm/**'
+      - 'test/postman/helm/**'
+      - '.github/workflows/helm*'
+      - '.pre-commit-config.d/helm.yaml'
+  push:
+    branches:
+      - 'master'
+      - pr-*
 jobs:
   app_charts:
-    if: >-
-      ! github.event.workflow_run.head_repository.fork
-      && github.event.workflow_run.head_repository.owner.login == 'Alfresco'
-      && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     outputs:
       app_json: ${{ steps.app_charts.outputs.json }}
@@ -42,10 +45,6 @@ jobs:
           echo "::set-output name=json::$VERS"
   helm_integration:
     runs-on: ubuntu-latest
-    if: >-
-      ! github.event.workflow_run.head_repository.fork
-      && github.event.workflow_run.head_repository.owner.login == 'Alfresco'
-      && github.event.workflow_run.conclusion == 'success'
     needs:
       - app_charts
     strategy:
@@ -90,3 +89,48 @@ jobs:
         with:
           name: ${{ github.workflow }}
           path: ${{ github.ref_name }}/
+  prepare_releases:
+    if: >-
+      contains(github.event.workflow_run.head_commit.message,'[publish]') ||
+      (
+        contains(github.event.workflow_run.head_commit.message,'[release]')
+        && github.ref_name == github.event.repository.default_branch
+      )
+    runs-on: ubuntu-latest
+    outputs:
+      releases: ${{ steps.charts_matrix.outputs.charts }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: build charts matrix
+        id: charts_matrix
+        uses: ./.github/actions/matrix-from-artifact
+        with:
+          artifact: ${{ github.event.workflow.name }}
+  publish:
+    if: >-
+      contains(github.event.workflow_run.head_commit.message,'[publish]') ||
+      (
+        contains(github.event.workflow_run.head_commit.message,'[release]')
+        && github.ref_name == github.event.repository.default_branch
+      )
+    runs-on: ubuntu-latest
+    needs:
+      - prepare_releases
+    strategy:
+      matrix: ${{ fromJSON(needs.prepare_releases.outputs.releases) }}
+    outputs:
+      releases: ${{ steps.read_releases.outputs.json }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: publish chart
+        uses: >-
+          ./.github/actions/publish-charts
+        with:
+          chart: ${{ matrix.charts.name }}
+          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
+          github_email: ${{ secrets.BOT_GITHUB_EMAIL }}

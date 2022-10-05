@@ -19,7 +19,8 @@ jobs:
     outputs:
       commit_message: ${{ steps.compute_vars.outputs.commit_message }}
       branch_name: ${{ steps.compute_vars.outputs.branch_name }}
-      json_charts: ${{ steps.getcharts.outputs.json }}
+      app_charts: ${{ steps.getcharts.outputs.app }}
+      lib_charts: ${{ steps.getcharts.outputs.lib }}
     steps:
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.16.0
