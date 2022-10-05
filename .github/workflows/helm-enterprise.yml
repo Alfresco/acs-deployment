@@ -17,11 +17,10 @@ jobs:
   app_charts:
     runs-on: ubuntu-latest
     outputs:
-      app_json: ${{ steps.app_charts.outputs.json }}
+      app_json: ${{ steps.getcharts.outputs.app }}
       ver_json: ${{ steps.app_versions.outputs.json }}
+      chart_names: ${{ steps.chart_names.outputs.json}}
     steps:
-      - name: Debug action
-        uses: hmarr/debug-action@v2.0.1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -29,20 +28,23 @@ jobs:
         uses: ./.github/actions/charts-as-json
         with:
           charts-root: helm
-      - id: app_charts
-        env:
-          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}
-        run: |
-          APPS=$(jq -nc --argjson json '${{ env.JSON }}' \
-            '$json | del(.charts[] | select(.type=="library"))')
-          echo "::set-output name=json::$APPS"
       - id: app_versions
         env:
-          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.json)) }}
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.app)) }}
+          JQ_FILTER: >-
+            $json | .charts[].values | split("\n")
+            | del(.[] | select(.=="community_values.yaml"))
         run: |
-          VERS=$(jq -nc --argjson json '${{ env.JSON }}' \
-            '$json | del(.charts[] | select(.type=="library")) | .charts[].values | split("\n") | del(.[] | select(.=="community_values.yaml"))')
+          VERS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
           echo "::set-output name=json::$VERS"
+      - id: chart_names
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
+          JQ_FILTER: >-
+            $json | [.charts[].name]
+        run: |
+          CHARTS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
+          echo "::set-output name=json::$CHARTS"
   helm_integration:
     runs-on: ubuntu-latest
     needs:
@@ -62,7 +64,7 @@ jobs:
           fi
           echo "::set-output name=app_version::$V"
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1545-script-fix
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.16.0
         with:
           acs_version: ${{ steps.values_to_version.outputs.app_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
@@ -73,41 +75,6 @@ jobs:
           quay_password: ${{ secrets.QUAY_PASSWORD }}
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
-  applications_outcome:
-    needs:
-      - app_charts
-      - helm_integration
-    runs-on: ubuntu-latest
-    steps:
-      - name: Prepare library charts artifact
-        run: |
-          mkdir -p "${{ github.ref_name }}"
-          echo '${{ toJSON(fromJSON(needs.app_charts.outputs.app_json)) }}' |\
-          jq 'del(.charts[] | select(.type=="library"))' >\
-          ${{ github.ref_name }}/${GITHUB_WORKFLOW}.json
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ github.workflow }}
-          path: ${{ github.ref_name }}/
-  prepare_releases:
-    if: >-
-      contains(github.event.workflow_run.head_commit.message,'[publish]') ||
-      (
-        contains(github.event.workflow_run.head_commit.message,'[release]')
-        && github.ref_name == github.event.repository.default_branch
-      )
-    runs-on: ubuntu-latest
-    outputs:
-      releases: ${{ steps.charts_matrix.outputs.charts }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: build charts matrix
-        id: charts_matrix
-        uses: ./.github/actions/matrix-from-artifact
-        with:
-          artifact: ${{ github.event.workflow.name }}
   publish:
     if: >-
       contains(github.event.workflow_run.head_commit.message,'[publish]') ||
@@ -117,9 +84,11 @@ jobs:
       )
     runs-on: ubuntu-latest
     needs:
-      - prepare_releases
+      - app_charts
+      - helm_integration
     strategy:
-      matrix: ${{ fromJSON(needs.prepare_releases.outputs.releases) }}
+      matrix:
+        charts: ${{ fromJSON(needs.app_charts.outputs.chart_names) }}
     outputs:
       releases: ${{ steps.read_releases.outputs.json }}
     steps:
@@ -128,9 +97,9 @@ jobs:
           fetch-depth: 0
       - name: publish chart
         uses: >-
-          ./.github/actions/publish-charts
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.16.0
         with:
-          chart: ${{ matrix.charts.name }}
+          chart: ${{ matrix.charts }}
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
           github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
