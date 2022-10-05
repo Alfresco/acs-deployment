@@ -40,8 +40,7 @@ jobs:
       - id: chart_names
         env:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
-          JQ_FILTER: >-
-            $json | [.charts[].name]
+          JQ_FILTER: $json | [.charts[].name]
         run: |
           CHARTS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
           echo "::set-output name=json::$CHARTS"
@@ -66,6 +65,9 @@ jobs:
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.16.0
         with:
+          test_newman: 'true'
+          chart_name: alfresco-content-services
+          release_prefix: acs-${{ steps.values_to_version.outputs.app_version }}
           acs_version: ${{ steps.values_to_version.outputs.app_version }}
           aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
