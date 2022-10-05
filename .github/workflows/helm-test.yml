@@ -100,103 +100,18 @@ jobs:
           helm package --dependency-update --destination helm/alfresco-content-services/charts helm/alfresco-common
           tar zxf helm/alfresco-content-services/charts/alfresco-common-0.1.0-SNAPSHOT.tgz -C helm/alfresco-content-services/charts/
       - name: Community local deployment
-        env:
-          VALUES: |
-            repository:
-              resources:
-                requests:
-                  memory: "1024Mi"
-                limits:
-                  memory: "1560Mi"
-              edition: Community
-              replicaCount: 1
-              image:
-                repository: alfresco/alfresco-content-repository-community
-            share:
-              resources:
-                requests:
-                  memory: "256Mi"
-                limits:
-                  memory: "512Mi"
-              replicaCount: 1
-              image:
-                repository: alfresco/alfresco-share
-            pdfrenderer:
-              resources:
-                requests:
-                  memory: "256Mi"
-                limits:
-                  memory: "512Mi"
-              replicaCount: 1
-            imagemagick:
-              resources:
-                requests:
-                  memory: "256Mi"
-                limits:
-                  memory: "512Mi"
-              replicaCount: 1
-            libreoffice:
-              resources:
-                requests:
-                  memory: "512Mi"
-                limits:
-                  memory: "1024Mi"
-              replicaCount: 1
-            tika:
-              resources:
-                requests:
-                  memory: "256Mi"
-                limits:
-                  memory: "512Mi"
-              replicaCount: 1
-            transformmisc:
-              resources:
-                requests:
-                  memory: "256Mi"
-                limits:
-                  memory: "512Mi"
-              replicaCount: 1
-            alfresco-search:
-              resources:
-                requests:
-                  memory: "512Mi"
-                limits:
-                  memory: "1024Mi"
-              searchServicesImage:
-                repository: alfresco/alfresco-search-services
-            # Disable features
-            alfresco-digital-workspace:
-              enabled: false
-            alfresco-sync-service:
-              syncservice:
-                enabled: false
-            postgresql-syncservice:
-              enabled: false
-            ai:
-              enabled: false
-            s3connector:
-              enabled: false
-            email:
-              server:
-                enabled: false
-              inbound:
-                enabled: false
-            imap:
-              server:
-                enabled: false
         run: |
           helm dep up ./helm/alfresco-content-services
           helm install acs ./helm/alfresco-content-services \
             --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
             --set externalPort="80" --set externalProtocol="http" \
             --set externalHost="localhost" --wait --timeout 10m0s --values - \
-            < <(echo "$VALUES")
+            test/community-integration-test-values.yaml
       - name: Spit cluster status
         if: always()
         run: |
-          helm ls --all-namespaces --all
-          kubectl get all
-          kubectl -n ingress-nginx logs services/ingress-nginx-controller
+          helm ls --all-namespaces
+          kubectl get all --all-namespaces
       - name: run Postman tests
         uses: matt-ball/newman-action@v1.0.4
         with:
