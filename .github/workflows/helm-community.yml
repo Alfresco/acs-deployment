@@ -85,7 +85,7 @@ jobs:
         uses: ./.github/actions/use-local-deps
         with:
           charts-root: helm
-          chart-name: ${{ matrix.name }}
+          chart-name: alfresco-content-services
       - name: Community local deployment
         run: |
           helm dep up ./helm/alfresco-content-services
