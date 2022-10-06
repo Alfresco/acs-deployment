@@ -87,13 +87,21 @@ jobs:
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
-      - name: run Postman tests (retry)
-        uses: Wandalen/wretry.action@v1.0.35
+          echo 'waiting ACS to warm up'
+          sleep 60
+      - name: run Postman tests
+        uses: matt-ball/newman-action@v1.0.4
         with:
-          attempt_limit: 3
-          attempt_delay: 30000
-          action: matt-ball/newman-action@v1.0.4
-          with: |
-            globalVar: [{"key":"protocol","value":"http"},{"key":"url","value":"localhost"}]
-            collection: test/postman/helm/acs-test-helm-collection.json
-            insecure: true
+          globalVar: >-
+            [
+              {
+                "key":"protocol",
+                "value":"http"
+              },
+              {
+                "key":"url",
+                "value":"localhost"
+              }
+            ]
+          collection: test/postman/helm/acs-test-helm-collection.json
+          insecure: true
