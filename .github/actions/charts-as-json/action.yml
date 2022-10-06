@@ -32,7 +32,7 @@ runs:
           VALUES_FILES=$(ls -r ${{ inputs.charts-root }}/"${CHART}"/*values.yaml || true)
           VALUES=${VALUES_FILES//${CHART_ROOT}/}
           yq e "$YQ_FILTER" "${{ inputs.charts-root }}/${CHART}/Chart.yaml" | \
-          jq -c --arg v "${VALUES:-[]}" '.values=$v' > /tmp/outputs_${CHART}.json
+          jq -c --arg v "${VALUES}" '.values=($v | split("\n"))' > /tmp/outputs_${CHART}.json
         done
         echo "::set-output name=app::$(jq -sc '{charts:.} | del(.charts[] | select(.type=="library"))' /tmp/outputs_*.json)"
         echo "::set-output name=lib::$(jq -sc '{charts:.} | del(.charts[] | select(.type!="library"))' /tmp/outputs_*.json)"
