@@ -21,6 +21,8 @@ jobs:
       ver_json: ${{ steps.app_versions.outputs.json }}
       chart_names: ${{ steps.chart_names.outputs.json}}
     steps:
+      - name: Debug action
+        uses: hmarr/debug-action@v2.0.1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -49,13 +51,16 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - app_charts
-    name: Helm install ${{ matrix.name }} ${{ matrix.values }} 
+    name: Helm ${{ matrix.name }} ${{ matrix.values }} 
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
         include: ${{ fromJSON(needs.app_charts.outputs.ver_json) }}
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: compute version as expected by deployment script
         id: values_to_version
         run: |
@@ -68,6 +73,11 @@ jobs:
           echo "Release prefix to $SANITIZED_V"
           echo "::set-output name=app_version::$V"
           echo "::set-output name=app_prefix::${SANITIZED_V}"
+      - name: Use local dependencies
+        uses: ./.github/actions/use-local-deps
+        with:
+          charts-root: helm
+          chart-name: ${{ matrix.name }}
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.16.0
         with:
