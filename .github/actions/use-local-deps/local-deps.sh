@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 # Compute charts dependencies and force local dependencies resolution
 CHARTS_ROOT=$(dirname $1)
 CHART_NAME=$(basename $1)

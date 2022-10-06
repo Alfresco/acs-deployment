@@ -16,6 +16,12 @@ on:
 jobs:
   app_charts:
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push'
+      || (
+        ! github.event.pull_request.head.repo.fork
+        && github.event.pull_request.head.user.login == 'Alfresco'
+      )
     outputs:
       app_json: ${{ steps.getcharts.outputs.app }}
       ver_json: ${{ steps.app_versions.outputs.json }}
@@ -68,7 +74,7 @@ jobs:
           if [ "${VFILE}" == 'values.yaml' ]; then V='latest'
           else V=${VFILE%_values.yaml}
           fi
-          SANITIZED_V=$(echo ${{ matrix.name }} | sed -r 's/[[:punct:]]?(.)[[:alnum:]]*/\L\1/g')-${V//./}
+          SANITIZED_V=$(echo ${{ matrix.name }} | sed -r 's/[[:punct:]]?(.)[[:alnum:]]*/\1/g')-${V//./}
           SANITIZED_V=${SANITIZED_V,,}
           echo "Release prefix to $SANITIZED_V"
           echo "::set-output name=app_version::$V"
@@ -108,9 +114,14 @@ jobs:
     strategy:
       matrix:
         charts: ${{ fromJSON(needs.app_charts.outputs.chart_names) }}
-    outputs:
-      releases: ${{ steps.read_releases.outputs.json }}
     steps:
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.16.0
+      - name: set release type
+        run: |
+          [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" && "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]] \
+          && RELEASE_TYPE='stable' || RELEASE_TYPE='incubator'
+          echo "RELEASE_TYPE=$RELEASE_TYPE" >> $GITHUB_ENV
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -119,6 +130,7 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.16.0
         with:
           chart: ${{ matrix.charts }}
+          release_type: ${{ env.RELEASE_TYPE }}
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
           github_email: ${{ secrets.BOT_GITHUB_EMAIL }}

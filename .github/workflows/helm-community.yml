@@ -17,8 +17,6 @@ jobs:
   build_vars:
     runs-on: ubuntu-latest
     outputs:
-      commit_message: ${{ steps.compute_vars.outputs.commit_message }}
-      branch_name: ${{ steps.compute_vars.outputs.branch_name }}
       app_charts: ${{ steps.getcharts.outputs.app }}
       lib_charts: ${{ steps.getcharts.outputs.lib }}
     steps:
@@ -30,16 +28,6 @@ jobs:
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.16.0
         with:
           pre-commit-args: -c .pre-commit-config.d/helm.yaml
-      - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.16.0
-      - id: compute_vars
-        name: Evaluate build vars and set to ENV
-        run: |
-          BRANCH_NAME=${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}
-          echo "Commit message is $COMMIT_MESSAGE"
-          echo "::set-output name=commit_message::$COMMIT_MESSAGE"
-          echo "Branch name is $BRANCH_NAME"
-          echo "::set-output name=branch_name::$BRANCH_NAME"
       - id: getcharts
         uses: >-
           ./.github/actions/charts-as-json

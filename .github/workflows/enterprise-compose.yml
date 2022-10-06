@@ -37,8 +37,8 @@ jobs:
     if: >-
       github.event_name == 'push'
       || (
-        ! github.event.workflow_run.head_repository.fork
-        && github.event.workflow_run.head_repository.owner.login == 'Alfresco'
+        ! github.event.pull_request.head.repo.fork
+        && github.event.pull_request.head.user.login == 'Alfresco'
       )
     steps:
       - uses: >-
