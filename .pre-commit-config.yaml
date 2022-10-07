@@ -29,5 +29,4 @@ repos:
     rev: 2.0.1211
     hooks:
     - id: checkov
-      args: [--config, .checkov/config.yml]
       files: \.yaml$

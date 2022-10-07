@@ -8,7 +8,7 @@ on:
       - 'docker-compose/community-docker-compose.yml'
       - 'test/postman/docker-compose/**'
       - '.github/workflows/community-compose.yml'
-      - '.pre-commit-config.d/compose.yaml'
+      - '.pre-commit-config.d/docker.yaml'
   push:
     branches:
       - 'master'
@@ -20,7 +20,7 @@ jobs:
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
         with:
           pre-commit-all-files: false
-          pre-commit-args: -c .pre-commit-config.d/compose.yaml
+          pre-commit-args: -c .pre-commit-config.d/docker.yaml
   compose_community:
     name: docker-compose community
     runs-on: ubuntu-latest
