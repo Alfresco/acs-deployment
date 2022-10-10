@@ -1,0 +1,73 @@
+# alfresco-common is a library so can only be tested from
+# another chart
+---
+suite: test search related rendering
+templates:
+  - config-repository.yaml
+tests:
+  - it: should configure ACS without any search subsystem
+    values: &testvalues
+      - test-values.yml
+    set:
+      alfresco-search:
+        enabled: false
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dindex.subsystem.name=none($|\ )
+  - it: should configure ACS with external Solr
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+        external:
+          host: somehostwheresolrservesrequests
+          port: 8983
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dindex.subsystem.name=solr6($|\ )
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dsolr.host=somehostwheresolrservesrequests($|\ )
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dsolr.port=8983($|\ )
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dsolr.secureComms=secret($|\ )
+  - it: should configure ACS with external ElasticSearch
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+      alfresco-elasticsearch-connector:
+        enabled: true
+        elasticsearch:
+          host: some.opensearch.endpoint
+          port: 443
+          protocol: https
+          user: user
+          password: pass
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dindex.subsystem.name=elasticsearch($|\ )
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Delasticsearch.host=some.opensearch.endpoint($|\ )
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Delasticsearch.secureComms=https($|\ )
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Delasticsearch.user=user($|\ )

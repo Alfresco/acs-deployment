@@ -39,14 +39,20 @@ data:
       -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
       -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
       -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
-      {{- if or (index .Values "alfresco-search" "enabled") (index .Values "alfresco-search" "external" "host") }}
+      {{- if and 
+        (not (index .Values "alfresco-search" "enabled"))
+        (not (index .Values "alfresco-elasticsearch-connector" "enabled"))
+        (not (index .Values "alfresco-search" "external" "host"))
+      }}
+      -Dindex.subsystem.name=none
+      {{- else if or (index .Values "alfresco-search" "enabled") (index .Values "alfresco-search" "external" "host") }}
       -Dindex.subsystem.name=solr6
       -Dsolr.base.url={{ template "alfresco-search.baseurl" . }}
       -Dsolr.host={{ template "alfresco-search.host" . }}
       -Dsolr.port={{ template "alfresco-search.port" . }}
       -Dsolr.secureComms={{ .Values.global.tracking.auth | default "secret" }}
       {{- else if index .Values "alfresco-elasticsearch-connector" "enabled" }}
-      {{ include "repo.elasticsearch.config" . | nindent 6 }}
+      {{- include "repo.elasticsearch.config" . | nindent 6 }}
       {{- end }}
       {{- if eq .Values.repository.edition "Enterprise" }}
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
