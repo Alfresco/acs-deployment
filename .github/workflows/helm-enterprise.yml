@@ -1,0 +1,136 @@
+---
+name: helm-enterprise
+on:
+  pull_request:
+    branches:
+      - 'master'
+    paths:
+      - 'helm/**'
+      - 'test/postman/helm/**'
+      - '.github/workflows/helm*'
+      - '.pre-commit-config.d/helm.yaml'
+  push:
+    branches:
+      - 'master'
+      - pr-*
+jobs:
+  app_charts:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push'
+      || (
+        ! github.event.pull_request.head.repo.fork
+        && github.event.pull_request.head.user.login == 'Alfresco'
+      )
+    outputs:
+      app_json: ${{ steps.getcharts.outputs.app }}
+      ver_json: ${{ steps.app_versions.outputs.json }}
+      chart_names: ${{ steps.chart_names.outputs.json}}
+    steps:
+      - name: Debug action
+        uses: hmarr/debug-action@v2.0.1
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: getcharts
+        uses: ./.github/actions/charts-as-json
+        with:
+          charts-root: helm
+      - id: app_versions
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
+          JQ_FILTER: >-
+            [inputs | .charts[] | {name: .name, values: .values[]}]
+            | del(.[] | select(.values=="community_values.yaml"))
+        run: |
+          echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
+          VERS=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
+          echo "::set-output name=json::$VERS"
+      - id: chart_names
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
+          JQ_FILTER: $json | [.charts[].name]
+        run: |
+          CHARTS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
+          echo "::set-output name=json::$CHARTS"
+  helm_integration:
+    runs-on: ubuntu-latest
+    needs:
+      - app_charts
+    name: Helm ${{ matrix.name }} ${{ matrix.values }} 
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include: ${{ fromJSON(needs.app_charts.outputs.ver_json) }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: compute version as expected by deployment script
+        id: values_to_version
+        run: |
+          VFILE="${{ matrix.values }}"
+          if [ "${VFILE}" == 'values.yaml' ]; then V='latest'
+          else V=${VFILE%_values.yaml}
+          fi
+          SANITIZED_V=$(echo ${{ matrix.name }} | sed -r 's/[[:punct:]]?(.)[[:alnum:]]*/\1/g')-${V//./}
+          SANITIZED_V=${SANITIZED_V,,}
+          echo "Release prefix to $SANITIZED_V"
+          echo "::set-output name=app_version::$V"
+          echo "::set-output name=app_prefix::${SANITIZED_V}"
+      - name: Use local dependencies
+        uses: ./.github/actions/use-local-deps
+        with:
+          charts-root: helm
+          chart-name: ${{ matrix.name }}
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@2098cdd3d3cf0610336e94da099f2f106366d511
+        with:
+          skip_checkout: 'true'
+          test_newman: 'true'
+          chart_name: ${{ matrix.name }}
+          release_prefix: ${{ steps.values_to_version.outputs.app_prefix }}
+          acs_version: ${{ steps.values_to_version.outputs.app_version }}
+          aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
+          docker_username: ${{ secrets.DOCKER_USERNAME }}
+          docker_password: ${{ secrets.DOCKER_PASSWORD }}
+          quay_username: ${{ secrets.QUAY_USERNAME }}
+          quay_password: ${{ secrets.QUAY_PASSWORD }}
+          acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
+          aws_sg: ${{ secrets.AWS_SG }}
+  publish:
+    if: >-
+      contains(github.event.workflow_run.head_commit.message,'[publish]') ||
+      (
+        contains(github.event.workflow_run.head_commit.message,'[release]')
+        && github.ref_name == github.event.repository.default_branch
+      )
+    runs-on: ubuntu-latest
+    needs:
+      - app_charts
+      - helm_integration
+    strategy:
+      matrix:
+        charts: ${{ fromJSON(needs.app_charts.outputs.chart_names) }}
+    steps:
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.17.0
+      - name: set release type
+        run: |
+          [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" && "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]] \
+          && RELEASE_TYPE='stable' || RELEASE_TYPE='incubator'
+          echo "RELEASE_TYPE=$RELEASE_TYPE" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: publish chart
+        uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.17.0
+        with:
+          chart: ${{ matrix.charts }}
+          release_type: ${{ env.RELEASE_TYPE }}
+          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
+          github_email: ${{ secrets.BOT_GITHUB_EMAIL }}

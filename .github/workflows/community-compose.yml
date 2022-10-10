@@ -17,7 +17,7 @@ jobs:
     name: Run pre-commit compose checks
     runs-on: ubuntu-latest
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.17.0
         with:
           pre-commit-all-files: false
           pre-commit-args: -c .pre-commit-config.d/docker.yaml
@@ -26,6 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.17.0
         with:
           compose_file_path: docker-compose/community-docker-compose.yml

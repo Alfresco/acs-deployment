@@ -1,0 +1,40 @@
+---
+name: charts_json
+inputs:
+  charts-root:
+    required: true
+    description: root directory containing the charts
+    type: string
+outputs:
+  all:
+    description: matrix object charts
+    value: ${{ steps.getcharts.outputs.all }}
+  app:
+    description: matrix object apps
+    value: ${{ steps.getcharts.outputs.app }}
+  lib:
+    description: matrix object libs
+    value: ${{ steps.getcharts.outputs.lib }}
+description: Return as JSON string with charts details
+runs:
+  using: composite
+  steps:
+    - name: Debug action
+      uses: hmarr/debug-action@v2.0.1
+    - id: getcharts
+      name: Get main Charts and parse manifest
+      env:
+        YQ_FILTER: >
+          {"name": .name,"type": .type, "version": .version} | to_json
+      run: |
+        for CHART_ROOT in ${{ inputs.charts-root }}/*/; do
+          CHART=$(basename $CHART_ROOT)
+          VALUES_FILES=$(ls -r ${{ inputs.charts-root }}/"${CHART}"/*values.yaml || true)
+          VALUES=${VALUES_FILES//${CHART_ROOT}/}
+          yq e "$YQ_FILTER" "${{ inputs.charts-root }}/${CHART}/Chart.yaml" | \
+          jq -c --arg v "${VALUES}" '.values=($v | split("\n"))' > /tmp/outputs_${CHART}.json
+        done
+        echo "::set-output name=app::$(jq -sc '{charts:.} | del(.charts[] | select(.type=="library"))' /tmp/outputs_*.json)"
+        echo "::set-output name=lib::$(jq -sc '{charts:.} | del(.charts[] | select(.type!="library"))' /tmp/outputs_*.json)"
+        echo "::set-output name=all::$(jq -sc '{charts:.}' /tmp/outputs_*.json)"
+      shell: bash
