@@ -175,7 +175,7 @@ alfresco-elasticsearch-connector:
   enabled: true
 global:
   elasticsearch:
-    host: YOUR-DOMAIN-ENDPOINT
+    host: YOUR-DOMAIN-HOSTNAME
     port: 443
     protocol: https
     user: YOUR-DOMAIN-MASTER-USERNAME
@@ -235,7 +235,7 @@ If you want to use Search Enterprise with Amazon Opensearch, add:
 ```bash
 --set alfresco-search.enabled=false \
 --set alfresco-elasticsearch-connector.enabled=true \
---set global.elasticsearch.host="YOUR-DOMAIN-ENDPOINT" \
+--set global.elasticsearch.host="YOUR-DOMAIN-HOSTNAME" \
 --set global.elasticsearch.port=443 \
 --set global.elasticsearch.protocol=https \
 --set global.elasticsearch.user="YOUR-DOMAIN-MASTER-USERNAME" \
