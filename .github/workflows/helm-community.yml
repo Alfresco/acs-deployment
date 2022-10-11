@@ -1,5 +1,5 @@
 ---
-name: helm-community
+name: Helm (Community)
 on:
   pull_request:
     branches:

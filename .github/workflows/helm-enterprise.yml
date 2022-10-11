@@ -1,5 +1,5 @@
 ---
-name: helm-enterprise
+name: Helm (Enterprise)
 on:
   pull_request:
     branches:
