@@ -66,7 +66,7 @@ Alfresco Sync Service
 | syncservice.image.internalPort | int | `9090` |  |
 | syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | syncservice.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| syncservice.image.tag | string | `"3.7.3-A1"` |  |
+| syncservice.image.tag | string | `"3.8.0-A1"` |  |
 | syncservice.ingress.path | string | `"/syncservice"` |  |
 | syncservice.livenessProbe.initialDelaySeconds | int | `150` |  |
 | syncservice.livenessProbe.periodSeconds | int | `30` |  |
