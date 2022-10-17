@@ -27,8 +27,6 @@ jobs:
       ver_json: ${{ steps.app_versions.outputs.json }}
       chart_names: ${{ steps.chart_names.outputs.json}}
     steps:
-      - name: Debug action
-        uses: hmarr/debug-action@v2.0.1
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -60,7 +58,7 @@ jobs:
     name: Helm ${{ matrix.name }} ${{ matrix.values }} 
     strategy:
       fail-fast: false
-      max-parallel: 1
+      max-parallel: 2
       matrix:
         include: ${{ fromJSON(needs.app_charts.outputs.ver_json) }}
     steps:
@@ -85,7 +83,7 @@ jobs:
           charts-root: helm
           chart-name: ${{ matrix.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@2098cdd3d3cf0610336e94da099f2f106366d511
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@38d9090e74640744cf93b88dfcfb5f0db5c16a09
         with:
           skip_checkout: 'true'
           test_newman: 'true'
