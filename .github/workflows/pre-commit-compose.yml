@@ -12,11 +12,13 @@ on:
     branches:
       - "master"
 
+env:
+  # https://pre-commit.com/#temporarily-disabling-hooks
+  SKIP: helm-docs,helm-deps,helm-lint,checkov
+
 jobs:
   pre_commit:
     name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.17.0
-        with:
-          pre-commit-args: --exclude="helm-docs,helm-deps,helm-lint,checkov"
