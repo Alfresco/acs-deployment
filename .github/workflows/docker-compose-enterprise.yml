@@ -9,19 +9,10 @@ on:
       - 'docker-compose/**'
       - 'test/postman/docker-compose/**'
       - '.github/workflows/enterprise-compose.yml'
-      - '.pre-commit-config.d/docker.yaml'
   push:
     branches:
       - 'master'
 jobs:
-  pre_commit:
-    name: Run pre-commit compose checks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.17.0
-        with:
-          pre-commit-all-files: false
-          pre-commit-args: -c .pre-commit-config.d/docker.yaml
   compose_enterprise:
     name: docker-compose enterprise
     strategy:

@@ -8,7 +8,6 @@ on:
       - 'helm/**'
       - 'test/postman/helm/**'
       - '.github/workflows/helm*'
-      - '.pre-commit-config.d/helm.yaml'
   push:
     branches:
       - 'master'
@@ -25,9 +24,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.17.0
-        with:
-          pre-commit-args: -c .pre-commit-config.d/helm.yaml
       - id: getcharts
         uses: >-
           ./.github/actions/charts-as-json
