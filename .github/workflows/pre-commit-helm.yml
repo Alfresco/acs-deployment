@@ -4,17 +4,17 @@ name: Pre-commit (Helm)
 on:
   pull_request:
     branches:
-      - 'master'
+      - "master"
     paths:
-      - 'helm/**'
-      - 'test/postman/helm/**'
-      - '.github/workflows/helm*'
-      - '**.md'
-      - '.pre-commit-config.yaml'
+      - "helm/**"
+      - "test/postman/helm/**"
+      - ".github/workflows/helm*"
+      - "**.md"
+      - ".pre-commit-config.yaml"
   push:
     branches:
-      - 'master'
-  
+      - "master"
+
 jobs:
   pre_commit:
     name: Run pre-commit

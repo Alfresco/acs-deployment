@@ -4,14 +4,14 @@ name: Pre-commit (Docker Compose)
 on:
   pull_request:
     branches:
-      - 'master'
+      - "master"
     paths:
-      - 'docker-compose/**'
-      - '.pre-commit-config.yaml'
+      - "docker-compose/**"
+      - ".pre-commit-config.yaml"
   push:
     branches:
-      - 'master'
-  
+      - "master"
+
 jobs:
   pre_commit:
     name: Run pre-commit
