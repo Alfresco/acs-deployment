@@ -10,6 +10,7 @@ on:
       - 'test/postman/helm/**'
       - '.github/workflows/helm*'
       - '**.md'
+      - '.pre-commit-config.yaml'
   push:
     branches:
       - 'master'
