@@ -12,6 +12,9 @@ on:
     branches:
       - 'master'
       - pr-*
+concurrency:
+  group: ${{ github.head_ref || github.ref_name || github.run_id }}
+  cancel-in-progress: false
 jobs:
   app_charts:
     runs-on: ubuntu-latest
