@@ -1,13 +1,5 @@
 repos:
-  - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.10.0
-    hooks:
-      - id: helm-docs
-  - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.6.0
-    hooks:
-      - id: helm-deps
-      - id: helm-lint
+  # General hooks section
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
     hooks:
@@ -18,15 +10,26 @@ repos:
       - id: check-merge-conflict
       - id: fix-byte-order-marker
       - id: mixed-line-ending
-        args: ['--fix=lf']
+        args: ["--fix=lf"]
       - id: end-of-file-fixer
+  # Helm hooks section (excluded in pre-commit-compose workflow)
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.11.0
+    hooks:
+      - id: helm-docs
+  - repo: https://github.com/Alfresco/alfresco-build-tools
+    rev: v1.18.1
+    hooks:
+      - id: helm-deps
+      - id: helm-lint
+  - repo: https://github.com/bridgecrewio/checkov.git
+    rev: 2.1.275
+    hooks:
+      - id: checkov
+        files: \.yaml$
+  # Docker Compose hooks section (excluded in pre-commit-helm workflow)
   - repo: https://github.com/IamTheFij/docker-pre-commit
-    rev: v2.1.0
+    rev: v2.1.1
     hooks:
       - id: docker-compose-check
         exclude: override-docker-compose.yml
-  - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 2.0.1211
-    hooks:
-    - id: checkov
-      files: \.yaml$
