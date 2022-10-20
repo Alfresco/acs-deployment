@@ -13,7 +13,7 @@ Make sure your license available is readable and you have appropriate kubernetes
 
 ```bash
 ACS_NAMESPACE=acs
-LIC64=$(base64 < ~/Downloads/Alfresco-ent72-foobar.lic)
+LIC64=$(base64 < ~/Downloads/Alfresco-ent72-foobar.lic | tr -d '\n')
 cat <<EOF | kubectl -n $ACS_NAMESPACE apply -f -
 apiVersion: v1
 kind: Secret
