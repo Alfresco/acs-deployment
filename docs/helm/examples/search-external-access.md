@@ -9,7 +9,7 @@ This example demonstrates how to enable Alfresco Search Services (`/solr`) for e
 3. Generate a `base64` encoded `htpasswd` formatted string using the following command, where "solradmin" is username and "somepassword" is the password:
 
     ```bash
-    echo -n "$(htpasswd -nbm solradmin somepassword)" | base64
+    echo -n "$(htpasswd -nbm solradmin somepassword)" | base64 | tr -d '\n'
     ```
 
 ## Install ACS Helm Chart With Search External Access
