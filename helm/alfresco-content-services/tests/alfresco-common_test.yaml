@@ -8,7 +8,7 @@ templates:
 tests:
   - it: should render with default value alfresco-cs
     values: &testvalues
-      - test-values.yml
+      - values/test_values.yaml
     asserts:
       - equal:
           path: data.JAVA_TOOL_OPTIONS

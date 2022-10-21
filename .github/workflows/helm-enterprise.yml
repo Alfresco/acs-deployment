@@ -16,7 +16,7 @@ concurrency:
   group: ${{ github.head_ref || github.ref_name || github.run_id }}
   cancel-in-progress: false
 jobs:
-  app_charts:
+  build_vars:
     runs-on: ubuntu-latest
     if: >-
       github.event_name == 'push'
@@ -56,13 +56,13 @@ jobs:
   helm_integration:
     runs-on: ubuntu-latest
     needs:
-      - app_charts
+      - build_vars
     name: Helm ${{ matrix.name }} ${{ matrix.values }} 
     strategy:
       fail-fast: false
       max-parallel: 2
       matrix:
-        include: ${{ fromJSON(needs.app_charts.outputs.ver_json) }}
+        include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -109,11 +109,11 @@ jobs:
       )
     runs-on: ubuntu-latest
     needs:
-      - app_charts
+      - build_vars
       - helm_integration
     strategy:
       matrix:
-        charts: ${{ fromJSON(needs.app_charts.outputs.chart_names) }}
+        charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
     steps:
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.17.0
@@ -129,7 +129,7 @@ jobs:
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.17.0
         with:
-          chart: ${{ matrix.charts }}
+          chart: ${{ matrix.charts }}
           release_type: ${{ env.RELEASE_TYPE }}
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}

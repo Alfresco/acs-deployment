@@ -30,12 +30,12 @@ spec:
             - secretRef:
                 name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
           env:
-            - name: SPRING_DATABASE_PASSWORD
+            - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ template "content-services.shortname" . }}-dbsecret
                   key: DATABASE_PASSWORD
-            - name: SPRING_DATABASE_USERNAME
+            - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ template "content-services.shortname" . }}-dbsecret

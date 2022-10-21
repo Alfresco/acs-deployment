@@ -12,8 +12,8 @@ templates:
 tests:
   - it: should render activeMQ embeded secret
     values:
-      - test-values.yml
-      - externalBroker-values.yml
+      - values/test_values.yaml
+      - values/externalBroker_values.yaml
     asserts:
       - equal:
           path: spec.template.spec.containers[0].envFrom[3].secretRef.name
@@ -24,7 +24,7 @@ tests:
           value: ZmFpbG92ZXIobmlvOi8vc29tZWJyb2tlcjo2MTYxNik=
   - it: should render custom secret
     values:
-      - test-values.yml
+      - values/test_values.yaml
     set:
       messageBroker:
         existingSecretName: acs-credentials
