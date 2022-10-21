@@ -1,0 +1,22 @@
+---
+suite: test reindexing job manifest
+templates:
+  - reindexing-job.yaml
+tests:
+  - it: should have env vars for spring database credentials
+    values: &testvalues
+      - ../../../tests/values/test_values.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].name
+          value: SPRING_DATASOURCE_PASSWORD
+      - equal:
+          path: spec.template.spec.containers[0].env[1].name
+          value: SPRING_DATASOURCE_USERNAME
+  - it: should not be present when disabled
+    values: *testvalues
+    set:
+      reindexing.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
