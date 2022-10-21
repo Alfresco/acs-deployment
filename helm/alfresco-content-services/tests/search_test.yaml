@@ -7,7 +7,7 @@ templates:
 tests:
   - it: should configure ACS without any search subsystem
     values: &testvalues
-      - test-values.yml
+      - values/test_values.yaml
     set:
       alfresco-search:
         enabled: false
