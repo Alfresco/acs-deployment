@@ -23,6 +23,7 @@ jobs:
       || (
         ! github.event.pull_request.head.repo.fork
         && github.event.pull_request.head.user.login == 'Alfresco'
+        && github.actor != 'dependabot[bot]'
       )
     outputs:
       app_json: ${{ steps.getcharts.outputs.app }}
