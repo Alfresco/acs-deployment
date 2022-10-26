@@ -19,11 +19,13 @@ tests:
       - matchRegex:
           path: metadata.name
           pattern: ^RELEASE-NAME-alfresco-cs-
+        template: ingress-repository.yaml
   - it: should render with value set
     values: *testvalues
     set:
       NameOverride: myacstest
     asserts:
       - matchRegex:
-          path: metadata.name
           pattern: ^RELEASE-NAME-myacstest-
+          path: metadata.name
+        template: ingress-repository.yaml
