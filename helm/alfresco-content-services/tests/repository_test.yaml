@@ -18,8 +18,7 @@ tests:
           path: spec.template.metadata.annotations.checksum/config
           value: 65b89491b06b9ccd8146424a8eab9d7a9d109a18db722e1276f1223ee37fd47c
   - it: should have basic metadata in place
-    values: &testvalues
-      - values/test_values.yaml
+    values: *testvalues
     asserts:
       - equal:
           path: metadata.name
