@@ -6,6 +6,8 @@ tests:
   - it: |
       Render elastcisearch Liveindexing,
       using global config to ensure it overrides default values.
+    values:
+      - ../../../tests/values/test_values.yaml
     set:
       global:
         elasticsearch:
@@ -25,6 +27,7 @@ tests:
       using config provided in elasticsearch context to ensure it takes
       precedence over any global parameter.
     values:
+      - ../../../tests/values/test_values.yaml
       - values/external.yaml
     set:
       global:
