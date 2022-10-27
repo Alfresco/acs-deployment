@@ -22,6 +22,7 @@ tests:
       - equal:
           path: data.BROKER_URL
           value: ZmFpbG92ZXIobmlvOi8vc29tZWJyb2tlcjo2MTYxNik=
+        template: secret-message-broker.yaml
   - it: should render custom secret
     values:
       - values/test_values.yaml

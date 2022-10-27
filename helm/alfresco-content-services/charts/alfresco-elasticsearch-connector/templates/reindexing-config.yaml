@@ -11,7 +11,7 @@ data:
   ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
   {{ template "spring.elasticsearch.config" . }}
   ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
-  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "content-services.shortname" . }}-transform-misc/transform/config
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco.shortname" . }}-router/transform/config
   ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
   {{- if .Values.reindexing.postgresql.url }}
   SPRING_DATASOURCE_URL: {{ .Values.reindexing.postgresql.url }}
