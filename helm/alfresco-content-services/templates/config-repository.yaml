@@ -154,3 +154,4 @@ data:
       -Dmessaging.broker.url=$BROKER_URL
       -Dmessaging.broker.username=$BROKER_USERNAME
       -Dmessaging.broker.password=$BROKER_PASSWORD
+      -Dencryption.ssl.truststore.location=$JAVA_HOME/lib/security/cacerts
