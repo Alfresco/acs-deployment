@@ -57,12 +57,18 @@ jobs:
         uses: helm/kind-action@v1.4.0
         with:
           config: test/kind-ingress-enabled-cluster.yaml
-      - name: Install NGINX ingress
+      - name: Install nginx ingress
         env:
           NGINX_MANIFEST: |
             https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
         run: |
-          kubectl apply -f ${{ env.NGINX_MANIFEST }}
+          kubectl apply -f $NGINX_MANIFEST
+      - name: Wait for nginx ingress ready
+        run: |
+          kubectl wait --namespace ingress-nginx \
+            --for=condition=ready pod \
+            --selector=app.kubernetes.io/component=controller \
+            --timeout=90s
       - name: Use local dependencies
         uses: ./.github/actions/use-local-deps
         with:
