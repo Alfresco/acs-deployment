@@ -1,5 +1,3 @@
-# alfresco-common is a library so can only be tested from
-# another chart
 ---
 suite: test search related rendering
 templates:
