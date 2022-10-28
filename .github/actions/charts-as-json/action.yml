@@ -34,7 +34,7 @@ runs:
           yq e "$YQ_FILTER" "${{ inputs.charts-root }}/${CHART}/Chart.yaml" | \
           jq -c --arg v "${VALUES}" '.values=($v | split("\n"))' > /tmp/outputs_${CHART}.json
         done
-        echo "::set-output name=app::$(jq -sc '{charts:.} | del(.charts[] | select(.type=="library"))' /tmp/outputs_*.json)"
-        echo "::set-output name=lib::$(jq -sc '{charts:.} | del(.charts[] | select(.type!="library"))' /tmp/outputs_*.json)"
-        echo "::set-output name=all::$(jq -sc '{charts:.}' /tmp/outputs_*.json)"
+        echo "app=$(jq -sc '{charts:.} | del(.charts[] | select(.type=="library"))' /tmp/outputs_*.json)" >> $GITHUB_OUTPUT
+        echo "lib=$(jq -sc '{charts:.} | del(.charts[] | select(.type!="library"))' /tmp/outputs_*.json)" >> $GITHUB_OUTPUT
+        echo "all=$(jq -sc '{charts:.}' /tmp/outputs_*.json)" >> $GITHUB_OUTPUT
       shell: bash
