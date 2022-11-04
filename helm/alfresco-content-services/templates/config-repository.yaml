@@ -17,6 +17,7 @@ data:
   {{- $alfhost := tpl (.Values.externalHost | default (printf "%s-repository" (include "content-services.shortname" .))) $ }}
   {{- $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
   {{- $alfport := tpl ((.Values.externalPort | default .Values.repository.service.externalPort) | toString) $ }}
+  {{- $alfUrl := include "url.builder" (dict "protocol" $alfprotocol "host" $alfhost "port" $alfport ) }}
   ALFRESCO_OPTS: >-
       -Ddeployment.method=HELM_CHART
       -Dalfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
@@ -26,15 +27,9 @@ data:
       -Dalfresco.host={{ $alfhost }}
       -Dalfresco.protocol={{ $alfprotocol }}
       -Dalfresco.port={{ $alfport }}
-      {{- if or (eq $alfport "80") (eq $alfport "443") }}
-      -Daos.baseUrlOverwrite={{ $alfprotocol }}://{{ $alfhost }}/alfresco/aos
-      -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}
-      -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}/.*
-      {{- else }}
-      -Daos.baseUrlOverwrite={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/alfresco/aos
-      -Dcsrf.filter.origin={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}
-      -Dcsrf.filter.referer={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*
-      {{- end }}
+      -Daos.baseUrlOverwrite={{ $alfUrl }}/alfresco/aos
+      -Dcsrf.filter.origin={{ $alfUrl }}
+      -Dcsrf.filter.referer={{ $alfUrl }}/.*
       -Dshare.protocol={{ tpl (.Values.externalProtocol | default "http") $ }}
       -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
       -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
