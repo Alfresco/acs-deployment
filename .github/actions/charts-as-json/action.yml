@@ -19,8 +19,6 @@ description: Return as JSON string with charts details
 runs:
   using: composite
   steps:
-    - name: Debug action
-      uses: hmarr/debug-action@v2.0.1
     - id: getcharts
       name: Get main Charts and parse manifest
       env:
