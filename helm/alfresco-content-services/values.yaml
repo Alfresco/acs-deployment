@@ -474,7 +474,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.3.0-M2
+    tag: 7.3.0
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
