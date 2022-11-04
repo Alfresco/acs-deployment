@@ -78,7 +78,7 @@ jobs:
           SANITIZED_V=$(echo ${{ matrix.name }} | sed -r 's/[[:punct:]]?(.)[[:alnum:]]*/\1/g')-${V//./}
           SANITIZED_V=${SANITIZED_V,,}
           echo "Release prefix to $SANITIZED_V"
-          echo "app_version:=$V" >> $GITHUB_OUTPUT
+          echo "app_version=$V" >> $GITHUB_OUTPUT
           echo "app_prefix=${SANITIZED_V}" >> $GITHUB_OUTPUT
       - name: Use local dependencies
         uses: ./.github/actions/use-local-deps
