@@ -86,7 +86,7 @@ jobs:
           charts-root: helm
           chart-name: ${{ matrix.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@OPSEXP-1828
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@64f3566e77ff7c289a6ed0aa0385fb5b1df2e04e
         with:
           skip_checkout: 'true'
           test_newman: 'true'
