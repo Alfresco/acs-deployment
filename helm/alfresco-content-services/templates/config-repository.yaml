@@ -54,6 +54,7 @@ data:
       -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
       -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
       {{- end }}
+      -DlocalTransform.core-aio.url=
       -DlocalTransform.pdfrenderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
       -DlocalTransform.imagemagick.url=http://{{ template "content-services.shortname" . }}-imagemagick
       -DlocalTransform.libreoffice.url=http://{{ template "content-services.shortname" . }}-libreoffice
