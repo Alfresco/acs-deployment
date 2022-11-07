@@ -19,7 +19,7 @@ data:
   {{- if .Values.share.environment.JAVA_OPTS }}
   JAVA_OPTS: {{ tpl (printf "%s %s" (index .Values "share" "environment" "JAVA_OPTS") $alfproxy) $ | quote }}
   {{- else }}
-  JAVA_OPTS: "-Dalfresco.proxy={{ $alfUrl }}"
+  JAVA_OPTS: "{{ $alfproxy }}"
   {{- end }}
   {{- if .Values.share.environment }}
   {{- range $key, $val := .Values.share.environment }}
