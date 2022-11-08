@@ -78,7 +78,7 @@ jobs:
           SANITIZED_V=$(echo ${{ matrix.name }} | sed -r 's/[[:punct:]]?(.)[[:alnum:]]*/\1/g')-${V//./}
           SANITIZED_V=${SANITIZED_V,,}
           echo "Release prefix to $SANITIZED_V"
-          echo "app_version:=$V" >> $GITHUB_OUTPUT
+          echo "app_version=$V" >> $GITHUB_OUTPUT
           echo "app_prefix=${SANITIZED_V}" >> $GITHUB_OUTPUT
       - name: Use local dependencies
         uses: ./.github/actions/use-local-deps
@@ -86,7 +86,7 @@ jobs:
           charts-root: helm
           chart-name: ${{ matrix.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@38d9090e74640744cf93b88dfcfb5f0db5c16a09
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@64f3566e77ff7c289a6ed0aa0385fb5b1df2e04e
         with:
           skip_checkout: 'true'
           test_newman: 'true'
