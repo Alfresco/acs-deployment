@@ -8,7 +8,7 @@ metadata:
 data:
   {{- $alfhost := tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
   {{- $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
-  {{- $alfport := tpl (.Values.externalPort | default .Values.repository.service.externalPort | toString) $ }}
+  {{- $alfport := tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
   {{- $alfUrl := include "url.builder" (dict "protocol" $alfprotocol "host" $alfhost "port" $alfport) -}}
   {{- $alfproxy := printf "-Dalfresco.proxy=%s" $alfUrl }}
   REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
