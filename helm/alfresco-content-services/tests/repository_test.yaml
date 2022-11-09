@@ -1,0 +1,28 @@
+---
+suite: test repository manifest
+templates:
+  - deployment-repository.yaml
+  - config-repository.yaml
+  - secret-database.yaml
+  - secret-s3.yaml
+  - config-dev-log4j-properties.yaml
+tests:
+  - it: should have basic metadata in place
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-cs-repository
+        template: deployment-repository.yaml
+  - it: should have basic metadata in place
+    values: *testvalues
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-cs-repository-configmap
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: -Dencryption.ssl.truststore.location=\$JAVA_HOME/lib/security/cacerts
+        template: config-repository.yaml

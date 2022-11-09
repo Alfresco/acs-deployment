@@ -1,0 +1,15 @@
+---
+elasticsearch:
+  host: some.es.instance.somwhere.on.the.cloud
+  port: 443
+  protocol: https
+  user: alfresco
+  password: dummy
+messageBroker:
+  url: >-
+    failover:(ssl://somebroker.somewhere.on.the.cloud:61617)
+  user: alfresco
+  password: dummy
+  postgresql:
+    url: >-
+      jdbc:postgresql://somepg.somewhere.on.the.cloud/postgres

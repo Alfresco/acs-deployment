@@ -9,19 +9,10 @@ on:
       - 'docker-compose/**'
       - 'test/postman/docker-compose/**'
       - '.github/workflows/enterprise-compose.yml'
-      - '.pre-commit-config.d/compose.yaml'
   push:
     branches:
       - 'master'
 jobs:
-  pre_commit:
-    name: Run pre-commit compose checks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
-        with:
-          pre-commit-all-files: false
-          pre-commit-args: -c .pre-commit-config.d/compose.yaml
   compose_enterprise:
     name: docker-compose enterprise
     strategy:
@@ -34,9 +25,15 @@ jobs:
           - 7.0.N-docker-compose.yml
           - 6.2.N-docker-compose.yml
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push'
+      || (
+        ! github.event.pull_request.head.repo.fork
+        && github.event.pull_request.head.user.login == 'Alfresco'
+      )
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@master
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.17.0
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}

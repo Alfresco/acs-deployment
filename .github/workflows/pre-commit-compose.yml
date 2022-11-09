@@ -1,0 +1,24 @@
+---
+name: Pre-commit (Docker Compose)
+
+on:
+  pull_request:
+    branches:
+      - "master"
+    paths:
+      - "docker-compose/**"
+      - ".pre-commit-config.yaml"
+  push:
+    branches:
+      - "master"
+
+env:
+  # https://pre-commit.com/#temporarily-disabling-hooks
+  SKIP: helm-docs,helm-deps,helm-lint,checkov
+
+jobs:
+  pre_commit:
+    name: Run pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.17.0
