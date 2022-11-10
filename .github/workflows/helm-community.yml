@@ -39,11 +39,11 @@ jobs:
         with:
           fetch-depth: 0
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.17.0
+          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.21.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@v1.17.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@v1.21.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           chart-type: ${{ matrix.charts.type }}
