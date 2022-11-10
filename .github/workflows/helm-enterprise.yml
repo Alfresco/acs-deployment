@@ -86,7 +86,7 @@ jobs:
           charts-root: helm
           chart-name: ${{ matrix.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@64f3566e77ff7c289a6ed0aa0385fb5b1df2e04e
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.21.0
         with:
           skip_checkout: 'true'
           test_newman: 'true'
@@ -117,7 +117,7 @@ jobs:
         charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.17.0
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.21.0
       - name: set release type
         run: |
           [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" && "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]] \
@@ -128,7 +128,7 @@ jobs:
           fetch-depth: 0
       - name: publish chart
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.17.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.21.0
         with:
           chart: ${{ matrix.charts }}
           release_type: ${{ env.RELEASE_TYPE }}
