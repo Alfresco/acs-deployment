@@ -6,10 +6,7 @@ metadata:
   labels:
     {{- include "share.labels" . | nindent 4 }}
 data:
-  {{- $alfprotocol := include "alf.protocol" $ }}
-  {{- $alfhost := include "alf.share.host" $ }}
-  {{- $alfport := include "alf.share.port" $ }}
-  {{- $alfUrl := include "url.builder" (dict "protocol" $alfprotocol "host" $alfhost "port" $alfport) -}}
+  {{- $alfUrl := include "share.url" $ -}}
   {{- $alfproxy := printf "-Dalfresco.proxy=%s" $alfUrl }}
   REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
   REPO_PORT: "{{ .Values.repository.service.externalPort }}"

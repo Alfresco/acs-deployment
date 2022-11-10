@@ -18,6 +18,14 @@
 {{ .Values.externalPort | default .Values.share.service.externalPort | toString }}
 {{- end -}}
 
+{{- define "repo.url" -}}
+{{- include "url.builder" (dict "protocol" (include "alf.protocol" $) "host" (include "alf.repo.host" $) "port" (include "alf.repo.port" $) ) }}
+{{- end -}}
+
+{{- define "share.url" -}}
+{{- include "url.builder" (dict "protocol" (include "alf.protocol" $) "host" (include "alf.share.host" $) "port" (include "alf.share.port" $) ) }}
+{{- end -}}
+
 {{- define "url.builder" -}}
 {{- if or (and (eq .protocol "https") (eq .port "443")) (and (eq .protocol "http") (eq .port "80")) -}}
 {{ .protocol }}://{{ .host }}
