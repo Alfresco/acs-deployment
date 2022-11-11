@@ -113,6 +113,7 @@ jobs:
       - build_vars
       - helm_integration
     strategy:
+      max-parallel: 1
       matrix:
         charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
     steps:
