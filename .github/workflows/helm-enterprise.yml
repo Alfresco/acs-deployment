@@ -118,6 +118,8 @@ jobs:
     steps:
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.21.0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.21.0
       - name: set release type
         run: |
           [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" && "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]] \
