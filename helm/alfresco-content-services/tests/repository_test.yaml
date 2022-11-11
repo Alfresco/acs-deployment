@@ -7,7 +7,7 @@ templates:
   - secret-s3.yaml
   - config-dev-log4j-properties.yaml
 tests:
-  - it: should have basic metadata in place
+  - it: should have basic metadata in place in deployment
     values: &testvalues
       - values/test_values.yaml
     asserts:
@@ -15,14 +15,49 @@ tests:
           path: metadata.name
           value: RELEASE-NAME-alfresco-cs-repository
         template: deployment-repository.yaml
-  - it: should have basic metadata in place
+  - it: should have configmap with CATALINA_OPTS with encryption.ssl.truststore.location set
     values: *testvalues
     asserts:
-      - equal:
-          path: metadata.name
-          value: RELEASE-NAME-alfresco-cs-repository-configmap
-        template: config-repository.yaml
       - matchRegex:
           path: data.CATALINA_OPTS
-          pattern: -Dencryption.ssl.truststore.location=\$JAVA_HOME/lib/security/cacerts
+          pattern: |-
+            (^|\w\ )-Dencryption.ssl.truststore.location=\$JAVA_HOME/lib/security/cacerts($|\ )
+        template: config-repository.yaml
+  - it: should have configmap with ALFRESCO_OPTS urls without ports when are the same of the protocol default
+    values: *testvalues
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Daos.baseUrlOverwrite=http://RELEASE-NAME-alfresco-cs-repository/alfresco/aos($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dcsrf.filter.origin=http://RELEASE-NAME-alfresco-cs-repository($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dcsrf.filter.referer=http://RELEASE-NAME-alfresco-cs-repository/\.\*($|\ )
+        template: config-repository.yaml
+  - it: should have configmap with ALFRESCO_OPTS urls with ports when are not protocol default
+    values: *testvalues
+    set:
+      externalPort: "8080"
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Daos.baseUrlOverwrite=http://RELEASE-NAME-alfresco-cs-repository:8080/alfresco/aos($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dcsrf.filter.origin=http://RELEASE-NAME-alfresco-cs-repository:8080($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|\w\ )-Dcsrf.filter.referer=http://RELEASE-NAME-alfresco-cs-repository:8080/\.\*($|\ )
         template: config-repository.yaml
