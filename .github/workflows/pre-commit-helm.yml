@@ -34,4 +34,4 @@ jobs:
         with:
           charts-root: helm
           chart-name: alfresco-content-services
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.21.0
+      - uses: pre-commit/action@v3.0.0
