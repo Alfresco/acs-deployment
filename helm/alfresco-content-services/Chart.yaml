@@ -18,7 +18,7 @@ sources:
 dependencies:
   - name: alfresco-common
     version: 0.1.0
-    repository: https://kubernetes-charts.alfresco.com/incubator
+    repository: https://kubernetes-charts.alfresco.com/stable
   - name: postgresql
     version: 10.16.2
     repository: >-

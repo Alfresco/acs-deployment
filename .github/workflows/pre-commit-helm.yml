@@ -24,14 +24,5 @@ jobs:
     name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: azure/setup-helm@v3
-        with:
-          version: 3.9.4
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.21.0
-      - name: Use local dependencies
-        uses: ./.github/actions/use-local-deps
-        with:
-          charts-root: helm
-          chart-name: alfresco-content-services
-      - uses: pre-commit/action@v3.0.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.21.0
