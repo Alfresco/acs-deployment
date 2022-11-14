@@ -13,7 +13,6 @@ spec:
       component: search
   serviceName: {{ template "alfresco-search.fullName" . }}-solr-slave-headless
   replicas: {{ .Values.replication.replicaCount }}
-  minReadySeconds: 10
   template:
     metadata:
       labels:
