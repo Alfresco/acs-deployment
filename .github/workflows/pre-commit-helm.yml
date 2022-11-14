@@ -24,6 +24,7 @@ jobs:
     name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: azure/setup-helm@v3
         with:
           version: 3.9.4
