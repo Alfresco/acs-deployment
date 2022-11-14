@@ -72,7 +72,7 @@ alfresco-elasticsearch-connector:
 
 alfresco-digital-workspace:
   image:
-    tag: 2.9.0
+    tag: 3.0.0
 
 postgresql:
   image:
