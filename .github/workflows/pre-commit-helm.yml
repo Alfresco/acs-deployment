@@ -24,5 +24,8 @@ jobs:
     name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
+      - uses: azure/setup-helm@v3
+        with:
+          version: 3.9.4
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.21.0
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.21.0
