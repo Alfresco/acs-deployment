@@ -1,9 +1,8 @@
 name: gitlab-sync
 
-on: 
+on:
   - push
   - delete
-  - workflow_dispatch
 
 jobs:
   sync:
@@ -21,4 +20,4 @@ jobs:
         target-username: ${{ secrets.TARGET_USERNAME }}
         # You can store token in your project's 'Setting > Secrets' and reference the name here. Such as ${{ secrets.ACCESS_TOKEN }}
         target-token: ${{ secrets.TARGET_TOKEN }}
-        
+
