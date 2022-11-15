@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "helm unittest",
+            "type": "shell",
+            "command": "helm unittest --color .",
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "options": {
+              "cwd": "helm/alfresco-content-services"
+            }
+        }
+    ]
+}
