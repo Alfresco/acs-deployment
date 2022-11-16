@@ -1,0 +1,50 @@
+---
+name: Helm release
+
+on:
+  push:
+    tags:
+      - v**
+
+jobs:
+  build_vars:
+    runs-on: ubuntu-latest
+    outputs:
+      app_json: ${{ steps.getcharts.outputs.app }}
+      chart_names: ${{ steps.chart_names.outputs.json}}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: getcharts
+        uses: ./.github/actions/charts-as-json
+        with:
+          charts-root: helm
+      - id: chart_names
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
+          JQ_FILTER: $json | [.charts[].name]
+        run: |
+          CHARTS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
+          echo "json=$CHARTS" >> $GITHUB_OUTPUT
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+      - build_vars
+    strategy:
+      max-parallel: 1
+      fail-fast: true
+      matrix:
+        charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Publish chart
+        uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@88063ae20fa0f16ff559f34b8440592eb4c67e7e
+        with:
+          chart_name: ${{ matrix.charts }}
+          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
+          github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
