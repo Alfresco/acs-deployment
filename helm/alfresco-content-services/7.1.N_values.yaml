@@ -1,4 +1,4 @@
-# This is a YAML-formatted file.  Declare variables to be passed into your templates.
+# ACS 7.1.x values
 
 repository:
   image:

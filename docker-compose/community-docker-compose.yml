@@ -10,10 +10,10 @@ version: "2"
 
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository-community:7.3.0-M2
+    image: alfresco/alfresco-content-repository-community:7.3.0
     mem_limit: 1900m
     environment:
-      JAVA_TOOL_OPTIONS: "
+      JAVA_TOOL_OPTIONS: >-
         -Dencryption.keystore.type=JCEKS
         -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
         -Dencryption.keyAlgorithm=DESede
@@ -22,8 +22,7 @@ services:
         -Dmetadata-keystore.aliases=metadata
         -Dmetadata-keystore.metadata.password=oKIWzVdEdA
         -Dmetadata-keystore.metadata.algorithm=DESede
-        "
-      JAVA_OPTS: "
+      JAVA_OPTS: >-
         -Ddb.driver=org.postgresql.Driver
         -Ddb.username=alfresco
         -Ddb.password=alfresco
@@ -40,15 +39,14 @@ services:
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
-        -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
+        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -Dcsrf.filter.enabled=false
         -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-        "
 
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:2.5.7
+    image: alfresco/alfresco-transform-core-aio:3.0.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
@@ -56,19 +54,18 @@ services:
       - "8090:8090"
 
   share:
-    image: alfresco/alfresco-share:7.3.0-M2
+    image: alfresco/alfresco-share:7.3.0
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
-      JAVA_OPTS: "
+      JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
         -Dalfresco.context=alfresco
         -Dalfresco.protocol=http
-        "
 
   postgres:
     image: postgres:14.4
@@ -82,7 +79,7 @@ services:
       - "5432:5432"
 
   solr6:
-    image: alfresco/alfresco-search-services:2.0.3
+    image: alfresco/alfresco-search-services:2.0.5
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -96,9 +93,8 @@ services:
       # HTTPS or SECRET
       ALFRESCO_SECURE_COMMS: "secret"
       # SHARED SECRET VALUE
-      JAVA_TOOL_OPTIONS: "
-          -Dalfresco.secureComms.secret=secret
-      "
+      JAVA_TOOL_OPTIONS: >-
+        -Dalfresco.secureComms.secret=secret
     ports:
       - "8083:8983" # Browser port
 
@@ -112,7 +108,7 @@ services:
       - "61613:61613" # STOMP
 
   content-app:
-    image: alfresco/alfresco-content-app:2.11.0
+    image: alfresco/alfresco-content-app:3.1.0
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"

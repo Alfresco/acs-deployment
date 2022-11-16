@@ -1,8 +1,20 @@
-# This is a YAML-formatted file.  Declare variables to be passed into your templates.
+# ACS 7.2.x values
 
 repository:
   image:
     tag: 7.2.1
+
+ooiService:
+  image:
+    tag: 1.1.3
+
+msTeamsService:
+  image:
+    tag: 1.1.0
+
+transformrouter:
+  image:
+    tag: 2.0.0
 
 pdfrenderer:
   image:
@@ -32,13 +44,35 @@ filestore:
   image:
     tag: 0.16.1
 
+share:
+  image:
+    tag: 7.2.1
+
 alfresco-search:
   searchServicesImage:
     tag: 2.0.4
 
-share:
+alfresco-elasticsearch-connector:
+  liveIndexing:
+    mediation:
+      image:
+        tag: 3.1.1
+    content:
+      image:
+        tag: 3.1.1
+    metadata:
+      image:
+        tag: 3.1.1
+    path:
+      image:
+        tag: 3.1.1
+  reindexing:
+    image:
+      tag: 3.1.1
+
+alfresco-digital-workspace:
   image:
-    tag: 7.2.1
+    tag: 3.0.0
 
 postgresql:
   image:
@@ -51,4 +85,4 @@ postgresql-syncservice:
 alfresco-sync-service:
   syncservice:
     image:
-      tag: 3.8.0
+      tag: 3.7.2

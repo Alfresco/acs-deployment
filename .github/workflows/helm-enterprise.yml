@@ -113,19 +113,28 @@ jobs:
       - build_vars
       - helm_integration
     strategy:
+      max-parallel: 1
       matrix:
         charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
     steps:
-      - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.21.0
-      - name: set release type
-        run: |
-          [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" && "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]] \
-          && RELEASE_TYPE='stable' || RELEASE_TYPE='incubator'
-          echo "RELEASE_TYPE=$RELEASE_TYPE" >> $GITHUB_ENV
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.21.0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.21.0
+      - name: Set stable release type
+        if: github.ref_name == github.event.repository.default_branch
+        run: |
+          if [[ "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]]; then
+            echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
+          fi
+      - name: Fallback to incubator release type otherwise
+        run: |
+          if [ -z "$RELEASE_TYPE" ]; then
+            echo "RELEASE_TYPE=incubator" >> $GITHUB_ENV
+          fi
       - name: publish chart
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.21.0

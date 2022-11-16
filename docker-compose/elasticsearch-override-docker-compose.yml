@@ -3,7 +3,7 @@ version: "2"
 services:
   alfresco:
     environment:
-      JAVA_OPTS: "
+      JAVA_OPTS: >-
         -Ddb.driver=org.postgresql.Driver
         -Ddb.username=alfresco
         -Ddb.password=alfresco
@@ -17,7 +17,7 @@ services:
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
-        -Dmessaging.broker.url=\"failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true\"
+        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
         -Dtransform.service.enabled=true
         -Dtransform.service.url=http://transform-router:8095
@@ -26,7 +26,7 @@ services:
         -Dcsrf.filter.enabled=false
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-        "
+
   elasticsearch:
     image: elasticsearch:7.10.1
     environment:
@@ -46,7 +46,7 @@ services:
       - 9300:9300
 
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.1.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.2.0
     depends_on:
       - elasticsearch
       - alfresco
@@ -57,7 +57,7 @@ services:
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
 
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:3.1.0
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:3.2.0
     depends_on:
       - alfresco
     restart: on-failure:10
