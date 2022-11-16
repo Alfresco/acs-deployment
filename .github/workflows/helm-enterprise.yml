@@ -102,16 +102,9 @@ jobs:
           acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
           aws_sg: ${{ secrets.AWS_SG }}
   publish:
-    if: >-
-      contains(github.event.workflow_run.head_commit.message,'[publish]') ||
-      (
-        contains(github.event.workflow_run.head_commit.message,'[release]')
-        && github.ref_name == github.event.repository.default_branch
-      )
     runs-on: ubuntu-latest
     needs:
       - build_vars
-      - helm_integration
     strategy:
       max-parallel: 1
       matrix:
@@ -124,18 +117,19 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.21.0
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.21.0
-      - name: Set stable release type
+      - name: Set release type to stable when requested
         if: github.ref_name == github.event.repository.default_branch
         run: |
           if [[ "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]]; then
             echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
           fi
-      - name: Fallback to incubator release type otherwise
+      - name: Set release type to incubator when requested
         run: |
-          if [ -z "$RELEASE_TYPE" ]; then
+          if [[ "$COMMIT_MESSAGE" =~ ^.*\[publish\].*$ ]]; then
             echo "RELEASE_TYPE=incubator" >> $GITHUB_ENV
           fi
       - name: publish chart
+        if: env.RELEASE_TYPE == 'stable' || env.RELEASE_TYPE == 'incubator'
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.21.0
         with:
