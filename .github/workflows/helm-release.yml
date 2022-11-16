@@ -40,28 +40,19 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.21.0
-      - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.21.0
-      - name: Set release type to stable when requested
-        if: github.ref_name == github.event.repository.default_branch
+      - name: Set release type to stable on standard tags
+        if: ${{ ! endsWith(github.ref_name, '-test') }}
         run: |
-          if [[ "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]]; then
-            echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
-          fi
-      - name: Set release type to incubator when requested
+          echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
+      - name: Set release type to incubator when tags ends in -test
+        if: ${{ endsWith(github.ref_name, '-test') }}
         run: |
-          if [[ "$COMMIT_MESSAGE" =~ ^.*\[publish\].*$ ]]; then
-            echo "RELEASE_TYPE=incubator" >> $GITHUB_ENV
-          fi
+          echo "RELEASE_TYPE=incubator" >> $GITHUB_ENV
       - name: Publish chart
-        if: env.RELEASE_TYPE == 'stable' || env.RELEASE_TYPE == 'incubator'
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@OPSEXP-1796-release-tag
         with:
           chart_name: ${{ matrix.charts }}
-          chart_repo: Alfresco/acs-deployment.git
           release_type: ${{ env.RELEASE_TYPE }}
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
