@@ -1,0 +1,68 @@
+---
+name: Helm release
+
+on:
+  push:
+    tags:
+      - v**
+
+jobs:
+  build_vars:
+    runs-on: ubuntu-latest
+    outputs:
+      app_json: ${{ steps.getcharts.outputs.app }}
+      chart_names: ${{ steps.chart_names.outputs.json}}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: getcharts
+        uses: ./.github/actions/charts-as-json
+        with:
+          charts-root: helm
+      - id: chart_names
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
+          JQ_FILTER: $json | [.charts[].name]
+        run: |
+          CHARTS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
+          echo "json=$CHARTS" >> $GITHUB_OUTPUT
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+      - build_vars
+    strategy:
+      max-parallel: 1
+      fail-fast: true
+      matrix:
+        charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-commit-message@v1.21.0
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.21.0
+      - name: Set release type to stable when requested
+        if: github.ref_name == github.event.repository.default_branch
+        run: |
+          if [[ "$COMMIT_MESSAGE" =~ ^.*\[release\].*$ ]]; then
+            echo "RELEASE_TYPE=stable" >> $GITHUB_ENV
+          fi
+      - name: Set release type to incubator when requested
+        run: |
+          if [[ "$COMMIT_MESSAGE" =~ ^.*\[publish\].*$ ]]; then
+            echo "RELEASE_TYPE=incubator" >> $GITHUB_ENV
+          fi
+      - name: Publish chart
+        if: env.RELEASE_TYPE == 'stable' || env.RELEASE_TYPE == 'incubator'
+        uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@OPSEXP-1796-release-tag
+        with:
+          chart_name: ${{ matrix.charts }}
+          chart_repo: Alfresco/acs-deployment.git
+          release_type: ${{ env.RELEASE_TYPE }}
+          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
+          github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
