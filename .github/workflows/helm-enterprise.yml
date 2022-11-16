@@ -128,7 +128,7 @@ jobs:
           if [[ "$COMMIT_MESSAGE" =~ ^.*\[publish\].*$ ]]; then
             echo "RELEASE_TYPE=incubator" >> $GITHUB_ENV
           fi
-      - name: publish chart
+      - name: Publish chart
         if: env.RELEASE_TYPE == 'stable' || env.RELEASE_TYPE == 'incubator'
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.21.0
