@@ -105,7 +105,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build_vars
-      - helm_integration
     strategy:
       max-parallel: 1
       matrix:
