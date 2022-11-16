@@ -133,7 +133,8 @@ jobs:
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.21.0
         with:
-          chart: ${{ matrix.charts }}
+          chart_name: ${{ matrix.charts }}
+          chart_repo: Alfresco/acs-deployment.git
           release_type: ${{ env.RELEASE_TYPE }}
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
