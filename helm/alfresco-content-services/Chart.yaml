@@ -17,8 +17,8 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: alfresco-common
-    version: 0.1.0
-    repository: https://kubernetes-charts.alfresco.com/stable
+    version: 0.2.0-SNAPSHOT
+    repository: https://kubernetes-charts.alfresco.com/incubator
   - name: postgresql
     version: 10.16.2
     repository: >-
