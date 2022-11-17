@@ -1,5 +1,5 @@
 ---
-name: Pre-commit (Helm)
+name: Pre-commit (Helm Docs)
 
 on:
   pull_request:
@@ -15,19 +15,13 @@ on:
     branches:
       - "master"
 
-env:
-  # https://pre-commit.com/#temporarily-disabling-hooks
-  SKIP: docker-compose-check,helm-docs
-
 jobs:
   pre_commit:
     name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use local dependencies
-        uses: ./.github/actions/use-local-deps
-        with:
-          charts-root: helm
-          chart-name: alfresco-content-services
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.21.0
       - uses: pre-commit/action@v3.0.0
+        with:
+          extra_args: helm-docs --all-files
