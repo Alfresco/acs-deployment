@@ -473,7 +473,7 @@ filestore:
     storageClass:
       enabled: true
       accessModes:
-        - ReadWriteMany
+        - ReadWriteOnce
       # -- Custom storage class name
       name: null
     # -- Use pre-provisioned volume (through claim) instead of dynamiv provisioning
