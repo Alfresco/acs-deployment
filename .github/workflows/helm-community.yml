@@ -54,7 +54,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-1841-kind-action
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@7f38da6475c4b02f2f15dbb8176f456d17ad3a9e
       - name: Use local dependencies
         uses: ./.github/actions/use-local-deps
         with:
