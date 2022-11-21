@@ -80,7 +80,7 @@ spec:
             - name: data
               mountPath: {{ .Values.filestore.persistence.data.mountPath }}
               subPath: {{ .Values.filestore.persistence.data.subPath }}
-          volumes:
-          {{- include "data_volume" .Values.filestore | nindent 12 }}
-          {{- end }}
+      volumes:
+      {{- include "data_volume" .Values.filestore | nindent 8 }}
+      {{- end }}
 {{- end }}
