@@ -18,6 +18,7 @@ spec:
     requests:
       storage: {{ .Values.persistence.baseSize | quote }}
   {{- end -}}
-{{- if and (not .Values.filestore.persistence.existingClaim) .Values.filestore.persistence.enabled -}}
+
+{{- if and (not .Values.filestore.persistence.existingClaim) .Values.filestore.persistence.enabled }}
 {{ include "component_pvc" .Values.filestore }}
-{{- end -}}
+{{- end }}
