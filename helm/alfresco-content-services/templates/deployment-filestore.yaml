@@ -76,11 +76,11 @@ spec:
             failureThreshold: 1
             timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
           volumeMounts:
-          - name: data
-            mountPath: {{ .Values.persistence.filestore.data.mountPath }}
-            subPath: {{ .Values.persistence.filestore.data.subPath }}
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
+          {{- if .Values.filestore.persistence.enabled }}
+            - name: data
+              mountPath: {{ .Values.filestore.persistence.data.mountPath }}
+              subPath: {{ .Values.filestore.persistence.data.subPath }}
+          volumes:
+          {{- include "data_volume" .Values.filestore | nindent 12 }}
+          {{- end }}
 {{- end }}
