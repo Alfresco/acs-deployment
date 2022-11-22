@@ -476,7 +476,7 @@ filestore:
         - ReadWriteOnce
       # -- Custom storage class name
       name: null
-    # -- Use pre-provisioned volume (through claim) instead of dynamiv provisioning
+    # -- Use pre-provisioned volume (through claim) instead of dynamic provisioning
     existingClaim: null
     data:
       mountPath: "/tmp/Alfresco"
