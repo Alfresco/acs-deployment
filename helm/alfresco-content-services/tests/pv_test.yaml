@@ -37,7 +37,6 @@ tests:
           enabled: true
           storageClass:
             enabled: true
-            name: cheap
             volumeMode: Block
             accessModes:
               - ReadWriteMany
@@ -46,16 +45,29 @@ tests:
       - equal:
           path: >-
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: filestore-default-pvc
+        template: deployment-filestore.yaml
+      - isNull:
+          path: spec.storageClassName
+        template: pvc.yaml
+        documentIndex: 1
+  - it: should render a deployment with provided storage class
+    values: *testvalues
+    set:
+      filestore:
+        persistence:
+          enabled: true
+          storageClass:
+            enabled: true
+            name: cheap
+    asserts:
+      - equal:
+          path: >-
+            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
           value: filestore-cheap-pvc
         template: deployment-filestore.yaml
       - equal:
-          path: >-
-            spec.volumeMode
-          value: Block
+          path: spec.storageClassName
+          value: cheap
         template: pvc.yaml
         documentIndex: 1
-      - contains:
-          path: spec.accessModes
-          content: ReadOnlyMany
-        documentIndex: 1
-        template: pvc.yaml

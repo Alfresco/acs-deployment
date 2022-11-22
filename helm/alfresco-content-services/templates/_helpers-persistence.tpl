@@ -25,7 +25,9 @@ spec:
   {{- range .storageClass.accessModes }}
     - {{ . }}
   {{- end }}
-  storageClassName: {{ .storageClass.name | default "null" }}
+  {{- if .storageClass.name }}
+  storageClassName: {{ .storageClass.name }}
+  {{- end }}
   {{- end }}
   resources:
     requests:
