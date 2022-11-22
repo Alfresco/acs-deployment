@@ -56,22 +56,8 @@ jobs:
       - helm_unit_test
     steps:
       - uses: actions/checkout@v3
-      - name: Kind Cluster
-        uses: helm/kind-action@v1.4.0
-        with:
-          config: test/kind-ingress-enabled-cluster.yaml
-      - name: Install nginx ingress
-        env:
-          NGINX_MANIFEST: |
-            https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-        run: |
-          kubectl apply -f $NGINX_MANIFEST
-      - name: Wait for nginx ingress ready
-        run: |
-          kubectl wait --namespace ingress-nginx \
-            --for=condition=ready pod \
-            --selector=app.kubernetes.io/component=controller \
-            --timeout=90s
+      - name: Setup cluster
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@7f38da6475c4b02f2f15dbb8176f456d17ad3a9e
       - name: Use local dependencies
         uses: ./.github/actions/use-local-deps
         with:
