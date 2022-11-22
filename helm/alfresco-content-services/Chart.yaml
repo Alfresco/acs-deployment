@@ -32,6 +32,12 @@ dependencies:
     condition: >-
       alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
   - name: common
+    alias: alfresco-admin-app
+    repository: https://activiti.github.io/activiti-cloud-helm-charts
+    version: 7.6.0
+    condition: >-
+      alfresco-content-services.alfresco-admin-app.enabled,alfresco-admin-app.enabled
+  - name: common
     alias: alfresco-digital-workspace
     repository: https://activiti.github.io/activiti-cloud-helm-charts
     version: 7.3.0
