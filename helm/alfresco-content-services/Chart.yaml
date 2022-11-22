@@ -36,13 +36,13 @@ dependencies:
     repository: https://activiti.github.io/activiti-cloud-helm-charts
     version: 7.6.0
     condition: >-
-      alfresco-content-services.alfresco-admin-app.enabled,alfresco-admin-app.enabled
+      alfresco-admin-app.enabled
   - name: common
     alias: alfresco-digital-workspace
     repository: https://activiti.github.io/activiti-cloud-helm-charts
     version: 7.3.0
     condition: >-
-      alfresco-content-services.alfresco-digital-workspace.enabled,alfresco-digital-workspace.enabled
+      alfresco-digital-workspace.enabled
   - name: activemq
     version: 2.1.0
     condition: activemq.enabled
