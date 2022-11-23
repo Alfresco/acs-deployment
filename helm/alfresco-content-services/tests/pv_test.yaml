@@ -35,12 +35,10 @@ tests:
       filestore:
         persistence:
           enabled: true
-          storageClass:
-            enabled: true
-            volumeMode: Block
-            accessModes:
-              - ReadWriteMany
-              - ReadOnlyMany
+          volumeMode: Block
+          accessModes:
+            - ReadWriteMany
+            - ReadOnlyMany
     asserts:
       - equal:
           path: >-
@@ -57,9 +55,7 @@ tests:
       filestore:
         persistence:
           enabled: true
-          storageClass:
-            enabled: true
-            name: cheap
+          storageClass: cheap
     asserts:
       - equal:
           path: >-

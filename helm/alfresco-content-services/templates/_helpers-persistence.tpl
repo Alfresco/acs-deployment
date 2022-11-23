@@ -1,7 +1,7 @@
 {{- define "data_volume" -}}
 {{- $svc_name := .service.name -}}
 {{- with .persistence -}}
-{{- $sc_name := .storageClass.name | default "default" -}}
+{{- $sc_name := .storageClass | default "default" -}}
 - name: data
   persistentVolumeClaim:
     claimName: >-
@@ -12,25 +12,25 @@
 {{- define "component_pvc" -}}
 {{ $svc_name := .service.name }}
 {{- with .persistence }}
-{{- $sc_name := .storageClass.name | default "default" -}}
+{{- $sc_name := .storageClass | default "default" -}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ printf "%s-%s-pvc" $svc_name $sc_name }}
 spec:
-  {{- if .storageClass.enabled }}
-  volumeMode: {{ .storageClass.volumeMode | default "Filesystem" }}
+  {{- if .storageClass }}
+  storageClassName: {{ .storageClass | quote }}
+  {{- end }}
+  {{- if .accessModes }}
   accessModes:
-  {{- range .storageClass.accessModes }}
+  {{- range .accessModes }}
     - {{ . }}
   {{- end }}
-  {{- if .storageClass.name }}
-  storageClassName: {{ .storageClass.name }}
   {{- end }}
-  {{- end }}
+  volumeMode: {{ .volumeMode | default "Filesystem" }}
   resources:
     requests:
-      storage: {{ .baseSize | default "20Gi" }}
+      storage: {{ .baseSize | default "20Gi" | quote }}
 {{- end }}
 {{- end -}}
