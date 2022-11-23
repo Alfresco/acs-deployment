@@ -655,7 +655,6 @@ alfresco-admin-app:
     path: /control-center
     annotations:
       kubernetes.io/ingress.class: nginx
-     # nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -678,7 +677,6 @@ alfresco-admin-app:
 
 # -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
 
-# -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
 ooi:
   enabled: false
 
