@@ -665,6 +665,7 @@ alfresco-admin-app:
     tag: 7.6.0
     pullPolicy: IfNotPresent
   env:
+    APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
   resources:
