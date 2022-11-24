@@ -11,4 +11,4 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 1.x.x |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 2.x.x |
