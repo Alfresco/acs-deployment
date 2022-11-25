@@ -1,0 +1,32 @@
+@startuml
+'!theme crt-amber
+title Component Persistence
+
+skinparam linetype ortho
+
+(*) --> "Read .Values.component.persistence"
+
+if ".enabled" then
+  -down->[y] if ".existingClaim" then
+    -->[y] "Render deployment with volume\nbacked by existingClaim"
+    --> (*)
+  else
+    -right->[n] "Create PVC"
+    if ".StorageClass" then
+      --> "Use provided storageClass for dynamic provisioning of PV"
+      --> "Render deployment with volume\nbacked by dynamic provisioning"
+      --> (*)
+    else
+      --> "Use default storageClass for dynamic provisioning of PV"
+      --> "Render deployment with volume\nbacked by default storageClasss"
+       --> (*)
+    endif
+  endif
+else
+  -right->[n] "Render deployment without volume"
+  --> (*)
+endif
+
+center footer Copyright 2022 Alfresco Software Inc
+
+@enduml
