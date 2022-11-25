@@ -54,4 +54,5 @@ imap:
   server:
     enabled: false
 
-alfresco-admin-app.enabled=false
+alfresco-admin-app
+  enabled: false
