@@ -466,6 +466,19 @@ filestore:
     timeoutSeconds: 10
     livenessPercent: 150
     livenessSavePeriodSeconds: 600
+  persistence:
+    # -- Persist filestore data
+    enabled: true
+    # -- Specify a storageClass for dynamic provisioning
+    accessModes:
+      - ReadWriteOnce
+    # -- Bind PVC based on storageClass (e.g. dynamic provisionning)
+    storageClass:
+    # -- Use pre-provisioned pv through its claim (e.g. static provisionning)
+    existingClaim: null
+    data:
+      mountPath: "/tmp/Alfresco"
+      subPath: "alfresco-content-services/filestore-data"
 
 # -- Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
@@ -534,11 +547,6 @@ persistence:
     data:
       mountPath: "/usr/local/tomcat/alf_data"
       subPath: "alfresco-content-services/repository-data"
-  filestore:
-    enabled: true
-    data:
-      mountPath: "/tmp/Alfresco"
-      subPath: "alfresco-content-services/filestore-data"
 
 activemq:
   enabled: true
