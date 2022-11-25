@@ -1,0 +1,69 @@
+---
+suite: test persistence 
+templates:
+  - config-filestore.yaml
+  - deployment-filestore.yaml
+  - pvc.yaml
+tests:
+  - it: should render a volumeless deployment
+    values: &testvalues
+      - values/test_values.yaml
+    set:
+      filestore:
+        persistence:
+          enabled: false
+    asserts:
+      - isEmpty:
+          path: spec.template.spec.volumes
+        template: deployment-filestore.yaml
+  - it: should render a deployment with set claim
+    values: *testvalues
+    set:
+      filestore:
+        persistence:
+          enabled: true
+          existingClaim: mysfsvolume
+    asserts:
+      - equal:
+          path: >-
+            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: mysfsvolume
+        template: deployment-filestore.yaml
+  - it: should render a deployment with dynamic claim name
+    values: *testvalues
+    set:
+      filestore:
+        persistence:
+          enabled: true
+          volumeMode: Block
+          accessModes:
+            - ReadWriteMany
+            - ReadOnlyMany
+    asserts:
+      - equal:
+          path: >-
+            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: filestore-default-pvc
+        template: deployment-filestore.yaml
+      - isNull:
+          path: spec.storageClassName
+        template: pvc.yaml
+        documentIndex: 1
+  - it: should render a deployment with provided storage class
+    values: *testvalues
+    set:
+      filestore:
+        persistence:
+          enabled: true
+          storageClass: cheap
+    asserts:
+      - equal:
+          path: >-
+            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: filestore-cheap-pvc
+        template: deployment-filestore.yaml
+      - equal:
+          path: spec.storageClassName
+          value: cheap
+        template: pvc.yaml
+        documentIndex: 1

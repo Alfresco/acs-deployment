@@ -4,17 +4,21 @@ apiVersion: v1
 metadata:
   name: alfresco-volume-claim
 spec:
-  {{ if .Values.persistence.storageClass.enabled }}
+  {{- if .Values.persistence.storageClass.enabled }}
   accessModes:
   {{- range .Values.persistence.storageClass.accessModes }}
   - {{ . }}
   {{- end }}
   storageClassName: {{ .Values.persistence.storageClass.name }}
-  {{ else }}
+  {{- else }}
   accessModes:
     - ReadWriteOnce
-  {{ end }}
+  {{- end }}
   resources:
     requests:
       storage: {{ .Values.persistence.baseSize | quote }}
   {{- end -}}
+
+{{- if and (not .Values.filestore.persistence.existingClaim) (eq .Values.repository.edition "Enterprise") .Values.filestore.persistence.enabled }}
+{{ include "component_pvc" .Values.filestore }}
+{{- end }}
