@@ -30,7 +30,7 @@ component:
     enabled: true
 ```
 
-### Configuring Static provisioning
+### Configuring static provisioning
 
 This method requires the cluster administrator to provision in advance a
 [physical volume claim (PVC)](https://kubernetes.io/docs/concepts/storage/volumes/#persistentvolumeclaim).
@@ -60,7 +60,7 @@ That method can be convenient in production environment where the data pre-exist
 the infrastructure. In that case a cluster admin might also want to [pre-bind PV and
 PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume).
 
-### Configuring Static provisioning
+### Configuring dynamic provisioning
 
 This method offers a dynamic provisioning approach so cluster admins do not need to
 manually create PV and its corresponding PVC. Instead what they need to have is
