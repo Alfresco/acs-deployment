@@ -653,7 +653,38 @@ alfresco-digital-workspace:
       cpu: 150m
       memory: 256Mi
 
+alfresco-admin-app:
+  nodeSelector: {}
+  enabled: true
+  nameOverride: "alfresco-cc"
+  service:
+    envType: frontend
+  ingress:
+    path: /control-center
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  image:
+    repository: quay.io/alfresco/alfresco-admin-app
+    tag: 7.6.0
+    pullPolicy: IfNotPresent
+  env:
+    APP_CONFIG_PROVIDER: "ECM"
+    APP_CONFIG_AUTH_TYPE: "BASIC"
+    API_URL: "{protocol}//{hostname}{:port}"
+  resources:
+    limits:
+      cpu: 1
+      memory: 1024Mi
+    requests:
+      cpu: 150m
+      memory: 256Mi
+
 # -- Choose if you want Office Online Integration capabilities (Alfresco Collaboration Connector for Microsoft 365)
+
 ooi:
   enabled: false
 
