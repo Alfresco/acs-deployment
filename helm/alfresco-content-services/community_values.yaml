@@ -53,3 +53,6 @@ email:
 imap:
   server:
     enabled: false
+
+alfresco-admin-app:
+  enabled: false

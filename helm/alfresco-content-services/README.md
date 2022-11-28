@@ -20,7 +20,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |  | alfresco-elasticsearch-connector | 0.1.0 |
 |  | alfresco-search | 1.0.4 |
 |  | alfresco-sync-service | 3.0.9 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.3.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.6.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.6.0 |
 | https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
 | https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.2.0-SNAPSHOT |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
@@ -54,6 +55,23 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
 | aiTransformer.service.type | string | `"ClusterIP"` |  |
+| alfresco-admin-app.enabled | bool | `true` |  |
+| alfresco-admin-app.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
+| alfresco-admin-app.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
+| alfresco-admin-app.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
+| alfresco-admin-app.image.pullPolicy | string | `"IfNotPresent"` |  |
+| alfresco-admin-app.image.repository | string | `"quay.io/alfresco/alfresco-admin-app"` |  |
+| alfresco-admin-app.image.tag | string | `"7.6.0"` |  |
+| alfresco-admin-app.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
+| alfresco-admin-app.ingress.path | string | `"/control-center"` |  |
+| alfresco-admin-app.ingress.tls | list | `[]` |  |
+| alfresco-admin-app.nameOverride | string | `"alfresco-cc"` |  |
+| alfresco-admin-app.nodeSelector | object | `{}` |  |
+| alfresco-admin-app.resources.limits.cpu | int | `1` |  |
+| alfresco-admin-app.resources.limits.memory | string | `"1024Mi"` |  |
+| alfresco-admin-app.resources.requests.cpu | string | `"150m"` |  |
+| alfresco-admin-app.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-admin-app.service.envType | string | `"frontend"` |  |
 | alfresco-digital-workspace.enabled | bool | `true` |  |
 | alfresco-digital-workspace.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-digital-workspace.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
