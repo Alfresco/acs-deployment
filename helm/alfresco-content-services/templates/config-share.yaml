@@ -6,19 +6,17 @@ metadata:
   labels:
     {{- include "share.labels" . | nindent 4 }}
 data:
-  {{ $alfhost := tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
-  {{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
-  {{ $alfport := tpl (.Values.externalPort | default .Values.repository.service.externalPort | toString) $ }}
-  {{ $alfproxy := printf "-Dalfresco.proxy=%s://%s:%s" $alfprotocol $alfhost $alfport }}
+  {{- $alfUrl := include "share.url" $ -}}
+  {{- $alfproxy := printf "-Dalfresco.proxy=%s" $alfUrl }}
   REPO_HOST: "{{ template "content-services.shortname" . }}-repository"
   REPO_PORT: "{{ .Values.repository.service.externalPort }}"
-  CSRF_FILTER_REFERER: "{{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}/.*"
-  CSRF_FILTER_ORIGIN: "{{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}"
+  CSRF_FILTER_REFERER: "{{ $alfUrl }}/.*"
+  CSRF_FILTER_ORIGIN: "{{ $alfUrl }}"
   # The JAVA_OPTS defined in the values.yaml file for the "share" are set here using proper quotes
   {{- if .Values.share.environment.JAVA_OPTS }}
   JAVA_OPTS: {{ tpl (printf "%s %s" (index .Values "share" "environment" "JAVA_OPTS") $alfproxy) $ | quote }}
   {{- else }}
-  JAVA_OPTS: "-Dalfresco.proxy={{ $alfprotocol }}://{{ $alfhost }}:{{ $alfport }}"
+  JAVA_OPTS: "{{ $alfproxy }}"
   {{- end }}
   {{- if .Values.share.environment }}
   {{- range $key, $val := .Values.share.environment }}
