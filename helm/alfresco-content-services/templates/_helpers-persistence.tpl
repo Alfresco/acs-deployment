@@ -1,7 +1,7 @@
-{{- define "data_volume2" -}}
-{{- $svc_name2 := .service.name -}}
+{{- define "data_volume" -}}
+{{- $svc_name := .service.name -}}
 {{- with .persistence -}}
-{{- $sc_name2 := .storageClass | default "default" -}}
+{{- $sc_name := .storageClass | default "default" -}}
 - name: data
   persistentVolumeClaim:
     claimName: >-
@@ -9,15 +9,15 @@
 {{- end -}}
 {{- end -}}
 
-{{- define "component_pvc2" -}}
-{{ $svc_name2 := .service.name }}
+{{- define "component_pvc" -}}
+{{ $svc_name := .service.name }}
 {{- with .persistence }}
 {{- $sc_name := .storageClass | default "default" -}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-   name: {{ printf "%s-%s-pvc" $svc_name2 $sc_name2 }}
+   name: {{ printf "%s-%s-pvc" $svc_name $sc_name }}
 spec:
   {{- if .storageClass }}
   storageClassName: {{ .storageClass | quote }}

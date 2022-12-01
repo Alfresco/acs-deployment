@@ -24,5 +24,5 @@ spec:
 {{- end }}
 
 {{- if and (not .Values.repository.persistence.existingClaim) (eq .Values.repository.edition "Enterprise") .Values.repository.persistence.enabled }}
-{{ include "component_pvc2" .Values.repository }}
+{{ include "component_pvc" .Values.repository }}
 {{- end }}

@@ -209,7 +209,7 @@ spec:
               mountPath: {{ .Values.repository.persistence.data.mountPath }}
               subPath: {{ .Values.repository.persistence.data.subPath }}
       volumes:
-      {{- include "data_volume2" .Values.repository | nindent 8 }}
+      {{- include "data_volume" .Values.repository | nindent 8 }}
        {{- end }}
       {{- if .Values.repository.licenseSecret }}
       - name: acs-license
