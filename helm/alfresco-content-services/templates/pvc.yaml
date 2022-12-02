@@ -19,7 +19,7 @@ spec:
       storage: {{ .Values.persistence.baseSize | quote }}
   {{- end -}}
 
-{{- if and (not .Values.repository.persistence.existingClaim) (eq .Values.repository.edition "Enterprise") .Values.repository.persistence.enabled }}
+{{- if and (not .Values.repository.persistence.existingClaim) .Values.repository.persistence.enabled }}
 {{ include "component_pvc" .Values.repository }}
 {{- end }}
 

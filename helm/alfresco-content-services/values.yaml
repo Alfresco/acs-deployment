@@ -467,7 +467,7 @@ filestore:
     livenessPercent: 150
     livenessSavePeriodSeconds: 600
   repository.persistence:
-    # -- Persist filestore data
+    # -- Persist repository data
     enabled: true
     # -- Specify a storageClass for dynamic provisioning
     accessModes:
@@ -478,7 +478,7 @@ filestore:
     existingClaim: null
     data:
       mountPath: "/tmp/Alfresco"
-      subPath: "alfresco-content-services/filestore-data"
+      subPath: "alfresco-content-services/repository-data"
 
 # -- Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
