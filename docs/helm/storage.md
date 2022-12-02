@@ -1,105 +1,108 @@
 # ACS Storage persistence in kubernetes
 
-ACS platform in order to serve users, needs to persist several type of data so
-it survives pods restart, cordons of worker nodes or even crashes.
+ACS platform in order to serve users' requests, needs to persist several type
+of data so it survives pods restart, cordons of worker nodes or even crashes.
 This documents aims at providing guidance in setting up different kinds of
 data persistence.
 
-## PostgreSQL
+## Different possible storage options:
 
-The relational database is key to ACS platform. This type of workload requires
-good performances in terms of IO, excellent durability, excellent reliability
-(what the system think is committed to disk needs to be) and allow for full
-control in order to proceed with regular or exceptional maintenance operations.
-For this reasons (and others) we recommend to set up the database workload
-outside of the kubernetes cluster. That can be a Managed service like AWS Aurora
-or an external RDBMS system of yours where your DBA team has full access and
-feel comfortable doing their day to day job.
-However if you want to deploy the db in-cluster that is possible for
-convenience.
+There mainly 2 different options when setting up persistence in kubernetes:
 
-### Default values
+ * Static provisioning
+ * Dynamic provisioning
 
-If no specific configuration is passed to helm when deploying, the chart will
-try to rely on the default `storageClass` configured on the cluster if any.
-On a vanilla EKS cluster, that means the postgresql workload will persist data
-on an EBS volume using the default `gp2` `storageClass`.
+The charts Alfresco provides leverage a common mechanism to configure both options.
+This mechanism can be reused by different charts or sub-charts in the same way.
 
-:important:
-Before chart versions 5.3.0, the default for postgresql workload was to
-leverage the `alfresco-volume-claim` so if you're upgrading from pre-5.3.0
-and you used the default config for `postgresql.persistence` you need to take
-extra actions to ensure a new database pod won't be recreate wit ha new blank
-volume.
+> Note: direct usage of kubernetes volumes (without PVC) is not supported)
 
-If your kubernetes cluster doesn't have a default `storageClass`with a provider
-then you can either:
+The logic used in the template is depicted b the diagram below:
 
-* explicitly set the `storageClass` to use (see [Static Provisioning](#static-provisioning))
-* explicitly set the `PersistentVolumeClaim` to use (see [Dynamic Provisioning](#dynamic-provisioning))
+![persitence of storage in acs chart](diagrams/charts-storage-persistence.png)
 
-### Static Provisioning
+Whatever the option you choose, start by enabling persistence under the
+component which needs it:
 
-Static provisioning consist of manual operation a kubernetes administrator
-needs to do prior to release deployment.
-The steps are as follow:
+```yaml
+component:
+  persistence:
+    enabled: true
+```
 
-1. Create and prepare (format and/or set appropriate permissions) the actual storage volume at the storage level.
-2. Create the [PersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes)
-   and its corresponding [PersistentVolumeClaim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims)
+### Configuring static provisioning
 
-Once done, you need to give the chart the name of the `PersistentVolumeClaim`as shown bellow:
+This method requires the cluster administrator to provision in advance a
+[physical volume claim (PVC)](https://kubernetes.io/docs/concepts/storage/volumes/#persistentvolumeclaim).
+That PVC needs to fulfil requirements driven by  the cluster architecture. That
+usually means:
+
+ * offering `ReadWriteMany` [accessModes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+   for components which have a `Deployment.replicas` > 1 and more than one
+   schedule-able worker node.
+ * Providing sufficient speed and space for the workload
+ * Being given a [Reclaim Policy](https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/)
+   that DO match environment type (you probably want to avoid using `Delete`
+   in your production environment).
+
+Plus all your other site-specific requirements.
+
+To use static provisioning:
+
+```yaml
+component:
+  persistence:
+    enabled: true
+    existingClaim: ecmVolume
+```
+
+That method can be convenient in production environment where the data pre-exists
+the infrastructure. In that case a cluster admin might also want to [pre-bind PV and
+PVC](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#reserving-a-persistentvolume).
+
+### Configuring dynamic provisioning
+
+This method offers a dynamic provisioning approach so cluster admins do not need to
+manually create PV and its corresponding PVC. Instead what they need to have is
+a [storageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/) which
+has a [provisioner](https://kubernetes.io/docs/concepts/storage/storage-classes/#provisioner).
+
+With that configuration ,if no volume exists when a deployments needs to spin up pods,
+Kubernetes will use the `provisioner`to create one on-the-fly:
+
+```yaml
+component:
+  persistence:
+    enabled: true
+    storageClass: dc1-nfs-exports
+```
+
+## Migrating from previous chart versions
+
+Previous versions of the chart did not use that per-component approach to storage.
+Instead, the default behavior was to create a PVC and rely by default on it for
+any kind of data to persist). That approach has proven to cause problems and
+that's why we're moving away from it.
+However if you have already deployed using this approach and want to keep it
+(which we don't recommend), you can do so by using the static provisioning approach
+and set the `existingClaim` to the previously created PVC `alfresco-volume-claim`:
 
 ```yaml
 postgresql:
   persistence:
-    existingClaim: acsDbClaim
+    existingClaim: alfresco-volume-claim
 ```
 
-### Dynamic Provisioning
-
-With Dynamic provisioning you don't have to prepare individual volumes for each
-deployment. Instead a kubernetes storage provisioner will take care of sending
-volume creation requests to the storage backend. Most provisioner however will
-create "blank" volume or at least deal with a restricted number of
-"initialization" tasks. So dynamic provisioning is mostly useful for initial
-deployment.
-
-### Migrating from pre-5.3.0 chart versions
-
-First thing you need to check is the `Retention Policy` of your existing volume
-where database data are persisted.  You can do that by running the command
-bellow:
-
-```sh
-kubectl get pv -o jsonpath='{@.items[?(.spec.claimRef.name=="alfresco-volume-claim")].spec.persistentVolumeReclaimPolicy}'
-```
-
-This should be set to `Retain` before you start so we're sure we would not
-delete any data by mistake.
-
-If you've been using the default persistence configuration for postgresql in
-older versions you cannot simply re-use the values from previous deployment
-with 5.3.0. Instead you will need to either:
-
-1. force the claim to point to the old `alfresco-volume-claim` (not recommended)
-   
-   ```yaml
-   postgresql:
-     persistence:
-       existingClaim: acsDbClaim
-   ```
-
-2. create a new volume and copy data to it from the old volume bound to the old
-   `alfresco-volume-claim`.
-   Details of this process depends on the type of storage and provisioner that
-   was used during deployment.
+Another option is to create a new volume and copy data to it from the old
+volume bound to the old `alfresco-volume-claim`.
+Details of this process depends on the type of storage and provisioner that
+was used during deployment.
 
 If you choose the second - and preferred - method, you'll then need to use
 [static provisioning method](#static-provisioning) to create a new volume and
 then instruct helm to search for a specific volume by claim name or
-`storageClass`.
-Using `storageClass` requires creating a new PVC too, which should reference the
-PV name to make sure a new volume is not dynamically created. Also applying 
-`labels` to the PV and corresponding `selector` to the PVC helps ensure the 
-`storageClass`will only pickup the right volume that's been prepared.
+`storageClass`. Using `storageClass` requires creating a new PVC too, which
+should reference the PV name to make sure a new volume is not dynamically
+created.
+Also,  applying `labels` to the PV and corresponding `selector` to the PVC
+helps ensure the `storageClass` will only pick the intended volume.
