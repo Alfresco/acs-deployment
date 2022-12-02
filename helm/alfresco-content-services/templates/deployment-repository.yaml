@@ -82,6 +82,11 @@ spec:
 {{ toYaml .Values.repository.resources | indent 12 }}
           {{- if .Values.persistence.repository.enabled }}
           volumeMounts:
+          {{- if .Values.repository.persistence.enabled }}
+          - name: data
+            mountPath: {{ .Values.repository.persistence.data.mountPath }}
+            subPath: {{ .Values.repository.persistence.data.subPath }}
+          {{- end }}
           {{- if .Values.repository.licenseSecret }}
           - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
@@ -203,11 +208,6 @@ spec:
             - name: email-keystore-volume
               mountPath: /var/run/secrets/java.io/keystores
         {{- end }}
-          volumeMounts:
-          {{- if .Values.repository.persistence.enabled }}
-            - name: data
-              mountPath: {{ .Values.repository.persistence.data.mountPath }}
-              subPath: {{ .Values.repository.persistence.data.subPath }}
       volumes:
       {{- include "data_volume" .Values.repository | nindent 8 }}
        {{- end }}
