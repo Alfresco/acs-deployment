@@ -28,7 +28,7 @@ A new version numbering scheme is also being introduced, during the development 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
 | Chart Version/Tag | Default   | 7.2.N | 7.1.N   | 7.0.N   | 6.2.N    | Community |
-|-------------------|-----------|-------|---------|---------|----------|-----------|
+| ----------------- | --------- | ----- | ------- | ------- | -------- | --------- |
 | 5.0.0-M1          | 7.0.0-M2  |       |         |         | 6.2.2    | 6.2.1-A8  |
 | 5.0.0-M2          | 7.0.0-M3  |       |         |         | 6.2.2    | 7.0.0     |
 | 5.0.0             | 7.0.0     |       |         |         | 6.2.2    | 7.0.0     |
@@ -59,8 +59,8 @@ Our tests are executed using the latest version of Docker and Docker Compose pro
 
 Version 5.3.0 changes the way the default persistence is set up for the
 PostgreSQL database. If you did not customize the database persistance (which
-was not recommanded for serious workloads). Please take a look at [this](./storage.md)
- before trying to upgrade.
+was not recommended for serious workloads). Please take a look at [this](./storage.md)
+before trying to upgrade.
 
 Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
 
