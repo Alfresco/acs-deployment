@@ -64,9 +64,10 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 12 }}
         volumeMounts:
+        {{- if .Values.persistence.enabled }}
         - name: data
-          mountPath: {{ .Values.persistence.mountPath }}
-          subPath: {{ .Values.persistence.subPath }}
+          mountPath: {{ .Values.persistence.data.mountPath }}
+          subPath: {{ .Values.persistence.data.subPath }}
       {{- if .Values.persistence.chownWithDynamicProvisioning }}
       initContainers:
         - name: init-fs
@@ -78,11 +79,11 @@ spec:
           command: ["sh", "-c", "chown -R 33031:1000 {{ .Values.persistence.mountPath }}"]
           volumeMounts:
             - name: data
-              mountPath: {{ .Values.persistence.mountPath }}
-              subPath: {{ .Values.persistence.subPath }}
+              mountPath: {{ .Values.persistence.data.mountPath }}
+              subPath: {{ .Values.persistence.data.subPath }}
       {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
+           claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-activemq-claim"  (include "activemq.fullName" .) }}"
 {{- end }}
