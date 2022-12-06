@@ -85,5 +85,5 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-           claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-activemq-claim"  (include "activemq.fullName" .) }}"
+           claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-activemq-claim"  (include "activemq.fullName" .)) }}"
 {{- end }}
