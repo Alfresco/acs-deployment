@@ -1,12 +1,7 @@
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: alfresco-volume-claim
-spec:
- {{- if and (not .Values.repository.persistence.existingClaim) .Values.repository.persistence.enabled }}
- {{ include "component_pvc" .Values.repository }}
- {{- end }}
+{{- if and (not .Values.repository.persistence.existingClaim) .Values.repository.persistence.enabled }}
+{{ include "component_pvc" .Values.repository }}
+{{- end }}
 
- {{- if and (not .Values.filestore.persistence.existingClaim) (eq .Values.repository.edition "Enterprise") .Values.filestore.persistence.enabled }}
- {{ include "component_pvc" .Values.filestore }}
- {{- end }}
+{{- if and (not .Values.filestore.persistence.existingClaim) (eq .Values.repository.edition "Enterprise") .Values.filestore.persistence.enabled }}
+{{ include "component_pvc" .Values.filestore }}
+{{- end }}
