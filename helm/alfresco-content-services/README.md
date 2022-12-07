@@ -282,6 +282,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.livenessProbe.periodSeconds | int | `20` |  |
 | repository.livenessProbe.timeoutSeconds | int | `10` |  |
 | repository.nodeSelector | object | `{}` |  |
+| repository.persistence.accessModes | list | `["ReadWriteOnce"]` | Specify a storageClass for dynamic provisioning |
+| repository.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
+| repository.persistence.data.subPath | string | `"alfresco-content-services/repository-data"` |  |
+| repository.persistence.enabled | bool | `true` | Persist repository data |
+| repository.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
+| repository.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
 | repository.readinessProbe.failureThreshold | int | `6` |  |
 | repository.readinessProbe.initialDelaySeconds | int | `60` |  |
 | repository.readinessProbe.periodSeconds | int | `20` |  |

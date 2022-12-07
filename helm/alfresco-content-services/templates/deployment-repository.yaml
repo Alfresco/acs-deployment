@@ -96,9 +96,6 @@ spec:
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
             subPath: dev-log4j.properties
           {{- end }}
-          - name: data
-            mountPath: {{ .Values.persistence.repository.data.mountPath }}
-            subPath: {{ .Values.persistence.repository.data.subPath }}
           - name: custom-queryset-config-volume
             mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
           - name: custom-pipeline-config-volume
@@ -209,8 +206,9 @@ spec:
               mountPath: /var/run/secrets/java.io/keystores
         {{- end }}
       volumes:
+      {{- if .Values.repository.persistence.enabled }}
       {{- include "data_volume" .Values.repository | nindent 8 }}
-       {{- end }}
+      {{- end }}
       {{- if .Values.repository.licenseSecret }}
       - name: acs-license
         secret:
