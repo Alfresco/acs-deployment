@@ -1,4 +1,4 @@
-{{- if .Values.enabled }}
+{{- if .Values.activemq.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -9,7 +9,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.activemq.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "activemq.fullname" . }}
@@ -20,70 +20,74 @@ spec:
         app: {{ template "activemq.fullname" . }}
         release: {{ .Release.Name }}
     spec:
-    {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
+    {{- if .Values.activemq.nodeSelector }}
+      nodeSelector: {{- .Values.activemq.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
+      securityContext:
+        runAsUser: 33031
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
       - name: activemq
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        image: "{{ .Values.activemq.image.repository }}:{{ .Values.activemq.image.tag }}"
+        imagePullPolicy: {{ .Values.activemq.image.pullPolicy }}
         env:
         - name: ACTIVEMQ_CONFIG_MINMEMORY
-          value: "{{ .Values.resources.requests.memory | replace "Mi" "" }}"
+          value: "{{ .Values.activemq.resources.requests.memory | replace "Mi" "" }}"
         - name: ACTIVEMQ_CONFIG_MAXMEMORY
-          value: "{{ .Values.resources.limits.memory | replace "Mi" "" }}"
+          value: "{{ .Values.activemq.resources.limits.memory | replace "Mi" "" }}"
         - name: ACTIVEMQ_BROKER_NAME
           value: "{{ template "activemq.fullname" . }}"
         - name: ACTIVEMQ_ADMIN_LOGIN
-          value: "{{ .Values.adminUser.username }}"
+          value: "{{ .Values.activemq.adminUser.username }}"
         - name: ACTIVEMQ_ADMIN_PASSWORD
-          value: "{{ .Values.adminUser.password }}"
+          value: "{{ .Values.activemq.adminUser.password }}"
         ports:
         - name: stomp
-          containerPort: {{ .Values.services.broker.ports.internal.stomp | default 61613 }}
+          containerPort: {{ .Values.activemq.services.broker.ports.internal.stomp | default 61613 }}
         - name: openwire
-          containerPort: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
+          containerPort: {{ .Values.activemq.services.broker.ports.internal.openwire | default 61616 }}
         - name: amqp
-          containerPort: {{ .Values.services.broker.ports.internal.amqp | default 5672 }}
+          containerPort: {{ .Values.activemq.services.broker.ports.internal.amqp | default 5672 }}
         - name: web-console
-          containerPort: {{ .Values.services.webConsole.ports.internal.webConsole | default 8161 }}
+          containerPort: {{ .Values.activemq.services.webConsole.ports.internal.webConsole | default 8161 }}
         readinessProbe:
           tcpSocket:
-            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
-          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
-          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            port: {{ .Values.activemq.services.broker.ports.internal.openwire | default 61616 }}
+          initialDelaySeconds: {{ .Values.activemq.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.activemq.readinessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.activemq.readinessProbe.failureThreshold }}
+          timeoutSeconds: {{ .Values.activemq.readinessProbe.timeoutSeconds }}
         livenessProbe:
           tcpSocket:
-            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
-          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            port: {{ .Values.activemq.services.broker.ports.internal.openwire | default 61616 }}
+          initialDelaySeconds: {{ .Values.activemq.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.activemq.livenessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.activemq.livenessProbe.failureThreshold }}
+          timeoutSeconds: {{ .Values.activemq.livenessProbe.timeoutSeconds }}
         resources:
 {{ toYaml .Values.resources | indent 12 }}
         volumeMounts:
-        {{- if .Values.persistence.enabled }}
+        {{- if .Values.activemq.persistence.enabled }}
         - name: data
-          mountPath: {{ .Values.persistence.data.mountPath }}
-          subPath: {{ .Values.persistence.data.subPath }}
-      {{- if .Values.persistence.chownWithDynamicProvisioning }}
+          mountPath: {{ .Values.activemq.persistence.data.mountPath }}
+          subPath: {{ .Values.activemq.persistence.data.subPath }}
+        {{- end }}
       initContainers:
         - name: init-fs
-          image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
-          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
+          image: "{{ .Values.activemq.initContainer.image.repository }}:{{ .Values.activemq.initContainer.image.tag }}"
+          imagePullPolicy: {{ .Values.activemq.initContainer.image.pullPolicy }}
           resources:
 {{ toYaml .Values.initContainer.resources | indent 14 }}
           # command to allow repository to write to EFS volume.
-          command: ["sh", "-c", "chown -R 33031:1000 {{ .Values.persistence.mountPath }}"]
+          command: ["sh", "-c", "chown -R 33031:1000 {{ .Values.activemq.persistence.mountPath }}"]
           volumeMounts:
             - name: data
-              mountPath: {{ .Values.persistence.data.mountPath }}
-              subPath: {{ .Values.persistence.data.subPath }}
-      {{- end }}
+              mountPath: {{ .Values.activemq.persistence.data.mountPath }}
+              subPath: {{ .Values.activemq.persistence.data.subPath }}
       volumes:
-      - name: data
-        persistentVolumeClaim:
-           claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-activemq-claim"  (include "activemq.fullName" .)) }}"
+        {{- if .Values.activemq.persistence.enabled }}
+        {{- include "data_volume" .Values.activemq | nindent 8 }}
+        {{- end }}
+
 {{- end }}

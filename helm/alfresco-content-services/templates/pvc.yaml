@@ -19,6 +19,10 @@ spec:
       storage: {{ .Values.persistence.baseSize | quote }}
   {{- end -}}
 
+{{- if and (not .Values.activemq.persistence.existingClaim) .Values.activemq.persistence.enabled }}
+{{ include "component_pvc" .Values.activemq }}
+{{- end }}
+
 {{- if and (not .Values.filestore.persistence.existingClaim) (eq .Values.repository.edition "Enterprise") .Values.filestore.persistence.enabled }}
 {{ include "component_pvc" .Values.filestore }}
 {{- end }}

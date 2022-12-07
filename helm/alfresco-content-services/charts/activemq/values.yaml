@@ -1,70 +1,69 @@
 # Leave this to true to deploy the chart
-enabled: true
-replicaCount: 1
-nodeSelector: {}
-image:
-  repository: alfresco/alfresco-activemq
-  tag: 5.17.1-jre11-rockylinux8
-  pullPolicy: IfNotPresent
-adminUser:
-  username: admin
-  password: admin
-resources:
-  requests:
-    memory: "512Mi"
-  limits:
-    memory: "2048Mi"
-services:
-  broker:
-    ports:
-      internal:
-        stomp: 61613
-        amqp: 5672
-        openwire: 61616
-      external:
-        stomp: 61613
-        amqp: 5672
-        openwire: 61616
-    type: ClusterIP
-  webConsole:
-    ports:
-      internal:
-        webConsole: 8161
-      external:
-        webConsole: 8161
-    type: NodePort
-
-initContainer:
+activemq:
+  enabled: true
+  replicaCount: 1
+  nodeSelector: {}
   image:
-    repository: busybox
-    tag: 1.35.0
+    repository: alfresco/alfresco-activemq
+    tag: 5.17.1-jre11-rockylinux8
     pullPolicy: IfNotPresent
+  adminUser:
+    username: admin
+    password: admin
   resources:
     requests:
-      memory: "5Mi"
+      memory: "512Mi"
     limits:
-      memory: "10Mi"
-# -- The ActiveMQ readiness probe is used to check startup only as a failure
-# of the liveness probe later will result in the pod being restarted.
-readinessProbe:
-  initialDelaySeconds: 60
-  periodSeconds: 20
-  timeoutSeconds: 10
-  failureThreshold: 6
-livenessProbe:
-  initialDelaySeconds: 130
-  periodSeconds: 20
-  timeoutSeconds: 10
-  failureThreshold: 1
-persistence:
-  enabled: true
-  VolumeSizeRequest: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  storageClass:
-  data:
-    mountPath: "/opt/activemq/data"
-    subPath: "alfresco-infrastructure/activemq-data"
-      #chown doesn't work with dynamic provisioning so far
-      #issue on github: https://github.com/kubernetes-sigs/aws-efs-csi-driver/issues/300
-      chownWithDynamicProvisioning: false
+      memory: "2048Mi"
+  services:
+    broker:
+      ports:
+        internal:
+          stomp: 61613
+          amqp: 5672
+          openwire: 61616
+        external:
+          stomp: 61613
+          amqp: 5672
+          openwire: 61616
+      type: ClusterIP
+    webConsole:
+      ports:
+        internal:
+          webConsole: 8161
+        external:
+          webConsole: 8161
+      type: NodePort
+
+  initContainer:
+    image:
+      repository: busybox
+      tag: 1.35.0
+      pullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: "5Mi"
+      limits:
+        memory: "10Mi"
+  # -- The ActiveMQ readiness probe is used to check startup only as a failure
+  # of the liveness probe later will result in the pod being restarted.
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 20
+    timeoutSeconds: 10
+    failureThreshold: 6
+  livenessProbe:
+    initialDelaySeconds: 130
+    periodSeconds: 20
+    timeoutSeconds: 10
+    failureThreshold: 1
+  persistence:
+    enabled: true
+    baseSize: 20Gi
+    storageClass:
+    accessModes:
+      - ReadWriteOnce
+    existingClaim:
+    data:
+      mountPath: "/opt/activemq/data"
+      subPath: "alfresco-infrastructure/activemq-data"
