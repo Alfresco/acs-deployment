@@ -255,3 +255,4 @@ spec:
 {{ toYaml .Values.repository.extraVolumes | indent 6 }}
       {{- end }}
       {{- end }}
+
