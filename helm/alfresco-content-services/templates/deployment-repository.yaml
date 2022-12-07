@@ -80,7 +80,7 @@ spec:
             {{- end }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
-          {{- if .Values.persistence.repository.enabled }}
+     #     {{- if .Values.persistence.repository.enabled }}
           volumeMounts:
           {{- if .Values.repository.persistence.enabled }}
           - name: data
@@ -113,7 +113,7 @@ spec:
           {{- if .Values.repository.extraVolumeMounts }}
 {{ toYaml .Values.repository.extraVolumeMounts | indent 10 }}
           {{- end }}
-          {{- end }}
+      #    {{- end }}
           startupProbe:
             httpGet:
               path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
