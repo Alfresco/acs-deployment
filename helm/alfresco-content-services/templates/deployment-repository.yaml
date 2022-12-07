@@ -182,34 +182,34 @@ spec:
       {{- include "data_volume" .Values.repository | nindent 8 }}
       {{- end }}
       {{- if .Values.repository.licenseSecret }}
-      - name: acs-license
-        secret:
-          secretName: {{ .Values.repository.licenseSecret }}
+        - name: acs-license
+          secret:
+            secretName: {{ .Values.repository.licenseSecret }}
       {{- end }}
       {{- if .Values.repository.extraLogStatements }}
-      - name : dev-log4j-properties-volume
-        configMap:
-          name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
-          items:
-          - key: dev-log4j.properties
-            path: dev-log4j.properties
+        - name : dev-log4j-properties-volume
+          configMap:
+            name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
+            items:
+            - key: dev-log4j.properties
+              path: dev-log4j.properties
       {{- end }}
-      - name: custom-pipeline-config-volume
-        configMap:
-          optional: true
-          name: custom-pipeline-config
-      - name: custom-rendition-config-volume
-        configMap:
-          optional: true
-          name: custom-rendition-config
-      - name: custom-mimetype-config-volume
-        configMap:
-          optional: true
-          name: custom-mimetype-config
-      - name: custom-queryset-config-volume
-        configMap:
-          optional: true
-          name: custom-queryset-config
+        - name: custom-pipeline-config-volume
+          configMap:
+            optional: true
+            name: custom-pipeline-config
+        - name: custom-rendition-config-volume
+          configMap:
+            optional: true
+            name: custom-rendition-config
+        - name: custom-mimetype-config-volume
+          configMap:
+            optional: true
+            name: custom-mimetype-config
+        - name: custom-queryset-config-volume
+          configMap:
+            optional: true
+            name: custom-queryset-config
       {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
       - name: email-keystore-volume
         emptyDir: {}
