@@ -85,32 +85,6 @@ spec:
           - name: data
             mountPath: {{ .Values.repository.persistence.data.mountPath }}
             subPath: {{ .Values.repository.persistence.data.subPath }}
-          {{- if .Values.repository.licenseSecret }}
-          - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
-            name: acs-license
-          {{- end }}
-          {{- if .Values.repository.extraLogStatements }}
-          - name: dev-log4j-properties-volume
-            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
-            subPath: dev-log4j.properties
-          {{- end }}
-          - name: custom-queryset-config-volume
-            mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
-          - name: custom-pipeline-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.pipelinesMountPath }}
-          - name: custom-rendition-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.renditionsMountPath }}
-          - name: custom-mimetype-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.mimetypesMountPath }}
-          {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
-          - mountPath: /var/run/secrets/java.io/keystores
-            name: email-keystore-volume
-          - mountPath: /var/run/secrets/certs
-            name: email-certs
-          {{- end }}
-          {{- if .Values.repository.extraVolumeMounts }}
-{{ toYaml .Values.repository.extraVolumeMounts | indent 10 }}
-          {{- end }}
           {{- end }}
           startupProbe:
             httpGet:
