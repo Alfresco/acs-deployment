@@ -74,6 +74,10 @@ alfresco-digital-workspace:
   image:
     tag: 3.0.0
 
+alfresco-admin-app:
+  image:
+    tag: 7.6.0
+
 postgresql:
   image:
     tag: 13.3.0
