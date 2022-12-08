@@ -1,0 +1,88 @@
+---
+repository:
+  image:
+    tag: 7.3.0
+
+ooiService:
+  image:
+    tag: 1.1.3
+
+msTeams:
+  enabled: false
+
+msTeamsService:
+  image:
+    tag: 1.1.0
+
+transformrouter:
+  image:
+    tag: 2.0.0
+
+pdfrenderer:
+  image:
+    tag: 3.0.0
+
+imagemagick:
+  image:
+    tag: 3.0.0
+
+libreoffice:
+  image:
+    tag: 3.0.0
+
+tika:
+  image:
+    tag: 3.0.0
+
+transformmisc:
+  image:
+    tag: 3.0.0
+
+aiTransformer:
+  image:
+    tag: 1.4.5
+
+filestore:
+  image:
+    tag: 2.0.0
+
+share:
+  image:
+    tag: 7.3.0
+
+activemq:
+  image:
+    tag:
+
+alfresco-search:
+  searchServicesImage:
+    tag: 2.0.5
+
+alfresco-elasticsearch-connector:
+  enabled: false
+  image:
+    tag:
+
+alfresco-digital-workspace:
+  image:
+    tag: 3.1.0
+
+alfresco-admin-app:
+  image:
+    tag: 7.6.0
+
+ooi:
+  enabled: false
+
+postgresql:
+  image:
+    tag: 14.4.0
+
+postgresql-syncservice:
+  image:
+    tag: 14.4.0
+
+alfresco-sync-service:
+  syncservice:
+    image:
+      tag: 3.8.0
