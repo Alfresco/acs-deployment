@@ -60,8 +60,23 @@ alfresco-search:
 
 alfresco-elasticsearch-connector:
   enabled: false
-  image:
-    tag:
+  liveIndexing:
+    mediation:
+      image:
+        tag: 3.1.1
+    content:
+      image:
+        tag: 3.1.1
+    metadata:
+      image:
+        tag: 3.1.1
+    path:
+      image:
+        tag: 3.1.1
+  reindexing:
+    image:
+      tag: 3.1.1
+
 
 alfresco-digital-workspace:
   image:
