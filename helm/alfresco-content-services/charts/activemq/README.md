@@ -36,14 +36,18 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
-| persistence.chownWithDynamicProvisioning | bool | `false` |  |
-| persistence.existingClaim | string | `"alfresco-volume-claim"` |  |
-| persistence.mountPath | string | `"/opt/activemq/data"` |  |
-| persistence.subPath | string | `"alfresco-infrastructure/activemq-data"` |  |
+| persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| persistence.baseSize | string | `"20Gi"` |  |
+| persistence.data.mountPath | string | `"/opt/activemq/data"` |  |
+| persistence.data.subPath | string | `"alfresco-infrastructure/activemq-data"` |  |
+| persistence.enabled | bool | `true` |  |
+| persistence.existingClaim | string | `nil` |  |
+| persistence.storageClass | string | `nil` |  |
 | readinessProbe | object | `{"failureThreshold":6,"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":10}` | The ActiveMQ readiness probe is used to check startup only as a failure of the liveness probe later will result in the pod being restarted. |
 | replicaCount | int | `1` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
+| service.name | string | `"activemq"` |  |
 | services.broker.ports.external.amqp | int | `5672` |  |
 | services.broker.ports.external.openwire | int | `61616` |  |
 | services.broker.ports.external.stomp | int | `61613` |  |
