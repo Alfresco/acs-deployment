@@ -1,66 +1,51 @@
-# ACS 7.0.x values
-
+# ACS 7.0.N values
+---
 repository:
   image:
-    tag: 7.0.1.3
-
+    tag: 7.0.1.9
 transformrouter:
   image:
     tag: 1.4.1
-
 pdfrenderer:
   image:
     tag: 2.5.3
-
 imagemagick:
   image:
     tag: 2.5.3
-
 libreoffice:
   image:
     tag: 2.5.3
-
 tika:
   image:
     tag: 2.5.3
-
 transformmisc:
   image:
     tag: 2.5.3
-
 aiTransformer:
   image:
     tag: 1.4.0
-
 filestore:
   image:
     tag: 0.16.0
-
 share:
   image:
     tag: 7.0.1.3
-
 alfresco-search:
   searchServicesImage:
     tag: 2.0.2.2
-
 alfresco-digital-workspace:
   image:
-    tag: 2.5.0
-
+    tag: 2.6.2
 postgresql:
   image:
     tag: 13.1.0
-
 postgresql-syncservice:
   image:
     tag: 13.1.0
-
 alfresco-sync-service:
   syncservice:
     image:
       tag: 3.4.0
-
 global:
   tracking:
     auth: none
