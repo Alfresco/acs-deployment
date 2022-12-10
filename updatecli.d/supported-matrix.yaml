@@ -1,0 +1,228 @@
+---
+# Reflection of https://docs.alfresco.com/content-services/latest/support/
+# TO BE ENRICHED AS RELEASES ARE OUT
+matrix:
+  latest:
+    acs:
+      version: "7.4"
+      compose_target: &compose >-
+        docker-compose/docker-compose.yml
+      compose_key: services.alfresco.image
+      helm_target: &helmvalues >-
+        helm/alfresco-content-services/values.yaml
+      helm_key: repository.image.tag
+    share:
+      version: "7.4"
+      compose_target: *compose
+      compose_key: services.share.image
+      helm_target: *helmvalues
+      helm_key: share.image.tag
+    search-enterprise:
+      version: "3"
+      compose_target: >-
+        docker-compose/elasticsearch-override-docker-compose.yml
+      compose_key: services.search.image
+      helm_target: >-
+        helm/alfresco-content-services/charts/alfresco-elasticsearch-connector/values.yaml
+      helm_keys:
+        Reindexing: reindexing.image.tag
+        Liveindexing:
+          Mediation: liveIndexing.mediation.image.tag
+          Content: liveIndexing.content.image.tag
+          Metadata: liveIndexing.metadata.image.tag
+          Path: liveIndexing.path.image.tag
+    sync:
+      version: "4"
+      compose_target: *compose
+      compose_key: services.sync-service.image
+      helm_target: >-
+        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_key: syncservice.image.tag
+    adw:
+      version: "4"
+      compose_target: *compose
+      compose_key: services.digital-workspace.image
+      helm_target: *helmvalues
+      helm_key: alfresco-digital-workspace.image.tag
+    adminApp:
+      version: "7"
+      compose_target: *compose
+      compose_key: services.control-center.image
+      helm_target: *helmvalues
+      helm_key: alfresco-admin-app.image.tag
+  7.3.N:
+    acs:
+      version: "7.3"
+      compose_target: &compose73 >-
+        docker-compose/7.3.N-docker-compose.yml
+      compose_key: services.alfresco.image
+      helm_target: &helmvalues73 >-
+        helm/alfresco-content-services/7.3.N_values.yaml
+      helm_key: repository.image.tag
+    share:
+      version: "7.3"
+      compose_target: *compose73
+      compose_key: services.share.image
+      helm_target: *helmvalues73
+      helm_key: share.image.tag
+    search-enterprise:
+      version: "3.2"
+      helm_target: *helmvalues73
+      helm_keys:
+        Reindexing: alfresco-elasticsearch-connector.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            alfresco-elasticsearch-connector.liveIndexing.mediation.image.tag
+          Content: >-
+            alfresco-elasticsearch-connector.liveIndexing.content.image.tag
+          Metadata: >-
+            alfresco-elasticsearch-connector.liveIndexing.metadata.image.tag
+          Path: >-
+            alfresco-elasticsearch-connector.liveIndexing.path.image.tag
+    sync:
+      version: "3.8"
+      compose_target: *compose73
+      compose_key: services.sync-service.image
+      helm_target: >-
+        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_key: syncservice.image.tag
+    adw:
+      version: "3.1"
+      compose_target: *compose73
+      compose_key: services.digital-workspace.image
+      helm_target: *helmvalues73
+      helm_key: alfresco-digital-workspace.image.tag
+    adminApp:
+      version: "7.6"
+      compose_target: *compose73
+      compose_key: services.control-center.image
+      helm_target: *helmvalues73
+      helm_key: alfresco-admin-app.image.tag
+  7.2.N:
+    acs:
+      version: "7.2"
+      compose_target: &compose72 >-
+        docker-compose/7.2.N-docker-compose.yml
+      compose_key: services.alfresco.image
+      helm_target: &helmvalues72 >-
+        helm/alfresco-content-services/7.2.N_values.yaml
+      helm_key: repository.image.tag
+    share:
+      version: "7.2"
+      compose_target: *compose72
+      compose_key: services.share.image
+      helm_target: *helmvalues72
+      helm_key: share.image.tag
+    search-enterprise:
+      version: "3.1"
+      helm_target: *helmvalues72
+      helm_keys:
+        Reindexing: alfresco-elasticsearch-connector.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            alfresco-elasticsearch-connector.liveIndexing.mediation.image.tag
+          Content: >-
+            alfresco-elasticsearch-connector.liveIndexing.content.image.tag
+          Metadata: >-
+            alfresco-elasticsearch-connector.liveIndexing.metadata.image.tag
+          Path: >-
+            alfresco-elasticsearch-connector.liveIndexing.path.image.tag
+    sync:
+      version: "3.7"
+      compose_target: *compose72
+      compose_key: services.sync-service.image
+      helm_target: >-
+        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_key: syncservice.image.tag
+    adw:
+      version: "3.0"
+      compose_target: *compose72
+      compose_key: services.digital-workspace.image
+      helm_target: *helmvalues72
+      helm_key: alfresco-digital-workspace.image.tag
+    adminApp:
+      version: "7.6"
+      compose_target: *compose72
+      compose_key: services.control-center.image
+      helm_target: *helmvalues72
+      helm_key: alfresco-admin-app.image.tag
+  7.1.N:
+    acs:
+      version: "7.1"
+      compose_target: &compose71 >-
+        docker-compose/7.1.N-docker-compose.yml
+      compose_key: services.alfresco.image
+      helm_target: &helmvalues71 >-
+        helm/alfresco-content-services/7.1.N_values.yaml
+      helm_key: repository.image.tag
+    share:
+      version: "7.1"
+      compose_target: *compose71
+      compose_key: services.share.image
+      helm_target: *helmvalues71
+      helm_key: share.image.tag
+    search-enterprise:
+      version: "3.1"
+      helm_target: *helmvalues71
+      helm_keys:
+        Reindexing: alfresco-elasticsearch-connector.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            alfresco-elasticsearch-connector.liveIndexing.mediation.image.tag
+          Content: >-
+            alfresco-elasticsearch-connector.liveIndexing.content.image.tag
+          Metadata: >-
+            alfresco-elasticsearch-connector.liveIndexing.metadata.image.tag
+          Path: >-
+            alfresco-elasticsearch-connector.liveIndexing.path.image.tag
+    sync:
+      version: "3.7"
+      compose_target: *compose71
+      compose_key: services.sync-service.image
+      helm_target: >-
+        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_key: syncservice.image.tag
+    adw:
+      version: "2.6"
+      compose_target: *compose71
+      compose_key: services.digital-workspace.image
+      helm_target: *helmvalues71
+      helm_key: alfresco-digital-workspace.image.tag
+  7.0.N:
+    acs:
+      version: "7.0"
+      compose_target: &compose70 >-
+        docker-compose/7.0.N-docker-compose.yml
+      compose_key: services.alfresco.image
+      helm_target: &helmvalues70 >-
+        helm/alfresco-content-services/7.0.N_values.yaml
+      helm_key: repository.image.tag
+    share:
+      version: "7.0"
+      compose_target: *compose70
+      compose_key: services.share.image
+      helm_target: *helmvalues70
+      helm_key: share.image.tag
+    sync:
+      version: "3.7"
+      compose_target: *compose70
+      compose_key: services.sync-service.image
+      helm_target: >-
+        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_key: syncservice.image.tag
+    adw:
+      version: "2.6"
+      compose_target: *compose70
+      compose_key: services.digital-workspace.image
+      helm_target: *helmvalues70
+      helm_key: alfresco-digital-workspace.image.tag
+  community:
+    acs:
+      version: "7.4"
+      compose_target: &composece >-
+        docker-compose/community-docker-compose.yml
+      compose_key: services.alfresco.image
+    share:
+      version: "7.4"
+      compose_target: *composece
+      compose_key: services.share.image

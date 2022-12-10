@@ -1,0 +1,53 @@
+---
+name: Bump component versions
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticket:
+        description: ticket reference for the requested update
+        required: true
+
+permissions:
+  contents: "write"
+  pull-requests: "write"
+
+jobs:
+  updatecli:
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        version:
+          - latest
+          - 7.3.N
+          - 7.2.N
+          - 7.1.N
+          - 7.0.N
+          - community
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Updatecli
+        uses: updatecli/updatecli-action@v2
+
+      - name: Run Updatecli in apply mode
+        env:
+          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+          QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+          UPDATECLI_MANIFEST: ${{ matrix.version }}-manifest.yaml
+          MATRIX_FILE: /tmp/${{ matrix.version }}-matrix.yaml
+          UPDATECLI_GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          yq e '.matrix["${{ matrix.version }}"]' supported-matrix.yaml \
+          | tee > "$MATRIX_FILE"
+          updatecli apply -c "$UPDATECLI_MANIFEST" -v "$MATRIX_FILE"
+
+      - name: commit changes & open PR
+        shell:  bash
+        run: |
+          git checkout -b ${{ inputs.ticket }}-$GITHUB_RUN_ID
+          git commit -m "bumped" -- docker-compose/ helm/
+          git push
+          gh pr create -d -t "updatecli version bump" \
+            -b "${{ inputs.ticket }}" -l component-versions
