@@ -47,9 +47,9 @@ The table below shows the exact version of ACS deployed with each chart version/
 
 ### End of Life'ed versions
 
-While our latest version of the charts should be able to deployment any version of ACS (theorically), we only ever test deployment of _currently_ supported versions. Also we do not provide values files for older unsupported version. If you need to deploy old version we provide a reference table below to allow you find the older values files and charts. You can either try using the values file for a version with the latest charts or using the old charts.
+While our latest version of the charts should be able to deployment any version of ACS (theoretically), we only ever test deployment of _currently_ supported versions. Also we do not provide values files for older unsupported version. If you need to deploy old version we provide a reference table below to allow you find the older values files and charts. You can either try using the values file for a version with the latest charts or using the old charts.
 
-| unsuported ACS version | Last chart version providing it |
+| unsupported ACS version | Last chart version providing it |
 | ---------------------- | ------------------------------- |
 | 6.2                    | 5.3.0                           |
 | 6.1                    | 5.1.1                           |
