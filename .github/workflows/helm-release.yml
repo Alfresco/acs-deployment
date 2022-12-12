@@ -42,7 +42,7 @@ jobs:
           fetch-depth: 0
       - name: Publish chart
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.22.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v1.24.2
         with:
           chart_name: ${{ matrix.charts }}
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
