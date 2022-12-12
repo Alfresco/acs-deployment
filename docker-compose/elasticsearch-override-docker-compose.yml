@@ -1,5 +1,5 @@
+---
 version: "2"
-
 services:
   alfresco:
     environment:
@@ -16,6 +16,7 @@ services:
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
+        -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
@@ -23,10 +24,9 @@ services:
         -Dtransform.service.url=http://transform-router:8095
         -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-        -Dcsrf.filter.enabled=false
         -Ddsync.service.uris=http://localhost:9090/alfresco
-        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
   elasticsearch:
     image: elasticsearch:7.10.1
     environment:
@@ -44,31 +44,31 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.2.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.3.0-M1
     depends_on:
       - elasticsearch
       - alfresco
     environment:
-      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: http://transform-core-aio:8090/transform/config
-      ALFRESCO_SHAREDFILESTORE_BASEURL: http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
+      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
+        http://transform-core-aio:8090/transform/config
+      ALFRESCO_SHAREDFILESTORE_BASEURL: >-
+        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
-
   search-reindexing:
     image: quay.io/alfresco/alfresco-elasticsearch-reindexing:3.2.0
     depends_on:
       - alfresco
     restart: on-failure:10
     environment:
-      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: http://transform-core-aio:8090/transform/config
+      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
+        http://transform-core-aio:8090/transform/config
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_DATASOURCE_PASSWORD: alfresco
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
-
   # Disable the default solr6 service
   solr6:
     image: alpine:latest

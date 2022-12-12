@@ -1,13 +1,11 @@
-# This is a YAML-formatted file.  Declare variables to be passed into your templates.
-
-# ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
-# 1 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
-
+# ACS Community values
+---
 repository:
   edition: Community
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
+    tag: 7.3.0
 
 pdfrenderer:
   replicaCount: 1
@@ -33,12 +31,12 @@ alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
 
-# Disable features
+# Disable Enterprise only features
 alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:
   syncservice:
-    enabled : false
+    enabled: false
 postgresql-syncservice:
   enabled: false
 ai:

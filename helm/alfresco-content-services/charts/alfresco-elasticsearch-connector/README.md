@@ -32,21 +32,21 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | indexName | string | `"alfresco"` |  |
 | liveIndexing.content.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.content.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-content"` |  |
-| liveIndexing.content.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.content.image.tag | string | `"3.3.0-M1"` |  |
 | liveIndexing.content.replicaCount | int | `1` |  |
 | liveIndexing.mediation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.mediation.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation"` |  |
-| liveIndexing.mediation.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.mediation.image.tag | string | `"3.3.0-M1"` |  |
 | liveIndexing.metadata.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.metadata.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata"` |  |
-| liveIndexing.metadata.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.metadata.image.tag | string | `"3.3.0-M1"` |  |
 | liveIndexing.metadata.replicaCount | int | `1` |  |
 | liveIndexing.path.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.path.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-path"` |  |
-| liveIndexing.path.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.path.image.tag | string | `"3.3.0-M1"` |  |
 | liveIndexing.path.replicaCount | int | `1` |  |
 | messageBroker.password | string | `nil` | Broker password |
-| messageBroker.url | string | `nil` | Broker URL formatted as per https://activemq.apache.org/failover-transport-reference |
+| messageBroker.url | string | `nil` | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference |
 | messageBroker.user | string | `nil` | Broker username |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
@@ -57,7 +57,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.enabled | bool | `true` |  |
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
-| reindexing.image.tag | string | `"3.2.0"` |  |
+| reindexing.image.tag | string | `"3.3.0-M1"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
 | reindexing.postgresql.database | string | `"alfresco"` |  |
 | reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |

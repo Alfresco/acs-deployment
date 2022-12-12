@@ -1,16 +1,25 @@
-# This docker-compose file will spin up an ACS cluster on a local host or on a server and it requires a minimum of 13GB Memory to distribute among containers.
-# Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
-# For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
-# See Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D).
-# If the container memory is not explicitly set then the flags above will set the max heap default to 1/4 of the container's memory, which may not be ideal.
-# For performance tuning, assign the container memory and give a percentage of it to the JVM.
-
-# Using version 2 as 3 does not support resource constraint options (cpu_*, mem_* limits) for non swarm mode in Compose
+# This docker-compose file will spin up an ACS cluster on a local host.
+# It requires a minimum of 13GB Memory to distribute among containers.
+#
+# For performance tuning, assign the container memory and give a percentage of
+# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
+# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
+# More details here:
+# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
+#
+# Note: The docker-compose file from github.com is a limited trial that goes
+# into read-only mode after 2 days. Get the latest docker-compose.yml file with
+# a 30-day trial license by accessing the Alfresco Content Services trial
+# download page at:
+# https://www.alfresco.com/platform/content-services-ecm/trial/download
+#
+# Using version 2 as 3 does not support resource constraint options
+# (cpu_*, mem_* limits) for non swarm mode in Compose
+---
 version: "2"
-
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository-community:7.3.0
+    image: alfresco/alfresco-content-repository-community:7.4.0-M1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -23,28 +32,18 @@ services:
         -Dmetadata-keystore.metadata.password=oKIWzVdEdA
         -Dmetadata-keystore.metadata.algorithm=DESede
       JAVA_OPTS: >-
-        -Ddb.driver=org.postgresql.Driver
-        -Ddb.username=alfresco
-        -Ddb.password=alfresco
-        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsolr.host=solr6
-        -Dsolr.port=8983
-        -Dsolr.http.connection.timeout=1000
-        -Dsolr.secureComms=secret
-        -Dsolr.sharedSecret=secret
-        -Dsolr.base.url=/solr
-        -Dindex.subsystem.name=solr6
-        -Dshare.host=127.0.0.1
-        -Dshare.port=8080
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
+        -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco
+        -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dsolr.host=solr6 -Dsolr.port=8983 -Dsolr.http.connection.timeout=1000
+        -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret
+        -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6
+        -Dshare.host=127.0.0.1 -Dshare.port=8080 -Dalfresco.host=localhost
+        -Dalfresco.port=8080 -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-        -Dcsrf.filter.enabled=false
         -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:3.0.0
     mem_limit: 1536m
@@ -52,21 +51,16 @@ services:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
     ports:
       - "8090:8090"
-
   share:
-    image: alfresco/alfresco-share:7.3.0
+    image: alfresco/alfresco-share:7.4.0-M1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
       JAVA_OPTS: >-
-        -XX:MinRAMPercentage=50
-        -XX:MaxRAMPercentage=80
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
-        -Dalfresco.context=alfresco
-        -Dalfresco.protocol=http
-
+        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+        -Dalfresco.host=localhost -Dalfresco.port=8080
+        -Dalfresco.context=alfresco -Dalfresco.protocol=http
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -77,7 +71,6 @@ services:
     command: postgres -c max_connections=300 -c log_min_messages=LOG
     ports:
       - "5432:5432"
-
   solr6:
     image: alfresco/alfresco-search-services:2.0.5
     mem_limit: 2g
@@ -96,23 +89,20 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dalfresco.secureComms.secret=secret
     ports:
-      - "8083:8983" # Browser port
-
+      - "8083:8983"  # Browser port
   activemq:
     image: alfresco/alfresco-activemq:5.17.1-jre11-rockylinux8
     mem_limit: 1g
     ports:
-      - "8161:8161" # Web Console
-      - "5672:5672" # AMQP
-      - "61616:61616" # OpenWire
-      - "61613:61613" # STOMP
-
+      - "8161:8161"  # Web Console
+      - "5672:5672"  # AMQP
+      - "61616:61616"  # OpenWire
+      - "61613:61613"  # STOMP
   content-app:
     image: alfresco/alfresco-content-app:3.1.0
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
-
   proxy:
     image: alfresco/alfresco-acs-nginx:3.4.2
     mem_limit: 128m
