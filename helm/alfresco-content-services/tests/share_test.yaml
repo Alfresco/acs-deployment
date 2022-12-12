@@ -15,14 +15,19 @@ tests:
           path: metadata.name
           value: RELEASE-NAME-alfresco-cs-share
         template: deployment-share.yaml
-  - it: should have configmap with CATALINA_OPTS with encryption.ssl.truststore.location set
+  - it: |
+      should have configmap with CATALINA_OPTS with
+      encryption.ssl.truststore.location set
     values: *testvalues
     asserts:
-      - equal:
+      - matchRegex:
           path: data.CATALINA_OPTS
-          value: ' -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80'
+          pattern: >-
+            (^|\w\ )-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80($|\ )
         template: config-share.yaml
-  - it: should have configmap with ALFRESCO_OPTS urls without ports when are the same of the protocol default
+  - it: |
+      should have configmap with ALFRESCO_OPTS urls without ports when are the
+      same of the protocol default
     values: *testvalues
     asserts:
       - equal:
@@ -37,7 +42,9 @@ tests:
           path: data.JAVA_OPTS
           value: -Dalfresco.proxy=http://RELEASE-NAME-alfresco-cs-share
         template: config-share.yaml
-  - it: should have configmap with ALFRESCO_OPTS urls with ports when are not protocol default
+  - it: |
+      should have configmap with ALFRESCO_OPTS urls with ports when are not
+      protocol default
     values: *testvalues
     set:
       externalPort: "8080"
@@ -54,7 +61,9 @@ tests:
           path: data.JAVA_OPTS
           value: -Dalfresco.proxy=http://RELEASE-NAME-alfresco-cs-share:8080
         template: config-share.yaml
-  - it: should have configmap with ALFRESCO_OPTS urls with overridden share externalPort
+  - it: |
+      should have configmap with ALFRESCO_OPTS urls with overridden share
+      externalPort
     values: *testvalues
     set:
       share.service.externalPort: "8081"
