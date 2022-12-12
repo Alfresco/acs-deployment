@@ -88,5 +88,5 @@ alert-fly-alfresco-cs-email   LoadBalancer   100.XX.33.188   a1dXXXXXab11eaac670
 
 ## References
 
-- [Alfresco Configuring email](https://docs.alfresco.com/6.2/concepts/email.html)
+- [Alfresco Configuring email](https://docs.alfresco.com/content-services/latest/admin/)
 - [Kubernetes Ingress-nginx Exposing TCP and UDP services](https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/exposing-tcp-udp-services.md#exposing-tcp-and-udp-services)

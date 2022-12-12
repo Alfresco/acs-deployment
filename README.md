@@ -27,25 +27,34 @@ A new version numbering scheme is also being introduced, during the development 
 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
-| Chart Version/Tag | Default   | 7.2.N | 7.1.N   | 7.0.N   | 6.2.N    | Community |
-| ----------------- | --------- | ----- | ------- | ------- | -------- | --------- |
-| 5.0.0-M1          | 7.0.0-M2  |       |         |         | 6.2.2    | 6.2.1-A8  |
-| 5.0.0-M2          | 7.0.0-M3  |       |         |         | 6.2.2    | 7.0.0     |
-| 5.0.0             | 7.0.0     |       |         |         | 6.2.2    | 7.0.0     |
-| 5.0.1             | 7.0.0     |       |         |         | 6.2.2    | 7.0.0     |
-| 5.1.0-M1          | 7.1.0-M1  |       |         |         | 6.2.2    | 7.1.0-M1  |
-| 5.1.0-M2          | 7.1.0-M2  |       |         | 7.0.1   | 6.2.2    | 7.1.0-M2  |
-| 5.1.0             | 7.1.0.1   |       |         | 7.0.1   | 6.2.2    | 7.1.0     |
-| 5.1.1             | 7.1.0.1   |       |         | 7.0.1   | 6.2.2    | 7.1.0     |
-| 5.2.0-M1          | 7.2.0-M1  |       | 7.1.0.1 | 7.0.1   | 6.2.2    | 7.2.0-M1  |
-| 5.2.0-M2          | 7.2.0-M2  |       | 7.1.1   | 7.0.1   | 6.2.2    | 7.2.0-M2  |
-| 5.2.0             | 7.2.0     |       | 7.1.1   | 7.0.1   | 6.2.2    | 7.2.0     |
-| 5.3.0-M1          | 23.1.0-M1 | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 23.1.0-M1 |
-| 5.3.0-M2          | 7.3.0-M1  | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 7.3.0-M2  |
-| 5.3.0-M3          | 7.3.0-M2  | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 7.3.0-M2  |
-| 5.3.0             | 7.3.0     | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 7.3.0     |
+| Chart Version/Tag | Default   | 7.2.N | 7.1.N   | 7.0.N   | Community |
+| ----------------- | --------- | ----- | ------- | ------- | --------- |
+| 5.0.0-M1          | 7.0.0-M2  |       |         |         | 6.2.1-A8  |
+| 5.0.0-M2          | 7.0.0-M3  |       |         |         | 7.0.0     |
+| 5.0.0             | 7.0.0     |       |         |         | 7.0.0     |
+| 5.0.1             | 7.0.0     |       |         |         | 7.0.0     |
+| 5.1.0-M1          | 7.1.0-M1  |       |         |         | 7.1.0-M1  |
+| 5.1.0-M2          | 7.1.0-M2  |       |         | 7.0.1   | 7.1.0-M2  |
+| 5.1.0             | 7.1.0.1   |       |         | 7.0.1   | 7.1.0     |
+| 5.1.1             | 7.1.0.1   |       |         | 7.0.1   | 7.1.0     |
+| 5.2.0-M1          | 7.2.0-M1  |       | 7.1.0.1 | 7.0.1   | 7.2.0-M1  |
+| 5.2.0-M2          | 7.2.0-M2  |       | 7.1.1   | 7.0.1   | 7.2.0-M2  |
+| 5.2.0             | 7.2.0     |       | 7.1.1   | 7.0.1   | 7.2.0     |
+| 5.3.0-M1          | 23.1.0-M1 | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 23.1.0-M1 |
+| 5.3.0-M2          | 7.3.0-M1  | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 7.3.0-M2  |
+| 5.3.0-M3          | 7.3.0-M2  | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 7.3.0-M2  |
+| 5.3.0             | 7.3.0     | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 7.3.0     |
 
-> ACS 6.1.x is currently in [EoM](https://www.alfresco.com/services/subscription/technical-support/product-support-status) and has been removed from this project, if you need to install it please use a former release like [5.1.1](https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1).
+### End of Life'ed versions
+
+While our latest version of the charts should be able to deployment any version of ACS (theoretically), we only ever test deployment of _currently_ supported versions. Also we do not provide values files for older unsupported version. If you need to deploy old version we provide a reference table below to allow you find the older values files and charts. You can either try using the values file for a version with the latest charts or using the old charts.
+
+| unsupported ACS version | Last chart version providing it |
+| ---------------------- | ------------------------------- |
+| 6.2                    | 5.3.0                           |
+| 6.1                    | 5.1.1                           |
+
+> These charts are mentioned for reference but are not supported.
 
 ### Docker
 
