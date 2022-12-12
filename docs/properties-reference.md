@@ -1504,7 +1504,7 @@ used in deprecated classes that have been superseded by newer functionality.
 | domain.name.caseSensitive | Are domain names case sensitive? | false |
 | domain.separator | | |
 | download.cleaner.batchSize | Download Service Cleanup. -1 or 0 for not using batches | 1000 |
-| download.cleaner.cleanAllSysDownloadFolders | You could set this to false for new installations greater then ACS 6.2 see MNT-20212 | true |
+| download.cleaner.cleanAllSysDownloadFolders | You could set this to false for new installations greater than ACS 6.2 see MNT-20212 | true |
 | download.cleaner.maxAgeMins | Download Service Cleanup | 60 |
 | download.cleaner.repeatIntervalMilliseconds | Download Service Cleanup | 3600000 |
 | download.cleaner.startDelayMilliseconds | Download Service Cleanup | 3600000 |
