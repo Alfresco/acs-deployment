@@ -29,18 +29,18 @@ This process requires some familiarty with [Docker](https://www.docker.com/) and
 
 You will now need to install the AMP files into the Alfresco Content Repository image.
 
-1. The docker-compose folder contains a file for each main code line of ACS, examine the relevant docker compose file for the version of ACS you want to apply the AMPs to. For example, to apply to the latest version of 6.2 take a look at the [6.2.N-docker-compose file](../../../docker-compose/6.2.N-docker-compose.yml)
+1. The docker-compose folder contains a file for each main code line of ACS, examine the relevant docker compose file for the version of ACS you want to apply the AMPs to. For example, to apply to the latest version of 7.3 take a look at the [7.3.N-docker-compose file](../../../docker-compose/7.3.N-docker-compose.yml)
 
-2. Take note of the image and tag being used for the **alfresco** service in the docker compose file you chose in the previous step. For example, if you are using 6.2.N-docker-compose.yml, you will find this on [line 15](https://github.com/Alfresco/acs-deployment/blob/229fe58d077414c5d91bab9f5cec91adc902453c/docker-compose/6.2.N-docker-compose.yml#L15) as follows:
+2. Take note of the image and tag being used for the **alfresco** service in the docker compose file you chose in the previous step. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 15](https://github.com/Alfresco/acs-deployment/blob/229fe58d077414c5d91bab9f5cec91adc902453c/docker-compose/7.3.N-docker-compose.yml#L15) as follows:
 
     ```bash
-    alfresco/alfresco-content-repository:6.2.2.1
+    alfresco/alfresco-content-repository:7.3.0.1
     ```
 
 3. Add the following Docker commands to the repository/Dockerfile file and save, making sure to change the image name and tag to match from the above step:
 
     ```Dockerfile
-    FROM alfresco/alfresco-content-repository:6.2.2.1
+    FROM alfresco/alfresco-content-repository:7.3.0.1
 
     # Customize container: install amps
 
@@ -66,23 +66,23 @@ You will now need to install the AMP files into the Alfresco Content Repository 
     USER alfresco
     ```
 
-    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.alfresco.com/6.2/concepts/dev-extensions-modules-management-tool.html).
+    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.alfresco.com/7.3/concepts/dev-extensions-modules-management-tool.html).
 
-4. Build the image, make sure you give the image an appropriate name and tag so you can easily identify the image afterwards. In the below example, you will want to replace `myregistrydomain/my-custom-alfresco-content-repository:6.2.2` and `myregistrydomain/my-custom-alfresco-content-repository:latest` with your own Docker registry, image name and tag as per your requirements
+4. Build the image, make sure you give the image an appropriate name and tag so you can easily identify the image afterwards. In the below example, you will want to replace `myregistrydomain/my-custom-alfresco-content-repository:7.3.0.1` and `myregistrydomain/my-custom-alfresco-content-repository:latest` with your own Docker registry, image name and tag as per your requirements
 
     ```bash
-    docker build repository -t myregistrydomain/my-custom-alfresco-content-repository:6.2.2.1 -t myregistrydomain/my-custom-alfresco-content-repository:latest
+    docker build repository -t myregistrydomain/my-custom-alfresco-content-repository:0.2.2.1 -t myregistrydomain/my-custom-alfresco-content-repository:latest
     ```
 
     Once the image build is complete, you should see successful messages similar to the below:
 
     ```text
     Successfully built 632eda3ea296
-    Successfully tagged myregistrydomain/my-custom-alfresco-content-repository:6.2.2.1
+    Successfully tagged myregistrydomain/my-custom-alfresco-content-repository:7.3.0.1
     Successfully tagged myregistrydomain/my-custom-alfresco-content-repository:latest
     ```
 
-5. Replace the image used by the **alfresco** service in the docker-compose file you chose to use in step 1, for example, **replace** `image: alfresco/alfresco-content-repository:6.2.2.1` **with** `image: myregistrydomain/my-custom-alfresco-content-repository:6.2.2.1`
+5. Replace the image used by the **alfresco** service in the docker-compose file you chose to use in step 1, for example, **replace** `image: alfresco/alfresco-content-repository:7.3.0.1` **with** `image: myregistrydomain/my-custom-alfresco-content-repository:7.3.0.1`
 
 6. Save the docker-compose file
 
@@ -90,16 +90,16 @@ You will now need to install the AMP files into the Alfresco Content Repository 
 
 We will now repeat the process for the Alfresco Share image.
 
-1. Take note of the image and tag being used for the **share** service in the docker compose file you chose in the previous section. For example, if you are using 6.2.N-docker-compose.yml, you will find this on [line 89](https://github.com/Alfresco/acs-deployment/blob/229fe58d077414c5d91bab9f5cec91adc902453c/docker-compose/6.2.N-docker-compose.yml#L89) as follows:
+1. Take note of the image and tag being used for the **share** service in the docker compose file you chose in the previous section. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 89](https://github.com/Alfresco/acs-deployment/blob/229fe58d077414c5d91bab9f5cec91adc902453c/docker-compose/7.3.N-docker-compose.yml#L89) as follows:
 
     ```bash
-    alfresco/alfresco-share:6.2.2
+    alfresco/alfresco-share:7.3.0
     ```
 
 2. Add the following Docker commands to the share/Dockerfile file and save, making sure to change the image name and tag to match from the above step:
 
     ```Dockerfile
-    FROM alfresco/alfresco-share:6.2.2
+    FROM alfresco/alfresco-share:7.3.0
 
     ARG TOMCAT_DIR=/usr/local/tomcat
 
@@ -109,23 +109,23 @@ We will now repeat the process for the Alfresco Share image.
         ${TOMCAT_DIR}/amps_share ${TOMCAT_DIR}/webapps/share -directory -nobackup -verbose
     ```
 
-    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.alfresco.com/6.2/concepts/dev-extensions-modules-management-tool.html).
+    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.alfresco.com/7.3/concepts/dev-extensions-modules-management-tool.html).
 
-3. Build the image, make sure you give the image an appropriate name and tag so you can easily identify the image afterwards. In the below command, you will want to replace `myregistrydomain/my-custom-alfresco-share:6.2.2` and `myregistrydomain/my-custom-alfresco-share:latest` with your own Docker registry, image name and tag as per your requirements
+3. Build the image, make sure you give the image an appropriate name and tag so you can easily identify the image afterwards. In the below command, you will want to replace `myregistrydomain/my-custom-alfresco-share:7.3.0` and `myregistrydomain/my-custom-alfresco-share:latest` with your own Docker registry, image name and tag as per your requirements
 
     ```bash
-    docker build share -t myregistrydomain/my-custom-alfresco-share:6.2.2 -t myregistrydomain/my-custom-alfresco-share:latest
+    docker build share -t myregistrydomain/my-custom-alfresco-share:7.3.0 -t myregistrydomain/my-custom-alfresco-share:latest
     ```
 
     Once the image build is complete, you should see successful messages similar to the below:
 
     ```text
     Successfully built 6d5ee67935da
-    Successfully tagged myregistrydomain/my-custom-alfresco-share:6.2.2
+    Successfully tagged myregistrydomain/my-custom-alfresco-share:7.3.0
     Successfully tagged myregistrydomain/my-custom-alfresco-share:latest
     ```
 
-4. Replace the image used by the **share** service in the docker-compose file you chose to use in the previous section, for example, **replace** `image: alfresco/alfresco-share:6.2.2` **with** `image: myregistrydomain/my-custom-alfresco-share:6.2.2`
+4. Replace the image used by the **share** service in the docker-compose file you chose to use in the previous section, for example, **replace** `image: alfresco/alfresco-share:7.3.0` **with** `image: myregistrydomain/my-custom-alfresco-share:7.3.0`
 
 5. Save the docker-compose file
 

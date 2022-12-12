@@ -23,7 +23,6 @@ jobs:
           - 7.2.N-docker-compose.yml
           - 7.1.N-docker-compose.yml
           - 7.0.N-docker-compose.yml
-          - 6.2.N-docker-compose.yml
     runs-on: ubuntu-latest
     if: >-
       github.event_name == 'push'

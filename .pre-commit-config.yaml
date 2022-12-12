@@ -24,7 +24,7 @@ repos:
       - id: helm-deps
       - id: helm-lint
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 2.2.93
+    rev: 2.2.139
     hooks:
       - id: checkov
         files: \.yaml$
