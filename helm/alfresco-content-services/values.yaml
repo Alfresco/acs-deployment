@@ -70,8 +70,10 @@ repository:
     #      - chart-example.local
   environment:
     JAVA_OPTS: >-
-      -Dtransform.service.enabled=true -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS
+      -Dtransform.service.enabled=true
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=80
+      -Dencryption.keystore.type=JCEKS
       -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
       -Dencryption.keyAlgorithm=DESede
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore

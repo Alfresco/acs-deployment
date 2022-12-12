@@ -32,20 +32,30 @@ services:
         -Dmetadata-keystore.metadata.password=oKIWzVdEdA
         -Dmetadata-keystore.metadata.algorithm=DESede
       JAVA_OPTS: >-
-        -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco
-        -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsolr.host=solr6 -Dsolr.port=8983 -Dsolr.secureComms=none
-        -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6
-        -Dshare.host=127.0.0.1 -Dshare.port=8080 -Dalfresco.host=localhost
-        -Dalfresco.port=8080 -Dcsrf.filter.enabled=false
+        -Ddb.driver=org.postgresql.Driver
+        -Ddb.username=alfresco
+        -Ddb.password=alfresco
+        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dsolr.host=solr6
+        -Dsolr.port=8983
+        -Dsolr.secureComms=none
+        -Dsolr.base.url=/solr
+        -Dindex.subsystem.name=solr6
+        -Dshare.host=127.0.0.1
+        -Dshare.port=8080
+        -Dalfresco.host=localhost
+        -Dalfresco.port=8080
+        -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Ddeployment.method=DOCKER_COMPOSE -Dtransform.service.enabled=true
+        -Ddeployment.method=DOCKER_COMPOSE
+        -Dtransform.service.enabled=true
         -Dtransform.service.url=http://transform-router:8095
         -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -Ddsync.service.uris=http://localhost:9090/alfresco
-        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:1.4.1
@@ -151,10 +161,14 @@ services:
       JAVA_OPTS: >-
         -Dsql.db.driver=org.postgresql.Driver
         -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsql.db.username=alfresco -Dsql.db.password=alfresco
-        -Dmessaging.broker.host=activemq -Drepo.hostname=alfresco
-        -Drepo.port=8080 -Ddw.server.applicationConnectors[0].type=http
-        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+        -Dsql.db.username=alfresco
+        -Dsql.db.password=alfresco
+        -Dmessaging.broker.host=activemq
+        -Drepo.hostname=alfresco
+        -Drepo.port=8080
+        -Ddw.server.applicationConnectors[0].type=http
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
     ports:
       - "9090:9090"
 volumes:
