@@ -19,8 +19,8 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.0.1.9
-    mem_limit: 1700m
+    image: quay.io/alfresco/alfresco-content-repository:7.3.0.1
+    mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
         -Dencryption.keystore.type=JCEKS
@@ -38,14 +38,14 @@ services:
         -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
         -Dsolr.host=solr6
         -Dsolr.port=8983
-        -Dsolr.secureComms=none
+        -Dsolr.secureComms=secret
+        -Dsolr.sharedSecret=secret
         -Dsolr.base.url=/solr
         -Dindex.subsystem.name=solr6
         -Dshare.host=127.0.0.1
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
-        -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
@@ -53,12 +53,13 @@ services:
         -Dtransform.service.url=http://transform-router:8095
         -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
+        -Dcsrf.filter.enabled=false
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:1.4.1
+    image: quay.io/alfresco/alfresco-transform-router:2.0.0
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -72,13 +73,13 @@ services:
     links:
       - activemq
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:2.5.3
+    image: alfresco/alfresco-transform-core-aio:3.0.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
-      ACTIVEMQ_URL: "nio://activemq:61616"
+      ACTIVEMQ_URL: nio://activemq:61616
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
@@ -86,7 +87,7 @@ services:
     links:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:0.16.0
+    image: quay.io/alfresco/alfresco-shared-file-store:2.0.0
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -99,7 +100,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.0.1.3
+    image: quay.io/alfresco/alfresco-share:7.3.0.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -112,7 +113,7 @@ services:
         -Dalfresco.context=alfresco
         -Dalfresco.protocol=http
   postgres:
-    image: postgres:13.1
+    image: postgres:14.4
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
@@ -122,23 +123,26 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: alfresco/alfresco-search-services:2.0.2.2
+    image: alfresco/alfresco-search-services:2.0.5
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
-      - SOLR_ALFRESCO_HOST=alfresco
-      - SOLR_ALFRESCO_PORT=8080
+      SOLR_ALFRESCO_HOST: "alfresco"
+      SOLR_ALFRESCO_PORT: "8080"
       # Alfresco needs to know how to call solr
-      - SOLR_SOLR_HOST=solr6
-      - SOLR_SOLR_PORT=8983
+      SOLR_SOLR_HOST: "solr6"
+      SOLR_SOLR_PORT: "8983"
       # Create the default alfresco and archive cores
-      - SOLR_CREATE_ALFRESCO_DEFAULTS=alfresco,archive
-      # HTTP by default
-      - ALFRESCO_SECURE_COMMS=none
+      SOLR_CREATE_ALFRESCO_DEFAULTS: "alfresco,archive"
+      # HTTPS or SECRET
+      ALFRESCO_SECURE_COMMS: "secret"
+      # SHARED SECRET VALUE
+      JAVA_TOOL_OPTIONS: >-
+        -Dalfresco.secureComms.secret=secret
     ports:
       - "8083:8983"  # Browser port
   activemq:
-    image: alfresco/alfresco-activemq:5.16.4-jre11-centos7
+    image: alfresco/alfresco-activemq:5.17.1-jre11-rockylinux8
     mem_limit: 1g
     ports:
       - "8161:8161"  # Web Console
@@ -146,25 +150,35 @@ services:
       - "61616:61616"  # OpenWire
       - "61613:61613"  # STOMP
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:2.6.2
+    image: quay.io/alfresco/alfresco-digital-workspace:3.1.1
     mem_limit: 128m
     environment:
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
+      APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
+  control-center:
+    image: quay.io/alfresco/alfresco-admin-app:7.6.1
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.2.0
+    image: alfresco/alfresco-acs-nginx:3.4.2
     mem_limit: 128m
     depends_on:
       - alfresco
       - digital-workspace
+      - control-center
     ports:
       - "8080:8080"
     links:
       - digital-workspace
       - alfresco
       - share
+      - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:3.7.2
+    image: quay.io/alfresco/service-sync:3.8.0
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
