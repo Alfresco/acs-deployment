@@ -113,7 +113,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.repository.port | int | `80` |  |
 | alfresco-search.searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.0.5"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.6-A4"` |  |
 | alfresco-search.type | string | `"search-services"` |  |
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | alfresco-sync-service.image.tag | string | `"3.8.0"` |  |
