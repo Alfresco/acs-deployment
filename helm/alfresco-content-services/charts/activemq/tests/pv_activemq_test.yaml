@@ -1,9 +1,9 @@
 ---
 suite: Activemq test persistence 
 templates:
-  - charts/activemq/templates/deployment-activemq.yaml
-  - charts/activemq/templates/pvc-activemq.yaml
-  - pvc.yaml
+  - deployment-activemq.yaml
+  - pvc-activemq.yaml
+  - ../../../templates/pvc.yaml
 tests:
   - it: should render a volumeless deployment
     values: &testvalues
@@ -14,7 +14,7 @@ tests:
     asserts:
       - isEmpty:
           path: spec.template.spec.volumes
-        template: charts/activemq/templates/deployment-activemq.yaml
+        template: deployment-activemq.yaml
   - it: should render a deployment with set claim
     values: *testvalues
     set:
@@ -26,7 +26,7 @@ tests:
           path: >-
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
           value: mysfsvolume
-        template: charts/activemq/templates/deployment-activemq.yaml
+        template: deployment-activemq.yaml
   - it: should render a deployment with dynamic claim name
     values: *testvalues
     set:
@@ -41,10 +41,10 @@ tests:
           path: >-
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
           value: activemq-default-pvc
-        template: charts/activemq/templates/deployment-activemq.yaml
+        template: deployment-activemq.yaml
       - isNull:
           path: spec.storageClassName
-        template: pvc.yaml
+        template: ../../../templates/pvc.yaml
         documentIndex: 1
   - it: should render a deployment with provided storage class
     values: *testvalues
@@ -57,9 +57,9 @@ tests:
           path: >-
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
           value: activemq-cheap-pvc
-        template: charts/activemq/templates/deployment-activemq.yaml
+        template: deployment-activemq.yaml
       - equal:
           path: spec.storageClassName
           value: cheap
-        template: pvc.yaml
+        template: ../../../templates/pvc.yaml
         documentIndex: 1
