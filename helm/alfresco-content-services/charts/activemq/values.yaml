@@ -64,7 +64,7 @@ persistence:
   storageClass:
   accessModes:
      - ReadWriteOnce
-  existingClaim: null
+  existingClaim:
   data:
    mountPath: "/opt/activemq/data"
    subPath: "alfresco-infrastructure/activemq-data"

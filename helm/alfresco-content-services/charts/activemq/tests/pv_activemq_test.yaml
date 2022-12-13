@@ -1,69 +1,67 @@
----
-suite: Activemq test persistence 
+suite: test activemq manifest
 templates:
   - deployment-activemq.yaml
   - pvc-activemq.yaml
   - ../../../templates/pvc.yaml
 tests:
-  - it: should render a volumeless deployment
-    values: &testvalues
-      - values/test_values.yaml
-    set:
-      persistence:
-        enabled: false
-    asserts:
-      - isEmpty:
-          path: spec.template.spec.volumes
-        template: deployment-activemq.yaml
-  - it: should render a deployment with set claim
-    values: *testvalues
-    set:
-      persistence:
-        enabled: true
-        existingClaim: mysfsvolume
+  - it: should have basic metadata in place in deployment
     asserts:
       - equal:
-          path: >-
-            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
-          value: mysfsvolume
-        template: deployment-activemq.yaml
-  - it: should render a deployment with dynamic claim name
-    values: *testvalues
-    set:
-      persistence:
-        enabled: true
-        volumeMode: Block
-        accessModes:
-          - ReadWriteMany
-          - ReadOnlyMany
+          path: metadata.name
+          value: RELEASE-NAME-activemq
+        template: deployment-aps.yaml
+  - it: should have a default volume claim when not specifying an existing one
     asserts:
       - equal:
-          path: >-
-            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          path: spec.template.spec.containers[0].volumeMounts[0].name
+          value: data
+        template: deployment-activemq.yaml
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].mountPath
+          value: /opt/activemq/data
+        template: deployment-activemq.yaml
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].subPath
+          value: alfresco-infrastructure/activemq-data
+        template: deployment-activemq.yaml
+      - equal:
+          path: spec.template.spec.volumes[0].persistentVolumeClaim.claimName
           value: activemq-default-pvc
         template: deployment-activemq.yaml
-      - isNull:
+      - equal:
+          path: metadata.name
+          value: activemq-default-pvc
+        template: 
+          - ../../../templates/pvc.yaml
+          - pvc-activemq.yaml
+      - isEmpty:
           path: spec.storageClassName
         template:
           - ../../../templates/pvc.yaml
           - pvc-activemq.yaml
-        documentIndex: 1
-  - it: should render a deployment with provided storage class
-    values: *testvalues
+  - it: should set a specific storage class when set
     set:
-      persistence:
-        enabled: true
-        storageClass: cheap
+      persistence.storageClass: my-own-storage-class
     asserts:
       - equal:
-          path: >-
-            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
-          value: activemq-cheap-pvc
-        template: deployment-activemq.yaml
-      - equal:
           path: spec.storageClassName
-          value: cheap
+          value: my-own-storage-class
         template:
           - ../../../templates/pvc.yaml
           - pvc-activemq.yaml
-        documentIndex: 1
+  - it: should override default volume claim when existing claim is provided
+    set:
+      persistence.existingClaim: my-own-custom-pvc
+    asserts:
+      - isNotEmpty:
+          path: spec.template.spec.containers[0].volumeMounts
+        template: deployment-activemq.yaml
+      - equal:
+          path: spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: my-own-custom-pvc
+        template: deployment-activemq.yaml
+      - hasDocuments:
+          count: 0
+        template: 
+          - ../../../templates/pvc.yaml
+          - pvc-activemq.yaml
