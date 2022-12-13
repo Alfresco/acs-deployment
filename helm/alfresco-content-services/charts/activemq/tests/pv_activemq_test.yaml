@@ -44,7 +44,7 @@ tests:
         template: deployment-activemq.yaml
       - isNull:
           path: spec.storageClassName
-        template: ../../../templates/pvc.yaml
+        template: pvc-activemq.yaml
         documentIndex: 1
   - it: should render a deployment with provided storage class
     values: *testvalues
@@ -61,5 +61,5 @@ tests:
       - equal:
           path: spec.storageClassName
           value: cheap
-        template: ../../../templates/pvc.yaml
+        template: pvc-activemq.yaml
         documentIndex: 1
