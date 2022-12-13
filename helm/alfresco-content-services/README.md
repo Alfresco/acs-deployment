@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 5.4.0-M1](https://img.shields.io/badge/Version-5.4.0--M1-informational?style=flat-square)
+![Version: 5.4.0-SNAPSHOT](https://img.shields.io/badge/Version-5.4.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -23,7 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.6.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.6.0 |
 | https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
-| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.2.0 |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.3.0-SNAPSHOT |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql-syncservice(postgresql) | 10.16.2 |
 
