@@ -108,6 +108,7 @@ Open a PR that will:
   every [subchart](/helm/alfresco-content-services/charts/)) as a dependency:
   * Bump version to the new `alfresco-common` stable version
   * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
+* Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, create and push the signed tag with:
 
@@ -131,6 +132,7 @@ Once the tagged workflow is successful, open a PR to move back to development ve
   every [subchart](/helm/alfresco-content-services/charts/)) as a dependency:
   * Bump version to the new `alfresco-common` development version
   * Switch `repository` back to `https://kubernetes-charts.alfresco.com/incubator`
+* Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, overwrite and push the signed mutable tag with:
 
