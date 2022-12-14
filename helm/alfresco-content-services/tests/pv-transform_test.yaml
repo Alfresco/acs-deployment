@@ -1,5 +1,5 @@
 ---
-suite: test persistence 
+suite: test persistence
 templates:
   - config-filestore.yaml
   - deployment-filestore.yaml
