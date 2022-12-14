@@ -1,19 +1,19 @@
+---
 replicaCount: 1
 nodeSelector: {}
-
-# -- Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s)
+# -- Global definition of Docker registry pull secret which can be overridden
+# from parent ACS Helm chart(s)
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
 syncservice:
   enabled: true
   image:
     repository: quay.io/alfresco/service-sync
-    tag: 3.8.0
+    tag: 4.0.0-M5
     pullPolicy: IfNotPresent
     internalPort: 9090
   environment:
@@ -22,8 +22,7 @@ syncservice:
       -Dsync.metrics.reporter.graphite.address=127.0.0.1
       -Dsync.metrics.reporter.graphite.port=2003
       -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-    EXTRA_JAVA_OPTS: >-
-
+    EXTRA_JAVA_OPTS: ""
   service:
     name: syncservice
     type: NodePort
@@ -37,7 +36,6 @@ syncservice:
     limits:
       memory: "2000Mi"
       cpu: "2"
-
   livenessProbe:
     initialDelaySeconds: 150
     periodSeconds: 30
@@ -47,7 +45,6 @@ syncservice:
     periodSeconds: 10
     failureThreshold: 12
     timeoutSeconds: 10
-
   horizontalPodAutoscaling:
     enabled: true
     minReplicas: 1
@@ -57,38 +54,35 @@ syncservice:
       targetAverageUtilization: 80
     memory:
       enabled: true
-      # -- For the memory a lower threshold(60) for the targetAverageUtilization is needed.
-      # We need to allow the resource metrics to be queried by the metrics-server,
-      # before the pod is killed # by Kubernetes due to reaching memory limits(the infamous
-      # message one might see  in the pod events history. "Terminated: OOMKilled").
-      # The metrics are checked every 15 seconds by #    # default,  configured by the
+      # -- For the memory a lower threshold(60) for the targetAverageUtilization
+      # is needed. We need to allow the resource metrics to be queried by the
+      # metrics-server, before the pod is killed # by Kubernetes due to reaching
+      # memory limits(the infamous message one might see in the pod events
+      # history "Terminated: OOMKilled").
+      # The metrics are checked every 15 seconds by default, configured by the
       # global cluster flag --horizontal-pod-autoscaler-sync-period
       targetAverageUtilization: 60
-
 repository:
   host: alfresco-cs-repository
   port: 80
-
-# -- `messageBroker` object allow to pass ActiveMQ connection details.
-# `url`: provides URI formatted string (see https://activemq.apache.org/failover-transport-reference)
-# `user`: username to authenticate as.
-# `password`: credential to use to authenticate to the broker.
+# -- messageBroker object allow to pass ActiveMQ connection details.
+# url: provides URI formatted string, see:
+# https://activemq.apache.org/failover-transport-reference
+# user: username to authenticate as.
+# password: credential to use to authenticate to the broker.
 messageBroker:
   url: null
   existingSecretName: null
-
 contentServices:
   # -- Specify when installing as a standalone chart, not as a subchart of ACS.
-  # This variable will be used to construct the correct hostname for ACS and ActiveMQ
+  # must match the release name of the ACS release
   installationName:
-
 # -- Defines properties required by sync service for connecting to the database
-# Note! : If you set database.external to true you will have to setup the JDBC driver,
-# user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`.
-# Also make sure that the container has the db driver in TODO - add container path
+# If you set database.external to true you will have to setup the JDBC driver,
+# user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements
+# of `database`. Also make sure that the container has the db driver
 database:
   external: false
-
 postgresql-syncservice:
   name: postgresql-syncservice
   # -- If true, install the postgresql chart alongside Alfresco Sync service.
@@ -112,7 +106,6 @@ postgresql-syncservice:
       memory: "1500Mi"
     limits:
       memory: "1500Mi"
-
 initContainers:
   activemq:
     image:
@@ -134,10 +127,10 @@ initContainers:
         memory: "5Mi"
       limits:
         memory: "10Mi"
-
 ingress:
-  # -- useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes
-  #nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  # -- useful when running Sync service without SSL termination done by a load
+  # balancer, e.g. when ran on Minikube for testing purposes
+  # nginx.ingress.kubernetes.io/ssl-redirect: "false"
   extraAnnotations:
   #  - secretName: chart-example-tls
   #    hosts:
