@@ -3,7 +3,6 @@ suite: Activemq test persistence
 templates:
   - deployment-activemq.yaml
   - pvc-activemq.yaml
-  - ../../../templates/pvc.yaml
 tests:
   - it: should render a volumeless deployment
     values: &testvalues
@@ -44,10 +43,7 @@ tests:
         template: deployment-activemq.yaml
       - isNull:
           path: spec.storageClassName
-        template:
-          - ../../../templates/pvc.yaml
-          - pvc-activemq.yaml
-        documentIndex: 1
+        template: pvc-activemq.yaml
   - it: should render a deployment with provided storage class
     values: *testvalues
     set:
@@ -63,7 +59,4 @@ tests:
       - equal:
           path: spec.storageClassName
           value: cheap
-        template:
-          - ../../../templates/pvc.yaml
-          - pvc-activemq.yaml
-        documentIndex: 1
+        template: pvc-activemq.yaml
