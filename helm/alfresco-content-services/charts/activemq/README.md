@@ -36,7 +36,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
-| persistence.accessModes | string | `"ReadWriteOnce"` |  |
+| persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
 | persistence.baseSize | string | `"20Gi"` |  |
 | persistence.data.mountPath | string | `"/opt/activemq/data"` |  |
 | persistence.data.subPath | string | `"alfresco-infrastructure/activemq-data"` |  |

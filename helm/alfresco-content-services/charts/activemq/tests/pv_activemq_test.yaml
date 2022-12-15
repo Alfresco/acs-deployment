@@ -6,7 +6,7 @@ templates:
 tests:
   - it: should render a volumeless deployment
     values: &testvalues
-      - ../../../values/test_values.yaml
+      - ../../../tests/values/test_values.yaml
     set:
       persistence:
         enabled: false
