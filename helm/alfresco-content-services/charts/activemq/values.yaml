@@ -14,7 +14,7 @@ resources:
     memory: "512Mi"
   limits:
     memory: "2048Mi"
-service: 
+service:
   name: activemq
 services:
   broker:
@@ -63,8 +63,8 @@ persistence:
   baseSize: 20Gi
   storageClass:
   accessModes:
-     - ReadWriteOnce
+    - ReadWriteOnce
   existingClaim:
   data:
-   mountPath: "/opt/activemq/data"
-   subPath: "alfresco-infrastructure/activemq-data"
+    mountPath: "/opt/activemq/data"
+    subPath: "alfresco-infrastructure/activemq-data"

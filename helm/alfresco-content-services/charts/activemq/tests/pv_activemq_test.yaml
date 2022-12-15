@@ -1,12 +1,12 @@
 ---
-suite: Activemq test persistence 
+suite: test activemq persistence
 templates:
   - deployment-activemq.yaml
   - pvc-activemq.yaml
 tests:
   - it: should render a volumeless deployment
     values: &testvalues
-      - values/test_values.yaml
+      - ../../../values/test_values.yaml
     set:
       persistence:
         enabled: false

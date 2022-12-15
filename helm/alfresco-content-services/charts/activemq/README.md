@@ -14,7 +14,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.2.0-SNAPSHOT |
+| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.2.0 |
 
 ## Values
 
@@ -36,7 +36,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
-| persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| persistence.accessModes | string | `"ReadWriteOnce"` |  |
 | persistence.baseSize | string | `"20Gi"` |  |
 | persistence.data.mountPath | string | `"/opt/activemq/data"` |  |
 | persistence.data.subPath | string | `"alfresco-infrastructure/activemq-data"` |  |

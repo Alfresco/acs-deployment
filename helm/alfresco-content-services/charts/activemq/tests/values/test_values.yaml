@@ -1,5 +1,0 @@
----
-global:
-  tracking:
-    sharedsecret: dummy
-  alfrescoRegistryPullSecrets: secretsecret
