@@ -26,11 +26,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
 | image.tag | string | `"5.17.1-jre11-rockylinux8"` |  |
-| initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
-| initContainer.image.repository | string | `"busybox"` |  |
-| initContainer.image.tag | string | `"1.35.0"` |  |
-| initContainer.resources.limits.memory | string | `"10Mi"` |  |
-| initContainer.resources.requests.memory | string | `"5Mi"` |  |
 | livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
