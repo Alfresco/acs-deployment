@@ -260,7 +260,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.nodeSelector | object | `{}` |  |
 | repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | repository.persistence.baseSize | string | `"20Gi"` |  |
-| repository.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
+| repository.persistence.data.mountPath | string | `"/usr/local/tomcat/alf_data"` |  |
 | repository.persistence.data.subPath | string | `"alfresco-content-services/repository-data"` |  |
 | repository.persistence.enabled | bool | `true` | Persist repository data |
 | repository.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
