@@ -7,6 +7,9 @@ repository:
       memory: "1560Mi"
   edition: Community
   replicaCount: 1
+  persistence:
+    accessModes:
+      - ReadWriteOnce
   image:
     repository: alfresco/alfresco-content-repository-community
 share:
