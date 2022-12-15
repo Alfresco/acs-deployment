@@ -253,11 +253,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.initContainers.db.image.tag | string | `"1.35.0"` |  |
 | repository.initContainers.db.resources.limits.memory | string | `"10Mi"` |  |
 | repository.initContainers.db.resources.requests.memory | string | `"5Mi"` |  |
-| repository.initContainers.fs.image.pullPolicy | string | `"IfNotPresent"` |  |
-| repository.initContainers.fs.image.repository | string | `"busybox"` |  |
-| repository.initContainers.fs.image.tag | string | `"1.35.0"` |  |
-| repository.initContainers.fs.resources.limits.memory | string | `"10Mi"` |  |
-| repository.initContainers.fs.resources.requests.memory | string | `"5Mi"` |  |
 | repository.licenseSecret | string | `nil` | The name of the secret holding the ACS repository license if any. it must be contained within a `data['*.lic']` property For details on how to manage license, see: https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md |
 | repository.livenessProbe.initialDelaySeconds | int | `130` |  |
 | repository.livenessProbe.periodSeconds | int | `20` |  |
