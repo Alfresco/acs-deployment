@@ -1,0 +1,62 @@
+---
+suite: test activemq persistence
+templates:
+  - deployment-activemq.yaml
+  - pvc-activemq.yaml
+tests:
+  - it: should render a volumeless deployment
+    values: &testvalues
+      - ../../../tests/values/test_values.yaml
+    set:
+      persistence:
+        enabled: false
+    asserts:
+      - isEmpty:
+          path: spec.template.spec.volumes
+        template: deployment-activemq.yaml
+  - it: should render a deployment with set claim
+    values: *testvalues
+    set:
+      persistence:
+        enabled: true
+        existingClaim: mysfsvolume
+    asserts:
+      - equal:
+          path: >-
+            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: mysfsvolume
+        template: deployment-activemq.yaml
+  - it: should render a deployment with dynamic claim name
+    values: *testvalues
+    set:
+      persistence:
+        enabled: true
+        volumeMode: Block
+        accessModes:
+          - ReadWriteMany
+          - ReadOnlyMany
+    asserts:
+      - equal:
+          path: >-
+            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: activemq-default-pvc
+        template: deployment-activemq.yaml
+      - isNull:
+          path: spec.storageClassName
+        template: pvc-activemq.yaml
+  - it: should render a deployment with provided storage class
+    values: *testvalues
+    set:
+      persistence:
+        enabled: true
+        storageClass: cheap
+    asserts:
+      - equal:
+          path: >-
+            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
+          value: activemq-cheap-pvc
+        template: deployment-activemq.yaml
+      - equal:
+          path: spec.storageClassName
+          value: cheap
+        template: pvc-activemq.yaml
