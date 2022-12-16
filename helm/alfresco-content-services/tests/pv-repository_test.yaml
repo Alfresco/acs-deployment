@@ -1,25 +1,28 @@
 ---
-suite: test persistence 
+suite: test persistence
 templates:
-  - config-filestore.yaml
-  - deployment-filestore.yaml
+  - config-repository.yaml
+  - config-dev-log4j-properties.yaml
+  - secret-database.yaml
+  - secret-s3.yaml
+  - deployment-repository.yaml
   - pvc.yaml
 tests:
   - it: should render a volumeless deployment
     values: &testvalues
       - values/test_values.yaml
     set:
-      filestore:
+      repository:
         persistence:
           enabled: false
     asserts:
       - isEmpty:
           path: spec.template.spec.volumes
-        template: deployment-filestore.yaml
+        template: deployment-repository.yaml
   - it: should render a deployment with set claim
     values: *testvalues
     set:
-      filestore:
+      repository:
         persistence:
           enabled: true
           existingClaim: mysfsvolume
@@ -28,11 +31,11 @@ tests:
           path: >-
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
           value: mysfsvolume
-        template: deployment-filestore.yaml
+        template: deployment-repository.yaml
   - it: should render a deployment with dynamic claim name
     values: *testvalues
     set:
-      filestore:
+      repository:
         persistence:
           enabled: true
           volumeMode: Block
@@ -43,16 +46,16 @@ tests:
       - equal:
           path: >-
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
-          value: filestore-default-pvc
-        template: deployment-filestore.yaml
+          value: alfresco-default-pvc
+        template: deployment-repository.yaml
       - isNull:
           path: spec.storageClassName
         template: pvc.yaml
-        documentIndex: 1
+        documentIndex: 0
   - it: should render a deployment with provided storage class
     values: *testvalues
     set:
-      filestore:
+      repository:
         persistence:
           enabled: true
           storageClass: cheap
@@ -60,10 +63,10 @@ tests:
       - equal:
           path: >-
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
-          value: filestore-cheap-pvc
-        template: deployment-filestore.yaml
+          value: alfresco-cheap-pvc
+        template: deployment-repository.yaml
       - equal:
           path: spec.storageClassName
           value: cheap
         template: pvc.yaml
-        documentIndex: 1
+        documentIndex: 0
