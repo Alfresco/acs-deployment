@@ -80,37 +80,11 @@ spec:
             {{- end }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
-          {{- if .Values.persistence.repository.enabled }}
+          {{- if .Values.repository.persistence.enabled }}
           volumeMounts:
-          {{- if .Values.repository.licenseSecret }}
-          - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
-            name: acs-license
-          {{- end }}
-          {{- if .Values.repository.extraLogStatements }}
-          - name: dev-log4j-properties-volume
-            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
-            subPath: dev-log4j.properties
-          {{- end }}
           - name: data
-            mountPath: {{ .Values.persistence.repository.data.mountPath }}
-            subPath: {{ .Values.persistence.repository.data.subPath }}
-          - name: custom-queryset-config-volume
-            mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
-          - name: custom-pipeline-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.pipelinesMountPath }}
-          - name: custom-rendition-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.renditionsMountPath }}
-          - name: custom-mimetype-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.mimetypesMountPath }}
-          {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
-          - mountPath: /var/run/secrets/java.io/keystores
-            name: email-keystore-volume
-          - mountPath: /var/run/secrets/certs
-            name: email-certs
-          {{- end }}
-          {{- if .Values.repository.extraVolumeMounts }}
-{{ toYaml .Values.repository.extraVolumeMounts | indent 10 }}
-          {{- end }}
+            mountPath: {{ .Values.repository.persistence.data.mountPath }}
+            subPath: {{ .Values.repository.persistence.data.subPath }}
           {{- end }}
           startupProbe:
             httpGet:
@@ -138,7 +112,7 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
-      {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
+      {{- if eq .Values.database.external false }}
       initContainers:
       {{- if .Values.repository.extraInitContainers }}
 {{ tpl .Values.repository.extraInitContainers . | indent 8 }}
@@ -152,7 +126,7 @@ spec:
 {{ toYaml .Values.repository.initContainers.db.resources | indent 14 }}
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
-      {{- if .Values.persistence.repository.enabled }}
+      {{- if .Values.repository.persistence.enabled }}
        {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
           image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"
@@ -204,38 +178,38 @@ spec:
               mountPath: /var/run/secrets/java.io/keystores
         {{- end }}
       volumes:
+      {{- if .Values.repository.persistence.enabled }}
+      {{- include "data_volume" .Values.repository | nindent 8 }}
+      {{- end }}
       {{- if .Values.repository.licenseSecret }}
-      - name: acs-license
-        secret:
-          secretName: {{ .Values.repository.licenseSecret }}
+        - name: acs-license
+          secret:
+            secretName: {{ .Values.repository.licenseSecret }}
       {{- end }}
       {{- if .Values.repository.extraLogStatements }}
-      - name : dev-log4j-properties-volume
-        configMap:
-          name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
-          items:
-          - key: dev-log4j.properties
-            path: dev-log4j.properties
+        - name : dev-log4j-properties-volume
+          configMap:
+            name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
+            items:
+            - key: dev-log4j.properties
+              path: dev-log4j.properties
       {{- end }}
-      - name: data
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
-      - name: custom-pipeline-config-volume
-        configMap:
-          optional: true
-          name: custom-pipeline-config
-      - name: custom-rendition-config-volume
-        configMap:
-          optional: true
-          name: custom-rendition-config
-      - name: custom-mimetype-config-volume
-        configMap:
-          optional: true
-          name: custom-mimetype-config
-      - name: custom-queryset-config-volume
-        configMap:
-          optional: true
-          name: custom-queryset-config
+        - name: custom-pipeline-config-volume
+          configMap:
+            optional: true
+            name: custom-pipeline-config
+        - name: custom-rendition-config-volume
+          configMap:
+            optional: true
+            name: custom-rendition-config
+        - name: custom-mimetype-config-volume
+          configMap:
+            optional: true
+            name: custom-mimetype-config
+        - name: custom-queryset-config-volume
+          configMap:
+            optional: true
+            name: custom-queryset-config
       {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
       - name: email-keystore-volume
         emptyDir: {}

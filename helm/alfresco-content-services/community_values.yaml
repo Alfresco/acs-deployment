@@ -6,6 +6,9 @@ repository:
   image:
     repository: alfresco/alfresco-content-repository-community
     tag: 7.3.0
+  persistence:
+    accessModes:
+      - ReadWriteOnce
 
 pdfrenderer:
   replicaCount: 1
