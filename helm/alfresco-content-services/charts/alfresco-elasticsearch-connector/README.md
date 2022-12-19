@@ -10,7 +10,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.1.0-SNAPSHOT |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.3.0-SNAPSHOT |
 
 ## Values
 
