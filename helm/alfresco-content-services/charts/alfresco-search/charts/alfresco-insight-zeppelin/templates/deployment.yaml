@@ -28,6 +28,7 @@ spec:
         app: {{ template "alfresco-insight-zeppelin.fullName" . }}
         release: {{ .Release.Name }}
     spec:
+    {{- include "component-security-context" $ | indent 4 }}
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}

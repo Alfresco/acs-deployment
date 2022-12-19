@@ -1,6 +1,6 @@
 # alfresco-insight-zeppelin
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
+![Version: 1.0.4-SNAPSHOT](https://img.shields.io/badge/Version-1.0.4--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.1.0-SNAPSHOT |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.3.0-SNAPSHOT |
 
 ## Values
 
@@ -40,6 +40,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
 | resources.limits.memory | string | `"1024Mi"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.runAsUser | int | `33007` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"zeppelin"` |  |
 | service.type | string | `"ClusterIP"` |  |

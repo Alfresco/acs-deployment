@@ -16,7 +16,7 @@ sources:
 version: 1.0.4
 dependencies:
   - name: alfresco-insight-zeppelin
-    version: 1.0.3
+    version: 1.0.4-SNAPSHOT
   - name: alfresco-common
     version: 0.3.0-SNAPSHOT
     repository: https://kubernetes-charts.alfresco.com/incubator
