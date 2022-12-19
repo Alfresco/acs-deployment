@@ -91,3 +91,55 @@ The code in this repository is released under the Apache License, see the [LICEN
 ## Contribution Guide
 
 Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
+
+## Release
+
+### Helm charts release
+
+Open a PR that will:
+
+* In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
+  the next stable release (usually by removing the `-SNAPSHOT` suffix)
+* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
+  bump chart version to the next stable release (usually by removing the
+  `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
+* For every chart using `alfresco-common`
+  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
+  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
+  * Bump version to the new `alfresco-common` stable version
+  * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
+* Run `pre-commit run --all-files helm-docs` to update docs
+
+Once the PR has been merged, create and push the signed tag with:
+
+```sh
+git tag -f -s vx.x.x -m vx.x.x
+git push origin vx.x.x
+```
+
+where `vx.x.x` is the `alfresco-content-services` version.
+
+Once the tagged workflow is successful, open a PR to move back to development version:
+
+* In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
+  the next development release (usually by increasing the minor version and adding
+  the `-SNAPSHOT` suffix)
+* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
+  bump chart version to the next development release (usually by increasing the
+  minor version and adding the `-SNAPSHOT` suffix)
+* For every chart using `alfresco-common`
+  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
+  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
+  * Bump version to the new `alfresco-common` development version
+  * Switch `repository` back to `https://kubernetes-charts.alfresco.com/incubator`
+* Run `pre-commit run --all-files helm-docs` to update docs
+
+Once the PR has been merged, overwrite and push the signed mutable tag with:
+
+```sh
+git tag -d vx.x.x-SNAPSHOT
+git tag -f -s vx.x.x-SNAPSHOT -m vx.x.x-SNAPSHOT
+git push origin vx.x.x-SNAPSHOT --force
+```
+
+Once the tagged workflow is successful, the release process has completed.
