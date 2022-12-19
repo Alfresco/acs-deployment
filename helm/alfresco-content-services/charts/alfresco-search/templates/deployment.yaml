@@ -25,6 +25,7 @@ spec:
         app: {{ template "alfresco-search.fullName" . }}-solr
         release: {{ .Release.Name }}
     spec:
+    {{- include "component-security-context" . | indent 4 }}
     {{- with .Values.affinity }}
       affinity:
 {{ tpl . $ | indent 8 }}

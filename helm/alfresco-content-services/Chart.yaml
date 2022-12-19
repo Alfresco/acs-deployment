@@ -47,7 +47,7 @@ dependencies:
     version: 2.2.0-SNAPSHOT
     condition: activemq.enabled
   - name: alfresco-search
-    version: 1.0.4
+    version: 1.0.5-SNAPSHOT
     condition: alfresco-search.enabled
   - name: alfresco-elasticsearch-connector
     version: 0.2.0-SNAPSHOT

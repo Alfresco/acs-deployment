@@ -1,6 +1,6 @@
 # alfresco-search
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square)
+![Version: 1.0.5-SNAPSHOT](https://img.shields.io/badge/Version-1.0.5--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search
 
@@ -58,6 +58,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | searchServicesImage.tag | string | `"2.0.6-A4"` |  |
+| securityContext.fsGroup | int | `33007` |  |
+| securityContext.runAsGroup | int | `33007` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.runAsUser | int | `33007` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
