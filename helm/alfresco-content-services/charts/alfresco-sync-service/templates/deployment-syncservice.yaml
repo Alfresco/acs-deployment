@@ -27,6 +27,7 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-syncservice.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
     spec:
+    {{- include "component-security-context" . | indent 4 }}
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
