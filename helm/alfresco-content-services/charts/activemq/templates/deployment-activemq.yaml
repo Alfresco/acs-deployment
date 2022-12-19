@@ -23,6 +23,10 @@ spec:
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
+      securityContext:
+          runAsUser: 33031
+          runAsGroup: 1000
+          fsGroup: 1000
       containers:
       - name: activemq
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -64,25 +68,13 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 12 }}
         volumeMounts:
-        - name: data
-          mountPath: {{ .Values.persistence.mountPath }}
-          subPath: {{ .Values.persistence.subPath }}
-      {{- if .Values.persistence.chownWithDynamicProvisioning }}
-      initContainers:
-        - name: init-fs
-          image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
-          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
-          resources:
-{{ toYaml .Values.initContainer.resources | indent 14 }}
-          # command to allow repository to write to EFS volume.
-          command: ["sh", "-c", "chown -R 33031:1000 {{ .Values.persistence.mountPath }}"]
-          volumeMounts:
-            - name: data
-              mountPath: {{ .Values.persistence.mountPath }}
-              subPath: {{ .Values.persistence.subPath }}
-      {{- end }}
+        {{- if .Values.persistence.enabled }}
+          - name: data
+            mountPath: {{ .Values.persistence.data.mountPath }}
+            subPath: {{ .Values.persistence.data.subPath }}
+        {{- end }}
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
+        {{- if .Values.persistence.enabled }}
+        {{- include "data_volume" .Values | nindent 8 }}
+        {{- end }}
 {{- end }}
