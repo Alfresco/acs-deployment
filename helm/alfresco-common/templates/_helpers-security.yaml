@@ -1,0 +1,14 @@
+{{- define "default-security-context" }}
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+{{- end }}
+
+{{- define "component-security-context" }}
+{{- if .Values.securityContext }}
+  securityContext:
+    {{- .Values.securityContext | toYaml | nindent 4 }}
+{{- else }}
+{{- include "default-security-context" . }}
+{{- end }}
+{{- end }}
