@@ -34,7 +34,7 @@ dependencies:
   - name: common
     alias: alfresco-admin-app
     repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 7.6.0
+    version: 7.7.0
     condition: >-
       alfresco-admin-app.enabled
   - name: common
@@ -50,7 +50,7 @@ dependencies:
     version: 1.0.4
     condition: alfresco-search.enabled
   - name: alfresco-elasticsearch-connector
-    version: 0.1.0
+    version: 0.2.0-SNAPSHOT
     condition: alfresco-elasticsearch-connector.enabled
   - name: alfresco-sync-service
     version: 3.0.9
