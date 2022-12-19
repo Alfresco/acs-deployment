@@ -1,6 +1,6 @@
 # activemq
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 5.16.4](https://img.shields.io/badge/AppVersion-5.16.4-informational?style=flat-square)
+![Version: 2.2.0-SNAPSHOT](https://img.shields.io/badge/Version-2.2.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 5.17.1](https://img.shields.io/badge/AppVersion-5.17.1-informational?style=flat-square)
 
 A Helm chart Providing Apache ActiveMQ.
 
@@ -42,6 +42,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | replicaCount | int | `1` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
+| securityContext.fsGroup | int | `1000` |  |
+| securityContext.runAsGroup | int | `1000` |  |
+| securityContext.runAsUser | int | `33031` |  |
 | service.name | string | `"activemq"` |  |
 | services.broker.ports.external.amqp | int | `5672` |  |
 | services.broker.ports.external.openwire | int | `61616` |  |
