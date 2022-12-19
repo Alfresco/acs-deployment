@@ -105,7 +105,7 @@ Open a PR that will:
   `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
 * For every chart using `alfresco-common`
   ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
-  every [subchart](/helm/alfresco-content-services/charts/)) as a dependency:
+  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
   * Bump version to the new `alfresco-common` stable version
   * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
 * Run `pre-commit run --all-files helm-docs` to update docs
@@ -129,7 +129,7 @@ Once the tagged workflow is successful, open a PR to move back to development ve
   minor version and adding the `-SNAPSHOT` suffix)
 * For every chart using `alfresco-common`
   ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
-  every [subchart](/helm/alfresco-content-services/charts/)) as a dependency:
+  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
   * Bump version to the new `alfresco-common` development version
   * Switch `repository` back to `https://kubernetes-charts.alfresco.com/incubator`
 * Run `pre-commit run --all-files helm-docs` to update docs
