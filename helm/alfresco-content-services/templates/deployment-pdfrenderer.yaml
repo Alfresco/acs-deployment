@@ -22,6 +22,7 @@ spec:
       labels:
         {{- include "pdfrenderer.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-security-context" .Values.pdfrenderer | indent 4 }}
     {{- if .Values.pdfrenderer.nodeSelector }}
       nodeSelector: {{- .Values.pdfrenderer.nodeSelector | toYaml | nindent 8 }}
     {{- end }}

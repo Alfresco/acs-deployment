@@ -245,6 +245,9 @@ pdfrenderer:
     name: pdfrenderer
     type: ClusterIP
     externalPort: 80
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 33001
   resources:
     requests:
       memory: "1000Mi"
