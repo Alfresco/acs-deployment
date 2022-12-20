@@ -275,6 +275,9 @@ imagemagick:
     name: imagemagick
     type: ClusterIP
     externalPort: 80
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 33002
   resources:
     requests:
       memory: "1000Mi"
