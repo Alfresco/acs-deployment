@@ -665,6 +665,9 @@ alfresco-digital-workspace:
     - name: APP_CONFIG_PLUGIN_AI_SERVICE
       value: '{{ .Values.global.ai.enabled }}'
     {{- end }}
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 101
   resources:
     limits:
       cpu: 1
@@ -694,6 +697,9 @@ alfresco-admin-app:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 101
   resources:
     limits:
       cpu: 1

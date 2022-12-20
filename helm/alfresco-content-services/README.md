@@ -72,6 +72,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-admin-app.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-admin-app.resources.requests.cpu | string | `"150m"` |  |
 | alfresco-admin-app.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-admin-app.securityContext.runAsNonRoot | bool | `true` |  |
+| alfresco-admin-app.securityContext.runAsUser | int | `101` |  |
 | alfresco-admin-app.service.envType | string | `"frontend"` |  |
 | alfresco-digital-workspace.enabled | bool | `true` |  |
 | alfresco-digital-workspace.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
@@ -90,6 +92,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-digital-workspace.resources.requests.cpu | string | `"150m"` |  |
 | alfresco-digital-workspace.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
+| alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
 | alfresco-elasticsearch-connector.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | alfresco-elasticsearch-connector.enabled | bool | `false` |  |
