@@ -482,6 +482,10 @@ filestore:
     name: filestore
     type: ClusterIP
     externalPort: 80
+  securityContext:
+    runAsUser: 33030
+    runAsGroup: 1000
+    fsGroup: 1000
   resources:
     requests:
       memory: "1000Mi"

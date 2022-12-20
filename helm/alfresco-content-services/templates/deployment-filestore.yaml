@@ -23,6 +23,7 @@ spec:
       labels:
         {{- include "filestore.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-security-context" .Values.filestore | indent 4 }}
     {{- if .Values.filestore.nodeSelector }}
       nodeSelector: {{- .Values.filestore.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
