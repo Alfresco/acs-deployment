@@ -315,6 +315,9 @@ libreoffice:
       memory: "1000Mi"
     limits:
       memory: "1000Mi"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 33003
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50

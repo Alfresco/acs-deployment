@@ -13,6 +13,7 @@ skip-check:
   - CKV_K8S_10
   - CKV_K8S_29
   - CKV_K8S_30
+  - CKV_K8S_23
   - CKV_K8S_28
   - CKV_K8S_37
   - CKV_K8S_38

@@ -1,5 +1,6 @@
 # Defines the deployment for the libreoffice transformer app
 # Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,6 +23,7 @@ spec:
       labels:
         {{- include "libreoffice.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-security-context" .Values.libreoffice | indent 4 }}
     {{- if .Values.libreoffice.nodeSelector }}
       nodeSelector: {{- .Values.libreoffice.nodeSelector | toYaml | nindent 8 }}
     {{- end }}

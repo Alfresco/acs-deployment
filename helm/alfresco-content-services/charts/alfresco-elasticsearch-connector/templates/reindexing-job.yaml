@@ -13,7 +13,7 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 8 }}
     spec:
-      {{- include "component-security-context" . | indent 4 }}
+      {{- include "component-security-context" .Values | indent 4 }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       restartPolicy: Never
       containers:
