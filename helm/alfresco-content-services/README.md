@@ -272,6 +272,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.replicaCount | int | `2` |  |
 | repository.resources.limits.memory | string | `"3000Mi"` |  |
 | repository.resources.requests.memory | string | `"3000Mi"` |  |
+| repository.securityContext.fsGroup | int | `1000` |  |
+| repository.securityContext.runAsGroup | int | `1000` |  |
+| repository.securityContext.runAsNonRoot | bool | `true` |  |
+| repository.securityContext.runAsUser | int | `33000` |  |
 | repository.service.externalPort | int | `80` |  |
 | repository.service.name | string | `"alfresco"` |  |
 | repository.service.type | string | `"ClusterIP"` |  |

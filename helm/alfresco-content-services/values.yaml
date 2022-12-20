@@ -69,6 +69,11 @@ repository:
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
       -Dmetadata-keystore.aliases=metadata
       -Dmetadata-keystore.metadata.algorithm=DESede
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 33000
+    runAsGroup: 1000
+    fsGroup: 1000
   resources:
     requests:
       memory: "3000Mi"

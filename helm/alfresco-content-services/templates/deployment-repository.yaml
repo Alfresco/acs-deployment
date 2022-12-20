@@ -28,6 +28,7 @@ spec:
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-security-context" .Values.repository | indent 4 }}
     {{- if .Values.repository.nodeSelector }}
       nodeSelector: {{- .Values.repository.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
