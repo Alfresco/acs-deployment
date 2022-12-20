@@ -23,6 +23,7 @@ spec:
       labels:
         {{- include "ms-teams-service.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-security-context" .Values.msTeams | indent 4 }}
     {{- if .Values.msTeamsService.nodeSelector }}
       nodeSelector: {{- .Values.msTeamsService.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -68,7 +69,7 @@ spec:
             timeoutSeconds: {{ .Values.msTeamsService.readinessProbe.timeoutSeconds }}
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.msTeamsService.image.internalPort }}          
+              port: {{ .Values.msTeamsService.image.internalPort }}
             initialDelaySeconds: {{ .Values.msTeamsService.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.msTeamsService.livenessProbe.periodSeconds }}
             failureThreshold: 1

@@ -180,6 +180,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | msTeamsService.replicaCount | int | `2` |  |
 | msTeamsService.resources.limits.memory | string | `"1000Mi"` |  |
 | msTeamsService.resources.requests.memory | string | `"1000Mi"` |  |
+| msTeamsService.securityContext.runAsNonRoot | bool | `true` |  |
+| msTeamsService.securityContext.runAsUser | int | `33041` |  |
 | msTeamsService.service.externalPort | int | `80` |  |
 | msTeamsService.service.name | string | `"ms-teams-service"` |  |
 | msTeamsService.service.type | string | `"ClusterIP"` |  |
