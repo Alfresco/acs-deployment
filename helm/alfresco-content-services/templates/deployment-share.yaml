@@ -21,6 +21,7 @@ spec:
       labels:
         {{- include "share.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-security-context" .Values.share | indent 4 }}
     {{- if .Values.share.nodeSelector }}
       nodeSelector: {{- .Values.share.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
