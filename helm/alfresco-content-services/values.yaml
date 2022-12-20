@@ -226,6 +226,9 @@ transformrouter:
     initialDelaySeconds: 140
     periodSeconds: 120
     timeoutSeconds: 60
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 33016
   resources:
     requests:
       memory: "128Mi"

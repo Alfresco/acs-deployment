@@ -300,6 +300,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | transformrouter.replicaCount | int | `2` |  |
 | transformrouter.resources.limits.memory | string | `"512Mi"` |  |
 | transformrouter.resources.requests.memory | string | `"128Mi"` |  |
+| transformrouter.securityContext.runAsNonRoot | bool | `true` |  |
+| transformrouter.securityContext.runAsUser | int | `33016` |  |
 | transformrouter.service.externalPort | int | `80` |  |
 | transformrouter.service.name | string | `"transform-router"` |  |
 | transformrouter.service.type | string | `"ClusterIP"` |  |
