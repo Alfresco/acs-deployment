@@ -206,6 +206,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.replicaCount | int | `2` |  |
 | ooiService.resources.limits.memory | string | `"1000Mi"` |  |
 | ooiService.resources.requests.memory | string | `"1000Mi"` |  |
+| ooiService.securityContext.runAsNonRoot | bool | `true` |  |
+| ooiService.securityContext.runAsUser | int | `33006` |  |
 | ooiService.service.externalPort | int | `80` |  |
 | ooiService.service.name | string | `"ooi-service"` |  |
 | ooiService.service.type | string | `"ClusterIP"` |  |

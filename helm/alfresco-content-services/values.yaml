@@ -138,6 +138,9 @@ ooiService:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 33006
   resources:
     requests:
       memory: "1000Mi"
