@@ -398,6 +398,9 @@ transformmisc:
     name: transformmisc
     type: ClusterIP
     externalPort: 80
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 33006
   resources:
     requests:
       memory: "1000Mi"
