@@ -52,6 +52,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.replicaCount | int | `2` |  |
 | aiTransformer.resources.limits.memory | string | `"1000Mi"` |  |
 | aiTransformer.resources.requests.memory | string | `"1000Mi"` |  |
+| aiTransformer.securityContext.runAsUser | int | `33015` |  |
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
 | aiTransformer.service.type | string | `"ClusterIP"` |  |

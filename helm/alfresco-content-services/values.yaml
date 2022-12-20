@@ -437,6 +437,8 @@ aiTransformer:
     name: ai-transformer
     type: ClusterIP
     externalPort: 80
+  securityContext:
+    runAsUser: 33015
   resources:
     requests:
       memory: "1000Mi"

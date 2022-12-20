@@ -23,6 +23,7 @@ spec:
       labels:
         {{- include "ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-security-context" .Values.aiTransformer | indent 4 }}
     {{- if .Values.aiTransformer.nodeSelector }}
       nodeSelector: {{- .Values.aiTransformer.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
