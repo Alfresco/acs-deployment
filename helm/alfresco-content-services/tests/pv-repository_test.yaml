@@ -8,7 +8,7 @@ templates:
   - deployment-repository.yaml
   - pvc.yaml
 tests:
-  - it: should render a volumeless deployment
+  - it: should render an ephemeral volume
     values: &testvalues
       - values/test_values.yaml
     set:
@@ -16,8 +16,12 @@ tests:
         persistence:
           enabled: false
     asserts:
-      - isEmpty:
+      - contains:
           path: spec.template.spec.volumes
+          content:
+            emptyDir:
+              sizeLimit: 20Gi
+            name: data
         template: deployment-repository.yaml
   - it: should render a deployment with set claim
     values: *testvalues
