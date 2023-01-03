@@ -21,8 +21,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | adminUser.existingSecretName | string | `nil` | An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys |
-| adminUser.password | string | `"admin"` |  |
-| adminUser.username | string | `"admin"` |  |
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |

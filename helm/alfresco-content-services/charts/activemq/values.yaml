@@ -7,8 +7,6 @@ image:
   tag: 5.17.1-jre11-rockylinux8
   pullPolicy: IfNotPresent
 adminUser:
-  username: admin
-  password: admin
   # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName:
 resources:

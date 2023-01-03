@@ -93,9 +93,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-elasticsearch-connector.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | alfresco-elasticsearch-connector.enabled | bool | `false` |  |
 | alfresco-elasticsearch-connector.messageBroker.existingSecretName | string | `nil` |  |
-| alfresco-elasticsearch-connector.messageBroker.password | string | `nil` |  |
+| alfresco-elasticsearch-connector.messageBroker.password | string | `"admin"` |  |
 | alfresco-elasticsearch-connector.messageBroker.url | string | `nil` |  |
-| alfresco-elasticsearch-connector.messageBroker.user | string | `nil` |  |
+| alfresco-elasticsearch-connector.messageBroker.user | string | `"admin"` |  |
 | alfresco-elasticsearch-connector.reindexing.enabled | bool | `true` |  |
 | alfresco-elasticsearch-connector.reindexing.postgresql.database | string | `"alfresco"` |  |
 | alfresco-elasticsearch-connector.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
@@ -118,9 +118,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | alfresco-sync-service.image.tag | string | `"3.8.0"` |  |
 | alfresco-sync-service.messageBroker.existingSecretName | string | `nil` |  |
-| alfresco-sync-service.messageBroker.password | string | `nil` |  |
+| alfresco-sync-service.messageBroker.password | string | `"admin"` |  |
 | alfresco-sync-service.messageBroker.url | string | `nil` |  |
-| alfresco-sync-service.messageBroker.user | string | `nil` |  |
+| alfresco-sync-service.messageBroker.user | string | `"admin"` |  |
 | alfresco-sync-service.nodeSelector | object | `{}` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
@@ -154,7 +154,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | imap | object | `{"mail":{"from":{"default":null},"to":{"default":null}},"server":{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
 | libreoffice | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-libreoffice","tag":"3.0.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":250,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":99999,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"libreoffice","type":"ClusterIP"}}` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | mail | object | `{"encoding":"UTF-8","from":{"default":null,"enabled":false},"host":null,"password":null,"port":null,"protocol":"smtps","smtp":{"auth":true,"debug":false,"starttls":{"enable":true},"timeout":30000},"smtps":{"auth":true,"starttls":{"enable":true}},"username":null}` | For a full information of configuring the outbound email ssytem, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
-| messageBroker | object | `{"existingSecretName":null,"password":null,"url":null,"user":null}` | external activemq connection setting when activemq.enabled=false |
+| messageBroker | object | `{"existingSecretName":null,"password":"admin","url":null,"user":"admin"}` | activemq connection settings |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
 | msTeams | object | `{"enabled":false}` | Enable/Disable Alfresco Content Connector for Microsoft Teams |

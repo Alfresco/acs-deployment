@@ -542,11 +542,11 @@ activemq:
   # -- Possibility to choose Node for pod, with a key-value pair label
   # e.g {"kubernetes.io/hostname": multinode-demo-m02}
   nodeSelector: {}
-# -- external activemq connection setting when activemq.enabled=false
+# -- activemq connection settings
 messageBroker: &acs_messageBroker
   url: null
-  user: null
-  password: null
+  user: admin
+  password: admin
   existingSecretName: null
 alfresco-search:
   nodeSelector: {}
