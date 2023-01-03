@@ -4,15 +4,19 @@ templates:
   - deployment-activemq.yaml
   - pvc-activemq.yaml
 tests:
-  - it: should render a volumeless deployment
+  - it: should render an ephemeral volume
     values: &testvalues
       - ../../../tests/values/test_values.yaml
     set:
       persistence:
         enabled: false
     asserts:
-      - isEmpty:
+      - contains:
           path: spec.template.spec.volumes
+          content:
+            emptyDir:
+              sizeLimit: 20Gi
+            name: data
         template: deployment-activemq.yaml
   - it: should render a deployment with set claim
     values: *testvalues
