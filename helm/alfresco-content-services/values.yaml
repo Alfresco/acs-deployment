@@ -2,7 +2,7 @@
 # It declares variables to be passed into your templates.
 # ACS will be created in a k8s cluster with a minimum of 16GB memory to split
 # among below nodes:
-# 2 x repository, 1 x share, 1 x postgresq and
+# 2 x repository, 1 x share, 1 x postgres and
 # 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc)
 #
 # Limit container memory and assign X percentage to JVM. There are couple of

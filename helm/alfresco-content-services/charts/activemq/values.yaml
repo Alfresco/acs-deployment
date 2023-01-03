@@ -9,6 +9,8 @@ image:
 adminUser:
   username: admin
   password: admin
+  # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys
+  existingSecretName:
 resources:
   requests:
     memory: "512Mi"
