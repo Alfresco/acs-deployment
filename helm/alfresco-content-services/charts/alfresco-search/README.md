@@ -30,6 +30,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic |
 | ingress.basicAuth | string | `"YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg=="` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` # i.e. admin / admin basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | ingress.enabled | bool | `true` |  |
+| ingress.existingSecretName | string | `nil` | An existing secret that contains an `auth` key with a value in the same format of `ingress.basicAuth` |
 | ingress.path | string | `"/solr"` |  |
 | ingress.tls | list | `[]` |  |
 | ingress.whitelist_ips | string | `"0.0.0.0/0"` | Comma separated list of IP CIDR to limit search endpoint over the internet |

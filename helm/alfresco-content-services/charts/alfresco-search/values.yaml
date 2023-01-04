@@ -37,6 +37,8 @@ ingress:
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` # i.e. admin / admin
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
   basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
+  # -- An existing secret that contains an `auth` key with a value in the same format of `ingress.basicAuth`
+  existingSecretName:
   # -- Comma separated list of IP CIDR to limit search endpoint over the internet
   whitelist_ips: "0.0.0.0/0"
 # -- The parent chart will set the values for "repository.host" and "repository.port"
