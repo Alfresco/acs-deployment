@@ -2,11 +2,12 @@
 suite: test liveindexing template rendering
 templates:
   - liveindexing-config.yaml
+  - liveindexing-deployment.yaml
 tests:
   - it: |
       Render elasticsearch Liveindexing configmap,
       using global config to ensure it overrides default values.
-    values:
+    values: &testvalues
       - ../../../tests/values/test_values.yaml
     set:
       global:
@@ -35,3 +36,14 @@ tests:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: https://some.es.instance.somwhere.on.the.cloud:443
+  - it: should have env vars for elasticsearch credentials
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[3].name
+          value: SPRING_ELASTICSEARCH_REST_USERNAME
+        template: liveindexing-deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[4].name
+          value: SPRING_ELASTICSEARCH_REST_PASSWORD
+        template: liveindexing-deployment.yaml
