@@ -80,11 +80,9 @@ spec:
             failureThreshold: 1
             timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
           volumeMounts:
-          {{- if .Values.filestore.persistence.enabled }}
             - name: data
               mountPath: {{ .Values.filestore.persistence.data.mountPath }}
               subPath: {{ .Values.filestore.persistence.data.subPath }}
       volumes:
       {{- include "data_volume" .Values.filestore | nindent 8 }}
-      {{- end }}
 {{- end }}

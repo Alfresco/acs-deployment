@@ -80,12 +80,10 @@ spec:
             {{- end }}
           resources:
 {{ toYaml .Values.repository.resources | indent 12 }}
-          {{- if .Values.repository.persistence.enabled }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.repository.persistence.data.mountPath }}
             subPath: {{ .Values.repository.persistence.data.subPath }}
-          {{- end }}
           startupProbe:
             httpGet:
               path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
@@ -126,8 +124,7 @@ spec:
 {{ toYaml .Values.repository.initContainers.db.resources | indent 14 }}
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
-      {{- if .Values.repository.persistence.enabled }}
-       {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
+      {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
           image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"
           imagePullPolicy: {{ .Values.email.initContainers.pemToKeystore.image.pullPolicy }}
@@ -176,11 +173,9 @@ spec:
           volumeMounts:
             - name: email-keystore-volume
               mountPath: /var/run/secrets/java.io/keystores
-        {{- end }}
-      volumes:
-      {{- if .Values.repository.persistence.enabled }}
-      {{- include "data_volume" .Values.repository | nindent 8 }}
       {{- end }}
+      volumes:
+      {{- include "data_volume" .Values.repository | nindent 8 }}
       {{- if .Values.repository.licenseSecret }}
         - name: acs-license
           secret:
@@ -225,6 +220,5 @@ spec:
       {{- end }}
       {{- if .Values.repository.extraVolumes }}
 {{ toYaml .Values.repository.extraVolumes | indent 6 }}
-      {{- end }}
       {{- end }}
       {{- end }}

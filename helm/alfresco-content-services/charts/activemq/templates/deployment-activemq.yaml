@@ -68,13 +68,9 @@ spec:
         resources:
 {{ toYaml .Values.resources | indent 12 }}
         volumeMounts:
-        {{- if .Values.persistence.enabled }}
           - name: data
             mountPath: {{ .Values.persistence.data.mountPath }}
             subPath: {{ .Values.persistence.data.subPath }}
-        {{- end }}
       volumes:
-        {{- if .Values.persistence.enabled }}
         {{- include "data_volume" .Values | nindent 8 }}
-        {{- end }}
 {{- end }}
