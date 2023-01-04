@@ -87,3 +87,5 @@ global:
     user: null
     # -- The password required to access the service, if any
     password: null
+    # -- An existing secret that contains X and Y keys
+    existingSecretName:
