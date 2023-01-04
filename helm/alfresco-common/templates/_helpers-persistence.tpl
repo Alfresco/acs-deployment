@@ -1,12 +1,17 @@
 {{- define "data_volume" -}}
-{{- $svc_name := .service.name -}}
-{{- with .persistence -}}
-{{- $sc_name := .storageClass | default "default" -}}
 - name: data
+{{- $svc_name := .service.name }}
+{{- with .persistence }}
+{{- if .enabled }}
+{{- $sc_name := .storageClass | default "default" }}
   persistentVolumeClaim:
     claimName: >-
       {{ .existingClaim | default (printf "%s-%s-pvc" $svc_name $sc_name ) }}
-{{- end -}}
+{{- else }}
+  emptyDir:
+    sizeLimit: {{ .baseSize | default "20Gi" | quote }}
+{{- end }}
+{{- end }}
 {{- end -}}
 
 {{- define "component_pvc" -}}

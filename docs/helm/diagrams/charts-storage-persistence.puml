@@ -8,21 +8,23 @@ start
 :Read .Values.component.persistence;
 if (.enabled?) then (yes)
   if(.existingClaim?) then (yes)
-    :Render deployment with volume
-    backed by existingClaim;
+    :Render deployment with Persistent volume
+    backed by existingClaim PVC;
   else (no)
     :Create PVC;
     if(.StorageClass?) then (yes)
       :Use provided storageClass
-        for dynamic provisioning of PV;
+      for dynamic provisioning of PV;
     else (no)
       :Use default storageClass
       for dynamic provisioning of PV;
     endif
-    :Render deployment with volume;
+    :Render deployment with Persistent volume
+    backed by created PVC;
   endif
 else (no)
-  :Render deployment without volume;
+  :Render deployment
+  with Ephemeral volume (emptyDir);
 endif
 stop
 
