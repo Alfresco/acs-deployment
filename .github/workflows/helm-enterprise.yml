@@ -61,7 +61,6 @@ jobs:
     name: Helm ${{ matrix.name }} ${{ matrix.values }} 
     strategy:
       fail-fast: false
-      max-parallel: 2
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
@@ -86,7 +85,7 @@ jobs:
           charts-root: helm
           chart-name: ${{ matrix.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.26.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.28.0
         with:
           skip_checkout: 'true'
           test_newman: 'true'
