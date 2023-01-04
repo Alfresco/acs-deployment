@@ -39,13 +39,11 @@ spec:
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
         - name: SPRING_ELASTICSEARCH_REST_USERNAME
-          value: "{{ .Values.adminUser.username }}"
           valueFrom:
             secretKeyRef:
               name: {{ default (printf "%s-elasticsearch-secret" (include "alfresco-elasticsearch-connector.fullName" $)) $.Values.global.elasticsearch.existingSecretName }}
               key: ELASTICSEARCH_USERNAME
         - name: SPRING_ELASTICSEARCH_REST_PASSWORD
-          value: "{{ .Values.adminUser.password }}"
           valueFrom:
             secretKeyRef:
               name: {{ default (printf "%s-elasticsearch-secret" (include "alfresco-elasticsearch-connector.fullName" $)) $.Values.global.elasticsearch.existingSecretName }}
