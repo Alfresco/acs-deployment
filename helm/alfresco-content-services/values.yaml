@@ -549,6 +549,8 @@ share:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  securityContext:
+    runAsNonRoot: false
   resources:
     requests:
       memory: "2000Mi"
