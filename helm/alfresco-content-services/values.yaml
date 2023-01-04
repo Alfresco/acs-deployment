@@ -667,9 +667,10 @@ alfresco-digital-workspace:
     - name: APP_CONFIG_PLUGIN_AI_SERVICE
       value: '{{ .Values.global.ai.enabled }}'
     {{- end }}
-  securityContext:
+  securityContext: &secContext
     runAsNonRoot: true
     runAsUser: 101
+  podSecurityContext: *secContext
   resources:
     limits:
       cpu: 1
