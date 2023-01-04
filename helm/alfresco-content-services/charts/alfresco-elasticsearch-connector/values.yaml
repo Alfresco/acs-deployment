@@ -87,5 +87,5 @@ global:
     user: null
     # -- The password required to access the service, if any
     password: null
-    # -- An existing secret that contains X and Y keys
+    # -- An existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
     existingSecretName:
