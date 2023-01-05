@@ -670,7 +670,7 @@ alfresco-admin-app:
 ooi:
   enabled: false
 database:
-  # -- Enable using an external database for Alfresco Content Services
+  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false
   # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
   driver:
@@ -680,9 +680,11 @@ database:
   password:
   # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
   url:
+  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+  # When using embedded postgres you need to also set `postgresql.existingSecret`.
+  existingSecretName:
 postgresql:
   # -- Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart
-  # Note: Must be set to false if you use an external database.
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-acs
@@ -691,8 +693,11 @@ postgresql:
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
-  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
-  existingSecretName:
+  # -- Name of existing secret to use for PostgreSQL passwords
+  # The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is
+  # different of postgres, postgresql-postgres-password which will override postgresqlPassword.
+  # The same secret must be set also as `database.existingSecretName` to provide the credentials to ACS.
+  existingSecret:
   # -- Postgresql database user
   postgresqlUsername: alfresco
   # -- Postgresql database password

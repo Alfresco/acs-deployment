@@ -125,7 +125,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
-| database.external | bool | `false` | Enable using an external database for Alfresco Content Services |
+| database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
+| database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
 | database.password | string | `nil` | External Postgresql database password |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
@@ -224,8 +225,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
 | postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
-| postgresql.enabled | bool | `true` | Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart Note: Must be set to false if you use an external database. |
-| postgresql.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys |
+| postgresql.enabled | bool | `true` | Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart |
+| postgresql.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL passwords The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is different of postgres, postgresql-postgres-password which will override postgresqlPassword. The same secret must be set also as `database.existingSecretName` to provide the credentials to ACS. |
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql.image.tag | string | `"14.4.0"` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
