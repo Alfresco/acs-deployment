@@ -207,12 +207,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.service.name | string | `"ooi-service"` |  |
 | ooiService.service.type | string | `"ClusterIP"` |  |
 | pdfrenderer | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"3.0.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
-| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"14.4.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":null,"storageClass":null,"subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","primary":{"nodeSelector":{}},"replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
+| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"existingSecretName":null,"image":{"pullPolicy":"IfNotPresent","tag":"14.4.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":null,"storageClass":null,"subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","primary":{"nodeSelector":{}},"replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
 | postgresql-syncservice.commonAnnotations.application | string | `"alfresco-content-services"` |  |
-| postgresql-syncservice.enabled | bool | `true` |  |
+| postgresql-syncservice.enabled | bool | `true` | Enable embedded postgres for Alfresco Sync service leveraging the postgresql Bitnami chart |
 | postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql-syncservice.image.tag | string | `"14.4.0"` |  |
-| postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
+| postgresql-syncservice.name | string | `"postgresql-syncservice"` |  |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
 | postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.log_min_messages | string | `"LOG"` |  |
@@ -224,7 +224,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
-| postgresql.enabled | bool | `true` | If true, install the postgresql chart alongside Alfresco Content Services Note: Set this to false if you use an external database. |
+| postgresql.enabled | bool | `true` | Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart Note: Must be set to false if you use an external database. |
+| postgresql.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys |
 | postgresql.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownhership set. |
 | postgresql.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
 | postgresql.postgresqlDatabase | string | `"alfresco"` | Postgresql database name |
