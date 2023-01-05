@@ -48,6 +48,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | nodeSelector | object | `{}` | Define the alfresco-search properties to use in the k8s cluster This is the search provider used by alfresco-content-repository |
 | persistence | object | `{"EbsPvConfiguration":{"fsType":"ext4"},"VolumeSizeRequest":"10Gi","chownWithDynamicProvisioning":false,"enabled":true,"search":{"data":{"mountPath":"/opt/alfresco-search-services/data","subPath":"alfresco-content-services/solr-data"}}}` | Defines the mounting points for the persistence required by the apps in the cluster the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data |
 | persistence.VolumeSizeRequest | string | `"10Gi"` | Only define if you have a specific claim already created existingClaim: "search-master-claim" |
+| podSecurityContext.fsGroup | int | `33007` |  |
+| podSecurityContext.runAsGroup | int | `33007` |  |
+| podSecurityContext.runAsNonRoot | bool | `true` |  |
+| podSecurityContext.runAsUser | int | `33007` |  |
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
@@ -58,10 +62,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | searchServicesImage.tag | string | `"2.0.6-A4"` |  |
-| securityContext.fsGroup | int | `33007` |  |
-| securityContext.runAsGroup | int | `33007` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.runAsUser | int | `33007` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |

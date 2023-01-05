@@ -33,6 +33,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
+| podSecurityContext.runAsNonRoot | bool | `true` |  |
+| podSecurityContext.runAsUser | int | `33007` |  |
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
@@ -40,8 +42,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
 | resources.limits.memory | string | `"1024Mi"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.runAsUser | int | `33007` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"zeppelin"` |  |
 | service.type | string | `"ClusterIP"` |  |

@@ -1,13 +1,20 @@
 {{- define "default-security-context" }}
-  securityContext:
     runAsNonRoot: true
-    runAsUser: 1000
+{{- end }}
+
+{{- define "component-pod-security-context" }}
+  securityContext:
+{{- if .podSecurityContext }}
+    {{- .podSecurityContext | toYaml | nindent 4 }}
+{{- else }}
+{{- include "default-security-context" . }}
+{{- end }}
 {{- end }}
 
 {{- define "component-security-context" }}
-{{- if .securityContext }}
   securityContext:
-    {{- .securityContext | toYaml | nindent 4 }}
+{{- if .securityContext }}
+  {{- .securityContext | toYaml | nindent 4 }}
 {{- else }}
 {{- include "default-security-context" . }}
 {{- end }}

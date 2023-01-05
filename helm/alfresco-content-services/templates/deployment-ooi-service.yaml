@@ -24,7 +24,7 @@ spec:
       labels:
         {{- include "ooi-service.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-security-context" .Values.ooi | indent 4 }}
+    {{- include "component-pod-security-context" .Values.ooi | indent 4 }}
     {{- if .Values.ooiService.nodeSelector }}
       nodeSelector: {{- .Values.ooiService.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -54,6 +54,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.ooiService.image.repository }}:{{ .Values.ooiService.image.tag }}"
           imagePullPolicy: {{ .Values.ooiService.image.pullPolicy }}
+          {{- include "component-security-context" .Values.ooi | indent 8 }}
           envFrom:
             - configMapRef:
                 # config map to use, defined in config-ooi-service.yaml

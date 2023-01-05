@@ -20,7 +20,7 @@ spec:
         app: {{ template "activemq.fullname" . }}
         release: {{ .Release.Name }}
     spec:
-    {{- include "component-security-context" .Values | indent 4 }}
+    {{- include "component-pod-security-context" .Values | indent 4 }}
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -28,6 +28,7 @@ spec:
       - name: activemq
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- include "component-security-context" .Values | indent 6 }}
         env:
         - name: ACTIVEMQ_CONFIG_MINMEMORY
           value: "{{ .Values.resources.requests.memory | replace "Mi" "" }}"

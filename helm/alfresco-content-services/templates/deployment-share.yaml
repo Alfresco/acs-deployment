@@ -23,7 +23,7 @@ spec:
       labels:
         {{- include "share.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-security-context" .Values.share | indent 4 }}
+    {{- include "component-pod-security-context" .Values.share | indent 4 }}
     {{- if .Values.share.nodeSelector }}
       nodeSelector: {{- .Values.share.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -35,6 +35,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.share.image.repository }}:{{ .Values.share.image.tag }}"
           imagePullPolicy: {{ .Values.share.image.pullPolicy }}
+          {{- include "component-security-context" .Values.share | indent 8 }}
           {{- if .Values.share.command }}
           command:
 {{ tpl .Values.share.command . | indent 12 }}
