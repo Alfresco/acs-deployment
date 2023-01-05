@@ -42,7 +42,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
-          {{- include "component-pod-security-context" .Values | indent 8 }}
+          {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-search.fullName" . }}-solr-configmap
