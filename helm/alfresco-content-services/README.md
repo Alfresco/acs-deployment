@@ -72,6 +72,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-admin-app.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-admin-app.resources.requests.cpu | string | `"150m"` |  |
 | alfresco-admin-app.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-admin-app.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-admin-app.securityContext.runAsNonRoot | bool | `true` |  |
 | alfresco-admin-app.securityContext.runAsUser | int | `101` |  |
 | alfresco-admin-app.service.envType | string | `"frontend"` |  |
@@ -92,6 +93,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-digital-workspace.resources.requests.cpu | string | `"150m"` |  |
 | alfresco-digital-workspace.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-digital-workspace.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
 | alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |

@@ -675,6 +675,9 @@ alfresco-digital-workspace:
   securityContext:
     runAsNonRoot: true
     runAsUser: 101
+    capabilities:
+      drop:
+        - NET_RAW
   resources:
     limits:
       cpu: 1
@@ -707,6 +710,9 @@ alfresco-admin-app:
   securityContext:
     runAsNonRoot: true
     runAsUser: 101
+    capabilities:
+      drop:
+        - NET_RAW
   resources:
     limits:
       cpu: 1
