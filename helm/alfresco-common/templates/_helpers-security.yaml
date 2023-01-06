@@ -9,6 +9,7 @@
     capabilities:
       drop:
         - NET_RAW
+        - ALL
 {{- end }}
 
 {{- define "component-pod-security-context" }}

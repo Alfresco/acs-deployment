@@ -554,6 +554,7 @@ share:
     capabilities:
       drop:
         - NET_RAW
+        - ALL
   podSecurityContext:
     runAsNonRoot: true
   resources:
@@ -678,6 +679,7 @@ alfresco-digital-workspace:
     capabilities:
       drop:
         - NET_RAW
+        - ALL
   resources:
     limits:
       cpu: 1
@@ -713,6 +715,7 @@ alfresco-admin-app:
     capabilities:
       drop:
         - NET_RAW
+        - ALL
   resources:
     limits:
       cpu: 1
