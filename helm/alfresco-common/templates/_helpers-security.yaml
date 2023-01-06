@@ -1,5 +1,14 @@
+{{- define "default-pod-security-context" }}
+    runAsNonRoot: true
+    fsGroupChangePolicy: OnRootMismatch
+{{- end }}
+
 {{- define "default-security-context" }}
     runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - NET_RAW
 {{- end }}
 
 {{- define "component-pod-security-context" }}
@@ -7,7 +16,7 @@
 {{- if .podSecurityContext }}
     {{- .podSecurityContext | toYaml | nindent 4 }}
 {{- else }}
-{{- include "default-security-context" . }}
+{{- include "default-pod-security-context" . }}
 {{- end }}
 {{- end }}
 
