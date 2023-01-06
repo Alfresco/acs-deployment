@@ -549,8 +549,13 @@ share:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-  podSecurityContext:
+  securityContext:
     runAsNonRoot: false
+    capabilities:
+      drop:
+        - NET_RAW
+  podSecurityContext:
+    runAsNonRoot: true
   resources:
     requests:
       memory: "2000Mi"
