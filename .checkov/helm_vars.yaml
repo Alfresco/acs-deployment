@@ -8,7 +8,7 @@ global:
     sharedsecret: dummy
 alfresco-elasticsearch-connector:
   enabled: true
-# Do not render dependent charts for static analysis
+# Do not render dependency charts for static analysis
 alfresco-digital-workspace:
   enabled: false
 alfresco-admin-app:
