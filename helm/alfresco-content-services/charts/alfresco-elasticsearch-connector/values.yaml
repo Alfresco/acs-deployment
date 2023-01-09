@@ -65,6 +65,7 @@ elasticsearch:
   protocol: null
   user: null
   password: null
+  existingSecretName:
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
