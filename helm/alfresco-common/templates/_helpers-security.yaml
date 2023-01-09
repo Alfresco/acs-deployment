@@ -1,6 +1,6 @@
 {{- define "default-pod-security-context" }}
     runAsNonRoot: true
-    runAsUser: 65534
+    runAsUser: 33099
     fsGroupChangePolicy: OnRootMismatch
 {{- end }}
 
