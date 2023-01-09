@@ -571,7 +571,7 @@ alfresco-search:
       enabled: false
     repository: *repositoryHostPort
   ingress:
-    # -- Alfresco Search services endpoint ('/solr') is disabled by default
+    # -- Alfresco Search services endpoint ('/solr')
     enabled: false
     # -- Default solr basic auth user/password: admin / admin
     # You can create your own with htpasswd utilility & encode it with base64.

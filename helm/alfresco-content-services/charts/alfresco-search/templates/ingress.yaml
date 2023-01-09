@@ -8,7 +8,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/auth-type: basic
-    nginx.ingress.kubernetes.io/auth-secret: {{ template "alfresco-search.fullName" . }}-solr
+    nginx.ingress.kubernetes.io/auth-secret: {{ default (printf "%s-solr" (include "alfresco-search.fullName" $)) $.Values.ingress.existingSecretName }}
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Alfresco Search Services"
     nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.whitelist_ips }}
 
