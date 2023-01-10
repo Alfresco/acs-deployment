@@ -5,6 +5,7 @@ templates:
   - config-repository.yaml
   - secret-database.yaml
   - secret-s3.yaml
+  - secret-repository.yaml
   - config-dev-log4j-properties.yaml
 tests:
   - it: should have basic metadata in place in deployment
@@ -15,6 +16,25 @@ tests:
           path: metadata.name
           value: RELEASE-NAME-alfresco-cs-repository
         template: deployment-repository.yaml
+
+  - it: should have default secret in env
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[4].secretRef.name
+          value: RELEASE-NAME-alfresco-cs-repository-secret
+        template: deployment-repository.yaml
+
+  - it: should have overridden secret in env
+    values: *testvalues
+    set:
+      repository.existingSecretName: whatever
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[4].secretRef.name
+          value: whatever
+        template: deployment-repository.yaml
+
   - it: should have configmap with CATALINA_OPTS with encryption.ssl.truststore.location set
     values: *testvalues
     asserts:
@@ -23,6 +43,7 @@ tests:
           pattern: |-
             (^|\w\ )-Dencryption.ssl.truststore.location=\$JAVA_HOME/lib/security/cacerts($|\ )
         template: config-repository.yaml
+
   - it: should have configmap with ALFRESCO_OPTS urls without ports when are the same of the protocol default
     values: *testvalues
     asserts:
@@ -41,6 +62,7 @@ tests:
           pattern: |-
             (^|\w\ )-Dcsrf.filter.referer=http://RELEASE-NAME-alfresco-cs-repository/\.\*($|\ )
         template: config-repository.yaml
+
   - it: should have configmap with ALFRESCO_OPTS urls with ports when are not protocol default
     values: *testvalues
     set:

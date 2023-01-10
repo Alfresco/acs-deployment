@@ -116,7 +116,7 @@ repository:
   # -- Provide additional log statements by adding classes and/or packages in a
   # key:value maner org.alfresco.repo.content.transform.TransformerDebug: debug
   extraLogStatements: {}
-  ## -- An existing secret that contains REPO_ADMIN_PASSWORD as an alternative for `repository.adminPassword` value
+  # -- An existing secret that contains REPO_ADMIN_PASSWORD as an alternative for `repository.adminPassword` value
   existingSecretName:
 # -- Declares the api-explorer service used by the content repository
 apiexplorer:

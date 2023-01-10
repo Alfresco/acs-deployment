@@ -5,6 +5,7 @@ templates:
   - config-dev-log4j-properties.yaml
   - secret-database.yaml
   - secret-s3.yaml
+  - secret-repository.yaml
   - deployment-repository.yaml
   - pvc.yaml
 tests:
