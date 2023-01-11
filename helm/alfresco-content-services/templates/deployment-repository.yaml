@@ -58,8 +58,8 @@ spec:
           {{- end }}
           {{- if .Values.email.server.enabled }}
           - secretRef:
-              # mail password
               name: {{ template "content-services.shortname" . }}-mail-password
+              name: {{ default (printf "%s-mail-password" (include "content-services.shortname" .)) .Values.mail.existingSecretName }}
           {{- end }}
           - secretRef:
               name: {{ template "content-services.shortname" . }}-metadata-keystore-secret
