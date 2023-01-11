@@ -24,7 +24,6 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-repository.yaml") . | sha256sum }}
         checksum/secretDatabase: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
         checksum/secretS3: {{ include (print $.Template.BasePath "/secret-s3.yaml") . | sha256sum }}
-        checksum/secret-repository: {{ include (print $.Template.BasePath "/secret-repository.yaml") . | sha256sum }}
         checksum/config-log4j: {{ include (print $.Template.BasePath "/config-dev-log4j-properties.yaml") . | sha256sum }}
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
