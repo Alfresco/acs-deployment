@@ -126,7 +126,6 @@ data:
       -Ddb.username=$DATABASE_USERNAME
       -Ddb.password=$DATABASE_PASSWORD
       {{- if .Values.s3connector.enabled }}
-      {{- if .Values.s3connector.secrets }}
       {{- if .Values.s3connector.secrets.accessKey }}
       -Ds3.accessKey=$ACCESSKEY
       {{- end }}
@@ -138,7 +137,6 @@ data:
       {{- end }}
       {{- if .Values.s3connector.secrets.awsKmsKeyId }}
       -Ds3.awsKmsKeyId=$KMSKEYID
-      {{- end }}
       {{- end }}
       {{- end }}
       -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
