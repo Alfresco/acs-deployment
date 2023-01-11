@@ -11,13 +11,7 @@ skip-check:
   - CKV_K8S_22
   - CKV_K8S_11
   - CKV_K8S_10
-  - CKV_K8S_29
-  - CKV_K8S_30
-  - CKV_K8S_23
-  - CKV_K8S_28
-  - CKV_K8S_37
   - CKV_K8S_38
-  - CKV_K8S_40
   - CKV_K8S_15
   - CKV_K8S_153
 var-file:

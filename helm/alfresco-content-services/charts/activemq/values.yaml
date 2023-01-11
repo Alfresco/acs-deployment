@@ -9,6 +9,10 @@ image:
 adminUser:
   username: admin
   password: admin
+podSecurityContext:
+  runAsUser: 33031
+  runAsGroup: 1000
+  fsGroup: 1000
 resources:
   requests:
     memory: "512Mi"

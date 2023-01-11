@@ -28,6 +28,7 @@ spec:
         app: {{ template "alfresco-insight-zeppelin.fullName" . }}
         release: {{ .Release.Name }}
     spec:
+    {{- include "component-pod-security-context" .Values | indent 4 }}
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -38,6 +39,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+          {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-insight-zeppelin.fullName" . }}-configmap

@@ -69,6 +69,11 @@ repository:
       -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
       -Dmetadata-keystore.aliases=metadata
       -Dmetadata-keystore.metadata.algorithm=DESede
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33000
+    runAsGroup: 1000
+    fsGroup: 1000
   resources:
     requests:
       memory: "3000Mi"
@@ -133,6 +138,9 @@ ooiService:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33006
   resources:
     requests:
       memory: "1000Mi"
@@ -169,6 +177,9 @@ msTeamsService:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33041
   resources:
     requests:
       memory: "1000Mi"
@@ -221,6 +232,9 @@ transformrouter:
     initialDelaySeconds: 140
     periodSeconds: 120
     timeoutSeconds: 60
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33016
   resources:
     requests:
       memory: "128Mi"
@@ -240,6 +254,9 @@ pdfrenderer:
     name: pdfrenderer
     type: ClusterIP
     externalPort: 80
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33001
   resources:
     requests:
       memory: "1000Mi"
@@ -275,6 +292,9 @@ imagemagick:
     name: imagemagick
     type: ClusterIP
     externalPort: 80
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33002
   resources:
     requests:
       memory: "1000Mi"
@@ -315,6 +335,9 @@ libreoffice:
       memory: "1000Mi"
     limits:
       memory: "1000Mi"
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33003
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -345,6 +368,9 @@ tika:
     name: tika
     type: ClusterIP
     externalPort: 80
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33004
   resources:
     requests:
       memory: "1000Mi"
@@ -381,6 +407,9 @@ transformmisc:
     name: transformmisc
     type: ClusterIP
     externalPort: 80
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 33006
   resources:
     requests:
       memory: "1000Mi"
@@ -414,6 +443,8 @@ aiTransformer:
     name: ai-transformer
     type: ClusterIP
     externalPort: 80
+  podSecurityContext:
+    runAsUser: 33015
   resources:
     requests:
       memory: "1000Mi"
@@ -459,6 +490,10 @@ filestore:
     name: filestore
     type: ClusterIP
     externalPort: 80
+  podSecurityContext:
+    runAsUser: 33030
+    runAsGroup: 1000
+    fsGroup: 1000
   resources:
     requests:
       memory: "1000Mi"
@@ -514,6 +549,14 @@ share:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+  securityContext:
+    runAsNonRoot: false
+    capabilities:
+      drop:
+        - NET_RAW
+        - ALL
+  podSecurityContext:
+    runAsNonRoot: true
   resources:
     requests:
       memory: "2000Mi"
@@ -630,6 +673,13 @@ alfresco-digital-workspace:
     - name: APP_CONFIG_PLUGIN_AI_SERVICE
       value: '{{ .Values.global.ai.enabled }}'
     {{- end }}
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 101
+    capabilities:
+      drop:
+        - NET_RAW
+        - ALL
   resources:
     limits:
       cpu: 1
@@ -659,6 +709,13 @@ alfresco-admin-app:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 101
+    capabilities:
+      drop:
+        - NET_RAW
+        - ALL
   resources:
     limits:
       cpu: 1

@@ -13,12 +13,14 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 8 }}
     spec:
+      {{- include "component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing
           image: "{{ .Values.reindexing.image.repository }}:{{ .Values.reindexing.image.tag }}"
           imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
+          {{- include "component-security-context" .Values | indent 8 }}
           resources:
             limits:
               memory: {{ .Values.resources.limits.memory }}
@@ -48,6 +50,7 @@ spec:
       initContainers:
         - name: wait-for-repository
           image: curlimages/curl:7.79.1
+          {{- include "component-security-context" .Values | indent 8 }}
           resources:
             limits:
               memory: 512Mi
