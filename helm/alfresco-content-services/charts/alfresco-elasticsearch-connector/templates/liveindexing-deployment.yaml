@@ -23,14 +23,14 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 8 }}
     spec:
+      {{- include "component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-content-services.imagePullSecrets" $ | indent 6 }}
-      securityContext:
-        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ $.Chart.Name }}-{{ $serviceName }}
           image: "{{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "repository" }}:\
             {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "tag" }}"
           imagePullPolicy: {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "pullPolicy" }}
+            {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" $ }}-configmap

@@ -25,6 +25,7 @@ spec:
         app: {{ template "alfresco-search.fullName" . }}-solr
         release: {{ .Release.Name }}
     spec:
+    {{- include "component-pod-security-context" .Values | indent 4 }}
     {{- with .Values.affinity }}
       affinity:
 {{ tpl . $ | indent 8 }}
@@ -41,6 +42,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
+          {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-search.fullName" . }}-solr-configmap
@@ -86,19 +88,8 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 10"]
-      initContainers:
-        - name: init-fs
-          image: "{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
-          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
-          resources:
-{{ toYaml .Values.initContainer.resources | indent 14 }}
-          # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
-          command: ["sh", "-c", "chown -R 33007:33007 {{ .Values.persistence.search.data.mountPath }}"]
-          volumeMounts:
-          - name: data
-            mountPath: {{ .Values.persistence.search.data.mountPath }}
-            subPath: {{ .Values.persistence.search.data.subPath }}
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: "{{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}"
+          claimName: |-
+            {{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}

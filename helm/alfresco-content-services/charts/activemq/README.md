@@ -1,6 +1,6 @@
 # activemq
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 5.16.4](https://img.shields.io/badge/AppVersion-5.16.4-informational?style=flat-square)
+![Version: 2.2.0-SNAPSHOT](https://img.shields.io/badge/Version-2.2.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 5.17.1](https://img.shields.io/badge/AppVersion-5.17.1-informational?style=flat-square)
 
 A Helm chart Providing Apache ActiveMQ.
 
@@ -38,6 +38,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | persistence.enabled | bool | `true` |  |
 | persistence.existingClaim | string | `nil` |  |
 | persistence.storageClass | string | `nil` |  |
+| podSecurityContext.fsGroup | int | `1000` |  |
+| podSecurityContext.runAsGroup | int | `1000` |  |
+| podSecurityContext.runAsUser | int | `33031` |  |
 | readinessProbe | object | `{"failureThreshold":6,"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":10}` | The ActiveMQ readiness probe is used to check startup only as a failure of the liveness probe later will result in the pod being restarted. |
 | replicaCount | int | `1` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |

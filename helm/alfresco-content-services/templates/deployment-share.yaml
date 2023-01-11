@@ -5,6 +5,9 @@ metadata:
   name: {{ template "content-services.shortname" . }}-share
   labels:
     {{- include "share.labels" . | nindent 4 }}
+  annotations:
+    checkov.io/skip1: CKV_K8S_23=Requires APPS-1832 first
+    checkov.io/skip2: CKV_K8S_40=Requires APPS-1832 first
 spec:
   replicas: {{ .Values.share.replicaCount }}
   selector:
@@ -21,6 +24,7 @@ spec:
       labels:
         {{- include "share.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.share | indent 4 }}
     {{- if .Values.share.nodeSelector }}
       nodeSelector: {{- .Values.share.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -32,6 +36,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.share.image.repository }}:{{ .Values.share.image.tag }}"
           imagePullPolicy: {{ .Values.share.image.pullPolicy }}
+          {{- include "component-security-context" .Values.share | indent 8 }}
           {{- if .Values.share.command }}
           command:
 {{ tpl .Values.share.command . | indent 12 }}

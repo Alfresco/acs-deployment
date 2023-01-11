@@ -23,6 +23,7 @@ spec:
       labels:
         {{- include "ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.aiTransformer | indent 4 }}
     {{- if .Values.aiTransformer.nodeSelector }}
       nodeSelector: {{- .Values.aiTransformer.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -52,6 +53,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.aiTransformer.image.repository }}:{{ .Values.aiTransformer.image.tag }}"
           imagePullPolicy: {{ .Values.aiTransformer.image.pullPolicy }}
+          {{- include "component-security-context" .Values.aiTransformer | indent 8 }}
           envFrom:
           - configMapRef:
               # config map to use, defined in config-ai-transformer.yaml

@@ -22,6 +22,7 @@ spec:
       labels:
         {{- include "tika.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.tika | indent 4 }}
     {{- if .Values.tika.nodeSelector }}
       nodeSelector: {{- .Values.tika.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -51,6 +52,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.tika.image.repository }}:{{ .Values.tika.image.tag }}"
           imagePullPolicy: {{ .Values.tika.image.pullPolicy }}
+          {{- include "component-security-context" .Values.tika | indent 8 }}
           envFrom:
           - configMapRef:
               # config map to use, defined in config-tika.yaml

@@ -23,6 +23,7 @@ spec:
       labels:
         {{- include "filestore.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.filestore | indent 4 }}
     {{- if .Values.filestore.nodeSelector }}
       nodeSelector: {{- .Values.filestore.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -56,6 +57,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.filestore.image.repository }}:{{ .Values.filestore.image.tag }}"
           imagePullPolicy: {{ .Values.filestore.image.pullPolicy }}
+          {{- include "component-security-context" .Values.filestore | indent 8 }}
           envFrom:
           - configMapRef:
               # config map to use, defined in config-filestore.yaml

@@ -13,6 +13,9 @@ image:
   tag: 2.0.6-A4
   pullPolicy: IfNotPresent
   internalPort: 9090
+podSecurityContext:
+  runAsUser: 33007
+  runAsNonRoot: true
 service:
   name: zeppelin
   type: ClusterIP

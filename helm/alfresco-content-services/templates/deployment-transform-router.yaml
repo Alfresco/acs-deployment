@@ -22,6 +22,7 @@ spec:
       labels:
         {{- include "transform-router.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.transformrouter | indent 4 }}
     {{- if .Values.transformrouter.nodeSelector }}
       nodeSelector: {{- .Values.transformrouter.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -51,6 +52,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.transformrouter.image.repository }}:{{ .Values.transformrouter.image.tag }}"
           imagePullPolicy: {{ .Values.transformrouter.image.pullPolicy }}
+          {{- include "component-security-context" .Values.transformrouter | indent 8 }}
           envFrom:
           - configMapRef:
               # config map to use, defined in config-transform-router.yaml

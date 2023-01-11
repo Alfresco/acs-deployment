@@ -10,8 +10,9 @@ keywords:
 name: alfresco-insight-zeppelin
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 1.0.3
+version: 1.0.4-SNAPSHOT
+appVersion: 2.0.6-A4
 dependencies:
   - name: alfresco-common
-    version: 0.1.0-SNAPSHOT
+    version: 0.3.0-SNAPSHOT
     repository: https://kubernetes-charts.alfresco.com/incubator

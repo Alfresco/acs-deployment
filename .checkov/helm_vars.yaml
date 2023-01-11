@@ -1,3 +1,4 @@
+---
 alfresco-search:
   alfresco-insight-zeppelin:
     insightzeppelin:
@@ -7,3 +8,14 @@ global:
     sharedsecret: dummy
 alfresco-elasticsearch-connector:
   enabled: true
+# Do not render dependency charts for static analysis
+alfresco-digital-workspace:
+  enabled: false
+alfresco-admin-app:
+  enabled: false
+postgresql:
+  enabled: false
+postgresql-syncservice:
+  enabled: false
+database:
+  external: true

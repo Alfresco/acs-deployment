@@ -10,6 +10,11 @@ nodeSelector: {}
 # As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set
 # More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
 type: "search-services"
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 33007
+  runAsGroup: 33007
+  fsGroup: 33007
 searchServicesImage:
   repository: quay.io/alfresco/search-services
   tag: 2.0.6-A4

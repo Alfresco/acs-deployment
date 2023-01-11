@@ -29,12 +29,11 @@ dependencies:
     repository: >-
       https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
     alias: postgresql-syncservice
-    condition: >-
-      alfresco-sync-service.syncservice.enabled,postgresql-syncservice.enabled
+    condition: postgresql-syncservice.enabled
   - name: common
     alias: alfresco-admin-app
     repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 7.6.0
+    version: 7.7.0
     condition: >-
       alfresco-admin-app.enabled
   - name: common
@@ -44,13 +43,13 @@ dependencies:
     condition: >-
       alfresco-digital-workspace.enabled
   - name: activemq
-    version: 2.1.0
+    version: 2.2.0-SNAPSHOT
     condition: activemq.enabled
   - name: alfresco-search
-    version: 1.0.4
+    version: 1.0.5-SNAPSHOT
     condition: alfresco-search.enabled
   - name: alfresco-elasticsearch-connector
-    version: 0.1.0
+    version: 0.2.0-SNAPSHOT
     condition: alfresco-elasticsearch-connector.enabled
   - name: alfresco-sync-service
     version: 3.0.9
