@@ -2,9 +2,14 @@
 
 ![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 5.16.4](https://img.shields.io/badge/AppVersion-5.16.4-informational?style=flat-square)
 
-A Helm chart Providing Apache ActiveMQ.
+A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (do not use in production).
 
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
+Please refer to the [documentation](../../../../docs/helm/README.md) for information on the Helm charts and deployment instructions.
+
+Credentials get injected by the [main chart](../../README.md) and by default are:
+
+* username: admin
+* password: admin
 
 ## Source Code
 
