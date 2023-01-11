@@ -16,8 +16,9 @@ spec:
       {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with $.Values.podAnnotations }}
       annotations:
+        checksum/secret-elasticsearch: {{ include (print $.Template.BasePath "/secret-elasticsearch.yaml") $ | sha256sum }}
+      {{- with $.Values.podAnnotations }}
         {{- toYaml $ | nindent 8 }}
       {{- end }}
       labels:
