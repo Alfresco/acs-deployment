@@ -30,32 +30,34 @@ node "alfresco namespace" {
 }
 
 cloud "Amazon Web Services" {
-    storage "EBS" as ebs
-    storage "EFS Volume Claim" as vc
+    rectangle "GP2/3" {
+        storage "EBS" as ebs1
+        storage "EBS" as ebs2
+        storage "EBS" as ebs3
+    }
+    rectangle "EFS CSI" {
+        storage "EFS Volume" as vc
+    }
 }
+Client -->> nginx
 
-Client --> nginx
+nginx -->> acs
+nginx -->> share
 
-nginx --> acs
-nginx --> share
+acs -->> vc
+psql -->> ebs1
+ass -->> ebs2
+amq -->> ebs3
 
-acs --> vc
-psql --> vc
-ass --> ebs
-
-ass <-left-> acs
-acs --> psql
-acs --> pdfr
-acs --> libr
-acs --> img
-acs --> tika
-acs --> misc
-acs <--> amq
-share --> acs
-
-sync <-left-> acs
-sync --> psql
-sync --> amq
+ass <<->> acs
+acs -->> psql
+acs -->> pdfr
+acs -->> libr
+acs -->> img
+acs -->> tika
+acs -->> misc
+acs <<-->> amq
+share -->> acs
 
 center footer Copyright 2021 Alfresco Software Inc
 

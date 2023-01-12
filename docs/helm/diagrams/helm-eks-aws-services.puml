@@ -15,7 +15,10 @@ actor Client
 node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
     component "Alfresco Digital Workspace" as adw #lightgrey
-    component "Alfresco Content Services" as acs #lightgrey
+    together {
+        component "Alfresco Content Services" as acs #lightgrey
+        component "Alfresco Share" as share #lightgrey
+    }
     rectangle "Alfresco Search Enterprise 3" as se3 {
         frame "LiveIndexing" as se3liveidx {
             component "mediation" as se3mediation
@@ -26,7 +29,6 @@ node "alfresco namespace" {
         component "ReIndexing" as se3reidx
     }
     component "Alfresco Sync Service" as sync #lightgrey
-    component "Alfresco Share" as share #lightgrey
     rectangle "Alfresco Transform Service" {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
@@ -52,7 +54,7 @@ nginx --> acs
 nginx --> share
 nginx --> adw
 
-se3 -[hidden]- sync
+acs -[hidden]- se3
 acs --> s3
 acs --> osearch
 se3content --> osearch
@@ -89,7 +91,7 @@ misc --> sfs
 share --> acs
 adw --> acs
 
-sync <--> acs
+sync <-> acs
 sync --> db
 sync --> mq
 

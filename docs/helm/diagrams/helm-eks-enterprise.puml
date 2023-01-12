@@ -14,14 +14,16 @@ actor Client
 
 node "alfresco namespace" {
     component "NGINX ingress-controller" as nginx #lightgrey
-    component "Alfresco Digital Workspace" as adw #lightgrey
+    together {
+        component "Alfresco Digital Workspace" as adw #lightgrey
+        component "Alfresco Share" as share #lightgrey
+    }
     component "Alfresco Content Services" as acs #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "Alfresco Sync Service" as sync #lightgrey
     component "PostgreSQL" as psql #lightgrey
-    component "Alfresco Share" as share #lightgrey
     component "ActiveMQ" as amq #lightgrey
-    rectangle "Alfresco Transform Service" {
+    rectangle "Alfresco Transform Service" as ats {
         component "Transform Router" as tr #lightgrey
         component "Shared File Store" as sfs #lightgrey
         component "Alfresco PDF Renderer" as pdfr #lightgrey
@@ -33,47 +35,55 @@ node "alfresco namespace" {
 }
 
 cloud "Amazon Web Services" {
-    storage "EBS" as ebs
-    storage "EFS Volume Claim" as vc
+    rectangle "GP2/3" {
+        storage "EBS" as ebs1
+        storage "EBS" as ebs2
+        storage "EBS" as ebs3
+    }
+    rectangle "EFS CSI" {
+        storage "EFS Volume" as vc
+    }
 }
 
-Client --> nginx
+Client -->> nginx
 
-nginx --> acs
-nginx --> share
-nginx --> adw
+nginx -->> acs
+nginx -->> share
+nginx -->> adw
 
-acs --> vc
-psql --> vc
-sfs --> vc
-ass --> ebs
+acs -[hidden]- ats
+acs -->> vc
+amq -->> ebs1
+psql -->> ebs2
+sfs -->> vc
+ass -->> ebs3
 
-ass <-left-> acs
-acs --> psql
-acs --> pdfr
-acs --> libr
-acs --> img
-acs --> tika
-acs --> misc
-acs --> sfs
-acs <--> amq
-tr --> pdfr
-tr --> libr
-tr --> img
-tr --> tika
-tr --> misc
-tr <-up-> amq
-pdfr --> sfs
-libr --> sfs
-img --> sfs
-tika --> sfs
-misc --> sfs
-share --> acs
-adw --> acs
+acs -->> psql
+acs -->> pdfr
+acs -->> libr
+acs -->> img
+acs -->> tika
+acs -->> misc
+acs -->> sfs
+acs <<-->> amq
+tr -->> pdfr
+tr -->> libr
+tr -->> img
+tr -->> tika
+tr -->> misc
+tr <<-->> amq
+pdfr -->> sfs
+libr -->> sfs
+img -->> sfs
+tika -->> sfs
+misc -->> sfs
+share -->> acs
+adw ->> acs
 
-sync <-left-> acs
-sync --> psql
-sync --> amq
+acs <<->> ass
+sync <<->> acs
+sync -->> psql
+sync -->> amq
 
 center footer Copyright 2021 Alfresco Software Inc
 
