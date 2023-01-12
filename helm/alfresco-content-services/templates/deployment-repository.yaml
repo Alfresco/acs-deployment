@@ -28,6 +28,7 @@ spec:
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.repository | indent 4 }}
     {{- if .Values.repository.nodeSelector }}
       nodeSelector: {{- .Values.repository.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -43,6 +44,7 @@ spec:
           command:
 {{ tpl .Values.repository.command . | indent 12 }}
           {{- end }}
+          {{- include "component-security-context" .Values.repository | indent 8 }}
           envFrom:
           {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
           - secretRef:
@@ -120,6 +122,7 @@ spec:
         - name: init-db
           image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
           imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.db | indent 8 }}
           resources:
 {{ toYaml .Values.repository.initContainers.db.resources | indent 14 }}
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
@@ -128,6 +131,7 @@ spec:
         - name: pem-to-keystore
           image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"
           imagePullPolicy: {{ .Values.email.initContainers.pemToKeystore.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.pemToKeystore | indent 8 }}
           env:
             - name: keyfile
               value: /var/run/secrets/certs/tls.key
@@ -149,6 +153,7 @@ spec:
         - name: pem-to-truststore
           image: "{{ .Values.email.initContainers.pemToTruststore.image.repository }}:{{ .Values.email.initContainers.pemToTruststore.image.tag }}"
           imagePullPolicy: {{ .Values.email.initContainers.pemToTruststore.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.pemToTruststore | indent 8 }}
           env:
             - name: ca_bundle
               value: /var/run/secrets/cacert/ca.crt
@@ -166,6 +171,7 @@ spec:
         - name: set-perms
           image: "{{ .Values.email.initContainers.setPerms.image.repository }}:{{ .Values.email.initContainers.setPerms.image.tag }}"
           imagePullPolicy: {{ .Values.email.initContainers.setPerms.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.setPerms | indent 8 }}
           env:
             - name: keystore_dir
               value: /var/run/secrets/java.io/keystores

@@ -19,6 +19,7 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.name
           value: RELEASE-NAME-alfresco-cs-dbsecret
+
   - it: should have overridden secret for spring database credentials when existingSecretName is set
     values: *testvalues
     set:
@@ -30,6 +31,23 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.name
           value: my-custom-secret
+
+  - it: should have env vars for elasticsearch credentials
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[5].name
+          value: SPRING_ELASTICSEARCH_REST_USERNAME
+      - equal:
+          path: spec.template.spec.containers[0].env[5].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-elasticsearch-connector-elasticsearch-secret
+      - equal:
+          path: spec.template.spec.containers[0].env[6].name
+          value: SPRING_ELASTICSEARCH_REST_PASSWORD
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-elasticsearch-connector-elasticsearch-secret
+
   - it: should not be present when disabled
     values: *testvalues
     set:

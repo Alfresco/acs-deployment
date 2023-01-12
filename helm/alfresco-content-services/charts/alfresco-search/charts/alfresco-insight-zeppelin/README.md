@@ -1,6 +1,6 @@
 # alfresco-insight-zeppelin
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
+![Version: 1.0.4-SNAPSHOT](https://img.shields.io/badge/Version-1.0.4--SNAPSHOT-informational?style=flat-square) ![AppVersion: 2.0.6-A4](https://img.shields.io/badge/AppVersion-2.0.6--A4-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.1.0-SNAPSHOT |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.3.0-SNAPSHOT |
 
 ## Values
 
@@ -33,6 +33,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
+| podSecurityContext.runAsNonRoot | bool | `true` |  |
+| podSecurityContext.runAsUser | int | `33007` |  |
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
