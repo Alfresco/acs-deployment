@@ -726,35 +726,35 @@ alfresco-admin-app:
 # -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
 ooi:
   enabled: false
-# -- Defines properties required by alfresco for connecting to the database
-# Note! : If you set database.external to true you will have to setup the
-# driver, user, password and JdbcUrl. Also make sure that the container has the
-# db driver in /usr/local/tomcat/lib since the current image only has the
-# postgresql driver
 database:
+  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false
-  # -- ex: org.postgresql.Driver
+  # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
   driver:
-  # -- ex: alfresco
+  # -- External Postgresql database user
   user:
-  # -- ex: alfresco
+  # -- External Postgresql database password
   password:
-  # -- ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco
+  # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
   url:
-# -- Defines the properties to be used for the required postgres DB
-# Note: the database (tables) information is also saved in the persistent volume
-# claim
+  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+  # When using embedded postgres you need to also set `postgresql.existingSecret`.
+  existingSecretName:
 postgresql:
-  replicaCount: 1
-  # -- If true, install the postgresql chart alongside Alfresco Content Services
-  # Note: Set this to false if you use an external database.
+  # -- Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart
   enabled: true
+  replicaCount: 1
   nameOverride: postgresql-acs
   image:
     tag: 14.4.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
+  # -- Name of existing secret to use for PostgreSQL passwords
+  # The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is
+  # different of postgres, postgresql-postgres-password which will override postgresqlPassword.
+  # The same secret must be set also as `database.existingSecretName` to provide the credentials to ACS.
+  existingSecret:
   # -- Postgresql database user
   postgresqlUsername: alfresco
   # -- Postgresql database password
@@ -780,9 +780,8 @@ postgresql:
     limits:
       memory: "1500Mi"
 postgresql-syncservice:
-  # -- If true, install the postgresql chart alongside Alfresco Sync service.
-  # Note: Set this to false if you use an external database.
   name: postgresql-syncservice
+  # -- Enable embedded postgres for Alfresco Sync service leveraging the postgresql Bitnami chart
   enabled: true
   replicaCount: 1
   nameOverride: postgresql-syncservice

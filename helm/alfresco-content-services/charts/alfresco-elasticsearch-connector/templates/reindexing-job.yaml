@@ -35,12 +35,12 @@ spec:
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.reindexing.postgresql.existingSecretName }}
                   key: DATABASE_PASSWORD
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.reindexing.postgresql.existingSecretName }}
                   key: DATABASE_USERNAME
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}

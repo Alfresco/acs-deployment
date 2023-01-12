@@ -61,6 +61,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.image.tag | string | `"3.3.0-M1"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
 | reindexing.postgresql.database | string | `"alfresco"` |  |
+| reindexing.postgresql.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys |
 | reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
 | reindexing.postgresql.port | int | `5432` |  |
 | reindexing.postgresql.url | string | `nil` |  |
