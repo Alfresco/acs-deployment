@@ -133,11 +133,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.nodeSelector | object | `{}` |  |
 | alfresco-sync-service.syncservice.enabled | bool | `true` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
-| database | object | `{"driver":null,"external":false,"password":null,"url":null,"user":null}` | Defines properties required by alfresco for connecting to the database Note! : If you set database.external to true you will have to setup the driver, user, password and JdbcUrl. Also make sure that the container has the db driver in /usr/local/tomcat/lib since the current image only has the postgresql driver |
-| database.driver | string | `nil` | ex: org.postgresql.Driver |
-| database.password | string | `nil` | ex: alfresco |
-| database.url | string | `nil` | ex: jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco |
-| database.user | string | `nil` | ex: alfresco |
+| database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
+| database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
+| database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
+| database.password | string | `nil` | External Postgresql database password |
+| database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
+| database.user | string | `nil` | External Postgresql database user |
 | elasticsearch | object | `{"clusterHealthCheckParams":"wait_for_status=yellow&timeout=1s","enabled":false,"image":"docker.elastic.co/elasticsearch/elasticsearch-oss","replicas":1}` | Embedded ElasticSearch cluster powered by Bitnami charts |
 | elasticsearch.enabled | bool | `false` | Enable the embedded ElasticSearch cluster |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of configuring the inbound email ssytem, see https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails |
@@ -220,12 +221,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.service.name | string | `"ooi-service"` |  |
 | ooiService.service.type | string | `"ClusterIP"` |  |
 | pdfrenderer | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"3.0.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true,"runAsUser":33001},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
-| postgresql | object | `{"commonAnnotations":{"application":"alfresco-content-services"},"enabled":true,"image":{"pullPolicy":"IfNotPresent","tag":"14.4.0"},"nameOverride":"postgresql-acs","persistence":{"existingClaim":null,"storageClass":null,"subPath":"alfresco-content-services/database-data"},"postgresqlDatabase":"alfresco","postgresqlExtendedConf":{"log_min_messages":"LOG","max_connections":300},"postgresqlPassword":"alfresco","postgresqlUsername":"alfresco","primary":{"nodeSelector":{}},"replicaCount":1,"resources":{"limits":{"memory":"1500Mi"},"requests":{"memory":"1500Mi"}}}` | Defines the properties to be used for the required postgres DB Note: the database (tables) information is also saved in the persistent volume claim |
 | postgresql-syncservice.commonAnnotations.application | string | `"alfresco-content-services"` |  |
-| postgresql-syncservice.enabled | bool | `true` |  |
+| postgresql-syncservice.enabled | bool | `true` | Enable embedded postgres for Alfresco Sync service leveraging the postgresql Bitnami chart |
 | postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql-syncservice.image.tag | string | `"14.4.0"` |  |
-| postgresql-syncservice.name | string | `"postgresql-syncservice"` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
+| postgresql-syncservice.name | string | `"postgresql-syncservice"` |  |
 | postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
 | postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
 | postgresql-syncservice.postgresqlExtendedConf.log_min_messages | string | `"LOG"` |  |
@@ -237,12 +237,24 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
-| postgresql.enabled | bool | `true` | If true, install the postgresql chart alongside Alfresco Content Services Note: Set this to false if you use an external database. |
+| postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
+| postgresql.enabled | bool | `true` | Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart |
+| postgresql.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL passwords The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is different of postgres, postgresql-postgres-password which will override postgresqlPassword. The same secret must be set also as `database.existingSecretName` to provide the credentials to ACS. |
+| postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
+| postgresql.image.tag | string | `"14.4.0"` |  |
+| postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownhership set. |
 | postgresql.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
+| postgresql.persistence.subPath | string | `"alfresco-content-services/database-data"` |  |
 | postgresql.postgresqlDatabase | string | `"alfresco"` | Postgresql database name |
+| postgresql.postgresqlExtendedConf.log_min_messages | string | `"LOG"` |  |
+| postgresql.postgresqlExtendedConf.max_connections | int | `300` |  |
 | postgresql.postgresqlPassword | string | `"alfresco"` | Postgresql database password |
 | postgresql.postgresqlUsername | string | `"alfresco"` | Postgresql database user |
+| postgresql.primary.nodeSelector | object | `{}` |  |
+| postgresql.replicaCount | int | `1` |  |
+| postgresql.resources.limits.memory | string | `"1500Mi"` |  |
+| postgresql.resources.requests.memory | string | `"1500Mi"` |  |
 | repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in md5 hash format |
 | repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |

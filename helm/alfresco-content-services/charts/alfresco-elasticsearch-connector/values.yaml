@@ -58,6 +58,8 @@ reindexing:
     hostname: postgresql-acs
     database: alfresco
     port: 5432
+    # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
+    existingSecretName:
 # -- Overrides .Values.global.elasticsearch
 elasticsearch:
   host: null
