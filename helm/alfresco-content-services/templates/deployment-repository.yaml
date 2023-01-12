@@ -51,8 +51,6 @@ spec:
               name: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
           {{- end }}
           - secretRef:
-              name: {{ default (printf "%s-repository-secret" (include "content-services.shortname" .)) .Values.repository.existingSecretName }}
-          - secretRef:
               name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.postgresql.existingSecretName }}
           {{- if and .Values.s3connector.enabled .Values.s3connector.secrets }}
           - secretRef:
