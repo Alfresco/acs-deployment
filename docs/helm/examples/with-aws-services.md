@@ -4,7 +4,7 @@ This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) 
 
 The diagram below shows the deployment produced by this example:
 
-![Helm with AWS Services](../diagrams/helm-eks-s3-rds-mq.png)
+![Helm with AWS Services](../diagrams/helm-eks-aws-services.png)
 
 ## Prerequisites
 
@@ -137,16 +137,23 @@ Edit your `values.yml` file so it contains below elements:
 externalPort: 443
 externalProtocol: https
 externalHost: acs.YOUR-DOMAIN-NAME
-persistence:
-  enabled: true
-  storageClass:
-    enabled: true
-    name: nfs-client
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
+  elasticsearch:
+    host: YOUR-DOMAIN-HOSTNAME
+    port: 443
+    protocol: https
+    user: YOUR-DOMAIN-MASTER-USERNAME
+    password: YOUR-DOMAIN-MASTER-PASSWORD
 repository:
   image:
     repository: alfresco-content-repository-aws
+  persistence:
+    enabled: false
+filestore:
+  persistence:
+    enabled: true
+    storageClass: nfs-client
 s3connector:
   enabled: true
   config:
@@ -160,26 +167,18 @@ database:
   url: jdbc:postgresql://YOUR-DATABASE-ENDPOINT:5432/
   user: alfresco
   password: YOUR-DATABASE-PASSWORD
+activemq:
+  enabled: false
 messageBroker: &acs_messageBroker
   url: YOUR-MQ-ENDPOINT
   user: alfresco
   password: YOUR-MQ-PASSWORD
-```
-
-If you want to use Search Enterprise with Amazon Opensearch, add:
-
-```yaml
 alfresco-search:
   enabled: false
 alfresco-elasticsearch-connector:
   enabled: true
-global:
-  elasticsearch:
-    host: YOUR-DOMAIN-HOSTNAME
-    port: 443
-    protocol: https
-    user: YOUR-DOMAIN-MASTER-USERNAME
-    password: YOUR-DOMAIN-MASTER-PASSWORD
+alfresco-sync-service:
+  messageBroker: *acs_messageBroker
 ```
 
 Then you can deploy using:
@@ -203,10 +202,16 @@ helm -n alfresco install acs --repo https://kubernetes-charts.alfresco.com/stabl
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
---set persistence.enabled=true \
---set persistence.storageClass.enabled=true \
---set persistence.storageClass.name="nfs-client" \
 --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+--set global.elasticsearch.host=YOUR-DOMAIN-HOSTNAME \
+--set global.elasticsearch.port=443 \
+--set global.elasticsearch.protocol=https \
+--set global.elasticsearch.user=YOUR-DOMAIN-MASTER-USERNAME \
+--set global.elasticsearch.password=YOUR-DOMAIN-MASTER-PASSWORD \
+--set repository.persistence.enabled=false \
+--set repository.image.repository=alfresco-content-repository-aws \
+--set filestore.persistence.enabled=true \
+--set filestore.persistence.storageClass="nfs-client" \
 --set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
 --set s3connector.enabled=true \
 --set s3connector.config.bucketName="YOUR-BUCKET-NAME" \
@@ -224,20 +229,10 @@ helm -n alfresco install acs --repo https://kubernetes-charts.alfresco.com/stabl
 --set alfresco-sync-service.messageBroker.url="YOUR-MQ-ENDPOINT" \
 --set alfresco-sync-service.messageBroker.user="alfresco" \
 --set alfresco-sync-service.messageBroker.password="YOUR-MQ-PASSWORD" \
+--set alfresco-search.enabled=false \
+--set alfresco-elasticsearch-connector.enabled=true
 ```
 
 > NOTE: Alternatively, Aurora MySQL can be used instead of PostgreSQL by selecting the "Amazon Aurora with MySQL compatibility" option and version "5.7.12" in the create database wizard. You'll also need to change the `database.driver` value to "org.mariadb.jdbc.Driver" and change the `database.url` to `"jdbc:mariadb:aurora//YOUR-DATABASE-ENDPOINT:3306/alfresco?useUnicode=yes&characterEncoding=UTF-8"`.
 >
 > NOTE: If your `database.url` contains semi-colons i.e. for SQL Server, you will need to escape them e.g. `"jdbc:sqlserver://YOUR-DATABASE-ENDPOINT:1433\\;databaseName=alfresco\\;lockTimeout=1000\\;"`
-
-If you want to use Search Enterprise with Amazon Opensearch, add:
-
-```bash
---set alfresco-search.enabled=false \
---set alfresco-elasticsearch-connector.enabled=true \
---set global.elasticsearch.host="YOUR-DOMAIN-HOSTNAME" \
---set global.elasticsearch.port=443 \
---set global.elasticsearch.protocol=https \
---set global.elasticsearch.user="YOUR-DOMAIN-MASTER-USERNAME" \
---set global.elasticsearch.password="YOUR-DOMAIN-MASTER-PASSWORD" \
-```
