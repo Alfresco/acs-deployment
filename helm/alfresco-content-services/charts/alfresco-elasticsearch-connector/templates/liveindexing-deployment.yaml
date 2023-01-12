@@ -16,8 +16,9 @@ spec:
       {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with $.Values.podAnnotations }}
       annotations:
+        checksum/secret-elasticsearch: {{ include (print $.Template.BasePath "/secret-elasticsearch.yaml") $ | sha256sum }}
+      {{- with $.Values.podAnnotations }}
         {{- toYaml $ | nindent 8 }}
       {{- end }}
       labels:
@@ -38,6 +39,7 @@ spec:
                 name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
+            {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}
           ports:
             - name: http
               containerPort: 8080

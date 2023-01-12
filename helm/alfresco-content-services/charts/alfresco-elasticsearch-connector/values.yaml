@@ -65,6 +65,7 @@ elasticsearch:
   protocol: null
   user: null
   password: null
+  existingSecretName:
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
@@ -87,3 +88,5 @@ global:
     user: null
     # -- The password required to access the service, if any
     password: null
+    # -- An existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
+    existingSecretName:
