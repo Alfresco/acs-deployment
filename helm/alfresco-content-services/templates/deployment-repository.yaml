@@ -52,7 +52,7 @@ spec:
           {{- end }}
           - secretRef:
               name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.postgresql.existingSecretName }}
-          {{- if and .Values.s3connector.enabled }}
+          {{- if .Values.s3connector.enabled }}
           - secretRef:
               name: {{ default (printf "%s-s3secret" (include "content-services.shortname" .)) .Values.s3connector.existingSecretName }}
           {{- end }}
