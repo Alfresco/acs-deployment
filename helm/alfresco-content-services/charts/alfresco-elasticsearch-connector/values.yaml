@@ -58,6 +58,8 @@ reindexing:
     hostname: postgresql-acs
     database: alfresco
     port: 5432
+    # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
+    existingSecretName:
 # -- Overrides .Values.global.elasticsearch
 elasticsearch:
   host: null
@@ -65,6 +67,7 @@ elasticsearch:
   protocol: null
   user: null
   password: null
+  existingSecretName:
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
@@ -87,3 +90,5 @@ global:
     user: null
     # -- The password required to access the service, if any
     password: null
+    # -- An existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
+    existingSecretName:

@@ -10,6 +10,11 @@ nodeSelector: {}
 # As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set
 # More information can be found on https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md
 type: "search-services"
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 33007
+  runAsGroup: 33007
+  fsGroup: 33007
 searchServicesImage:
   repository: quay.io/alfresco/search-services
   tag: 2.0.6-A4
@@ -25,7 +30,8 @@ service:
   type: ClusterIP
   externalPort: 80
 ingress:
-  enabled: true
+  # -- Expose the solr admin console behind basic auth
+  enabled: false
   path: /solr
   tls: []
   #  - secretName: chart-example-tls
@@ -36,7 +42,9 @@ ingress:
   # You can create your own with htpasswd utilility & encode it with base640.
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` # i.e. admin / admin
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
-  basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
+  basicAuth:
+  # -- An existing secret that contains an `auth` key with a value in the same format of `ingress.basicAuth`
+  existingSecretName:
   # -- Comma separated list of IP CIDR to limit search endpoint over the internet
   whitelist_ips: "0.0.0.0/0"
 # -- The parent chart will set the values for "repository.host" and "repository.port"

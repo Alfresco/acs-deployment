@@ -16,21 +16,22 @@ spec:
       {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with $.Values.podAnnotations }}
       annotations:
+        checksum/secret-elasticsearch: {{ include (print $.Template.BasePath "/secret-elasticsearch.yaml") $ | sha256sum }}
+      {{- with $.Values.podAnnotations }}
         {{- toYaml $ | nindent 8 }}
       {{- end }}
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" $ | nindent 8 }}
     spec:
+      {{- include "component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-content-services.imagePullSecrets" $ | indent 6 }}
-      securityContext:
-        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ $.Chart.Name }}-{{ $serviceName }}
           image: "{{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "repository" }}:\
             {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "tag" }}"
           imagePullPolicy: {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "pullPolicy" }}
+            {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" $ }}-configmap
@@ -38,6 +39,7 @@ spec:
                 name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
+            {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}
           ports:
             - name: http
               containerPort: 8080

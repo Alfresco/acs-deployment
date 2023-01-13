@@ -13,12 +13,14 @@ spec:
       labels:
         {{- include "alfresco-elasticsearch-connector.selectorLabels" . | nindent 8 }}
     spec:
+      {{- include "component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing
           image: "{{ .Values.reindexing.image.repository }}:{{ .Values.reindexing.image.tag }}"
           imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
+          {{- include "component-security-context" .Values | indent 8 }}
           resources:
             limits:
               memory: {{ .Values.resources.limits.memory }}
@@ -33,14 +35,15 @@ spec:
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.reindexing.postgresql.existingSecretName }}
                   key: DATABASE_PASSWORD
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "content-services.shortname" . }}-dbsecret
+                  name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.reindexing.postgresql.existingSecretName }}
                   key: DATABASE_USERNAME
             {{- include "spring.activemq.env" . | nindent 12 }}
+            {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}
           ports:
               - name: http
                 containerPort: 8080
@@ -48,6 +51,7 @@ spec:
       initContainers:
         - name: wait-for-repository
           image: curlimages/curl:7.79.1
+          {{- include "component-security-context" .Values | indent 8 }}
           resources:
             limits:
               memory: 512Mi

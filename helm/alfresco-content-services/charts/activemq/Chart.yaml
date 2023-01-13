@@ -1,6 +1,7 @@
 ---
 apiVersion: v2
 appVersion: 5.16.4
+appVersion: 5.17.1
 description: A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (do not use in production).
 keywords:
   - activemq
@@ -8,7 +9,7 @@ keywords:
 name: activemq
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 2.1.0
+version: 2.2.0-SNAPSHOT
 dependencies:
   - name: alfresco-common
     version: 0.3.0-SNAPSHOT

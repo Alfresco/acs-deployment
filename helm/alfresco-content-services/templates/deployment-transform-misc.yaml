@@ -23,6 +23,7 @@ spec:
       labels:
         {{- include "transform-misc.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.transformmisc | indent 4 }}
     {{- if .Values.transformmisc.nodeSelector }}
       nodeSelector: {{- .Values.transformmisc.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -52,6 +53,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.transformmisc.image.repository }}:{{ .Values.transformmisc.image.tag }}"
           imagePullPolicy: {{ .Values.transformmisc.image.pullPolicy }}
+          {{- include "component-security-context" .Values.transformmisc | indent 8 }}
           envFrom:
           - configMapRef:
               # config map to use, defined in config-transformmisc.yaml
