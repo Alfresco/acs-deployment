@@ -1,5 +1,5 @@
 @startuml
-
+!theme bluegray
 Title: ACS Helm Enterprise Deployment
 
 skinparam componentStyle uml2
@@ -8,21 +8,22 @@ skinparam rectangle {
     BorderStyle dashed
     FontSize 15
     FontStyle none
+    BackgroundColor Azure
 }
 
 actor Client
 
-node "alfresco namespace" {
-    component "NGINX ingress-controller" as nginx #lightgrey
-    component "Alfresco Digital Workspace" as adw #lightgrey
+frame "alfresco namespace" {
+    component "NGINX ingress-controller" as nginx
+    component "Alfresco Digital Workspace" as adw
     together {
-        component "Alfresco Share" as share #lightgrey
-        component "Alfresco Content Services" as acs #lightgrey
+        component "Alfresco Share" as share
+        component "Alfresco Content Services" as acs
     }
-    component "Alfresco Search Services" as ass #lightgrey
-    component "Alfresco Sync Service" as sync #lightgrey
-    component "PostgreSQL" as psql #lightgrey
-    component "ActiveMQ" as amq #lightgrey
+    component "Alfresco Search Services" as ass
+    component "Alfresco Sync Service" as sync
+    component "PostgreSQL" as psql
+    component "ActiveMQ" as amq
     together {
         database "Volume Claim" as vc1
         database "Volume Claim" as vc2
@@ -31,15 +32,17 @@ node "alfresco namespace" {
         database "Volume Claim" as vc5
     }
     rectangle "Alfresco Transform Service" as ats {
-        component "Transform Router" as tr #lightgrey
-        component "Shared File Store" as sfs #lightgrey
-        component "Alfresco PDF Renderer" as pdfr #lightgrey
-        component "LibreOffice" as libr #lightgrey
-        component "ImageMagick" as img #lightgrey
-        component "Tika" as tika #lightgrey
-        component "TransformMisc" as misc #lightgrey
+        component "Transform Router" as tr
+        component "Shared File Store" as sfs
+        component "Alfresco PDF Renderer" as pdfr
+        component "LibreOffice" as libr
+        component "ImageMagick" as img
+        component "Tika" as tika
+        component "TransformMisc" as misc
     }
 }
+
+acs -[hidden]- ats
 
 Client -->> nginx
 
@@ -47,7 +50,6 @@ nginx -->> acs
 nginx -->> share
 nginx -->> adw
 
-acs -[hidden]- ats
 acs -->> vc1
 ass -->> vc2
 psql -->> vc3
