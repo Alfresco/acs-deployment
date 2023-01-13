@@ -37,9 +37,15 @@ spec:
         - name: ACTIVEMQ_BROKER_NAME
           value: "{{ template "activemq.fullname" . }}"
         - name: ACTIVEMQ_ADMIN_LOGIN
-          value: "{{ .Values.adminUser.username }}"
+          valueFrom:
+            secretKeyRef:
+              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" $)) $.Values.adminUser.existingSecretName }}
+              key: BROKER_USERNAME
         - name: ACTIVEMQ_ADMIN_PASSWORD
-          value: "{{ .Values.adminUser.password }}"
+          valueFrom:
+            secretKeyRef:
+              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" $)) $.Values.adminUser.existingSecretName }}
+              key: BROKER_PASSWORD
         ports:
         - name: stomp
           containerPort: {{ .Values.services.broker.ports.internal.stomp | default 61613 }}

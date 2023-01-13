@@ -2,9 +2,14 @@
 
 ![Version: 2.2.0-SNAPSHOT](https://img.shields.io/badge/Version-2.2.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 5.17.1](https://img.shields.io/badge/AppVersion-5.17.1-informational?style=flat-square)
 
-A Helm chart Providing Apache ActiveMQ.
+A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (do not use in production).
 
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
+Please refer to the [documentation](../../../../docs/helm/README.md) for information on the Helm charts and deployment instructions.
+
+Credentials get injected by the [main chart](../../README.md) and by default are:
+
+* username: admin
+* password: admin
 
 ## Source Code
 
@@ -20,8 +25,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| adminUser.password | string | `"admin"` |  |
-| adminUser.username | string | `"admin"` |  |
+| adminUser.existingSecretName | string | `nil` | An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys |
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |

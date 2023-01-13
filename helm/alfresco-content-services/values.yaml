@@ -2,7 +2,7 @@
 # It declares variables to be passed into your templates.
 # ACS will be created in a k8s cluster with a minimum of 16GB memory to split
 # among below nodes:
-# 2 x repository, 1 x share, 1 x postgresq and
+# 2 x repository, 1 x share, 1 x postgres and
 # 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc)
 #
 # Limit container memory and assign X percentage to JVM. There are couple of
@@ -587,6 +587,11 @@ activemq:
   # -- Possibility to choose Node for pod, with a key-value pair label
   # e.g {"kubernetes.io/hostname": multinode-demo-m02}
   nodeSelector: {}
+  adminUser:
+    # -- Default username for the embedded broker admin user
+    user: admin
+    # -- Default password for the embedded broker admin user
+    password: admin
 # -- external activemq connection setting when activemq.enabled=false
 messageBroker: &acs_messageBroker
   url: null
