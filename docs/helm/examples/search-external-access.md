@@ -25,6 +25,8 @@ helm install acs alfresco/alfresco-content-services \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
 --set repository.persistence.enabled=true \
 --set repository.persistence.storageClass="nfs-client" \
+--set filestore.persistence.enabled=true \
+--set filestore.persistence.storageClass="nfs-client" \
 --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --set alfresco-search.ingress.enabled=true \
 --set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
