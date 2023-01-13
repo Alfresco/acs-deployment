@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 appVersion: 5.17.1
-description: A Helm chart Providing Apache ActiveMQ.
+description: A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (do not use in production).
 keywords:
   - activemq
   - message broker

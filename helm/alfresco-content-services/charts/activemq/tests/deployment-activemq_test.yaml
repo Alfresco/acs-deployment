@@ -1,0 +1,26 @@
+---
+suite: test activemq persistence
+templates:
+  - deployment-activemq.yaml
+tests:
+  - it: should reference default secret containing broker default credentials
+    values: &testvalues
+      - ../../../tests/values/test_values.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[3].name
+          value: ACTIVEMQ_ADMIN_LOGIN
+        template: deployment-activemq.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-cs-brokersecret
+        template: deployment-activemq.yaml
+  - it: should reference overridden secret when setting existingSecretName
+    values: *testvalues
+    set:
+      adminUser.existingSecretName: existing-secret
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
+          value: existing-secret
+        template: deployment-activemq.yaml
