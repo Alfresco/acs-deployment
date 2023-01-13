@@ -42,7 +42,7 @@ jobs:
           charts-root: helm
           chart-name: alfresco-content-services
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/build-helm-chart@v1.29.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.29.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
