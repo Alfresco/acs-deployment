@@ -52,12 +52,9 @@ spec:
           {{- end }}
           - secretRef:
               name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.postgresql.existingSecretName }}
-          {{- if .Values.s3connector.enabled }}
-          {{- if .Values.s3connector.secrets }}
+          {{- if and .Values.s3connector.enabled .Values.s3connector.secrets }}
           - secretRef:
-              # s3 connector secret keys
               name: {{ template "content-services.shortname" . }}-s3secret
-          {{- end }}
           {{- end }}
           {{- if .Values.email.server.enabled }}
           - secretRef:
@@ -68,6 +65,8 @@ spec:
               name: {{ template "content-services.shortname" . }}-metadata-keystore-secret
           - secretRef:
               name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
+          - secretRef:
+              name: {{ default (printf "%s-repository-secret" (include "content-services.shortname" .)) .Values.repository.existingSecretName }}
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap

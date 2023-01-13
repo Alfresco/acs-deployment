@@ -8,9 +8,10 @@ templates:
   - config-repository.yaml
   - secret-database.yaml
   - secret-s3.yaml
+  - secret-repository.yaml
   - config-dev-log4j-properties.yaml
 tests:
-  - it: should render activeMQ embeded secret
+  - it: should render ActiveMQ embedded secret
     values:
       - values/test_values.yaml
       - values/externalBroker_values.yaml
