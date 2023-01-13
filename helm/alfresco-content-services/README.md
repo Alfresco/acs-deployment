@@ -255,10 +255,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.replicaCount | int | `1` |  |
 | postgresql.resources.limits.memory | string | `"1500Mi"` |  |
 | postgresql.resources.requests.memory | string | `"1500Mi"` |  |
-| repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in md5 hash format |
+| repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in NTLM hash format to set at bootstrap time |
 | repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |
 | repository.environment.JAVA_OPTS | string | `"-Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede"` |  |
+| repository.existingSecretName | string | `nil` | An existing secret that contains REPO_ADMIN_PASSWORD as an alternative for `repository.adminPassword` value |
 | repository.extraInitContainers | list | `[]` |  |
 | repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value maner org.alfresco.repo.content.transform.TransformerDebug: debug |
 | repository.extraSideContainers | list | `[]` |  |
@@ -288,8 +289,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.persistence.data.mountPath | string | `"/usr/local/tomcat/alf_data"` |  |
 | repository.persistence.data.subPath | string | `"alfresco-content-services/repository-data"` |  |
 | repository.persistence.enabled | bool | `true` | Persist repository data |
-| repository.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
-| repository.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
+| repository.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisioning) |
+| repository.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisioning) |
 | repository.podSecurityContext.fsGroup | int | `1000` |  |
 | repository.podSecurityContext.runAsGroup | int | `1000` |  |
 | repository.podSecurityContext.runAsNonRoot | bool | `true` |  |
