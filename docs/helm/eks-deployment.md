@@ -108,19 +108,19 @@ Now we have an EKS cluster up and running there are a few one time steps we need
    kubectl apply -f external-dns.yaml -n kube-system
    ```
 
-4. Find the name of the nodegroup created by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
+5. Find the name of the nodegroup created by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
 
     ```bash
     eksctl get nodegroup --cluster=`YOUR-CLUSTER-NAME` 
     ```
 
-5. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and `YOUR-NODE-GROUP` with the nodegroup from the step above):
+6. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and `YOUR-NODE-GROUP` with the nodegroup from the step above):
 
     ```bash
     aws eks describe-nodegroup --cluster-name YOUR-CLUSTER-NAME --nodegroup-name YOUR-NODE-GROUP --query "nodegroup.nodeRole" --output text
     ```
 
-6. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy as shown in the screenshot below:
+7. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy as shown in the screenshot below:
 
     ![Attach Policy](./diagrams/eks-attach-policy.png)
 

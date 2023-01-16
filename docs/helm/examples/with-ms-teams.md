@@ -13,7 +13,6 @@ The diagram below shows the deployment produced by this example:
 
 Follow the [AWS Services](with-aws-services.md) example up until the [Deploy](with-aws-services.md#deploy) section and return to this page.
 
-
 ## Deploy
 
 When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
