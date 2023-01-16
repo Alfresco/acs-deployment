@@ -1,61 +1,75 @@
 @startuml
-
+!theme bluegray
 Title: ACS Community on EKS Helm Deployment Overview
 
 skinparam componentStyle uml2
 skinparam linetype ortho
 skinparam rectangle {
-    BorderStyle dashed
+   BorderStyle dashed
     FontSize 15
     FontStyle none
+    BackgroundColor Azure
+}
+
+skinparam cloud {
+    BorderThickness 3
+    BorderColor Orange
+    BackgroundColor white
+    CloudFontSize 15
 }
 
 actor Client
 
-node "alfresco namespace" {
-    component "NGINX ingress-controller" as nginx #lightgrey
-    component "Alfresco Content Services" as acs #lightgrey
-    component "Alfresco Search Services" as ass #lightgrey
-    component "Alfresco Sync Service" as sync #lightgrey
-    component "PostgreSQL" as psql #lightgrey
-    component "Alfresco Share" as share #lightgrey
-    component "ActiveMQ" as amq #lightgrey
-    rectangle "Alfresco Transform Service" {
-        component "Alfresco PDF Renderer" as pdfr #lightgrey
-        component "LibreOffice" as libr #lightgrey
-        component "ImageMagick" as img #lightgrey
-        component "Tika" as tika #lightgrey
-        component "TransformMisc" as misc #lightgrey
+frame "alfresco namespace" {
+    component "NGINX ingress-controller" as nginx
+    component "Alfresco Content Services" as acs
+    component "Alfresco Search Services" as ass
+    component "PostgreSQL" as psql
+    component "Alfresco Share" as share
+    component "ActiveMQ" as amq
+    rectangle "Alfresco Transform Service" as ats {
+        component "Alfresco PDF Renderer" as pdfr
+        component "LibreOffice" as libr
+        component "ImageMagick" as img
+        component "Tika" as tika
+        component "TransformMisc" as misc
     }
 }
 
 cloud "Amazon Web Services" {
-    storage "EBS" as ebs
-    storage "EFS Volume Claim" as vc
+    rectangle "GP2/3" {
+        storage "EBS Volume" as ebs1 #Orange
+        storage "EBS Volume" as ebs2 #Orange
+        storage "EBS Volume" as ebs3 #Orange
+    }
+    rectangle "EFS CSI" {
+        storage "EFS Volume" as vc #Orange
+    }
 }
 
-Client --> nginx
+acs -[hidden]- ats
+img -[hidden]- pdfr
+img -[hidden]- misc
 
-nginx --> acs
-nginx --> share
+Client -->> nginx
 
-acs --> vc
-psql --> vc
-ass --> ebs
+nginx -->> acs
+nginx -->> share
 
-ass <-left-> acs
-acs --> psql
-acs --> pdfr
-acs --> libr
-acs --> img
-acs --> tika
-acs --> misc
-acs <--> amq
-share --> acs
+acs -->> vc
+psql -->> ebs1
+ass -->> ebs2
+amq -->> ebs3
 
-sync <-left-> acs
-sync --> psql
-sync --> amq
+ass <<->> acs
+acs -->> psql
+acs -->> pdfr
+acs -->> libr
+acs -->> img
+acs -->> tika
+acs -->> misc
+acs <<-->> amq
+share -->> acs
 
 center footer Copyright 2021 Alfresco Software Inc
 

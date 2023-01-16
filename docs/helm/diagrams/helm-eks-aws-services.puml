@@ -1,14 +1,8 @@
 @startuml
 !theme bluegray
-Title: ACS with Office Online Integration (OOI) on EKS using S3, RDS and MQ Helm Deployment Overview
+Title: ACS on EKS using S3, RDS, MQ & OpenSearch Helm Deployment Overview
 
 skinparam linetype ortho
-skinparam rectangle {
-    BorderStyle dashed
-    FontSize 15
-    FontStyle none
-    BackgroungColor Azure
-}
 
 skinparam cloud {
     BorderThickness 3
@@ -17,17 +11,31 @@ skinparam cloud {
     CloudFontSize 15
 }
 
+skinparam rectangle {
+    BorderStyle dashed
+    BackgroundColor Azure
+    FontSize 15
+    FontStyle none
+}
+
 actor Client
 
 frame "alfresco namespace" {
     component "NGINX ingress-controller" as nginx
-    component "Alfresco Digital Workspace \n (with OOI config)" as adw
-    component "Alfresco Content Services \n" as acs
-    component "Alfresco Search Services" as ass
+    component "Alfresco Digital Workspace" as adw
+    together {
+        component "Alfresco Content Services" as acs
+        component "Alfresco Share" as share
+    }
+    rectangle "Alfresco Search Enterprise 3" as se3 {
+        component "mediation" as se3mediation
+        component "content" as se3content
+        component "metadata" as se3metadata
+        component "path" as se3path
+        component "ReIndexing" as se3reidx
+    }
     component "Alfresco Sync Service" as sync
-    component "Alfresco Share \n" as share
-    component "Alfresco OOI Service" as ooi
-    rectangle "Alfresco Transform Service" as ats {
+    rectangle "Alfresco Transform Service" {
         component "Transform Router" as tr
         component "Shared File Store" as sfs
         component "Alfresco PDF Renderer" as pdfr
@@ -39,32 +47,35 @@ frame "alfresco namespace" {
 }
 
 cloud "Amazon Web Services" {
-    rectangle "S3 Buckets" {
-        storage "ACS Contentstore" as s3acs #Orange
-    }
     database "Aurora RDS" as db #Orange
-    storage "EBS Volume" as ebs #Orange
-    storage "EFS Volume" as vc #Orange
+    storage "S3" as s3 #Orange
+    storage "EFS Volume Claim" as vc #Orange
     queue "Amazon MQ" as mq #Orange
+    collections "OpenSearch" as osearch #Orange
 }
 
-cloud "Microsoft 365" {
-    storage "Auth" as msauth #DodgerBlue
-    storage "Graph Files (OneDrive)" as msgraph #DodgerBlue
-}
+acs -[hidden]- se3
 
-acs -[hidden]- ats
 Client -->> nginx
 
 nginx -->> acs
 nginx -->> share
 nginx -->> adw
 
-ass -->> ebs
+acs -->> s3
+acs -->> osearch
+se3content -->> osearch
+se3metadata -->> osearch
+se3path -->> osearch
+se3content -->> se3mediation
+se3metadata -->> se3mediation
+se3path -->> se3mediation
+se3mediation -->> mq
+se3reidx -->> db
+se3reidx -->> osearch
 sfs -->> vc
-acs -->> s3acs
 
-ass <<->> acs
+se3 <<-- acs
 acs -->> db
 acs -->> pdfr
 acs -->> libr
@@ -86,11 +97,6 @@ tika -->> sfs
 misc -->> sfs
 share -->> acs
 adw -->> acs
-adw -->> ooi
-adw -->> msauth
-
-ooi -->> acs
-ooi -->> msgraph
 
 sync <<->> acs
 sync -->> db
