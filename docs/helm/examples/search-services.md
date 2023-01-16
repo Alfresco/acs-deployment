@@ -107,7 +107,7 @@ the encoded basic authentication string and list of whitelisted IP addresses
 you prepared in the "Prepare Data" section):
 
 ```bash
-helm upgrade acs alfreso/alfresco-content-services \
+helm upgrade acs alfresco/alfresco-content-services \
 --set alfresco-search.ingress.enabled=true \
 --set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
 --set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \
