@@ -819,21 +819,23 @@ elasticsearch:
   image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-# -- Defines the properties to be used for the S3 Connector
-# For a full list of properties on the S3 connector, please view:
-# https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
 s3connector:
+  # -- Enable the S3 Connector
+  # For a full list of properties on the S3 connector see:
+  # https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
   enabled: false
-  # config:
-  #   bucketName:
-  #   bucketLocation:
-  # -- Additional properties can be defined here.
-  # secrets:
-  #   accessKey:
-  #   secretKey:
-  #   encryption:
-  #   awsKmsKeyId:
-# -- For a full information of configuring the inbound email ssytem, see
+  config:
+    bucketName:
+    bucketLocation:
+  secrets:
+    accessKey:
+    secretKey:
+    encryption:
+    awsKmsKeyId:
+  # -- An existing kubernetes secret that contains ACCESSKEY, SECRETKEY, ENCRYPTION, KMSKEYID keys
+  existingSecretName:
+
+# -- For a full information of configuring the inbound email system, see
 # https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails
 email:
   server:

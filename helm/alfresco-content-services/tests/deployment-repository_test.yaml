@@ -66,6 +66,29 @@ tests:
           value: whatever
         template: deployment-repository.yaml
 
+  - it: should have s3 secret in env
+    values: *testvalues
+    set:
+      s3connector:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
+          value: RELEASE-NAME-alfresco-cs-s3secret
+        template: deployment-repository.yaml
+
+  - it: should have overridden s3 secret in env
+    values: *testvalues
+    set:
+      s3connector:
+        enabled: true
+        existingSecretName: whatever
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
+          value: whatever
+        template: deployment-repository.yaml
+
   - it: should have configmap with CATALINA_OPTS with encryption.ssl.truststore.location set
     values: *testvalues
     asserts:
