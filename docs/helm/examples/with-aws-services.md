@@ -16,13 +16,13 @@ Follow the [EKS deployment](../eks-deployment.md) guide up until the
 installed return to this page.
 
 :information_source: In the EKS installation documentation mentioned above, the
-EFS volume is used in order to persist both thec ACS contentstore and the
+EFS volume is used in order to persist both the ACS contentstore and the
 transformations shared file store. Here S3 is the contentstore's backend so the
 EFS volume is only used by the SFS service. Persistence for SFS can actually be
 withdrawn so no EFS volume is needed anymore. Please make sure you understand
 the implications below:
 
-* Renditions performed for "in-fligth" documents may be lost. By "in-flight" we
+* Renditions performed for "in-flight" documents may be lost. By "in-flight" we
   mean documents that are currently being uploaded to the repository.
   Generation of these renditions can be retried, and this retry will happen
   when using Alfresco UI and trying to access the content again.
@@ -33,7 +33,7 @@ the implications below:
   may want to have multiple SFS pods in the deployment and stick with EFS.
 
 The rest of this document assume EFS is used for SFS. To disable it replace
-the values bellow:
+the values below:
 
 ```yaml
 filestore:
