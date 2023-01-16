@@ -1,5 +1,5 @@
 @startuml
-
+!theme bluegray
 Title: ACS Helm Community Deployment
 
 skinparam componentStyle uml2
@@ -8,53 +8,59 @@ skinparam rectangle {
     BorderStyle dashed
     FontSize 15
     FontStyle none
+    BackgroundColor Azure
 }
 
 actor Client
 
-node "alfresco namespace" {
-    component "NGINX ingress-controller" as nginx #lightgrey
-    component "Alfresco Content Services" as acs #lightgrey
-    component "Alfresco Search Services" as ass #lightgrey
-    component "Alfresco Sync Service" as sync #lightgrey
-    component "PostgreSQL" as psql #lightgrey
-    component "Alfresco Share" as share #lightgrey
-    component "ActiveMQ" as amq #lightgrey
-    database "Volume Claim" as vc
-    rectangle "Alfresco Transform Service" {
-        ' component "Transform Router" as tr #lightgrey
-        ' component "Shared File Store" as sfs #lightgrey
-        component "Alfresco PDF Renderer" as pdfr #lightgrey
-        component "LibreOffice" as libr #lightgrey
-        component "ImageMagick" as img #lightgrey
-        component "Tika" as tika #lightgrey
-        component "TransformMisc" as misc #lightgrey
+frame "alfresco namespace" {
+    component "NGINX ingress-controller" as nginx
+    component "Alfresco Content Services" as acs
+    component "Alfresco Search Services" as ass
+    component "PostgreSQL" as psql
+    component "Alfresco Share" as share
+    component "ActiveMQ" as amq
+    together {
+        database "Volume Claim" as vc1
+        database "Volume Claim" as vc2
+        database "Volume Claim" as vc3
+        database "Volume Claim" as vc4
+    }
+    rectangle "Alfresco Transform Service" as ats {
+        ' component "Transform Router" as tr
+        ' component "Shared File Store" as sfs
+        component "Alfresco PDF Renderer" as pdfr
+        component "LibreOffice" as libr
+        component "ImageMagick" as img
+        component "Tika" as tika
+        component "TransformMisc" as misc
     }
 }
 
-Client --> nginx
+acs -[hidden]- ats
+img -[hidden]- pdfr
+img -[hidden]- misc
 
-nginx --> acs
-nginx --> share
+Client -->> nginx
 
-acs --> vc
-ass --> vc
-psql --> vc
+nginx -->> acs
+nginx -->> share
 
-ass <-left-> acs
-acs --> psql
-acs --> pdfr
-acs --> libr
-acs --> img
-acs --> tika
-acs --> misc
-acs <--> amq
+acs -->> vc1
+amq -->> vc2
+ass -->> vc3
+psql -->> vc4
 
-share --> acs
+ass <<->> acs
+acs -->> psql
+acs -->> pdfr
+acs -->> libr
+acs -->> img
+acs -->> tika
+acs -->> misc
+acs <<-->> amq
 
-sync <-left-> acs
-sync --> psql
-sync --> amq
+share -->> acs
 
 center footer Copyright 2021 Alfresco Software Inc
 

@@ -30,9 +30,10 @@ helm install acs alfresco/alfresco-content-services \
 --set externalPort="443" \
 --set externalProtocol="https" \
 --set externalHost="acs.YOUR-DOMAIN-NAME" \
---set persistence.enabled=true \
---set persistence.storageClass.enabled=true \
---set persistence.storageClass.name="nfs-client" \
+--set repository.persistence.enabled=true \
+--set repository.persistence.storageClass="nfs-client" \
+--set filestore.persistence.enabled=true \
+--set filestore.persistence.storageClass="nfs-client" \
 --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --set mail.host="smtp.gmail.com" \
 --set mail.from.default="some.user@gmail.com" \
