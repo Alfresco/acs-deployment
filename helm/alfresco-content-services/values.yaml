@@ -885,6 +885,8 @@ mail:
   encoding: UTF-8
   username:
   password:
+  # -- An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value
+  existingSecretName:
   from:
     default:
     enabled: false
