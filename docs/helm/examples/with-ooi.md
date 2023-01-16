@@ -1,6 +1,6 @@
 # Alfresco Content Services Helm Deployment with Microsoft 365 Connector (Office Online Integration)
 
-The [Alfresco Microsoft 365 Connector](https://docs.alfresco.com/officeonline/concepts/office-online-intro.html)enables Office Online Integration (OOI) within Alfresco Digital Workspace such that users can share and co-author Office documents stored within ACS using the Microsoft 365. By default, this feature is disabled. 
+The [Alfresco Microsoft 365 Connector](https://docs.alfresco.com/officeonline/concepts/office-online-intro.html)enables Office Online Integration (OOI) within Alfresco Digital Workspace such that users can share and co-author Office documents stored within ACS using the Microsoft 365. By default, this feature is disabled.
 
 This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) with OOI enabled.
 
@@ -11,7 +11,6 @@ The diagram below shows the deployment produced by this example:
 ## Prerequisites
 
 Follow the [AWS Services](with-aws-services.md) example up until the [Deploy](with-aws-services.md#deploy) section and return to this page.
-
 
 ## Deploy
 
@@ -51,6 +50,7 @@ helm install acs alfresco/alfresco-content-services \
 ```
 
 NOTE: as per the `helm install` example above, you will need to specify `--set-string alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="true"` otherwise you may see an error such as
-  ```
-  Error: template: alfresco-content-services/charts/adw/templates/deployment.yaml:48:28: executing "alfresco-content-services/charts/adw/templates/deployment.yaml" at <$val>: wrong type for value; expected string; got bool
-  ```
+
+```sh
+Error: template: alfresco-content-services/charts/adw/templates/deployment.yaml:48:28: executing "alfresco-content-services/charts/adw/templates/deployment.yaml" at <$val>: wrong type for value; expected string; got bool
+```

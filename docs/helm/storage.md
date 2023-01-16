@@ -5,12 +5,12 @@ of data so it survives pods restart, cordons of worker nodes or even crashes.
 This documents aims at providing guidance in setting up different kinds of
 data persistence.
 
-## Different possible storage options:
+## Available storage options
 
 There mainly 2 different options when setting up persistence in kubernetes:
 
- * Static provisioning
- * Dynamic provisioning
+* Static provisioning
+* Dynamic provisioning
 
 The charts Alfresco provides leverage a common mechanism to configure both options.
 This mechanism can be reused by different charts or sub-charts in the same way.
@@ -19,7 +19,7 @@ This mechanism can be reused by different charts or sub-charts in the same way.
 
 The logic used in the template is depicted b the diagram below:
 
-![persitence of storage in acs chart](diagrams/charts-storage-persistence.png)
+![persistence of storage in acs chart](diagrams/charts-storage-persistence.png)
 
 Whatever the option you choose, start by enabling persistence under the
 component which needs it:
@@ -37,13 +37,15 @@ This method requires the cluster administrator to provision in advance a
 That PVC needs to fulfil requirements driven by  the cluster architecture. That
 usually means:
 
- * offering `ReadWriteMany` [accessModes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
-   for components which have a `Deployment.replicas` > 1 and more than one
-   schedule-able worker node.
- * Providing sufficient speed and space for the workload
- * Being given a [Reclaim Policy](https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/)
-   that DO match environment type (you probably want to avoid using `Delete`
-   in your production environment).
+* offering `ReadWriteMany`
+  [accessModes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+  for components which have a `Deployment.replicas` > 1 and more than one
+  schedule-able worker node.
+* Providing sufficient speed and space for the workload
+* Being given a [Reclaim
+  Policy](https://kubernetes.io/docs/tasks/administer-cluster/change-pv-reclaim-policy/)
+  that DO match environment type (you probably want to avoid using `Delete` in
+  your production environment).
 
 Plus all your other site-specific requirements.
 
@@ -99,7 +101,7 @@ Details of this process depends on the type of storage and provisioner that
 was used during deployment.
 
 If you choose the second - and preferred - method, you'll then need to use
-[static provisioning method](#static-provisioning) to create a new volume and
+[static provisioning method](#configuring-static-provisioning) to create a new volume and
 then instruct helm to search for a specific volume by claim name or
 `storageClass`. Using `storageClass` requires creating a new PVC too, which
 should reference the PV name to make sure a new volume is not dynamically
