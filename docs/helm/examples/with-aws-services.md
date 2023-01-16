@@ -15,6 +15,41 @@ Follow the [EKS deployment](../eks-deployment.md) guide up until the
 [ACS](../eks-deployment.md#acs) section, once the docker registry secret is
 installed return to this page.
 
+:information_source: In the EKS installation documentation mentioned above, the
+EFS volume is used in order to persist both the ACS contentstore and the
+transformations shared file store. Here S3 is the contentstore's backend so the
+EFS volume is only used by the SFS service. Persistence for SFS can actually be
+withdrawn so no EFS volume is needed anymore. Please make sure you understand
+the implications below:
+
+* Renditions performed for "in-flight" documents may be lost. By "in-flight" we
+  mean documents that are currently being uploaded to the repository.
+  Generation of these renditions can be retried, and this retry will happen
+  when using Alfresco UI and trying to access the content again.
+* Without a truly persistent volume you can only have one single SFS pod. A
+  single pod is the default configuration as we do not anticipate high load for
+  this component and we rely on Kubernetes orchestration to in case the pod
+  crashes. Though if your use-case requires higher availability standards, you
+  may want to have multiple SFS pods in the deployment and stick with EFS.
+
+The rest of this document assume EFS is used for SFS. To disable it replace
+the values below:
+
+```yaml
+filestore:
+  persistence:
+    enabled: true
+    storageClass: nfs-client
+```
+
+with:
+
+```yaml
+filestore:
+  persistence:
+    enabled: false  # or use helm CLI --set filestore.persistence.enabled=false
+```
+
 ## Setup Services
 
 The following sections describe how to setup the AWS services and highlights
