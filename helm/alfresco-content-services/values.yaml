@@ -878,9 +878,11 @@ email:
         repository: busybox
         tag: 1.35.0
         pullPolicy: IfNotPresent
-# -- For a full information of configuring the outbound email ssytem, see
+# -- For a full information of configuring the outbound email system, see
 # https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails
 mail:
+  # -- Enable the configuration for outbound email system
+  enabled: false
   host:
   port:
   protocol: smtps
