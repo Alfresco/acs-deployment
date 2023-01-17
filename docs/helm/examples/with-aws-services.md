@@ -190,6 +190,7 @@ the information required to deploy ACS.
    * In "Fine-grained access control", select "Create master user" and specify
      your preferred username and password credentials
    * In "Access policy", select "Only use fine-grained access control".
+   * Unfold the "Advanced cluster settings" and set "Max clause count" to `10240`
    * Hit "Create" button.
 
 2. Once the domain has been created, take note of the "Domain endpoint"
