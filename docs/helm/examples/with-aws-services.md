@@ -223,6 +223,8 @@ externalPort: 443
 externalProtocol: https
 externalHost: acs.YOUR-DOMAIN-NAME
 global:
+  tracking:
+    sharedsecret: dummy
   alfrescoRegistryPullSecrets: quay-registry-secret
   elasticsearch:
     host: YOUR-DOMAIN-HOSTNAME
@@ -296,6 +298,7 @@ helm -n alfresco install acs \
   --set externalProtocol="https" \
   --set externalHost="acs.YOUR-DOMAIN-NAME" \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set global.tracking.secret=dummy \
   --set global.elasticsearch.host=YOUR-DOMAIN-HOSTNAME \
   --set global.elasticsearch.port=443 \
   --set global.elasticsearch.protocol=https \
