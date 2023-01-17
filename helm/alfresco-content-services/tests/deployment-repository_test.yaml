@@ -20,7 +20,7 @@ tests:
   - it: should have default mail secret in env when email server is enabled
     values: *testvalues
     set:
-      email.server.enabled: true
+      mail.enabled: true
     asserts:
       - equal:
           path: spec.template.spec.containers[0].envFrom[2].secretRef.name
@@ -30,8 +30,9 @@ tests:
   - it: should have overridden secret in env when email server is enabled
     values: *testvalues
     set:
-      email.server.enabled: true
-      mail.existingSecretName: whatever
+      mail:
+        enabled: true
+        existingSecretName: whatever
     asserts:
       - equal:
           path: spec.template.spec.containers[0].envFrom[2].secretRef.name
