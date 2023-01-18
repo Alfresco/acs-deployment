@@ -94,7 +94,7 @@ data:
       -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
       {{- end }}
       {{- end }}
-      {{- if .Values.mail.enabled }}
+      {{- if .Values.mail.host }}
       -Dmail.encoding={{ .Values.mail.encoding }}
       -Dmail.host={{ .Values.mail.host }}
       -Dmail.port={{ .Values.mail.port }}
@@ -122,7 +122,7 @@ data:
       {{- else }}
       -Ddb.url={{ .Values.database.url }}
       {{- end }}
-      {{- if .Values.email.server.enabled }}
+      {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
       -Dmail.password=$MAIL_PASSWORD
       {{- end }}
       -Ddb.username=$DATABASE_USERNAME

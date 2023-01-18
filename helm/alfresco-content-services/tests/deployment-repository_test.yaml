@@ -20,23 +20,29 @@ tests:
   - it: should have default mail secret in env when email server is enabled
     values: *testvalues
     set:
-      mail.enabled: true
+      mail:
+        host: smtp.example.org
+        password: smtpPassword
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
-          value: RELEASE-NAME-alfresco-cs-mail-password
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: RELEASE-NAME-alfresco-cs-mail-password
         template: deployment-repository.yaml
 
   - it: should have overridden secret in env when email server is enabled
     values: *testvalues
     set:
       mail:
-        enabled: true
+        host: smtp.example.org
         existingSecretName: whatever
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
-          value: whatever
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: whatever
         template: deployment-repository.yaml
 
   - it: should have overridden secret in env when email server is enabled
