@@ -12,15 +12,37 @@ The Community configuration will deploy the following system:
 
 ![Helm Deployment Community](./diagrams/helm-community.png)
 
-## Considerations
+## What to expect from the ACS Helm charts
 
 Alfresco provides tested Helm charts as a "deployment template" for customers who want to take advantage of the container orchestration benefits of Kubernetes. These Helm charts are undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
 
-Helm charts values contains secrets to be set. For production deployments please see the [Security](security.md) section.
+Helm charts values contains secrets to be set. For production deployments please
+see the [Security](security.md) section.
 
-The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without changes and are still flexible to be adopted to your actual environment.
+The Helm charts in this repository provide a PostgreSQL database via [Bitnami
+charts](https://github.com/bitnami/charts) and do not configure any logging or
+monitoring. This design has been chosen so that they can be installed in a
+Kubernetes cluster without changes and are still flexible to be adopted to your
+actual environment.
 
-For your environment, you should use these charts as a starting point and modify them so that ACS integrates into your infrastructure. You typically want to remove the PostgreSQL container and connect the cs-repository directly to your database (might require [custom images](../docker-compose/examples/customisation-guidelines.md) to get the required JDBC driver in the container).
+For your environment, you should use these charts as a starting point and
+extends them so that ACS integrates into your infrastructure. You typically want
+to remove the PostgreSQL container and connect the cs-repository directly to
+your database.
+
+If you want to have additional JDBC drivers available or to extend the default
+ACS functionalities, you are required to build [custom Docker
+images](../docker-compose/examples/customisation-guidelines.md), deploy them on
+a public/private registry and set the appropriate values in the charts.
+
+For example, you can override the ACS repository image by specifying in the [values](../../helm/alfresco-content-services/README.md):
+
+```yaml
+repository:
+  image:
+    repository: registry.example.org/my-custom-alfresco-content-repository
+    tag: 7.3.0
+```
 
 Another typical change would be the integration of your company-wide monitoring and logging tools.
 
