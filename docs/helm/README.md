@@ -14,15 +14,20 @@ The Community configuration will deploy the following system:
 
 ## What to expect from the ACS Helm charts
 
-Alfresco provides tested Helm charts as a "deployment template" for customers who want to take advantage of the container orchestration benefits of Kubernetes. These Helm charts are undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
+Alfresco provides tested Helm charts as a "deployment template" for customers
+who want to take advantage of the container orchestration benefits of
+Kubernetes. These Helm charts are undergoing continual development and
+improvement, and should not be used "as is" for your production environments,
+but should help you save time and effort deploying Alfresco Content Services for
+your organisation.
 
-Helm charts values contains secrets to be set. For production deployments please
-see the [Security](security.md) section.
+Helm charts values contains secrets to be set. For deployment in sensitive
+environments please see the [Security](security.md) section.
 
 The Helm charts in this repository provide a PostgreSQL database via [Bitnami
 charts](https://github.com/bitnami/charts) and do not configure any logging or
 monitoring. This design has been chosen so that they can be installed in a
-Kubernetes cluster without changes and are still flexible to be adopted to your
+Kubernetes cluster without changes and are still flexible to be adapted to your
 actual environment.
 
 For your environment, you should use these charts as a starting point and
@@ -44,7 +49,11 @@ repository:
     tag: 7.3.0
 ```
 
-Another typical change would be the integration of your company-wide monitoring and logging tools.
+See the [registry authentication](registry-authentication.md) page to configure
+credentials for your private registry.
+
+Another typical change would be the integration of your company-wide monitoring
+and logging tools.
 
 ## Deploy
 
