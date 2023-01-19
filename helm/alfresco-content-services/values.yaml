@@ -878,11 +878,12 @@ email:
         repository: busybox
         tag: 1.35.0
         pullPolicy: IfNotPresent
-# -- For a full information of configuring the outbound email ssytem, see
+# -- For a full information of configuring the outbound email system, see
 # https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails
 mail:
+  # -- SMTP(S) host server to enable delivery of site invitations, activity notifications and workflow tasks by email
   host:
-  port:
+  port: 25
   protocol: smtps
   encoding: UTF-8
   username:
@@ -890,6 +891,7 @@ mail:
   # -- An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value
   existingSecretName:
   from:
+    # -- Specifies the email address from which email notifications are sent
     default:
     enabled: false
   smtp:
@@ -902,13 +904,6 @@ mail:
     auth: true
     starttls:
       enable: true
-      # DO NOT USE: It breaks repo pod with Error: Could not find or load main
-      # class SMTP Caused by: java.lang.ClassNotFoundException: SMTP
-      # testmessage:
-      #   send: false
-      #   subject: "Outbound SMTP"
-      #   text: "The Outbound SMTP email subsystem is working."
-      #   to:
 # -- For a full information of configuring the imap subsystem, see
 # https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties
 imap:

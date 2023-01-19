@@ -80,19 +80,6 @@ data:
       -Demail.inbound.unknownUser={{ .Values.email.inbound.unknownUser }}
       -Demail.inbound.emailContributorsAuthority={{ .Values.email.inbound.emailContributorsAuthority }}
       -Demail.handler.folder.overwriteDuplicates={{ .Values.email.handler.folder.overwriteDuplicates }}
-      -Dmail.encoding={{ .Values.mail.encoding }}
-      -Dmail.host={{ .Values.mail.host }}
-      -Dmail.port={{ .Values.mail.port }}
-      -Dmail.protocol={{ .Values.mail.protocol }}
-      -Dmail.username={{ .Values.mail.username }}
-      -Dmail.from.default={{ .Values.mail.from.default }}
-      -Dmail.from.enabled={{ .Values.mail.from.enabled }}
-      -Dmail.smtp.auth={{ .Values.mail.smtp.auth }}
-      -Dmail.smtp.debug={{ .Values.mail.smtp.debug }}
-      -Dmail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
-      -Dmail.smtp.timeout={{ .Values.mail.smtp.timeout }}
-      -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
-      -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
       -Dimap.server.enabled={{ .Values.imap.server.enabled }}
       -Dimap.server.port={{ .Values.imap.server.port }}
       -Dimap.server.host={{ .Values.imap.server.host }}
@@ -107,6 +94,21 @@ data:
       -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
       {{- end }}
       {{- end }}
+      {{- if .Values.mail.host }}
+      -Dmail.encoding={{ .Values.mail.encoding }}
+      -Dmail.host={{ .Values.mail.host }}
+      -Dmail.port={{ .Values.mail.port }}
+      -Dmail.protocol={{ .Values.mail.protocol }}
+      -Dmail.username={{ .Values.mail.username }}
+      -Dmail.from.default={{ .Values.mail.from.default }}
+      -Dmail.from.enabled={{ .Values.mail.from.enabled }}
+      -Dmail.smtp.auth={{ .Values.mail.smtp.auth }}
+      -Dmail.smtp.debug={{ .Values.mail.smtp.debug }}
+      -Dmail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
+      -Dmail.smtp.timeout={{ .Values.mail.smtp.timeout }}
+      -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
+      -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
+      {{- end }}
       {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
       -Ddsync.service.uris={{ $alfUrl }}/syncservice
       {{- else }}
@@ -120,7 +122,7 @@ data:
       {{- else }}
       -Ddb.url={{ .Values.database.url }}
       {{- end }}
-      {{- if .Values.email.server.enabled }}
+      {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
       -Dmail.password=$MAIL_PASSWORD
       {{- end }}
       -Ddb.username=$DATABASE_USERNAME
