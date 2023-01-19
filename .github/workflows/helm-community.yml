@@ -72,6 +72,7 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/helm-template-lint@OPSEXP-1942-yaml-lint
         with:
           chart-dir: helm/${{ matrix.charts.name }}
+          helm-options: --values tests/values/test_values.yaml
   community_charts:
     runs-on: ubuntu-latest
     needs:
