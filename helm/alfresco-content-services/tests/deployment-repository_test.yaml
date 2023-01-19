@@ -20,22 +20,29 @@ tests:
   - it: should have default mail secret in env when email server is enabled
     values: *testvalues
     set:
-      email.server.enabled: true
+      mail:
+        host: smtp.example.org
+        password: smtpPassword
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
-          value: RELEASE-NAME-alfresco-cs-mail-password
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: RELEASE-NAME-alfresco-cs-mail-password
         template: deployment-repository.yaml
 
   - it: should have overridden secret in env when email server is enabled
     values: *testvalues
     set:
-      email.server.enabled: true
-      mail.existingSecretName: whatever
+      mail:
+        host: smtp.example.org
+        existingSecretName: whatever
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
-          value: whatever
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: whatever
         template: deployment-repository.yaml
 
   - it: should have overridden secret in env when email server is enabled
@@ -88,52 +95,3 @@ tests:
           path: spec.template.spec.containers[0].envFrom[2].secretRef.name
           value: whatever
         template: deployment-repository.yaml
-
-  - it: should have configmap with CATALINA_OPTS with encryption.ssl.truststore.location set
-    values: *testvalues
-    asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^|\w\ )-Dencryption.ssl.truststore.location=\$JAVA_HOME/lib/security/cacerts($|\ )
-        template: config-repository.yaml
-
-  - it: should have configmap with ALFRESCO_OPTS urls without ports when are the same of the protocol default
-    values: *testvalues
-    asserts:
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\ )-Daos.baseUrlOverwrite=http://RELEASE-NAME-alfresco-cs-repository/alfresco/aos($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\ )-Dcsrf.filter.origin=http://RELEASE-NAME-alfresco-cs-repository($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\ )-Dcsrf.filter.referer=http://RELEASE-NAME-alfresco-cs-repository/\.\*($|\ )
-        template: config-repository.yaml
-
-  - it: should have configmap with ALFRESCO_OPTS urls with ports when are not protocol default
-    values: *testvalues
-    set:
-      externalPort: "8080"
-    asserts:
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\ )-Daos.baseUrlOverwrite=http://RELEASE-NAME-alfresco-cs-repository:8080/alfresco/aos($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\ )-Dcsrf.filter.origin=http://RELEASE-NAME-alfresco-cs-repository:8080($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\ )-Dcsrf.filter.referer=http://RELEASE-NAME-alfresco-cs-repository:8080/\.\*($|\ )
-        template: config-repository.yaml

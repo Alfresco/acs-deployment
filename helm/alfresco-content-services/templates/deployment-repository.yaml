@@ -56,9 +56,8 @@ spec:
           - secretRef:
               name: {{ default (printf "%s-s3secret" (include "content-services.shortname" .)) .Values.s3connector.existingSecretName }}
           {{- end }}
-          {{- if .Values.email.server.enabled }}
+          {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
           - secretRef:
-              name: {{ template "content-services.shortname" . }}-mail-password
               name: {{ default (printf "%s-mail-password" (include "content-services.shortname" .)) .Values.mail.existingSecretName }}
           {{- end }}
           - secretRef:
