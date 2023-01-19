@@ -49,10 +49,6 @@ spec:
                   values:
                   - {{ template "alfresco.shortname" . }}-filestore
               topologyKey: kubernetes.io/hostname
-      securityContext:
-        runAsUser: 33030
-        runAsGroup: 1000
-        fsGroup: 1000
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.filestore.image.repository }}:{{ .Values.filestore.image.tag }}"
