@@ -294,17 +294,18 @@ Deploy the latest version of ACS by running the following command (replacing `YO
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
---set externalPort="443" \
---set externalProtocol="https" \
---set externalHost="acs.YOUR-DOMAIN-NAME" \
---set repository.persistence.enabled=true \
---set repository.persistence.storageClass="nfs-client" \
---set filestore.persistence.enabled=true \
---set filestore.persistence.storageClass="nfs-client" \
---set global.alfrescoRegistryPullSecrets=quay-registry-secret \
---atomic \
---timeout 10m0s \
---namespace=alfresco
+  --set externalPort="443" \
+  --set externalProtocol="https" \
+  --set externalHost="acs.YOUR-DOMAIN-NAME" \
+  --set repository.persistence.enabled=true \
+  --set repository.persistence.storageClass="nfs-client" \
+  --set filestore.persistence.enabled=true \
+  --set filestore.persistence.storageClass="nfs-client" \
+  --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --atomic \
+  --timeout 10m0s \
+  --namespace=alfresco
 ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
@@ -347,6 +348,7 @@ helm install acs alfresco/alfresco-content-services \
     --set filestore.persistence.enabled=true \
     --set filestore.persistence.storageClass="nfs-client" \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+    --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
     --atomic \
     --timeout 10m0s \
     --namespace=alfresco

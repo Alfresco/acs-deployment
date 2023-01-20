@@ -130,30 +130,31 @@ Fortunately this can all be achieved with one, albeit large, command as shown be
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
---set externalPort="80" \
---set externalProtocol="http" \
---set externalHost="localhost" \
---set global.alfrescoRegistryPullSecrets=quay-registry-secret \
---set repository.replicaCount=1 \
---set transformrouter.replicaCount=1 \
---set pdfrenderer.replicaCount=1 \
---set imagemagick.replicaCount=1 \
---set libreoffice.replicaCount=1 \
---set tika.replicaCount=1 \
---set transformmisc.replicaCount=1 \
---set postgresql-syncservice.resources.requests.memory="500Mi" \
---set postgresql-syncservice.resources.limits.memory="500Mi" \
---set postgresql.resources.requests.memory="500Mi" \
---set postgresql.resources.limits.memory="500Mi" \
---set alfresco-search.resources.requests.memory="1000Mi" \
---set alfresco-search.resources.limits.memory="1000Mi" \
---set share.resources.limits.memory="1500Mi" \
---set share.resources.requests.memory="1500Mi" \
---set repository.resources.limits.memory="2500Mi" \
---set repository.resources.requests.memory="2500Mi" \
---atomic \
---timeout 10m0s \
---namespace alfresco
+  --set externalPort="80" \
+  --set externalProtocol="http" \
+  --set externalHost="localhost" \
+  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set repository.replicaCount=1 \
+  --set transformrouter.replicaCount=1 \
+  --set pdfrenderer.replicaCount=1 \
+  --set imagemagick.replicaCount=1 \
+  --set libreoffice.replicaCount=1 \
+  --set tika.replicaCount=1 \
+  --set transformmisc.replicaCount=1 \
+  --set postgresql-syncservice.resources.requests.memory="500Mi" \
+  --set postgresql-syncservice.resources.limits.memory="500Mi" \
+  --set postgresql.resources.requests.memory="500Mi" \
+  --set postgresql.resources.limits.memory="500Mi" \
+  --set alfresco-search.resources.requests.memory="1000Mi" \
+  --set alfresco-search.resources.limits.memory="1000Mi" \
+  --set share.resources.limits.memory="1500Mi" \
+  --set share.resources.requests.memory="1500Mi" \
+  --set repository.resources.limits.memory="2500Mi" \
+  --set repository.resources.requests.memory="2500Mi" \
+  --atomic \
+  --timeout 10m0s \
+  --namespace alfresco
 ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
