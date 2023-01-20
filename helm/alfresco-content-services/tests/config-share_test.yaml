@@ -1,0 +1,45 @@
+---
+suite: test share configmap
+templates:
+  - config-share.yaml
+tests:
+  - it: should merge proxy property with JAVA_OPTS defined in values
+    values: &testvalues
+      - values/test_values.yaml
+    set:
+      share:
+        environment:
+          JAVA_OPTS: -Dshare.property=false
+      externalHost: myExternalProxy
+      externalPort: 3128
+    asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: -Dshare.property=false -Dalfresco.proxy=http://myExternalProxy:3128
+      - equal:
+          path: data.CATALINA_OPTS
+          value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+
+  - it: should render just the proxy in JAVA_OPTS with default environment values
+    values: *testvalues
+    set:
+      externalHost: myExternalProxy
+      externalPort: 3128
+    asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: -Dalfresco.proxy=http://myExternalProxy:3128
+      - equal:
+          path: data.CATALINA_OPTS
+          value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+
+  - it: should render just the proxy when environment is empty
+    values: *testvalues
+    set:
+      share.environment: null
+    asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: -Dalfresco.proxy=http://RELEASE-NAME-alfresco-cs-share
+      - isNull:
+          path: data.CATALINA_OPTS
