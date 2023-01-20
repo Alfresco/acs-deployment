@@ -265,24 +265,6 @@ kubectl create namespace alfresco
 
     > NOTE: The command will wait until the deployment is ready so please be patient.
 
-### Docker Registry Secret
-
-Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following command (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
-
-```bash
-kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
-```
-
-Alternatively, if you require credentials for more than one docker registry you can login and then create a generic secret using the `--from-file` option, as shown below.
-
-```bash
-docker login docker.io
-docker login quay.io
-kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
-```
-
-> If you use this approach remember to replace `quay-registry-secret` with `my-registry-secrets` in your helm install command!
-
 ### ACS
 
 This repository allows you to either deploy a system using released stable artefacts or the latest in-progress development artefacts.
@@ -304,6 +286,9 @@ helm repo update
 Now decide whether you want to install the latest version of ACS (Enterprise or Community) or a previous version and follow the steps in the relevant section below.
 
 #### Latest Enterprise Version
+
+See the [registry authentication](registry-authentication.md) page to configure
+credentials to access the Alfresco Enterprise registry.
 
 Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
