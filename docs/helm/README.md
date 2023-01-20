@@ -15,7 +15,7 @@ The Community configuration will deploy the following system:
 ## Overview
 
 Alfresco provides tested Helm charts as a "template" to accelerate deployment
-and configuration for customers who wants to take advantage of Kubernetes
+and configuration for customers who want to take advantage of Kubernetes
 orchestration capabilities. Please remember that as stated in our [support
 policies](https://docs.alfresco.com/support/latest/policies/deployment/),
 similarly to other deployment artifacts, they are not meant to be used 'as-is'
