@@ -42,11 +42,11 @@ jobs:
           charts-root: helm
           chart-name: alfresco-content-services
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.29.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.31.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@v1.29.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@v1.31.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           chart-type: ${{ matrix.charts.type }}
@@ -65,11 +65,11 @@ jobs:
           charts-root: helm
           chart-name: alfresco-content-services
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.29.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.31.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-template-lint@OPSEXP-1942-yaml-lint
+          Alfresco/alfresco-build-tools/.github/actions/helm-template-lint@1.31.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           helm-options: --values tests/values/test_values.yaml
@@ -81,7 +81,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v1.29.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v1.31.0
       - name: Use local dependencies
         uses: ./.github/actions/use-local-deps
         with:
