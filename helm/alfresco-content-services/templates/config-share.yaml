@@ -12,14 +12,8 @@ data:
   REPO_PORT: "{{ .Values.repository.service.externalPort }}"
   CSRF_FILTER_REFERER: "{{ $alfUrl }}/.*"
   CSRF_FILTER_ORIGIN: "{{ $alfUrl }}"
-  # The JAVA_OPTS defined in the values.yaml file for the "share" are set here using proper quotes
-  {{- if .Values.share.environment.JAVA_OPTS }}
-  JAVA_OPTS: {{ tpl (printf "%s %s" (index .Values "share" "environment" "JAVA_OPTS") $alfproxy) $ | quote }}
-  {{- else }}
-  JAVA_OPTS: "{{ $alfproxy }}"
-  {{- end }}
-  {{- if .Values.share.environment }}
-  {{- range $key, $val := .Values.share.environment }}
+  {{- $environment := .Values.share.environment | default dict }}
+  JAVA_OPTS: {{ tpl (printf "%s %s" ($environment.JAVA_OPTS | default "") $alfproxy) $ | trim | quote }}
+  {{- range $key, $val := omit $environment "JAVA_OPTS" }}
   {{ $key }}: {{ tpl $val $ | quote }}
-  {{- end }}
   {{- end }}
