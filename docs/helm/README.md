@@ -12,17 +12,54 @@ The Community configuration will deploy the following system:
 
 ![Helm Deployment Community](./diagrams/helm-community.png)
 
-## Considerations
+## Overview
 
-Alfresco provides tested Helm charts as a "deployment template" for customers who want to take advantage of the container orchestration benefits of Kubernetes. These Helm charts are undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
+Alfresco provides tested Helm charts as a "template" to accelerate deployment
+and configuration for customers who want to take advantage of Kubernetes
+orchestration capabilities. Please remember that as stated in our [support
+policies](https://docs.alfresco.com/support/latest/policies/deployment/),
+similarly to other deployment artifacts, they are not meant to be used 'as-is'
+in production. Our goal is to save you time and effort deploying Alfresco
+Content Services for your organization.
 
-Helm charts values contains secrets to be set. For production deployments please see the [Security](security.md) section.
+## Using the Helm charts
 
-The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without changes and are still flexible to be adopted to your actual environment.
+Out of the box we provide a working ACS installation by configuring a PostgreSQL
+database via [Bitnami charts][bitnami-repo] and an ActiveMQ message broker with
+a simple [activemq subchart][activemq-readme], both with basic authentication
+and without any kind of redundancy.
 
-For your environment, you should use these charts as a starting point and modify them so that ACS integrates into your infrastructure. You typically want to remove the PostgreSQL container and connect the cs-repository directly to your database (might require [custom images](../docker-compose/examples/customisation-guidelines.md) to get the required JDBC driver in the container).
+[activemq-readme]: ../../helm/alfresco-content-services/charts/activemq/README.md
+[bitnami-repo]: https://github.com/bitnami/charts
 
-Another typical change would be the integration of your company-wide monitoring and logging tools.
+You typically want to disable the embedded postgres and activemq broker and
+connect directly to managed instances of those services. Another typical change
+would be the integration of your company-wide monitoring, logging and backup
+solutions.
+
+If you want to have additional JDBC drivers available or to extend the default
+ACS functionalities, you are required to build [custom Docker
+images][docker-customization], deploy them on a public/private registry and set
+the appropriate values in the charts.
+
+[docker-customization]: ../docker-compose/examples/customisation-guidelines.md
+
+For example, you can override the ACS repository image by specifying in the
+[values](../../helm/alfresco-content-services/README.md):
+
+```yaml
+repository:
+  image:
+    repository: registry.example.org/my-custom-alfresco-content-repository
+    tag: 7.3.0
+```
+
+See the [registry authentication](registry-authentication.md) page to configure
+credentials for your private registry.
+
+Helm charts values contains secrets to be set. For deployment in sensitive
+environments please see the [Security](security.md) page before proceeding with
+the installation.
 
 ## Deploy
 
