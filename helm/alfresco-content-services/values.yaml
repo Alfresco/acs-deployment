@@ -41,10 +41,9 @@ repository:
         tag: 1.35.0
         pullPolicy: IfNotPresent
       resources:
-        requests:
-          memory: "5Mi"
         limits:
-          memory: "10Mi"
+          cpu: 0.5
+          memory: 10Mi
   service:
     name: alfresco
     type: ClusterIP
@@ -76,9 +75,11 @@ repository:
     fsGroup: 1000
   resources:
     requests:
-      memory: "3000Mi"
+      cpu: 2
+      memory: 1500Mi
     limits:
-      memory: "3000Mi"
+      cpu: 4
+      memory: 3000Mi
   # -- The startup probe to cover the worse case startup time for slow clusters
   startupProbe:
     periodSeconds: 30
@@ -239,8 +240,10 @@ transformrouter:
     runAsUser: 33016
   resources:
     requests:
-      memory: "128Mi"
+      cpu: 0.5
+      memory: "300Mi"
     limits:
+      cpu: 1
       memory: "512Mi"
 # -- Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
@@ -261,9 +264,11 @@ pdfrenderer:
     runAsUser: 33001
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 300Mi
     limits:
-      memory: "1000Mi"
+      cpu: 4
+      memory: 1000Mi
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -299,9 +304,11 @@ imagemagick:
     runAsUser: 33002
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 300Mi
     limits:
-      memory: "1000Mi"
+      cpu: 4
+      memory: 1000Mi
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -334,8 +341,10 @@ libreoffice:
     externalPort: 80
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: "400Mi"
     limits:
+      cpu: 2
       memory: "1000Mi"
   podSecurityContext:
     runAsNonRoot: true
@@ -375,8 +384,10 @@ tika:
     runAsUser: 33004
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: "600Mi"
     limits:
+      cpu: 2
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
@@ -414,9 +425,11 @@ transformmisc:
     runAsUser: 33006
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 300Mi
     limits:
-      memory: "1000Mi"
+      cpu: 2
+      memory: 1000Mi
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -484,10 +497,9 @@ filestore:
       tag: 1.35.0
       pullPolicy: IfNotPresent
     resources:
-      requests:
-        memory: "5Mi"
       limits:
-        memory: "10Mi"
+        cpu: 0.50
+        memory: 10Mi
   service:
     name: filestore
     type: ClusterIP
@@ -498,9 +510,11 @@ filestore:
     fsGroup: 1000
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 0.50
+      memory: 200Mi
     limits:
-      memory: "1000Mi"
+      cpu: 2
+      memory: 1000Mi
   environment:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
@@ -561,9 +575,11 @@ share:
     runAsNonRoot: true
   resources:
     requests:
-      memory: "2000Mi"
+      cpu: 1
+      memory: 512Mi
     limits:
-      memory: "2000Mi"
+      cpu: 4
+      memory: 2000Mi
   environment:
     CATALINA_OPTS: >-
       -XX:MinRAMPercentage=50

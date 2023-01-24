@@ -43,8 +43,7 @@ spec:
           {{- end }}
           ports:
             - containerPort: {{ .Values.share.image.internalPort }}
-          resources:
-{{ toYaml .Values.share.resources | indent 12 }}
+          resources: {{- toYaml .Values.share.resources | nindent 12 }}
           envFrom:
           - configMapRef:
               name: {{ template "content-services.shortname" . }}-share-configmap

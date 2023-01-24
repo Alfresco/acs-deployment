@@ -36,8 +36,8 @@ syncservice:
     path: /syncservice
   resources:
     requests:
-      cpu: 2
-      memory: 100Mi
+      cpu: 1
+      memory: 500Mi
     limits:
       cpu: 2
       memory: 2000Mi
@@ -109,10 +109,10 @@ postgresql-syncservice:
   resources:
     requests:
       cpu: 1
-      memory: "600Mi"
+      memory: 600Mi
     limits:
       cpu: 2
-      memory: "1500Mi"
+      memory: 1500Mi
 initContainers:
   activemq:
     image:
@@ -120,24 +120,18 @@ initContainers:
       tag: 5.1.16
       pullPolicy: IfNotPresent
     resources:
-      requests:
-        cpu: 0.5
-        memory: "5Mi"
       limits:
         cpu: 0.5
-        memory: "10Mi"
+        memory: 10Mi
   postgres:
     image:
       repository: busybox
       tag: 1.35.0
       pullPolicy: IfNotPresent
     resources:
-      requests:
-        cpu: 0.5
-        memory: "5Mi"
       limits:
         cpu: 0.5
-        memory: "10Mi"
+        memory: 10Mi
 ingress:
   # -- useful when running Sync service without SSL termination done by a load
   # balancer, e.g. when ran on Minikube for testing purposes
