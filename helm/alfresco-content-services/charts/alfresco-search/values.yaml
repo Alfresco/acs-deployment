@@ -53,7 +53,7 @@ environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
 resources:
   requests:
-    cpu: "1"
+    cpu: "0.50"
     memory: "1200Mi"
   limits:
     cpu: "4"

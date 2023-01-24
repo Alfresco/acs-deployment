@@ -49,7 +49,7 @@ Credentials get injected by the [main chart](../../README.md) and by default are
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
-| resources.requests.cpu | string | `"0.5"` |  |
+| resources.requests.cpu | string | `"0.25"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
 | service.name | string | `"activemq"` |  |
 | services.broker.ports.external.amqp | int | `5672` |  |

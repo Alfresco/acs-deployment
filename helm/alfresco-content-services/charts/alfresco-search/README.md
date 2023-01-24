@@ -59,7 +59,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
-| resources.requests.cpu | string | `"1"` |  |
+| resources.requests.cpu | string | `"0.50"` |  |
 | resources.requests.memory | string | `"1200Mi"` |  |
 | searchServicesImage.internalPort | int | `8983` |  |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |

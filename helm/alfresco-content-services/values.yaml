@@ -75,7 +75,7 @@ repository:
     fsGroup: 1000
   resources:
     requests:
-      cpu: "2"
+      cpu: "1"
       memory: "1500Mi"
     limits:
       cpu: "4"
@@ -146,7 +146,7 @@ ooiService:
     runAsUser: 33006
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.25"
       memory: "1000Mi"
     limits:
       cpu: "2"
@@ -187,7 +187,7 @@ msTeamsService:
     runAsUser: 33041
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.5"
       memory: "1000Mi"
     limits:
       cpu: "1"
@@ -244,7 +244,7 @@ transformrouter:
     runAsUser: 33016
   resources:
     requests:
-      cpu: "0.5"
+      cpu: "0.25"
       memory: "300Mi"
     limits:
       cpu: "1"
@@ -268,10 +268,10 @@ pdfrenderer:
     runAsUser: 33001
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.25"
       memory: "300Mi"
     limits:
-      cpu: "4"
+      cpu: "2"
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
@@ -308,10 +308,10 @@ imagemagick:
     runAsUser: 33002
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.25"
       memory: "300Mi"
     limits:
-      cpu: "4"
+      cpu: "2"
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
@@ -345,7 +345,7 @@ libreoffice:
     externalPort: 80
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.25"
       memory: "400Mi"
     limits:
       cpu: "2"
@@ -388,7 +388,7 @@ tika:
     runAsUser: 33004
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.25"
       memory: "600Mi"
     limits:
       cpu: "2"
@@ -429,7 +429,7 @@ transformmisc:
     runAsUser: 33006
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.25"
       memory: "300Mi"
     limits:
       cpu: "2"
@@ -466,10 +466,10 @@ aiTransformer:
     runAsUser: 33015
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.25"
       memory: "1000Mi"
     limits:
-      cpu: "1"
+      cpu: "2"
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
@@ -516,7 +516,7 @@ filestore:
     fsGroup: 1000
   resources:
     requests:
-      cpu: "0.50"
+      cpu: "0.25"
       memory: "200Mi"
     limits:
       cpu: "2"
@@ -805,7 +805,7 @@ postgresql:
     subPath: "alfresco-content-services/database-data"
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.5"
       memory: "1500Mi"
     limits:
       cpu: "4"
@@ -833,7 +833,7 @@ postgresql-syncservice:
     nodeSelector: {}
   resources:
     requests:
-      cpu: "1"
+      cpu: "0.5"
       memory: "1500Mi"
     limits:
       cpu: "4"

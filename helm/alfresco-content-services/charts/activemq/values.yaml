@@ -15,7 +15,7 @@ podSecurityContext:
   fsGroup: 1000
 resources:
   requests:
-    cpu: "0.5"
+    cpu: "0.25"
     memory: "512Mi"
   limits:
     cpu: "2"
