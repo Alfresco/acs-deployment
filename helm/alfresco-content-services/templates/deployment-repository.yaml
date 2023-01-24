@@ -84,6 +84,15 @@ spec:
           - name: data
             mountPath: {{ .Values.repository.persistence.data.mountPath }}
             subPath: {{ .Values.repository.persistence.data.subPath }}
+          {{- if .Values.repository.licenseSecret }}
+          - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
+            name: acs-license
+          {{- end }}
+          {{- if .Values.repository.extraLogStatements }}
+          - name: dev-log4j-properties-volume
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
+            subPath: dev-log4j.properties
+          {{- end }}
           startupProbe:
             httpGet:
               path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
