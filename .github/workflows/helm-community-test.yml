@@ -1,5 +1,5 @@
 ---
-name: Helm (Community)
+name: Helm (Community-unit-test)
 on:
   pull_request:
     branches:
