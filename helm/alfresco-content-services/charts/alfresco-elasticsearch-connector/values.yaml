@@ -11,11 +11,11 @@ tolerations: []
 affinity: {}
 resources:
   requests:
-    cpu: 0.5
-    memory: 256Mi
+    cpu: "0.5"
+    memory: "256Mi"
   limits:
-    cpu: 4
-    memory: 2048Mi
+    cpu: "4"
+    memory: "2048Mi"
 # Connector properties
 indexName: alfresco
 pathIndexingComponent:
@@ -64,16 +64,16 @@ reindexing:
     existingSecretName:
   resources:
     requests:
-      cpu: 0.5
-      memory: 128Mi
+      cpu: "0.5"
+      memory: "128Mi"
     limits:
-      cpu: 2
-      memory: 512Mi
+      cpu: "2"
+      memory: "512Mi"
   initcontainers:
     waitForRepository:
       resources:
         limits:
-          cpu: 0.5
+          cpu: "0.5"
           memory: "10Mi"
 # -- Overrides .Values.global.elasticsearch
 elasticsearch:

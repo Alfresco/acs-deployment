@@ -59,9 +59,9 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: 0.5
-              memory: 256Mi
+              cpu: "0.5"
+              memory: "256Mi"
             limits:
-              cpu: 4
-              memory: 2048Mi
+              cpu: "4"
+              memory: "2048Mi"
         template: liveindexing-deployment.yaml

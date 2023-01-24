@@ -20,9 +20,9 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: 1
-              memory: 1200Mi
+              cpu: "1"
+              memory: "1200Mi"
             limits:
-              cpu: 4
-              memory: 2000Mi
+              cpu: "4"
+              memory: "2000Mi"
         template: deployment.yaml
