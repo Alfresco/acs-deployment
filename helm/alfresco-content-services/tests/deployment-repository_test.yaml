@@ -95,3 +95,24 @@ tests:
           path: spec.template.spec.containers[0].envFrom[2].secretRef.name
           value: whatever
         template: deployment-repository.yaml
+
+  - it: should have a volume and a volumeMount for license
+    values: *testvalues
+    set:
+      repository:
+        licenseSecret: somesecret
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: acs-license
+            secret:
+              secretName: somesecret
+        template: deployment-repository.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: >-
+              /usr/local/tomcat/shared/classes/alfresco/extension/license/
+            name: acs-license
+        template: deployment-repository.yaml
