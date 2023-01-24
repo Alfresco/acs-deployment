@@ -11,8 +11,10 @@ tolerations: []
 affinity: {}
 resources:
   requests:
+    cpu: 0.5
     memory: 256Mi
   limits:
+    cpu: 4
     memory: 2048Mi
 # Connector properties
 indexName: alfresco
@@ -60,6 +62,19 @@ reindexing:
     port: 5432
     # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
     existingSecretName:
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 128Mi
+    limits:
+      cpu: 2
+      memory: 512Mi
+  initcontainers:
+    waitForRepository:
+      resources:
+        limits:
+          cpu: 0.5
+          memory: "10Mi"
 # -- Overrides .Values.global.elasticsearch
 elasticsearch:
   host: null
