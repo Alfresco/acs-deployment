@@ -27,12 +27,16 @@ Alfresco Sync Service
 | initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"bash"` |  |
 | initContainers.activemq.image.tag | string | `"5.1.16"` |  |
+| initContainers.activemq.resources.limits.cpu | float | `0.5` |  |
 | initContainers.activemq.resources.limits.memory | string | `"10Mi"` |  |
+| initContainers.activemq.resources.requests.cpu | float | `0.5` |  |
 | initContainers.activemq.resources.requests.memory | string | `"5Mi"` |  |
 | initContainers.postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.postgres.image.repository | string | `"busybox"` |  |
 | initContainers.postgres.image.tag | string | `"1.35.0"` |  |
+| initContainers.postgres.resources.limits.cpu | float | `0.5` |  |
 | initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
+| initContainers.postgres.resources.requests.cpu | float | `0.5` |  |
 | initContainers.postgres.resources.requests.memory | string | `"5Mi"` |  |
 | messageBroker | object | `{"existingSecretName":null,"url":null}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
 | nodeSelector | object | `{}` |  |
@@ -51,8 +55,10 @@ Alfresco Sync Service
 | postgresql-syncservice.postgresqlPassword | string | `"admin"` |  |
 | postgresql-syncservice.postgresqlUsername | string | `"alfresco"` |  |
 | postgresql-syncservice.replicaCount | int | `1` |  |
+| postgresql-syncservice.resources.limits.cpu | int | `2` |  |
 | postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
-| postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
+| postgresql-syncservice.resources.requests.cpu | int | `1` |  |
+| postgresql-syncservice.resources.requests.memory | string | `"600Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
 | replicaCount | int | `1` |  |
 | repository.host | string | `"alfresco-cs-repository"` |  |
@@ -79,10 +85,10 @@ Alfresco Sync Service
 | syncservice.readinessProbe.initialDelaySeconds | int | `20` |  |
 | syncservice.readinessProbe.periodSeconds | int | `10` |  |
 | syncservice.readinessProbe.timeoutSeconds | int | `10` |  |
-| syncservice.resources.limits.cpu | string | `"2"` |  |
+| syncservice.resources.limits.cpu | int | `2` |  |
 | syncservice.resources.limits.memory | string | `"2000Mi"` |  |
-| syncservice.resources.requests.cpu | string | `"2"` |  |
-| syncservice.resources.requests.memory | string | `"2000Mi"` |  |
+| syncservice.resources.requests.cpu | int | `2` |  |
+| syncservice.resources.requests.memory | string | `"100Mi"` |  |
 | syncservice.service.externalPort | int | `80` |  |
 | syncservice.service.name | string | `"syncservice"` |  |
 | syncservice.service.type | string | `"NodePort"` |  |
