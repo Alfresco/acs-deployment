@@ -61,8 +61,7 @@ spec:
                 name: {{ template "content-services.shortname" . }}-ooi-service-configmap
           ports:
               - containerPort: {{ .Values.ooiService.image.internalPort }}
-          resources:
-{{ toYaml .Values.ooiService.resources | indent 12 }}
+          resources: {{- toYaml .Values.ooiService.resources | nindent 12 }}
           readinessProbe:
             tcpSocket:
               port: {{ .Values.ooiService.image.internalPort }}

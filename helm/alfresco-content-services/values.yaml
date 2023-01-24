@@ -146,9 +146,11 @@ ooiService:
     runAsUser: 33006
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 1000Mi
     limits:
-      memory: "1000Mi"
+      cpu: 2
+      memory: 1000Mi
   environment:
     JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
   readinessProbe:
@@ -185,9 +187,11 @@ msTeamsService:
     runAsUser: 33041
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 1000Mi
     limits:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 1000Mi
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -241,10 +245,10 @@ transformrouter:
   resources:
     requests:
       cpu: 0.5
-      memory: "300Mi"
+      memory: 300Mi
     limits:
       cpu: 1
-      memory: "512Mi"
+      memory: 512Mi
 # -- Declares the alfresco-pdf-renderer service used by the content repository
 # to transform pdf files
 pdfrenderer:
@@ -342,10 +346,10 @@ libreoffice:
   resources:
     requests:
       cpu: 1
-      memory: "400Mi"
+      memory: 400Mi
     limits:
       cpu: 2
-      memory: "1000Mi"
+      memory: 1000Mi
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33003
@@ -385,10 +389,10 @@ tika:
   resources:
     requests:
       cpu: 1
-      memory: "600Mi"
+      memory: 600Mi
     limits:
       cpu: 2
-      memory: "1000Mi"
+      memory: 1000Mi
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -462,9 +466,11 @@ aiTransformer:
     runAsUser: 33015
   resources:
     requests:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 1000Mi
     limits:
-      memory: "1000Mi"
+      cpu: 1
+      memory: 1000Mi
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -704,12 +710,12 @@ alfresco-digital-workspace:
         - NET_RAW
         - ALL
   resources:
+    requests:
+      cpu: 0.25
+      memory: 256Mi
     limits:
       cpu: 1
       memory: 1024Mi
-    requests:
-      cpu: 150m
-      memory: 256Mi
 alfresco-admin-app:
   nodeSelector: {}
   enabled: true
@@ -740,12 +746,12 @@ alfresco-admin-app:
         - NET_RAW
         - ALL
   resources:
+    requests:
+      cpu: 0.25
+      memory: 256Mi
     limits:
       cpu: 1
       memory: 1024Mi
-    requests:
-      cpu: 150m
-      memory: 256Mi
 # -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
 ooi:
   enabled: false
@@ -799,9 +805,11 @@ postgresql:
     subPath: "alfresco-content-services/database-data"
   resources:
     requests:
-      memory: "1500Mi"
+      cpu: "1"
+      memory: 1500Mi
     limits:
-      memory: "1500Mi"
+      cpu: "4"
+      memory: 1500Mi
 postgresql-syncservice:
   name: postgresql-syncservice
   # -- Enable embedded postgres for Alfresco Sync service leveraging the postgresql Bitnami chart
@@ -825,9 +833,11 @@ postgresql-syncservice:
     nodeSelector: {}
   resources:
     requests:
-      memory: "1500Mi"
+      cpu: "1"
+      memory: 1500Mi
     limits:
-      memory: "1500Mi"
+      cpu: "4"
+      memory: 1500Mi
 # -- Embedded ElasticSearch cluster powered by Bitnami charts
 elasticsearch:
   # -- Enable the embedded ElasticSearch cluster

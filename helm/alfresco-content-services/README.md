@@ -53,7 +53,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.readinessProbe.periodSeconds | int | `60` |  |
 | aiTransformer.readinessProbe.timeoutSeconds | int | `10` |  |
 | aiTransformer.replicaCount | int | `2` |  |
+| aiTransformer.resources.limits.cpu | int | `1` |  |
 | aiTransformer.resources.limits.memory | string | `"1000Mi"` |  |
+| aiTransformer.resources.requests.cpu | int | `1` |  |
 | aiTransformer.resources.requests.memory | string | `"1000Mi"` |  |
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
@@ -72,7 +74,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-admin-app.nodeSelector | object | `{}` |  |
 | alfresco-admin-app.resources.limits.cpu | int | `1` |  |
 | alfresco-admin-app.resources.limits.memory | string | `"1024Mi"` |  |
-| alfresco-admin-app.resources.requests.cpu | string | `"150m"` |  |
+| alfresco-admin-app.resources.requests.cpu | float | `0.25` |  |
 | alfresco-admin-app.resources.requests.memory | string | `"256Mi"` |  |
 | alfresco-admin-app.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-admin-app.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
@@ -94,7 +96,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.nodeSelector | object | `{}` |  |
 | alfresco-digital-workspace.resources.limits.cpu | int | `1` |  |
 | alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
-| alfresco-digital-workspace.resources.requests.cpu | string | `"150m"` |  |
+| alfresco-digital-workspace.resources.requests.cpu | float | `0.25` |  |
 | alfresco-digital-workspace.resources.requests.memory | string | `"256Mi"` |  |
 | alfresco-digital-workspace.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-digital-workspace.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
@@ -194,7 +196,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | msTeamsService.readinessProbe.periodSeconds | int | `60` |  |
 | msTeamsService.readinessProbe.timeoutSeconds | int | `10` |  |
 | msTeamsService.replicaCount | int | `2` |  |
+| msTeamsService.resources.limits.cpu | int | `1` |  |
 | msTeamsService.resources.limits.memory | string | `"1000Mi"` |  |
+| msTeamsService.resources.requests.cpu | int | `1` |  |
 | msTeamsService.resources.requests.memory | string | `"1000Mi"` |  |
 | msTeamsService.service.externalPort | int | `80` |  |
 | msTeamsService.service.name | string | `"ms-teams-service"` |  |
@@ -220,7 +224,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.readinessProbe.periodSeconds | int | `60` |  |
 | ooiService.readinessProbe.timeoutSeconds | int | `10` |  |
 | ooiService.replicaCount | int | `2` |  |
+| ooiService.resources.limits.cpu | int | `2` |  |
 | ooiService.resources.limits.memory | string | `"1000Mi"` |  |
+| ooiService.resources.requests.cpu | int | `1` |  |
 | ooiService.resources.requests.memory | string | `"1000Mi"` |  |
 | ooiService.service.externalPort | int | `80` |  |
 | ooiService.service.name | string | `"ooi-service"` |  |
@@ -239,7 +245,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-syncservice.postgresqlUsername | string | `"alfresco"` |  |
 | postgresql-syncservice.primary.nodeSelector | object | `{}` |  |
 | postgresql-syncservice.replicaCount | int | `1` |  |
+| postgresql-syncservice.resources.limits.cpu | string | `"4"` |  |
 | postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
+| postgresql-syncservice.resources.requests.cpu | string | `"1"` |  |
 | postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
 | postgresql-syncservice.service.port | int | `5432` |  |
 | postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
@@ -258,7 +266,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.postgresqlUsername | string | `"alfresco"` | Postgresql database user |
 | postgresql.primary.nodeSelector | object | `{}` |  |
 | postgresql.replicaCount | int | `1` |  |
+| postgresql.resources.limits.cpu | string | `"4"` |  |
 | postgresql.resources.limits.memory | string | `"1500Mi"` |  |
+| postgresql.resources.requests.cpu | string | `"1"` |  |
 | postgresql.resources.requests.memory | string | `"1500Mi"` |  |
 | repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in NTLM hash format to set at bootstrap time |
 | repository.command | list | `[]` |  |
@@ -323,7 +333,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
 | share | object | `{"command":[],"environment":{"CATALINA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.4.0-M1"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"cpu":4,"memory":"2000Mi"},"requests":{"cpu":1,"memory":"512Mi"}},"securityContext":{"capabilities":{"drop":["NET_RAW","ALL"]},"runAsNonRoot":false},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
-| tika | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-tika","tag":"3.0.0"},"livenessProbe":{"initialDelaySeconds":60,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true,"runAsUser":33004},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"memory":"1000Mi"},"requests":{"memory":"1000Mi"}},"service":{"externalPort":80,"name":"tika","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
+| tika | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-tika","tag":"3.0.0"},"livenessProbe":{"initialDelaySeconds":60,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true,"runAsUser":33004},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"cpu":2,"memory":"1000Mi"},"requests":{"cpu":1,"memory":"600Mi"}},"service":{"externalPort":80,"name":"tika","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformmisc | object | `{"enabled":true,"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-transform-misc","tag":"3.0.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":400,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1800,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true,"runAsUser":33006},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"cpu":2,"memory":"1000Mi"},"requests":{"cpu":1,"memory":"300Mi"}},"service":{"externalPort":80,"name":"transformmisc","type":"ClusterIP"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformrouter.image.internalPort | int | `8095` |  |
