@@ -46,10 +46,6 @@ spec:
           {{- end }}
           {{- include "component-security-context" .Values.repository | indent 8 }}
           envFrom:
-          {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
-          - secretRef:
-              name: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
-          {{- end }}
           - secretRef:
               name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.postgresql.existingSecretName }}
           {{- if .Values.s3connector.enabled }}
@@ -80,6 +76,12 @@ spec:
             {{- end }}
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
+          {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
+          - name: repository-jtoolopts
+            mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+            subPath: alfresco-global.properties
+            #readOnly: true
+          {{- end }}
           - name: data
             mountPath: {{ .Values.repository.persistence.data.mountPath }}
             subPath: {{ .Values.repository.persistence.data.subPath }}
@@ -187,6 +189,14 @@ spec:
       {{- end }}
       volumes:
       {{- include "data_volume" .Values.repository | nindent 8 }}
+      {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
+        - name: repository-jtoolopts
+          secret:
+            secretName: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
+            items:
+              - key: alfresco-global.properties
+                path: alfresco-global.properties
+      {{- end }}
       {{- if .Values.repository.licenseSecret }}
         - name: acs-license
           secret:
