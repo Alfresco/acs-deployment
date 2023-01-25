@@ -13,20 +13,6 @@ on:
       - 'master'
       - pr-*
 jobs:
-  build_vars:
-    runs-on: ubuntu-latest
-    outputs:
-      app_charts: ${{ steps.getcharts.outputs.app }}
-      lib_charts: ${{ steps.getcharts.outputs.lib }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
-      - id: getcharts
-        uses: >-
-          ./.github/actions/charts-as-json
-        with:
-          charts-root: helm
   helm_yaml_lint:
     needs:
       - build_vars
@@ -53,6 +39,7 @@ jobs:
   community_charts:
     runs-on: ubuntu-latest
     needs:
+      - helm_unit_test
       - helm_yaml_lint
     steps:
       - uses: actions/checkout@v3
