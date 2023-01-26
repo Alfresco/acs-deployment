@@ -77,10 +77,9 @@ spec:
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
           {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
-          - name: repository-jtoolopts
+          - name: repository-properties
             mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
             subPath: alfresco-global.properties
-            #readOnly: true
           {{- end }}
           - name: data
             mountPath: {{ .Values.repository.persistence.data.mountPath }}
@@ -190,9 +189,9 @@ spec:
       volumes:
       {{- include "data_volume" .Values.repository | nindent 8 }}
       {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
-        - name: repository-jtoolopts
+        - name: repository-properties
           secret:
-            secretName: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
+            secretName: {{ template "alfresco.shortname" . }}-repository-properties-secret
             items:
               - key: alfresco-global.properties
                 path: alfresco-global.properties
