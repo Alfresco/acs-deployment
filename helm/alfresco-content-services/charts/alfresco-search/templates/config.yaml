@@ -15,8 +15,6 @@ data:
   SOLR_SOLR_PORT: "{{ .Values.service.externalPort }}"
   ALFRESCO_SECURE_COMMS: {{ .Values.global.tracking.auth | default "secret" }}
   {{- $environment := .Values.environment | default dict }}
-  {{- $secureCommsSecret := printf "-Dalfresco.secureComms.secret=%s" (include "tracking-shared-secret" .) }}
-  SOLR_OPTS: {{ tpl (printf "%s %s" ($environment.SOLR_OPTS | default "") $secureCommsSecret) $ | trim | quote }}
-  {{- range $key, $val := omit $environment "SOLR_OPTS" }}
+  {{- range $key, $val := $environment }}
   {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
