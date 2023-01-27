@@ -37,7 +37,7 @@ liveIndexing:
   metadata:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata
-      tag: 3.3.0-A9
+      tag: ""
       pullPolicy: IfNotPresent
     replicaCount: 1
   path:
