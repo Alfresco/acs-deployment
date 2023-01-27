@@ -14,7 +14,6 @@
 # max heap to 1/4th of container's memory which may not be ideal. Hence, setting
 # up explicit Container memory and then assigning a percentage of it to the JVM
 # for performance tuning.
----
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
@@ -60,15 +59,7 @@ repository:
     #      - chart-example.local
   environment:
     JAVA_OPTS: >-
-      -Dtransform.service.enabled=true
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-      -Dencryption.keystore.type=JCEKS
-      -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
-      -Dencryption.keyAlgorithm=DESede
-      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
-      -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=DESede
+      -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33000
@@ -224,8 +215,7 @@ transformrouter:
     externalPort: 80
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 140
     periodSeconds: 60
@@ -266,8 +256,7 @@ pdfrenderer:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -304,8 +293,7 @@ imagemagick:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -342,8 +330,7 @@ libreoffice:
     runAsUser: 33003
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -380,8 +367,7 @@ tika:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 60
@@ -419,8 +405,7 @@ transformmisc:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -454,8 +439,7 @@ aiTransformer:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -505,8 +489,7 @@ filestore:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -566,8 +549,7 @@ share:
       memory: "2000Mi"
   environment:
     CATALINA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
@@ -581,7 +563,6 @@ share:
   extraSideContainers: []
   extraInitContainers: []
   command: []
-
 activemq:
   enabled: true
   # -- Possibility to choose Node for pod, with a key-value pair label
@@ -665,7 +646,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.0.0-A.1
+    tag: 4.0.0-A.2
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -834,7 +815,6 @@ s3connector:
     awsKmsKeyId:
   # -- An existing kubernetes secret that contains ACCESSKEY, SECRETKEY, ENCRYPTION, KMSKEYID keys
   existingSecretName:
-
 # -- For a full information of configuring the inbound email system, see
 # https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails
 email:
