@@ -124,7 +124,7 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "2"
+              cpu: "1"
               memory: "1500Mi"
             limits:
               cpu: "4"

@@ -62,6 +62,6 @@ tests:
               cpu: "0.5"
               memory: "256Mi"
             limits:
-              cpu: "4"
+              cpu: "2"
               memory: "2048Mi"
         template: liveindexing-deployment.yaml

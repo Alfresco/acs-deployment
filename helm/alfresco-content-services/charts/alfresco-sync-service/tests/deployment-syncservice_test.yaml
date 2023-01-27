@@ -19,8 +19,8 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "1"
-              memory: "500Mi"
+              cpu: "0.5"
+              memory: "800Mi"
             limits:
               cpu: "2"
               memory: "2000Mi"

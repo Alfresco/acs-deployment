@@ -20,7 +20,7 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "1"
+              cpu: "0.50"
               memory: "1200Mi"
             limits:
               cpu: "4"
