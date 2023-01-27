@@ -59,7 +59,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
 | reindexing.image.tag | string | `"3.3.0-M1"` |  |
-| reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.5"` |  |
+| reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
 | reindexing.postgresql.database | string | `"alfresco"` |  |
@@ -71,7 +71,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |
 | reindexing.resources.requests.memory | string | `"128Mi"` |  |
-| resources.limits.cpu | string | `"4"` |  |
+| resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |

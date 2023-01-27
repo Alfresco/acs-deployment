@@ -27,12 +27,12 @@ Alfresco Sync Service
 | initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"bash"` |  |
 | initContainers.activemq.image.tag | string | `"5.1.16"` |  |
-| initContainers.activemq.resources.limits.cpu | string | `"0.5"` |  |
+| initContainers.activemq.resources.limits.cpu | string | `"0.25"` |  |
 | initContainers.activemq.resources.limits.memory | string | `"10Mi"` |  |
 | initContainers.postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.postgres.image.repository | string | `"busybox"` |  |
 | initContainers.postgres.image.tag | string | `"1.35.0"` |  |
-| initContainers.postgres.resources.limits.cpu | string | `"0.5"` |  |
+| initContainers.postgres.resources.limits.cpu | string | `"0.25"` |  |
 | initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
 | messageBroker | object | `{"existingSecretName":null,"url":null}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
 | nodeSelector | object | `{}` |  |

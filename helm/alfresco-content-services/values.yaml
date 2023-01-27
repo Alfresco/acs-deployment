@@ -42,7 +42,7 @@ repository:
         pullPolicy: IfNotPresent
       resources:
         limits:
-          cpu: "0.5"
+          cpu: "0.25"
           memory: "10Mi"
   service:
     name: alfresco
@@ -308,10 +308,10 @@ imagemagick:
     runAsUser: 33002
   resources:
     requests:
-      cpu: "0.25"
+      cpu: "0.5"
       memory: "300Mi"
     limits:
-      cpu: "2"
+      cpu: "4"
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
@@ -345,10 +345,10 @@ libreoffice:
     externalPort: 80
   resources:
     requests:
-      cpu: "0.25"
+      cpu: "0.5"
       memory: "400Mi"
     limits:
-      cpu: "2"
+      cpu: "4"
       memory: "1000Mi"
   podSecurityContext:
     runAsNonRoot: true
