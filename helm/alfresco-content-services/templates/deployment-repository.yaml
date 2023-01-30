@@ -192,6 +192,7 @@ spec:
         - name: repository-properties
           secret:
             secretName: {{ template "alfresco.shortname" . }}-repository-properties-secret
+            defaultMode: 0400
             items:
               - key: alfresco-global.properties
                 path: alfresco-global.properties
@@ -200,6 +201,7 @@ spec:
         - name: acs-license
           secret:
             secretName: {{ .Values.repository.licenseSecret }}
+            defaultMode: 0400
       {{- end }}
       {{- if .Values.repository.extraLogStatements }}
         - name : dev-log4j-properties-volume
