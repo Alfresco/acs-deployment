@@ -25,25 +25,3 @@ tests:
               cpu: "4"
               memory: "2000Mi"
         template: deployment.yaml
-
-  - it: should pick tracking secret env from secret
-    values: *testvalues
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[0].envFrom
-          content:
-            secretRef:
-              name: RELEASE-NAME-alfresco-search-solr-secret
-        template: deployment.yaml
-
-  - it: should NOT pick tracking secret env from secret when disabled
-    values: *testvalues
-    set:
-      global.tracking.auth: none
-    asserts:
-      - notContains:
-          path: spec.template.spec.containers[0].envFrom
-          content:
-            secretRef:
-              name: RELEASE-NAME-alfresco-search-solr-secret
-        template: deployment.yaml

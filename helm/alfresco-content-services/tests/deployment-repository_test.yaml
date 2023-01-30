@@ -116,6 +116,7 @@ tests:
             name: acs-license
             secret:
               secretName: somesecret
+              defaultMode: 0400
         template: deployment-repository.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
@@ -123,6 +124,28 @@ tests:
             mountPath: >-
               /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
+          template: deployment-repository.yaml
+
+  - it: should have a volume and a volumeMount for alfresco-global.properties
+    values: *testvalues
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: repository-properties
+            secret:
+              secretName: RELEASE-NAME-alfresco-repository-properties-secret
+              defaultMode: 0400
+              items:
+                - key: alfresco-global.properties
+                  path: alfresco-global.properties
+        template: deployment-repository.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: repository-properties
+            mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+            subPath: alfresco-global.properties
           template: deployment-repository.yaml
 
   - it: should render cpu and memory limits
