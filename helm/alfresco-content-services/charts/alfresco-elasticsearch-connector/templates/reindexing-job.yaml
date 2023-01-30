@@ -21,11 +21,7 @@ spec:
           image: "{{ .Values.reindexing.image.repository }}:{{ .Values.reindexing.image.tag }}"
           imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
           {{- include "component-security-context" .Values | indent 8 }}
-          resources:
-            limits:
-              memory: {{ .Values.resources.limits.memory }}
-            requests:
-              memory: {{ .Values.resources.requests.memory }}
+          resources: {{- toYaml .Values.reindexing.resources | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
@@ -52,11 +48,7 @@ spec:
         - name: wait-for-repository
           image: curlimages/curl:7.79.1
           {{- include "component-security-context" .Values | indent 8 }}
-          resources:
-            limits:
-              memory: 512Mi
-            requests:
-              memory: 128Mi
+          resources: {{- toYaml .Values.reindexing.initcontainers.waitForRepository.resources | nindent 12 }}
           env:
             - name: ALFRESCO_REPOSITORY_URL
               value: http://{{ template "content-services.shortname" . }}-repository/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-

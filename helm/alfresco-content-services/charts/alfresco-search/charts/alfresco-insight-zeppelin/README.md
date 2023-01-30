@@ -40,7 +40,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `1` | Define the alfresco-insight-zeppelin properties to use in the k8s cluster This is chart will be installed as part of Alfresco Insight Engine |
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
+| resources.limits.cpu | string | `"1"` |  |
 | resources.limits.memory | string | `"1024Mi"` |  |
+| resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"zeppelin"` |  |

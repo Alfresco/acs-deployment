@@ -2,6 +2,7 @@
 repository:
   resources:
     requests:
+      cpu: "0.01"
       memory: "1024Mi"
     limits:
       memory: "1560Mi"
@@ -15,6 +16,7 @@ repository:
 share:
   resources:
     requests:
+      cpu: "0.01"
       memory: "256Mi"
     limits:
       memory: "512Mi"
@@ -24,6 +26,7 @@ share:
 pdfrenderer:
   resources:
     requests:
+      cpu: "0.01"
       memory: "256Mi"
     limits:
       memory: "512Mi"
@@ -31,6 +34,7 @@ pdfrenderer:
 imagemagick:
   resources:
     requests:
+      cpu: "0.01"
       memory: "256Mi"
     limits:
       memory: "512Mi"
@@ -38,6 +42,7 @@ imagemagick:
 libreoffice:
   resources:
     requests:
+      cpu: "0.01"
       memory: "512Mi"
     limits:
       memory: "1024Mi"
@@ -45,6 +50,7 @@ libreoffice:
 tika:
   resources:
     requests:
+      cpu: "0.01"
       memory: "256Mi"
     limits:
       memory: "512Mi"
@@ -52,6 +58,7 @@ tika:
 transformmisc:
   resources:
     requests:
+      cpu: "0.01"
       memory: "256Mi"
     limits:
       memory: "512Mi"
@@ -59,6 +66,7 @@ transformmisc:
 alfresco-search:
   resources:
     requests:
+      cpu: "0.01"
       memory: "512Mi"
     limits:
       memory: "1024Mi"
@@ -70,6 +78,10 @@ alfresco-digital-workspace:
 alfresco-sync-service:
   syncservice:
     enabled: false
+postgresql:
+  resources:
+    requests:
+      cpu: "0.01"
 postgresql-syncservice:
   enabled: false
 ai:

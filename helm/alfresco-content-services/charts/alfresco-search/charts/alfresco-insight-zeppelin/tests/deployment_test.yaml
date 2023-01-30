@@ -1,0 +1,27 @@
+---
+suite: test deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: should have basic metadata in place
+    values: &testvalues
+      - ../../../../../tests/values/test_values.yaml
+      - values/test.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-insight-zeppelin
+        template: deployment.yaml
+
+  - it: should render cpu and memory limits
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.5"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1024Mi"

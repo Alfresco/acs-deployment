@@ -18,8 +18,7 @@ spec:
       release: {{ .Release.Name }}
   strategy:
     type: RollingUpdate
-    rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+    rollingUpdate: {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -37,8 +36,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
           {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
           - configMapRef:
@@ -58,6 +56,4 @@ spec:
               port: {{ .Values.image.internalPort }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
 {{- end }}

@@ -57,8 +57,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
+| resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
-| resources.requests.memory | string | `"2000Mi"` | Alfresco Search Services requests memory |
+| resources.requests.cpu | string | `"0.50"` |  |
+| resources.requests.memory | string | `"1200Mi"` |  |
 | searchServicesImage.internalPort | int | `8983` |  |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |

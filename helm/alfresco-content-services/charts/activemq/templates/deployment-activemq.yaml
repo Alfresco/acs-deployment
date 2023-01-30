@@ -69,8 +69,7 @@ spec:
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
           timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
-        resources:
-{{ toYaml .Values.resources | indent 12 }}
+        resources: {{- toYaml .Values.resources | nindent 12 }}
         volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.data.mountPath }}

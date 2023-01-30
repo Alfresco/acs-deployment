@@ -60,8 +60,7 @@ spec:
                 name: {{ template "content-services.shortname" . }}-ms-teams-service-configmap
           ports:
               - containerPort: {{ .Values.msTeamsService.image.internalPort }}
-          resources:
-{{ toYaml .Values.msTeamsService.resources | indent 12 }}
+          resources: {{- toYaml .Values.msTeamsService.resources | nindent 12 }}
           readinessProbe:
             tcpSocket:
               port: {{ .Values.msTeamsService.image.internalPort }}

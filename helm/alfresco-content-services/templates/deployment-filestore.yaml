@@ -60,8 +60,7 @@ spec:
               name: {{ template "alfresco.shortname" . }}-filestore-configmap
           ports:
             - containerPort: {{ .Values.filestore.image.internalPort }}
-          resources:
-{{ toYaml .Values.filestore.resources | indent 12 }}
+          resources: {{- toYaml .Values.filestore.resources | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready

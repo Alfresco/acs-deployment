@@ -64,8 +64,7 @@ spec:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
-          resources:
-{{ toYaml .Values.libreoffice.resources | indent 12 }}
+          resources: {{- toYaml .Values.libreoffice.resources | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready

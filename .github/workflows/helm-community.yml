@@ -36,8 +36,9 @@ jobs:
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
-          echo 'waiting ACS to warm up'
-          sleep 60
+          kubectl describe pod
+      - name: Wait ACS to warm up
+        run: sleep 60
       - name: run Postman tests
         uses: matt-ball/newman-action@v1.0.4
         with:

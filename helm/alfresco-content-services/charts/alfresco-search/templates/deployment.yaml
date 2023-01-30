@@ -52,8 +52,7 @@ spec:
           {{- end }}
           ports:
             - containerPort: {{ template "alfresco-search.internalPort" . }}
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}

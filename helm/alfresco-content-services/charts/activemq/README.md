@@ -47,7 +47,9 @@ Credentials get injected by the [main chart](../../README.md) and by default are
 | podSecurityContext.runAsUser | int | `33031` |  |
 | readinessProbe | object | `{"failureThreshold":6,"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":10}` | The ActiveMQ readiness probe is used to check startup only as a failure of the liveness probe later will result in the pod being restarted. |
 | replicaCount | int | `1` |  |
+| resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
+| resources.requests.cpu | string | `"0.25"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
 | service.name | string | `"activemq"` |  |
 | services.broker.ports.external.amqp | int | `5672` |  |

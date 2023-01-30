@@ -78,8 +78,7 @@ spec:
             - containerPort: {{ .Values.imap.server.port }}
             - containerPort: {{ .Values.imap.server.imaps.port }}
             {{- end }}
-          resources:
-{{ toYaml .Values.repository.resources | indent 12 }}
+          resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.repository.persistence.data.mountPath }}
@@ -130,8 +129,7 @@ spec:
           image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
           imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
           {{- include "component-security-context" .Values.repository.initContainers.db | indent 8 }}
-          resources:
-{{ toYaml .Values.repository.initContainers.db.resources | indent 14 }}
+          resources: {{- toYaml .Values.repository.initContainers.db.resources | nindent 12 }}
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
       {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
