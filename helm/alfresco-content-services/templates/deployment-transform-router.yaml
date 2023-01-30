@@ -63,8 +63,7 @@ spec:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
             - containerPort: {{ .Values.transformrouter.image.internalPort }}
-          resources:
-{{ toYaml .Values.transformrouter.resources | indent 12 }}
+          resources: {{- toYaml .Values.transformrouter.resources | nindent 12 }}
           livenessProbe:
             httpGet:
               path: /actuator/health

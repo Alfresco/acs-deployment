@@ -15,6 +15,7 @@ tests:
           path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
           value: RELEASE-NAME-alfresco-cs-brokersecret
         template: deployment-activemq.yaml
+
   - it: should reference overridden secret when setting existingSecretName
     values: *testvalues
     set:
@@ -23,4 +24,18 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
           value: existing-secret
+        template: deployment-activemq.yaml
+
+  - it: should render cpu and memory limits
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.25"
+              memory: "512Mi"
+            limits:
+              cpu: "2"
+              memory: "2048Mi"
         template: deployment-activemq.yaml

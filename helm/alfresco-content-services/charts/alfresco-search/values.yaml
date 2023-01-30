@@ -53,9 +53,10 @@ environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
 resources:
   requests:
-    # -- Alfresco Search Services requests memory
-    memory: "2000Mi"
+    cpu: "0.50"
+    memory: "1200Mi"
   limits:
+    cpu: "4"
     memory: "2000Mi"
 # -- Defines the mounting points for the persistence required by the apps in the cluster
 # the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data

@@ -36,11 +36,11 @@ syncservice:
     path: /syncservice
   resources:
     requests:
-      memory: "2000Mi"
-      cpu: "2"
+      cpu: "0.5"
+      memory: "800Mi"
     limits:
-      memory: "2000Mi"
       cpu: "2"
+      memory: "2000Mi"
   livenessProbe:
     initialDelaySeconds: 150
     periodSeconds: 30
@@ -108,8 +108,10 @@ postgresql-syncservice:
     port: 5432
   resources:
     requests:
-      memory: "1500Mi"
+      cpu: "0.5"
+      memory: "600Mi"
     limits:
+      cpu: "2"
       memory: "1500Mi"
 initContainers:
   activemq:
@@ -118,9 +120,8 @@ initContainers:
       tag: 5.1.16
       pullPolicy: IfNotPresent
     resources:
-      requests:
-        memory: "5Mi"
       limits:
+        cpu: "0.25"
         memory: "10Mi"
   postgres:
     image:
@@ -128,9 +129,8 @@ initContainers:
       tag: 1.35.0
       pullPolicy: IfNotPresent
     resources:
-      requests:
-        memory: "5Mi"
       limits:
+        cpu: "0.25"
         memory: "10Mi"
 ingress:
   # -- useful when running Sync service without SSL termination done by a load

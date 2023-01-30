@@ -64,8 +64,7 @@ spec:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
-          resources:
-{{ toYaml .Values.transformmisc.resources | indent 12 }}
+          resources: {{- toYaml .Values.transformmisc.resources | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready

@@ -115,4 +115,18 @@ tests:
             mountPath: >-
               /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
+          template: deployment-repository.yaml
+
+  - it: should render cpu and memory limits
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "1"
+              memory: "1500Mi"
+            limits:
+              cpu: "4"
+              memory: "3000Mi"
         template: deployment-repository.yaml

@@ -63,8 +63,7 @@ spec:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
             - containerPort: {{ .Values.tika.image.internalPort }}
-          resources:
-{{ toYaml .Values.tika.resources | indent 12 }}
+          resources: {{- toYaml .Values.tika.resources | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready

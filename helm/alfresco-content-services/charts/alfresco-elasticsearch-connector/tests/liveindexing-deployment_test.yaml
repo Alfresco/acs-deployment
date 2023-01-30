@@ -20,6 +20,8 @@ tests:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: https://someglobally.used.host:1443
+          template: liveindexing-config.yaml
+
   - it: |
       Render elasticsearch Liveindexing configmap,
       using config provided in elasticsearch context to ensure it takes
@@ -36,6 +38,8 @@ tests:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: https://some.es.instance.somwhere.on.the.cloud:443
+          template: liveindexing-config.yaml
+
   - it: should have env vars for elasticsearch credentials
     values: *testvalues
     asserts:
@@ -46,4 +50,18 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[4].name
           value: SPRING_ELASTICSEARCH_REST_PASSWORD
+        template: liveindexing-deployment.yaml
+
+  - it: should render cpu and memory limits
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.5"
+              memory: "256Mi"
+            limits:
+              cpu: "2"
+              memory: "2048Mi"
         template: liveindexing-deployment.yaml

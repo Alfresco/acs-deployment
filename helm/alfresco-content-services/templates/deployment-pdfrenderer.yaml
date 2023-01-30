@@ -63,8 +63,7 @@ spec:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
             - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
-          resources:
-{{ toYaml .Values.pdfrenderer.resources | indent 12 }}
+          resources: {{- toYaml .Values.pdfrenderer.resources | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /ready
