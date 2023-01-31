@@ -44,7 +44,7 @@ postgresql-syncservice:
 alfresco-sync-service:
   syncservice:
     image:
-      tag: 3.4.0
+      tag: 3.7.2
 global:
   tracking:
     auth: none
