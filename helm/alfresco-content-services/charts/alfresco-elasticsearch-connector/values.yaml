@@ -28,7 +28,7 @@ liveIndexing:
     image:
       repository: >-
         quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation
-      tag: 3.3.0-M1
+      tag: 3.3.0-A9
       pullPolicy: IfNotPresent
   content:
     image:
