@@ -1,8 +1,7 @@
 # ACS 7.0.N values
----
 repository:
   image:
-    tag: 7.0.1.9
+    tag: 7.0.1.10
 transformrouter:
   image:
     tag: 1.4.1
