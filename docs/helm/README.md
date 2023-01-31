@@ -84,9 +84,9 @@ There are also several [examples](./examples) showing how to deploy with various
 ## Upgrade
 
 You can use the standard `helm upgrade acs ./alfresco/alfresco-content-services
---reuse-values` command, but make sure you read the [upgrades.md] for any
-breaking change that may have been introduced since previous helm charts
-versions.
+--reuse-values` command, but make sure you read the [upgrades page](upgrades.md)
+to learn about breaking changes that may have been introduced since previous
+helm charts versions.
 
 ## Configure
 
