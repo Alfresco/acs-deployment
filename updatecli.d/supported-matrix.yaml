@@ -97,7 +97,7 @@ matrix:
       compose_target: *compose73
       compose_key: services.sync-service.image
       helm_target: *helmvalues73
-      helm_key: syncservice.image.tag
+      helm_key: alfresco-sync-service.syncservice.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "3.1"
@@ -150,7 +150,7 @@ matrix:
       compose_target: *compose72
       compose_key: services.sync-service.image
       helm_target: *helmvalues72
-      helm_key: syncservice.image.tag
+      helm_key: alfresco-sync-service.syncservice.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "3.0"
@@ -203,7 +203,7 @@ matrix:
       compose_target: *compose71
       compose_key: services.sync-service.image
       helm_target: *helmvalues71
-      helm_key: syncservice.image.tag
+      helm_key: alfresco-sync-service.syncservice.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "2.6"
@@ -234,7 +234,7 @@ matrix:
       compose_target: *compose70
       compose_key: services.sync-service.image
       helm_target: *helmvalues70
-      helm_key: syncservice.image.tag
+      helm_key: alfresco-sync-service.syncservice.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "2.6"
