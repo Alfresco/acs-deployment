@@ -6,18 +6,6 @@ title: Images updates for ACS latest
       password: {{ requiredEnv "QUAY_PASSWORD" }}
 {{- end }}
 
-{{- define "wip_pattern" -}}
-  (-[AM]\.?[0-9]+)?
-{{- end }}
-
-{{- define "hf_pattern" -}}
-  (\.[0-9]+){1,3}
-{{- end }}
-
-{{- define "ga_pattern" -}}
-  (\.[0-9]+){1,2}
-{{- end }}
-
 scms:
   ourRepo:
     kind: github
@@ -50,7 +38,7 @@ sources:
       versionFilter:
         kind: regex
         pattern: >-
-          ^{{ index . "sync" "version" }}{{ template "hf_pattern" }}{{ template "wip_pattern" }}$
+          ^{{ index . "sync" "version" }}{{ index . "sync" "pattern" }}$
   adwTag:
     name: Alfresco Digital Workspace tag
     kind: dockerimage
@@ -60,7 +48,7 @@ sources:
       versionFilter:
         kind: regex
         pattern: >-
-          ^{{ index . "adw" "version" }}{{ template "hf_pattern" }}{{ template "wip_pattern" }}$
+          ^{{ index . "adw" "version" }}{{ index . "adw" "pattern" }}$
   {{ if index . "search-enterprise" }}
   searchEnterpriseTag:
     name: Search Enterprise tag
@@ -70,7 +58,7 @@ sources:
       versionFilter:
         kind: regex
         pattern: >-
-          ^{{ index . "search-enterprise" "version" }}{{ template "hf_pattern" }}{{ template "wip_pattern" }}$
+          ^{{ index . "search-enterprise" "version" }}{{ index . "search-enterprise" "pattern" }}$
   {{ end }}
   repositoryTag:
     name: ACS repository tag
@@ -81,7 +69,7 @@ sources:
       versionFilter:
         kind: regex
         pattern: >-
-          ^{{ index . "acs" "version" }}{{ template "hf_pattern" }}{{ template "wip_pattern" }}$
+          ^{{ index . "acs" "version" }}{{ index . "acs" "pattern" }}$
   shareTag:
     name: Share repository tag
     kind: dockerimage
@@ -91,7 +79,7 @@ sources:
       versionFilter:
         kind: regex
         pattern: >-
-          ^{{ index . "share" "version" }}{{ template "hf_pattern" }}{{ template "wip_pattern" }}$
+          ^{{ index . "share" "version" }}{{ index . "share" "pattern" }}$
   {{ if index . "adminApp" }}
   adminAppTag:
     name: Alfresco admin application tag
@@ -102,7 +90,7 @@ sources:
       versionFilter:
         kind: regex
         pattern: >-
-          ^{{ index . "adminApp" "version" }}{{ template "hf_pattern" }}{{ template "wip_pattern" }}$
+          ^{{ index . "adminApp" "version" }}{{ index . "adminApp" "pattern" }}$
   {{ end }}
 
 actions:
