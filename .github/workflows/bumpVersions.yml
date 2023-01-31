@@ -40,7 +40,7 @@ jobs:
       - name: Prepare values file for ${{ matrix.version }}
         working-directory: ./updatecli.d/
         run: |
-          yq e '.matrix["${{ matrix.version }}"]' supported-matrix.yaml \
+          yq -e e 'explode(.) | .matrix["${{ matrix.version }}"]' supported-matrix.yaml \
           | tee > "$MATRIX_VALUES_OUTPUT"
 
       - name: Get today date for cache key
