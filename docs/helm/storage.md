@@ -81,30 +81,4 @@ component:
 
 ## Migrating from previous chart versions
 
-Previous versions of the chart did not use that per-component approach to storage.
-Instead, the default behavior was to create a PVC and rely by default on it for
-any kind of data to persist). That approach has proven to cause problems and
-that's why we're moving away from it.
-However if you have already deployed using this approach and want to keep it
-(which we don't recommend), you can do so by using the static provisioning approach
-and set the `existingClaim` to the previously created PVC `alfresco-volume-claim`:
-
-```yaml
-postgresql:
-  persistence:
-    existingClaim: alfresco-volume-claim
-```
-
-Another option is to create a new volume and copy data to it from the old
-volume bound to the old `alfresco-volume-claim`.
-Details of this process depends on the type of storage and provisioner that
-was used during deployment.
-
-If you choose the second - and preferred - method, you'll then need to use
-[static provisioning method](#configuring-static-provisioning) to create a new volume and
-then instruct helm to search for a specific volume by claim name or
-`storageClass`. Using `storageClass` requires creating a new PVC too, which
-should reference the PV name to make sure a new volume is not dynamically
-created.
-Also,  applying `labels` to the PV and corresponding `selector` to the PVC
-helps ensure the `storageClass` will only pick the intended volume.
+See [upgrade guide](upgrades.md#persistence).

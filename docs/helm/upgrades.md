@@ -39,3 +39,61 @@ repository:
 That means that each `repository` pod will have a reservation of 1 full cpu core
 and enables bursting up to 4 cpu cores. You can also reduce the number of
 replicas for the components that allows it.
+
+## 5.3.0
+
+### Persistence
+
+Previous versions of the chart did not use that per-component approach to storage.
+Instead, the default behavior was to create a PVC and rely by default on it for
+any kind of data to persist). That approach has proven to cause problems and
+that's why we're moving away from it.
+However if you have already deployed using this approach and want to keep it
+(which we don't recommend), you can do so by using the static provisioning approach
+and set the `existingClaim` to the previously created PVC `alfresco-volume-claim`:
+
+```yaml
+postgresql:
+  persistence:
+    existingClaim: alfresco-volume-claim
+```
+
+Another option is to create a new volume and copy data to it from the old
+volume bound to the old `alfresco-volume-claim`.
+Details of this process depends on the type of storage and provisioner that
+was used during deployment.
+
+If you choose the second - and preferred - method, you'll then need to use
+[static provisioning method](storage.md#configuring-static-provisioning) to create a new volume and
+then instruct helm to search for a specific volume by claim name or
+`storageClass`. Using `storageClass` requires creating a new PVC too, which
+should reference the PV name to make sure a new volume is not dynamically
+created.
+Also,  applying `labels` to the PV and corresponding `selector` to the PVC
+helps ensure the `storageClass` will only pick the intended volume.
+
+## 5.2.0
+
+### Solr tracking shared secret
+
+As of chart version 5.2.0 (ACS 7.2.0) it is now required to set a shared secret for solr and repo to authenticate to each other.
+
+```yaml
+global:
+  tracking:
+    auth: secret
+    sharedsecret: 50m3S3cretTh4t!s5tr0n6
+```
+
+If you are deploying ACS version pre 7.2.0 with charts version 5.2.0+, make sure to set the value below to your `values.yml` file:
+
+```yaml
+global:
+  tracking:
+    auth: none
+```
+
+If you try to install ACS 7.2.0 and following versions, the configuration below
+is **not supported** anymore and you are **required to set a shared secret**.
+
+> :information_source: Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.
