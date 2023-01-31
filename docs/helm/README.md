@@ -65,6 +65,12 @@ the installation.
 
 For the best results we recommend [deploying ACS to AWS EKS](./eks-deployment.md). If you have a machine with at least 16GB of memory you can also [deploy using Docker for Desktop](./docker-desktop-deployment.md).
 
+The recommended cluster resources for the Enterprise version are at least 3
+nodes with 12 cpu cores and 32 GB of memory in total. You can install with lower
+requirements by fine tuning the [resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
+available in the [values](../helm/../../helm/alfresco-content-services/values.yaml)
+for each component.
+
 There are also several [examples](./examples) showing how to deploy with various configurations:
 
 * [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
