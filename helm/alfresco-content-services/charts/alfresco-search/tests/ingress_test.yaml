@@ -18,7 +18,7 @@ tests:
     asserts:
       - equal:
           path: metadata.annotations.nginx\.ingress\.kubernetes\.io/auth-secret
-          value: RELEASE-NAME-alfresco-search-solr
+          value: RELEASE-NAME-alfresco-search-ingress-secret
         template: ingress.yaml
 
   - it: should reference the existing secret when ingress.existingSecretName is set

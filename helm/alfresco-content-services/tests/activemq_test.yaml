@@ -16,22 +16,26 @@ tests:
       - values/test_values.yaml
       - values/externalBroker_values.yaml
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[3].secretRef.name
-          value: RELEASE-NAME-alfresco-cs-brokersecret
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: RELEASE-NAME-alfresco-cs-brokersecret
         template: deployment-repository.yaml
       - equal:
           path: data.BROKER_URL
           value: ZmFpbG92ZXIobmlvOi8vc29tZWJyb2tlcjo2MTYxNik=
         template: secret-message-broker.yaml
+
   - it: should render custom secret
     values:
       - values/test_values.yaml
     set:
-      messageBroker:
-        existingSecretName: acs-credentials
+      messageBroker.existingSecretName: acs-credentials
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[3].secretRef.name
-          value: acs-credentials
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: acs-credentials
         template: deployment-repository.yaml
