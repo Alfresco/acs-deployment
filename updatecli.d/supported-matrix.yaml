@@ -83,8 +83,7 @@ matrix:
       version: "3.8"
       compose_target: *compose73
       compose_key: services.sync-service.image
-      helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_target: *helmvalues73
       helm_key: syncservice.image.tag
     adw:
       version: "3.1"
@@ -131,8 +130,7 @@ matrix:
       version: "3.7"
       compose_target: *compose72
       compose_key: services.sync-service.image
-      helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_target: *helmvalues72
       helm_key: syncservice.image.tag
     adw:
       version: "3.0"
@@ -179,8 +177,7 @@ matrix:
       version: "3.7"
       compose_target: *compose71
       compose_key: services.sync-service.image
-      helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_target: *helmvalues71
       helm_key: syncservice.image.tag
     adw:
       version: "2.6"
@@ -207,8 +204,7 @@ matrix:
       version: "3.7"
       compose_target: *compose70
       compose_key: services.sync-service.image
-      helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
+      helm_target: *helmvalues70
       helm_key: syncservice.image.tag
     adw:
       version: "2.6"
