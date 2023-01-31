@@ -58,9 +58,11 @@ tests:
   - it: should have default secret in env
     values: *testvalues
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[4].secretRef.name
-          value: RELEASE-NAME-alfresco-cs-repository-secret
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: RELEASE-NAME-alfresco-cs-repository-secret
         template: deployment-repository.yaml
 
   - it: should have overridden secret in env
@@ -68,9 +70,11 @@ tests:
     set:
       repository.existingSecretName: whatever
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[4].secretRef.name
-          value: whatever
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: whatever
         template: deployment-repository.yaml
 
   - it: should have s3 secret in env
@@ -79,9 +83,11 @@ tests:
       s3connector:
         enabled: true
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
-          value: RELEASE-NAME-alfresco-cs-s3secret
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: RELEASE-NAME-alfresco-cs-s3secret
         template: deployment-repository.yaml
 
   - it: should have overridden s3 secret in env
@@ -91,9 +97,11 @@ tests:
         enabled: true
         existingSecretName: whatever
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].envFrom[2].secretRef.name
-          value: whatever
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: whatever
         template: deployment-repository.yaml
 
   - it: should have a volume and a volumeMount for license
@@ -108,6 +116,7 @@ tests:
             name: acs-license
             secret:
               secretName: somesecret
+              defaultMode: 0400
         template: deployment-repository.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
@@ -115,6 +124,28 @@ tests:
             mountPath: >-
               /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
+          template: deployment-repository.yaml
+
+  - it: should have a volume and a volumeMount for alfresco-global.properties
+    values: *testvalues
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: repository-properties
+            secret:
+              secretName: RELEASE-NAME-alfresco-repository-properties-secret
+              defaultMode: 0400
+              items:
+                - key: alfresco-global.properties
+                  path: alfresco-global.properties
+        template: deployment-repository.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: repository-properties
+            mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+            subPath: alfresco-global.properties
           template: deployment-repository.yaml
 
   - it: should render cpu and memory limits

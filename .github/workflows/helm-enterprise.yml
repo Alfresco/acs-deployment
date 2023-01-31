@@ -61,6 +61,7 @@ jobs:
     name: Helm ${{ matrix.name }} ${{ matrix.values }} 
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:

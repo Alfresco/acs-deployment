@@ -1,25 +1,17 @@
-# alfresco-common is a library so can only be tested from
-# another chart
 ---
-suite: test alfresco-common library
+suite: test ingress for repository
 templates:
   - ingress-repository.yaml
-  - secret-repo-jtoolopt.yaml
 tests:
   - it: should render with default value alfresco-cs
     values: &testvalues
       - values/test_values.yaml
     asserts:
-      - equal:
-          path: data.JAVA_TOOL_OPTIONS
-          #  harcoded value. Can't encode on the fly
-          value: |
-            LURzb2xyLnNoYXJlZFNlY3JldD1kdW1teSA=
-        template: secret-repo-jtoolopt.yaml
       - matchRegex:
           path: metadata.name
           pattern: ^RELEASE-NAME-alfresco-cs-
         template: ingress-repository.yaml
+
   - it: should render with value set
     values: *testvalues
     set:

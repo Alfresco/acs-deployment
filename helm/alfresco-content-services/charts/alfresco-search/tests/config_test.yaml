@@ -1,0 +1,55 @@
+---
+suite: test search configmap
+templates:
+  - config.yaml
+tests:
+  - it: should contains default env vars
+    values: &testvalues
+      - ../../../tests/values/test_values.yaml
+    asserts:
+      - equal:
+          path: data.SOLR_ALFRESCO_HOST
+          value: RELEASE-NAME-alfresco-cs-repository
+      - equal:
+          path: data.SOLR_ALFRESCO_PORT
+          value: "80"
+      - equal:
+          path: data.SOLR_SOLR_HOST
+          value: RELEASE-NAME-alfresco-search-solr
+      - equal:
+          path: data.SOLR_SOLR_PORT
+          value: "80"
+      - equal:
+          path: data.ALFRESCO_SECURE_COMMS
+          value: secret
+      - equal:
+          path: data.SOLR_CREATE_ALFRESCO_DEFAULTS
+          value: alfresco,archive
+
+  - it: should contains default env vars
+    values: *testvalues
+    set:
+      environment:
+        whatever: value
+    asserts:
+      - equal:
+          path: data.SOLR_ALFRESCO_HOST
+          value: RELEASE-NAME-alfresco-cs-repository
+      - equal:
+          path: data.SOLR_ALFRESCO_PORT
+          value: "80"
+      - equal:
+          path: data.SOLR_SOLR_HOST
+          value: RELEASE-NAME-alfresco-search-solr
+      - equal:
+          path: data.SOLR_SOLR_PORT
+          value: "80"
+      - equal:
+          path: data.ALFRESCO_SECURE_COMMS
+          value: secret
+      - equal:
+          path: data.SOLR_CREATE_ALFRESCO_DEFAULTS
+          value: alfresco,archive
+      - equal:
+          path: data.whatever
+          value: value

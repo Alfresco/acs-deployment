@@ -46,9 +46,9 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-search.fullName" . }}-solr-configmap
-          {{- if and (eq .Values.global.tracking.auth "secret") (.Values.global.tracking.sharedsecret) }}
+          {{- if eq .Values.global.tracking.auth "secret" }}
           - secretRef:
-              name: {{ printf "%s-solr-jtoolopts" .Release.Name | quote }}
+              name: {{ template "alfresco-search.fullName" . }}-solr-jtoolopts
           {{- end }}
           ports:
             - containerPort: {{ template "alfresco-search.internalPort" . }}

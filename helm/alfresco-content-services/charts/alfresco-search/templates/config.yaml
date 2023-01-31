@@ -14,9 +14,7 @@ data:
   SOLR_SOLR_HOST: "{{ template "alfresco-search.fullName" . }}-solr"
   SOLR_SOLR_PORT: "{{ .Values.service.externalPort }}"
   ALFRESCO_SECURE_COMMS: {{ .Values.global.tracking.auth | default "secret" }}
-  # The values for SOLR_CREATE_ALFRESCO_DEFAULTS and SOLR_OPTS, defined in the values.yaml for "search" are set next:
-  {{- if .Values.environment }}
-  {{- range $key, $val := .Values.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
+  {{- $environment := .Values.environment | default dict }}
+  {{- range $key, $val := $environment }}
+  {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
