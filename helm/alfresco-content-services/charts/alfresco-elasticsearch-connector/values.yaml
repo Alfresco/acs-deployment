@@ -45,7 +45,7 @@ liveIndexing:
   path:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-path
-      tag: 3.3.0-M1
+      tag: 3.3.0-A9
       pullPolicy: IfNotPresent
     replicaCount: 1
 reindexing:
