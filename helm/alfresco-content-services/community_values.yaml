@@ -1,5 +1,4 @@
 # ACS Community values
----
 repository:
   edition: Community
   replicaCount: 1
@@ -9,33 +8,25 @@ repository:
   persistence:
     accessModes:
       - ReadWriteOnce
-
 pdfrenderer:
   replicaCount: 1
-
 imagemagick:
   replicaCount: 1
-
 libreoffice:
   replicaCount: 1
-
 tika:
   replicaCount: 1
-
 transformmisc:
   replicaCount: 1
-
 share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: 7.3.0
-
+    tag: 7.4.0-M2
 alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
     tag: 2.0.6-A4
-
 # Disable Enterprise only features
 alfresco-digital-workspace:
   enabled: false
@@ -56,6 +47,5 @@ email:
 imap:
   server:
     enabled: false
-
 alfresco-admin-app:
   enabled: false
