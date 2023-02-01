@@ -16,6 +16,7 @@ matrix:
         helm/alfresco-content-services/values.yaml
       helm_key: repository.image.tag
       pattern: *development_pattern
+      image: &repository_image quay.io/alfresco/alfresco-content-repository
     share:
       version: "7.4"
       compose_target: *compose
@@ -23,6 +24,7 @@ matrix:
       helm_target: *helmvalues
       helm_key: share.image.tag
       pattern: *development_pattern
+      image: &share_image quay.io/alfresco/alfresco-share
     search-enterprise:
       version: "3"
       compose_target: >-
@@ -70,6 +72,7 @@ matrix:
         helm/alfresco-content-services/7.3.N_values.yaml
       helm_key: repository.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *repository_image
     share:
       version: "7.3"
       compose_target: *compose73
@@ -77,6 +80,7 @@ matrix:
       helm_target: *helmvalues73
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *share_image
     search-enterprise:
       version: "3.2"
       helm_target: *helmvalues73
@@ -123,6 +127,7 @@ matrix:
         helm/alfresco-content-services/7.2.N_values.yaml
       helm_key: repository.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *repository_image
     share:
       version: "7.2"
       compose_target: *compose72
@@ -130,6 +135,7 @@ matrix:
       helm_target: *helmvalues72
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *share_image
     search-enterprise:
       version: "3.1"
       helm_target: *helmvalues72
@@ -176,6 +182,7 @@ matrix:
         helm/alfresco-content-services/7.1.N_values.yaml
       helm_key: repository.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *repository_image
     share:
       version: "7.1"
       compose_target: *compose71
@@ -183,6 +190,7 @@ matrix:
       helm_target: *helmvalues71
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *share_image
     search-enterprise:
       version: "3.1"
       helm_target: *helmvalues71
@@ -222,6 +230,7 @@ matrix:
         helm/alfresco-content-services/7.0.N_values.yaml
       helm_key: repository.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *repository_image
     share:
       version: "7.0"
       compose_target: *compose70
@@ -229,6 +238,7 @@ matrix:
       helm_target: *helmvalues70
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
+      image: *share_image
     sync:
       version: "3.7"
       compose_target: *compose70
@@ -246,12 +256,19 @@ matrix:
   community:
     acs:
       version: "7.4"
-      compose_target: &composece >-
+      compose_target: &composeOss >-
         docker-compose/community-docker-compose.yml
       compose_key: services.alfresco.image
-      pattern: *ga_hotfixes_pattern
+      helm_target: &helmvaluesOss >-
+        helm/alfresco-content-services/community_values.yaml
+      helm_key: repository.image.tag
+      pattern: *development_pattern
+      image: docker.io/alfresco/alfresco-content-repository-community
     share:
       version: "7.4"
-      compose_target: *composece
+      compose_target: *composeOss
       compose_key: services.share.image
-      pattern: *ga_hotfixes_pattern
+      helm_target: *helmvaluesOss
+      helm_key: share.image.tag
+      pattern: *development_pattern
+      image: docker.io/alfresco/alfresco-share

@@ -28,71 +28,6 @@ scms:
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
       directory: /tmp/updatecli/searchEnterprise
 
-sources:
-  syncTag:
-    name: Sync Service image tag
-    kind: dockerimage
-    spec:
-      image: quay.io/alfresco/service-sync
-      {{ template "quay_auth" }}
-      versionFilter:
-        kind: regex
-        pattern: >-
-          ^{{ index . "sync" "version" }}{{ index . "sync" "pattern" }}$
-  adwTag:
-    name: Alfresco Digital Workspace tag
-    kind: dockerimage
-    spec:
-      image: quay.io/alfresco/alfresco-digital-workspace
-      {{ template "quay_auth" }}
-      versionFilter:
-        kind: regex
-        pattern: >-
-          ^{{ index . "adw" "version" }}{{ index . "adw" "pattern" }}$
-  {{ if index . "search-enterprise" }}
-  searchEnterpriseTag:
-    name: Search Enterprise tag
-    kind: gittag
-    scmid: searchEnterprise
-    spec:
-      versionFilter:
-        kind: regex
-        pattern: >-
-          ^{{ index . "search-enterprise" "version" }}{{ index . "search-enterprise" "pattern" }}$
-  {{ end }}
-  repositoryTag:
-    name: ACS repository tag
-    kind: dockerimage
-    spec:
-      image: quay.io/alfresco/alfresco-content-repository
-      {{ template "quay_auth" }}
-      versionFilter:
-        kind: regex
-        pattern: >-
-          ^{{ index . "acs" "version" }}{{ index . "acs" "pattern" }}$
-  shareTag:
-    name: Share repository tag
-    kind: dockerimage
-    spec:
-      image: quay.io/alfresco/alfresco-share
-      {{ template "quay_auth" }}
-      versionFilter:
-        kind: regex
-        pattern: >-
-          ^{{ index . "share" "version" }}{{ index . "share" "pattern" }}$
-  {{ if index . "adminApp" }}
-  adminAppTag:
-    name: Alfresco admin application tag
-    kind: dockerimage
-    spec:
-      image: quay.io/alfresco/alfresco-admin-app
-      {{ template "quay_auth" }}
-      versionFilter:
-        kind: regex
-        pattern: >-
-          ^{{ index . "adminApp" "version" }}{{ index . "adminApp" "pattern" }}$
-  {{ end }}
-
 actions:
   default:
     kind: github/pullrequest
@@ -103,14 +38,135 @@ actions:
       labels:
         - updatecli
 
+sources:
+  {{- if index . "adminApp" }}
+  adminAppTag:
+    name: Alfresco admin application tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-admin-app
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "adminApp" "version" }}{{ index . "adminApp" "pattern" }}$
+  {{- end }}
+  {{- if index . "adw" }}
+  adwTag:
+    name: Alfresco Digital Workspace tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-digital-workspace
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "adw" "version" }}{{ index . "adw" "pattern" }}$
+  {{- end }}
+  {{ $repo_image := index . "acs" "image" }}
+  repositoryTag:
+    name: ACS repository tag
+    kind: dockerimage
+    spec:
+      image: {{ $repo_image }}
+      {{ if eq (slice $repo_image 0 8) "quay.io/" }}
+      {{ template "quay_auth" }}
+      {{ end }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "acs" "version" }}{{ index . "acs" "pattern" }}$
+  {{- if index . "search-enterprise" }}
+  searchEnterpriseTag:
+    name: Search Enterprise tag
+    kind: gittag
+    scmid: searchEnterprise
+    spec:
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "search-enterprise" "version" }}{{ index . "search-enterprise" "pattern" }}$
+  {{ end }}
+  {{ $share_image := index . "share" "image" }}
+  shareTag:
+    name: Share repository tag
+    kind: dockerimage
+    spec:
+      image: {{ $share_image }}
+      {{ if eq (slice $share_image 0 8) "quay.io/" }}
+      {{ template "quay_auth" }}
+      {{ end }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "share" "version" }}{{ index . "share" "pattern" }}$
+  {{- if index . "sync" }}
+  syncTag:
+    name: Sync Service image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/service-sync
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "sync" "version" }}{{ index . "sync" "pattern" }}$
+  {{- end }}
+
+
+
 targets:
+  {{- if index . "adminApp" }}
+  adminAppCompose:
+    name: Alfresco Control Center
+    kind: yaml
+    scmid: ourRepo
+    sourceid: adminAppTag
+    transformers:
+      - addprefix: "quay.io/alfresco/alfresco-admin-app:"
+    spec:
+      file: {{ .adminApp.compose_target }}
+      key: >-
+        {{ .adminApp.compose_key }}
+  adminAppValues:
+    name: Helm chart default values file
+    kind: yaml
+    scmid: ourRepo
+    sourceid: adminAppTag
+    spec:
+      file: {{ .adminApp.helm_target }}
+      key: >-
+        {{ .adminApp.helm_key }}
+  {{- end }}
+  {{- if index . "adw" }}
+  adwCompose:
+    name: ADW image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: adwTag
+    transformers:
+      - addprefix: "quay.io/alfresco/alfresco-digital-workspace:"
+    spec:
+      file: {{ .adw.compose_target }}
+      key: >-
+        {{ .adw.compose_key }}
+  adwValues:
+    name: ADW image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: adwTag
+    spec:
+      file: {{ .adw.helm_target }}
+      key: >-
+        {{ .adw.helm_key }}
+  {{- end }}
   repositoryCompose:
     name: Repo image tag
     kind: yaml
     scmid: ourRepo
     sourceid: repositoryTag
     transformers:
-      - addprefix: "quay.io/alfresco/alfresco-content-repository:"
+      - addprefix: "{{ index . "acs" "image" }}:"
     spec:
       file: {{ .acs.compose_target }}
       key: >-
@@ -124,46 +180,6 @@ targets:
       file: {{ .acs.helm_target }}
       key: >-
         {{ .acs.helm_key }}
-  shareCompose:
-    name: Share image tag
-    kind: yaml
-    scmid: ourRepo
-    sourceid: shareTag
-    transformers:
-      - addprefix: "quay.io/alfresco/alfresco-share:"
-    spec:
-      file: {{ .share.compose_target }}
-      key: >-
-        {{ .share.compose_key }}
-  shareValues:
-    name: Share image tag
-    kind: yaml
-    scmid: ourRepo
-    sourceid: shareTag
-    spec:
-      file: {{ .share.helm_target }}
-      key: >-
-        {{ .share.helm_key }}
-  syncCompose:
-    name: Sync image tag
-    kind: yaml
-    scmid: ourRepo
-    sourceid: syncTag
-    transformers:
-      - addprefix: "quay.io/alfresco/service-sync:"
-    spec:
-      file: {{ .sync.compose_target }}
-      key: >-
-        {{ .sync.compose_key }}
-  syncValues:
-    name: Sync image tag
-    kind: yaml
-    scmid: ourRepo
-    sourceid: syncTag
-    spec:
-      file: {{ .sync.helm_target }}
-      key: >-
-        {{ .sync.helm_key }}
   {{- if index . "search-enterprise" }}
   {{- if index . "search-enterprise" "compose_target" }}
   searchEnterpriseCompose:
@@ -198,45 +214,45 @@ targets:
       key: {{ $value }}
   {{- end }}
   {{- end }}
-  adwCompose:
-    name: ADW image tag
+  shareCompose:
+    name: Share image tag
     kind: yaml
     scmid: ourRepo
-    sourceid: adwTag
+    sourceid: shareTag
     transformers:
-      - addprefix: "quay.io/alfresco/alfresco-digital-workspace:"
+      - addprefix: "{{ index . "share" "image" }}:"
     spec:
-      file: {{ .adw.compose_target }}
+      file: {{ .share.compose_target }}
       key: >-
-        {{ .adw.compose_key }}
-  adwValues:
-    name: ADW image tag
+        {{ .share.compose_key }}
+  shareValues:
+    name: Share image tag
     kind: yaml
     scmid: ourRepo
-    sourceid: adwTag
+    sourceid: shareTag
     spec:
-      file: {{ .adw.helm_target }}
+      file: {{ .share.helm_target }}
       key: >-
-        {{ .adw.helm_key }}
-  {{ if index . "adminApp" }}
-  adminAppCompose:
-    name: Alfresco Control Center
+        {{ .share.helm_key }}
+  {{- if index . "sync" }}
+  syncCompose:
+    name: Sync image tag
     kind: yaml
     scmid: ourRepo
-    sourceid: adminAppTag
+    sourceid: syncTag
     transformers:
-      - addprefix: "quay.io/alfresco/alfresco-admin-app:"
+      - addprefix: "quay.io/alfresco/service-sync:"
     spec:
-      file: {{ .adminApp.compose_target }}
+      file: {{ .sync.compose_target }}
       key: >-
-        {{ .adminApp.compose_key }}
-  adminAppValues:
-    name: Helm chart default values file
+        {{ .sync.compose_key }}
+  syncValues:
+    name: Sync image tag
     kind: yaml
     scmid: ourRepo
-    sourceid: adminAppTag
+    sourceid: syncTag
     spec:
-      file: {{ .adminApp.helm_target }}
+      file: {{ .sync.helm_target }}
       key: >-
-        {{ .adminApp.helm_key }}
-  {{ end }}
+        {{ .sync.helm_key }}
+  {{- end }}
