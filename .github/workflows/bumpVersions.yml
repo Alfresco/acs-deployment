@@ -25,11 +25,10 @@ jobs:
           - 7.2.N
           - 7.1.N
           - 7.0.N
-          #- community
+          - community
     env:
       MATRIX_VALUES_OUTPUT: /tmp/${{ matrix.version }}-values.yaml
-      UPDATECLI_MANIFEST_FILE: ./updatecli.d/enterprise-manifest.tpl
-      JIRA_ID: ${{ inputs.jira_id }}
+      UPDATECLI_MANIFEST_FILE: ./updatecli.d/uber-manifest.tpl
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -43,33 +42,12 @@ jobs:
           yq -e e 'explode(.) | .matrix["${{ matrix.version }}"]' supported-matrix.yaml \
           | tee > "$MATRIX_VALUES_OUTPUT"
 
-      - name: Get today date for cache key
-        id: get-date
-        run: |
-          echo "date=$(/bin/date -u "+%Y%m%d")" >> $GITHUB_OUTPUT
-        shell: bash
-
-      - name: Cache updatecli
-        id: updatecli-cache
-        uses: actions/cache@v3
-        with:
-          path: /tmp/updatecli
-          key: updatecli-${{ steps.get-date.outputs.date }}
-
-      - name: Run Updatecli in dry run mode
-        env:
-          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-          QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
-          UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-        run: >-
-          JIRA_ID=${JIRA_ID:-DRAFT}
-          updatecli diff -c "$UPDATECLI_MANIFEST_FILE" -v "$MATRIX_VALUES_OUTPUT"
-
       - name: Run Updatecli in apply mode
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          JIRA_ID: ${{ inputs.jira_id }}
         run: >-
           JIRA_ID=${JIRA_ID:-DRAFT}
           updatecli apply -c "$UPDATECLI_MANIFEST_FILE" -v "$MATRIX_VALUES_OUTPUT"
