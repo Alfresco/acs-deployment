@@ -955,8 +955,6 @@ metadataKeystore:
 alfresco-sync-service:
   messageBroker: *acs_messageBroker
   nodeSelector: {}
-  syncservice:
-    enabled: true
   image:
     repository: quay.io/alfresco/service-sync
     tag: 3.8.0
