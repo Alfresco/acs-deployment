@@ -48,7 +48,7 @@ alfresco-elasticsearch-connector:
         tag: 3.1.1
     metadata:
       image:
-        tag: 3.1.1
+        tag: 3.1.0
     path:
       image:
         tag: 3.1.0
