@@ -29,10 +29,12 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
+    tag: 7.3.0
 
 alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
+    tag: 2.0.6-A4
 
 # Disable Enterprise only features
 alfresco-digital-workspace:
