@@ -4,7 +4,7 @@ repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 7.3.0
+    tag: 7.4.0-M2
   persistence:
     accessModes:
       - ReadWriteOnce
