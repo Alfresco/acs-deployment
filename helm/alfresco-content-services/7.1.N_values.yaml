@@ -45,7 +45,7 @@ alfresco-elasticsearch-connector:
         tag: 3.1.1
     path:
       image:
-        tag: 3.1.1
+        tag: 3.1.0
   reindexing:
     image:
       tag: 3.1.1
