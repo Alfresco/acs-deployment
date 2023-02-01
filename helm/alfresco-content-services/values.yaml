@@ -952,14 +952,6 @@ metadataKeystore:
   # keyPassword: ""
   defaultKeystorePassword: "mp6yc0UD9e"
   defaultKeyPassword: "oKIWzVdEdA"
-alfresco-sync-service:
-  messageBroker: *acs_messageBroker
-  nodeSelector: {}
-  syncservice:
-    enabled: true
-  image:
-    repository: quay.io/alfresco/service-sync
-    tag: 3.8.0
 global:
   # A shared secret is now required in order to authenticate connections between
   # solr and repo (typically: tracking)
