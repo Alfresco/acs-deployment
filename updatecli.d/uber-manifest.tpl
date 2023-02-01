@@ -17,16 +17,6 @@ scms:
       repository: acs-deployment
       branch: master
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
-  searchEnterprise:
-    name: Alfresco Elasticsearch connector
-    kind: github
-    spec:
-      owner: Alfresco
-      repository: alfresco-elasticsearch-connector
-      branch: master
-      username: alfresco-build
-      token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
-      directory: /tmp/updatecli/searchEnterprise
 
 actions:
   default:
@@ -79,9 +69,10 @@ sources:
   {{- if index . "search-enterprise" }}
   searchEnterpriseTag:
     name: Search Enterprise tag
-    kind: gittag
-    scmid: searchEnterprise
+    kind: dockerimage
     spec:
+      image: quay.io/alfresco/alfresco-elasticsearch-live-indexing
+      {{ template "quay_auth" }}
       versionFilter:
         kind: regex
         pattern: >-
@@ -112,8 +103,6 @@ sources:
         pattern: >-
           ^{{ index . "sync" "version" }}{{ index . "sync" "pattern" }}$
   {{- end }}
-
-
 
 targets:
   {{- if index . "adminApp" }}
