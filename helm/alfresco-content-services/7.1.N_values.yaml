@@ -61,7 +61,7 @@ alfresco-digital-workspace:
 alfresco-sync-service:
   syncservice:
     image:
-      tag: 3.5.0
+      tag: 3.7.2
 global:
   tracking:
     auth: none
