@@ -1,5 +1,5 @@
 ---
-title: Images updates for ACS latest
+title: Images updates for all versions of Helm charts and Docker compose
 
 {{- define "quay_auth" }}
       username: {{ requiredEnv "QUAY_USERNAME" }}
@@ -10,12 +10,12 @@ scms:
   ourRepo:
     kind: github
     spec:
-      user: alfresco-build
-      email: alfresco-build@hyland.com
-      username: alfresco-build
+      user: {{ requiredEnv "GIT_AUTHOR_USERNAME" }}
+      email: {{ requiredEnv "GIT_AUTHOR_EMAIL" }}
       owner: Alfresco
       repository: acs-deployment
       branch: master
+      username: alfresco-build
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
   searchEnterprise:
     name: Alfresco Elasticsearch connector
