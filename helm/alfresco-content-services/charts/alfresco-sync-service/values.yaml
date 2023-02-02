@@ -15,6 +15,7 @@ podSecurityContext:
   runAsNonRoot: true
   fsGroup: 1000
 syncservice:
+  enabled: true
   image:
     repository: quay.io/alfresco/service-sync
     tag: 4.0.0-M5

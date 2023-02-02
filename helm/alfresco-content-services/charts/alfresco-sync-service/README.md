@@ -59,6 +59,7 @@ Alfresco Sync Service
 | replicaCount | int | `1` |  |
 | repository.host | string | `"alfresco-cs-repository"` |  |
 | repository.port | int | `80` |  |
+| syncservice.enabled | bool | `true` |  |
 | syncservice.environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | syncservice.environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -Dsync.metrics.reporter.graphite.address=127.0.0.1 -Dsync.metrics.reporter.graphite.port=2003 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | syncservice.image.internalPort | int | `9090` |  |
