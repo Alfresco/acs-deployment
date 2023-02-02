@@ -87,6 +87,21 @@ sources:
         pattern: >-
           ^{{ index . "search-enterprise" "version" }}{{ index . "search-enterprise" "pattern" }}$
   {{ end }}
+  {{- if index . "search" }}
+  {{ $search_image := index . "search" "image" }}
+  searchTag:
+    name: Alfresco Search Services
+    kind: dockerimage
+    spec:
+      image: {{ $search_image }}
+      {{ if eq (slice $search_image 0 8) "quay.io/" }}
+      {{ template "quay_auth" }}
+      {{ end }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "search" "version" }}{{ index . "search" "pattern" }}$
+  {{- end }}
   {{ $share_image := index . "share" "image" }}
   shareTag:
     name: Share repository tag
@@ -180,6 +195,28 @@ targets:
       file: {{ .acs.helm_target }}
       key: >-
         {{ .acs.helm_key }}
+  {{- if index . "search" }}
+  searchCompose:
+    name: search image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: searchTag
+    transformers:
+      - addprefix: "{{ index . "search" "image" }}:"
+    spec:
+      file: {{ .search.compose_target }}
+      key: >-
+        {{ .search.compose_key }}
+  searchValues:
+    name: search image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: searchTag
+    spec:
+      file: {{ .search.helm_target }}
+      key: >-
+        {{ .search.helm_key }}
+  {{- end }}
   {{- if index . "search-enterprise" }}
   {{- if index . "search-enterprise" "compose_target" }}
   searchEnterpriseCompose:

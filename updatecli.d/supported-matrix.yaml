@@ -25,6 +25,15 @@ matrix:
       helm_key: share.image.tag
       pattern: *development_pattern
       image: &share_image quay.io/alfresco/alfresco-share
+    search:
+      version: "2"
+      compose_target: *compose
+      compose_key: services.solr6.image
+      helm_target: >-
+        helm/alfresco-content-services/charts/alfresco-search/values.yaml
+      helm_key: searchServicesImage.tag
+      pattern: *development_pattern
+      image: quay.io/alfresco/search-services
     search-enterprise:
       version: "3"
       compose_target: >-
@@ -272,3 +281,11 @@ matrix:
       helm_key: share.image.tag
       pattern: *development_pattern
       image: docker.io/alfresco/alfresco-share
+    search:
+      version: "2"
+      compose_target: *composeOss
+      compose_key: services.solr6.image
+      helm_target: *helmvaluesOss
+      helm_key: alfresco-search.searchServicesImage.tag
+      pattern: *development_pattern
+      image: docker.io/alfresco/alfresco-search-services
