@@ -68,7 +68,7 @@ For the best results we recommend [deploying ACS to AWS EKS](./eks-deployment.md
 The recommended cluster resources for the Enterprise version with the components enabled by default are:
 at least 3 nodes with 12 cpu cores and 32 GB of memory in total. You can install with lower
 requirements by fine tuning the [resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
-available in the [values](../../helm/alfresco-content-services/values.yaml)for each component.
+available in the [values](../../helm/alfresco-content-services/values.yaml) for each component.
 
 There are also several [examples](./examples) showing how to deploy with various configurations:
 
