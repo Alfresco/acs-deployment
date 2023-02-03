@@ -14,7 +14,6 @@
 # max heap to 1/4th of container's memory which may not be ideal. Hence, setting
 # up explicit Container memory and then assigning a percentage of it to the JVM
 # for performance tuning.
----
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
@@ -30,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.4.0-M1
+    tag: 7.4.0-M2
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -557,7 +556,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.4.0-M1
+    tag: 7.4.0-M2
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -603,7 +602,6 @@ share:
   extraSideContainers: []
   extraInitContainers: []
   command: []
-
 activemq:
   enabled: true
   # -- Possibility to choose Node for pod, with a key-value pair label
@@ -687,7 +685,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.0.0-A.1
+    tag: 4.0.0-A.2
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -732,7 +730,7 @@ alfresco-admin-app:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-admin-app
-    tag: 7.7.0
+    tag: 7.8.1
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -860,7 +858,6 @@ s3connector:
     awsKmsKeyId:
   # -- An existing kubernetes secret that contains ACCESSKEY, SECRETKEY, ENCRYPTION, KMSKEYID keys
   existingSecretName:
-
 # -- For a full information of configuring the inbound email system, see
 # https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails
 email:

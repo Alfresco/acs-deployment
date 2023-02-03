@@ -19,7 +19,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.2.1.5
+    image: quay.io/alfresco/alfresco-content-repository:7.2.1.7
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -100,7 +100,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.2.1.5
+    image: quay.io/alfresco/alfresco-share:7.2.1.7
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -140,15 +140,15 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dalfresco.secureComms.secret=secret
     ports:
-      - "8083:8983"  # Browser port
+      - "8083:8983" # Browser port
   activemq:
     image: alfresco/alfresco-activemq:5.17.1-jre11-rockylinux8
     mem_limit: 1g
     ports:
-      - "8161:8161"  # Web Console
-      - "5672:5672"  # AMQP
-      - "61616:61616"  # OpenWire
-      - "61613:61613"  # STOMP
+      - "8161:8161" # Web Console
+      - "5672:5672" # AMQP
+      - "61616:61616" # OpenWire
+      - "61613:61613" # STOMP
   digital-workspace:
     image: quay.io/alfresco/alfresco-digital-workspace:3.0.1
     mem_limit: 128m

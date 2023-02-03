@@ -1,4 +1,3 @@
----
 replicaCount: 1
 nodeSelector: {}
 # -- Global definition of Docker registry pull secret which can be overridden
@@ -18,7 +17,7 @@ syncservice:
   enabled: true
   image:
     repository: quay.io/alfresco/service-sync
-    tag: 4.0.0-M5
+    tag: 4.0.0-M6
     pullPolicy: IfNotPresent
     internalPort: 9090
   environment:
