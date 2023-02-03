@@ -5,7 +5,7 @@ repos:
     hooks:
       - id: check-yaml
         args: [--allow-multiple-documents]
-        exclude: helm/.*/templates
+        exclude: (helm/.*/templates)|(updatecli.d/.*-manifest.ya?ml)
       - id: check-json
       - id: check-merge-conflict
       - id: fix-byte-order-marker
