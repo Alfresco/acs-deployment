@@ -19,7 +19,7 @@
 version: "2"
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository-community:7.4.0-M1
+    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0-M2
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -52,7 +52,7 @@ services:
     ports:
       - "8090:8090"
   share:
-    image: alfresco/alfresco-share:7.4.0-M1
+    image: docker.io/alfresco/alfresco-share:7.4.0-M2
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -89,15 +89,15 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dalfresco.secureComms.secret=secret
     ports:
-      - "8083:8983"  # Browser port
+      - "8083:8983" # Browser port
   activemq:
     image: alfresco/alfresco-activemq:5.17.1-jre11-rockylinux8
     mem_limit: 1g
     ports:
-      - "8161:8161"  # Web Console
-      - "5672:5672"  # AMQP
-      - "61616:61616"  # OpenWire
-      - "61613:61613"  # STOMP
+      - "8161:8161" # Web Console
+      - "5672:5672" # AMQP
+      - "61616:61616" # OpenWire
+      - "61613:61613" # STOMP
   content-app:
     image: alfresco/alfresco-content-app:3.1.0
     mem_limit: 128m
