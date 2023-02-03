@@ -50,23 +50,6 @@ syncservice:
     periodSeconds: 10
     failureThreshold: 12
     timeoutSeconds: 10
-  horizontalPodAutoscaling:
-    enabled: true
-    minReplicas: 1
-    maxReplicas: 3
-    CPU:
-      enabled: true
-      targetAverageUtilization: 80
-    memory:
-      enabled: true
-      # -- For the memory a lower threshold(60) for the targetAverageUtilization
-      # is needed. We need to allow the resource metrics to be queried by the
-      # metrics-server, before the pod is killed # by Kubernetes due to reaching
-      # memory limits(the infamous message one might see in the pod events
-      # history "Terminated: OOMKilled").
-      # The metrics are checked every 15 seconds by default, configured by the
-      # global cluster flag --horizontal-pod-autoscaler-sync-period
-      targetAverageUtilization: 60
 repository:
   host: alfresco-cs-repository
   port: 80
