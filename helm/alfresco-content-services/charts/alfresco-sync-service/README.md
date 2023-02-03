@@ -62,13 +62,6 @@ Alfresco Sync Service
 | syncservice.enabled | bool | `true` |  |
 | syncservice.environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | syncservice.environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -Dsync.metrics.reporter.graphite.address=127.0.0.1 -Dsync.metrics.reporter.graphite.port=2003 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| syncservice.horizontalPodAutoscaling.CPU.enabled | bool | `true` |  |
-| syncservice.horizontalPodAutoscaling.CPU.targetAverageUtilization | int | `80` |  |
-| syncservice.horizontalPodAutoscaling.enabled | bool | `true` |  |
-| syncservice.horizontalPodAutoscaling.maxReplicas | int | `3` |  |
-| syncservice.horizontalPodAutoscaling.memory.enabled | bool | `true` |  |
-| syncservice.horizontalPodAutoscaling.memory.targetAverageUtilization | int | `60` | For the memory a lower threshold(60) for the targetAverageUtilization is needed. We need to allow the resource metrics to be queried by the metrics-server, before the pod is killed # by Kubernetes due to reaching memory limits(the infamous message one might see in the pod events history "Terminated: OOMKilled"). The metrics are checked every 15 seconds by default, configured by the global cluster flag --horizontal-pod-autoscaler-sync-period |
-| syncservice.horizontalPodAutoscaling.minReplicas | int | `1` |  |
 | syncservice.image.internalPort | int | `9090` |  |
 | syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | syncservice.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
