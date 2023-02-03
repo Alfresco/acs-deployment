@@ -1,0 +1,73 @@
+---
+name: Bump component versions
+
+on:
+  workflow_dispatch:
+    inputs:
+      jira_id:
+        description: ticket reference for the requested update (OPSEXP-1234)
+        required: true
+  push:
+    paths:
+      - '.github/workflows/bumpVersions.yml'
+      - 'updatecli.d/**'
+
+permissions:
+  contents: "write"
+  pull-requests: "write"
+
+jobs:
+  updatecli:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        version:
+          - community
+          - 7.0.N
+          - 7.1.N
+          - 7.2.N
+          - 7.3.N
+          - latest
+    env:
+      MATRIX_VALUES_OUTPUT: /tmp/${{ matrix.version }}-values.yaml
+      UPDATECLI_MANIFEST_FILE: ./updatecli.d/uber-manifest.tpl
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Updatecli
+        uses: updatecli/updatecli-action@v2
+        with:
+          version: v0.43.0
+
+      - name: Prepare values file for ${{ matrix.version }}
+        working-directory: ./updatecli.d/
+        run: |
+          yq -e e 'explode(.) | .matrix["${{ matrix.version }}"]' supported-matrix.yaml \
+          | tee > "$MATRIX_VALUES_OUTPUT"
+
+      - name: Run Updatecli in diff mode
+        if: github.event_name == 'push'
+        env:
+          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+          QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+          UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          GIT_AUTHOR_EMAIL: ${{ vars.BOT_GITHUB_EMAIL }}
+          GIT_AUTHOR_USERNAME: ${{ vars.BOT_GITHUB_USERNAME }}
+        run: >-
+          JIRA_ID="DRAFT"
+          updatecli diff -c "$UPDATECLI_MANIFEST_FILE" -v "$MATRIX_VALUES_OUTPUT"
+
+      - name: Run Updatecli in apply mode
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+          QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+          UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          GIT_AUTHOR_EMAIL: ${{ vars.BOT_GITHUB_EMAIL }}
+          GIT_AUTHOR_USERNAME: ${{ vars.BOT_GITHUB_USERNAME }}
+          JIRA_ID: ${{ inputs.jira_id }}
+        run: >-
+          JIRA_ID=${JIRA_ID:-DRAFT}
+          updatecli apply -c "$UPDATECLI_MANIFEST_FILE" -v "$MATRIX_VALUES_OUTPUT"
