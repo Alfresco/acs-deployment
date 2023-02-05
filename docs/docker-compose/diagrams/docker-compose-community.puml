@@ -29,14 +29,13 @@ Client --> proxy
 proxy --> aac
 proxy --> share
 proxy --> aca
+proxy --> acs
 
-aac --> acs
 acs <-left-> ass
 acs --> psql
 acs --> tcore
 acs <-left-> amq
 share -left-> acs
-aca -left-> acs
 
 center footer Copyright 2022 Alfresco Software Inc
 
