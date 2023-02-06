@@ -109,6 +109,8 @@ Open a PR that will:
   every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
   * Bump version to the new `alfresco-common` stable version
   * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
+* Bump each subchart version to the next stable release (usually by removing the
+  `-SNAPSHOT` suffix)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, create and push the signed tag with:
@@ -120,7 +122,9 @@ git push origin vx.x.x
 
 where `vx.x.x` is the `alfresco-content-services` version.
 
-Once the tagged workflow is successful, open a PR to move back to development version:
+Once the tagged workflow is successful, publish the [new release on GitHub](https://github.com/Alfresco/acs-deployment/releases/new).
+
+Now proceed and open a PR to move back to development version:
 
 * In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
   the next development release (usually by increasing the minor version and adding
