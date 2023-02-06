@@ -8,9 +8,9 @@ keywords:
 name: activemq
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 2.2.0-SNAPSHOT
+version: 2.2.0
 dependencies:
   - name: alfresco-common
-    version: 0.3.0-SNAPSHOT
-    repository: https://kubernetes-charts.alfresco.com/incubator
+    version: 0.3.0
+    repository: https://kubernetes-charts.alfresco.com/stable
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

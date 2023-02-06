@@ -629,9 +629,6 @@ alfresco-search:
     host: null
     # -- Port of the external solr6 instance.
     port: null
-  searchServicesImage:
-    tag: 2.0.6-A4
-    pullPolicy: IfNotPresent
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
     host: alfresco-cs
