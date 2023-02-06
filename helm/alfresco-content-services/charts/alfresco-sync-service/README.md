@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 3.0.9](https://img.shields.io/badge/Version-3.0.9-informational?style=flat-square)
+![Version: 3.0.9](https://img.shields.io/badge/Version-3.0.9-informational?style=flat-square) ![AppVersion: 4.0.0-M6](https://img.shields.io/badge/AppVersion-4.0.0--M6-informational?style=flat-square)
 
 Alfresco Sync Service
 

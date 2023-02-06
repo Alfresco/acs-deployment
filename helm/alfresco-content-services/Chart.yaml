@@ -6,6 +6,7 @@
 apiVersion: v2
 name: alfresco-content-services
 version: 5.4.0-M2
+appVersion: 7.4.0-M2
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -43,13 +44,13 @@ dependencies:
     condition: >-
       alfresco-digital-workspace.enabled
   - name: activemq
-    version: 2.2.0-SNAPSHOT
+    version: 2.2.0
     condition: activemq.enabled
   - name: alfresco-search
-    version: 1.0.5-SNAPSHOT
+    version: 1.1.0
     condition: alfresco-search.enabled
   - name: alfresco-elasticsearch-connector
-    version: 0.2.0-SNAPSHOT
+    version: 0.2.0
     condition: alfresco-elasticsearch-connector.enabled
   - name: alfresco-sync-service
     version: 3.0.9
