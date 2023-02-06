@@ -41,11 +41,11 @@ jobs:
           charts-root: helm
           chart-name: alfresco-content-services
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.32.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.33.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@v1.32.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-unit-tests@v1.33.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           chart-type: ${{ matrix.charts.type }}
@@ -64,11 +64,11 @@ jobs:
           charts-root: helm
           chart-name: alfresco-content-services
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.32.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v1.33.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v1.32.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v1.33.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           helm-options: --values tests/values/test_values.yaml

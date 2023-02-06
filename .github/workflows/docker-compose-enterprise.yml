@@ -32,7 +32,7 @@ jobs:
       )
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.32.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.33.0
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}
