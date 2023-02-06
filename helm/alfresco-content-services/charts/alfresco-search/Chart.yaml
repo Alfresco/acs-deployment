@@ -13,10 +13,11 @@ keywords:
 name: alfresco-search
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 1.0.5-SNAPSHOT
+version: 1.1.0
+appVersion: 2.0.6
 dependencies:
   - name: alfresco-insight-zeppelin
-    version: 1.0.4-SNAPSHOT
+    version: 1.1.0
   - name: alfresco-common
-    version: 0.3.0-SNAPSHOT
-    repository: https://kubernetes-charts.alfresco.com/incubator
+    version: 0.3.0
+    repository: https://kubernetes-charts.alfresco.com/stable
