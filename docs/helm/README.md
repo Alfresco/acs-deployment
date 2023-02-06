@@ -65,6 +65,11 @@ the installation.
 
 For the best results we recommend [deploying ACS to AWS EKS](./eks-deployment.md). If you have a machine with at least 16GB of memory you can also [deploy using Docker for Desktop](./docker-desktop-deployment.md).
 
+The recommended cluster resources for the Enterprise version with the components enabled by default are:
+at least 3 nodes with 12 cpu cores and 32 GB of memory in total. You can install with lower
+requirements by fine tuning the [resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
+available in the [values](../../helm/alfresco-content-services/values.yaml) for each component.
+
 There are also several [examples](./examples) showing how to deploy with various configurations:
 
 * [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
@@ -74,6 +79,13 @@ There are also several [examples](./examples) showing how to deploy with various
 * [Enable Email Services](./examples/email-enabled.md)
 * [Use a custom metadata keystore](./examples/custom-metadata-keystore.md)
 * [Install ACS license as part of the deployment](./examples/alf_license.md)
+
+## Upgrade
+
+You can use the standard `helm upgrade acs ./alfresco/alfresco-content-services
+--reuse-values` command, but make sure you read the [upgrades page](upgrades.md)
+to learn about breaking changes that may have been introduced since previous
+helm charts versions.
 
 ## Configure
 
@@ -85,25 +97,6 @@ Since the Alfresco Content Services chart also has local chart dependencies you 
 * [Alfresco Search Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-search/README.md)
 * [Alfresco Insight Zeppelin Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin/README.md)
 * [Alfresco Sync Service Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-sync-service/README.md)
-
-> :warning: **As of chart version 5.2.0 (ACS 7.2.0) it is now required to pass a shared secret for solr and repo to authenticate to each other** (see below)
-
-```yaml
-global:
-  tracking:
-    auth: secret
-    sharedsecret: 50m3S3cretTh4t!s5tr0n6
-```
-
-> :warning: **If you want to deploy ACS pre 7.2.0 with charts version 5.2.0+ make sure to add the values below to your `values.yml` file.** starting from ACS 7.2.0 the configuration below will not work anymore.
-
-```yaml
-global:
-  tracking:
-    auth: none
-```
-
-> :information_source: **Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.**
 
 ## Customise
 
