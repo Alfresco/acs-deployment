@@ -17,7 +17,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 |  | alfresco-insight-zeppelin | 1.1.0 |
-| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.4.0-SNAPSHOT |
 
 ## Values
 

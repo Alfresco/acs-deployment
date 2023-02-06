@@ -19,7 +19,7 @@ Credentials get injected by the [main chart](../../README.md) and by default are
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.4.0-SNAPSHOT |
 
 ## Values
 
