@@ -15,6 +15,7 @@ actor Client
 node "Docker Compose" {
     component "NGINX proxy" as proxy #lightgrey
     component "Alfresco Content Services" as acs #lightgrey
+    component "Alfresco Admin Console" as aac #lightgrey
     component "Alfresco Search Services" as ass #lightgrey
     component "PostgreSQL" as psql #lightgrey
     component "Alfresco Share" as share #lightgrey
@@ -25,16 +26,16 @@ node "Docker Compose" {
 
 Client --> proxy
 
-proxy --> acs
+proxy --> aac
 proxy --> share
 proxy --> aca
+proxy --> acs
 
 acs <-left-> ass
 acs --> psql
 acs --> tcore
 acs <-left-> amq
 share -left-> acs
-aca -left-> acs
 
 center footer Copyright 2022 Alfresco Software Inc
 
