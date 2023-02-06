@@ -21,7 +21,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |  | alfresco-search | 1.1.0 |
 |  | alfresco-sync-service | 3.1.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.6.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
 | https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
