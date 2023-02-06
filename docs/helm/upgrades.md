@@ -40,7 +40,7 @@ That means that each `repository` pod will have a reservation of 1 full cpu core
 and enables bursting up to 4 cpu cores. You can also reduce the number of
 replicas for the components that allows it.
 
-## 5.3.0
+## 5.4.0-M1
 
 ### Persistence
 
