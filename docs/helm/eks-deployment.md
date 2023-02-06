@@ -20,7 +20,11 @@ The Community configuration will deploy the following system:
 
 ## Setup An EKS Cluster
 
-Follow the [AWS EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to create a cluster and prepare your local machine to connect to the cluster. Use the "Managed nodes - Linux" option and specify a `--node-type` of at least m5.xlarge.
+Follow the [AWS EKS Getting Started
+Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
+to create a cluster and prepare your local machine to connect to the cluster.
+Use the "Managed nodes - Linux" option and specify a `--node-type`. Most common
+choices are `m5.xlarge` and `t3.xlarge`.
 
 As we'll be using Helm to deploy the ACS chart follow the [Using Helm with EKS](https://docs.aws.amazon.com/eks/latest/userguide/helm.html) instructions to setup helm on your local machine.
 
