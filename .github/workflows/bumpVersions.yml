@@ -11,6 +11,8 @@ on:
     paths:
       - '.github/workflows/bumpVersions.yml'
       - 'updatecli.d/**'
+    branches:
+      - 'OPSEXP-**'
 
 permissions:
   contents: "write"
