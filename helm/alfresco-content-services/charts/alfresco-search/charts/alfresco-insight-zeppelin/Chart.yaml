@@ -14,5 +14,5 @@ version: 1.0.4-SNAPSHOT
 appVersion: 2.0.6-A4
 dependencies:
   - name: alfresco-common
-    version: 0.3.0-SNAPSHOT
-    repository: https://kubernetes-charts.alfresco.com/incubator
+    version: 0.3.0
+    repository: https://kubernetes-charts.alfresco.com/stable
