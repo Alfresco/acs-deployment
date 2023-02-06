@@ -98,6 +98,7 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 
 Open a PR that will:
 
+* Update the [versioning table](#versioning)
 * In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
   the next stable release (usually by removing the `-SNAPSHOT` suffix)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
