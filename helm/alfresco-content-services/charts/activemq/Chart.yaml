@@ -8,7 +8,7 @@ keywords:
 name: activemq
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 2.2.0
+version: 2.3.0-SNAPSHOT
 dependencies:
   - name: alfresco-common
     version: 0.4.0-SNAPSHOT
