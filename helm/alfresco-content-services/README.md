@@ -19,7 +19,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |  | activemq | 2.2.0 |
 |  | alfresco-elasticsearch-connector | 0.2.0 |
 |  | alfresco-search | 1.1.0 |
-|  | alfresco-sync-service | 3.0.9 |
+|  | alfresco-sync-service | 3.1.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.6.0 |
 | https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
