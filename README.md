@@ -146,7 +146,7 @@ Once the tagged workflow is successful, the release process has completed.
 
 ## How to update workflow diagrams of Alfresco latest version
 
-* Go to the `docs/docker-compose/diagrams` folder of the repository and there you will find 2 plantuml source files and 2 diagram files.
+* Go to the `docs/docker-compose/diagrams` and/or `docs/helm/diagrams` folders of the repository and there you will find 2 plantuml source files and their PNG diagram files.
 * Update the plantuml(.puml) files for enterprise/community edition with latest changes as required.
 * Once you are done with the changes, you can generate the diagrams with 2 ways.
 

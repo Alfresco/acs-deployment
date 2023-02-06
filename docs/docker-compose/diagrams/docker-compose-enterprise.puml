@@ -36,7 +36,6 @@ proxy --> share
 proxy --> adw
 proxy --> acs
 
-adw --> acs
 share --> acs
 acs <-left-> ass
 sync <-left-> acs
