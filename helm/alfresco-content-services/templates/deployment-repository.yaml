@@ -24,7 +24,6 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-repository.yaml") . | sha256sum }}
         checksum/secretDatabase: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
         checksum/secretS3: {{ include (print $.Template.BasePath "/secret-s3.yaml") . | sha256sum }}
-        checksum/config-log4j: {{ include (print $.Template.BasePath "/config-dev-log4j-properties.yaml") . | sha256sum }}
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
@@ -92,6 +91,9 @@ spec:
           - name: dev-log4j-properties-volume
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
             subPath: dev-log4j.properties
+          - name: dev-log4j2-properties-volume
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j2.properties
+            subPath: dev-log4j2.properties
           {{- end }}
           startupProbe:
             httpGet:
@@ -210,6 +212,8 @@ spec:
             items:
             - key: dev-log4j.properties
               path: dev-log4j.properties
+            - key: dev-log4j2.properties
+              path: dev-log4j2.properties
       {{- end }}
         - name: custom-pipeline-config-volume
           configMap:

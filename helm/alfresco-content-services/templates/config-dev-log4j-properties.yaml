@@ -9,6 +9,10 @@ metadata:
 data:
   dev-log4j.properties: |-
   {{- range $key, $val := .Values.repository.extraLogStatements }}
-   log4j.logger.{{ $key }}={{ tpl $val $ }}
+   log4j.logger.{{ $key }}={{ $val }}
+  {{- end }}
+  dev-log4j2.properties: |-
+  {{- range $key, $val := .Values.repository.extraLogStatements }}
+   logger.{{ $key }}={{ $val }}
   {{- end }}
 {{- end }}
