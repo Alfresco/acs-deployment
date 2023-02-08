@@ -13,6 +13,7 @@ data:
   {{- end }}
   dev-log4j2.properties: |-
   {{- range $key, $val := .Values.repository.extraLogStatements }}
-   logger.{{ $key }}={{ $val }}
+   logger.{{ $key | replace "." "-" }}.name={{ $key }}
+   logger.{{ $key | replace "." "-" }}.level={{ $val }}
   {{- end }}
 {{- end }}
