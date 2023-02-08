@@ -33,23 +33,23 @@ workflow:
 #----------------------------------------
 # Job definitions
 #----------------------------------------
-build:alfresco-common:
-  stage: build
-  image: harbor.contezza.nl/tooling/helm-ci:1.0.0
-  variables:
-    CHART_ROOT: 'helm/alfresco-common'
-  script:
-    - *helm-login
-    - *helm-deps
-    - *helm-build-push
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      changes:
-      - ${CHART_ROOT}/*
-      - ${CHART_ROOT}/**/*
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-  tags:
-    - cntz-cicd
+#build:alfresco-common:
+#  stage: build
+#  image: harbor.contezza.nl/tooling/helm-ci:1.0.0
+#  variables:
+#    CHART_ROOT: 'helm/alfresco-common'
+#  script:
+#    - *helm-login
+#    - *helm-deps
+#    - *helm-build-push
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "push"'
+#      changes:
+#      - ${CHART_ROOT}/*
+#      - ${CHART_ROOT}/**/*
+#    - if: '$CI_PIPELINE_SOURCE == "web"'
+#  tags:
+#    - cntz-cicd
 
 build:alfresco-content-services:
   stage: build
@@ -69,21 +69,21 @@ build:alfresco-content-services:
   tags:
     - cntz-cicd
 
-build:alfresco-search:
-  stage: build
-  image: harbor.contezza.nl/tooling/helm-ci:1.0.0
-  variables:
-    CHART_ROOT: 'helm/alfresco-content-services/charts/alfresco-search'
-  script:
-    - *helm-login
-    - *helm-deps
-    - *helm-build-push
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      changes:
-      - ${CHART_ROOT}/*
-      - ${CHART_ROOT}/**/*
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-  tags:
-    - cntz-cicd
+#build:alfresco-search:
+#  stage: build
+#  image: harbor.contezza.nl/tooling/helm-ci:1.0.0
+#  variables:
+#    CHART_ROOT: 'helm/alfresco-content-services/charts/alfresco-search'
+#  script:
+#    - *helm-login
+#    - *helm-deps
+#    - *helm-build-push
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "push"'
+#      changes:
+#      - ${CHART_ROOT}/*
+#      - ${CHART_ROOT}/**/*
+#    - if: '$CI_PIPELINE_SOURCE == "web"'
+#  tags:
+#    - cntz-cicd
 
