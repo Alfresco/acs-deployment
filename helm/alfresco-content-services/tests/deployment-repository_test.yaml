@@ -20,7 +20,7 @@ tests:
   - it: Log4j & Log4j2 test
     values: *testvalues
     set:
-      repository.extraLogStatements: whatever
+      repository.extraLogStatements.testkey: testvalue
     asserts:
       - contains:
           path: spec.template.spec.containers[0].envFrom
