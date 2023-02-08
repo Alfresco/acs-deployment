@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.22.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.33.0
       - uses: pre-commit/action@v3.0.0
         with:
           extra_args: helm-docs --all-files

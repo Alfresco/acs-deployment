@@ -23,6 +23,7 @@ spec:
       labels:
         {{- include "ms-teams-service.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.msTeams | indent 4 }}
     {{- if .Values.msTeamsService.nodeSelector }}
       nodeSelector: {{- .Values.msTeamsService.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -52,14 +53,14 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.msTeamsService.image.repository }}:{{ .Values.msTeamsService.image.tag }}"
           imagePullPolicy: {{ .Values.msTeamsService.image.pullPolicy }}
+          {{- include "component-security-context" .Values.msTeams | indent 8 }}
           envFrom:
             - configMapRef:
                 # config map to use, defined in config-ms-teams-service.yaml
                 name: {{ template "content-services.shortname" . }}-ms-teams-service-configmap
           ports:
               - containerPort: {{ .Values.msTeamsService.image.internalPort }}
-          resources:
-{{ toYaml .Values.msTeamsService.resources | indent 12 }}
+          resources: {{- toYaml .Values.msTeamsService.resources | nindent 12 }}
           readinessProbe:
             tcpSocket:
               port: {{ .Values.msTeamsService.image.internalPort }}
@@ -68,7 +69,7 @@ spec:
             timeoutSeconds: {{ .Values.msTeamsService.readinessProbe.timeoutSeconds }}
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.msTeamsService.image.internalPort }}          
+              port: {{ .Values.msTeamsService.image.internalPort }}
             initialDelaySeconds: {{ .Values.msTeamsService.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.msTeamsService.livenessProbe.periodSeconds }}
             failureThreshold: 1

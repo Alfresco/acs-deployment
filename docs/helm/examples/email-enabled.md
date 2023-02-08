@@ -27,32 +27,34 @@ Deploy the latest version of ACS Enterprise by running the command below (replac
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
---set externalPort="443" \
---set externalProtocol="https" \
---set externalHost="acs.YOUR-DOMAIN-NAME" \
---set persistence.enabled=true \
---set persistence.storageClass.enabled=true \
---set persistence.storageClass.name="nfs-client" \
---set global.alfrescoRegistryPullSecrets=quay-registry-secret \
---set mail.host="smtp.gmail.com" \
---set mail.from.default="some.user@gmail.com" \
---set mail.username="some.user@gmail.com" \
---set mail.password="somepassword" \
---set mail.protocol=smtps \
---set mail.smtp.auth=true \
---set mail.smtps.auth=true \
---set email.server.enabled=true \
---set email.server.auth.enabled=true \
---set email.server.enableTLS=true \
---set email.server.domain=smtps-myacs.example.com \
---set email.inbound.unknownUser="some.user@gmail.com" \
---set email.ssl.secretName=your-cert-secret \
---set imap.server.enabled=true \
---set imap.server.imap.enabled=true \
---set imap.server.imaps.enabled=true \
---atomic \
---timeout 10m0s \
---namespace=alfresco
+  --set externalPort="443" \
+  --set externalProtocol="https" \
+  --set externalHost="acs.YOUR-DOMAIN-NAME" \
+  --set repository.persistence.enabled=true \
+  --set repository.persistence.storageClass="nfs-client" \
+  --set filestore.persistence.enabled=true \
+  --set filestore.persistence.storageClass="nfs-client" \
+  --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --set mail.host="smtp.gmail.com" \
+  --set mail.from.default="some.user@gmail.com" \
+  --set mail.username="some.user@gmail.com" \
+  --set mail.password="somepassword" \
+  --set mail.protocol=smtps \
+  --set mail.smtp.auth=true \
+  --set mail.smtps.auth=true \
+  --set email.server.enabled=true \
+  --set email.server.auth.enabled=true \
+  --set email.server.enableTLS=true \
+  --set email.server.domain=smtps-myacs.example.com \
+  --set email.inbound.unknownUser="some.user@gmail.com" \
+  --set email.ssl.secretName=your-cert-secret \
+  --set imap.server.enabled=true \
+  --set imap.server.imap.enabled=true \
+  --set imap.server.imaps.enabled=true \
+  --atomic \
+  --timeout 10m0s \
+  --namespace=alfresco
 ```
 
 > NOTE: If you are using GMail or Yahoo as the outbound email server, your application's attempts to send outgoing emails may be blocked by the email providers due to their security policies as if it considers the authentication attempts to be suspicious. When this happens, you will receive a security alert at the corresponding email address. To proceed, you will need to manually confirm the validity of the authentication attempt before the email provider will permit the application to send outbound emails. For more information on [Less secure apps & your Google Account](https://support.google.com/accounts/answer/6010255).
@@ -88,5 +90,5 @@ alert-fly-alfresco-cs-email   LoadBalancer   100.XX.33.188   a1dXXXXXab11eaac670
 
 ## References
 
-- [Alfresco Configuring email](https://docs.alfresco.com/6.2/concepts/email.html)
+- [Alfresco Configuring email](https://docs.alfresco.com/content-services/latest/admin/)
 - [Kubernetes Ingress-nginx Exposing TCP and UDP services](https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/exposing-tcp-udp-services.md#exposing-tcp-and-udp-services)

@@ -4,23 +4,31 @@ This page describes how to deploy Alfresco Content Services (ACS) Enterprise or 
 
 ## Prerequisites
 
-* You've read the projects [main README](/README.md#prerequisites) prerequisites section
-* You've read the [main Helm README](./README.md) page
-* You are proficient in Kubernetes
-* A machine with at least 12GB memory
-* Latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) is installed
-* Latest version of [Helm](https://helm.sh/docs/intro/install) is installed
-* [Docker for Desktop](https://docs.docker.com/desktop/) is installed
+- You've read the projects [main README](/README.md#prerequisites) prerequisites section
+- You've read the [main Helm README](./README.md) page
+- You are proficient in Kubernetes
+- A machine with at least 16GB memory
+- [Docker for Desktop](https://docs.docker.com/desktop/) for container management installed
+- Latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) is installed
+- Latest version of [Helm](https://helm.sh/docs/intro/install) is installed
+
+The following instructions are also applicable to [Rancher Desktop](https://rancherdesktop.io/) users. Rancher desktop will provide `kubectl` and `helm` out of the box. it is open source but less mature than Docker desktop.
 
 ## Configure Docker for Desktop
 
-In order to deploy onto Docker for Desktop we need to configure it with as much CPU and memory as possible on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below.
+In order to deploy onto Docker for Desktop we need to configure it with as much CPU and memory as possible on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below. Similar resource requirement apply to Rancher Desktop.
 
 ![Resources](./diagrams/dfd-resources.png)
+
+### Docker for Desktop specific configuration
 
 To deploy the Helm charts Kubernetes needs to be enabled, this can be done from the "Kubernetes" tab, as shown in the screenshot below. Press the "Apply & Restart" button to confirm.
 
 ![k8s Enabled](./diagrams/dfd-k8s-enabled.png)
+
+### Rancher Desktop specific configuration
+
+Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable Traefik. You may need to exit and restart Rancher Desktop for the change to take effect. Ref: [Setup NGINX Ingress Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
 
 ## Deploy
 
@@ -46,7 +54,7 @@ helm repo update
 Deploy an ingress controller into the alfresco namespace using the command below:
 
 ```bash
-helm install acs-ingress ingress-nginx/ingress-nginx --version=4.0.18 \
+helm install acs-ingress ingress-nginx/ingress-nginx --version=4.4.0 \
 --set controller.scope.enabled=true \
 --set controller.scope.namespace=alfresco \
 --set rbac.create=true \
@@ -56,9 +64,24 @@ helm install acs-ingress ingress-nginx/ingress-nginx --version=4.0.18 \
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
 
+```bash
+# Verify NGINX is up and running
+kubectl get pods --namespace alfresco
+
+NAME                                                    READY   STATUS    RESTARTS   AGE
+acs-ingress-ingress-nginx-controller-77b76b95f7-hf9hq   1/1     Running   0          2m55s
+
+# Verify expose localhost:80
+kubectl get svc --namespace alfresco
+
+NAME                                             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+acs-ingress-ingress-nginx-controller-admission   ClusterIP      10.43.244.72   <none>          443/TCP                      69m
+acs-ingress-ingress-nginx-controller             LoadBalancer   10.43.182.81   192.168.1.146   80:31155/TCP,443:32209/TCP   69m
+```
+
 ### ACS
 
-This repository allows you to either deploy a system using released stable artefacts or the latest in-progress development artefacts.
+This repository allows you to either deploy a system using released stable artifact or the latest in-progress development artifacts.
 
 To use a released version of the Helm chart add the stable chart repository using the following command:
 
@@ -95,52 +118,43 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Enterprise
 
-Firstly, create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following commmand (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
+See the [registry authentication](registry-authentication.md) page to configure
+credentials to access the Alfresco Enterprise registry.
 
-```bash
-kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
-```
-
-Alternatively, if you require credentials for more than one docker registry you can login and then create a generic secret using the `--from-file` option, as shown below.
-
-```bash
-docker login docker.io
-docker login quay.io
-kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
-```
-
-> If you use this approach remember to replace `quay-registry-secret` with `my-registry-secrets` in the helm install command below!
-
-The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster and therefore requires a large amount of resources out-of-the-box. To reduce the size of the deployment so it can run on a single machine we'll need to reduce the number of pods deployed and the memory requirements for serveral others.
+The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster
+and therefore requires a large amount of resources out-of-the-box. To reduce the
+size of the deployment so it can run on a single machine we'll need to reduce
+the number of pods deployed and the memory requirements for several others.
 
 Fortunately this can all be achieved with one, albeit large, command as shown below:
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
---set externalPort="80" \
---set externalProtocol="http" \
---set externalHost="localhost" \
---set global.alfrescoRegistryPullSecrets=quay-registry-secret \
---set repository.replicaCount=1 \
---set transformrouter.replicaCount=1 \
---set pdfrenderer.replicaCount=1 \
---set imagemagick.replicaCount=1 \
---set libreoffice.replicaCount=1 \
---set tika.replicaCount=1 \
---set transformmisc.replicaCount=1 \
---set postgresql-syncservice.resources.requests.memory="500Mi" \
---set postgresql-syncservice.resources.limits.memory="500Mi" \
---set postgresql.resources.requests.memory="500Mi" \
---set postgresql.resources.limits.memory="500Mi" \
---set alfresco-search.resources.requests.memory="1000Mi" \
---set alfresco-search.resources.limits.memory="1000Mi" \
---set share.resources.limits.memory="1500Mi" \
---set share.resources.requests.memory="1500Mi" \
---set repository.resources.limits.memory="2500Mi" \
---set repository.resources.requests.memory="2500Mi" \
---atomic \
---timeout 10m0s \
---namespace alfresco
+  --set externalPort="80" \
+  --set externalProtocol="http" \
+  --set externalHost="localhost" \
+  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set repository.replicaCount=1 \
+  --set transformrouter.replicaCount=1 \
+  --set pdfrenderer.replicaCount=1 \
+  --set imagemagick.replicaCount=1 \
+  --set libreoffice.replicaCount=1 \
+  --set tika.replicaCount=1 \
+  --set transformmisc.replicaCount=1 \
+  --set postgresql-syncservice.resources.requests.memory="500Mi" \
+  --set postgresql-syncservice.resources.limits.memory="500Mi" \
+  --set postgresql.resources.requests.memory="500Mi" \
+  --set postgresql.resources.limits.memory="500Mi" \
+  --set alfresco-search.resources.requests.memory="1000Mi" \
+  --set alfresco-search.resources.limits.memory="1000Mi" \
+  --set share.resources.limits.memory="1500Mi" \
+  --set share.resources.requests.memory="1500Mi" \
+  --set repository.resources.limits.memory="2500Mi" \
+  --set repository.resources.requests.memory="2500Mi" \
+  --atomic \
+  --timeout 10m0s \
+  --namespace alfresco
 ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
@@ -150,34 +164,34 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
 2. Deploy the specific version of ACS by running the following command:
 
-    ```bash
-    helm install acs alfresco/alfresco-content-services \
-    --values=MAJOR.MINOR.N_values.yaml \
-    --set externalPort="80" \
-    --set externalProtocol="http" \
-    --set externalHost="localhost" \
-    --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-    --set repository.replicaCount=1 \
-    --set transformrouter.replicaCount=1 \
-    --set pdfrenderer.replicaCount=1 \
-    --set imagemagick.replicaCount=1 \
-    --set libreoffice.replicaCount=1 \
-    --set tika.replicaCount=1 \
-    --set transformmisc.replicaCount=1 \
-    --set postgresql-syncservice.resources.requests.memory="500Mi" \
-    --set postgresql-syncservice.resources.limits.memory="500Mi" \
-    --set postgresql.resources.requests.memory="500Mi" \
-    --set postgresql.resources.limits.memory="500Mi" \
-    --set alfresco-search.resources.requests.memory="1000Mi" \
-    --set alfresco-search.resources.limits.memory="1000Mi" \
-    --set share.resources.limits.memory="1500Mi" \
-    --set share.resources.requests.memory="1500Mi" \
-    --set repository.resources.limits.memory="2500Mi" \
-    --set repository.resources.requests.memory="2500Mi" \
-    --atomic \
-    --timeout 10m0s \
-    --namespace alfresco
-    ```
+   ```bash
+   helm install acs alfresco/alfresco-content-services \
+   --values=MAJOR.MINOR.N_values.yaml \
+   --set externalPort="80" \
+   --set externalProtocol="http" \
+   --set externalHost="localhost" \
+   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+   --set repository.replicaCount=1 \
+   --set transformrouter.replicaCount=1 \
+   --set pdfrenderer.replicaCount=1 \
+   --set imagemagick.replicaCount=1 \
+   --set libreoffice.replicaCount=1 \
+   --set tika.replicaCount=1 \
+   --set transformmisc.replicaCount=1 \
+   --set postgresql-syncservice.resources.requests.memory="500Mi" \
+   --set postgresql-syncservice.resources.limits.memory="500Mi" \
+   --set postgresql.resources.requests.memory="500Mi" \
+   --set postgresql.resources.limits.memory="500Mi" \
+   --set alfresco-search.resources.requests.memory="1000Mi" \
+   --set alfresco-search.resources.limits.memory="1000Mi" \
+   --set share.resources.limits.memory="1500Mi" \
+   --set share.resources.requests.memory="1500Mi" \
+   --set repository.resources.limits.memory="2500Mi" \
+   --set repository.resources.requests.memory="2500Mi" \
+   --atomic \
+   --timeout 10m0s \
+   --namespace alfresco
+   ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
@@ -185,28 +199,28 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
 
 When the deployment has completed the following URLs will be available:
 
-* Repository: `http://localhost/alfresco`
-* Share: `http://localhost/share`
-* API Explorer: `http://localhost/api-explorer`
+- Repository: `http://localhost/alfresco`
+- Share: `http://localhost/share`
+- API Explorer: `http://localhost/api-explorer`
 
 If you deployed Enterprise you'll also have access to:
 
-* ADW: `http://localhost/workspace/`
-* Sync Service: `http://localhost/syncservice/healthcheck`
+- ADW: `http://localhost/workspace/`
+- Sync Service: `http://localhost/syncservice/healthcheck`
 
 ## Cleanup
 
 1. Remove the `acs` and `acs-ingress` deployments by running the following command:
 
-     ```bash
-     helm uninstall -n alfresco acs acs-ingress
-     ```
+   ```bash
+   helm uninstall -n alfresco acs acs-ingress
+   ```
 
 2. Delete the Kubernetes namespace using the command below:
 
-    ```bash
-    kubectl delete namespace alfresco
-    ```
+   ```bash
+   kubectl delete namespace alfresco
+   ```
 
 ## Troubleshooting
 

@@ -27,6 +27,7 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-syncservice.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
     spec:
+    {{- include "component-pod-security-context" .Values | indent 4 }}
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -38,8 +39,8 @@ spec:
       - name: init-activemq
         image: "{{ .Values.initContainers.activemq.image.repository }}:{{ .Values.initContainers.activemq.image.tag }}"
         imagePullPolicy: {{ .Values.initContainers.activemq.image.pullPolicy }}
-        resources:
-{{ toYaml .Values.initContainers.activemq.resources | indent 10 }}
+        {{- include "component-security-context" .Values.initContainers.activemq | indent 6 }}
+        resources: {{- toYaml .Values.initContainers.activemq.resources | nindent 12 }}
         envFrom:
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
@@ -66,8 +67,8 @@ spec:
       - name: init-postgres
         image: "{{ .Values.initContainers.postgres.image.repository }}:{{ .Values.initContainers.postgres.image.tag }}"
         imagePullPolicy: {{ .Values.initContainers.postgres.image.pullPolicy }}
-        resources:
-{{ toYaml .Values.initContainers.postgres.resources | indent 10 }}
+        {{- include "component-security-context" .Values.initContainers.postgres | indent 6 }}
+        resources: {{- toYaml .Values.initContainers.postgres.resources | nindent 12 }}
         command: ['sh', '-c', 'until nc -w1 {{ .Release.Name }}-postgresql-syncservice 5432; do echo "waiting for postgresql"; sleep 2; done;']
       {{- end }}
       terminationGracePeriodSeconds: 60
@@ -75,6 +76,7 @@ spec:
       - name: syncservice
         image: "{{ .Values.syncservice.image.repository }}:{{ .Values.syncservice.image.tag }}"
         imagePullPolicy: {{ .Values.syncservice.image.pullPolicy }}
+        {{- include "component-security-context" .Values | indent 6 }}
         envFrom:
         - secretRef:
             name: {{ template "syncservice.fullname" . }}-dbsecret
@@ -85,8 +87,7 @@ spec:
         ports:
         - name: serviceport
           containerPort: 9090
-        resources:
-{{ toYaml .Values.syncservice.resources | indent 12 }}
+        resources: {{- toYaml .Values.syncservice.resources | nindent 12 }}
         readinessProbe:
           httpGet:
             path: /alfresco/healthcheck

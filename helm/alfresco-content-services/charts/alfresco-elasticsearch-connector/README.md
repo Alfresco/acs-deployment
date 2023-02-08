@@ -1,6 +1,6 @@
 # alfresco-elasticsearch-connector
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0-A9](https://img.shields.io/badge/AppVersion-3.3.0--A9-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -10,7 +10,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.1.0-SNAPSHOT |
+| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
 
 ## Values
 
@@ -19,10 +19,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | affinity | object | `{}` |  |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
-| elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
+| elasticsearch | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch |
+| global.elasticsearch | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch |
+| global.elasticsearch.existingSecretName | string | `nil` | An existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
 | global.elasticsearch.host | string | `nil` | The host where service is available |
 | global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
 | global.elasticsearch.port | string | `nil` | The port where service is available |
@@ -32,21 +33,21 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | indexName | string | `"alfresco"` |  |
 | liveIndexing.content.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.content.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-content"` |  |
-| liveIndexing.content.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.content.image.tag | string | `"3.3.0-A9"` |  |
 | liveIndexing.content.replicaCount | int | `1` |  |
 | liveIndexing.mediation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.mediation.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation"` |  |
-| liveIndexing.mediation.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.mediation.image.tag | string | `"3.3.0-A9"` |  |
 | liveIndexing.metadata.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.metadata.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata"` |  |
-| liveIndexing.metadata.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.metadata.image.tag | string | `"3.3.0-A9"` |  |
 | liveIndexing.metadata.replicaCount | int | `1` |  |
 | liveIndexing.path.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.path.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-path"` |  |
-| liveIndexing.path.image.tag | string | `"3.2.0"` |  |
+| liveIndexing.path.image.tag | string | `"3.3.0-A9"` |  |
 | liveIndexing.path.replicaCount | int | `1` |  |
 | messageBroker.password | string | `nil` | Broker password |
-| messageBroker.url | string | `nil` | Broker URL formatted as per https://activemq.apache.org/failover-transport-reference |
+| messageBroker.url | string | `nil` | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference |
 | messageBroker.user | string | `nil` | Broker username |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
@@ -57,13 +58,22 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.enabled | bool | `true` |  |
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
-| reindexing.image.tag | string | `"3.2.0"` |  |
+| reindexing.image.tag | string | `"3.3.0-A9"` |  |
+| reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
+| reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
 | reindexing.postgresql.database | string | `"alfresco"` |  |
+| reindexing.postgresql.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys |
 | reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
 | reindexing.postgresql.port | int | `5432` |  |
 | reindexing.postgresql.url | string | `nil` |  |
+| reindexing.resources.limits.cpu | string | `"2"` |  |
+| reindexing.resources.limits.memory | string | `"512Mi"` |  |
+| reindexing.resources.requests.cpu | string | `"0.5"` |  |
+| reindexing.resources.requests.memory | string | `"128Mi"` |  |
+| resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
+| resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
 | securityContext | object | `{}` |  |
 | tolerations | list | `[]` |  |

@@ -28,6 +28,7 @@ spec:
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
+    {{- include "component-pod-security-context" .Values.repository | indent 4 }}
     {{- if .Values.repository.nodeSelector }}
       nodeSelector: {{- .Values.repository.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
@@ -43,29 +44,24 @@ spec:
           command:
 {{ tpl .Values.repository.command . | indent 12 }}
           {{- end }}
+          {{- include "component-security-context" .Values.repository | indent 8 }}
           envFrom:
-          {{- if and (.Values.global.tracking.sharedsecret) (eq .Values.global.tracking.auth "secret") }}
           - secretRef:
-              name: {{ printf "%s-repository-jtoolopts" .Release.Name | quote }}
-          {{- end }}
-          - secretRef:
-              name: {{ template "content-services.shortname" . }}-dbsecret
+              name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.postgresql.existingSecretName }}
           {{- if .Values.s3connector.enabled }}
-          {{- if .Values.s3connector.secrets }}
           - secretRef:
-              # s3 connector secret keys
-              name: {{ template "content-services.shortname" . }}-s3secret
+              name: {{ default (printf "%s-s3secret" (include "content-services.shortname" .)) .Values.s3connector.existingSecretName }}
           {{- end }}
-          {{- end }}
-          {{- if .Values.email.server.enabled }}
+          {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
           - secretRef:
-              # mail password
-              name: {{ template "content-services.shortname" . }}-mail-password
+              name: {{ default (printf "%s-mail-password" (include "content-services.shortname" .)) .Values.mail.existingSecretName }}
           {{- end }}
           - secretRef:
               name: {{ template "content-services.shortname" . }}-metadata-keystore-secret
           - secretRef:
               name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
+          - secretRef:
+              name: {{ default (printf "%s-repository-secret" (include "content-services.shortname" .)) .Values.repository.existingSecretName }}
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap
@@ -78,10 +74,16 @@ spec:
             - containerPort: {{ .Values.imap.server.port }}
             - containerPort: {{ .Values.imap.server.imaps.port }}
             {{- end }}
-          resources:
-{{ toYaml .Values.repository.resources | indent 12 }}
-          {{- if .Values.persistence.repository.enabled }}
+          resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
+          {{- if eq .Values.global.tracking.auth "secret" }}
+          - name: repository-properties
+            mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+            subPath: alfresco-global.properties
+          {{- end }}
+          - name: data
+            mountPath: {{ .Values.repository.persistence.data.mountPath }}
+            subPath: {{ .Values.repository.persistence.data.subPath }}
           {{- if .Values.repository.licenseSecret }}
           - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
@@ -90,27 +92,6 @@ spec:
           - name: dev-log4j-properties-volume
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
             subPath: dev-log4j.properties
-          {{- end }}
-          - name: data
-            mountPath: {{ .Values.persistence.repository.data.mountPath }}
-            subPath: {{ .Values.persistence.repository.data.subPath }}
-          - name: custom-queryset-config-volume
-            mountPath: {{ .Values.persistence.repository.config.querysetsMountPath }}
-          - name: custom-pipeline-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.pipelinesMountPath }}
-          - name: custom-rendition-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.renditionsMountPath }}
-          - name: custom-mimetype-config-volume
-            mountPath: {{ .Values.persistence.repository.config.transform.mimetypesMountPath }}
-          {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
-          - mountPath: /var/run/secrets/java.io/keystores
-            name: email-keystore-volume
-          - mountPath: /var/run/secrets/certs
-            name: email-certs
-          {{- end }}
-          {{- if .Values.repository.extraVolumeMounts }}
-{{ toYaml .Values.repository.extraVolumeMounts | indent 10 }}
-          {{- end }}
           {{- end }}
           startupProbe:
             httpGet:
@@ -138,7 +119,7 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
-      {{- if or (eq .Values.database.external false) (.Values.persistence.repository.enabled) }}
+      {{- if eq .Values.database.external false }}
       initContainers:
       {{- if .Values.repository.extraInitContainers }}
 {{ tpl .Values.repository.extraInitContainers . | indent 8 }}
@@ -148,15 +129,15 @@ spec:
         - name: init-db
           image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
           imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
-          resources:
-{{ toYaml .Values.repository.initContainers.db.resources | indent 14 }}
+          {{- include "component-security-context" .Values.repository.initContainers.db | indent 8 }}
+          resources: {{- toYaml .Values.repository.initContainers.db.resources | nindent 12 }}
           command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.service.port }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
       {{- end }}
-      {{- if .Values.persistence.repository.enabled }}
-       {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
+      {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
           image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"
           imagePullPolicy: {{ .Values.email.initContainers.pemToKeystore.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.pemToKeystore | indent 8 }}
           env:
             - name: keyfile
               value: /var/run/secrets/certs/tls.key
@@ -178,6 +159,7 @@ spec:
         - name: pem-to-truststore
           image: "{{ .Values.email.initContainers.pemToTruststore.image.repository }}:{{ .Values.email.initContainers.pemToTruststore.image.tag }}"
           imagePullPolicy: {{ .Values.email.initContainers.pemToTruststore.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.pemToTruststore | indent 8 }}
           env:
             - name: ca_bundle
               value: /var/run/secrets/cacert/ca.crt
@@ -195,6 +177,7 @@ spec:
         - name: set-perms
           image: "{{ .Values.email.initContainers.setPerms.image.repository }}:{{ .Values.email.initContainers.setPerms.image.tag }}"
           imagePullPolicy: {{ .Values.email.initContainers.setPerms.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.setPerms | indent 8 }}
           env:
             - name: keystore_dir
               value: /var/run/secrets/java.io/keystores
@@ -202,40 +185,48 @@ spec:
           volumeMounts:
             - name: email-keystore-volume
               mountPath: /var/run/secrets/java.io/keystores
-        {{- end }}
+      {{- end }}
       volumes:
+      {{- include "data_volume" .Values.repository | nindent 8 }}
+      {{- if eq .Values.global.tracking.auth "secret" }}
+        - name: repository-properties
+          secret:
+            secretName: {{ template "alfresco.shortname" . }}-repository-properties-secret
+            defaultMode: 0400
+            items:
+              - key: alfresco-global.properties
+                path: alfresco-global.properties
+      {{- end }}
       {{- if .Values.repository.licenseSecret }}
-      - name: acs-license
-        secret:
-          secretName: {{ .Values.repository.licenseSecret }}
+        - name: acs-license
+          secret:
+            secretName: {{ .Values.repository.licenseSecret }}
+            defaultMode: 0400
       {{- end }}
       {{- if .Values.repository.extraLogStatements }}
-      - name : dev-log4j-properties-volume
-        configMap:
-          name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
-          items:
-          - key: dev-log4j.properties
-            path: dev-log4j.properties
+        - name : dev-log4j-properties-volume
+          configMap:
+            name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
+            items:
+            - key: dev-log4j.properties
+              path: dev-log4j.properties
       {{- end }}
-      - name: data
-        persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim }}
-      - name: custom-pipeline-config-volume
-        configMap:
-          optional: true
-          name: custom-pipeline-config
-      - name: custom-rendition-config-volume
-        configMap:
-          optional: true
-          name: custom-rendition-config
-      - name: custom-mimetype-config-volume
-        configMap:
-          optional: true
-          name: custom-mimetype-config
-      - name: custom-queryset-config-volume
-        configMap:
-          optional: true
-          name: custom-queryset-config
+        - name: custom-pipeline-config-volume
+          configMap:
+            optional: true
+            name: custom-pipeline-config
+        - name: custom-rendition-config-volume
+          configMap:
+            optional: true
+            name: custom-rendition-config
+        - name: custom-mimetype-config-volume
+          configMap:
+            optional: true
+            name: custom-mimetype-config
+        - name: custom-queryset-config-volume
+          configMap:
+            optional: true
+            name: custom-queryset-config
       {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
       - name: email-keystore-volume
         emptyDir: {}
@@ -251,6 +242,5 @@ spec:
       {{- end }}
       {{- if .Values.repository.extraVolumes }}
 {{ toYaml .Values.repository.extraVolumes | indent 6 }}
-      {{- end }}
       {{- end }}
       {{- end }}

@@ -17,6 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.22.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.33.0
         with:
           compose_file_path: docker-compose/community-docker-compose.yml

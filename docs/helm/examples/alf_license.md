@@ -4,6 +4,7 @@ Alfresco content repository Docker images come with an embedded license which la
 You can configure the ACS Helm chart so the license is instead read from a kubernetes secret so that when it's time to renew the license the only thing you need to do is to update that secret as needed.
 
 This relies on 2 steps:
+
 * creating a secret to hold the license
 * configuring the chart to use that secret
 
@@ -25,7 +26,7 @@ data:
 EOF
 ```
 
-## Configure the chart to leverage that secret.
+## Configure the chart to leverage that secret
 
 In the chart value file add the following:
 
@@ -36,7 +37,7 @@ repository:
 
 > You can obtain a license file for your Alfresco enterprise subscription from the [Hyland Community portal](https://community.hyland.com/)
 
-## Applying a new license.
+## Applying a new license
 
 Before your license expires you will want to apply a new one. It's actually very easy do to so. All you need to do is overwrite the secret you created on previous deployment.
 You can use the exact same command just replacing the license file with the new one.

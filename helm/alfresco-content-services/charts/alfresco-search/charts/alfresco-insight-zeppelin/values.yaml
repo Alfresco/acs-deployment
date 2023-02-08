@@ -10,9 +10,12 @@ insightzeppelin:
   enabled: false
 image:
   repository: quay.io/alfresco/insight-zeppelin
-  tag: 1.4.0
+  tag: 2.0.6
   pullPolicy: IfNotPresent
   internalPort: 9090
+podSecurityContext:
+  runAsUser: 33007
+  runAsNonRoot: true
 service:
   name: zeppelin
   type: ClusterIP
@@ -23,8 +26,10 @@ ingress:
 repository: {}
 resources:
   requests:
+    cpu: "0.5"
     memory: "512Mi"
   limits:
+    cpu: "1"
     memory: "1024Mi"
 readinessProbe:
   initialDelaySeconds: 60

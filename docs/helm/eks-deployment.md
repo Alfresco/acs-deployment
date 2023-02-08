@@ -20,7 +20,11 @@ The Community configuration will deploy the following system:
 
 ## Setup An EKS Cluster
 
-Follow the [AWS EKS Getting Started Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html) to create a cluster and prepare your local machine to connect to the cluster. Use the "Managed nodes - Linux" option and specify a `--node-type` of at least m5.xlarge.
+Follow the [AWS EKS Getting Started
+Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
+to create a cluster and prepare your local machine to connect to the cluster.
+Use the "Managed nodes - Linux" option and specify a `--node-type`. Most common
+choices are `m5.xlarge` and `t3.xlarge`.
 
 As we'll be using Helm to deploy the ACS chart follow the [Using Helm with EKS](https://docs.aws.amazon.com/eks/latest/userguide/helm.html) instructions to setup helm on your local machine.
 
@@ -108,19 +112,19 @@ Now we have an EKS cluster up and running there are a few one time steps we need
    kubectl apply -f external-dns.yaml -n kube-system
    ```
 
-4. Find the name of the nodegroup created by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
+5. Find the name of the nodegroup created by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
 
     ```bash
     eksctl get nodegroup --cluster=`YOUR-CLUSTER-NAME` 
     ```
 
-5. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and `YOUR-NODE-GROUP` with the nodegroup from the step above):
+6. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and `YOUR-NODE-GROUP` with the nodegroup from the step above):
 
     ```bash
     aws eks describe-nodegroup --cluster-name YOUR-CLUSTER-NAME --nodegroup-name YOUR-NODE-GROUP --query "nodegroup.nodeRole" --output text
     ```
 
-6. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy as shown in the screenshot below:
+7. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy as shown in the screenshot below:
 
     ![Attach Policy](./diagrams/eks-attach-policy.png)
 
@@ -265,24 +269,6 @@ kubectl create namespace alfresco
 
     > NOTE: The command will wait until the deployment is ready so please be patient.
 
-### Docker Registry Secret
-
-Create a docker registry secret to allow the protected images to be pulled from Quay.io by running the following command (replacing `YOUR-USERNAME` and `YOUR-PASSWORD` with your credentials):
-
-```bash
-kubectl create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD -n alfresco
-```
-
-Alternatively, if you require credentials for more than one docker registry you can login and then create a generic secret using the `--from-file` option, as shown below.
-
-```bash
-docker login docker.io
-docker login quay.io
-kubectl create secret generic my-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson -n alfresco
-```
-
-> If you use this approach remember to replace `quay-registry-secret` with `my-registry-secrets` in your helm install command!
-
 ### ACS
 
 This repository allows you to either deploy a system using released stable artefacts or the latest in-progress development artefacts.
@@ -305,20 +291,25 @@ Now decide whether you want to install the latest version of ACS (Enterprise or 
 
 #### Latest Enterprise Version
 
+See the [registry authentication](registry-authentication.md) page to configure
+credentials to access the Alfresco Enterprise registry.
+
 Deploy the latest version of ACS by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
---set externalPort="443" \
---set externalProtocol="https" \
---set externalHost="acs.YOUR-DOMAIN-NAME" \
---set persistence.enabled=true \
---set persistence.storageClass.enabled=true \
---set persistence.storageClass.name="nfs-client" \
---set global.alfrescoRegistryPullSecrets=quay-registry-secret \
---atomic \
---timeout 10m0s \
---namespace=alfresco
+  --set externalPort="443" \
+  --set externalProtocol="https" \
+  --set externalHost="acs.YOUR-DOMAIN-NAME" \
+  --set repository.persistence.enabled=true \
+  --set repository.persistence.storageClass="nfs-client" \
+  --set filestore.persistence.enabled=true \
+  --set filestore.persistence.storageClass="nfs-client" \
+  --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --atomic \
+  --timeout 10m0s \
+  --namespace=alfresco
 ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
@@ -335,9 +326,8 @@ helm install acs alfresco/alfresco-content-services \
     --set externalPort="443" \
     --set externalProtocol="https" \
     --set externalHost="acs.YOUR-DOMAIN-NAME" \
-    --set persistence.enabled=true \
-    --set persistence.storageClass.enabled=true \
-    --set persistence.storageClass.name="nfs-client" \
+    --set repository.persistence.enabled=true \
+    --set repository.persistence.storageClass="nfs-client" \
     --atomic \
     --timeout 10m0s \
     --namespace=alfresco
@@ -357,10 +347,12 @@ helm install acs alfresco/alfresco-content-services \
     --set externalPort="443" \
     --set externalProtocol="https" \
     --set externalHost="acs.YOUR-DOMAIN-NAME" \
-    --set persistence.enabled=true \
-    --set persistence.storageClass.enabled=true \
-    --set persistence.storageClass.name="nfs-client" \
+    --set repository.persistence.enabled=true \
+    --set repository.persistence.storageClass="nfs-client" \
+    --set filestore.persistence.enabled=true \
+    --set filestore.persistence.storageClass="nfs-client" \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+    --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
     --atomic \
     --timeout 10m0s \
     --namespace=alfresco

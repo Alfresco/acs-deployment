@@ -27,25 +27,36 @@ A new version numbering scheme is also being introduced, during the development 
 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
-| Chart Version/Tag | Default   | 7.2.N | 7.1.N   | 7.0.N   | 6.2.N    | Community |
-|-------------------|-----------|-------|---------|---------|----------|-----------|
-| 5.0.0-M1          | 7.0.0-M2  |       |         |         | 6.2.2    | 6.2.1-A8  |
-| 5.0.0-M2          | 7.0.0-M3  |       |         |         | 6.2.2    | 7.0.0     |
-| 5.0.0             | 7.0.0     |       |         |         | 6.2.2    | 7.0.0     |
-| 5.0.1             | 7.0.0     |       |         |         | 6.2.2    | 7.0.0     |
-| 5.1.0-M1          | 7.1.0-M1  |       |         |         | 6.2.2    | 7.1.0-M1  |
-| 5.1.0-M2          | 7.1.0-M2  |       |         | 7.0.1   | 6.2.2    | 7.1.0-M2  |
-| 5.1.0             | 7.1.0.1   |       |         | 7.0.1   | 6.2.2    | 7.1.0     |
-| 5.1.1             | 7.1.0.1   |       |         | 7.0.1   | 6.2.2    | 7.1.0     |
-| 5.2.0-M1          | 7.2.0-M1  |       | 7.1.0.1 | 7.0.1   | 6.2.2    | 7.2.0-M1  |
-| 5.2.0-M2          | 7.2.0-M2  |       | 7.1.1   | 7.0.1   | 6.2.2    | 7.2.0-M2  |
-| 5.2.0             | 7.2.0     |       | 7.1.1   | 7.0.1   | 6.2.2    | 7.2.0     |
-| 5.3.0-M1          | 23.1.0-M1 | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 23.1.0-M1 |
-| 5.3.0-M2          | 7.3.0-M1  | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 7.3.0-M2  |
-| 5.3.0-M3          | 7.3.0-M2  | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 7.3.0-M2  |
-| 5.3.0             | 7.3.0     | 7.2.1 | 7.1.1.5 | 7.0.1.3 | 6.2.2.24 | 7.3.0     |
+| Chart Version/Tag | Default   | 7.3.N   | 7.2.N   | 7.1.N   | 7.0.N    | Community |
+|-------------------|-----------|---------|---------|---------|----------|-----------|
+| 5.0.0-M1          | 7.0.0-M2  |         |         |         |          | 6.2.1-A8  |
+| 5.0.0-M2          | 7.0.0-M3  |         |         |         |          | 7.0.0     |
+| 5.0.0             | 7.0.0     |         |         |         |          | 7.0.0     |
+| 5.0.1             | 7.0.0     |         |         |         |          | 7.0.0     |
+| 5.1.0-M1          | 7.1.0-M1  |         |         |         |          | 7.1.0-M1  |
+| 5.1.0-M2          | 7.1.0-M2  |         |         |         | 7.0.1    | 7.1.0-M2  |
+| 5.1.0             | 7.1.0.1   |         |         |         | 7.0.1    | 7.1.0     |
+| 5.1.1             | 7.1.0.1   |         |         |         | 7.0.1    | 7.1.0     |
+| 5.2.0-M1          | 7.2.0-M1  |         |         | 7.1.0.1 | 7.0.1    | 7.2.0-M1  |
+| 5.2.0-M2          | 7.2.0-M2  |         |         | 7.1.1   | 7.0.1    | 7.2.0-M2  |
+| 5.2.0             | 7.2.0     |         |         | 7.1.1   | 7.0.1    | 7.2.0     |
+| 5.3.0-M1          | 23.1.0-M1 |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 23.1.0-M1 |
+| 5.3.0-M2          | 7.3.0-M1  |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0-M2  |
+| 5.3.0-M3          | 7.3.0-M2  |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0-M2  |
+| 5.3.0             | 7.3.0     |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0     |
+| 5.4.0-M1          | 7.4.0-M1  | 7.3.0.1 | 7.2.1.5 | 7.1.1.7 | 7.0.1.9  | 7.4.0-M1  |
+| 5.4.0-M2          | 7.4.0-M2  | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0-M2  |
 
-> ACS 6.1.x is currently in [EoM](https://www.alfresco.com/services/subscription/technical-support/product-support-status) and has been removed from this project, if you need to install it please use a former release like [5.1.1](https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1).
+### End of Life'ed versions
+
+While our latest version of the charts should be able to deployment any version of ACS (theoretically), we only ever test deployment of _currently_ supported versions. Also we do not provide values files for older unsupported version. If you need to deploy old version we provide a reference table below to allow you find the older values files and charts. You can either try using the values file for a version with the latest charts or using the old charts.
+
+| unsupported ACS version | Last chart version providing it |
+|-------------------------|---------------------------------|
+| 6.2                     | 5.3.0                           |
+| 6.1                     | 5.1.1                           |
+
+> These charts are mentioned for reference but are not supported.
 
 ### Docker
 
@@ -59,8 +70,8 @@ Our tests are executed using the latest version of Docker and Docker Compose pro
 
 Version 5.3.0 changes the way the default persistence is set up for the
 PostgreSQL database. If you did not customize the database persistance (which
-was not recommanded for serious workloads). Please take a look at [this](./storage.md)
- before trying to upgrade.
+was not recommended for serious workloads). Please take a look at [this](./storage.md)
+before trying to upgrade.
 
 Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
 
@@ -81,3 +92,67 @@ The code in this repository is released under the Apache License, see the [LICEN
 ## Contribution Guide
 
 Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
+
+## Release
+
+### Helm charts release
+
+Open a PR that will:
+
+* In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
+  the next stable release (usually by removing the `-SNAPSHOT` suffix)
+* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
+  bump chart version to the next stable release (usually by removing the
+  `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
+* For every chart using `alfresco-common`
+  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
+  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
+  * Bump version to the new `alfresco-common` stable version
+  * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
+* Run `pre-commit run --all-files helm-docs` to update docs
+
+Once the PR has been merged, create and push the signed tag with:
+
+```sh
+git tag -f -s vx.x.x -m vx.x.x
+git push origin vx.x.x
+```
+
+where `vx.x.x` is the `alfresco-content-services` version.
+
+Once the tagged workflow is successful, open a PR to move back to development version:
+
+* In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
+  the next development release (usually by increasing the minor version and adding
+  the `-SNAPSHOT` suffix)
+* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
+  bump chart version to the next development release (usually by increasing the
+  minor version and adding the `-SNAPSHOT` suffix)
+* For every chart using `alfresco-common`
+  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
+  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
+  * Bump version to the new `alfresco-common` development version
+  * Switch `repository` back to `https://kubernetes-charts.alfresco.com/incubator`
+* Run `pre-commit run --all-files helm-docs` to update docs
+
+Once the PR has been merged, overwrite and push the signed mutable tag with:
+
+```sh
+git tag -d vx.x.x-SNAPSHOT
+git tag -f -s vx.x.x-SNAPSHOT -m vx.x.x-SNAPSHOT
+git push origin vx.x.x-SNAPSHOT --force
+```
+
+Once the tagged workflow is successful, the release process has completed.
+
+## How to update workflow diagrams of Alfresco latest version
+
+* Go to the `docs/docker-compose/diagrams` and/or `docs/helm/diagrams` folders of the repository and there you will find 2 plantuml source files and their PNG diagram files.
+* Update the plantuml(.puml) files for enterprise/community edition with latest changes as required.
+* Once you are done with the changes, you can generate the diagrams with 2 ways.
+
+1. You can update the diagrams with cli method by running the below command. You need to have Java and Plantuml installed on your machine.
+ `java -jar plantuml.jar filename`
+2. The other way to generate the diagrams is via official plantuml website. Go to the below url and paste your puml code and click on submit.
+ `http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000`
+  

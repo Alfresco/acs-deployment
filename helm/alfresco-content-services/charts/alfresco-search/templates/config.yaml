@@ -9,7 +9,6 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: search
 data:
-  ALFRESCO_SECURE_COMMS: {{ .Values.global.tracking.auth | default "secret" }}
   SOLR_ALFRESCO_HOST: "{{ .Release.Name }}-{{ .Values.repository.host }}-repository"
   SOLR_ALFRESCO_PORT: "{{ .Values.repository.port }}"
   SOLR_SOLR_HOST: "{{ template "alfresco-search.fullName" . }}-solr"
@@ -19,9 +18,8 @@ data:
   REPLICATION_AFTER: "commit,startup"
   REPLICATION_CONFIG_FILES: "schema.xml,stopwords.txt"
   {{- end }}
-  # The values for SOLR_CREATE_ALFRESCO_DEFAULTS and SOLR_OPTS, defined in the values.yaml for "search" are set next:
-  {{- if .Values.environment }}
-  {{- range $key, $val := .Values.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
+  ALFRESCO_SECURE_COMMS: {{ .Values.global.tracking.auth | default "secret" }}
+  {{- $environment := .Values.environment | default dict }}
+  {{- range $key, $val := $environment }}
+  {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}

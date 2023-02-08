@@ -12,58 +12,91 @@ The Community configuration will deploy the following system:
 
 ![Helm Deployment Community](./diagrams/helm-community.png)
 
-## Considerations
+## Overview
 
-Alfresco provides tested Helm charts as a "deployment template" for customers who want to take advantage of the container orchestration benefits of Kubernetes. These Helm charts are undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
+Alfresco provides tested Helm charts as a "template" to accelerate deployment
+and configuration for customers who want to take advantage of Kubernetes
+orchestration capabilities. Please remember that as stated in our [support
+policies](https://docs.alfresco.com/support/latest/policies/deployment/),
+similarly to other deployment artifacts, they are not meant to be used 'as-is'
+in production. Our goal is to save you time and effort deploying Alfresco
+Content Services for your organization.
 
-The Helm charts in this repository provide a PostgreSQL database in a Docker container and do not configure any logging. This design has been chosen so that they can be installed in a Kubernetes cluster without changes and are still flexible to be adopted to your actual environment.
+## Using the Helm charts
 
-For your environment, you should use these charts as a starting point and modify them so that ACS integrates into your infrastructure. You typically want to remove the PostgreSQL container and connect the cs-repository directly to your database (might require [custom images](../docker-compose/examples/customisation-guidelines.md) to get the required JDBC driver in the container).
+Out of the box we provide a working ACS installation by configuring a PostgreSQL
+database via [Bitnami charts][bitnami-repo] and an ActiveMQ message broker with
+a simple [activemq subchart][activemq-readme], both with basic authentication
+and without any kind of redundancy.
 
-Another typical change would be the integration of your company-wide monitoring and logging tools.
+[activemq-readme]: ../../helm/alfresco-content-services/charts/activemq/README.md
+[bitnami-repo]: https://github.com/bitnami/charts
+
+You typically want to disable the embedded postgres and activemq broker and
+connect directly to managed instances of those services. Another typical change
+would be the integration of your company-wide monitoring, logging and backup
+solutions.
+
+If you want to have additional JDBC drivers available or to extend the default
+ACS functionalities, you are required to build [custom Docker
+images][docker-customization], deploy them on a public/private registry and set
+the appropriate values in the charts.
+
+[docker-customization]: ../docker-compose/examples/customisation-guidelines.md
+
+For example, you can override the ACS repository image by specifying in the
+[values](../../helm/alfresco-content-services/README.md):
+
+```yaml
+repository:
+  image:
+    repository: registry.example.org/my-custom-alfresco-content-repository
+    tag: 7.3.0
+```
+
+See the [registry authentication](registry-authentication.md) page to configure
+credentials for your private registry.
+
+Helm charts values contains secrets to be set. For deployment in sensitive
+environments please see the [Security](security.md) page before proceeding with
+the installation.
 
 ## Deploy
 
 For the best results we recommend [deploying ACS to AWS EKS](./eks-deployment.md). If you have a machine with at least 16GB of memory you can also [deploy using Docker for Desktop](./docker-desktop-deployment.md).
+
+The recommended cluster resources for the Enterprise version with the components enabled by default are:
+at least 3 nodes with 12 cpu cores and 32 GB of memory in total. You can install with lower
+requirements by fine tuning the [resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
+available in the [values](../../helm/alfresco-content-services/values.yaml) for each component.
 
 There are also several [examples](./examples) showing how to deploy with various configurations:
 
 * [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
 * [Deploy with Intelligence Services](./examples/with-ai.md)
 * [Deploy with Microsoft 365 Connector (Office Online Integration)](./examples/with-ooi.md)
-* [Enable access to Search Services](./examples/search-external-access.md)
+* [Enable access to Search Services](./examples/search-services.mdi#enable-alfresco-search-services-external-access)
 * [Enable Email Services](./examples/email-enabled.md)
 * [Use a custom metadata keystore](./examples/custom-metadata-keystore.md)
 * [Install ACS license as part of the deployment](./examples/alf_license.md)
+
+## Upgrade
+
+You can use the standard `helm upgrade acs ./alfresco/alfresco-content-services
+--reuse-values` command, but make sure you read the [upgrades page](upgrades.md)
+to learn about breaking changes that may have been introduced since previous
+helm charts versions.
 
 ## Configure
 
 An autogenerated list of helm values used in the chart and their default values can be found here: [Alfresco Content Services Helm Chart](./../../helm/alfresco-content-services/README.md)
 
 Since the Alfresco Content Services chart also has local chart dependencies you can find the list of values that can be configured for these charts in their respective base folder:
-- [Alfresco ActiveMQ Helm Chart](./../../helm/alfresco-content-services/charts/activemq/README.md)
-- [Alfresco Search Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-search/README.md)
-- [Alfresco Insight Zeppelin Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin/README.md)
-- [Alfresco Sync Service Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-sync-service/README.md)
 
-> :warning: **As of chart version 5.2.0 (ACS 7.2.0) it is now required to pass a shared secret for solr and repo to authenticate to each other** (see below)
-
-```yaml
-global:
-  tracking:
-    auth: secret
-    sharedsecret: 50m3S3cretTh4t!s5tr0n6
-```
-
-> :warning: **If you want to deploy ACS pre 7.2.0 with charts version 5.2.0+ make sure to add the values below to your `values.yml` file.** starting from ACS 7.2.0 the configuration below will not work anymore.
-
-```yaml
-global:
-  tracking:
-    auth: none
-```
-
-> :information_source: **Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.**
+* [Alfresco ActiveMQ Helm Chart](./../../helm/alfresco-content-services/charts/activemq/README.md)
+* [Alfresco Search Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-search/README.md)
+* [Alfresco Insight Zeppelin Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin/README.md)
+* [Alfresco Sync Service Helm Chart](./../../helm/alfresco-content-services/charts/alfresco-sync-service/README.md)
 
 ## Customise
 

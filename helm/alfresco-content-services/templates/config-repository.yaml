@@ -30,7 +30,6 @@ data:
       -Dshare.protocol={{ tpl (.Values.externalProtocol | default "http") $ }}
       -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
       -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
-      -Dalfresco_user_store.adminpassword={{ .Values.repository.adminPassword | default "209c6174da490caeb422f3fa5a7ae634" }}
       {{- if and (not (index .Values "alfresco-search" "enabled")) (not (index .Values "alfresco-elasticsearch-connector" "enabled")) (not (index .Values "alfresco-search" "external" "host")) }}
       -Dindex.subsystem.name=none
       {{- else if or (index .Values "alfresco-search" "enabled") (index .Values "alfresco-search" "external" "host") }}
@@ -81,19 +80,6 @@ data:
       -Demail.inbound.unknownUser={{ .Values.email.inbound.unknownUser }}
       -Demail.inbound.emailContributorsAuthority={{ .Values.email.inbound.emailContributorsAuthority }}
       -Demail.handler.folder.overwriteDuplicates={{ .Values.email.handler.folder.overwriteDuplicates }}
-      -Dmail.encoding={{ .Values.mail.encoding }}
-      -Dmail.host={{ .Values.mail.host }}
-      -Dmail.port={{ .Values.mail.port }}
-      -Dmail.protocol={{ .Values.mail.protocol }}
-      -Dmail.username={{ .Values.mail.username }}
-      -Dmail.from.default={{ .Values.mail.from.default }}
-      -Dmail.from.enabled={{ .Values.mail.from.enabled }}
-      -Dmail.smtp.auth={{ .Values.mail.smtp.auth }}
-      -Dmail.smtp.debug={{ .Values.mail.smtp.debug }}
-      -Dmail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
-      -Dmail.smtp.timeout={{ .Values.mail.smtp.timeout }}
-      -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
-      -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
       -Dimap.server.enabled={{ .Values.imap.server.enabled }}
       -Dimap.server.port={{ .Values.imap.server.port }}
       -Dimap.server.host={{ .Values.imap.server.host }}
@@ -108,6 +94,21 @@ data:
       -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
       {{- end }}
       {{- end }}
+      {{- if .Values.mail.host }}
+      -Dmail.encoding={{ .Values.mail.encoding }}
+      -Dmail.host={{ .Values.mail.host }}
+      -Dmail.port={{ .Values.mail.port }}
+      -Dmail.protocol={{ .Values.mail.protocol }}
+      -Dmail.username={{ .Values.mail.username }}
+      -Dmail.from.default={{ .Values.mail.from.default }}
+      -Dmail.from.enabled={{ .Values.mail.from.enabled }}
+      -Dmail.smtp.auth={{ .Values.mail.smtp.auth }}
+      -Dmail.smtp.debug={{ .Values.mail.smtp.debug }}
+      -Dmail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
+      -Dmail.smtp.timeout={{ .Values.mail.smtp.timeout }}
+      -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
+      -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
+      {{- end }}
       {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
       -Ddsync.service.uris={{ $alfUrl }}/syncservice
       {{- else }}
@@ -121,13 +122,12 @@ data:
       {{- else }}
       -Ddb.url={{ .Values.database.url }}
       {{- end }}
-      {{- if .Values.email.server.enabled }}
+      {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
       -Dmail.password=$MAIL_PASSWORD
       {{- end }}
       -Ddb.username=$DATABASE_USERNAME
       -Ddb.password=$DATABASE_PASSWORD
       {{- if .Values.s3connector.enabled }}
-      {{- if .Values.s3connector.secrets }}
       {{- if .Values.s3connector.secrets.accessKey }}
       -Ds3.accessKey=$ACCESSKEY
       {{- end }}
@@ -141,10 +141,10 @@ data:
       -Ds3.awsKmsKeyId=$KMSKEYID
       {{- end }}
       {{- end }}
-      {{- end }}
       -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
       -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
       -Dmessaging.broker.url=$BROKER_URL
       -Dmessaging.broker.username=$BROKER_USERNAME
       -Dmessaging.broker.password=$BROKER_PASSWORD
       -Dencryption.ssl.truststore.location=$JAVA_HOME/lib/security/cacerts
+      -Dalfresco_user_store.adminpassword=$REPO_ADMIN_PASSWORD

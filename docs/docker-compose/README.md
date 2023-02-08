@@ -52,7 +52,7 @@ You can provision the latest Alfresco with the new search subsystem based on Ela
 docker-compose -f docker-compose.yml -f elasticsearch-override-docker-compose.yml up -d
 ```
 
-### Troubleshooting
+### Troubleshooting Search Enterprise
 
 Make sure that exposed ports are open on your host. Check the _docker-compose.yml_ file to determine the exposed ports - refer to the ```host:container``` port definitions. You'll see they include 5432, 8080, 8083 and others.
 
@@ -70,21 +70,21 @@ The provided Docker compose file provides some default configuration, the sectio
 
 ### Alfresco Content Repository (alfresco)
 
-| Property | Description | Default value |
-|----------|-------------|---------------|
-| JAVA_TOOL_OPTIONS | Adding this environment variable, allows to set sensisitive values (like passwords) that are not passed as arguments to the Java Process. |  |
-| JAVA_OPTS | A set of properties that are picked up by the JVM inside the container. Any ACS property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Ddb.driver=org.postgresql.Driver`) . For a complete list of properties that can be passed through JAVA_OPTS enviroment variable, please check the [property reference](../properties-reference.md).  |  |
+| Property          | Description                                                                                                                                                                                                                                                                                                                                                                         | Default value |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
+| JAVA_TOOL_OPTIONS | Adding this environment variable, allows to set sensitive values (like passwords) that are not passed as arguments to the Java Process.                                                                                                                                                                                                                                           |               |
+| JAVA_OPTS         | A set of properties that are picked up by the JVM inside the container. Any ACS property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Ddb.driver=org.postgresql.Driver`) . For a complete list of properties that can be passed through JAVA_OPTS enviroment variable, please check the [property reference](../properties-reference.md). |               |
 
 ### Alfresco Share (share)
 
-| Property | Description | Default value |
-|----------|-------------|---------------|
-| JAVA_OPTS | A set of properties that are picked up by the JVM inside the container |  |
-| REPO_HOST | Share needs to know how to register itself with Alfresco | localhost |
-| REPO_PORT | Share needs to know how to register itself with Alfresco | 8080 |
-| CSRF_FILTER_REFERER | CSRF Referrer | |
-| CSRF_FILTER_ORIGIN | CSRF Origin | |
-| USE_SSL | Enables ssl use if set to `"true"` | `false` |
+| Property            | Description                                                            | Default value |
+|---------------------|------------------------------------------------------------------------|---------------|
+| JAVA_OPTS           | A set of properties that are picked up by the JVM inside the container |               |
+| REPO_HOST           | Share needs to know how to register itself with Alfresco               | localhost     |
+| REPO_PORT           | Share needs to know how to register itself with Alfresco               | 8080          |
+| CSRF_FILTER_REFERER | CSRF Referrer                                                          |               |
+| CSRF_FILTER_ORIGIN  | CSRF Origin                                                            |               |
+| USE_SSL             | Enables ssl use if set to `"true"`                                     | `false`       |
 
 ```yml
 share:
@@ -157,7 +157,6 @@ share:
 | APP_CONFIG_PLUGIN_AOS                        | Enable AOS plugin                                                                           | true                                                     |
 | APP_CONFIG_PLUGIN_CONTENT_SERVICE            | Enable Content Service plugin                                                               | true                                                     |
 | APP_EXTENSIONS_IGNORE_REFS                   | Plugins references to exclude                                                               |                                                          |
-
 
 ### Control Center (control-center)
 
@@ -327,14 +326,12 @@ net start winnat
 
 ## Reference
 
-The table below shows the location of the publicly available `Dockerfile` for the containers used in the Community deployment.
+The list below shows the location of the publicly available `Dockerfile` for the containers used in the Community deployment.
 
-| Container                       | Dockerfile Location                                                                                                                     |
-|---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| alfresco                        | https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile                                                        |
-| share                           | https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile                                                               |
-| content-app                     | https://github.com/Alfresco/alfresco-content-app/blob/master/Dockerfile                                                                 |
-| solr6                           | https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile                                  |
-| <nobr>transform-core-aio</nobr> | https://github.com/Alfresco/alfresco-transform-core/blob/master/alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile |
-| activemq                        | https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile                                                             |
-| proxy                           | https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile                                                                          |
+* [alfresco](https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile)
+* [share](https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile)
+* [content-app](https://github.com/Alfresco/alfresco-content-app/blob/master/Dockerfile)
+* [solr6](https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile)
+* [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile)
+* [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
+* [proxy](https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile)

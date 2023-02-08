@@ -1,10 +1,15 @@
 # activemq
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 5.16.4](https://img.shields.io/badge/AppVersion-5.16.4-informational?style=flat-square)
+![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![AppVersion: 5.17.1](https://img.shields.io/badge/AppVersion-5.17.1-informational?style=flat-square)
 
-A Helm chart Providing Apache ActiveMQ.
+A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (do not use in production).
 
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
+Please refer to the [documentation](../../../../docs/helm/README.md) for information on the Helm charts and deployment instructions.
+
+Credentials get injected by the [main chart](../../README.md) and by default are:
+
+* username: admin
+* password: admin
 
 ## Source Code
 
@@ -14,36 +19,39 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.1.0-SNAPSHOT |
+| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| adminUser.password | string | `"admin"` |  |
-| adminUser.username | string | `"admin"` |  |
+| adminUser.existingSecretName | string | `nil` | An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys |
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
 | image.tag | string | `"5.17.1-jre11-rockylinux8"` |  |
-| initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
-| initContainer.image.repository | string | `"busybox"` |  |
-| initContainer.image.tag | string | `"1.35.0"` |  |
-| initContainer.resources.limits.memory | string | `"10Mi"` |  |
-| initContainer.resources.requests.memory | string | `"5Mi"` |  |
 | livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
-| persistence.chownWithDynamicProvisioning | bool | `false` |  |
-| persistence.existingClaim | string | `"alfresco-volume-claim"` |  |
-| persistence.mountPath | string | `"/opt/activemq/data"` |  |
-| persistence.subPath | string | `"alfresco-infrastructure/activemq-data"` |  |
+| persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
+| persistence.baseSize | string | `"20Gi"` |  |
+| persistence.data.mountPath | string | `"/opt/activemq/data"` |  |
+| persistence.data.subPath | string | `"alfresco-infrastructure/activemq-data"` |  |
+| persistence.enabled | bool | `true` |  |
+| persistence.existingClaim | string | `nil` |  |
+| persistence.storageClass | string | `nil` |  |
+| podSecurityContext.fsGroup | int | `1000` |  |
+| podSecurityContext.runAsGroup | int | `1000` |  |
+| podSecurityContext.runAsUser | int | `33031` |  |
 | readinessProbe | object | `{"failureThreshold":6,"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":10}` | The ActiveMQ readiness probe is used to check startup only as a failure of the liveness probe later will result in the pod being restarted. |
 | replicaCount | int | `1` |  |
+| resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
+| resources.requests.cpu | string | `"0.25"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
+| service.name | string | `"activemq"` |  |
 | services.broker.ports.external.amqp | int | `5672` |  |
 | services.broker.ports.external.openwire | int | `61616` |  |
 | services.broker.ports.external.stomp | int | `61613` |  |

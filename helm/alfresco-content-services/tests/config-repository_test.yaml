@@ -1,0 +1,91 @@
+---
+suite: test config-repository manifest
+templates:
+  - config-repository.yaml
+tests:
+  - it: should have CATALINA_OPTS with encryption.ssl.truststore.location set
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dencryption\.ssl\.truststore\.location=\$JAVA_HOME/lib/security/cacerts($|\ )
+        template: config-repository.yaml
+
+  - it: should have ALFRESCO_OPTS urls without ports when are the same of the protocol default
+    values: *testvalues
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Daos\.baseUrlOverwrite=http://RELEASE-NAME-alfresco-cs-repository/alfresco/aos($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dcsrf\.filter\.origin=http://RELEASE-NAME-alfresco-cs-repository($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dcsrf\.filter\.referer=http://RELEASE-NAME-alfresco-cs-repository/\.\*($|\ )
+        template: config-repository.yaml
+
+  - it: should have ALFRESCO_OPTS urls with ports when are not protocol default
+    values: *testvalues
+    set:
+      externalPort: "8080"
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Daos\.baseUrlOverwrite=http://RELEASE-NAME-alfresco-cs-repository:8080/alfresco/aos($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dcsrf\.filter\.origin=http://RELEASE-NAME-alfresco-cs-repository:8080($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dcsrf\.filter\.referer=http://RELEASE-NAME-alfresco-cs-repository:8080/\.\*($|\ )
+        template: config-repository.yaml
+
+  - it: should have ALFRESCO_OPTS and CATALINA_OPTS when mail values are set
+    values: *testvalues
+    set:
+      mail:
+        host: smtp.example.com
+        password: smtpPassword
+        port: 25
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dmail\.host=smtp\.example\.com($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dmail\.port=25($|\ )
+        template: config-repository.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dmail\.password=\$MAIL_PASSWORD($|\ )
+        template: config-repository.yaml
+
+  - it: should have CATALINA_OPTS with mail.password set when existing secret name is provided
+    values: *testvalues
+    set:
+      mail:
+        host: smtp.example.com
+        existingSecretName: existing
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^|[^\ ]\ )-Dmail\.password=\$MAIL_PASSWORD($|\ )
+        template: config-repository.yaml
