@@ -1,0 +1,89 @@
+#----------------------------------------
+# Stages
+#----------------------------------------
+stages:
+  - build
+
+#----------------------------------------
+# Global
+#----------------------------------------
+variables:
+  REGISTRY: 'harbor.contezza.nl '
+  HELM_REMOTE: 'oci://harbor.contezza.nl/alfresco-helm-charts'
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+
+#----------------------------------------
+# Script definitions
+#----------------------------------------
+.helm-login: &helm-login
+- echo ${CNTZ_DOCKER_HARBOR_PASSWD} | helm registry login --password-stdin --username ${CNTZ_DOCKER_HARBOR_USER} ${REGISTRY}
+
+.helm-deps: &helm-deps
+- helm dependencies build ${CHART_ROOT}
+
+.helm-build-push: &helm-build-push
+- export VERSION=$(cat ${CHART_ROOT}/Chart.yaml | yq '.version')
+- helm package ${CHART_ROOT} --version ${VERSION}-${CI_COMMIT_SHORT_SHA}
+- helm push *.tgz ${HELM_REMOTE}
+
+#----------------------------------------
+# Job definitions
+#----------------------------------------
+#build:alfresco-common:
+#  stage: build
+#  image: harbor.contezza.nl/tooling/helm-ci:1.0.0
+#  variables:
+#    CHART_ROOT: 'helm/alfresco-common'
+#  script:
+#    - *helm-login
+#    - *helm-deps
+#    - *helm-build-push
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "push"'
+#      changes:
+#      - ${CHART_ROOT}/*
+#      - ${CHART_ROOT}/**/*
+#    - if: '$CI_PIPELINE_SOURCE == "web"'
+#  tags:
+#    - cntz-cicd
+
+build:alfresco-content-services:
+  stage: build
+  image: harbor.contezza.nl/tooling/helm-ci:1.0.0
+  variables:
+    CHART_ROOT: 'helm/alfresco-content-services'
+  script:
+    - *helm-login
+    - *helm-deps
+    - *helm-build-push
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      changes:
+      - ${CHART_ROOT}/*
+      - ${CHART_ROOT}/**/*
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+  tags:
+    - cntz-cicd
+
+#build:alfresco-search:
+#  stage: build
+#  image: harbor.contezza.nl/tooling/helm-ci:1.0.0
+#  variables:
+#    CHART_ROOT: 'helm/alfresco-content-services/charts/alfresco-search'
+#  script:
+#    - *helm-login
+#    - *helm-deps
+#    - *helm-build-push
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "push"'
+#      changes:
+#      - ${CHART_ROOT}/*
+#      - ${CHART_ROOT}/**/*
+#    - if: '$CI_PIPELINE_SOURCE == "web"'
+#  tags:
+#    - cntz-cicd
+
