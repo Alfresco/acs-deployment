@@ -99,6 +99,7 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 
 Open a PR that will:
 
+* Update the [versioning table](#versioning)
 * In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
   the next stable release (usually by removing the `-SNAPSHOT` suffix)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
@@ -109,6 +110,8 @@ Open a PR that will:
   every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
   * Bump version to the new `alfresco-common` stable version
   * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
+* Bump each subchart version to the next stable release (usually by removing the
+  `-SNAPSHOT` suffix)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, create and push the signed tag with:
@@ -120,7 +123,10 @@ git push origin vx.x.x
 
 where `vx.x.x` is the `alfresco-content-services` version.
 
-Once the tagged workflow is successful, open a PR to move back to development version:
+Once the tagged workflow is successful, publish the [new release on
+GitHub](https://github.com/Alfresco/acs-deployment/releases/new).
+
+Now proceed and open a PR to move back to development version:
 
 * In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
   the next development release (usually by increasing the minor version and adding
@@ -133,6 +139,8 @@ Once the tagged workflow is successful, open a PR to move back to development ve
   every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
   * Bump version to the new `alfresco-common` development version
   * Switch `repository` back to `https://kubernetes-charts.alfresco.com/incubator`
+* Bump each subchart version to the next development release (usually by
+  increasing the minor version and adding the `-SNAPSHOT` suffix)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, overwrite and push the signed mutable tag with:
