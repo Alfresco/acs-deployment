@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 3.1.0](https://img.shields.io/badge/Version-3.1.0-informational?style=flat-square) ![AppVersion: 4.0.0-M6](https://img.shields.io/badge/AppVersion-4.0.0--M6-informational?style=flat-square)
+![Version: 3.2.0-SNAPSHOT](https://img.shields.io/badge/Version-3.2.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 4.0.0-M6](https://img.shields.io/badge/AppVersion-4.0.0--M6-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -12,7 +12,7 @@ Alfresco Sync Service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.4.0-SNAPSHOT |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 1.x.x |
 
 ## Values

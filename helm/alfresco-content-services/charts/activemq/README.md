@@ -1,6 +1,6 @@
 # activemq
 
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![AppVersion: 5.17.1](https://img.shields.io/badge/AppVersion-5.17.1-informational?style=flat-square)
+![Version: 2.3.0-SNAPSHOT](https://img.shields.io/badge/Version-2.3.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 5.17.1](https://img.shields.io/badge/AppVersion-5.17.1-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (do not use in production).
 
@@ -19,7 +19,7 @@ Credentials get injected by the [main chart](../../README.md) and by default are
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.4.0-SNAPSHOT |
 
 ## Values
 
