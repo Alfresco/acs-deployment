@@ -1,6 +1,6 @@
 # alfresco-elasticsearch-connector
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0-A9](https://img.shields.io/badge/AppVersion-3.3.0--A9-informational?style=flat-square)
+![Version: 0.3.0-SNAPSHOT](https://img.shields.io/badge/Version-0.3.0--SNAPSHOT-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0-A9](https://img.shields.io/badge/AppVersion-3.3.0--A9-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -10,7 +10,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes-charts.alfresco.com/stable | alfresco-common | 0.3.0 |
+| https://kubernetes-charts.alfresco.com/incubator | alfresco-common | 0.4.0-SNAPSHOT |
 
 ## Values
 
