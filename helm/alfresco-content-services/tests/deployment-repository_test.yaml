@@ -29,7 +29,7 @@ tests:
           content:
             name: repository-logging-properties-volume
             configMap:
-              name: RELEASE-NAME-custom-log4j-properties-configmap
+              name:  RELEASE-NAME-alfresco-custom-log4j-properties-configmap
               items:
               - key: custom-log4j.properties
                 path: custom-log4j.properties
