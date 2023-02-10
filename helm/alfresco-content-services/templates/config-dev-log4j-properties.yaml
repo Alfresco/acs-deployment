@@ -3,15 +3,15 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
+  name: {{ template "alfresco.shortname" . }}-custom-log4j-properties-configmap
   labels:
     {{- include "repository.labels" . | nindent 4 }}
 data:
-  dev-log4j.properties: |-
+  custom-log4j.properties: |-
   {{- range $key, $val := .Values.repository.extraLogStatements }}
    log4j.logger.{{ $key }}={{ $val }}
   {{- end }}
-  dev-log4j2.properties: |-
+  custom-log4j2.properties: |-
   {{- range $key, $val := .Values.repository.extraLogStatements }}
    logger.{{ $key | replace "." "-" }}.name={{ $key }}
    logger.{{ $key | replace "." "-" }}.level={{ $val }}
