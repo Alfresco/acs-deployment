@@ -173,16 +173,6 @@ To add additional repository log statements across the whole cluster use the `ex
 repository:
   ...
   extraLogStatements:
-    logger.alfresco-repo-content-transform-TransformerDebug.name: org.alfresco.repo.content.transform.TransformerDebug
-    logger.alfresco-repo-content-transform-TransformerDebug.level: debug
-```
-
-In addition with the Log4jv2 we have the logging level with Log4j, below is the example:
-
-```yaml
-repository:
-  ...
-  extraLogStatements:
     org.alfresco.repo.content.transform.TransformerDebug: debug
 ```
 

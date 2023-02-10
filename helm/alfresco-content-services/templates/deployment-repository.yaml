@@ -91,6 +91,9 @@ spec:
           - name: repository-logging-properties-volume
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j.properties
             subPath: custom-log4j.properties
+          - name: repository-logging-properties-volume
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j2.properties
+            subPath: custom-log4j2.properties
           {{- end }}
           startupProbe:
             httpGet:
