@@ -39,13 +39,17 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
-           - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j.properties
-             name: repository-logging-properties-volume
-             subPath: custom-log4j.properties
-           - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j2.properties
-             name: repository-logging-properties-volume
-             subPath: custom-log4j2.properties
-          template: deployment-repository.yaml
+            name: repository-logging-properties-volume
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j.properties
+            subPath: custom-log4j.properties
+        template: deployment-repository.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: repository-logging-properties-volume
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j2.properties
+            subPath: custom-log4j2.properties
+        template: deployment-repository.yaml
 
   - it: should have default mail secret in env when email server is enabled
     values: *testvalues
