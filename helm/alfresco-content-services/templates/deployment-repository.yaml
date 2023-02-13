@@ -24,7 +24,6 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-repository.yaml") . | sha256sum }}
         checksum/secretDatabase: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
         checksum/secretS3: {{ include (print $.Template.BasePath "/secret-s3.yaml") . | sha256sum }}
-        checksum/config-log4j: {{ include (print $.Template.BasePath "/config-dev-log4j-properties.yaml") . | sha256sum }}
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
@@ -89,9 +88,12 @@ spec:
             name: acs-license
           {{- end }}
           {{- if .Values.repository.extraLogStatements }}
-          - name: dev-log4j-properties-volume
-            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/dev-log4j.properties
-            subPath: dev-log4j.properties
+          - name: repository-logging-properties-volume
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j.properties
+            subPath: custom-log4j.properties
+          - name: repository-logging-properties-volume
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/custom-log4j2.properties
+            subPath: custom-log4j2.properties
           {{- end }}
           startupProbe:
             httpGet:
@@ -204,12 +206,14 @@ spec:
             defaultMode: 0400
       {{- end }}
       {{- if .Values.repository.extraLogStatements }}
-        - name : dev-log4j-properties-volume
+        - name : repository-logging-properties-volume
           configMap:
-            name: {{ template "alfresco.shortname" . }}-dev-log4j-properties-configmap
+            name: {{ template "alfresco.shortname" . }}-custom-log4j-properties-configmap
             items:
-            - key: dev-log4j.properties
-              path: dev-log4j.properties
+            - key: custom-log4j.properties
+              path: custom-log4j.properties
+            - key: custom-log4j2.properties
+              path: custom-log4j2.properties
       {{- end }}
         - name: custom-pipeline-config-volume
           configMap:
