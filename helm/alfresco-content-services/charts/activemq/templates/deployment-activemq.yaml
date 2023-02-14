@@ -16,6 +16,8 @@ spec:
       release: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        checksum/config: {{ tpl (toYaml .Values.activemq) . | sha256sum }}
       labels:
         app: {{ template "activemq.fullname" . }}
         release: {{ .Release.Name }}
