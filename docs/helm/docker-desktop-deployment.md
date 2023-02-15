@@ -105,13 +105,14 @@ To install the latest version of Community we need to use the [community_values.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
---values=community_values.yaml \
---set externalPort="80" \
---set externalProtocol="http" \
---set externalHost="localhost" \
---atomic \
---timeout 10m0s \
---namespace=alfresco
+  --values=community_values.yaml \
+  --set externalPort="80" \
+  --set externalProtocol="http" \
+  --set externalHost="localhost" \
+  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --atomic \
+  --timeout 10m0s \
+  --namespace=alfresco
 ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
