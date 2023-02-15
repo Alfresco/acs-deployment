@@ -8,7 +8,7 @@ on:
     paths:
       - "helm/**"
       - "test/postman/helm/**"
-      - ".github/workflows/helm*"
+      - ".github/workflows/pre-commit-helm.yml"
       - "**.md"
       - ".pre-commit-config.yaml"
   push:
@@ -17,7 +17,7 @@ on:
 
 env:
   # https://pre-commit.com/#temporarily-disabling-hooks
-  SKIP: docker-compose-check,helm-docs
+  SKIP: docker-compose-check
 
 jobs:
   pre_commit:
@@ -25,4 +25,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.35.0
       - uses: pre-commit/action@v3.0.0
