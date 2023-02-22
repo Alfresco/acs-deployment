@@ -44,7 +44,8 @@ dependencies:
     condition: >-
       alfresco-digital-workspace.enabled
   - name: activemq
-    version: 2.3.0-SNAPSHOT
+    version: 3.0.1
+    repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
   - name: alfresco-search
     version: 1.2.0-SNAPSHOT

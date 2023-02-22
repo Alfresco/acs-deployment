@@ -16,12 +16,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | activemq | 2.3.0-SNAPSHOT |
 |  | alfresco-elasticsearch-connector | 0.3.0-SNAPSHOT |
 |  | alfresco-search | 1.2.0-SNAPSHOT |
 |  | alfresco-sync-service | 3.2.0-SNAPSHOT |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
 | https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
