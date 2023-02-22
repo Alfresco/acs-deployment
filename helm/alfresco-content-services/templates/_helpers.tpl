@@ -10,3 +10,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- define "content-services.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" -}}
 {{- end }}
+
+{{- define "content-services.activemq.fullname" -}}
+{{- $data := dict "Release" .Release "Values" .Values.activemq "Chart" (dict "Name" "activemq") }}
+{{- include "activemq.fullname" $data }}
+{{- end }}
