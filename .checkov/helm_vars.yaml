@@ -6,7 +6,7 @@ alfresco-search:
 global:
   tracking:
     sharedsecret: dummy
-alfresco-elasticsearch-connector:
+alfresco-search-enterprise:
   enabled: true
 # Do not render dependency charts for static analysis
 alfresco-digital-workspace:

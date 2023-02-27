@@ -16,14 +16,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-elasticsearch-connector | 0.3.0-SNAPSHOT |
 |  | alfresco-search | 1.2.0-SNAPSHOT |
 |  | alfresco-sync-service | 3.2.0-SNAPSHOT |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
-| https://helm.elastic.co | elasticsearch(elasticsearch) | 7.10.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.0.0 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql-syncservice(postgresql) | 10.16.2 |
 
@@ -103,16 +102,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
 | alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
-| alfresco-elasticsearch-connector.elasticsearch | object | `{"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
-| alfresco-elasticsearch-connector.enabled | bool | `false` |  |
-| alfresco-elasticsearch-connector.messageBroker.existingSecretName | string | `nil` |  |
-| alfresco-elasticsearch-connector.messageBroker.password | string | `nil` |  |
-| alfresco-elasticsearch-connector.messageBroker.url | string | `nil` |  |
-| alfresco-elasticsearch-connector.messageBroker.user | string | `nil` |  |
-| alfresco-elasticsearch-connector.reindexing.enabled | bool | `true` |  |
-| alfresco-elasticsearch-connector.reindexing.postgresql.database | string | `"alfresco"` |  |
-| alfresco-elasticsearch-connector.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
-| alfresco-elasticsearch-connector.reindexing.postgresql.url | string | `nil` |  |
+| alfresco-search-enterprise.enabled | bool | `false` |  |
+| alfresco-search-enterprise.messageBroker.existingSecretName | string | `nil` |  |
+| alfresco-search-enterprise.messageBroker.password | string | `nil` |  |
+| alfresco-search-enterprise.messageBroker.url | string | `nil` |  |
+| alfresco-search-enterprise.messageBroker.user | string | `nil` |  |
+| alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
+| alfresco-search-enterprise.reindexing.postgresql.database | string | `"alfresco"` |  |
+| alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
+| alfresco-search-enterprise.reindexing.postgresql.url | string | `nil` |  |
 | alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.port | int | `80` |  |
@@ -151,7 +149,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | filestore.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
-| global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-elasticsearch-connector.enabled is true |
+| global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-search-enterprise.enabled is true |
 | global.elasticsearch.host | string | `"elasticsearch-master"` | The host where service is available. The provided default is for when elasticsearch.enabled is true |
 | global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
 | global.elasticsearch.port | int | `9200` | The port where service is available |

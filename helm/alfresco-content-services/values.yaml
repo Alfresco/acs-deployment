@@ -649,7 +649,7 @@ alfresco-search:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-alfresco-elasticsearch-connector:
+alfresco-search-enterprise:
   enabled: false
   messageBroker: *acs_messageBroker
   reindexing:
@@ -658,13 +658,6 @@ alfresco-elasticsearch-connector:
       url:
       hostname: postgresql-acs
       database: alfresco
-  # -- Overrides .Values.global.elasticsearch
-  elasticsearch:
-    host: null
-    port: null
-    protocol: null
-    user: null
-    password: null
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -987,7 +980,7 @@ global:
     #   s3Bucket:
     #   comprehendRoleARN:
   # -- Shared connections details for Elasticsearch/Opensearch, required when
-  # alfresco-elasticsearch-connector.enabled is true
+  # alfresco-search-enterprise.enabled is true
   elasticsearch:
     # -- The host where service is available. The provided default is for when
     # elasticsearch.enabled is true

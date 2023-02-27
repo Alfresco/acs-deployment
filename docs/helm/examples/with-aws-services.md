@@ -262,7 +262,7 @@ messageBroker: &acs_messageBroker
   password: YOUR-MQ-PASSWORD
 alfresco-search:
   enabled: false
-alfresco-elasticsearch-connector:
+alfresco-search-enterprise:
   enabled: true
 alfresco-sync-service:
   messageBroker: *acs_messageBroker
@@ -326,7 +326,7 @@ helm -n alfresco install acs \
   --set alfresco-sync-service.messageBroker.user="alfresco" \
   --set alfresco-sync-service.messageBroker.password="YOUR-MQ-PASSWORD" \
   --set alfresco-search.enabled=false \
-  --set alfresco-elasticsearch-connector.enabled=true
+  --set alfresco-search-enterprise.enabled=true
 ```
 
 > NOTE: Alternatively, Aurora MySQL can be used instead of PostgreSQL by

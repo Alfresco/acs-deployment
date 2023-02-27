@@ -32,7 +32,7 @@ share:
 alfresco-search:
   searchServicesImage:
     tag: 2.0.2.2
-alfresco-elasticsearch-connector:
+alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
