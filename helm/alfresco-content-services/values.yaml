@@ -651,7 +651,8 @@ alfresco-search:
     #      - chart-example.local
 alfresco-search-enterprise:
   enabled: false
-  messageBroker: *acs_messageBroker
+  messageBroker:
+    existingSecretName: acs-alfresco-cs-brokersecret
   reindexing:
     enabled: true
     postgresql:
@@ -826,13 +827,6 @@ postgresql-syncservice:
     limits:
       cpu: "4"
       memory: "1500Mi"
-# -- Embedded ElasticSearch cluster powered by Bitnami charts
-elasticsearch:
-  # -- Enable the embedded ElasticSearch cluster
-  enabled: false
-  image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
-  replicas: 1
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 s3connector:
   # -- Enable the S3 Connector
   # For a full list of properties on the S3 connector see:
