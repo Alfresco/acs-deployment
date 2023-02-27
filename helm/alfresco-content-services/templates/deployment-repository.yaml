@@ -75,7 +75,7 @@ spec:
             {{- end }}
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
-          {{- if eq .Values.global.tracking.auth "secret" }}
+          {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
           - name: repository-properties
             mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
             subPath: alfresco-global.properties
@@ -190,7 +190,7 @@ spec:
       {{- end }}
       volumes:
       {{- include "data_volume" .Values.repository | nindent 8 }}
-      {{- if eq .Values.global.tracking.auth "secret" }}
+      {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
         - name: repository-properties
           secret:
             secretName: {{ template "alfresco.shortname" . }}-repository-properties-secret
