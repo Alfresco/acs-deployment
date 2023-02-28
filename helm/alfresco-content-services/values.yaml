@@ -650,6 +650,22 @@ alfresco-search:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+database:
+  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
+  external: false
+  # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
+  driver:
+  # -- External Postgresql database user
+  user:
+  # -- External Postgresql database password
+  password:
+  # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
+  url:
+  # -- Name of the secret managed by this chart
+  secretName: &acs_database_secretName acs-alfresco-cs-dbsecret
+  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+  # When using embedded postgres you need to also set `postgresql.existingSecret`.
+  existingSecretName:
 alfresco-search-enterprise:
   enabled: false
   messageBroker:
@@ -660,6 +676,7 @@ alfresco-search-enterprise:
       url:
       hostname: postgresql-acs
       database: alfresco
+      existingSecretName: *acs_database_secretName
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -745,20 +762,6 @@ alfresco-admin-app:
 # -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
 ooi:
   enabled: false
-database:
-  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
-  external: false
-  # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
-  driver:
-  # -- External Postgresql database user
-  user:
-  # -- External Postgresql database password
-  password:
-  # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
-  url:
-  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
-  # When using embedded postgres you need to also set `postgresql.existingSecret`.
-  existingSecretName:
 postgresql:
   # -- Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart
   enabled: true
