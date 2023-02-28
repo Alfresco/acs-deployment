@@ -23,7 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
+| alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","tracking":{"auth":"secret","sharedsecret":null}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |

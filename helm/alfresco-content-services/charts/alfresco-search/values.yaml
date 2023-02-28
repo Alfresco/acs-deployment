@@ -75,8 +75,7 @@ persistence:
   EbsPvConfiguration:
     fsType: ext4
 alfresco-insight-zeppelin:
-  insightzeppelin:
-    enabled: false
+  enabled: false
 readinessProbe:
   initialDelaySeconds: 60
   periodSeconds: 20
