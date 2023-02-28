@@ -47,7 +47,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` | Define the alfresco-search properties to use in the k8s cluster This is the search provider used by alfresco-content-repository |
-| persistence | object | `{"EbsPvConfiguration":{"fsType":"ext4"},"VolumeSizeRequest":"10Gi","chownWithDynamicProvisioning":false,"enabled":true,"search":{"data":{"mountPath":"/opt/alfresco-search-services/data","subPath":"alfresco-content-services/solr-data"}}}` | Defines the mounting points for the persistence required by the apps in the cluster the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data |
+| persistence | object | `{"EbsPvConfiguration":{"fsType":"ext4"},"VolumeSizeRequest":"10Gi","enabled":true,"search":{"data":{"mountPath":"/opt/alfresco-search-services/data","subPath":"alfresco-content-services/solr-data"}}}` | Defines the mounting points for the persistence required by the apps in the cluster the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data |
 | persistence.VolumeSizeRequest | string | `"10Gi"` | Only define if you have a specific claim already created existingClaim: "search-master-claim" |
 | podSecurityContext.fsGroup | int | `33007` |  |
 | podSecurityContext.runAsGroup | int | `33007` |  |
