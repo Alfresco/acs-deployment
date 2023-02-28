@@ -670,6 +670,9 @@ database:
   existingSecretName:
 alfresco-search-enterprise:
   enabled: false
+  elasticsearch:
+    # -- Enables the embedded elasticsearch cluster
+    enabled: true
   messageBroker:
     existingSecretName: *acs_messageBroker_secretName
   reindexing:
