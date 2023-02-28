@@ -617,6 +617,7 @@ messageBroker: &acs_messageBroker
   url: null
   user: null
   password: null
+  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
   existingSecretName: null
 alfresco-search:
   nodeSelector: {}
@@ -652,7 +653,7 @@ alfresco-search:
 alfresco-search-enterprise:
   enabled: false
   messageBroker:
-    existingSecretName: acs-alfresco-cs-brokersecret
+    existingSecretName: *acs_messageBroker_secretName
   reindexing:
     enabled: true
     postgresql:
