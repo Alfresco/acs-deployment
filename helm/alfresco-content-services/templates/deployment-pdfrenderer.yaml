@@ -58,7 +58,7 @@ spec:
               # config map to use, defined in config-pdfrenderer.yaml
               name: {{ template "content-services.shortname" . }}-pdfrenderer-configmap
           - secretRef:
-              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
+              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
