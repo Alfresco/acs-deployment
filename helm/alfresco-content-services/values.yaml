@@ -617,7 +617,9 @@ messageBroker: &acs_messageBroker
   url: null
   user: null
   password: null
+  # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 alfresco-search:
   nodeSelector: {}
