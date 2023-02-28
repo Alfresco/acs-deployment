@@ -1,10 +1,13 @@
 # alfresco-content-services
 
-![Version: 5.4.0-SNAPSHOT](https://img.shields.io/badge/Version-5.4.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 7.4.0-M2](https://img.shields.io/badge/AppVersion-7.4.0--M2-informational?style=flat-square)
+![Version: 5.4.0-SNAPSHOT](https://img.shields.io/badge/Version-5.4.0--SNAPSHOT-informational?style=flat-square)
+![AppVersion: 7.4.0-M2](https://img.shields.io/badge/AppVersion-7.4.0--M2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
+Please refer to the
+[documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md)
+for information on the Helm charts and deployment instructions.
 
 **Homepage:** <https://www.alfresco.com>
 
@@ -110,7 +113,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.url | string | `nil` |  |
-| alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
+| alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.port | int | `80` |  |
 | alfresco-search.enabled | bool | `true` |  |

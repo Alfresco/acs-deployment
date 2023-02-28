@@ -637,8 +637,7 @@ alfresco-search:
     host: alfresco-cs
     port: *repositoryExternalPort
   alfresco-insight-zeppelin:
-    insightzeppelin:
-      enabled: false
+    enabled: false
     repository: *repositoryHostPort
   ingress:
     # -- Alfresco Search services endpoint ('/solr')
