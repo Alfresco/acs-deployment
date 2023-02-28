@@ -12,3 +12,5 @@ metadata:
 data:
   REPO_HOST: "{{ template "alfresco-repo-host" . }}"
   REPO_PORT: "{{ .Values.repository.port }}"
+  ZEPPELIN_MEM: -Xms512m -Xmx1024m
+  ZEPPELIN_INTP_MEM: -Xms512m -Xmx1024m
