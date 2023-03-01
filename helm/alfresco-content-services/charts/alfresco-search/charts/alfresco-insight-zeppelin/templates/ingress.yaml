@@ -1,4 +1,3 @@
-{{- if .Values.insightzeppelin.enabled }}
 {{- $serviceName :=  (include "alfresco-insight-zeppelin.fullName" .) -}}
 {{- $servicePort := .Values.service.externalPort -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
@@ -16,4 +15,3 @@ spec:
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
-{{- end }}

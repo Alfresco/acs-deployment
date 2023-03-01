@@ -1,5 +1,5 @@
+---
 # Defines the deployment for the Alfresco Insight Zeppelin App
-{{- if .Values.insightzeppelin.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -56,4 +56,3 @@ spec:
               port: {{ .Values.image.internalPort }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-{{- end }}

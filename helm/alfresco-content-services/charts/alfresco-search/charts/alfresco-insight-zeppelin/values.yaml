@@ -6,8 +6,6 @@
 # This is chart will be installed as part of Alfresco Insight Engine
 replicaCount: 1
 nodeSelector: {}
-insightzeppelin:
-  enabled: false
 image:
   repository: quay.io/alfresco/insight-zeppelin
   tag: 2.0.6
