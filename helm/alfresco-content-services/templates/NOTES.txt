@@ -5,6 +5,25 @@
 {{ $alfport := tpl (.Values.externalPort | default .Values.repository.service.externalPort | toString ) $ }}
 {{ $alfurl := printf "%s://%s:%s" $alfprotocol $alfhost $alfport }}
 
+                 _,,,,_
+              .@B@@@@@@EW_
+       _;@BBB@m,`T@@@@@@@@W UUh-_
+     _0@@@@@@BBBBm`0@@@BBBB ]LLLLU
+     B@@@@@@@BBBBBW @0BBBBB ]LLLLLL
+    !R""""P0N0BBBBB @BBBBB",LLLLLLL
+   _;@BBBBBWw`TBBBB @BBBM_+L"`^^^`` _
+  #@@@0BBBBBBBW_TB0 @B^_=^^``````- {@b
+ [@@@@@@B0BBBBBBW_T " ="=====-``_;B@@@b
+ 0@@@@@BM"",,,,,,,_   +pppppp@@N@@@@@@E
+ '@@@P_mBNNNNNNBN",@ Ew`TNNNNNNB@@@@@@"
+  `0"/BNNNNNNBP`,0N@ 0B@p_TBNNNNNN@@R`
+     BBBBBBBE`,BNNN@ 0NNB@b,`"MMM^"
+    !@@@@@@@ ANNNNB@ 0NNNNN@@@BBBN@L
+     T@@@@@E NNNNNN@L'BNNNNb@@@@@@P
+      '0@@@@ 0NNBN@@@p_TBNBN@@@@B"
+         `""  0@@@@@@@@b,_`"""`
+               `T0@@@@BP`
+
 You can access all components of Alfresco Content Services using the same root address, but different paths as follows:
 
   Content: {{ $alfurl }}/alfresco
@@ -12,10 +31,10 @@ You can access all components of Alfresco Content Services using the same root a
   API-Explorer: {{ $alfurl }}/api-explorer
 {{ if eq .Values.repository.edition "Enterprise" }}  Alfresco Digital Workspace: {{ $alfurl }}/workspace/ {{ end }}
 {{ if index .Values "alfresco-search" "ingress" "enabled" }}  Solr: {{ $alfurl }}/solr {{ end }}
-{{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "insightzeppelin") }}{{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "insightzeppelin" "enabled") }}  Zeppelin: {{ $alfurl }}/zeppelin {{ end }}{{ end }}
+{{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "enabled") }}  Zeppelin: {{ $alfurl }}/zeppelin {{ end }}
 {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
-  {{ $alfportdsync := tpl (.Values.externalPort | toString ) $ }}
-  {{ $alfurldsync := printf "%s://%s:%s" $alfprotocol $alfhost $alfportdsync }}
+  {{- $alfportdsync := tpl (.Values.externalPort | toString ) $ }}
+  {{- $alfurldsync := printf "%s://%s:%s" $alfprotocol $alfhost $alfportdsync }}
   Sync service: {{ $alfurldsync }}/syncservice/healthcheck
 {{ end }}
 {{ else }}

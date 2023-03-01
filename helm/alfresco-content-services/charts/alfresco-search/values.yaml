@@ -62,9 +62,6 @@ resources:
 # the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
 persistence:
   enabled: true
-  #chown doesn't work with dynamic provisioning so far
-  #issue on github: https://github.com/kubernetes-sigs/aws-efs-csi-driver/issues/300
-  chownWithDynamicProvisioning: false
   # -- Only define if you have a specific claim already created
   # existingClaim: "search-master-claim"
   VolumeSizeRequest: 10Gi
@@ -75,8 +72,7 @@ persistence:
   EbsPvConfiguration:
     fsType: ext4
 alfresco-insight-zeppelin:
-  insightzeppelin:
-    enabled: false
+  enabled: false
 readinessProbe:
   initialDelaySeconds: 60
   periodSeconds: 20

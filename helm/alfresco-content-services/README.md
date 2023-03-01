@@ -110,7 +110,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.url | string | `nil` |  |
-| alfresco-search.alfresco-insight-zeppelin.insightzeppelin.enabled | bool | `false` |  |
+| alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.alfresco-insight-zeppelin.repository.port | int | `80` |  |
 | alfresco-search.enabled | bool | `true` |  |
@@ -355,11 +355,26 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | transformrouter.service.name | string | `"transform-router"` |  |
 | transformrouter.service.type | string | `"ClusterIP"` |  |
 
-ACS will be created in a k8s cluster with a minimum of 16GB memory to split among below nodes:
-2 x repository, 1 x share, 1 x transformers (pdfrenderer, imagemagick, libreoffice, tika, misc) and 1 x postgresql
+Alfresco Content Service will be deployed in a Kubernetes cluster. This cluster
+needs a at least 32GB memory to split among below pods:
 
-Limit container memory and assign X percentage to JVM.  There are couple of ways to allocate JVM Memory for ACS Containers
-For example: 'JAVA_OPTS: "$JAVA_OPTS -XX:+PrintFlagsFinal -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"'
-But, as per Oracle docs (https://docs.oracle.com/javase/9/gctuning/parallel-collector1.htm#JSGCT-GUID-CAB83393-3438-44ED-98F0-D15641B43C7D)
-If container memory is not explicitly set, then the above flags will default max heap to 1/4th of container's memory which may not be ideal.
-Hence, setting up explicit Container memory and then assigning a percentage of it to the JVM for performance tuning.
+* 2 x repository
+* 1 x share
+* 1 x search
+* 2 x pdfrenderer
+* 2 x imagemagick
+* 2 libreoffice
+* 2 tika
+* 2 misc
+* 1 x postgresql
+* 1 activemq
+
+> Note: this is the default settings but requirements can be lowered by
+dropping the `replicaCount` value to 1 for each service.
+
+Default CPU and memory requirements for each pods are set as low as e think is
+reasonable. If you need to teak the resource allocation you can use the
+`resources.limits.cpu` & `resources.limits.memory` for each component of the
+platform. Remember that most of them are running in JAVA VM so you might want
+to also raise the JVM memory settings (-Xmx) which is possible using pods'
+environment variables.

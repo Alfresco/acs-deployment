@@ -28,7 +28,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |
 | image.tag | string | `"2.0.6"` |  |
 | ingress.path | string | `"/zeppelin"` |  |
-| insightzeppelin.enabled | bool | `false` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
