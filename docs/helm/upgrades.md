@@ -5,7 +5,26 @@ Our helm charts are continuously improved and sometimes arise the need to introd
 To get an overview of the changes in each release, first take a look at the
 release notes that are available via [GitHub Releases](https://github.com/Alfresco/acs-deployment/releases).
 
-Here follows a more detailed explaination of any breaking change grouped by version in which they have been released.
+Here follows a more detailed explanation of any breaking change grouped by version in which they have been released.
+
+## unreleased
+
+### Search Enterprise chart rename
+
+The previous `alfresco-elasticsearch-connector` subchart has been renamed to
+`alfresco-search-enterprise` to better reflect the product name during the
+migration to the new
+[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts)
+repository.
+
+Accordingly to this chart rename, also the related values has been moved from
+`.Values.alfresco-elasticsearch-connector` to
+`.Values.alfresco-search-enterprise`.
+
+The elasticsearch dependency (from elastic.co) has been moved from the main
+chart to the new alfresco-search-enterprise, thus the Values has been moved
+from `.Values.elasticsearch` to
+`.Values.alfresco-search-enterprise.elasticsearch`
 
 ## 5.4.0-M2
 

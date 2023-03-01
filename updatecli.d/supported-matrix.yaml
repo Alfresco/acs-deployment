@@ -40,7 +40,7 @@ matrix:
         docker-compose/elasticsearch-override-docker-compose.yml
       compose_key: services.search.image
       helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-elasticsearch-connector/values.yaml
+        helm/alfresco-content-services/charts/alfresco-search-enterprise/values.yaml
       helm_keys:
         Reindexing: reindexing.image.tag
         Liveindexing:
@@ -94,16 +94,16 @@ matrix:
       version: "3.2"
       helm_target: *helmvalues73
       helm_keys:
-        Reindexing: alfresco-elasticsearch-connector.reindexing.image.tag
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
-            alfresco-elasticsearch-connector.liveIndexing.mediation.image.tag
+            alfresco-search-enterprise.liveIndexing.mediation.image.tag
           Content: >-
-            alfresco-elasticsearch-connector.liveIndexing.content.image.tag
+            alfresco-search-enterprise.liveIndexing.content.image.tag
           Metadata: >-
-            alfresco-elasticsearch-connector.liveIndexing.metadata.image.tag
+            alfresco-search-enterprise.liveIndexing.metadata.image.tag
           Path: >-
-            alfresco-elasticsearch-connector.liveIndexing.path.image.tag
+            alfresco-search-enterprise.liveIndexing.path.image.tag
       pattern: *ga_hotfixes_pattern
     sync:
       version: "3.8"
@@ -149,16 +149,16 @@ matrix:
       version: "3.1"
       helm_target: *helmvalues72
       helm_keys:
-        Reindexing: alfresco-elasticsearch-connector.reindexing.image.tag
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
-            alfresco-elasticsearch-connector.liveIndexing.mediation.image.tag
+            alfresco-search-enterprise.liveIndexing.mediation.image.tag
           Content: >-
-            alfresco-elasticsearch-connector.liveIndexing.content.image.tag
+            alfresco-search-enterprise.liveIndexing.content.image.tag
           Metadata: >-
-            alfresco-elasticsearch-connector.liveIndexing.metadata.image.tag
+            alfresco-search-enterprise.liveIndexing.metadata.image.tag
           Path: >-
-            alfresco-elasticsearch-connector.liveIndexing.path.image.tag
+            alfresco-search-enterprise.liveIndexing.path.image.tag
       pattern: *ga_hotfixes_pattern
     sync:
       version: "3.7"
@@ -204,16 +204,16 @@ matrix:
       version: "3.1"
       helm_target: *helmvalues71
       helm_keys:
-        Reindexing: alfresco-elasticsearch-connector.reindexing.image.tag
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
-            alfresco-elasticsearch-connector.liveIndexing.mediation.image.tag
+            alfresco-search-enterprise.liveIndexing.mediation.image.tag
           Content: >-
-            alfresco-elasticsearch-connector.liveIndexing.content.image.tag
+            alfresco-search-enterprise.liveIndexing.content.image.tag
           Metadata: >-
-            alfresco-elasticsearch-connector.liveIndexing.metadata.image.tag
+            alfresco-search-enterprise.liveIndexing.metadata.image.tag
           Path: >-
-            alfresco-elasticsearch-connector.liveIndexing.path.image.tag
+            alfresco-search-enterprise.liveIndexing.path.image.tag
       pattern: *ga_hotfixes_pattern
     sync:
       version: "3.7"

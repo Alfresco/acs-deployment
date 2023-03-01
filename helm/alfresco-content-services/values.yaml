@@ -617,6 +617,9 @@ messageBroker: &acs_messageBroker
   url: null
   user: null
   password: null
+  # -- Name of the secret managed by this chart
+  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 alfresco-search:
   nodeSelector: {}
@@ -649,22 +652,36 @@ alfresco-search:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-alfresco-elasticsearch-connector:
+database:
+  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
+  external: false
+  # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
+  driver:
+  # -- External Postgresql database user
+  user:
+  # -- External Postgresql database password
+  password:
+  # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
+  url:
+  # -- Name of the secret managed by this chart
+  secretName: &acs_database_secretName acs-alfresco-cs-dbsecret
+  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+  # When using embedded postgres you need to also set `postgresql.existingSecret`.
+  existingSecretName:
+alfresco-search-enterprise:
   enabled: false
-  messageBroker: *acs_messageBroker
+  elasticsearch:
+    # -- Enables the embedded elasticsearch cluster
+    enabled: true
+  messageBroker:
+    existingSecretName: *acs_messageBroker_secretName
   reindexing:
     enabled: true
     postgresql:
       url:
       hostname: postgresql-acs
       database: alfresco
-  # -- Overrides .Values.global.elasticsearch
-  elasticsearch:
-    host: null
-    port: null
-    protocol: null
-    user: null
-    password: null
+      existingSecretName: *acs_database_secretName
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -750,20 +767,6 @@ alfresco-admin-app:
 # -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
 ooi:
   enabled: false
-database:
-  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
-  external: false
-  # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
-  driver:
-  # -- External Postgresql database user
-  user:
-  # -- External Postgresql database password
-  password:
-  # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
-  url:
-  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
-  # When using embedded postgres you need to also set `postgresql.existingSecret`.
-  existingSecretName:
 postgresql:
   # -- Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart
   enabled: true
@@ -833,13 +836,6 @@ postgresql-syncservice:
     limits:
       cpu: "4"
       memory: "1500Mi"
-# -- Embedded ElasticSearch cluster powered by Bitnami charts
-elasticsearch:
-  # -- Enable the embedded ElasticSearch cluster
-  enabled: false
-  image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
-  replicas: 1
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 s3connector:
   # -- Enable the S3 Connector
   # For a full list of properties on the S3 connector see:
@@ -987,7 +983,7 @@ global:
     #   s3Bucket:
     #   comprehendRoleARN:
   # -- Shared connections details for Elasticsearch/Opensearch, required when
-  # alfresco-elasticsearch-connector.enabled is true
+  # alfresco-search-enterprise.enabled is true
   elasticsearch:
     # -- The host where service is available. The provided default is for when
     # elasticsearch.enabled is true

@@ -20,7 +20,7 @@ tests:
           path: spec.template.spec.containers[0].envFrom
           content:
             secretRef:
-              name: RELEASE-NAME-alfresco-cs-brokersecret
+              name: acs-alfresco-cs-brokersecret
         template: deployment-repository.yaml
       - equal:
           path: data.BROKER_URL

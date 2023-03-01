@@ -1,4 +1,5 @@
 ---
+# General rule here is to skip charts dependencies for checkov analysis
 alfresco-search:
   alfresco-insight-zeppelin:
     insightzeppelin:
@@ -6,9 +7,10 @@ alfresco-search:
 global:
   tracking:
     sharedsecret: dummy
-alfresco-elasticsearch-connector:
+alfresco-search-enterprise:
   enabled: true
-# Do not render dependency charts for static analysis
+  elasticsearch:
+    enabled: false
 alfresco-digital-workspace:
   enabled: false
 alfresco-admin-app:

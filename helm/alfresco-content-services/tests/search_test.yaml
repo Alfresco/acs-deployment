@@ -44,7 +44,7 @@ tests:
     set:
       alfresco-search:
         enabled: false
-      alfresco-elasticsearch-connector:
+      alfresco-search-enterprise:
         enabled: true
         elasticsearch:
           host: some.opensearch.endpoint

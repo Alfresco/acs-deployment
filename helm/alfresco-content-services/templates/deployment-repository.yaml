@@ -46,7 +46,7 @@ spec:
           {{- include "component-security-context" .Values.repository | indent 8 }}
           envFrom:
           - secretRef:
-              name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.postgresql.existingSecretName }}
+              name: {{ .Values.database.existingSecretName | default .Values.database.secretName  }}
           {{- if .Values.s3connector.enabled }}
           - secretRef:
               name: {{ default (printf "%s-s3secret" (include "content-services.shortname" .)) .Values.s3connector.existingSecretName }}
@@ -58,7 +58,7 @@ spec:
           - secretRef:
               name: {{ template "content-services.shortname" . }}-metadata-keystore-secret
           - secretRef:
-              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
+              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
           - secretRef:
               name: {{ default (printf "%s-repository-secret" (include "content-services.shortname" .)) .Values.repository.existingSecretName }}
           - configMapRef:
@@ -75,7 +75,7 @@ spec:
             {{- end }}
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
-          {{- if eq .Values.global.tracking.auth "secret" }}
+          {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
           - name: repository-properties
             mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
             subPath: alfresco-global.properties
@@ -190,7 +190,7 @@ spec:
       {{- end }}
       volumes:
       {{- include "data_volume" .Values.repository | nindent 8 }}
-      {{- if eq .Values.global.tracking.auth "secret" }}
+      {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
         - name: repository-properties
           secret:
             secretName: {{ template "alfresco.shortname" . }}-repository-properties-secret
