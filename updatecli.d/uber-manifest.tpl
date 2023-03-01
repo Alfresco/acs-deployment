@@ -231,6 +231,7 @@ targets:
       key: >-
         {{ index . "search-enterprise" "compose_key" }}
   {{- end }}
+  {{- if index . "search-enterprise" "helm_target" }}
   {{- $target_searchEnt := index . "search-enterprise" "helm_target" }}
   searchEnterpriseReindexingValues:
     name: Search Enterprise image tag
@@ -249,6 +250,7 @@ targets:
     spec:
       file: {{ $target_searchEnt }}
       key: {{ $value }}
+  {{- end }}
   {{- end }}
   {{- end }}
   shareCompose:
