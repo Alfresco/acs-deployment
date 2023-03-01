@@ -39,15 +39,6 @@ matrix:
       compose_target: >-
         docker-compose/elasticsearch-override-docker-compose.yml
       compose_key: services.search.image
-      helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-search-enterprise/values.yaml
-      helm_keys:
-        Reindexing: reindexing.image.tag
-        Liveindexing:
-          Mediation: liveIndexing.mediation.image.tag
-          Content: liveIndexing.content.image.tag
-          Metadata: liveIndexing.metadata.image.tag
-          Path: liveIndexing.path.image.tag
       pattern: *development_pattern
     sync:
       version: "4"
