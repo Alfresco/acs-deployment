@@ -1,15 +1,16 @@
 ---
-suite: test deployment
+suite: test solr deployment
 templates:
   - deployment.yaml
+  - config.yaml
 tests:
   - it: should have basic metadata in place
     values: &testvalues
-      - ../../../../../tests/values/test_values.yaml
+      - ../../../tests/values/test_values.yaml
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-insight-zeppelin
+          value: RELEASE-NAME-alfresco-search-solr
         template: deployment.yaml
 
   - it: should render cpu and memory limits
@@ -19,8 +20,9 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "0.5"
-              memory: "512Mi"
+              cpu: "0.50"
+              memory: "1200Mi"
             limits:
-              cpu: "1"
-              memory: "1024Mi"
+              cpu: "4"
+              memory: "2000Mi"
+        template: deployment.yaml
