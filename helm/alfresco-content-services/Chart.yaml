@@ -18,7 +18,7 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: alfresco-common
-    version: 1.0.0
+    version: 2.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     version: 12.x.x
@@ -43,7 +43,7 @@ dependencies:
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 1.0.0
+    version: 1.0.1
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/
