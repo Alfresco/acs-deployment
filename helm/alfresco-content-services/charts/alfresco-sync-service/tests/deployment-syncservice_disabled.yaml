@@ -1,7 +1,10 @@
 ---
-suite: test solr deployment
+suite: test deployment
 templates:
-  - deployment.yaml
+  - deployment-syncservice.yaml
+  - config-syncservice.yaml
+  - secret-database.yaml
+  - ../../../templates/secret-repository.yaml
 tests:
   - it: should have basic metadata in place
     values: &testvalues
@@ -9,8 +12,8 @@ tests:
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-search-solr
-        template: deployment.yaml
+          value: RELEASE-NAME-alfresco-sync-service
+        template: deployment-syncservice.yaml
 
   - it: should render cpu and memory limits
     values: *testvalues
@@ -19,9 +22,9 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "0.50"
-              memory: "1200Mi"
+              cpu: "0.5"
+              memory: "800Mi"
             limits:
-              cpu: "4"
+              cpu: "2"
               memory: "2000Mi"
-        template: deployment.yaml
+        template: deployment-syncservice.yaml
