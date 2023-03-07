@@ -18,21 +18,53 @@ The Community configuration will deploy the following system:
 * You've read the [main Helm README](./README.md) page
 * You are proficient in AWS and Kubernetes
 
+Make sure to have installed:
+
+* [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
+* [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+* [helm](https://docs.aws.amazon.com/eks/latest/userguide/helm.html)
+
+To better troubleshoot any issue, you may want to install at least an UI application:
+
+* [lens](https://k8slens.dev/) (GUI)
+* [k9s](https://k9scli.io/) (CLI)
+
 ## Setup An EKS Cluster
 
-Follow the [AWS EKS Getting Started
-Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
-to create a cluster and prepare your local machine to connect to the cluster.
-Use the "Managed nodes - Linux" option and specify a `--node-type`. Most common
-choices are `m5.xlarge` and `t3.xlarge`.
+Set the default region you want to work on, to avoid having to add `--region` to
+every command:
 
-As we'll be using Helm to deploy the ACS chart follow the [Using Helm with EKS](https://docs.aws.amazon.com/eks/latest/userguide/helm.html) instructions to setup helm on your local machine.
+```sh
+export AWS_DEFAULT_REGION=eu-west-1
+```
 
-Optionally, to help troubleshoot issues with your cluster either follow the tutorial to [deploy the Kubernetes Dashboard](https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html) to your cluster or download and use the [Lens application](https://k8slens.dev) from your local machine.
+Set the cluster name in an environment variable that can be reused later:
+
+```sh
+EKS_CLUSTER_NAME=my-alfresco-eks
+```
+
+Create the cluster using a supported version (we are currently testing against
+1.24). Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
+
+```sh
+eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.24 --instance-types t3.xlarge
+```
+
+Enable the OIDC provider that is necessary to install further EKS addons later:
+
+```sh
+eksctl utils associate-iam-oidc-provider --cluster=$EKS_CLUSTER_NAME —approve
+```
+
+For further information please refer to the [Getting started with Amazon EKS –
+eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
+guide.
 
 ## Prepare The Cluster For ACS
 
-Now we have an EKS cluster up and running there are a few one time steps we need to perform to prepare the cluster for ACS to be installed.
+Now that we have an EKS cluster up and running, there are a few one time steps
+that we need to perform to prepare the cluster for ACS to be installed.
 
 ### DNS
 
@@ -128,7 +160,9 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
     ![Attach Policy](./diagrams/eks-attach-policy.png)
 
-### File System
+### Storage
+
+#### EFS
 
 1. Create an Elastic File System in the VPC created by EKS using [these steps](https://docs.aws.amazon.com/efs/latest/ug/creating-using-create-fs.html) ensuring a mount target is created in each subnet. Make a note of the File System ID (circled in the screenshot below).
 
@@ -176,6 +210,39 @@ Now we have an EKS cluster up and running there are a few one time steps we need
     ```
 
 > Note: the `storageClass` is set to `Retain` for obvious safety reasons. That however means kubernetes administrator need to take care of volume cleanup.
+
+#### EBS CSI
+
+> Since EKS 1.24 is mandatory to install EBS CSI Driver. Upgrading from 1.23 without it will break PVC.
+
+Set the aws account id in an environment variable that can be reused later:
+
+```sh
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+```
+
+Create the IAM Service Account with access to EBS that will be used by the driver:
+
+```sh
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster $EKS_CLUSTER_NAME \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name AmazonEKS_EBS_CSI_DriverRole
+```
+
+Enable the addon referencing the IAM role created previously:
+
+```sh
+eksctl create addon --name aws-ebs-csi-driver --cluster $EKS_CLUSTER_NAME --service-account-role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/AmazonEKS_EBS_CSI_DriverRole --force
+```
+
+At this point the provisioning of EBS volumes using the default GP2 storageClass will be handled by this driver.
+
+For further information please refer to the official [Amazon EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html) guide.
 
 ## Deploy
 
