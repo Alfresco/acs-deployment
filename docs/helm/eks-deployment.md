@@ -162,7 +162,7 @@ that we need to perform to prepare the cluster for ACS to be installed.
 
 ### Storage
 
-#### EFS
+#### EFS CSI Driver
 
 1. Create an Elastic File System in the VPC created by EKS using [these steps](https://docs.aws.amazon.com/efs/latest/ug/creating-using-create-fs.html) ensuring a mount target is created in each subnet. Make a note of the File System ID (circled in the screenshot below).
 
@@ -211,7 +211,7 @@ that we need to perform to prepare the cluster for ACS to be installed.
 
 > Note: the `storageClass` is set to `Retain` for obvious safety reasons. That however means kubernetes administrator need to take care of volume cleanup.
 
-#### EBS CSI
+#### EBS CSI Driver
 
 > Since EKS 1.24 is mandatory to install EBS CSI Driver. Upgrading from 1.23 without it will break PVC.
 
