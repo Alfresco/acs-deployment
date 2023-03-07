@@ -34,99 +34,134 @@ Optionally, to help troubleshoot issues with your cluster either follow the tuto
 
 Now we have an EKS cluster up and running there are a few one time steps we need to perform to prepare the cluster for ACS to be installed.
 
-### DNS
+### DNS & HTTPS
 
-1. Create a hosted zone in Route53 using [these steps](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html) if you don't already have one available.
+We are going to install [ExternalDns](https://github.com/kubernetes-sigs/external-dns) so that a DNS record will be automatically managed during the installation of ACS.
 
-2. Create a public certificate for the hosted zone created in step 1 in Certificate Manager using [these steps](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html) if you don't have one already available and make a note of the certificate ARN for use later.
+[Create a hosted zone in Route53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html)
+for a domain you own, if you don't already have one available.
 
-3. Create a file called `external-dns.yaml` with the text below (replacing `YOUR-DOMAIN-NAME` with the domain name you created in step 1). This manifest defines a service account and a cluster role for managing DNS.
+Set the zone name in an environment variable that can be reused later:
 
-    ```yaml
-    apiVersion: v1
-    kind: ServiceAccount
+```sh
+EKS_ZONE_NAME=yourcompany.tld
+```
+
+[Create a public
+certificate](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html)
+in Certificate Manager for a domain inside the same hosted zone created in the
+previous step (e.g. `alfresco.yourcompany.tld`).
+
+Set the domain name in an environment variable that can be reused later:
+
+```sh
+EKS_DOMAIN_NAME=alfresco.yourcompany.tld
+```
+
+Retrieve the certificate ARN and set it in an environment variable that can be reused later:
+
+```sh
+EKS_HTTPS_CERTIFICATE_ARN=$(aws acm list-certificates --query 'CertificateSummaryList[].[CertificateArn,DomainName]' --output text --region eu-west-1| grep $EKS_DOMAIN_NAME | cut -f1)
+```
+
+Now is necessary the give appropriate permission to node to manage Route53 records.
+Find the name of the nodegroup created by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
+
+```sh
+EKS_NODEGROUP_NAME=$(eksctl get nodegroup --cluster=$EKS_CLUSTER_NAME -o json | jq -r '.[].Name')
+```
+
+Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and `YOUR-NODE-GROUP` with the nodegroup from the step above):
+
+```bash
+EKS_NODEGROUP_ROLE=$(aws eks describe-nodegroup --cluster-name $EKS_CLUSTER_NAME --nodegroup-name $EKS_NODEGROUP_NAME --query "nodegroup.nodeRole" --output text | cut -f2 -d '/')
+```
+
+Finally attach the policy:
+
+```bash
+aws iam attach-role-policy \
+--policy-arn arn:aws:iam::aws:policy/AmazonRoute53FullAccess \
+--role-name $EKS_NODEGROUP_ROLE
+```
+
+Create a resources manifest file that defines a service account and a cluster
+role for managing DNS:
+
+```sh
+cat > external-dns.yml <<EOT
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-dns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: external-dns
+rules:
+  - apiGroups: [""]
+    resources: ["services", "endpoints", "pods"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["extensions"]
+    resources: ["ingresses"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: external-dns-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns
+subjects:
+  - kind: ServiceAccount
+    name: external-dns
+    namespace: kube-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
     metadata:
-      name: external-dns
-    ---
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRole
-    metadata:
-      name: external-dns
-    rules:
-    - apiGroups: [""]
-      resources: ["services","endpoints","pods"]
-      verbs: ["get","watch","list"]
-    - apiGroups: ["extensions"]
-      resources: ["ingresses"]
-      verbs: ["get","watch","list"]
-    - apiGroups: [""]
-      resources: ["nodes"]
-      verbs: ["list","watch"]
-    ---
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRoleBinding
-    metadata:
-      name: external-dns-viewer
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: ClusterRole
-      name: external-dns
-    subjects:
-    - kind: ServiceAccount
-      name: external-dns
-      namespace: kube-system
-    ---
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: external-dns
+      labels:
+        app: external-dns
     spec:
-      strategy:
-        type: Recreate
-      selector:
-        matchLabels:
-          app: external-dns
-      template:
-        metadata:
-          labels:
-            app: external-dns
-        spec:
-          serviceAccountName: external-dns
-          containers:
-          - name: external-dns
-            image: registry.opensource.zalan.do/teapot/external-dns:latest
-            args:
+      serviceAccountName: external-dns
+      containers:
+        - name: external-dns
+          image: registry.opensource.zalan.do/teapot/external-dns:latest
+          args:
             - --source=service
-            - --domain-filter=YOUR-DOMAIN-NAME
+            - --domain-filter=$EKS_ZONE_NAME
             - --provider=aws
             - --policy=sync
             - --aws-zone-type=public
             - --registry=txt
             - --txt-owner-id=acs-deployment
             - --log-level=debug
-    ```
+EOT
+```
 
-4. Use the kubectl command to deploy the external-dns service.
+Apply it to install the external-dns service:
 
-   ```bash
-   kubectl apply -f external-dns.yaml -n kube-system
-   ```
+```sh
+kubectl apply -f external-dns.yaml -n kube-system
+```
 
-5. Find the name of the nodegroup created by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
 
-    ```bash
-    eksctl get nodegroup --cluster=`YOUR-CLUSTER-NAME` 
-    ```
-
-6. Find the name of the role used by the nodes by running the following command (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and `YOUR-NODE-GROUP` with the nodegroup from the step above):
-
-    ```bash
-    aws eks describe-nodegroup --cluster-name YOUR-CLUSTER-NAME --nodegroup-name YOUR-NODE-GROUP --query "nodegroup.nodeRole" --output text
-    ```
-
-7. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role discovered in the previous step and attach the "AmazonRoute53FullAccess" managed policy as shown in the screenshot below:
-
-    ![Attach Policy](./diagrams/eks-attach-policy.png)
+### Storage
 
 ### File System
 
