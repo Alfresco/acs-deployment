@@ -81,7 +81,7 @@ jobs:
           echo "app_version=$V" >> $GITHUB_OUTPUT
           echo "app_prefix=${SANITIZED_V}" >> $GITHUB_OUTPUT
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.35.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.36.0
         with:
           skip_checkout: 'true'
           test_newman: 'true'

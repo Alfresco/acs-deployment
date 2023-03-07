@@ -1,16 +1,17 @@
 ---
 suite: test deployment
 templates:
-  - deployment-syncservice.yaml
+  - deployment.yaml
+  - config.yaml
 tests:
   - it: should have basic metadata in place
     values: &testvalues
-      - ../../../tests/values/test_values.yaml
+      - ../../../../../tests/values/test_values.yaml
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-sync-service
-        template: deployment-syncservice.yaml
+          value: RELEASE-NAME-alfresco-insight-zeppelin
+        template: deployment.yaml
 
   - it: should render cpu and memory limits
     values: *testvalues
@@ -20,8 +21,7 @@ tests:
           value:
             requests:
               cpu: "0.5"
-              memory: "800Mi"
+              memory: "512Mi"
             limits:
-              cpu: "2"
-              memory: "2000Mi"
-        template: deployment-syncservice.yaml
+              cpu: "1"
+              memory: "1024Mi"
