@@ -111,8 +111,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.url | string | `nil` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
-| alfresco-search.alfresco-insight-zeppelin.repository.host | string | `"alfresco-cs"` |  |
-| alfresco-search.alfresco-insight-zeppelin.repository.port | int | `80` |  |
 | alfresco-search.enabled | bool | `true` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
 | alfresco-search.external.port | string | `nil` | Port of the external solr6 instance. |
@@ -120,8 +118,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.nodeSelector | object | `{}` |  |
-| alfresco-search.repository.host | string | `"alfresco-cs"` |  |
-| alfresco-search.repository.port | int | `80` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
 | alfresco-sync-service.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-sync-service.postgresql.auth.database | string | `"syncservice-postgresql"` |  |
