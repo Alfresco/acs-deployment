@@ -1,8 +1,12 @@
 # Alfresco Content Services Helm Deployment with AWS EKS
 
-This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
+This page describes how to deploy Alfresco Content Services (ACS) Enterprise or
+Community using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
 
-Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. EKS runs the Kubernetes management infrastructure for you across multiple AWS availability zones to eliminate a single point of failure.
+Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy,
+manage, and scale containerized applications using Kubernetes on AWS. EKS runs
+the Kubernetes management infrastructure for you across multiple AWS
+availability zones to eliminate a single point of failure.
 
 The Enterprise configuration will deploy the following system:
 
@@ -24,12 +28,17 @@ Make sure to have installed:
 * [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
 * [helm](https://docs.aws.amazon.com/eks/latest/userguide/helm.html)
 
-To better troubleshoot any issue, you may want to install at least an UI application:
+To better troubleshoot any issue, you may want to install applications such as:
 
 * [lens](https://k8slens.dev/) (GUI)
 * [k9s](https://k9scli.io/) (CLI)
 
 ## Setup An EKS Cluster
+
+There are multiple ways to setup an EKS cluster, but one of the most simple is
+by using `eksctl`. This section will guide you in creating a new EKS cluster
+that satisfy the minimum requirements to have a basic ACS installation up and
+running.
 
 Set the default region you want to work on, to avoid having to add `--region` to
 every command:
@@ -162,6 +171,23 @@ that we need to perform to prepare the cluster for ACS to be installed.
 
 ### Storage
 
+There are multiple storage options available when deploying on AWS.
+
+For the main [content-store](https://docs.alfresco.com/content-services/latest/admin/content-stores/), you can alternatively:
+
+* Use an Elastic File System, installing the ([EFS CSI driver](#efs-csi-driver))
+* Use a bucket on [S3](examples/with-aws-services.md#s3)
+
+For the [database](https://docs.alfresco.com/content-services/latest/config/databases/), you can alternatively:
+
+* Enable [EBS CSI driver](#ebs-csi-driver) and use the embedded postgres provided by the helm chart by default
+* Use [RDS](examples/with-aws-services.md#rds)
+
+For the [messaging broker](https://docs.alfresco.com/content-services/latest/config/activemq/), you can alternatively:
+
+* Enable [EBS CSI driver](#ebs-csi-driver) and use the embedded activemq provided by the helm chart by default
+* Use [Amazon MQ](examples/with-aws-services.md#amazon-mq)
+
 #### EFS CSI Driver
 
 1. Create an Elastic File System in the VPC created by EKS using [these steps](https://docs.aws.amazon.com/efs/latest/ug/creating-using-create-fs.html) ensuring a mount target is created in each subnet. Make a note of the File System ID (circled in the screenshot below).
@@ -213,7 +239,9 @@ that we need to perform to prepare the cluster for ACS to be installed.
 
 #### EBS CSI Driver
 
-> Since EKS 1.24 is mandatory to install EBS CSI Driver. Upgrading from 1.23 without it will break PVC.
+> Since EKS 1.24 it is mandatory to install EBS CSI Driver for the dynamic
+> provisioning via the default `gp2` storage class. Upgrading from 1.23 without
+> it will break any existing PVC.
 
 Set the aws account id in an environment variable that can be reused later:
 
