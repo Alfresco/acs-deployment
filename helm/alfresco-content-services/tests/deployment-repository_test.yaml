@@ -158,7 +158,7 @@ tests:
             mountPath: >-
               /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
-          template: deployment-repository.yaml
+        template: deployment-repository.yaml
 
   - it: should have a volume and a volumeMount for alfresco-global.properties
     values: *testvalues
@@ -180,7 +180,7 @@ tests:
             name: repository-properties
             mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
             subPath: alfresco-global.properties
-          template: deployment-repository.yaml
+        template: deployment-repository.yaml
 
   - it: should render cpu and memory limits
     values: *testvalues
