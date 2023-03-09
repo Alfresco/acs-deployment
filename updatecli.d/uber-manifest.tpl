@@ -44,7 +44,7 @@ sources:
     name: Alfresco admin application tag
     kind: dockerimage
     spec:
-      image: quay.io/alfresco/alfresco-admin-app
+      image: quay.io/alfresco/alfresco-control-center
       {{ template "quay_auth" }}
       versionFilter:
         kind: regex

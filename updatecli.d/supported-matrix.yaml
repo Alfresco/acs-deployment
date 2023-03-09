@@ -116,7 +116,7 @@ matrix:
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
     adminApp:
-      version: "7.6"
+      version: "7"
       compose_target: *compose73
       compose_key: services.control-center.image
       helm_target: *helmvalues73
@@ -176,7 +176,7 @@ matrix:
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
     adminApp:
-      version: "7.6"
+      version: "7"
       compose_target: *compose72
       compose_key: services.control-center.image
       helm_target: *helmvalues72
