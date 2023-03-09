@@ -1,0 +1,6 @@
+alfresco-search:
+  enabled: false
+alfresco-search-enterprise:
+  enabled: true
+  elasticsearch:
+    enabled: true
