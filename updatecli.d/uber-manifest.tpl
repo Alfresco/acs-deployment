@@ -127,6 +127,18 @@ sources:
         pattern: >-
           ^{{ index . "sync" "version" }}{{ index . "sync" "pattern" }}$
   {{- end }}
+  {{- if index . "onedrive" }}
+  onedriveTag:
+    name: Onedrive (OOI) Service image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-ooi-service
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "onedrive" "version" }}{{ index . "onedrive" "pattern" }}$
+  {{- end }}
 
 
 
@@ -273,6 +285,17 @@ targets:
       file: {{ .share.helm_target }}
       key: >-
         {{ .share.helm_key }}
+  {{- if index . "onedrive" }}
+  onedriveValues:
+    name: Onedrive image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: onedriveTag
+    spec:
+      file: {{ .onedrive.helm_target }}
+      key: >-
+        {{ .onedrive.helm_key }}
+  {{- end }}
   {{- if index . "sync" }}
   syncCompose:
     name: Sync image tag
