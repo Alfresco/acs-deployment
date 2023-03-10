@@ -149,7 +149,7 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
 2. Deploy the specific version of ACS by running the following command:
 
-   ```bash
+```bash
 helm install acs alfresco/alfresco-content-services \
 --values=MAJOR.MINOR.N_values.yaml \
 --set externalPort="80" \
@@ -176,7 +176,7 @@ helm install acs alfresco/alfresco-content-services \
 --atomic \
 --timeout 10m0s \
 --namespace alfresco
-   ```
+```
 
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
