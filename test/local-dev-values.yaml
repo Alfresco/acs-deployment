@@ -1,0 +1,114 @@
+---
+repository:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "1024Mi"
+    limits:
+      cpu: "1"
+      memory: "1560Mi"
+  edition: Enterprise
+  replicaCount: 1
+  persistence:
+    accessModes:
+      - ReadWriteOnce
+  image:
+    repository: quay.io/alfresco/alfresco-content-repository
+share:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "1500Mi"
+    limits:
+      cpu: "1"
+      memory: "1500Mi"
+  replicaCount: 1
+  image:
+    repository: quay.io/alfresco/alfresco-share
+pdfrenderer:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+  replicaCount: 1
+imagemagick:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+  replicaCount: 1
+libreoffice:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1024Mi"
+  replicaCount: 1
+tika:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+  replicaCount: 1
+transformmisc:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+  replicaCount: 1
+alfresco-search:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1024Mi"
+  searchServicesImage:
+    repository: quay.io/alfresco/search-services
+alfresco-digital-workspace:
+  enabled: true
+alfresco-sync-service:
+  syncservice:
+    enabled: true
+postgresql:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "500Mi"
+    limits:
+      cpu: "1"
+      memory: "500Mi"
+postgresql-syncservice:
+  enabled: true
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "500Mi"
+    limits:
+      cpu: "1"
+      memory: "500Mi"
+  replicaCount: 1
+transformrouter:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+  replicaCount: 1
