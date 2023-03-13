@@ -196,7 +196,7 @@ tests:
               memory: "3000Mi"
         template: deployment-repository.yaml
 
-  - it: should have wait-db-ready initcontainer with external database
+  - it: should have wait-db-ready initcontainer with in-cluster db
     values: *testvalues
     set:
       database.external: false
