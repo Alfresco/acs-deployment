@@ -140,7 +140,7 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Search Enterprise deployment
 
-To install the Search Enterprise we need to use the [local-dev-values.yaml & enterprise-search-values.yaml ](../../docs/helm/values/). Once downloaded execute the command below to deploy.
+To install the Search Enterprise we need to use the [local-dev-values.yaml & enterprise-search-values.yaml](../../docs/helm/values/). Once downloaded execute the command below to deploy.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
