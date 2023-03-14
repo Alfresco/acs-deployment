@@ -127,11 +127,11 @@ and therefore requires a large amount of resources out-of-the-box. To reduce the
 size of the deployment so it can run on a single machine we'll need to reduce
 the number of pods deployed and the memory requirements for several others.
 
-To install the Enterprise on localhost we need to use the [local-dev-values.yaml](curl -LJO https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/values/local-dev-values.yaml). Once downloaded execute the command below to deploy.
+To install the Enterprise on localhost we need to use the [local-dev-values.yaml](curl -LJO https://github.com/Alfresco/acs-deployment/blob/OPSEXP-2013/docs/helm/values/local-dev-values.yaml). Once downloaded execute the command below to deploy.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --values= local-dev-values.yaml \
+  --values local-dev-values.yaml \
   --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
@@ -140,7 +140,7 @@ helm install acs alfresco/alfresco-content-services \
 
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
-The command above installs the latest version of ACS Enterprise. 
+The command above installs the latest version of ACS Enterprise.
 
 #### Enterprise deployment for Previous versions
 
