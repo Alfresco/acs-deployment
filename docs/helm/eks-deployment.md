@@ -176,16 +176,20 @@ There are multiple storage options available when deploying on AWS.
 For the main [content-store](https://docs.alfresco.com/content-services/latest/admin/content-stores/), you can alternatively:
 
 * Use an Elastic File System, installing the ([EFS CSI driver](#efs-csi-driver))
+  (the default we suggest, see `storageClass="nfs-client"` values in [helm
+  install section](#latest-enterprise-version))
+* Use an EBS block-storage, enabling [EBS CSI driver](#ebs-csi-driver) (not
+  possible with Enterprise in clustered mode)
 * Use a bucket on [S3](examples/with-aws-services.md#s3)
 
 For the [database](https://docs.alfresco.com/content-services/latest/config/databases/), you can alternatively:
 
-* Enable [EBS CSI driver](#ebs-csi-driver) and use the embedded postgres provided by the helm chart by default
+* Use the embedded postgres instance provided by the helm chart by default, enabling [EBS CSI driver](#ebs-csi-driver)
 * Use [RDS](examples/with-aws-services.md#rds)
 
 For the [messaging broker](https://docs.alfresco.com/content-services/latest/config/activemq/), you can alternatively:
 
-* Enable [EBS CSI driver](#ebs-csi-driver) and use the embedded activemq provided by the helm chart by default
+* Use the embedded activemq provided by the helm chart by default, enabling [EBS CSI driver](#ebs-csi-driver)
 * Use [Amazon MQ](examples/with-aws-services.md#amazon-mq)
 
 #### EFS CSI Driver
