@@ -127,11 +127,11 @@ and therefore requires a large amount of resources out-of-the-box. To reduce the
 size of the deployment so it can run on a single machine we'll need to reduce
 the number of pods deployed and the memory requirements for several others.
 
-Fortunately this can all be achieved with one, albeit large, command as shown below:
+To install the Enterprise on localhost we need to use the [local-dev-values.yaml](../../docs/helm/values/). Once downloaded execute the command below to deploy.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --values= ../../docs/helm/values/local-dev-values.yaml \
+  --values= local-dev-values.yaml \
   --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
@@ -140,10 +140,12 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Search Enterprise deployment
 
+To install the Search Enterprise we need to use the [local-dev-values.yaml & enterprise-search-values.yaml ](../../docs/helm/values/). Once downloaded execute the command below to deploy.
+
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --values= ../../docs/helm/values/local-dev-values.yaml \
-  --values ../../docs/helm/values/enterprise-search-values.yaml \
+  --values= local-dev-values.yaml \
+  --values= enterprise-search-values.yaml \
   --namespace alfresco
 ```
 
