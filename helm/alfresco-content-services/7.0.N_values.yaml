@@ -1,3 +1,4 @@
+---
 # ACS 7.0.N values
 repository:
   image:
@@ -42,9 +43,8 @@ postgresql-syncservice:
   image:
     tag: 13.1.0
 alfresco-sync-service:
-  syncservice:
-    image:
-      tag: 3.7.2
+  image:
+    tag: 3.7.2
 global:
   tracking:
     auth: none

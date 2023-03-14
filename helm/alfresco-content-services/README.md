@@ -17,12 +17,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 |  | alfresco-search | 1.2.0-SNAPSHOT |
-|  | alfresco-sync-service | 3.2.0-SNAPSHOT |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.0.0 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 10.16.2 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql-syncservice(postgresql) | 10.16.2 |
 
@@ -33,6 +33,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.adminUser.password | string | `"admin"` | Default password for the embedded broker admin user |
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
 | activemq.enabled | bool | `true` |  |
+| activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | aiTransformer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | aiTransformer.image.internalPort | int | `8090` |  |
@@ -123,15 +124,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.host | string | `"alfresco-cs"` |  |
 | alfresco-search.repository.port | int | `80` |  |
 | alfresco-search.type | string | `"search-services"` |  |
-| alfresco-sync-service.image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| alfresco-sync-service.image.tag | string | `"3.8.0"` |  |
-| alfresco-sync-service.messageBroker.existingSecretName | string | `nil` | Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
-| alfresco-sync-service.messageBroker.password | string | `nil` |  |
-| alfresco-sync-service.messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
-| alfresco-sync-service.messageBroker.url | string | `nil` |  |
-| alfresco-sync-service.messageBroker.user | string | `nil` |  |
-| alfresco-sync-service.nodeSelector | object | `{}` |  |
-| alfresco-sync-service.syncservice.enabled | bool | `true` |  |
+| alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) |
+| alfresco-sync-service.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-sync-service.postgresql.enabled | bool | `true` |  |
+| alfresco-sync-service.postgresql.image.primary.auth.database | string | `"syncservice-postgresql"` |  |
+| alfresco-sync-service.postgresql.image.resources.limits.cpu | string | `"4"` |  |
+| alfresco-sync-service.postgresql.image.resources.limits.memory | string | `"1500Mi"` |  |
+| alfresco-sync-service.postgresql.image.resources.requests.cpu | string | `"0.5"` |  |
+| alfresco-sync-service.postgresql.image.resources.requests.memory | string | `"1500Mi"` |  |
+| alfresco-sync-service.postgresql.image.tag | string | `"14.4.0"` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
 | database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
@@ -229,24 +230,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.service.name | string | `"ooi-service"` |  |
 | ooiService.service.type | string | `"ClusterIP"` |  |
 | pdfrenderer | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"3.0.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true,"runAsUser":33001},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"cpu":"2","memory":"1000Mi"},"requests":{"cpu":"0.25","memory":"300Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
-| postgresql-syncservice.commonAnnotations.application | string | `"alfresco-content-services"` |  |
-| postgresql-syncservice.enabled | bool | `true` | Enable embedded postgres for Alfresco Sync service leveraging the postgresql Bitnami chart |
-| postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql-syncservice.image.tag | string | `"14.4.0"` |  |
-| postgresql-syncservice.name | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
-| postgresql-syncservice.postgresqlExtendedConf.log_min_messages | string | `"LOG"` |  |
-| postgresql-syncservice.postgresqlExtendedConf.max_connections | int | `450` |  |
-| postgresql-syncservice.postgresqlPassword | string | `"admin"` |  |
-| postgresql-syncservice.postgresqlUsername | string | `"alfresco"` |  |
-| postgresql-syncservice.primary.nodeSelector | object | `{}` |  |
-| postgresql-syncservice.replicaCount | int | `1` |  |
-| postgresql-syncservice.resources.limits.cpu | string | `"4"` |  |
-| postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
-| postgresql-syncservice.resources.requests.cpu | string | `"0.5"` |  |
-| postgresql-syncservice.resources.requests.memory | string | `"1500Mi"` |  |
-| postgresql-syncservice.service.port | int | `5432` |  |
 | postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql.enabled | bool | `true` | Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart |
 | postgresql.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL passwords The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is different of postgres, postgresql-postgres-password which will override postgresqlPassword. The same secret must be set also as `database.existingSecretName` to provide the credentials to ACS. |

@@ -32,7 +32,7 @@ You can access all components of Alfresco Content Services using the same root a
 {{ if eq .Values.repository.edition "Enterprise" }}  Alfresco Digital Workspace: {{ $alfurl }}/workspace/ {{ end }}
 {{ if index .Values "alfresco-search" "ingress" "enabled" }}  Solr: {{ $alfurl }}/solr {{ end }}
 {{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "enabled") }}  Zeppelin: {{ $alfurl }}/zeppelin {{ end }}
-{{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
+{{- if index .Values "alfresco-sync-service" "enabled" }}
   {{- $alfportdsync := tpl (.Values.externalPort | toString ) $ }}
   {{- $alfurldsync := printf "%s://%s:%s" $alfprotocol $alfhost $alfportdsync }}
   Sync service: {{ $alfurldsync }}/syncservice/healthcheck

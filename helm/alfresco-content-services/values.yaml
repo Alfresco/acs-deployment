@@ -603,6 +603,7 @@ share:
   extraInitContainers: []
   command: []
 activemq:
+  nameOverride: activemq
   enabled: true
   # -- Possibility to choose Node for pod, with a key-value pair label
   # e.g {"kubernetes.io/hostname": multinode-demo-m02}
@@ -807,34 +808,6 @@ postgresql:
     limits:
       cpu: "4"
       memory: "1500Mi"
-postgresql-syncservice:
-  name: postgresql-syncservice
-  # -- Enable embedded postgres for Alfresco Sync service leveraging the postgresql Bitnami chart
-  enabled: true
-  replicaCount: 1
-  nameOverride: postgresql-syncservice
-  image:
-    tag: 14.4.0
-    pullPolicy: IfNotPresent
-  commonAnnotations:
-    application: alfresco-content-services
-  postgresqlUsername: alfresco
-  postgresqlPassword: admin
-  postgresqlDatabase: syncservice-postgresql
-  postgresqlExtendedConf:
-    max_connections: 450
-    log_min_messages: LOG
-  service:
-    port: 5432
-  primary:
-    nodeSelector: {}
-  resources:
-    requests:
-      cpu: "0.5"
-      memory: "1500Mi"
-    limits:
-      cpu: "4"
-      memory: "1500Mi"
 s3connector:
   # -- Enable the S3 Connector
   # For a full list of properties on the S3 connector see:
@@ -942,13 +915,24 @@ metadataKeystore:
   defaultKeystorePassword: "mp6yc0UD9e"
   defaultKeyPassword: "oKIWzVdEdA"
 alfresco-sync-service:
-  messageBroker: *acs_messageBroker
-  nodeSelector: {}
-  syncservice:
+  # -- Toggle deployment of Alfresco Sync Service (Desktop-Sync)
+  enabled: true
+  postgresql:
     enabled: true
-  image:
-    repository: quay.io/alfresco/service-sync
-    tag: 3.8.0
+    image:
+      tag: 14.4.0
+      primary:
+        auth:
+          database: syncservice-postgresql
+      resources:
+        requests:
+          cpu: "0.5"
+          memory: "1500Mi"
+        limits:
+          cpu: "4"
+          memory: "1500Mi"
+  messageBroker:
+    existingSecretName: *acs_messageBroker_secretName
 global:
   # A shared secret is now required in order to authenticate connections between
   # solr and repo (typically: tracking)

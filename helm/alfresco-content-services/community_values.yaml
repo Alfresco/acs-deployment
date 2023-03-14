@@ -1,3 +1,4 @@
+---
 # ACS Community values
 repository:
   edition: Community
@@ -31,8 +32,7 @@ alfresco-search:
 alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:
-  syncservice:
-    enabled: false
+  enabled: false
 postgresql-syncservice:
   enabled: false
 ai:

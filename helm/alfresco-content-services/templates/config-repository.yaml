@@ -109,7 +109,7 @@ data:
       -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
       -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
       {{- end }}
-      {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
+      {{- if index .Values "alfresco-sync-service" "enabled" }}
       -Ddsync.service.uris={{ $alfUrl }}/syncservice
       {{- else }}
       -Devents.subsystem.autoStart=false
