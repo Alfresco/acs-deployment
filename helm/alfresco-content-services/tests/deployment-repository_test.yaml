@@ -195,3 +195,59 @@ tests:
               cpu: "4"
               memory: "3000Mi"
         template: deployment-repository.yaml
+
+  - it: should have wait-db-ready initcontainer with in-cluster db
+    values: *testvalues
+    set:
+      database.external: false
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-db-ready
+        template: deployment-repository.yaml
+
+  - it: should not have wait-db-ready initcontainer with external database
+    values: *testvalues
+    set:
+      database.external: true
+    asserts:
+      - isEmpty:
+          path: spec.template.spec.initContainers
+        template: deployment-repository.yaml
+      - isNotEmpty:
+          path: spec.template.spec.volumes
+        template: deployment-repository.yaml
+
+  - it: should have custom init containers when defined
+    values: *testvalues
+    set:
+      repository.extraInitContainers:
+        - name: dummy-init-container
+          image: busybox:1.28
+          command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: dummy-init-container
+            image: busybox:1.28
+            command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+        template: deployment-repository.yaml
+
+  - it: should have custom extra volumes when defined
+    values: *testvalues
+    set:
+      repository.extraVolumes:
+        - name: test-volume
+          awsElasticBlockStore:
+            volumeID: "whatever"
+            fsType: ext4
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: test-volume
+            awsElasticBlockStore:
+              volumeID: "whatever"
+              fsType: ext4
+        template: deployment-repository.yaml

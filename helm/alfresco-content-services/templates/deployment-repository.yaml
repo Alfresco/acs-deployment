@@ -121,14 +121,12 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
-      {{- if eq .Values.database.external false }}
       initContainers:
       {{- if .Values.repository.extraInitContainers }}
-{{ tpl .Values.repository.extraInitContainers . | indent 8 }}
+        {{- toYaml .Values.repository.extraInitContainers | nindent 8 }}
       {{- end }}
-      {{- if eq .Values.database.external false }}
-        # wait for the DB to startup before this deployment can start
-        - name: init-db
+      {{- if not .Values.database.external }}
+        - name: wait-db-ready
           image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
           imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
           {{- include "component-security-context" .Values.repository.initContainers.db | indent 8 }}
@@ -245,6 +243,5 @@ spec:
               path: ca.crt
       {{- end }}
       {{- if .Values.repository.extraVolumes }}
-{{ toYaml .Values.repository.extraVolumes | indent 6 }}
-      {{- end }}
+        {{- toYaml .Values.repository.extraVolumes | nindent 8 }}
       {{- end }}
