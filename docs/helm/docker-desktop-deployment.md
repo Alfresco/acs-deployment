@@ -127,7 +127,7 @@ and therefore requires a large amount of resources out-of-the-box. To reduce the
 size of the deployment so it can run on a single machine we'll need to reduce
 the number of pods deployed and the memory requirements for several others.
 
-To install the Enterprise on localhost we need to use the [local-dev-values.yaml](../../docs/helm/values/). Once downloaded execute the command below to deploy.
+To install the Enterprise on localhost we need to use the [local-dev-values.yaml](curl -LJO https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/values/local-dev-values.yaml). Once downloaded execute the command below to deploy.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
@@ -138,20 +138,13 @@ helm install acs alfresco/alfresco-content-services \
   --namespace alfresco
 ```
 
-#### Search Enterprise deployment
-
-To install the Search Enterprise we need to use the [local-dev-values.yaml & enterprise-search-values.yaml](../../docs/helm/values/). Once downloaded execute the command below to deploy.
-
-```bash
-helm install acs alfresco/alfresco-content-services \
-  --values= local-dev-values.yaml \
-  --values= enterprise-search-values.yaml \
-  --namespace alfresco
-```
-
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
-The command above installs the latest version of ACS Enterprise. To deploy a previous version of ACS Enterprise follow the steps below.
+The command above installs the latest version of ACS Enterprise. 
+
+#### Enterprise deployment for Previous versions
+
+To deploy a previous version of ACS Enterprise follow the steps below.
 
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
 2. Deploy the specific version of ACS by running the following command:
