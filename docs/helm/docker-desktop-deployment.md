@@ -174,8 +174,8 @@ The command above installs the latest version of ACS Enterprise. To deploy a pre
    --set postgresql.resources.limits.memory="500Mi" \
    --set alfresco-search.resources.requests.memory="1000Mi" \
    --set alfresco-search.resources.limits.memory="1000Mi" \
-   --set share.resources.limits.memory="512Mi" \
-   --set share.resources.requests.memory="512Mi" \
+   --set share.resources.limits.memory="1500Mi" \
+   --set share.resources.requests.memory="1500Mi" \
    --set repository.resources.limits.memory="2500Mi" \
    --set repository.resources.requests.memory="2500Mi" \
    --atomic \
