@@ -1,37 +1,34 @@
----
+externalPort: "80"
+externalProtocol: http
+externalHost: localhost
+activemq:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
 repository:
+  replicaCount: 1
+  licenseSecret: acslicense
+  persistence:
+    accessModes:
+      - ReadWriteOnce
   resources:
     requests:
       cpu: "0.01"
       memory: "1024Mi"
     limits:
-      cpu: "1"
       memory: "1560Mi"
-  edition: Enterprise
+transformrouter:
   replicaCount: 1
-  persistence:
-    accessModes:
-      - ReadWriteOnce
-  image:
-    repository: quay.io/alfresco/alfresco-content-repository
-share:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "1500Mi"
-    limits:
-      cpu: "1"
-      memory: "1500Mi"
-  replicaCount: 1
-  image:
-    repository: quay.io/alfresco/alfresco-share
 pdfrenderer:
   resources:
     requests:
       cpu: "0.01"
       memory: "256Mi"
     limits:
-      cpu: "1"
       memory: "512Mi"
   replicaCount: 1
 imagemagick:
@@ -40,7 +37,6 @@ imagemagick:
       cpu: "0.01"
       memory: "256Mi"
     limits:
-      cpu: "1"
       memory: "512Mi"
   replicaCount: 1
 libreoffice:
@@ -49,7 +45,6 @@ libreoffice:
       cpu: "0.01"
       memory: "512Mi"
     limits:
-      cpu: "1"
       memory: "1024Mi"
   replicaCount: 1
 tika:
@@ -58,7 +53,6 @@ tika:
       cpu: "0.01"
       memory: "256Mi"
     limits:
-      cpu: "1"
       memory: "512Mi"
   replicaCount: 1
 transformmisc:
@@ -67,48 +61,61 @@ transformmisc:
       cpu: "0.01"
       memory: "256Mi"
     limits:
-      cpu: "1"
       memory: "512Mi"
   replicaCount: 1
-alfresco-search:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "512Mi"
-    limits:
-      cpu: "1"
-      memory: "1024Mi"
-  searchServicesImage:
-    repository: quay.io/alfresco/search-services
-alfresco-digital-workspace:
-  enabled: true
-alfresco-sync-service:
-  syncservice:
-    enabled: true
 postgresql:
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.1"
       memory: "500Mi"
     limits:
-      cpu: "1"
+      cpu: "0.1"
       memory: "500Mi"
-postgresql-syncservice:
-  enabled: true
+alfresco-search:
+  resources:
+    requests:
+      cpu: 0.1
+      memory: "1000Mi"
+    limits:
+      cpu: 0.1
+      memory: "1500Mi"
+alfresco-search-enterprise:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+  elasticsearch:
+    esJavaOpts: "-Xmx512m -Xms512m"
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "512Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1Gi"
+filestore:
   resources:
     requests:
       cpu: "0.01"
-      memory: "500Mi"
+      memory: "128Mi"
     limits:
-      cpu: "1"
-      memory: "500Mi"
+      cpu: 0.1
+      memory: "512Mi"
   replicaCount: 1
-transformrouter:
+share:
   resources:
     requests:
       cpu: "0.01"
       memory: "256Mi"
     limits:
-      cpu: "1"
       memory: "512Mi"
-  replicaCount: 1
+alfresco-sync-service:
+  syncservice:
+    enabled: false
+postgresql-syncservice:
+  enabled: false
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
