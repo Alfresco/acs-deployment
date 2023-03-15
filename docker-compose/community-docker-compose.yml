@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0-M2
+    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0-M3
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
