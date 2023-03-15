@@ -65,7 +65,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.4.0-M2
+    image: quay.io/alfresco/alfresco-share:7.4.0-A20
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
