@@ -127,10 +127,10 @@ and therefore requires a large amount of resources out-of-the-box. To reduce the
 size of the deployment so it can run on a single machine we'll need to reduce
 the number of pods deployed and the memory requirements for several others.
 
-To install the Enterprise on localhost we need to use the [local-dev-values.yaml]
+To install the Enterprise on localhost we need to use the local-dev-values.yaml
 
 ```bash
-curl -LJO https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/values/local-dev-values.yaml
+curl -f0O https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/local-dev-values.yaml
 ```
 
 Once downloaded execute the command below to deploy.
