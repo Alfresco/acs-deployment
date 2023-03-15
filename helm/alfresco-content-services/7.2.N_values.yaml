@@ -2,7 +2,7 @@
 # ACS 7.2.N values
 repository:
   image:
-    tag: 7.2.1.7
+    tag: 7.2.1.10
 ooiService:
   image:
     tag: 1.1.3
