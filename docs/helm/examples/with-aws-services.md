@@ -148,6 +148,12 @@ the information required to deploy ACS.
 5. Finally, take a note of the database Endpoint (shown in the screenshot in
    step 3)
 
+> Note: Alfresco Sync Service also needs to have its own schema. Either you'll
+> want to create a second schema on the same RDS instance (and then use the
+> same JDBC connection parameter but changeing the database name part), or you
+> can repeat the same RDS instance creation and repository and syncservice will
+> use different RDS instances.
+
 ### Amazon MQ
 
 1. Create an Amazon MQ broker using the "Create brokers" wizard in the
@@ -275,6 +281,10 @@ alfresco-search-enterprise:
   enabled: true
 alfresco-sync-service:
   messageBroker: *acs_messageBroker
+  database:
+    url: jdbc:postgresql://SYNC-SERVICE-DATABASE-ENDPOINT:5432/
+    user: alfresco
+    password: YOUR-SYNCDB-PASSWORD
 ```
 
 Then you can deploy using:
@@ -331,6 +341,9 @@ helm -n alfresco install acs \
   --set messageBroker.url="YOUR-MQ-ENDPOINT" \
   --set messageBroker.user="alfresco" \
   --set messageBroker.password="YOUR-MQ-PASSWORD" \
+  --set alfresco-sync-service.database.url="jdbc:postgresql://SYNC-SERVICE-DATABASE-ENDPOINT:5432/" \
+  --set alfresco-sync-service.database.user="alfresco" \
+  --set alfresco-sync-service.database.password="YOUR-SYNCDB-PASSWORD" \
   --set alfresco-sync-service.messageBroker.url="YOUR-MQ-ENDPOINT" \
   --set alfresco-sync-service.messageBroker.user="alfresco" \
   --set alfresco-sync-service.messageBroker.password="YOUR-MQ-PASSWORD" \

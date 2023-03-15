@@ -204,7 +204,7 @@ The most common reason for deployment failures with Docker for Desktop is lack o
 To save the deployment of two more pods you can also try disabling the Sync Service, to do that provide the additional `--set` option below with your helm install command:
 
 ```bash
---set alfresco-sync-service.syncservice.enabled=false
+--set alfresco-sync-service.enabled=false
 ```
 
 If you need to reduce the memory footprint further the JVM memory settings in most pods use the `MaxRAMPercentage` option so lowering the various `limits.memory` and `requests.memory` values will also reduce the JVM memory allocation.
