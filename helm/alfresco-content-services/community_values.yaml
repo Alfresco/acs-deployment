@@ -33,8 +33,6 @@ alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:
   enabled: false
-postgresql-syncservice:
-  enabled: false
 ai:
   enabled: false
 s3connector:
