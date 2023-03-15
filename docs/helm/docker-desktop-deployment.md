@@ -148,7 +148,7 @@ helm install acs alfresco/alfresco-content-services \
 
 The command above installs the latest version of ACS Enterprise.
 
-#### Enterprise deployment for Previous versions
+#### Enterprise deployment for previous versions
 
 To deploy a previous version of ACS Enterprise follow the steps below.
 
@@ -157,28 +157,8 @@ To deploy a previous version of ACS Enterprise follow the steps below.
 
    ```bash
    helm install acs alfresco/alfresco-content-services \
-   --values=MAJOR.MINOR.N_values.yaml \
-   --set externalPort="80" \
-   --set externalProtocol="http" \
-   --set externalHost="localhost" \
-   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-   --set repository.replicaCount=1 \
-   --set transformrouter.replicaCount=1 \
-   --set pdfrenderer.replicaCount=1 \
-   --set imagemagick.replicaCount=1 \
-   --set libreoffice.replicaCount=1 \
-   --set tika.replicaCount=1 \
-   --set transformmisc.replicaCount=1 \
-   --set postgresql-syncservice.resources.requests.memory="500Mi" \
-   --set postgresql-syncservice.resources.limits.memory="500Mi" \
-   --set postgresql.resources.requests.memory="500Mi" \
-   --set postgresql.resources.limits.memory="500Mi" \
-   --set alfresco-search.resources.requests.memory="1000Mi" \
-   --set alfresco-search.resources.limits.memory="1000Mi" \
-   --set share.resources.limits.memory="1500Mi" \
-   --set share.resources.requests.memory="1500Mi" \
-   --set repository.resources.limits.memory="2500Mi" \
-   --set repository.resources.requests.memory="2500Mi" \
+   --values MAJOR.MINOR.N_values.yaml \
+   --values local-dev-values.yaml \
    --atomic \
    --timeout 10m0s \
    --namespace alfresco
