@@ -58,15 +58,7 @@ repository:
     #      - chart-example.local
   environment:
     JAVA_OPTS: >-
-      -Dtransform.service.enabled=true
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-      -Dencryption.keystore.type=JCEKS
-      -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
-      -Dencryption.keyAlgorithm=DESede
-      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
-      -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=DESede
+      -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33000
@@ -228,8 +220,7 @@ transformrouter:
     externalPort: 80
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 140
     periodSeconds: 60
@@ -274,8 +265,7 @@ pdfrenderer:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -314,8 +304,7 @@ imagemagick:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -354,8 +343,7 @@ libreoffice:
     runAsUser: 33003
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -394,8 +382,7 @@ tika:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 60
@@ -435,8 +422,7 @@ transformmisc:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -472,8 +458,7 @@ aiTransformer:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -524,8 +509,7 @@ filestore:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -587,8 +571,7 @@ share:
       memory: "2000Mi"
   environment:
     CATALINA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
@@ -699,7 +682,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.0.0-A.2
+    tag: 4.0.0-A.3
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
