@@ -17,7 +17,8 @@ alfresco-admin-app:
   enabled: false
 postgresql:
   enabled: false
-postgresql-syncservice:
-  enabled: false
+alfresco-sync-service:
+  postgresql:
+    enabled: false
 database:
   external: true
