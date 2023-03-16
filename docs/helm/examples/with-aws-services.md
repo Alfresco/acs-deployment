@@ -1,5 +1,14 @@
 # Alfresco Content Services Helm Deployment with AWS Services
 
+- [Alfresco Content Services Helm Deployment with AWS Services](#alfresco-content-services-helm-deployment-with-aws-services)
+  - [Prerequisites](#prerequisites)
+  - [Setup Services](#setup-services)
+    - [S3](#s3)
+    - [RDS](#rds)
+    - [Amazon MQ](#amazon-mq)
+    - [Amazon Opensearch](#amazon-opensearch)
+  - [Deploy](#deploy)
+
 This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks)
 and use [S3](https://aws.amazon.com/s3) for content storage,
 [RDS](https://aws.amazon.com/rds) as an external database and
@@ -22,11 +31,11 @@ EFS volume is only used by the SFS service. Persistence for SFS can actually be
 withdrawn so no EFS volume is needed anymore. Please make sure you understand
 the implications below:
 
-* Renditions performed for "in-flight" documents may be lost. By "in-flight" we
+- Renditions performed for "in-flight" documents may be lost. By "in-flight" we
   mean documents that are currently being uploaded to the repository.
   Generation of these renditions can be retried, and this retry will happen
   when using Alfresco UI and trying to access the content again.
-* Without a truly persistent volume you can only have one single SFS pod. A
+- Without a truly persistent volume you can only have one single SFS pod. A
   single pod is the default configuration as we do not anticipate high load for
   this component and we rely on Kubernetes orchestration to in case the pod
   crashes. Though if your use-case requires higher availability standards, you
@@ -111,17 +120,17 @@ the information required to deploy ACS.
 1. Create an Aurora cluster using the "Create database" wizard in the
    [RDS Console](https://console.aws.amazon.com/rds/home).
 
-   * Select the "Standard Create" option so you can choose the VPC later
-   * Select the "Amazon Aurora with PostgreSQL compatibility" Edition
-   * Select "14.3" for the Version
-   * Provide a "DB cluster identifier" of your choosing
-   * Change the "Master username" to `alfresco`
-   * In the "Connectivity" section select the VPC created by eksctl that
+   - Select the "Standard Create" option so you can choose the VPC later
+   - Select the "Amazon Aurora with PostgreSQL compatibility" Edition
+   - Select "14.3" for the Version
+   - Provide a "DB cluster identifier" of your choosing
+   - Change the "Master username" to `alfresco`
+   - In the "Connectivity" section select the VPC created by eksctl that
      contains your EKS cluster
-   * Expand the "Additional configuration" section and provide a "Initial
+   - Expand the "Additional configuration" section and provide a "Initial
      database name" of `alfresco`
-   * Leave all other options set to the default
-   * Press the orange "Create database" button
+   - Leave all other options set to the default
+   - Press the orange "Create database" button
 
 2. Once the cluster has been created (it can take a few minutes) make a note of
    the generated master password using the "View credentials details" button in
@@ -144,20 +153,20 @@ the information required to deploy ACS.
 1. Create an Amazon MQ broker using the "Create brokers" wizard in the
    [MQ Console](https://console.aws.amazon.com/amazon-mq/home).
 
-   * In "Broker engine types", select "Apache ActiveMQ"
-   * In "Deployment Mode", select "Single-instance broker" if you are just
+   - In "Broker engine types", select "Apache ActiveMQ"
+   - In "Deployment Mode", select "Single-instance broker" if you are just
      testing or "Active/standby broker" option for production environments
-   * Provide a "Broker name" of your choosing
-   * In "Broker instance type", avoid any `mq.*.micro` type that has
+   - Provide a "Broker name" of your choosing
+   - In "Broker instance type", avoid any `mq.-.micro` type that has
      [limited_max_connections](https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/amazon-mq-limits.html#broker-limits)
      and won't work with default Alfresco settings
-   * In "ActiveMQ Access", specify an username and a password of your choice
-   * In "Additional settings", choose the "Select existing VPC and subnet(s)" option
-   * Select the VPC created by eksctl that contains your EKS cluster
-   * Choose the "Select existing security groups" option and select the VPC's
+   - In "ActiveMQ Access", specify an username and a password of your choice
+   - In "Additional settings", choose the "Select existing VPC and subnet(s)" option
+   - Select the VPC created by eksctl that contains your EKS cluster
+   - Choose the "Select existing security groups" option and select the VPC's
      default security group from the list
-   * Leave all other options set to the default
-   * Proceed with "Create broker" button
+   - Leave all other options set to the default
+   - Proceed with "Create broker" button
 
 2. Once the broker has been created (it takes 20 minutes on average) view the
    broker details and click on the link to the security group.
@@ -177,21 +186,21 @@ the information required to deploy ACS.
 
 1. Create an Elasticsearch domain using AWS web console.
 
-   * Hit the "Create domain" button
-   * In "Deployment type", choose between "Production" or "Development and
+   - Hit the "Create domain" button
+   - In "Deployment type", choose between "Production" or "Development and
      testing" depending on your use case
-   * In "Version", select "Elasticsearch 7.10"
-   * Adjust "Data nodes" settings as you prefer, T3 instance types are the most
+   - In "Version", select "Elasticsearch 7.10"
+   - Adjust "Data nodes" settings as you prefer, T3 instance types are the most
      affordable options for small clusters.
-   * In "Network", select the EKS VPC or "Public access" if Alfresco will run
+   - In "Network", select the EKS VPC or "Public access" if Alfresco will run
      outside AWS.
-   * If required, select a security group with an inbound access for 443/tcp
+   - If required, select a security group with an inbound access for 443/tcp
      port
-   * In "Fine-grained access control", select "Create master user" and specify
+   - In "Fine-grained access control", select "Create master user" and specify
      your preferred username and password credentials
-   * In "Access policy", select "Only use fine-grained access control".
-   * Unfold the "Advanced cluster settings" and set "Max clause count" to `10240`
-   * Hit "Create" button.
+   - In "Access policy", select "Only use fine-grained access control".
+   - Unfold the "Advanced cluster settings" and set "Max clause count" to `10240`
+   - Hit "Create" button.
 
 2. Once the domain has been created, take note of the "Domain endpoint"
 3. If not already allowed, add 443/tcp access to the security group associated
@@ -278,9 +287,9 @@ helm -n alfresco install acs ./alfresco/alfresco-content-services \
 If you're deploying from the registry of charts you can't update the
 `values.yml` file. Instead you either:
 
-* use a local copy of the `values.yml` file amended as shown above (and use the
+- use a local copy of the `values.yml` file amended as shown above (and use the
   ```helm install -f my-values.yml ...```
-* use ```--set``` options to pass individual values.
+- use ```--set``` options to pass individual values.
 
 Note however that the main `values.yml` file uses
 [YAML_anchors_and_aliases](https://yaml.org/spec/1.2.2/#3222-anchors-and-aliases)
