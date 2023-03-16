@@ -21,9 +21,8 @@ dependencies:
     version: 1.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
-    version: 10.16.2
-    repository: >-
-      https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+    version: 12.x.x
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: common
     alias: alfresco-admin-app

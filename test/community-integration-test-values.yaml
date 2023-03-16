@@ -76,14 +76,11 @@ alfresco-search:
 alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:
-  syncservice:
-    enabled: false
+  enabled: false
 postgresql:
   resources:
     requests:
       cpu: "0.01"
-postgresql-syncservice:
-  enabled: false
 ai:
   enabled: false
 s3connector:
