@@ -1,8 +1,12 @@
 # Alfresco Content Services Helm Deployment with AWS EKS
 
-This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
+This page describes how to deploy Alfresco Content Services (ACS) Enterprise or
+Community using [Helm](https://helm.sh) onto [EKS](https://aws.amazon.com/eks).
 
-Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. EKS runs the Kubernetes management infrastructure for you across multiple AWS availability zones to eliminate a single point of failure.
+Amazon's EKS (Elastic Container Service for Kubernetes) makes it easy to deploy,
+manage, and scale containerized applications using Kubernetes on AWS. EKS runs
+the Kubernetes management infrastructure for you across multiple AWS
+availability zones to eliminate a single point of failure.
 
 The Enterprise configuration will deploy the following system:
 
@@ -18,21 +22,58 @@ The Community configuration will deploy the following system:
 * You've read the [main Helm README](./README.md) page
 * You are proficient in AWS and Kubernetes
 
+Make sure to have installed:
+
+* [kubectl](https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html)
+* [eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html)
+* [helm](https://docs.aws.amazon.com/eks/latest/userguide/helm.html)
+
+To better troubleshoot any issue, you may want to install applications such as:
+
+* [lens](https://k8slens.dev/) (GUI)
+* [k9s](https://k9scli.io/) (CLI)
+
 ## Setup An EKS Cluster
 
-Follow the [AWS EKS Getting Started
-Guide](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
-to create a cluster and prepare your local machine to connect to the cluster.
-Use the "Managed nodes - Linux" option and specify a `--node-type`. Most common
-choices are `m5.xlarge` and `t3.xlarge`.
+There are multiple ways to setup an EKS cluster, but one of the most simple is
+by using `eksctl`. This section will guide you in creating a new EKS cluster
+that satisfy the minimum requirements to have a basic ACS installation up and
+running.
 
-As we'll be using Helm to deploy the ACS chart follow the [Using Helm with EKS](https://docs.aws.amazon.com/eks/latest/userguide/helm.html) instructions to setup helm on your local machine.
+Set the default region you want to work on, to avoid having to add `--region` to
+every command:
 
-Optionally, to help troubleshoot issues with your cluster either follow the tutorial to [deploy the Kubernetes Dashboard](https://docs.aws.amazon.com/eks/latest/userguide/dashboard-tutorial.html) to your cluster or download and use the [Lens application](https://k8slens.dev) from your local machine.
+```sh
+export AWS_DEFAULT_REGION=eu-west-1
+```
+
+Set the cluster name in an environment variable that can be reused later:
+
+```sh
+EKS_CLUSTER_NAME=my-alfresco-eks
+```
+
+Create the cluster using a supported version (we are currently testing against
+1.24). Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
+
+```sh
+eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.24 --instance-types t3.xlarge
+```
+
+Enable the OIDC provider that is necessary to install further EKS addons later:
+
+```sh
+eksctl utils associate-iam-oidc-provider --cluster=$EKS_CLUSTER_NAME —approve
+```
+
+For further information please refer to the [Getting started with Amazon EKS –
+eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
+guide.
 
 ## Prepare The Cluster For ACS
 
-Now we have an EKS cluster up and running there are a few one time steps we need to perform to prepare the cluster for ACS to be installed.
+Now that we have an EKS cluster up and running, there are a few one time steps
+that we need to perform to prepare the cluster for ACS to be installed.
 
 ### DNS
 
@@ -128,7 +169,30 @@ Now we have an EKS cluster up and running there are a few one time steps we need
 
     ![Attach Policy](./diagrams/eks-attach-policy.png)
 
-### File System
+### Storage
+
+There are multiple storage options available when deploying on AWS.
+
+For the main [content-store](https://docs.alfresco.com/content-services/latest/admin/content-stores/), you can alternatively:
+
+* Use an Elastic File System, installing the ([EFS CSI driver](#efs-csi-driver))
+  (the default we suggest, see `storageClass="nfs-client"` values in [helm
+  install section](#latest-enterprise-version))
+* Use an EBS block-storage, enabling [EBS CSI driver](#ebs-csi-driver) (not
+  possible with Enterprise in clustered mode)
+* Use a bucket on [S3](examples/with-aws-services.md#s3)
+
+For the [database](https://docs.alfresco.com/content-services/latest/config/databases/), you can alternatively:
+
+* Use the embedded postgres instance provided by the helm chart by default, enabling [EBS CSI driver](#ebs-csi-driver)
+* Use [RDS](examples/with-aws-services.md#rds)
+
+For the [messaging broker](https://docs.alfresco.com/content-services/latest/config/activemq/), you can alternatively:
+
+* Use the embedded activemq provided by the helm chart by default, enabling [EBS CSI driver](#ebs-csi-driver)
+* Use [Amazon MQ](examples/with-aws-services.md#amazon-mq)
+
+#### EFS CSI Driver
 
 1. Create an Elastic File System in the VPC created by EKS using [these steps](https://docs.aws.amazon.com/efs/latest/ug/creating-using-create-fs.html) ensuring a mount target is created in each subnet. Make a note of the File System ID (circled in the screenshot below).
 
@@ -176,6 +240,41 @@ Now we have an EKS cluster up and running there are a few one time steps we need
     ```
 
 > Note: the `storageClass` is set to `Retain` for obvious safety reasons. That however means kubernetes administrator need to take care of volume cleanup.
+
+#### EBS CSI Driver
+
+> Since EKS 1.24 it is mandatory to install EBS CSI Driver for the dynamic
+> provisioning via the default `gp2` storage class. Upgrading from 1.23 without
+> it will break any existing PVC.
+
+Set the aws account id in an environment variable that can be reused later:
+
+```sh
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+```
+
+Create the IAM Service Account with access to EBS that will be used by the driver:
+
+```sh
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster $EKS_CLUSTER_NAME \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name AmazonEKS_EBS_CSI_DriverRole
+```
+
+Enable the addon referencing the IAM role created previously:
+
+```sh
+eksctl create addon --name aws-ebs-csi-driver --cluster $EKS_CLUSTER_NAME --service-account-role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/AmazonEKS_EBS_CSI_DriverRole --force
+```
+
+At this point the provisioning of EBS volumes using the default GP2 storageClass will be handled by this driver.
+
+For further information please refer to the official [Amazon EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html) guide.
 
 ## Deploy
 
