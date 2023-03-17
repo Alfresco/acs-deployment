@@ -117,7 +117,7 @@ helm install acs alfresco/alfresco-content-services \
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
 
-#### Enterprise
+#### Enterprise localhost deployment
 
 See the [registry authentication](registry-authentication.md) page to configure
 credentials to access the Alfresco Enterprise registry.
@@ -127,32 +127,18 @@ and therefore requires a large amount of resources out-of-the-box. To reduce the
 size of the deployment so it can run on a single machine we'll need to reduce
 the number of pods deployed and the memory requirements for several others.
 
-Fortunately this can all be achieved with one, albeit large, command as shown below:
+To install the Enterprise on localhost we need to use the local-dev-values.yaml
+
+```bash
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/local-dev-values.yaml
+```
+
+Once downloaded execute the command below to deploy.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set externalPort="80" \
-  --set externalProtocol="http" \
-  --set externalHost="localhost" \
+  --values local-dev-values.yaml \
   --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
-  --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-  --set repository.replicaCount=1 \
-  --set transformrouter.replicaCount=1 \
-  --set pdfrenderer.replicaCount=1 \
-  --set imagemagick.replicaCount=1 \
-  --set libreoffice.replicaCount=1 \
-  --set tika.replicaCount=1 \
-  --set transformmisc.replicaCount=1 \
-  --set postgresql-syncservice.resources.requests.memory="500Mi" \
-  --set postgresql-syncservice.resources.limits.memory="500Mi" \
-  --set postgresql.resources.requests.memory="500Mi" \
-  --set postgresql.resources.limits.memory="500Mi" \
-  --set alfresco-search.resources.requests.memory="1000Mi" \
-  --set alfresco-search.resources.limits.memory="1000Mi" \
-  --set share.resources.limits.memory="1500Mi" \
-  --set share.resources.requests.memory="1500Mi" \
-  --set repository.resources.limits.memory="2500Mi" \
-  --set repository.resources.requests.memory="2500Mi" \
   --atomic \
   --timeout 10m0s \
   --namespace alfresco
@@ -160,35 +146,19 @@ helm install acs alfresco/alfresco-content-services \
 
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
-The command above installs the latest version of ACS Enterprise. To deploy a previous version of ACS Enterprise follow the steps below.
+The command above installs the latest version of ACS Enterprise.
+
+#### Enterprise deployment for previous versions
+
+To deploy a previous version of ACS Enterprise follow the steps below.
 
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
 2. Deploy the specific version of ACS by running the following command:
 
    ```bash
    helm install acs alfresco/alfresco-content-services \
-   --values=MAJOR.MINOR.N_values.yaml \
-   --set externalPort="80" \
-   --set externalProtocol="http" \
-   --set externalHost="localhost" \
-   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-   --set repository.replicaCount=1 \
-   --set transformrouter.replicaCount=1 \
-   --set pdfrenderer.replicaCount=1 \
-   --set imagemagick.replicaCount=1 \
-   --set libreoffice.replicaCount=1 \
-   --set tika.replicaCount=1 \
-   --set transformmisc.replicaCount=1 \
-   --set postgresql-syncservice.resources.requests.memory="500Mi" \
-   --set postgresql-syncservice.resources.limits.memory="500Mi" \
-   --set postgresql.resources.requests.memory="500Mi" \
-   --set postgresql.resources.limits.memory="500Mi" \
-   --set alfresco-search.resources.requests.memory="1000Mi" \
-   --set alfresco-search.resources.limits.memory="1000Mi" \
-   --set share.resources.limits.memory="1500Mi" \
-   --set share.resources.requests.memory="1500Mi" \
-   --set repository.resources.limits.memory="2500Mi" \
-   --set repository.resources.requests.memory="2500Mi" \
+   --values MAJOR.MINOR.N_values.yaml \
+   --values local-dev-values.yaml \
    --atomic \
    --timeout 10m0s \
    --namespace alfresco
