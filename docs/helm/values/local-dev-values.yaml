@@ -1,0 +1,120 @@
+externalPort: "80"
+externalProtocol: http
+externalHost: localhost
+activemq:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+repository:
+  replicaCount: 1
+  persistence:
+    accessModes:
+      - ReadWriteOnce
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "1024Mi"
+    limits:
+      memory: "1560Mi"
+transformrouter:
+  replicaCount: 1
+pdfrenderer:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+imagemagick:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+libreoffice:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+    limits:
+      memory: "1024Mi"
+  replicaCount: 1
+tika:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+transformmisc:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+postgresql:
+  resources:
+    requests:
+      cpu: "0.1"
+      memory: "500Mi"
+    limits:
+      cpu: "0.1"
+      memory: "500Mi"
+alfresco-search:
+  resources:
+    requests:
+      cpu: 0.1
+      memory: "1000Mi"
+    limits:
+      cpu: 0.1
+      memory: "1500Mi"
+alfresco-search-enterprise:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+  elasticsearch:
+    esJavaOpts: "-Xmx512m -Xms512m"
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "512Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1Gi"
+filestore:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "128Mi"
+    limits:
+      cpu: 0.1
+      memory: "512Mi"
+  replicaCount: 1
+share:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+alfresco-sync-service:
+  syncservice:
+    enabled: false
+postgresql-syncservice:
+  enabled: false
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
