@@ -744,7 +744,7 @@ alfresco-admin-app:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-admin-app
-    tag: 7.9.0
+    tag: 7.8.1
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
