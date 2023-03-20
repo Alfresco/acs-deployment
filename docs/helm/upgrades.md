@@ -7,7 +7,7 @@ release notes that are available via [GitHub Releases](https://github.com/Alfres
 
 Here follows a more detailed explanation of any breaking change grouped by version in which they have been released.
 
-## unreleased
+## 5.4.0-M3
 
 ### Search Enterprise chart rename
 
