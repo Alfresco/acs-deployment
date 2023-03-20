@@ -101,9 +101,20 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 Open a PR that will:
 
 * Update the [versioning table](#versioning)
-* If any updates requires then make the changes, bump the version and raise the PR.
+* If any updates to the updatecli pipelines is required then make the changes and raise the PR.
 * Once the PR merge then run the manually [updatecli-workflow](https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml)
-* That will create the bump version PR automatically. This PR needed to be review and then merge.
+* That will create the bump version PR automatically.
+* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
+  bump chart version to the next stable release (usually by removing the
+  `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
+* For every chart using `alfresco-common`
+  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
+  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
+  * Bump version to the new `alfresco-common` stable version
+  * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
+* Bump each subchart version to the next stable release (usually by removing the
+  `-SNAPSHOT` suffix)
+* Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, create and push the signed tag with:
 
