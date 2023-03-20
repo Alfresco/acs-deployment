@@ -64,7 +64,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.internalPort | int | `8983` |  |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| searchServicesImage.tag | string | `"2.0.6"` |  |
+| searchServicesImage.tag | string | `"2.0.7-A4"` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
