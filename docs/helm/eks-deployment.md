@@ -63,7 +63,7 @@ eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.24 --instance-types t
 Enable the OIDC provider that is necessary to install further EKS addons later:
 
 ```sh
-eksctl utils associate-iam-oidc-provider --cluster=$EKS_CLUSTER_NAME —approve
+eksctl utils associate-iam-oidc-provider --cluster=$EKS_CLUSTER_NAME --approve
 ```
 
 For further information please refer to the [Getting started with Amazon EKS –
