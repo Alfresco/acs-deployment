@@ -58,7 +58,7 @@ alfresco-search-enterprise:
       tag: 3.1.1
 alfresco-digital-workspace:
   image:
-    tag: 3.0.1
+    tag: 3.1.1
 alfresco-admin-app:
   image:
     tag: 7.8.1
