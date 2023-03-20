@@ -109,7 +109,7 @@ data:
       -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
       -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
       {{- end }}
-      {{- if index .Values "alfresco-sync-service" "syncservice" "enabled" }}
+      {{- if index .Values "alfresco-sync-service" "enabled" }}
       -Ddsync.service.uris={{ $alfUrl }}/syncservice
       {{- else }}
       -Devents.subsystem.autoStart=false
@@ -118,7 +118,7 @@ data:
       $ALFRESCO_OPTS
       -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
       {{- if eq .Values.database.external false }}
-      -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.service.port }}/{{ .Values.postgresql.postgresDatabase }}
+      -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.primary.service.ports.postgresql }}/{{ .Values.postgresql.auth.database }}
       {{- else }}
       -Ddb.url={{ .Values.database.url }}
       {{- end }}

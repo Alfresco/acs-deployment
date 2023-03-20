@@ -51,4 +51,4 @@ can be provided using existing Kubernetes Secrets:
 * [activemq](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/activemq/README.md)
 * [alfresco-search-enterprise](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-search-enterprise/README.md)
 * [alfresco-search](../../helm/alfresco-content-services/charts/alfresco-search/README.md)
-* [alfresco-sync-service](../../helm/alfresco-content-services/charts/alfresco-sync-service/README.md)
+* [alfresco-sync-service](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-sync-service/README.md)
