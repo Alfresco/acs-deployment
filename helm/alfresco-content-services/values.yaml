@@ -603,6 +603,7 @@ share:
   extraInitContainers: []
   command: []
 activemq:
+  nameOverride: activemq
   enabled: true
   # -- Possibility to choose Node for pod, with a key-value pair label
   # e.g {"kubernetes.io/hostname": multinode-demo-m02}
@@ -767,74 +768,45 @@ alfresco-admin-app:
 ooi:
   enabled: false
 postgresql:
-  # -- Enable embedded postgres for Alfresco Content Services leveraging the postgresql Bitnami chart
+  # -- Toggle embedded postgres for Alfresco Content Services repository
+  # Check [PostgreSQL Bitnami chart
+  # Documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
   enabled: true
-  replicaCount: 1
   nameOverride: postgresql-acs
   image:
     tag: 14.4.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
-  # -- Name of existing secret to use for PostgreSQL passwords
-  # The secret has to contain the keys postgresql-password which is the password for postgresqlUsername when it is
-  # different of postgres, postgresql-postgres-password which will override postgresqlPassword.
-  # The same secret must be set also as `database.existingSecretName` to provide the credentials to ACS.
-  existingSecret:
-  # -- Postgresql database user
-  postgresqlUsername: alfresco
-  # -- Postgresql database password
-  postgresqlPassword: alfresco
-  # -- Postgresql database name
-  postgresqlDatabase: alfresco
-  postgresqlExtendedConf:
-    max_connections: 300
-    log_min_messages: LOG
+  auth:
+    existingSecret:
+    username: alfresco
+    password: alfresco
+    database: alfresco
   primary:
-    nodeSelector: {}
-  persistence:
-    # -- set the storageClass to use for dynamic provisioning.
-    # setting it to null means "default storageClass".
-    storageClass: null
-    # -- provide an existing persistent volume claim name to persist SQL data
-    # Make sure the root folder has the appropriate permissions/ownhership set.
-    existingClaim: null
-    subPath: "alfresco-content-services/database-data"
-  resources:
-    requests:
-      cpu: "0.5"
-      memory: "1500Mi"
-    limits:
-      cpu: "4"
-      memory: "1500Mi"
-postgresql-syncservice:
-  name: postgresql-syncservice
-  # -- Enable embedded postgres for Alfresco Sync service leveraging the postgresql Bitnami chart
-  enabled: true
-  replicaCount: 1
-  nameOverride: postgresql-syncservice
-  image:
-    tag: 14.4.0
-    pullPolicy: IfNotPresent
-  commonAnnotations:
-    application: alfresco-content-services
-  postgresqlUsername: alfresco
-  postgresqlPassword: admin
-  postgresqlDatabase: syncservice-postgresql
-  postgresqlExtendedConf:
-    max_connections: 450
-    log_min_messages: LOG
-  service:
-    port: 5432
-  primary:
-    nodeSelector: {}
-  resources:
-    requests:
-      cpu: "0.5"
-      memory: "1500Mi"
-    limits:
-      cpu: "4"
-      memory: "1500Mi"
+    extendedConfiguration: |
+      max_connections = 250
+      shared_buffers = 512MB
+      effective_cache_size = 2GB
+      wal_level = minimal
+      max_wal_senders = 0
+      max_replication_slots = 0
+      log_min_messages = LOG
+    resources:
+      requests:
+        cpu: "0.5"
+        memory: "1500Mi"
+      limits:
+        cpu: "8"
+        memory: "8192Mi"
+    persistence:
+      # -- set the storageClass to use for dynamic provisioning.
+      # setting it to null means "default storageClass".
+      storageClass: null
+      # -- provide an existing persistent volume claim name to persist SQL data
+      # Make sure the root folder has the appropriate permissions/ownhership set.
+      existingClaim: null
+      subPath: "alfresco-content-services/database-data"
 s3connector:
   # -- Enable the S3 Connector
   # For a full list of properties on the S3 connector see:
@@ -942,13 +914,32 @@ metadataKeystore:
   defaultKeystorePassword: "mp6yc0UD9e"
   defaultKeyPassword: "oKIWzVdEdA"
 alfresco-sync-service:
-  messageBroker: *acs_messageBroker
-  nodeSelector: {}
-  syncservice:
+  # -- Toggle deployment of Alfresco Sync Service (Desktop-Sync)
+  # Check [Alfresco Sync Service
+  # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
+  enabled: true
+  postgresql:
     enabled: true
-  image:
-    repository: quay.io/alfresco/service-sync
-    tag: 3.8.0
+    image:
+      tag: 14.4.0
+    auth:
+      enablePostgresUser: false
+      username: alfresco
+      password: admin
+      database: syncservice-postgresql
+    primary:
+      resources:
+        requests:
+          cpu: "0.5"
+          memory: "1500Mi"
+        limits:
+          cpu: "4"
+          memory: "1500Mi"
+  messageBroker:
+    existingSecretName: *acs_messageBroker_secretName
+  repository:
+    nameOverride: alfresco-cs-repository
+    port: *repositoryExternalPort
 global:
   # A shared secret is now required in order to authenticate connections between
   # solr and repo (typically: tracking)

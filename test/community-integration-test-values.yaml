@@ -69,21 +69,19 @@ alfresco-search:
       cpu: "0.01"
       memory: "512Mi"
     limits:
-      memory: "1024Mi"
+      memory: "1280Mi"
   searchServicesImage:
     repository: alfresco/alfresco-search-services
 # Disable features
 alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:
-  syncservice:
-    enabled: false
-postgresql:
-  resources:
-    requests:
-      cpu: "0.01"
-postgresql-syncservice:
   enabled: false
+postgresql:
+  primary:
+    resources:
+      requests:
+        cpu: "0.01"
 ai:
   enabled: false
 s3connector:
