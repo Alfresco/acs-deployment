@@ -101,8 +101,9 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 Open a PR that will:
 
 * Update the [versioning table](#versioning)
-* In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
-  the next stable release (usually by removing the `-SNAPSHOT` suffix)
+* If any updates to the updatecli pipelines is required then make the changes and raise the PR.
+* Once the PR merge then run the manually [updatecli-workflow](https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml)
+* That will create the bump version PR automatically.
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the next stable release (usually by removing the
   `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)

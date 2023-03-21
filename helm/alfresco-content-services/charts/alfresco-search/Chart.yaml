@@ -13,11 +13,11 @@ keywords:
 name: alfresco-search
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 1.2.0-SNAPSHOT
+version: 1.2.0
 appVersion: 2.0.6
 dependencies:
   - name: alfresco-insight-zeppelin
-    version: 1.2.0-SNAPSHOT
+    version: 1.2.0
     condition: alfresco-insight-zeppelin.enabled
   - name: alfresco-common
     version: 1.0.0

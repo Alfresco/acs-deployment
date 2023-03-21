@@ -29,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.4.0-M2
+    tag: 7.4.0-M3
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -556,7 +556,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.4.0-M2
+    tag: 7.4.0-M3
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -699,7 +699,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.0.0-A.2
+    tag: 4.0.0-A.3
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"

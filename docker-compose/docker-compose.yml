@@ -19,7 +19,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.4.0-M2
+    image: quay.io/alfresco/alfresco-content-repository:7.4.0-M3
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -100,7 +100,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.4.0-M2
+    image: quay.io/alfresco/alfresco-share:7.4.0-M3
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -123,7 +123,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: alfresco/alfresco-search-services:2.0.5
+    image: quay.io/alfresco/search-services:2.0.6
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -150,7 +150,7 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:4.0.0-A.2
+    image: quay.io/alfresco/alfresco-digital-workspace:4.0.0-A.3
     mem_limit: 128m
     environment:
       APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -178,7 +178,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:4.0.0-M6
+    image: quay.io/alfresco/service-sync:4.0.0-M7
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-

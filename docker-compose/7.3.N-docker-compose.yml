@@ -157,7 +157,7 @@ services:
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-admin-app:7.6.1
+    image: quay.io/alfresco/alfresco-admin-app:7.8.1
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

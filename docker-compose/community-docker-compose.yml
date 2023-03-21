@@ -19,7 +19,7 @@
 version: "2"
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0-M2
+    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0-M3
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -32,18 +32,28 @@ services:
         -Dmetadata-keystore.metadata.password=oKIWzVdEdA
         -Dmetadata-keystore.metadata.algorithm=DESede
       JAVA_OPTS: >-
-        -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco
-        -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsolr.host=solr6 -Dsolr.port=8983 -Dsolr.http.connection.timeout=1000
-        -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret
-        -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6
-        -Dshare.host=127.0.0.1 -Dshare.port=8080 -Dalfresco.host=localhost
-        -Dalfresco.port=8080 -Dcsrf.filter.enabled=false
+        -Ddb.driver=org.postgresql.Driver
+        -Ddb.username=alfresco
+        -Ddb.password=alfresco
+        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dsolr.host=solr6
+        -Dsolr.port=8983
+        -Dsolr.http.connection.timeout=1000
+        -Dsolr.secureComms=secret
+        -Dsolr.sharedSecret=secret
+        -Dsolr.base.url=/solr
+        -Dindex.subsystem.name=solr6
+        -Dshare.host=127.0.0.1
+        -Dshare.port=8080
+        -Dalfresco.host=localhost
+        -Dalfresco.port=8080
+        -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:3.0.0
     mem_limit: 1536m
@@ -52,15 +62,18 @@ services:
     ports:
       - "8090:8090"
   share:
-    image: docker.io/alfresco/alfresco-share:7.4.0-M2
+    image: docker.io/alfresco/alfresco-share:7.4.0-M3
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
       JAVA_OPTS: >-
-        -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-        -Dalfresco.host=localhost -Dalfresco.port=8080
-        -Dalfresco.context=alfresco -Dalfresco.protocol=http
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+        -Dalfresco.host=localhost
+        -Dalfresco.port=8080
+        -Dalfresco.context=alfresco
+        -Dalfresco.protocol=http
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -72,7 +85,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: alfresco/alfresco-search-services:2.0.5
+    image: docker.io/alfresco/alfresco-search-services:2.0.6
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
