@@ -19,7 +19,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.2.1.7
+    image: quay.io/alfresco/alfresco-content-repository:7.2.1.10
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -36,8 +36,7 @@ services:
         -Ddb.username=alfresco
         -Ddb.password=alfresco
         -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsolr.host=solr6
-        -Dsolr.port=8983
+        -Dsolr.host=solr6 -Dsolr.port=8983
         -Dsolr.secureComms=secret
         -Dsolr.sharedSecret=secret
         -Dsolr.base.url=/solr
@@ -100,7 +99,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.2.1.7
+    image: quay.io/alfresco/alfresco-share:7.2.1.10
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -157,7 +156,7 @@ services:
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-admin-app:7.6.1
+    image: quay.io/alfresco/alfresco-admin-app:7.8.1
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
