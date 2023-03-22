@@ -1,6 +1,6 @@
 # alfresco-insight-zeppelin
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![AppVersion: 2.0.6](https://img.shields.io/badge/AppVersion-2.0.6-informational?style=flat-square)
+![Version: 1.3.0-SNAPSHOT](https://img.shields.io/badge/Version-1.3.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 2.0.6](https://img.shields.io/badge/AppVersion-2.0.6-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
