@@ -5,7 +5,7 @@
 ---
 apiVersion: v2
 name: alfresco-content-services
-version: 5.4.0-M3
+version: 5.4.0-SNAPSHOT
 appVersion: 7.4.0-M3
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
@@ -41,7 +41,7 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
   - name: alfresco-search
-    version: 1.2.0
+    version: 1.3.0-SNAPSHOT
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/

@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 5.4.0-M3](https://img.shields.io/badge/Version-5.4.0--M3-informational?style=flat-square) ![AppVersion: 7.4.0-M3](https://img.shields.io/badge/AppVersion-7.4.0--M3-informational?style=flat-square)
+![Version: 5.4.0-SNAPSHOT](https://img.shields.io/badge/Version-5.4.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 7.4.0-M3](https://img.shields.io/badge/AppVersion-7.4.0--M3-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-search | 1.2.0 |
+|  | alfresco-search | 1.3.0-SNAPSHOT |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
