@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-search | 1.2.0-SNAPSHOT |
+|  | alfresco-search | 1.3.0-SNAPSHOT |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
