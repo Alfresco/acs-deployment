@@ -68,7 +68,6 @@ postgresql:
       cpu: "0.1"
       memory: "500Mi"
     limits:
-      cpu: "0.1"
       memory: "500Mi"
 alfresco-search:
   resources:
@@ -76,7 +75,6 @@ alfresco-search:
       cpu: 0.1
       memory: "1000Mi"
     limits:
-      cpu: 0.1
       memory: "1500Mi"
 alfresco-search-enterprise:
   resources:
@@ -101,7 +99,6 @@ filestore:
       cpu: "0.01"
       memory: "128Mi"
     limits:
-      cpu: 0.1
       memory: "512Mi"
   replicaCount: 1
 share:
