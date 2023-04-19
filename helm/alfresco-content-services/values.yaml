@@ -168,7 +168,7 @@ msTeamsService:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 1.1.0
+    tag: 2.0.0-A1
     pullPolicy: IfNotPresent
     internalPort: 3978
   service:
