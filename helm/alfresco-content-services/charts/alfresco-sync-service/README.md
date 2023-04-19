@@ -22,7 +22,7 @@ Alfresco Sync Service
 | contentServices.installationName | string | `nil` | Specify when installing as a standalone chart, not as a subchart of ACS. This variable will be used to construct the correct hostname for ACS and ActiveMQ |
 | database | object | `{"existingSecret":null,"external":false}` | Defines properties required by sync service for connecting to the database Note! : If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver in TODO - add container path |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
-| ingress.extraAnnotations | string | `nil` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
+| ingress.extraAnnotations | string | `nil` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.tls | list | `[]` |  |
 | initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"bash"` |  |
@@ -105,7 +105,7 @@ Alfresco Sync Service
 | contentServices.installationName | string | `nil` | Specify when installing as a standalone chart, not as a subchart of ACS. This variable will be used to construct the correct hostname for ACS and ActiveMQ |
 | database | object | `{"existingSecret":null,"external":false}` | Defines properties required by sync service for connecting to the database Note! : If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver in TODO - add container path |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
-| ingress.extraAnnotations | string | `nil` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes |
+| ingress.extraAnnotations | string | `nil` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.tls | list | `[]` |  |
 | initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.activemq.image.repository | string | `"bash"` |  |
