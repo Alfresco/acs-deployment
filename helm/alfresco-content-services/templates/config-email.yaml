@@ -7,7 +7,7 @@ metadata:
   labels:
     {{- include "repository.labels" . | nindent 4 }}
 data:
-  {{ .Values.email.server.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.email.server.port }}::PROXY"
-  {{ .Values.imap.server.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.imap.server.port }}::PROXY"
-  {{ .Values.imap.server.imaps.port }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.imap.server.imaps.port }}::PROXY"
+  {{ .Values.email.server.port | quote }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.email.server.port }}::PROXY"
+  {{ .Values.imap.server.port | quote }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.imap.server.port }}::PROXY"
+  {{ .Values.imap.server.imaps.port | quote }}: "{{ .Release.Name }}/{{ template "content-services.shortname" . }}-email:{{ .Values.imap.server.imaps.port }}::PROXY"
 {{- end }}
