@@ -913,6 +913,8 @@ alfresco-sync-service:
   # Check [Alfresco Sync Service
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
+  image:
+    tag: 4.0.0-M7
   postgresql:
     enabled: true
     image:
