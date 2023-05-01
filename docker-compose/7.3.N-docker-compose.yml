@@ -178,7 +178,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:3.8.0
+    image: quay.io/alfresco/service-sync:3.9.0
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
