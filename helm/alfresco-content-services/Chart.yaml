@@ -43,11 +43,11 @@ dependencies:
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 1.0.1
+    version: 1.0.3
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 4.0.4
+    version: 4.0.5
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
     version: 1.0.0
