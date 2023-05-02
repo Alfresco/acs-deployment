@@ -14,7 +14,7 @@ scms:
       email: {{ requiredEnv "GIT_AUTHOR_EMAIL" }}
       owner: Alfresco
       repository: acs-deployment
-      branch: master
+      branch: {{ requiredEnv "GIT_BRANCH" }}
       username: alfresco-build
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
   searchEnterprise:
