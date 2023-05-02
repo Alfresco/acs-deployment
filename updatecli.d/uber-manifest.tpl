@@ -219,6 +219,7 @@ targets:
       file: {{ .search.compose_target }}
       key: >-
         {{ .search.compose_key }}
+  {{- if and .search.helm_target .search.helm_key }}
   searchValues:
     name: search image tag
     kind: yaml
@@ -228,6 +229,7 @@ targets:
       file: {{ .search.helm_target }}
       key: >-
         {{ .search.helm_key }}
+  {{- end }}
   {{- end }}
   {{- if index . "search-enterprise" }}
   {{- if index . "search-enterprise" "compose_target" }}
