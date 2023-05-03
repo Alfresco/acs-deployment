@@ -63,12 +63,13 @@ transformmisc:
       memory: "512Mi"
   replicaCount: 1
 postgresql:
-  resources:
-    requests:
-      cpu: "0.1"
-      memory: "500Mi"
-    limits:
-      memory: "500Mi"
+  primary:
+    resources:
+      requests:
+        cpu: "0.1"
+        memory: "500Mi"
+      limits:
+        memory: "500Mi"
 alfresco-search:
   resources:
     requests:
