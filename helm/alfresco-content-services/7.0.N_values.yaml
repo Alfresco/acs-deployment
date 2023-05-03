@@ -41,7 +41,7 @@ postgresql:
     tag: 13.1.0
 alfresco-sync-service:
   image:
-    tag: 3.9.0
+    tag: 3.7.0
   postgresql:
     primary:
       image:
