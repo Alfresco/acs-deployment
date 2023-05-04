@@ -1,5 +1,4 @@
 {{- define "repo.elasticsearch.config" -}}
--Dindex.subsystem.name=elasticsearch
 {{- if eq (index .Values "alfresco-search-enterprise" "elasticsearch" "protocol" | default .Values.global.elasticsearch.protocol) "https" }}
 -Delasticsearch.secureComms=https
 {{- end }}

@@ -620,11 +620,11 @@ messageBroker: &acs_messageBroker
   password: null
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  # -- Alternatively, provide credentials via an existing secret that contains
+  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 alfresco-search:
   nodeSelector: {}
-  type: "search-services"
   enabled: true
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -633,13 +633,8 @@ alfresco-search:
     host: null
     # -- Port of the external solr6 instance.
     port: null
-  repository: &repositoryHostPort
-    # The value for "host" is the name of this chart
-    host: alfresco-cs
-    port: *repositoryExternalPort
   alfresco-insight-zeppelin:
     enabled: false
-    repository: *repositoryHostPort
   ingress:
     # -- Alfresco Search services endpoint ('/solr')
     enabled: false
@@ -918,6 +913,8 @@ alfresco-sync-service:
   # Check [Alfresco Sync Service
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
+  image:
+    tag: 4.0.0-M7
   postgresql:
     enabled: true
     image:
