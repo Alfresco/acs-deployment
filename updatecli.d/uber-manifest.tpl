@@ -14,7 +14,7 @@ scms:
       email: {{ requiredEnv "GIT_AUTHOR_EMAIL" }}
       owner: Alfresco
       repository: acs-deployment
-      branch: master
+      branch: {{ requiredEnv "GIT_BRANCH" }}
       username: alfresco-build
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
   searchEnterprise:
@@ -219,6 +219,7 @@ targets:
       file: {{ .search.compose_target }}
       key: >-
         {{ .search.compose_key }}
+  {{- if and .search.helm_target .search.helm_key }}
   searchValues:
     name: search image tag
     kind: yaml
@@ -228,6 +229,7 @@ targets:
       file: {{ .search.helm_target }}
       key: >-
         {{ .search.helm_key }}
+  {{- end }}
   {{- end }}
   {{- if index . "search-enterprise" }}
   {{- if index . "search-enterprise" "compose_target" }}

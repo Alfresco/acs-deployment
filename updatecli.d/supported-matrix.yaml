@@ -29,9 +29,6 @@ matrix:
       version: "2"
       compose_target: *compose
       compose_key: services.solr6.image
-      helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-search/values.yaml
-      helm_key: searchServicesImage.tag
       pattern: *development_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
@@ -45,8 +42,8 @@ matrix:
       compose_target: *compose
       compose_key: services.sync-service.image
       helm_target: >-
-        helm/alfresco-content-services/charts/alfresco-sync-service/values.yaml
-      helm_key: syncservice.image.tag
+        helm/alfresco-content-services/values.yaml
+      helm_key: alfresco-sync-service.image.tag
       pattern: *development_pattern
     adw:
       version: "4"
@@ -86,6 +83,14 @@ matrix:
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
       image: *share_image
+    search:
+      version: "2"
+      compose_target: *compose73
+      compose_key: services.solr6.image
+      helm_target: *helmvalues73
+      helm_key: alfresco-search.searchServicesImage.tag
+      pattern: *ga_hotfixes_pattern
+      image: quay.io/alfresco/search-services
     search-enterprise:
       version: "3.2"
       helm_target: *helmvalues73
@@ -106,7 +111,7 @@ matrix:
       compose_target: *compose73
       compose_key: services.sync-service.image
       helm_target: *helmvalues73
-      helm_key: alfresco-sync-service.syncservice.image.tag
+      helm_key: alfresco-sync-service.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "3.1"
@@ -146,6 +151,14 @@ matrix:
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
       image: *share_image
+    search:
+      version: "2"
+      compose_target: *compose72
+      compose_key: services.solr6.image
+      helm_target: *helmvalues72
+      helm_key: alfresco-search.searchServicesImage.tag
+      pattern: *ga_hotfixes_pattern
+      image: quay.io/alfresco/search-services
     search-enterprise:
       version: "3.1"
       helm_target: *helmvalues72
@@ -166,7 +179,7 @@ matrix:
       compose_target: *compose72
       compose_key: services.sync-service.image
       helm_target: *helmvalues72
-      helm_key: alfresco-sync-service.syncservice.image.tag
+      helm_key: alfresco-sync-service.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "3.0"
@@ -206,6 +219,14 @@ matrix:
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
       image: *share_image
+    search:
+      version: "2"
+      compose_target: *compose71
+      compose_key: services.solr6.image
+      helm_target: *helmvalues71
+      helm_key: alfresco-search.searchServicesImage.tag
+      pattern: *ga_hotfixes_pattern
+      image: quay.io/alfresco/search-services
     search-enterprise:
       version: "3.1"
       helm_target: *helmvalues71
@@ -226,7 +247,7 @@ matrix:
       compose_target: *compose71
       compose_key: services.sync-service.image
       helm_target: *helmvalues71
-      helm_key: alfresco-sync-service.syncservice.image.tag
+      helm_key: alfresco-sync-service.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "2.6"
@@ -259,12 +280,20 @@ matrix:
       helm_key: share.image.tag
       pattern: *ga_hotfixes_pattern
       image: *share_image
+    search:
+      version: "2"
+      compose_target: *compose70
+      compose_key: services.solr6.image
+      helm_target: *helmvalues70
+      helm_key: alfresco-search.searchServicesImage.tag
+      pattern: *ga_hotfixes_pattern
+      image: quay.io/alfresco/search-services
     sync:
       version: "3.7"
       compose_target: *compose70
       compose_key: services.sync-service.image
       helm_target: *helmvalues70
-      helm_key: alfresco-sync-service.syncservice.image.tag
+      helm_key: alfresco-sync-service.image.tag
       pattern: *ga_hotfixes_pattern
     adw:
       version: "2.6"

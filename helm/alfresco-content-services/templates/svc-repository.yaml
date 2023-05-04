@@ -8,8 +8,8 @@ metadata:
 spec:
   type: {{ .Values.repository.service.type }}
   ports:
-    - port: {{ .Values.repository.service.externalPort }}
-      targetPort: {{ .Values.repository.image.internalPort }}
+    - port: {{ include "repository.svcPort" . }}
+      targetPort: {{ include "repository.containerPort" . }}
       name: {{ .Values.repository.service.name }}
     {{- if and .Values.email.server.enabled .Values.email.inbound.enabled }}
     - port: {{ .Values.email.server.port }}

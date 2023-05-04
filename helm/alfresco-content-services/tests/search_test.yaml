@@ -13,7 +13,7 @@ tests:
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Dindex.subsystem.name=none($|\ )
+            (^|\w\s+)-Dindex.subsystem.name=none($|\ )
   - it: should configure ACS with external Solr
     values: *testvalues
     set:
@@ -26,19 +26,19 @@ tests:
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Dindex.subsystem.name=solr6($|\ )
+            (^|\w\s+)-Dindex.subsystem.name=solr6($|\ )
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Dsolr.host=somehostwheresolrservesrequests($|\ )
+            (^|\w\s+)-Dsolr.host=somehostwheresolrservesrequests($|\ )
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Dsolr.port=8983($|\ )
+            (^|\w\s+)-Dsolr.port=8983($|\ )
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Dsolr.secureComms=secret($|\ )
+            (^|\w\s+)-Dsolr.secureComms=secret($|\ )
   - it: should configure ACS with external ElasticSearch
     values: *testvalues
     set:
@@ -56,16 +56,16 @@ tests:
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Dindex.subsystem.name=elasticsearch($|\ )
+            (^|\w\s+)-Dindex.subsystem.name=elasticsearch($|\ )
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Delasticsearch.host=some.opensearch.endpoint($|\ )
+            (^|\w\s+)-Delasticsearch.host=some.opensearch.endpoint($|\ )
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Delasticsearch.secureComms=https($|\ )
+            (^|\w\s+)-Delasticsearch.secureComms=https($|\ )
       - matchRegex:
           path: data.ALFRESCO_OPTS
           pattern: |-
-            (^|\w\ )-Delasticsearch.user=user($|\ )
+            (^|\w\s+)-Delasticsearch.user=user($|\ )
