@@ -23,7 +23,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.2.0
+    tag: 7.3.0
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -81,7 +81,11 @@ repository:
       memory: "3000Mi"
     limits:
       memory: "3000Mi"
-  # -- The repository readiness probe is used to check startup only as a failure
+  # -- The startup probe to cover the worse case startup time for slow start containers
+  startupProbe:
+    periodSeconds: 30
+    failureThreshold: 10
+  # The repository readiness probe is used to check startup only as a failure
   # of the liveness probe later will result in the pod being restarted.
   readinessProbe:
     initialDelaySeconds: 60
@@ -116,7 +120,7 @@ ooiService:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 1.1.1
+    tag: 1.1.3
     pullPolicy: IfNotPresent
     internalPort: 9095
   service:
@@ -156,7 +160,7 @@ msTeamsService:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 1.0.0
+    tag: 1.1.0
     pullPolicy: IfNotPresent
     internalPort: 3978
   service:
@@ -205,7 +209,7 @@ transformrouter:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: 1.5.2
+    tag: 2.0.0
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -237,7 +241,7 @@ pdfrenderer:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: 2.5.7
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -273,7 +277,7 @@ imagemagick:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: 2.5.7
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -309,7 +313,7 @@ libreoffice:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: 2.5.7
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -345,7 +349,7 @@ tika:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-tika
-    tag: 2.5.7
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -382,7 +386,7 @@ transformmisc:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: 2.5.7
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -416,7 +420,7 @@ aiTransformer:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 1.4.2
+    tag: 1.4.5
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -452,7 +456,7 @@ filestore:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 0.16.1
+    tag: 2.0.0
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
@@ -498,7 +502,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.2.0
+    tag: 7.3.0
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -574,7 +578,12 @@ activemq:
   enabled: true
   # --Possibility to choose Node for pod, key-value pair label of a desired node e.g {"kubernetes.io/hostname": multinode-demo-m02}
   nodeSelector: {}
-
+# -- external activemq connection setting when activemq.enabled=false
+messageBroker: &acs_messageBroker
+  url: null
+  user: null
+  password: null
+  existingSecretName: null
 alfresco-search:
   nodeSelector: {}
   type: "search-services"
@@ -589,7 +598,7 @@ alfresco-search:
     # Port of the external solr6 instance.
 #    port: "8983"
   searchServicesImage:
-    tag: 2.0.3
+    tag: 2.0.5
     pullPolicy: IfNotPresent
   repository: &repositoryHostPort
     # The value for "host" is the name of this chart
@@ -613,6 +622,23 @@ alfresco-search:
     #    hosts:
     #      - chart-example.local
 
+alfresco-elasticsearch-connector:
+  enabled: false
+  messageBroker: *acs_messageBroker
+  reindexing:
+    enabled: true
+    postgresql:
+      url:
+      hostname: postgresql-acs
+      database: alfresco
+  # -- Overrides .Values.global.elasticsearch
+  elasticsearch:
+    host: null
+    port: null
+    protocol: null
+    user: null
+    password: null
+
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -630,7 +656,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 2.7.0
+    tag: 3.1.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -680,7 +706,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: 13.3.0
+    tag: 14.4.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
@@ -712,7 +738,7 @@ postgresql-syncservice:
   replicaCount: 1
   nameOverride: postgresql-syncservice
   image:
-    tag: 13.3.0
+    tag: 14.4.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
@@ -731,6 +757,14 @@ postgresql-syncservice:
       memory: "1500Mi"
     limits:
       memory: "1500Mi"
+
+# -- Embedded ElasticSearch cluster powered by Bitnami charts
+elasticsearch:
+  # -- Enable the embedded ElasticSearch cluster
+  enabled: false
+  image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 # -- Defines the properties to be used for the S3 Connector
 # For a full list of properties on the S3 connector, please view: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
@@ -842,12 +876,13 @@ metadataKeystore:
   defaultKeyPassword: "oKIWzVdEdA"
 
 alfresco-sync-service:
+  messageBroker: *acs_messageBroker
   nodeSelector: {}
   syncservice:
     enabled : true
   image:
     repository: quay.io/alfresco/service-sync
-    tag: 3.6.0
+    tag: 3.8.0
 
 global:
 # A shared secret is now required in order to authenticate connections between solr and repo (typically: tracking)
@@ -887,3 +922,16 @@ global:
 #   region:
 #   s3Bucket:
 #   comprehendRoleARN:
+
+  # -- Shared connections details for Elasticsearch/Opensearch, required when alfresco-elasticsearch-connector.enabled is true
+  elasticsearch:
+    # -- The host where service is available. The provided default is for when elasticsearch.enabled is true
+    host: elasticsearch-master
+    # -- The port where service is available
+    port: 9200
+    # -- Valid values are http or https
+    protocol: http
+    # -- The username required to access the service, if any
+    user: null
+    # -- The password required to access the service, if any
+    password: null
