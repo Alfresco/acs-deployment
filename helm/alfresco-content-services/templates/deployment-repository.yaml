@@ -187,6 +187,8 @@ spec:
               mountPath: /var/run/secrets/java.io/keystores
       {{- end }}
       volumes:
+        - name: amps
+          emptyDir:
       {{- include "data_volume" .Values.repository | nindent 8 }}
       {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
         - name: repository-properties
