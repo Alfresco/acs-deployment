@@ -41,7 +41,7 @@ spec:
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
           {{- if .Values.repository.command }}
           command:
-{{ tpl .Values.repository.command . | indent 12 }}
+          {{ toYaml .Values.repository.command | nindent 12 }}
           {{- end }}
           {{- include "component-security-context" .Values.repository | indent 8 }}
           envFrom:
