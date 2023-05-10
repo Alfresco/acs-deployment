@@ -31,7 +31,7 @@ spec:
     {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
+     {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
       # only set this secret if a private docker registry variable is defined
       imagePullSecrets:
       {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}

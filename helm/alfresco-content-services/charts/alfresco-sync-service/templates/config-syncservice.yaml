@@ -22,16 +22,10 @@ data:
       -Dsql.db.password=$DATABASE_PASSWORD
       -Drepo.hostname={{ printf "%s-%s" (include "acs.release.name" .) .Values.repository.host }}
       -Drepo.port={{ .Values.repository.port }}
-      {{- if eq .Values.activemq.external false }}
-      -Dmessaging.broker.host={{ printf "%s-%s" (include "acs.release.name" .) .Values.activemq.broker.host}}
-      {{- else }}
-      -Dmessaging.broker.host={{ .Values.activemq.broker.host }}
-      {{- end }}
-      -Dmessaging.username={{ .Values.activemq.broker.username }}
-      -Dmessaging.password={{ .Values.activemq.broker.password }}
-      -Dmessaging.broker.port={{ .Values.activemq.broker.port }}
-      -Dmessaging.broker.protocol={{ .Values.activemq.broker.protocol }}
       -Ddw.server.applicationConnectors[0].type=http
+      -Dmessaging.broker.url=$BROKER_URL
+      -Dmessaging.username=$BROKER_USERNAME
+      -Dmessaging.password=$BROKER_PASSWORD
       {{ .Values.syncservice.environment.JAVA_OPTS }}
       {{ .Values.syncservice.environment.EXTRA_JAVA_OPTS }}
 {{- end }}

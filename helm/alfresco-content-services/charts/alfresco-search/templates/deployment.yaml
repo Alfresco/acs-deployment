@@ -11,6 +11,8 @@ metadata:
     component: search
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: {{ template "alfresco-search.fullName" . }}-solr
@@ -35,15 +37,10 @@ spec:
       tolerations:
 {{ toYaml . | indent 8 }}
     {{- end }}
-      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
-      # only set this secret if a private docker registry variable is defined
-      imagePullSecrets:
-      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}
-      securityContext:
-{{ toYaml .Values.securityContext | indent 8 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | nindent 6 }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ template "alfresco-search.dockerImage" . }}
@@ -65,7 +62,7 @@ spec:
             subPath: {{ .Values.persistence.search.data.subPath }}
           readinessProbe:
             httpGet:
-              path: /solr
+              path: /solr/alfresco/admin/ping
               port: {{ template "alfresco-search.internalPort" . }}
               {{- if eq .Values.global.tracking.auth "secret" }}
               httpHeaders:
