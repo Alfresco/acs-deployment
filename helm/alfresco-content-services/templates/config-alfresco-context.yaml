@@ -1,0 +1,12 @@
+{{- if .Values.repository.modules }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alfresco-context
+  labels:
+    {{- include "repository.labels" . | nindent 4 }}
+data:
+  alfresco.xml: |-
+    {{- tpl (.Files.Get "alfresco.xml") . | nindent 4 }}
+{{- end }}

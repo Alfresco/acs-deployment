@@ -75,11 +75,17 @@ spec:
             {{- end }}
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
+          {{- if .Values.repository.modules }}
+          - name: alfresco-context
+            mountPath: /usr/local/tomcat/conf/Catalina/localhost/
+          {{- end }}
           {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
           - name: repository-properties
             mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
             subPath: alfresco-global.properties
           {{- end }}
+          - mountPath: /amps
+            name: amps
           - name: data
             mountPath: {{ .Values.repository.persistence.data.mountPath }}
             subPath: {{ .Values.repository.persistence.data.subPath }}
@@ -204,6 +210,11 @@ spec:
           secret:
             secretName: {{ .Values.repository.licenseSecret }}
             defaultMode: 0400
+      {{- end }}
+      {{- if .Values.repository.modules }}
+        - name : alfresco-context
+          configMap:
+            name: alfresco-context
       {{- end }}
       {{- if .Values.repository.extraLogStatements }}
         - name : repository-logging-properties-volume

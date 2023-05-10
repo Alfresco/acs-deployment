@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+  <Resources>
+  {{- range .Values.repository.modules }}
+  {{- $packedClasses := printf "%s-classes.jar" (.name | trimSuffix ".amp") }}
+    <JarResources base="/amps/{{ .name }}"
+      className="org.apache.catalina.webresources.JarResourceSet"
+      internalPath="/lib"
+      webAppMount="/WEB-INF/lib"/>
+    <JarResources base="/amps/{{ $packedClasses }}"
+      className="org.apache.catalina.webresources.JarResourceSet"
+      webAppMount="/WEB-INF/classes"/>
+    <JarResources base="/amps/{{ .name }}"
+      className="org.apache.catalina.webresources.JarResourceSet"
+      internalPath="/web"
+      webAppMount="/"/>
+{{- end }}
+  </Resources>
+</Context>
