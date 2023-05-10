@@ -1,5 +1,13 @@
 ---
 repository:
+  modules:
+    - name: support-tools-repo-1.2.0.0-amp.amp
+      url: >-
+        https://repo1.maven.org/maven2/org/orderofthebee/support-tools/support-tools-repo/1.2.0.0
+    - name: alfresco-governance-services-community-repo-18.15.amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-governance-services-community-repo/18.15
+  command: ["catalina.sh", "run"]
   resources:
     requests:
       cpu: "0.01"
