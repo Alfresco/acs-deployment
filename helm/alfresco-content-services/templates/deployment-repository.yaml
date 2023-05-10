@@ -79,6 +79,8 @@ spec:
           {{- end }}
           - secretRef:
               name: {{ template "content-services.shortname" . }}-metadata-keystore-secret
+          - secretRef:
+              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
           - configMapRef:
               # config map to use, defined in config-repository.yaml
               name: {{ template "content-services.shortname" . }}-repository-configmap
@@ -125,6 +127,12 @@ spec:
 {{ toYaml .Values.repository.extraVolumeMounts | indent 10 }}
           {{- end }}
           {{- end }}
+          startupProbe:
+            httpGet:
+              path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+              port: {{ .Values.repository.image.internalPort }}
+            periodSeconds: {{ .Values.repository.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.repository.startupProbe.failureThreshold }}
           readinessProbe:
             httpGet:
               path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-

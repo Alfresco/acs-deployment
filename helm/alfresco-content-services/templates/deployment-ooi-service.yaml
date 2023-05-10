@@ -24,21 +24,10 @@ spec:
       labels:
         {{- include "ooi-service.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
-      # only set this secret if a private docker registry variable is defined
-      imagePullSecrets:
-      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}
-      {{- with .Values.ooiService.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.ooiService.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}         
+    {{- if .Values.ooiService.nodeSelector }}
+      nodeSelector: {{- .Values.ooiService.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

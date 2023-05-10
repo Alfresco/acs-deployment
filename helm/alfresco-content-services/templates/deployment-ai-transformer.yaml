@@ -23,21 +23,10 @@ spec:
       labels:
         {{- include "ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
-      # only set this secret if a private docker registry variable is defined
-      imagePullSecrets:
-      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}
-      {{- with .Values.aiTransformer.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.aiTransformer.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}         
+    {{- if .Values.aiTransformer.nodeSelector }}
+      nodeSelector: {{- .Values.aiTransformer.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -67,6 +56,10 @@ spec:
           - configMapRef:
               # config map to use, defined in config-ai-transformer.yaml
               name: {{ template "content-services.shortname" . }}-ai-transformer-configmap
+          - secretRef:
+              name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
+          env:
+            {{- include "activemq.env" . | nindent 12 }}
           ports:
               - containerPort: {{ .Values.aiTransformer.image.internalPort }}
           resources:

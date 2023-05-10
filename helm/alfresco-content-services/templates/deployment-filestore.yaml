@@ -23,21 +23,10 @@ spec:
       labels:
         {{- include "filestore.selectorLabels" . | nindent 8 }}
     spec:
-      {{- if .Values.global.multipleAlfrescoRegistryPullSecrets  }}
-      # only set this secret if a private docker registry variable is defined
-      imagePullSecrets:
-      {{- with .Values.global.multipleAlfrescoRegistryPullSecrets }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}      
-      {{- with .Values.filestore.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.filestore.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}         
+    {{- if .Values.filestore.nodeSelector }}
+      nodeSelector: {{- .Values.filestore.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -90,20 +79,6 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.filestore.data.mountPath }}
             subPath: {{ .Values.persistence.filestore.data.subPath }}
-      {{- if and .Values.persistence.filestore.enabled .Values.persistence.chownWithDynamicProvisioning }}
-      initContainers:
-        - name: init-fs
-          image: "{{ .Values.filestore.initContainer.image.repository }}:{{ .Values.filestore.initContainer.image.tag }}"
-          imagePullPolicy: {{ .Values.filestore.initContainer.image.pullPolicy }}
-          resources:
-{{ toYaml .Values.filestore.initContainer.resources | indent 14 }}
-          # command to allow sfs to write to EFS volume.
-          command: ["sh", "-c", "chown -R 33030:1000 {{ .Values.persistence.filestore.data.mountPath }}"]
-          volumeMounts:
-            - name: data
-              mountPath: {{ .Values.persistence.filestore.data.mountPath }}
-              subPath: {{ .Values.persistence.filestore.data.subPath }}
-      {{- end }}
       volumes:
       - name: data
         persistentVolumeClaim:
