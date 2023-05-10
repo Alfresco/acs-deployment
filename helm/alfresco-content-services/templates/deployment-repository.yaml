@@ -159,16 +159,15 @@ spec:
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           command:
             - /bin/bash
-            - -xec
+            - -ec
           args:
             - |
               cd /amps
               for AMP in $(ls /amps/*.amp); do
                 mkdir amp && cd $_
-                pwd
-                echo $AMP
                 jar xf $AMP
-                module_id=$(awk -F= '/^\s*module\.id/{print $2}' module.properties)
+                module_id=$(grep 'module\.id' module.properties | cut -d= -f 2 | tr -d '[:cntrl:]')
+                echo "repackaging $module_id..."
                 mv module.properties config/alfresco/module/${module_id}
                 jar -c -f ${AMP%.amp}-classes.jar -C config/ .
                 cd ../ && rm -rf amp
