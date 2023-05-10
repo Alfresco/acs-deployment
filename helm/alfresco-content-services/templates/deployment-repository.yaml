@@ -128,6 +128,55 @@ spec:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
       initContainers:
+        {{- if .Values.repository.modules }}
+        - name: get-amps
+          image: curlimages/curl:8.00.1
+          #image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
+          imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository | indent 8 }}
+          resources: {{- toYaml .Values.repository.initContainers.db.resources | nindent 12 }}
+          command:
+            - curl
+          args:
+            - --output-dir
+            - /amps
+            - -O
+            - -v
+            - >-
+              {{- $urls := list }}
+              {{- range .Values.repository.modules }}
+              {{- $urls = append $urls (printf "%s/%s" .url .name) }}
+              {{- end }}
+              {
+              {{- join "," $urls -}}
+              }
+          volumeMounts:
+            - mountPath: /amps
+              name: amps
+        - name: repack-amps
+          image: alfresco/alfresco-base-java:jdk17-rockylinux8
+          {{- include "component-security-context" .Values.repository | indent 8 }}
+          resources: {{- toYaml .Values.repository.resources | nindent 12 }}
+          command:
+            - /bin/bash
+            - -xec
+          args:
+            - |
+              cd /amps
+              for AMP in $(ls /amps/*.amp); do
+                mkdir amp && cd $_
+                pwd
+                echo $AMP
+                jar xf $AMP
+                module_id=$(awk -F= '/^\s*module\.id/{print $2}' module.properties)
+                mv module.properties config/alfresco/module/${module_id}
+                jar -c -f ${AMP%.amp}-classes.jar -C config/ .
+                cd ../ && rm -rf amp
+              done
+          volumeMounts:
+            - mountPath: /amps
+              name: amps
+        {{- end }}
       {{- if .Values.repository.extraInitContainers }}
         {{- toYaml .Values.repository.extraInitContainers | nindent 8 }}
       {{- end }}
