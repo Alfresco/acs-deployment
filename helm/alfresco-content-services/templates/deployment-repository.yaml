@@ -141,11 +141,11 @@ spec:
             - --output-dir
             - /amps
             - -O
-            - -v
+            - -Lv
             - >-
               {{- $urls := list }}
               {{- range .Values.repository.modules }}
-              {{- $urls = append $urls (printf "%s/%s" .url .name) }}
+              {{- $urls = append $urls (printf "%s/%s.%s" .url .name .type) }}
               {{- end }}
               {
               {{- join "," $urls -}}
@@ -163,6 +163,8 @@ spec:
           args:
             - |
               cd /amps
+              mkdir jars
+              mv *.jar jars
               for AMP in $(ls /amps/*.amp); do
                 mkdir amp && cd $_
                 jar xf $AMP

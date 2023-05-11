@@ -1,19 +1,24 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Context>
   <Resources>
+    <JarResources base="/amps/jars"
+      className="org.apache.catalina.webresources.DirResourceSet"
+      webAppMount="/WEB-INF/lib"/>
   {{- range .Values.repository.modules }}
-  {{- $packedClasses := printf "%s-classes.jar" (.name | trimSuffix ".amp") }}
-    <JarResources base="/amps/{{ .name }}"
+  {{- if eq .type "amp" }}
+  {{- $packedClasses := printf "%s-classes.jar" .name }}
+    <JarResources base="/amps/{{ .name }}.{{ .type }}"
       className="org.apache.catalina.webresources.JarResourceSet"
       internalPath="/lib"
       webAppMount="/WEB-INF/lib"/>
     <JarResources base="/amps/{{ $packedClasses }}"
       className="org.apache.catalina.webresources.JarResourceSet"
       webAppMount="/WEB-INF/classes"/>
-    <JarResources base="/amps/{{ .name }}"
+    <JarResources base="/amps/{{ .name }}.{{ .type }}"
       className="org.apache.catalina.webresources.JarResourceSet"
       internalPath="/web"
       webAppMount="/"/>
-{{- end }}
+  {{- end }}
+  {{- end }}
   </Resources>
 </Context>

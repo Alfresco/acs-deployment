@@ -1,10 +1,16 @@
 ---
 repository:
   modules:
-    - name: support-tools-repo-1.2.0.0-amp.amp
+    - name: support-tools-repo-1.2.0.0-amp
+      type: amp
       url: >-
         https://repo1.maven.org/maven2/org/orderofthebee/support-tools/support-tools-repo/1.2.0.0
-    - name: alfresco-governance-services-community-repo-18.15.amp
+    - name: alfresco-script-root-object-1.0.0
+      type: jar
+      url: >-
+        https://github.com/aborroy/alfresco-script-root-object/releases/download/1.0.0
+    - name: alfresco-governance-services-community-repo-18.15
+      type: amp
       url: >-
         https://nexus.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-governance-services-community-repo/18.15
   command: ["catalina.sh", "run"]
