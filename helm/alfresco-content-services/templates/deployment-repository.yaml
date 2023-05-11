@@ -75,6 +75,9 @@ spec:
             {{- end }}
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
+          - name: data
+            mountPath: {{ .Values.repository.persistence.data.mountPath }}
+            subPath: {{ .Values.repository.persistence.data.subPath }}
           {{- if .Values.repository.modules }}
           - name: alfresco-context
             mountPath: /usr/local/tomcat/conf/Catalina/localhost/
@@ -86,9 +89,6 @@ spec:
           {{- end }}
           - mountPath: /amps
             name: amps
-          - name: data
-            mountPath: {{ .Values.repository.persistence.data.mountPath }}
-            subPath: {{ .Values.repository.persistence.data.subPath }}
           {{- if .Values.repository.licenseSecret }}
           - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
@@ -243,9 +243,9 @@ spec:
               mountPath: /var/run/secrets/java.io/keystores
       {{- end }}
       volumes:
+      {{- include "data_volume" .Values.repository | nindent 8 }}
         - name: amps
           emptyDir:
-      {{- include "data_volume" .Values.repository | nindent 8 }}
       {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
         - name: repository-properties
           secret:
