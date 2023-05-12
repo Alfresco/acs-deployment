@@ -39,7 +39,7 @@ spec:
           {{- include "component-security-context" .Values.share | indent 8 }}
           {{- if .Values.share.command }}
           command:
-{{ tpl .Values.share.command . | indent 12 }}
+          {{ toYaml .Values.share.command | nindent 12 }}
           {{- end }}
           ports:
             - containerPort: {{ .Values.share.image.internalPort }}
@@ -47,8 +47,14 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "content-services.shortname" . }}-share-configmap
-          {{- if .Values.share.extraVolumeMounts }}
           volumeMounts:
+            - mountPath: /amps
+              name: {{ template "alfresco.amps.vols" .Values.share }}
+          {{- if .Values.share.modules }}
+            - mountPath: /usr/local/tomcat/conf/Catalina/localhost/
+              name: share-context
+          {{- end }}
+          {{- if .Values.share.extraVolumeMounts }}
 {{ toYaml .Values.share.extraVolumeMounts | indent 10 }}
           {{- end }}
           readinessProbe:
@@ -70,11 +76,21 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
-      {{- if .Values.share.extraInitContainers }}
       initContainers:
+        {{- if .Values.share.modules }}
+        {{- include "alfresco.amps.init" .Values.share | nindent 8 }}
+        {{- end }}
+      {{- if .Values.share.extraInitContainers }}
 {{ tpl .Values.share.extraInitContainers . | indent 8 }}
       {{- end }}
-      {{- if .Values.share.extraVolumes }}
       volumes:
+        - name: {{ template "alfresco.amps.vols" .Values.share }}
+          emptyDir:
+      {{- if .Values.share.modules }}
+        - name : share-context
+          configMap:
+            name: share-context
+      {{- end }}
+      {{- if .Values.share.extraVolumes }}
 {{ toYaml .Values.share.extraVolumes | indent 6 }}
       {{- end }}
