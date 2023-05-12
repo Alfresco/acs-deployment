@@ -88,7 +88,7 @@ spec:
             subPath: alfresco-global.properties
           {{- end }}
           - mountPath: /amps
-            name: amps
+            name: {{ template "alfresco.amps.vols" .Values.repository }}
           {{- if .Values.repository.licenseSecret }}
           - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
@@ -129,54 +129,7 @@ spec:
                 command: ["/bin/bash", "-c", "sleep 20"]
       initContainers:
         {{- if .Values.repository.modules }}
-        - name: get-amps
-          image: curlimages/curl:8.00.1
-          #image: "{{ .Values.repository.image.repository }}:{{ .Values.repository.image.tag }}"
-          imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
-          {{- include "component-security-context" .Values.repository | indent 8 }}
-          resources: {{- toYaml .Values.repository.initContainers.db.resources | nindent 12 }}
-          command:
-            - curl
-          args:
-            - --output-dir
-            - /amps
-            - -O
-            - -Lv
-            - >-
-              {{- $urls := list }}
-              {{- range .Values.repository.modules }}
-              {{- $urls = append $urls (printf "%s/%s.%s" .url .name .type) }}
-              {{- end }}
-              {
-              {{- join "," $urls -}}
-              }
-          volumeMounts:
-            - mountPath: /amps
-              name: amps
-        - name: repack-amps
-          image: alfresco/alfresco-base-java:jdk17-rockylinux8
-          {{- include "component-security-context" .Values.repository | indent 8 }}
-          resources: {{- toYaml .Values.repository.resources | nindent 12 }}
-          command:
-            - /bin/bash
-            - -ec
-          args:
-            - |
-              cd /amps
-              mkdir jars
-              mv *.jar jars
-              for AMP in $(ls /amps/*.amp); do
-                mkdir amp && cd $_
-                jar xf $AMP
-                module_id=$(grep 'module\.id' module.properties | cut -d= -f 2 | tr -d '[:cntrl:]')
-                echo "repackaging $module_id..."
-                mv module.properties config/alfresco/module/${module_id}
-                jar -c -f ${AMP%.amp}-classes.jar -C config/ .
-                cd ../ && rm -rf amp
-              done
-          volumeMounts:
-            - mountPath: /amps
-              name: amps
+        {{- include "alfresco.amps.init" .Values.repository | nindent 8 }}
         {{- end }}
       {{- if .Values.repository.extraInitContainers }}
         {{- toYaml .Values.repository.extraInitContainers | nindent 8 }}
@@ -244,7 +197,7 @@ spec:
       {{- end }}
       volumes:
       {{- include "data_volume" .Values.repository | nindent 8 }}
-        - name: amps
+        - name: {{ template "alfresco.amps.vols" .Values.repository }}
           emptyDir:
       {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
         - name: repository-properties

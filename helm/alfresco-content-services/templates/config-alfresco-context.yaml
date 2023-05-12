@@ -8,5 +8,5 @@ metadata:
     {{- include "repository.labels" . | nindent 4 }}
 data:
   alfresco.xml: |-
-    {{- tpl (.Files.Get "alfresco.xml") . | nindent 4 }}
+    {{- tpl (.Files.Get "webapp-context.xml") (dict "Template" $.Template "webapp" .Values.repository) | nindent 4 }}
 {{- end }}

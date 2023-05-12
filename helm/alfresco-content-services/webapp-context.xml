@@ -4,7 +4,7 @@
     <JarResources base="/amps/jars"
       className="org.apache.catalina.webresources.DirResourceSet"
       webAppMount="/WEB-INF/lib"/>
-  {{- range .Values.repository.modules }}
+  {{- range .webapp.modules }}
   {{- if eq .type "amp" }}
   {{- $packedClasses := printf "%s-classes.jar" .name }}
     <JarResources base="/amps/{{ .name }}.{{ .type }}"
