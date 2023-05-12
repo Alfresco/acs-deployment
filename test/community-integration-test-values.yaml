@@ -1,6 +1,21 @@
 ---
 repository:
+  image:
+    repository: alxgomz/alfresco-community-repo-base
+    tag: 7.3.1-hackathon.1
   modules:
+    - name: alfresco-share-services-18.15
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/releases/content/org/alfresco/alfresco-share-services/18.15
+    - name: alfresco-googledrive-repo-community-3.3.0
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/releases/content/org/alfresco/integrations/alfresco-googledrive-repo-community/3.3.0
+    - name: alfresco-governance-services-community-repo-18.15
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-governance-services-community-repo/18.15
     - name: support-tools-repo-1.2.0.0-amp
       type: amp
       url: >-
@@ -9,10 +24,6 @@ repository:
       type: jar
       url: >-
         https://github.com/aborroy/alfresco-script-root-object/releases/download/1.0.0
-    - name: alfresco-governance-services-community-repo-18.15
-      type: amp
-      url: >-
-        https://nexus.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-governance-services-community-repo/18.15
   command: ["catalina.sh", "run"]
   resources:
     requests:
@@ -25,9 +36,19 @@ repository:
   persistence:
     accessModes:
       - ReadWriteOnce
-  image:
-    repository: alfresco/alfresco-content-repository-community
 share:
+  image:
+    repository: alxgomz/alfresco-share-community-base
+    tag: 7.3.1-noamps.1
+  modules:
+    - name: alfresco-googledrive-share-3.3.0
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/releases/content/org/alfresco/integrations/alfresco-googledrive-share/3.3.0
+    - name: alfresco-governance-services-community-share-18.19
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repo_groups/public/content/org/alfresco/alfresco-governance-services-community-share/18.19
   resources:
     requests:
       cpu: "0.01"
@@ -35,8 +56,6 @@ share:
     limits:
       memory: "512Mi"
   replicaCount: 1
-  image:
-    repository: alfresco/alfresco-share
 pdfrenderer:
   resources:
     requests:
