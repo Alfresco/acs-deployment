@@ -41,7 +41,7 @@ spec:
           imagePullPolicy: {{ .Values.repository.image.pullPolicy }}
           {{- if .Values.repository.command }}
           command:
-{{ tpl .Values.repository.command . | indent 12 }}
+          {{ toYaml .Values.repository.command | nindent 12 }}
           {{- end }}
           {{- include "component-security-context" .Values.repository | indent 8 }}
           envFrom:
@@ -75,14 +75,20 @@ spec:
             {{- end }}
           resources: {{- toYaml .Values.repository.resources | nindent 12 }}
           volumeMounts:
+          - name: data
+            mountPath: {{ .Values.repository.persistence.data.mountPath }}
+            subPath: {{ .Values.repository.persistence.data.subPath }}
+          {{- if .Values.repository.modules }}
+          - name: alfresco-context
+            mountPath: /usr/local/tomcat/conf/Catalina/localhost/
+          {{- end }}
           {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
           - name: repository-properties
             mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
             subPath: alfresco-global.properties
           {{- end }}
-          - name: data
-            mountPath: {{ .Values.repository.persistence.data.mountPath }}
-            subPath: {{ .Values.repository.persistence.data.subPath }}
+          - mountPath: /amps
+            name: {{ template "alfresco.amps.vols" .Values.repository }}
           {{- if .Values.repository.licenseSecret }}
           - mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license/
             name: acs-license
@@ -122,6 +128,9 @@ spec:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
       initContainers:
+        {{- if .Values.repository.modules }}
+        {{- include "alfresco.amps.init" .Values.repository | nindent 8 }}
+        {{- end }}
       {{- if .Values.repository.extraInitContainers }}
         {{- toYaml .Values.repository.extraInitContainers | nindent 8 }}
       {{- end }}
@@ -188,6 +197,8 @@ spec:
       {{- end }}
       volumes:
       {{- include "data_volume" .Values.repository | nindent 8 }}
+        - name: {{ template "alfresco.amps.vols" .Values.repository }}
+          emptyDir:
       {{- if and (index .Values "alfresco-search" "enabled") (eq .Values.global.tracking.auth "secret") }}
         - name: repository-properties
           secret:
@@ -202,6 +213,11 @@ spec:
           secret:
             secretName: {{ .Values.repository.licenseSecret }}
             defaultMode: 0400
+      {{- end }}
+      {{- if .Values.repository.modules }}
+        - name : alfresco-context
+          configMap:
+            name: alfresco-context
       {{- end }}
       {{- if .Values.repository.extraLogStatements }}
         - name : repository-logging-properties-volume

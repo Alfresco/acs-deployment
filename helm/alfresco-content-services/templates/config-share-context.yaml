@@ -1,0 +1,12 @@
+{{- if .Values.share.modules }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: share-context
+  labels:
+    {{- include "share.labels" . | nindent 4 }}
+data:
+  share.xml: |-
+    {{- tpl (.Files.Get "webapp-context.xml") (dict "Template" $.Template "webapp" .Values.share) | nindent 4 }}
+{{- end }}
