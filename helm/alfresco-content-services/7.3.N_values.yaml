@@ -3,6 +3,24 @@
 repository:
   image:
     tag: 7.3.1
+  modules:
+    - name: alfresco-share-services-18.15
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/releases/content/org/alfresco/alfresco-share-services/18.15
+    - name: alfresco-googledrive-repo-enterprise-3.3.0
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/enterprise-releases/content/org/alfresco/integrations/alfresco-googledrive-repo-enterprise/3.3.0
+    - name: alfresco-governance-services-enterprise-repo-18.15
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/enterprise-releases/content/org/alfresco/alfresco-governance-services-enterprise-repo/18.15
+    - name: alfresco-script-root-object-1.0.0
+      type: jar
+      url: >-
+        https://github.com/aborroy/alfresco-script-root-object/releases/download/1.0.0
+  command: ["catalina.sh", "run"]
 ooiService:
   image:
     tag: 1.1.3
@@ -38,6 +56,15 @@ filestore:
 share:
   image:
     tag: 7.3.1
+  modules:
+    - name: alfresco-googledrive-share-3.3.0
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/releases/content/org/alfresco/integrations/alfresco-googledrive-share/3.3.0
+    - name: alfresco-governance-services-enterprise-share-18.19
+      type: amp
+      url: >-
+        https://nexus.alfresco.com/nexus/service/local/repositories/enterprise-releases/content/org/alfresco/alfresco-governance-services-enterprise-share/18.19
 activemq:
   image:
     tag:
