@@ -139,7 +139,18 @@ sources:
         pattern: >-
           ^{{ index . "onedrive" "version" }}{{ index . "onedrive" "pattern" }}$
   {{- end }}
-
+  {{- if index . "msteams" }}
+  msteamsTag:
+    name: MS Teams Service image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-ms-teams-service
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "msteams" "version" }}{{ index . "msteams" "pattern" }}$
+  {{- end }}
 
 
 targets:
@@ -297,6 +308,17 @@ targets:
       file: {{ .onedrive.helm_target }}
       key: >-
         {{ .onedrive.helm_key }}
+  {{- end }}
+  {{- if index . "msteams" }}
+  msteamsValues:
+    name: MS Teams image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: msteamsTag
+    spec:
+      file: {{ .msteams.helm_target }}
+      key: >-
+        {{ .msteams.helm_key }}
   {{- end }}
   {{- if index . "sync" }}
   syncCompose:
