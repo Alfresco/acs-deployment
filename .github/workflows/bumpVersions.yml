@@ -9,30 +9,20 @@ on:
         required: true
   push:
     paths:
-      - '.github/workflows/bumpVersions.yml'
-      - 'updatecli.d/**'
+      - .github/workflows/bumpVersions.yml
+      - updatecli.d/**
     branches:
-      - 'OPSEXP-**'
+      - OPSEXP-**
 
 permissions:
-  contents: "write"
-  pull-requests: "write"
+  contents: write
+  pull-requests: write
 
 jobs:
   updatecli:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      matrix:
-        version:
-          - community
-          - 7.0.N
-          - 7.1.N
-          - 7.2.N
-          - 7.3.N
-          - latest
     env:
-      MATRIX_VALUES_OUTPUT: /tmp/${{ matrix.version }}-values.yaml
+      VALUES: ./updatecli.d/supported-matrix.yaml
       UPDATECLI_MANIFEST_FILE: ./updatecli.d/uber-manifest.tpl
     steps:
       - name: Checkout
@@ -42,12 +32,6 @@ jobs:
         uses: updatecli/updatecli-action@v2
         with:
           version: v0.49.2
-
-      - name: Prepare values file for ${{ matrix.version }}
-        working-directory: ./updatecli.d/
-        run: |
-          yq -e e 'explode(.) | .matrix["${{ matrix.version }}"]' supported-matrix.yaml \
-          | tee > "$MATRIX_VALUES_OUTPUT"
 
       - name: Run Updatecli in diff mode
         if: github.event_name == 'push'
@@ -59,7 +43,7 @@ jobs:
           GIT_AUTHOR_USERNAME: ${{ vars.BOT_GITHUB_USERNAME }}
         run: >-
           JIRA_ID="DRAFT" GIT_BRANCH="$GITHUB_REF_NAME"
-          updatecli diff -c "$UPDATECLI_MANIFEST_FILE" -v "$MATRIX_VALUES_OUTPUT"
+          updatecli diff -c "$UPDATECLI_MANIFEST_FILE" -v "$VALUES"
 
       - name: Run Updatecli in apply mode
         if: github.event_name == 'workflow_dispatch'
@@ -73,4 +57,4 @@ jobs:
           JIRA_ID: ${{ inputs.jira_id }}
         run: >-
           JIRA_ID=${JIRA_ID:-DRAFT}
-          updatecli apply -c "$UPDATECLI_MANIFEST_FILE" -v "$MATRIX_VALUES_OUTPUT"
+          updatecli apply -c "$UPDATECLI_MANIFEST_FILE" -v "$VALUES"
