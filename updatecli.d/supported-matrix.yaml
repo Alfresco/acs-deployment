@@ -544,7 +544,11 @@ matrix:
       version: "1.1"
       helm_target: *helmvaluesOss
       helm_key: ooiService.image.tag
+<<<<<<< HEAD
       pattern: *ga_hotfixes_pattern
+=======
+      pattern: *development_pattern
+>>>>>>> 62dd247 (add tengine-aio (& missing targets))
     tengine-aio:
       compose_target: *composeOss
       compose_key: services.transform-core-aio.image
