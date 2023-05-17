@@ -39,7 +39,7 @@ alfresco-search-enterprise:
         tag: 3.1.1
     content:
       image:
-        tag: 3.1.1
+        tag: 3.3.0
     metadata:
       image:
         tag: 3.1.1
