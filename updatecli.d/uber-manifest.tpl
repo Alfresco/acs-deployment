@@ -211,6 +211,18 @@ sources:
         pattern: >-
           {{ index . "tengine-im" "version" }}
   {{- end }}
+  {{- if index . "tengine-lo" }}
+  tengine-loTag:
+    name: Alfresco LibreOffice Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-libreoffice
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-lo" "version" }}
+  {{- end }}
 
 
 targets:
@@ -436,6 +448,17 @@ targets:
       file: {{ index . "tengine-im" "helm_target" }}
       key: >-
         {{ index . "tengine-im" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-lo" }}
+  tengine-loValues:
+    name: Alfresco LibreOffice Transform Engine image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: tengine-loTag
+    spec:
+      file: {{ index . "tengine-lo" "helm_target" }}
+      key: >-
+        {{ index . "tengine-lo" "helm_key" }}
   {{- end }}
   {{- if index . "sync" }}
   syncCompose:
