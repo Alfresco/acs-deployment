@@ -16,7 +16,7 @@ libreoffice:
     tag: 2.6.0
 tika:
   image:
-    tag: 2.5.7
+    tag: 2.6.0
 transformmisc:
   image:
     tag: 2.5.7
