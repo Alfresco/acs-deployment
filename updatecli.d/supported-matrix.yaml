@@ -53,7 +53,7 @@ matrix:
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *development_pattern
     adminApp:
-      version: "7"
+      version: "8"
       compose_target: *compose
       compose_key: services.control-center.image
       helm_target: *helmvalues
