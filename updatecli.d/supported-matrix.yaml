@@ -133,7 +133,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
-      version: "3.2"
+      version: "3"
       helm_target: *helmvalues73
       helm_keys:
         Reindexing: alfresco-search-enterprise.reindexing.image.tag
@@ -242,7 +242,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
-      version: "3.1"
+      version: "3"
       helm_target: *helmvalues72
       helm_keys:
         Reindexing: alfresco-search-enterprise.reindexing.image.tag
@@ -351,7 +351,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
-      version: "3.1"
+      version: "3"
       helm_target: *helmvalues71
       helm_keys:
         Reindexing: alfresco-search-enterprise.reindexing.image.tag
