@@ -15,7 +15,7 @@ matrix:
       helm_target: &helmvalues >-
         helm/alfresco-content-services/values.yaml
       helm_key: repository.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: &repository_image quay.io/alfresco/alfresco-content-repository
     share:
       version: "7.4"
@@ -23,52 +23,52 @@ matrix:
       compose_key: services.share.image
       helm_target: *helmvalues
       helm_key: share.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: &share_image quay.io/alfresco/alfresco-share
     search:
       version: "^2.0"
       compose_target: *compose
       compose_key: services.solr6.image
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
       version: "3"
       compose_target: >-
         docker-compose/elasticsearch-override-docker-compose.yml
       compose_key: services.search.image
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     sync:
-      version: "4"
+      version: "3.9"
       compose_target: *compose
       compose_key: services.sync-service.image
       helm_target: >-
         helm/alfresco-content-services/values.yaml
       helm_key: alfresco-sync-service.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     adw:
       version: "4"
       compose_target: *compose
       compose_key: services.digital-workspace.image
       helm_target: *helmvalues
       helm_key: alfresco-digital-workspace.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     adminApp:
       version: "8"
       compose_target: *compose
       compose_key: services.control-center.image
       helm_target: *helmvalues
       helm_key: alfresco-admin-app.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     ondrive:
       version: "2"
       helm_target: *helmvalues
       helm_key: ooiService.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     msteams:
       version: "2"
       helm_target: *helmvalues
       helm_key: msTeamsService.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     intelligence:
       version: "~1.5.0"
       helm_target: *helmvalues
@@ -516,7 +516,7 @@ matrix:
       helm_target: &helmvaluesOss >-
         helm/alfresco-content-services/community_values.yaml
       helm_key: repository.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: docker.io/alfresco/alfresco-content-repository-community
     share:
       version: "7.4"
@@ -524,7 +524,7 @@ matrix:
       compose_key: services.share.image
       helm_target: *helmvaluesOss
       helm_key: share.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: docker.io/alfresco/alfresco-share
     search:
       version: "^2.0"
@@ -532,13 +532,13 @@ matrix:
       compose_key: services.solr6.image
       helm_target: *helmvaluesOss
       helm_key: alfresco-search.searchServicesImage.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: docker.io/alfresco/alfresco-search-services
     ondrive:
       version: "1.1"
       helm_target: *helmvaluesOss
       helm_key: ooiService.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     tengine-aio:
       compose_target: *composeOss
       compose_key: services.transform-core-aio.image
