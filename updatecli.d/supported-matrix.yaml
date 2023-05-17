@@ -91,6 +91,10 @@ matrix:
       version: "~3.1.0"
       helm_target: *helmvalues
       helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: pdfrenderer.image.tag
   7.3.N:
     acs:
       version: "7.3"
@@ -156,7 +160,7 @@ matrix:
       pattern: *ga_pattern
     ondrive:
       version: "2.0"
-      helm_target: *helmvalues
+      helm_target: *helmvalues73
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
     msteams:
@@ -186,6 +190,10 @@ matrix:
       version: "~3.0.0"
       helm_target: *helmvalues73
       helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "~3.0.0"
+      helm_target: *helmvalues73
+      helm_key: pdfrenderer.image.tag
   7.2.N:
     acs:
       version: "7.2"
@@ -251,7 +259,7 @@ matrix:
       pattern: *ga_pattern
     ondrive:
       version: "2.0"
-      helm_target: *helmvalues
+      helm_target: *helmvalues72
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
     msteams:
@@ -281,6 +289,10 @@ matrix:
       version: "^2.5.0"
       helm_target: *helmvalues72
       helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "^2.5.0"
+      helm_target: *helmvalues72
+      helm_key: pdfrenderer.image.tag
   7.1.N:
     acs:
       version: "7.1"
@@ -339,7 +351,7 @@ matrix:
       pattern: *ga_pattern
     ondrive:
       version: "2.0"
-      helm_target: *helmvalues
+      helm_target: *helmvalues71
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
     msteams:
@@ -369,6 +381,10 @@ matrix:
       version: "^2.5.0"
       helm_target: *helmvalues71
       helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "^2.5.0"
+      helm_target: *helmvalues71
+      helm_key: pdfrenderer.image.tag
   7.0.N:
     acs:
       version: "7.0"
@@ -431,12 +447,16 @@ matrix:
       helm_key: transformmisc.image.tag
     tengine-im:
       version: "^2.5.0"
-      helm_target: *helmvalues71
+      helm_target: *helmvalues70
       helm_key: imagemagick.image.tag
     tengine-lo:
       version: "^2.5.0"
-      helm_target: *helmvalues71
+      helm_target: *helmvalues70
       helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "^2.5.0"
+      helm_target: *helmvalues70
+      helm_key: pdfrenderer.image.tag
   community:
     acs:
       version: "7.4"

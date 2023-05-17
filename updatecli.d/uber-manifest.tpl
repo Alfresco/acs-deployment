@@ -223,6 +223,18 @@ sources:
         pattern: >-
           {{ index . "tengine-lo" "version" }}
   {{- end }}
+  {{- if index . "tengine-pdf" }}
+  tengine-pdfTag:
+    name: Alfresco PDF Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-pdf-renderer
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-pdf" "version" }}
+  {{- end }}
 
 
 targets:
@@ -459,6 +471,17 @@ targets:
       file: {{ index . "tengine-lo" "helm_target" }}
       key: >-
         {{ index . "tengine-lo" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-pdf" }}
+  tengine-pdfValues:
+    name: Alfresco PDF Transform Engine image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: tengine-pdfTag
+    spec:
+      file: {{ index . "tengine-pdf" "helm_target" }}
+      key: >-
+        {{ index . "tengine-pdf" "helm_key" }}
   {{- end }}
   {{- if index . "sync" }}
   syncCompose:
