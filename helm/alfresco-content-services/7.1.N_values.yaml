@@ -48,7 +48,7 @@ alfresco-search-enterprise:
         tag: 3.3.0
   reindexing:
     image:
-      tag: 3.1.1
+      tag: 3.3.0
 postgresql:
   image:
     tag: 13.3.0
