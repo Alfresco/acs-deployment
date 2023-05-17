@@ -60,9 +60,14 @@ matrix:
       helm_key: alfresco-admin-app.image.tag
       pattern: *development_pattern
     ondrive:
-      version: "1"
+      version: "2"
       helm_target: *helmvalues
       helm_key: ooiService.image.tag
+      pattern: *development_pattern
+    msteams:
+      version: "2"
+      helm_target: *helmvalues
+      helm_key: msTeamsService.image.tag
       pattern: *development_pattern
   7.3.N:
     acs:
@@ -128,9 +133,14 @@ matrix:
       helm_key: alfresco-admin-app.image.tag
       pattern: *ga_pattern
     ondrive:
-      version: "1.1"
+      version: "2.0"
       helm_target: *helmvalues
       helm_key: ooiService.image.tag
+      pattern: *ga_hotfixes_pattern
+    msteams:
+      version: "1.1"
+      helm_target: *helmvalues73
+      helm_key: msTeamsService.image.tag
       pattern: *ga_hotfixes_pattern
   7.2.N:
     acs:
@@ -196,9 +206,14 @@ matrix:
       helm_key: alfresco-admin-app.image.tag
       pattern: *ga_pattern
     ondrive:
-      version: "1.1"
+      version: "2.0"
       helm_target: *helmvalues
       helm_key: ooiService.image.tag
+      pattern: *ga_hotfixes_pattern
+    msteams:
+      version: "1.1"
+      helm_target: *helmvalues72
+      helm_key: msTeamsService.image.tag
       pattern: *ga_hotfixes_pattern
   7.1.N:
     acs:
@@ -257,9 +272,14 @@ matrix:
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
     ondrive:
-      version: "1.1"
+      version: "2.0"
       helm_target: *helmvalues
       helm_key: ooiService.image.tag
+      pattern: *ga_hotfixes_pattern
+    msteams:
+      version: "1.1"
+      helm_target: *helmvalues71
+      helm_key: msTeamsService.image.tag
       pattern: *ga_hotfixes_pattern
   7.0.N:
     acs:
@@ -302,6 +322,11 @@ matrix:
       helm_target: *helmvalues70
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
+    ondrive:
+      version: "2.0"
+      helm_target: *helmvalues
+      helm_key: ooiService.image.tag
+      pattern: *ga_hotfixes_pattern
   community:
     acs:
       version: "7.4"
