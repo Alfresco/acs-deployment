@@ -10,7 +10,7 @@ pdfrenderer:
     tag: 2.5.3
 imagemagick:
   image:
-    tag: 2.5.3
+    tag: 2.6.0
 libreoffice:
   image:
     tag: 2.6.0
