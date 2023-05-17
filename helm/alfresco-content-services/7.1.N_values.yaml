@@ -1,4 +1,3 @@
----
 # ACS 7.1.N values
 repository:
   image:
@@ -46,7 +45,7 @@ alfresco-search-enterprise:
         tag: 3.1.1
     path:
       image:
-        tag: 3.1.1
+        tag: 3.3.0
   reindexing:
     image:
       tag: 3.1.1
