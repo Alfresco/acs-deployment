@@ -409,3 +409,7 @@ matrix:
       helm_target: *helmvaluesOss
       helm_key: ooiService.image.tag
       pattern: *development_pattern
+    tengine-aio:
+      compose_target: *composeOss
+      compose_key: services.transform-core-aio.image
+      version: "^3.1.0"

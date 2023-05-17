@@ -175,6 +175,18 @@ sources:
         pattern: >-
           {{ index . "trouter" "version" }}
   {{- end }}
+  {{- if index . "tengine-aio" }}
+  tengine-aioTag:
+    name: Alfresco All-In-One Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-transform-core-aio
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-aio" "version" }}
+  {{- end }}
 
 
 targets:
@@ -343,6 +355,41 @@ targets:
       file: {{ .msteams.helm_target }}
       key: >-
         {{ .msteams.helm_key }}
+  {{- end }}
+  {{- if index . "intelligence" }}
+  intelligenceValues:
+    name: Alfresco Intelligence image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: intelligenceTag
+    spec:
+      file: {{ .intelligence.helm_target }}
+      key: >-
+        {{ .intelligence.helm_key }}
+  {{- end }}
+  {{- if index . "trouter" }}
+  trouterValues:
+    name: Alfresco Transform Router image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: trouterTag
+    spec:
+      file: {{ .trouter.helm_target }}
+      key: >-
+        {{ .trouter.helm_key }}
+  {{- end }}
+  {{- if index . "tengine-aio" }}
+  tengine-aioCompose:
+    name: Alfresco All-In-One Transform Engine image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: tengine-aioTag
+    transformers:
+      - addprefix: "{{ index . "tengine-aio" "image" }}:"
+    spec:
+      file: {{ index . "tengine-aio" "compose_target" }}
+      key: >-
+        {{ index . "tengine-aio" "compose_key" }}
   {{- end }}
   {{- if index . "sync" }}
   syncCompose:
