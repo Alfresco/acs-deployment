@@ -235,6 +235,18 @@ sources:
         pattern: >-
           {{ index . "tengine-pdf" "version" }}
   {{- end }}
+  {{- if index . "tengine-tika" }}
+  tengine-tikaTag:
+    name: Alfresco tika Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-tika
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-tika" "version" }}
+  {{- end }}
 
 
 targets:
@@ -482,6 +494,17 @@ targets:
       file: {{ index . "tengine-pdf" "helm_target" }}
       key: >-
         {{ index . "tengine-pdf" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-tika" }}
+  tengine-tikaValues:
+    name: Alfresco tika Transform Engine image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: tengine-tikaTag
+    spec:
+      file: {{ index . "tengine-tika" "helm_target" }}
+      key: >-
+        {{ index . "tengine-tika" "helm_key" }}
   {{- end }}
   {{- if index . "sync" }}
   syncCompose:

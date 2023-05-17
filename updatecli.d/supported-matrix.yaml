@@ -95,6 +95,10 @@ matrix:
       version: "~3.1.0"
       helm_target: *helmvalues
       helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: tika.image.tag
   7.3.N:
     acs:
       version: "7.3"
@@ -194,6 +198,10 @@ matrix:
       version: "~3.0.0"
       helm_target: *helmvalues73
       helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "~3.0.0"
+      helm_target: *helmvalues73
+      helm_key: tika.image.tag
   7.2.N:
     acs:
       version: "7.2"
@@ -293,6 +301,10 @@ matrix:
       version: "^2.5.0"
       helm_target: *helmvalues72
       helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "^2.5.0"
+      helm_target: *helmvalues72
+      helm_key: tika.image.tag
   7.1.N:
     acs:
       version: "7.1"
@@ -385,6 +397,10 @@ matrix:
       version: "^2.5.0"
       helm_target: *helmvalues71
       helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "^2.5.0"
+      helm_target: *helmvalues71
+      helm_key: tika.image.tag
   7.0.N:
     acs:
       version: "7.0"
@@ -457,6 +473,10 @@ matrix:
       version: "^2.5.0"
       helm_target: *helmvalues70
       helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "^2.5.0"
+      helm_target: *helmvalues70
+      helm_key: tika.image.tag
   community:
     acs:
       version: "7.4"
