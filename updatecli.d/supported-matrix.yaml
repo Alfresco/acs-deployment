@@ -76,9 +76,15 @@ matrix:
     trouter:
       version: "~2.1.0"
       compose_target: *compose
-      compose_key: transform-router.image
+      compose_key: services.transform-router.image
       helm_target: *helmvalues
       helm_key: transformrouter.image.tag
+    sfs:
+      version: "~2.1.0"
+      compose_target: *compose
+      compose_key: services.filestore.image
+      helm_target: *helmvalues
+      helm_key: filestore.image.tag
     tengine-misc:
       version: "~3.1.0"
       helm_target: *helmvalues
@@ -182,6 +188,12 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues73
       helm_key: transformrouter.image.tag
+    sfs:
+      version: "~2.0.0"
+      compose_target: *compose73
+      compose_key: services.filestore.image
+      helm_target: *helmvalues73
+      helm_key: filestore.image.tag
     tengine-misc:
       version: "~3.0.0"
       helm_target: *helmvalues73
@@ -285,6 +297,12 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues72
       helm_key: transformrouter.image.tag
+    sfs:
+      version: "~2.0.0"
+      compose_target: *compose72
+      compose_key: services.filestore.image
+      helm_target: *helmvalues72
+      helm_key: filestore.image.tag
     tengine-misc:
       version: "^2.5.0"
       helm_target: *helmvalues72
@@ -381,6 +399,12 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues71
       helm_key: transformrouter.image.tag
+    sfs:
+      version: "^1.5.0"
+      compose_target: *compose71
+      compose_key: services.filestore.image
+      helm_target: *helmvalues71
+      helm_key: filestore.image.tag
     tengine-misc:
       version: "^2.5.0"
       helm_target: *helmvalues
@@ -457,6 +481,12 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues70
       helm_key: transformrouter.image.tag
+    sfs:
+      version: "^1.5.0"
+      compose_target: *compose70
+      compose_key: services.filestore.image
+      helm_target: *helmvalues70
+      helm_key: filestore.image.tag
     tengine-misc:
       version: "^2.5.0"
       helm_target: *helmvalues

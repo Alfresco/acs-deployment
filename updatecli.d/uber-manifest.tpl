@@ -175,6 +175,18 @@ sources:
         pattern: >-
           {{ index . "trouter" "version" }}
   {{- end }}
+  {{- if index . "sfs" }}
+  sfsTag:
+    name: Alfresco Shared Filestore image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-shared-file-store
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "sfs" "version" }}
+  {{- end }}
   {{- if index . "tengine-aio" }}
   tengine-aioTag:
     name: Alfresco All-In-One Transform Engine image tag
@@ -428,6 +440,17 @@ targets:
         {{ .intelligence.helm_key }}
   {{- end }}
   {{- if index . "trouter" }}
+  trouterCompose:
+    name: Alfresco Transform Router image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: trouterTag
+    transformers:
+      - addprefix: "{{ index . "trouter" "image" }}:"
+    spec:
+      file: {{ index . "trouter" "compose_target" }}
+      key: >-
+        {{ index . "trouter" "compose_key" }}
   trouterValues:
     name: Alfresco Transform Router image tag
     kind: yaml
@@ -437,6 +460,28 @@ targets:
       file: {{ .trouter.helm_target }}
       key: >-
         {{ .trouter.helm_key }}
+  {{- end }}
+  {{- if index . "sfs" }}
+  sfsCompose:
+    name: Alfresco Shared Filestore image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: sfsTag
+    transformers:
+      - addprefix: "{{ index . "sfs" "image" }}:"
+    spec:
+      file: {{ index . "sfs" "compose_target" }}
+      key: >-
+        {{ index . "sfs" "compose_key" }}
+  sfsValues:
+    name: Alfresco Shared Filestore image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: sfsTag
+    spec:
+      file: {{ .sfs.helm_target }}
+      key: >-
+        {{ .sfs.helm_key }}
   {{- end }}
   {{- if index . "tengine-aio" }}
   tengine-aioCompose:
