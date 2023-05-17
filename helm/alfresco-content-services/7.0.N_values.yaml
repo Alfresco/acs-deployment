@@ -4,7 +4,7 @@ repository:
     tag: 7.0.1.10
 transformrouter:
   image:
-    tag: 1.4.1
+    tag: 1.5.3
 pdfrenderer:
   image:
     tag: 2.6.0
