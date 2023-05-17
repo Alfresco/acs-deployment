@@ -7,7 +7,7 @@ transformrouter:
     tag: 1.4.1
 pdfrenderer:
   image:
-    tag: 2.5.3
+    tag: 2.6.0
 imagemagick:
   image:
     tag: 2.6.0
