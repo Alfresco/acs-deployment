@@ -180,7 +180,7 @@ sources:
     name: Alfresco All-In-One Transform Engine image tag
     kind: dockerimage
     spec:
-      image: alfresco/alfresco-transform-core-aio
+      image: quay.io/alfresco/alfresco-transform-core-aio
       {{ template "quay_auth" }}
       versionFilter:
         kind: semver
@@ -192,12 +192,24 @@ sources:
     name: Alfresco misc Transform Engine image tag
     kind: dockerimage
     spec:
-      image: alfresco/alfresco-transform-misc
+      image: quay.io/alfresco/alfresco-transform-misc
       {{ template "quay_auth" }}
       versionFilter:
         kind: semver
         pattern: >-
           {{ index . "tengine-misc" "version" }}
+  {{- end }}
+  {{- if index . "tengine-im" }}
+  tengine-imTag:
+    name: Alfresco ImageMagick Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-imagemagick
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-im" "version" }}
   {{- end }}
 
 
@@ -405,14 +417,25 @@ targets:
   {{- end }}
   {{- if index . "tengine-misc" }}
   tengine-miscValues:
-    name: Alfresco missc Transform Engine image tag
+    name: Alfresco misc Transform Engine image tag
     kind: yaml
     scmid: ourRepo
     sourceid: tengine-miscTag
     spec:
-      file: {{ .tengine-misc.helm_target }}
+      file: {{ index . "tengine-misc" "helm_target" }}
       key: >-
-        {{ .tengine-misc.helm_key }}
+        {{ index . "tengine-misc" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-im" }}
+  tengine-imValues:
+    name: Alfresco ImageMagick Transform Engine image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: tengine-imTag
+    spec:
+      file: {{ index . "tengine-im" "helm_target" }}
+      key: >-
+        {{ index . "tengine-im" "helm_key" }}
   {{- end }}
   {{- if index . "sync" }}
   syncCompose:
