@@ -79,6 +79,10 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues
       helm_key: transformrouter.image.tag
+    tengine-misc:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
   7.3.N:
     acs:
       version: "7.3"
@@ -162,6 +166,10 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues73
       helm_key: transformrouter.image.tag
+    tengine-misc:
+      version: "~3.0.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
   7.2.N:
     acs:
       version: "7.2"
@@ -245,6 +253,10 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues72
       helm_key: transformrouter.image.tag
+    tengine-misc:
+      version: "^2.5.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
   7.1.N:
     acs:
       version: "7.1"
@@ -321,6 +333,10 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues71
       helm_key: transformrouter.image.tag
+    tengine-misc:
+      version: "^2.5.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
   7.0.N:
     acs:
       version: "7.0"
@@ -377,6 +393,10 @@ matrix:
       compose_key: transform-router.image
       helm_target: *helmvalues70
       helm_key: transformrouter.image.tag
+    tengine-misc:
+      version: "^2.5.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
   community:
     acs:
       version: "7.4"

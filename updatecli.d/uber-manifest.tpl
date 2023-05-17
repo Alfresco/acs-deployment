@@ -187,6 +187,18 @@ sources:
         pattern: >-
           {{ index . "tengine-aio" "version" }}
   {{- end }}
+  {{- if index . "tengine-misc" }}
+  tengine-miscTag:
+    name: Alfresco misc Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-transform-misc
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-misc" "version" }}
+  {{- end }}
 
 
 targets:
@@ -390,6 +402,17 @@ targets:
       file: {{ index . "tengine-aio" "compose_target" }}
       key: >-
         {{ index . "tengine-aio" "compose_key" }}
+  {{- end }}
+  {{- if index . "tengine-misc" }}
+  tengine-miscValues:
+    name: Alfresco missc Transform Engine image tag
+    kind: yaml
+    scmid: ourRepo
+    sourceid: tengine-miscTag
+    spec:
+      file: {{ .tengine-misc.helm_target }}
+      key: >-
+        {{ .tengine-misc.helm_key }}
   {{- end }}
   {{- if index . "sync" }}
   syncCompose:
