@@ -151,6 +151,30 @@ sources:
         pattern: >-
           ^{{ index . "msteams" "version" }}{{ index . "msteams" "pattern" }}$
   {{- end }}
+  {{- if index . "intelligence" }}
+  intelligenceTag:
+    name: Intelligence Service image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-ai-docker-engine
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "intelligence" "version" }}
+  {{- end }}
+  {{- if index . "trouter" }}
+  trouterTag:
+    name: Alfresco Transform Router image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-transform-router
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "trouter" "version" }}
+  {{- end }}
 
 
 targets:
