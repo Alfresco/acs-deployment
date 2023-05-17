@@ -178,7 +178,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | msTeamsService.image.internalPort | int | `3978` |  |
 | msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
-| msTeamsService.image.tag | string | `"2.0.0-A2"` |  |
+| msTeamsService.image.tag | string | `"2.0.0"` |  |
 | msTeamsService.ingress.path | string | `"/ms-teams-service"` |  |
 | msTeamsService.ingress.tls | list | `[]` |  |
 | msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
@@ -209,7 +209,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.image.internalPort | int | `9095` |  |
 | ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
 | ooiService.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
-| ooiService.image.tag | string | `"1.1.3"` |  |
+| ooiService.image.tag | string | `"2.0.0"` |  |
 | ooiService.ingress.path | string | `"/ooi-service"` |  |
 | ooiService.ingress.tls | list | `[]` |  |
 | ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
