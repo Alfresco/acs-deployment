@@ -69,7 +69,7 @@ sources:
     kind: dockerimage
     spec:
       image: {{ $repo_image }}
-      {{ if eq (slice $repo_image 0 8) "quay.io/" }}
+      {{ if eq (printf "%.8s" $repo_image) "quay.io/" }}
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
@@ -94,7 +94,7 @@ sources:
     kind: dockerimage
     spec:
       image: {{ $search_image }}
-      {{ if eq (slice $search_image 0 8) "quay.io/" }}
+      {{ if eq (printf "%.8s" $search_image) "quay.io/" }}
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
@@ -108,7 +108,7 @@ sources:
     kind: dockerimage
     spec:
       image: {{ $share_image }}
-      {{ if eq (slice $share_image 0 8) "quay.io/" }}
+      {{ if eq (printf "%.8s" $share_image) "quay.io/" }}
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
