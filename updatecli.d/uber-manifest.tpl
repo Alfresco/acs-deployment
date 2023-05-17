@@ -192,8 +192,7 @@ sources:
     name: Alfresco All-In-One Transform Engine image tag
     kind: dockerimage
     spec:
-      image: quay.io/alfresco/alfresco-transform-core-aio
-      {{ template "quay_auth" }}
+      image: alfresco/alfresco-transform-core-aio
       versionFilter:
         kind: semver
         pattern: >-
@@ -204,8 +203,7 @@ sources:
     name: Alfresco misc Transform Engine image tag
     kind: dockerimage
     spec:
-      image: quay.io/alfresco/alfresco-transform-misc
-      {{ template "quay_auth" }}
+      image: alfresco/alfresco-transform-misc
       versionFilter:
         kind: semver
         pattern: >-
@@ -216,8 +214,7 @@ sources:
     name: Alfresco ImageMagick Transform Engine image tag
     kind: dockerimage
     spec:
-      image: quay.io/alfresco/alfresco-imagemagick
-      {{ template "quay_auth" }}
+      image: alfresco/alfresco-imagemagick
       versionFilter:
         kind: semver
         pattern: >-
@@ -228,8 +225,7 @@ sources:
     name: Alfresco LibreOffice Transform Engine image tag
     kind: dockerimage
     spec:
-      image: quay.io/alfresco/alfresco-libreoffice
-      {{ template "quay_auth" }}
+      image: alfresco/alfresco-libreoffice
       versionFilter:
         kind: semver
         pattern: >-
@@ -240,8 +236,7 @@ sources:
     name: Alfresco PDF Transform Engine image tag
     kind: dockerimage
     spec:
-      image: quay.io/alfresco/alfresco-pdf-renderer
-      {{ template "quay_auth" }}
+      image: alfresco/alfresco-pdf-renderer
       versionFilter:
         kind: semver
         pattern: >-
@@ -252,8 +247,7 @@ sources:
     name: Alfresco tika Transform Engine image tag
     kind: dockerimage
     spec:
-      image: quay.io/alfresco/alfresco-tika
-      {{ template "quay_auth" }}
+      image: alfresco/alfresco-tika
       versionFilter:
         kind: semver
         pattern: >-
@@ -446,7 +440,7 @@ targets:
     scmid: ourRepo
     sourceid: trouterTag
     transformers:
-      - addprefix: "{{ index . "trouter" "image" }}:"
+      - addprefix: "quay.io/alfresco/alfresco-transform-router:"
     spec:
       file: {{ index . "trouter" "compose_target" }}
       key: >-
@@ -468,7 +462,7 @@ targets:
     scmid: ourRepo
     sourceid: sfsTag
     transformers:
-      - addprefix: "{{ index . "sfs" "image" }}:"
+      - addprefix: "quay.io/alfresco/alfresco-shared-file-store:"
     spec:
       file: {{ index . "sfs" "compose_target" }}
       key: >-
@@ -490,7 +484,7 @@ targets:
     scmid: ourRepo
     sourceid: tengine-aioTag
     transformers:
-      - addprefix: "{{ index . "tengine-aio" "image" }}:"
+      - addprefix: "alfresco/alfresco-transform-core-aio:"
     spec:
       file: {{ index . "tengine-aio" "compose_target" }}
       key: >-
