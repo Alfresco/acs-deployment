@@ -25,7 +25,7 @@ aiTransformer:
     tag: 1.4.0
 filestore:
   image:
-    tag: 0.16.0
+    tag: 1.5.3
 share:
   image:
     tag: 7.0.1.3
