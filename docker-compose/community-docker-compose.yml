@@ -26,7 +26,7 @@ services:
       JAVA_OPTS: >-
         -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco -Dsolr.host=solr6 -Dsolr.port=8983 -Dsolr.http.connection.timeout=1000 -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6 -Dshare.host=127.0.0.1 -Dshare.port=8080 -Dalfresco.host=localhost -Dalfresco.port=8080 -Dcsrf.filter.enabled=false -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true" -Ddeployment.method=DOCKER_COMPOSE -DlocalTransform.core-aio.url=http://transform-core-aio:8090/ -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:3.0.0
+    image: alfresco/alfresco-transform-core-aio:3.1.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
