@@ -7,6 +7,25 @@ release notes that are available via [GitHub Releases](https://github.com/Alfres
 
 Here follows a more detailed explanation of any breaking change grouped by version in which they have been released.
 
+## 6.0.0
+
+### Charts modularization
+
+`alfresco-content-services` chart has always been the mandatory entrypoint to
+deploy Alfresco platform and components. In order to porvide more flexibility
+we've started an effort of splitting Alfresco components into individual charts
+that can be used independantly.
+
+That effort is work in progress and we've started by turning the previously
+embedded subcharts into individual charts hosted in a the new repository
+[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts)
+
+The associated registry is `https://alfresco.github.io/alfresco-helm-charts/`
+
+These change comes with some deep modifications of the values structure:
+
+/!\ TODO /!\
+
 ## 5.4.0-M3
 
 ### Search Enterprise chart rename
@@ -91,6 +110,15 @@ created.
 Also,  applying `labels` to the PV and corresponding `selector` to the PVC
 helps ensure the `storageClass` will only pick the intended volume.
 
+## 5.3.0
+
+### PostgreSQL persistence
+
+Version 5.3.0 changes the way the default persistence is set up for the
+PostgreSQL database. If you did not customize the database persistance (which
+was not recommended for serious workloads). Please take a look at [this](./storage.md)
+before trying to upgrade.
+
 ## 5.2.0
 
 ### Solr tracking shared secret
@@ -116,3 +144,13 @@ If you try to install ACS 7.2.0 and following versions, the configuration below
 is **not supported** anymore and you are **required to set a shared secret**.
 
 > :information_source: Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.
+
+## 5.0.0
+
+### versioning
+
+Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
+
+By default the latest version of the chart will always deploy the latest development version of ACS. A set of values files are also provided that can be used to deploy a specific major.minor version.
+
+> As the Helm chart no longer deploys a specific version of ACS the `appVersion` property within the chart is longer be specified.
