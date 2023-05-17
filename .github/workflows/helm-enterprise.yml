@@ -3,15 +3,14 @@ name: Helm (Enterprise)
 on:
   pull_request:
     branches:
-      - 'master'
+      - master
     paths:
-      - 'helm/**'
-      - 'test/postman/helm/**'
-      - '.github/workflows/helm*'
+      - helm/**
+      - test/postman/helm/**
+      - .github/workflows/helm*
   push:
     branches:
-      - 'master'
-      - pr-*
+      - master
 concurrency:
   group: ${{ github.head_ref || github.ref_name || github.run_id }}
   cancel-in-progress: false
@@ -21,8 +20,7 @@ jobs:
     if: >-
       github.event_name == 'push'
       || (
-        ! github.event.pull_request.head.repo.fork
-        && github.event.pull_request.head.user.login == 'Alfresco'
+        github.event.pull_request.head.user.login == 'Alfresco'
         && github.actor != 'dependabot[bot]'
       )
     outputs:
@@ -81,7 +79,7 @@ jobs:
           echo "app_version=$V" >> $GITHUB_OUTPUT
           echo "app_prefix=${SANITIZED_V}" >> $GITHUB_OUTPUT
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.36.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v1.38.0
         with:
           skip_checkout: 'true'
           test_newman: 'true'

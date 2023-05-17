@@ -41,7 +41,7 @@ jobs:
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.43.0
+          version: v0.49.2
 
       - name: Prepare values file for ${{ matrix.version }}
         working-directory: ./updatecli.d/
