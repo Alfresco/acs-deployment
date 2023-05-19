@@ -63,6 +63,12 @@ alfresco-sync-service:
     primary:
       image:
         tag: 13.3.0
+msTeamsService:
+  image:
+    tag: 1.1.0
+ooiService:
+  image:
+    tag: 2.0.0
 global:
   tracking:
     auth: none

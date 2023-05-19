@@ -101,9 +101,25 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 Open a PR that will:
 
 * Update the [versioning table](#versioning)
-* If any updates to the updatecli pipelines is required then make the changes and raise the PR.
-* Once the PR merge then run the manually [updatecli-workflow](https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml)
-* That will create the bump version PR automatically.
+* If any updates to the updatecli pipelines is required then make the changes
+  and raise the PR.
+* Once the PR merge switch the `updatecli.d/supported-matrix.yaml` `latest`
+  section to "release mode" by changing all `development_pattern` by `ga_hotfixes_pattern`
+* Run locally the updatecli pipeline and commit the resulting files (except the
+  `updatecli.d/supported-matrix.yaml`) to a new branch.
+
+  ```bash
+  export QUAY_USERNAME="<VALUE>"
+  export QUAY_PASSWORD="<VALUE>"
+  export UPDATECLI_GITHUB_TOKEN="<VALUE>"
+  export GIT_AUTHOR_EMAIL='build@alfresco.com'
+  export GIT_AUTHOR_USERNAME='alfresco-build'
+  export GIT_BRANCH="$(git branch --show-current)"
+  updatecli apply --commit=true --push=false -c updatecli.d/uber-manifest.tpl -v updatecli.d/supported-matrix.yaml
+  ```
+
+* Restore formatting of files edited by updatecli (See [updatecli
+  issue](https://github.com/updatecli/updatecli/issues/1028)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the next stable release (usually by removing the
   `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
@@ -165,4 +181,3 @@ Once the tagged workflow is successful, the release process has completed.
  `java -jar plantuml.jar filename`
 2. The other way to generate the diagrams is via official plantuml website. Go to the below url and paste your puml code and click on submit.
  `http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000`
-  

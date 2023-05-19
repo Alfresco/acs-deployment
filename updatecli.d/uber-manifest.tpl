@@ -7,7 +7,7 @@ title: Images updates for all versions of Helm charts and Docker compose
 {{- end }}
 
 scms:
-  ourRepo:
+  sourceRepo:
     kind: github
     spec:
       user: {{ requiredEnv "GIT_AUTHOR_USERNAME" }}
@@ -28,20 +28,13 @@ scms:
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
       directory: /tmp/updatecli/searchEnterprise
 
-actions:
-  default:
-    kind: github/pullrequest
-    scmid: ourRepo
-    spec:
-      title: "{{ requiredEnv "JIRA_ID" }} Bump component versions"
-      draft: true
-      labels:
-        - updatecli
-
 sources:
+  {{- range .matrix }}
+  {{- $id := .id -}}
   {{- if index . "adminApp" }}
-  adminAppTag:
-    name: Alfresco admin application tag
+  adminAppTag_{{ $id }}:
+    name: >-
+      Alfresco admin application tag
     kind: dockerimage
     spec:
       image: quay.io/alfresco/alfresco-control-center
@@ -52,7 +45,7 @@ sources:
           ^{{ index . "adminApp" "version" }}{{ index . "adminApp" "pattern" }}$
   {{- end }}
   {{- if index . "adw" }}
-  adwTag:
+  adwTag_{{ $id }}:
     name: Alfresco Digital Workspace tag
     kind: dockerimage
     spec:
@@ -64,12 +57,12 @@ sources:
           ^{{ index . "adw" "version" }}{{ index . "adw" "pattern" }}$
   {{- end }}
   {{ $repo_image := index . "acs" "image" }}
-  repositoryTag:
+  repositoryTag_{{ $id }}:
     name: ACS repository tag
     kind: dockerimage
     spec:
       image: {{ $repo_image }}
-      {{ if eq (slice $repo_image 0 8) "quay.io/" }}
+      {{ if eq (printf "%.8s" $repo_image) "quay.io/" }}
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
@@ -77,7 +70,7 @@ sources:
         pattern: >-
           ^{{ index . "acs" "version" }}{{ index . "acs" "pattern" }}$
   {{- if index . "search-enterprise" }}
-  searchEnterpriseTag:
+  searchEnterpriseTag_{{ $id }}:
     name: Search Enterprise tag
     kind: gittag
     scmid: searchEnterprise
@@ -89,26 +82,26 @@ sources:
   {{ end }}
   {{- if index . "search" }}
   {{ $search_image := index . "search" "image" }}
-  searchTag:
+  searchTag_{{ $id }}:
     name: Alfresco Search Services
     kind: dockerimage
     spec:
       image: {{ $search_image }}
-      {{ if eq (slice $search_image 0 8) "quay.io/" }}
+      {{ if eq (printf "%.8s" $search_image) "quay.io/" }}
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
-        kind: regex
+        kind: semver
         pattern: >-
-          ^{{ index . "search" "version" }}{{ index . "search" "pattern" }}$
+          {{ index . "search" "version" }}
   {{- end }}
   {{ $share_image := index . "share" "image" }}
-  shareTag:
+  shareTag_{{ $id }}:
     name: Share repository tag
     kind: dockerimage
     spec:
       image: {{ $share_image }}
-      {{ if eq (slice $share_image 0 8) "quay.io/" }}
+      {{ if eq (printf "%.8s" $share_image) "quay.io/" }}
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
@@ -116,7 +109,7 @@ sources:
         pattern: >-
           ^{{ index . "share" "version" }}{{ index . "share" "pattern" }}$
   {{- if index . "sync" }}
-  syncTag:
+  syncTag_{{ $id }}:
     name: Sync Service image tag
     kind: dockerimage
     spec:
@@ -128,7 +121,7 @@ sources:
           ^{{ index . "sync" "version" }}{{ index . "sync" "pattern" }}$
   {{- end }}
   {{- if index . "onedrive" }}
-  onedriveTag:
+  onedriveTag_{{ $id }}:
     name: Onedrive (OOI) Service image tag
     kind: dockerimage
     spec:
@@ -139,80 +132,189 @@ sources:
         pattern: >-
           ^{{ index . "onedrive" "version" }}{{ index . "onedrive" "pattern" }}$
   {{- end }}
-
+  {{- if index . "msteams" }}
+  msteamsTag_{{ $id }}:
+    name: MS Teams Service image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-ms-teams-service
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: regex
+        pattern: >-
+          ^{{ index . "msteams" "version" }}{{ index . "msteams" "pattern" }}$
+  {{- end }}
+  {{- if index . "intelligence" }}
+  intelligenceTag_{{ $id }}:
+    name: Intelligence Service image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-ai-docker-engine
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "intelligence" "version" }}
+  {{- end }}
+  {{- if index . "trouter" }}
+  trouterTag_{{ $id }}:
+    name: Alfresco Transform Router image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-transform-router
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "trouter" "version" }}
+  {{- end }}
+  {{- if index . "sfs" }}
+  sfsTag_{{ $id }}:
+    name: Alfresco Shared Filestore image tag
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/alfresco-shared-file-store
+      {{ template "quay_auth" }}
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "sfs" "version" }}
+  {{- end }}
+  {{- if index . "tengine-aio" }}
+  tengine-aioTag_{{ $id }}:
+    name: Alfresco All-In-One Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-transform-core-aio
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-aio" "version" }}
+  {{- end }}
+  {{- if index . "tengine-misc" }}
+  tengine-miscTag_{{ $id }}:
+    name: Alfresco misc Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-transform-misc
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-misc" "version" }}
+  {{- end }}
+  {{- if index . "tengine-im" }}
+  tengine-imTag_{{ $id }}:
+    name: Alfresco ImageMagick Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-imagemagick
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-im" "version" }}
+  {{- end }}
+  {{- if index . "tengine-lo" }}
+  tengine-loTag_{{ $id }}:
+    name: Alfresco LibreOffice Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-libreoffice
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-lo" "version" }}
+  {{- end }}
+  {{- if index . "tengine-pdf" }}
+  tengine-pdfTag_{{ $id }}:
+    name: Alfresco PDF Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-pdf-renderer
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-pdf" "version" }}
+  {{- end }}
+  {{- if index . "tengine-tika" }}
+  tengine-tikaTag_{{ $id }}:
+    name: Alfresco tika Transform Engine image tag
+    kind: dockerimage
+    spec:
+      image: alfresco/alfresco-tika
+      versionFilter:
+        kind: semver
+        pattern: >-
+          {{ index . "tengine-tika" "version" }}
+  {{- end }}
+  {{- end }}
 
 
 targets:
+  {{- range .matrix }}
+  {{- $id := .id -}}
   {{- if index . "adminApp" }}
-  adminAppCompose:
+  adminAppCompose_{{ $id }}:
     name: Alfresco Control Center
     kind: yaml
-    scmid: ourRepo
-    sourceid: adminAppTag
+    sourceid: adminAppTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-admin-app:"
     spec:
       file: {{ .adminApp.compose_target }}
       key: >-
         {{ .adminApp.compose_key }}
-  adminAppValues:
+  adminAppValues_{{ $id }}:
     name: Helm chart default values file
     kind: yaml
-    scmid: ourRepo
-    sourceid: adminAppTag
+    sourceid: adminAppTag_{{ $id }}
     spec:
       file: {{ .adminApp.helm_target }}
       key: >-
         {{ .adminApp.helm_key }}
   {{- end }}
   {{- if index . "adw" }}
-  adwCompose:
+  adwCompose_{{ $id }}:
     name: ADW image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: adwTag
+    sourceid: adwTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-digital-workspace:"
     spec:
       file: {{ .adw.compose_target }}
       key: >-
         {{ .adw.compose_key }}
-  adwValues:
+  adwValues_{{ $id }}:
     name: ADW image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: adwTag
+    sourceid: adwTag_{{ $id }}
     spec:
       file: {{ .adw.helm_target }}
       key: >-
         {{ .adw.helm_key }}
   {{- end }}
-  repositoryCompose:
+  repositoryCompose_{{ $id }}:
     name: Repo image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: repositoryTag
+    sourceid: repositoryTag_{{ $id }}
     transformers:
       - addprefix: "{{ index . "acs" "image" }}:"
     spec:
       file: {{ .acs.compose_target }}
       key: >-
         {{ .acs.compose_key }}
-  repositoryValues:
+  repositoryValues_{{ $id }}:
     name: Repo image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: repositoryTag
+    sourceid: repositoryTag_{{ $id }}
     spec:
       file: {{ .acs.helm_target }}
       key: >-
         {{ .acs.helm_key }}
   {{- if index . "search" }}
-  searchCompose:
+  searchCompose_{{ $id }}:
     name: search image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: searchTag
+    sourceid: searchTag_{{ $id }}
     transformers:
       - addprefix: "{{ index . "search" "image" }}:"
     spec:
@@ -220,11 +322,10 @@ targets:
       key: >-
         {{ .search.compose_key }}
   {{- if and .search.helm_target .search.helm_key }}
-  searchValues:
+  searchValues_{{ $id }}:
     name: search image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: searchTag
+    sourceid: searchTag_{{ $id }}
     spec:
       file: {{ .search.helm_target }}
       key: >-
@@ -233,11 +334,10 @@ targets:
   {{- end }}
   {{- if index . "search-enterprise" }}
   {{- if index . "search-enterprise" "compose_target" }}
-  searchEnterpriseCompose:
+  searchEnterpriseCompose_{{ $id }}:
     name: Search Enterprise image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: searchEnterpriseTag
+    sourceid: searchEnterpriseTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-elasticsearch-live-indexing:"
     spec:
@@ -247,76 +347,192 @@ targets:
   {{- end }}
   {{- if index . "search-enterprise" "helm_target" }}
   {{- $target_searchEnt := index . "search-enterprise" "helm_target" }}
-  searchEnterpriseReindexingValues:
+  searchEnterpriseReindexingValues_{{ $id }}:
     name: Search Enterprise image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: searchEnterpriseTag
+    sourceid: searchEnterpriseTag_{{ $id }}
     spec:
       file: {{ $target_searchEnt }}
       key: {{ index . "search-enterprise" "helm_keys" "Reindexing" }}
   {{- range $key, $value := index . "search-enterprise" "helm_keys" "Liveindexing" }}
-  searchEnterprise{{ $key }}Values:
+  searchEnterprise{{ $key }}Values_{{ $id }}:
     name: Search Enterprise image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: searchEnterpriseTag
+    sourceid: searchEnterpriseTag_{{ $id }}
     spec:
       file: {{ $target_searchEnt }}
       key: {{ $value }}
   {{- end }}
   {{- end }}
   {{- end }}
-  shareCompose:
+  shareCompose_{{ $id }}:
     name: Share image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: shareTag
+    sourceid: shareTag_{{ $id }}
     transformers:
       - addprefix: "{{ index . "share" "image" }}:"
     spec:
       file: {{ .share.compose_target }}
       key: >-
         {{ .share.compose_key }}
-  shareValues:
+  shareValues_{{ $id }}:
     name: Share image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: shareTag
+    sourceid: shareTag_{{ $id }}
     spec:
       file: {{ .share.helm_target }}
       key: >-
         {{ .share.helm_key }}
   {{- if index . "onedrive" }}
-  onedriveValues:
+  onedriveValues_{{ $id }}:
     name: Onedrive image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: onedriveTag
+    sourceid: onedriveTag_{{ $id }}
     spec:
       file: {{ .onedrive.helm_target }}
       key: >-
         {{ .onedrive.helm_key }}
   {{- end }}
+  {{- if index . "msteams" }}
+  msteamsValues_{{ $id }}:
+    name: MS Teams image tag
+    kind: yaml
+    sourceid: msteamsTag_{{ $id }}
+    spec:
+      file: {{ .msteams.helm_target }}
+      key: >-
+        {{ .msteams.helm_key }}
+  {{- end }}
+  {{- if index . "intelligence" }}
+  intelligenceValues_{{ $id }}:
+    name: Alfresco Intelligence image tag
+    kind: yaml
+    sourceid: intelligenceTag_{{ $id }}
+    spec:
+      file: {{ .intelligence.helm_target }}
+      key: >-
+        {{ .intelligence.helm_key }}
+  {{- end }}
+  {{- if index . "trouter" }}
+  trouterCompose_{{ $id }}:
+    name: Alfresco Transform Router image tag
+    kind: yaml
+    sourceid: trouterTag_{{ $id }}
+    transformers:
+      - addprefix: "quay.io/alfresco/alfresco-transform-router:"
+    spec:
+      file: {{ index . "trouter" "compose_target" }}
+      key: >-
+        {{ index . "trouter" "compose_key" }}
+  trouterValues_{{ $id }}:
+    name: Alfresco Transform Router image tag
+    kind: yaml
+    sourceid: trouterTag_{{ $id }}
+    spec:
+      file: {{ .trouter.helm_target }}
+      key: >-
+        {{ .trouter.helm_key }}
+  {{- end }}
+  {{- if index . "sfs" }}
+  sfsCompose_{{ $id }}:
+    name: Alfresco Shared Filestore image tag
+    kind: yaml
+    sourceid: sfsTag_{{ $id }}
+    transformers:
+      - addprefix: "quay.io/alfresco/alfresco-shared-file-store:"
+    spec:
+      file: {{ index . "sfs" "compose_target" }}
+      key: >-
+        {{ index . "sfs" "compose_key" }}
+  sfsValues_{{ $id }}:
+    name: Alfresco Shared Filestore image tag
+    kind: yaml
+    sourceid: sfsTag_{{ $id }}
+    spec:
+      file: {{ .sfs.helm_target }}
+      key: >-
+        {{ .sfs.helm_key }}
+  {{- end }}
+  {{- if index . "tengine-aio" }}
+  tengine-aioCompose_{{ $id }}:
+    name: Alfresco All-In-One Transform Engine image tag
+    kind: yaml
+    sourceid: tengine-aioTag_{{ $id }}
+    transformers:
+      - addprefix: "alfresco/alfresco-transform-core-aio:"
+    spec:
+      file: {{ index . "tengine-aio" "compose_target" }}
+      key: >-
+        {{ index . "tengine-aio" "compose_key" }}
+  {{- end }}
+  {{- if index . "tengine-misc" }}
+  tengine-miscValues_{{ $id }}:
+    name: Alfresco misc Transform Engine image tag
+    kind: yaml
+    sourceid: tengine-miscTag_{{ $id }}
+    spec:
+      file: {{ index . "tengine-misc" "helm_target" }}
+      key: >-
+        {{ index . "tengine-misc" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-im" }}
+  tengine-imValues_{{ $id }}:
+    name: Alfresco ImageMagick Transform Engine image tag
+    kind: yaml
+    sourceid: tengine-imTag_{{ $id }}
+    spec:
+      file: {{ index . "tengine-im" "helm_target" }}
+      key: >-
+        {{ index . "tengine-im" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-lo" }}
+  tengine-loValues_{{ $id }}:
+    name: Alfresco LibreOffice Transform Engine image tag
+    kind: yaml
+    sourceid: tengine-loTag_{{ $id }}
+    spec:
+      file: {{ index . "tengine-lo" "helm_target" }}
+      key: >-
+        {{ index . "tengine-lo" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-pdf" }}
+  tengine-pdfValues_{{ $id }}:
+    name: Alfresco PDF Transform Engine image tag
+    kind: yaml
+    sourceid: tengine-pdfTag_{{ $id }}
+    spec:
+      file: {{ index . "tengine-pdf" "helm_target" }}
+      key: >-
+        {{ index . "tengine-pdf" "helm_key" }}
+  {{- end }}
+  {{- if index . "tengine-tika" }}
+  tengine-tikaValues_{{ $id }}:
+    name: Alfresco tika Transform Engine image tag
+    kind: yaml
+    sourceid: tengine-tikaTag_{{ $id }}
+    spec:
+      file: {{ index . "tengine-tika" "helm_target" }}
+      key: >-
+        {{ index . "tengine-tika" "helm_key" }}
+  {{- end }}
   {{- if index . "sync" }}
-  syncCompose:
+  syncCompose_{{ $id }}:
     name: Sync image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: syncTag
+    sourceid: syncTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/service-sync:"
     spec:
       file: {{ .sync.compose_target }}
       key: >-
         {{ .sync.compose_key }}
-  syncValues:
+  syncValues_{{ $id }}:
     name: Sync image tag
     kind: yaml
-    scmid: ourRepo
-    sourceid: syncTag
+    sourceid: syncTag_{{ $id }}
     spec:
       file: {{ .sync.helm_target }}
       key: >-
         {{ .sync.helm_key }}
+  {{- end }}
   {{- end }}
