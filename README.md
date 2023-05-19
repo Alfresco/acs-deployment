@@ -115,10 +115,10 @@ Open a PR that will:
   export GIT_AUTHOR_EMAIL='build@alfresco.com'
   export GIT_AUTHOR_USERNAME='alfresco-build'
   export GIT_BRANCH="$(git branch --show-current)"
-  updatecli apply -c updatecli.d/uber-manifest.tpl -v updatecli.d/supported-matrix.yaml
+  updatecli apply --commit=true --push=false -c updatecli.d/uber-manifest.tpl -v updatecli.d/supported-matrix.yaml
   ```
 
-* Restore formatting offiles edited by updatecli (See [updatecli
+* Restore formatting of files edited by updatecli (See [updatecli
   issue](https://github.com/updatecli/updatecli/issues/1028)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the next stable release (usually by removing the

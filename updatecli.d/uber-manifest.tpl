@@ -17,16 +17,6 @@ scms:
       branch: {{ requiredEnv "GIT_BRANCH" }}
       username: alfresco-build
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
-  targetRepo:
-    kind: github
-    spec:
-      user: {{ requiredEnv "GIT_AUTHOR_USERNAME" }}
-      email: {{ requiredEnv "GIT_AUTHOR_EMAIL" }}
-      owner: Alfresco
-      repository: acs-deployment
-      branch: {{ requiredEnv "TGT_PR_BRANCH" }}
-      username: alfresco-build
-      token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
   searchEnterprise:
     name: Alfresco Elasticsearch connector
     kind: github
@@ -37,16 +27,6 @@ scms:
       username: alfresco-build
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
       directory: /tmp/updatecli/searchEnterprise
-
-actions:
-  default:
-    kind: github/pullrequest
-    scmid: targetRepo
-    spec:
-      title: "{{ requiredEnv "JIRA_ID" }} Bump component versions"
-      draft: true
-      labels:
-        - updatecli
 
 sources:
   {{- range .matrix }}
@@ -276,7 +256,6 @@ targets:
   adminAppCompose_{{ $id }}:
     name: Alfresco Control Center
     kind: yaml
-    scmid: sourceRepo
     sourceid: adminAppTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-admin-app:"
@@ -287,7 +266,6 @@ targets:
   adminAppValues_{{ $id }}:
     name: Helm chart default values file
     kind: yaml
-    scmid: sourceRepo
     sourceid: adminAppTag_{{ $id }}
     spec:
       file: {{ .adminApp.helm_target }}
@@ -298,7 +276,6 @@ targets:
   adwCompose_{{ $id }}:
     name: ADW image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: adwTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-digital-workspace:"
@@ -309,7 +286,6 @@ targets:
   adwValues_{{ $id }}:
     name: ADW image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: adwTag_{{ $id }}
     spec:
       file: {{ .adw.helm_target }}
@@ -319,7 +295,6 @@ targets:
   repositoryCompose_{{ $id }}:
     name: Repo image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: repositoryTag_{{ $id }}
     transformers:
       - addprefix: "{{ index . "acs" "image" }}:"
@@ -330,7 +305,6 @@ targets:
   repositoryValues_{{ $id }}:
     name: Repo image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: repositoryTag_{{ $id }}
     spec:
       file: {{ .acs.helm_target }}
@@ -340,7 +314,6 @@ targets:
   searchCompose_{{ $id }}:
     name: search image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: searchTag_{{ $id }}
     transformers:
       - addprefix: "{{ index . "search" "image" }}:"
@@ -352,7 +325,6 @@ targets:
   searchValues_{{ $id }}:
     name: search image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: searchTag_{{ $id }}
     spec:
       file: {{ .search.helm_target }}
@@ -365,7 +337,6 @@ targets:
   searchEnterpriseCompose_{{ $id }}:
     name: Search Enterprise image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: searchEnterpriseTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-elasticsearch-live-indexing:"
@@ -379,7 +350,6 @@ targets:
   searchEnterpriseReindexingValues_{{ $id }}:
     name: Search Enterprise image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: searchEnterpriseTag_{{ $id }}
     spec:
       file: {{ $target_searchEnt }}
@@ -388,7 +358,6 @@ targets:
   searchEnterprise{{ $key }}Values_{{ $id }}:
     name: Search Enterprise image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: searchEnterpriseTag_{{ $id }}
     spec:
       file: {{ $target_searchEnt }}
@@ -399,7 +368,6 @@ targets:
   shareCompose_{{ $id }}:
     name: Share image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: shareTag_{{ $id }}
     transformers:
       - addprefix: "{{ index . "share" "image" }}:"
@@ -410,7 +378,6 @@ targets:
   shareValues_{{ $id }}:
     name: Share image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: shareTag_{{ $id }}
     spec:
       file: {{ .share.helm_target }}
@@ -420,7 +387,6 @@ targets:
   onedriveValues_{{ $id }}:
     name: Onedrive image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: onedriveTag_{{ $id }}
     spec:
       file: {{ .onedrive.helm_target }}
@@ -431,7 +397,6 @@ targets:
   msteamsValues_{{ $id }}:
     name: MS Teams image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: msteamsTag_{{ $id }}
     spec:
       file: {{ .msteams.helm_target }}
@@ -442,7 +407,6 @@ targets:
   intelligenceValues_{{ $id }}:
     name: Alfresco Intelligence image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: intelligenceTag_{{ $id }}
     spec:
       file: {{ .intelligence.helm_target }}
@@ -453,7 +417,6 @@ targets:
   trouterCompose_{{ $id }}:
     name: Alfresco Transform Router image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: trouterTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-transform-router:"
@@ -464,7 +427,6 @@ targets:
   trouterValues_{{ $id }}:
     name: Alfresco Transform Router image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: trouterTag_{{ $id }}
     spec:
       file: {{ .trouter.helm_target }}
@@ -475,7 +437,6 @@ targets:
   sfsCompose_{{ $id }}:
     name: Alfresco Shared Filestore image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: sfsTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/alfresco-shared-file-store:"
@@ -486,7 +447,6 @@ targets:
   sfsValues_{{ $id }}:
     name: Alfresco Shared Filestore image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: sfsTag_{{ $id }}
     spec:
       file: {{ .sfs.helm_target }}
@@ -497,7 +457,6 @@ targets:
   tengine-aioCompose_{{ $id }}:
     name: Alfresco All-In-One Transform Engine image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: tengine-aioTag_{{ $id }}
     transformers:
       - addprefix: "alfresco/alfresco-transform-core-aio:"
@@ -510,7 +469,6 @@ targets:
   tengine-miscValues_{{ $id }}:
     name: Alfresco misc Transform Engine image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: tengine-miscTag_{{ $id }}
     spec:
       file: {{ index . "tengine-misc" "helm_target" }}
@@ -521,7 +479,6 @@ targets:
   tengine-imValues_{{ $id }}:
     name: Alfresco ImageMagick Transform Engine image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: tengine-imTag_{{ $id }}
     spec:
       file: {{ index . "tengine-im" "helm_target" }}
@@ -532,7 +489,6 @@ targets:
   tengine-loValues_{{ $id }}:
     name: Alfresco LibreOffice Transform Engine image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: tengine-loTag_{{ $id }}
     spec:
       file: {{ index . "tengine-lo" "helm_target" }}
@@ -543,7 +499,6 @@ targets:
   tengine-pdfValues_{{ $id }}:
     name: Alfresco PDF Transform Engine image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: tengine-pdfTag_{{ $id }}
     spec:
       file: {{ index . "tengine-pdf" "helm_target" }}
@@ -554,7 +509,6 @@ targets:
   tengine-tikaValues_{{ $id }}:
     name: Alfresco tika Transform Engine image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: tengine-tikaTag_{{ $id }}
     spec:
       file: {{ index . "tengine-tika" "helm_target" }}
@@ -565,7 +519,6 @@ targets:
   syncCompose_{{ $id }}:
     name: Sync image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: syncTag_{{ $id }}
     transformers:
       - addprefix: "quay.io/alfresco/service-sync:"
@@ -576,7 +529,6 @@ targets:
   syncValues_{{ $id }}:
     name: Sync image tag
     kind: yaml
-    scmid: sourceRepo
     sourceid: syncTag_{{ $id }}
     spec:
       file: {{ .sync.helm_target }}
