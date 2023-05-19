@@ -12,19 +12,74 @@ Here follows a more detailed explanation of any breaking change grouped by versi
 ### Charts modularization
 
 `alfresco-content-services` chart has always been the mandatory entrypoint to
-deploy Alfresco platform and components. In order to porvide more flexibility
+deploy Alfresco platform and components. In order to provide more flexibility
 we've started an effort of splitting Alfresco components into individual charts
-that can be used independantly.
+that can be used independently.
 
 That effort is work in progress and we've started by turning the previously
-embedded subcharts into individual charts hosted in a the new repository
+embedded subcharts into individual charts hosted in a new repository:
 [alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts)
 
 The associated registry is `https://alfresco.github.io/alfresco-helm-charts/`
 
 These change comes with some deep modifications of the values structure:
 
-/!\ TODO /!\
+#### Resources limits
+
+We have introduced `resources.request` & `resources.limits` for each Alfresco
+component deployment. The purpose is of course to avoid a single component
+eating up all of the worker node's resource. Though, the default we provide
+might not suit your workload and you MUST review them and align them in you
+values in order to make sure your environment runs with appropriate amount of
+resource.
+
+Customizing resource allocation follow the generic kubernetes syntax under
+each component's YAML node. For example for the ACS repo:
+
+```yaml
+repository:
+    resources:
+      requests:
+        cpu: "0.5"
+        memory: "1000Mi"
+      limits:
+        cpu: "1"
+        memory: "1000Mi"
+```
+
+> You should focus on the limits to allow for more resource to be allocated to
+> the pods while the requests are mostly present to avoid scheduling the node on
+> too small worker nodes or requesting too much resources than needed.
+
+#### Resources naming
+
+The following charts benefited from a shift in the way resources are names.
+We've tried to stick more closely to the Helm provided templates. That impacts
+the charts in different ways and we advise you review changes for each chart or
+deploy the new chart somewhere for tests and compare the resource names  if you
+anticipate this change may be a problem for you and need to know about the new
+names.
+
+The list of charts which had some naming template modifications:
+
+* [activemq](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq)
+* [alfresco-search-enterprise](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-search-enterprise)
+* [alfresco-search-service](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-search-service)
+* [alfresco-sync-service](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
+
+#### YAML nodes name remapping
+
+We have changed part of the YAML structure of the `values.yaml` file.
+Some changes should be transparent some other require to align you own values.
+
+##### Transparent remapping (handled with a chart alias)
+
+`alfresco-elasticsearch-connector` => `alfresco-search-enterprise`
+`alfresco-search` => `alfresco-search-service`
+
+##### Breaking remapping
+
+`alfresco-sync-service.syncservice` => `alfresco-sync-service`
 
 ## 5.4.0-M3
 
