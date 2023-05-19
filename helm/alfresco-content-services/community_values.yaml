@@ -1,11 +1,10 @@
----
 # ACS Community values
 repository:
   edition: Community
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 7.4.0-M3
+    tag: 7.4.0.1
   persistence:
     accessModes:
       - ReadWriteOnce
@@ -23,11 +22,11 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-    tag: 7.4.0-M3
+    tag: 7.4.0.1
 alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
-    tag: 2.0.6
+    tag: 2.0.7
 # Disable Enterprise only features
 alfresco-digital-workspace:
   enabled: false

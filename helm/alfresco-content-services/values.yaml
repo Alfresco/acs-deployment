@@ -29,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.4.0-M3
+    tag: 7.4.0.1
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -58,15 +58,7 @@ repository:
     #      - chart-example.local
   environment:
     JAVA_OPTS: >-
-      -Dtransform.service.enabled=true
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-      -Dencryption.keystore.type=JCEKS
-      -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
-      -Dencryption.keyAlgorithm=DESede
-      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
-      -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=DESede
+      -Dtransform.service.enabled=true -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33000
@@ -219,7 +211,7 @@ transformrouter:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: 2.0.0
+    tag: 2.1.0
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -228,8 +220,7 @@ transformrouter:
     externalPort: 80
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 140
     periodSeconds: 60
@@ -255,7 +246,7 @@ pdfrenderer:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: 3.0.0
+    tag: 3.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -274,8 +265,7 @@ pdfrenderer:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -295,7 +285,7 @@ imagemagick:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: 3.0.0
+    tag: 3.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -314,8 +304,7 @@ imagemagick:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -335,7 +324,7 @@ libreoffice:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: 3.0.0
+    tag: 3.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -354,8 +343,7 @@ libreoffice:
     runAsUser: 33003
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -375,7 +363,7 @@ tika:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-tika
-    tag: 3.0.0
+    tag: 3.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -394,8 +382,7 @@ tika:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 60
@@ -416,7 +403,7 @@ transformmisc:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: 3.0.0
+    tag: 3.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -435,8 +422,7 @@ transformmisc:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -454,7 +440,7 @@ aiTransformer:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 1.4.5
+    tag: 1.5.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -472,8 +458,7 @@ aiTransformer:
       memory: "1000Mi"
   environment:
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -493,7 +478,7 @@ filestore:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 2.0.0
+    tag: 2.1.0
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
@@ -524,8 +509,7 @@ filestore:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
     JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -556,7 +540,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.4.0-M3
+    tag: 7.4.0.1
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -587,8 +571,7 @@ share:
       memory: "2000Mi"
   environment:
     CATALINA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
+      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   readinessProbe:
     initialDelaySeconds: 60
     periodSeconds: 20
@@ -694,7 +677,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.0.0-A.3
+    tag: 4.0.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -739,7 +722,7 @@ alfresco-admin-app:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-admin-app
-    tag: 7.8.1
+    tag: 8.0.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -914,7 +897,7 @@ alfresco-sync-service:
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
   image:
-    tag: 4.0.0-M7
+    tag: 3.9.0
   postgresql:
     enabled: true
     image:
