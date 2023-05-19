@@ -538,11 +538,6 @@ matrix:
       helm_target: *helmvaluesOss
       helm_key: alfresco-search.searchServicesImage.tag
       image: docker.io/alfresco/alfresco-search-services
-    ondrive:
-      version: "1.1"
-      helm_target: *helmvaluesOss
-      helm_key: ooiService.image.tag
-      pattern: *ga_hotfixes_pattern
     tengine-aio:
       compose_target: *composeOss
       compose_key: services.transform-core-aio.image

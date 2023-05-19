@@ -27,15 +27,6 @@ alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
     tag: 2.0.7
-# Disable Enterprise only features
-alfresco-digital-workspace:
-  enabled: false
-alfresco-sync-service:
-  enabled: false
-ai:
-  enabled: false
-s3connector:
-  enabled: false
 email:
   server:
     enabled: false
@@ -44,5 +35,20 @@ email:
 imap:
   server:
     enabled: false
+# Disable Enterprise only features
+alfresco-search-enterprise:
+  enabled: false
+alfresco-digital-workspace:
+  enabled: false
+alfresco-sync-service:
+  enabled: false
+ai:
+  enabled: false
+s3connector:
+  enabled: false
 alfresco-admin-app:
+  enabled: false
+ooi:
+  enabled: false
+msTeams:
   enabled: false
