@@ -1,12 +1,13 @@
 ---
 # Reflection of https://docs.alfresco.com/content-services/latest/support/
 # TO BE ENRICHED AS RELEASES ARE OUT
+patterns:
+  ga: &ga_pattern (\.[0-9]+){1,2}
+  ga_with_hotfixes: &ga_hotfixes_pattern (\.[0-9]+){1,3}
+  development: &development_pattern (\.[0-9]+){1,3}(-[AM]\.?[0-9]+)?
 matrix:
-  patterns:
-    ga: &ga_pattern (\.[0-9]+){1,2}
-    ga_with_hotfixes: &ga_hotfixes_pattern (\.[0-9]+){1,3}
-    development: &development_pattern (\.[0-9]+){1,3}(-[AM]\.?[0-9]+)?
   latest:
+    id: 74n
     acs:
       version: "7.4"
       compose_target: &compose >-
@@ -15,7 +16,7 @@ matrix:
       helm_target: &helmvalues >-
         helm/alfresco-content-services/values.yaml
       helm_key: repository.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: &repository_image quay.io/alfresco/alfresco-content-repository
     share:
       version: "7.4"
@@ -23,48 +24,90 @@ matrix:
       compose_key: services.share.image
       helm_target: *helmvalues
       helm_key: share.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: &share_image quay.io/alfresco/alfresco-share
     search:
-      version: "2"
+      version: "^2.0"
       compose_target: *compose
       compose_key: services.solr6.image
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
       version: "3"
       compose_target: >-
         docker-compose/elasticsearch-override-docker-compose.yml
       compose_key: services.search.image
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     sync:
-      version: "4"
+      version: "3.9"
       compose_target: *compose
       compose_key: services.sync-service.image
       helm_target: >-
         helm/alfresco-content-services/values.yaml
       helm_key: alfresco-sync-service.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     adw:
       version: "4"
       compose_target: *compose
       compose_key: services.digital-workspace.image
       helm_target: *helmvalues
       helm_key: alfresco-digital-workspace.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     adminApp:
-      version: "7"
+      version: "8"
       compose_target: *compose
       compose_key: services.control-center.image
       helm_target: *helmvalues
       helm_key: alfresco-admin-app.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
     ondrive:
-      version: "1"
+      version: "2"
       helm_target: *helmvalues
       helm_key: ooiService.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
+    msteams:
+      version: "2"
+      helm_target: *helmvalues
+      helm_key: msTeamsService.image.tag
+      pattern: *ga_hotfixes_pattern
+    intelligence:
+      version: "~1.5.0"
+      helm_target: *helmvalues
+      helm_key: aiTransformer.image.tag
+    trouter:
+      version: "~2.1.0"
+      compose_target: *compose
+      compose_key: services.transform-router.image
+      helm_target: *helmvalues
+      helm_key: transformrouter.image.tag
+    sfs:
+      version: "~2.1.0"
+      compose_target: *compose
+      compose_key: services.shared-file-store.image
+      helm_target: *helmvalues
+      helm_key: filestore.image.tag
+    tengine-misc:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
+    tengine-im:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: imagemagick.image.tag
+    tengine-lo:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "~3.1.0"
+      helm_target: *helmvalues
+      helm_key: tika.image.tag
   7.3.N:
+    id: 73n
     acs:
       version: "7.3"
       compose_target: &compose73 >-
@@ -84,7 +127,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: *share_image
     search:
-      version: "2"
+      version: "^2.0"
       compose_target: *compose73
       compose_key: services.solr6.image
       helm_target: *helmvalues73
@@ -92,7 +135,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
-      version: "3.2"
+      version: "3"
       helm_target: *helmvalues73
       helm_keys:
         Reindexing: alfresco-search-enterprise.reindexing.image.tag
@@ -128,11 +171,53 @@ matrix:
       helm_key: alfresco-admin-app.image.tag
       pattern: *ga_pattern
     ondrive:
-      version: "1.1"
-      helm_target: *helmvalues
+      version: "2.0"
+      helm_target: *helmvalues73
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
+    msteams:
+      version: "1.1"
+      helm_target: *helmvalues73
+      helm_key: msTeamsService.image.tag
+      pattern: *ga_hotfixes_pattern
+    intelligence:
+      version: "~1.5.0"
+      helm_target: *helmvalues73
+      helm_key: aiTransformer.image.tag
+    trouter:
+      version: "~2.0.0"
+      compose_target: *compose73
+      compose_key: services.transform-router.image
+      helm_target: *helmvalues73
+      helm_key: transformrouter.image.tag
+    sfs:
+      version: "~2.0.0"
+      compose_target: *compose73
+      compose_key: services.shared-file-store.image
+      helm_target: *helmvalues73
+      helm_key: filestore.image.tag
+    tengine-misc:
+      version: "~3.0.0"
+      helm_target: *helmvalues73
+      helm_key: transformmisc.image.tag
+    tengine-im:
+      version: "~3.0.0"
+      helm_target: *helmvalues73
+      helm_key: imagemagick.image.tag
+    tengine-lo:
+      version: "~3.0.0"
+      helm_target: *helmvalues73
+      helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "~3.0.0"
+      helm_target: *helmvalues73
+      helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "~3.0.0"
+      helm_target: *helmvalues73
+      helm_key: tika.image.tag
   7.2.N:
+    id: 72n
     acs:
       version: "7.2"
       compose_target: &compose72 >-
@@ -152,7 +237,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: *share_image
     search:
-      version: "2"
+      version: "^2.0"
       compose_target: *compose72
       compose_key: services.solr6.image
       helm_target: *helmvalues72
@@ -160,7 +245,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
-      version: "3.1"
+      version: "3"
       helm_target: *helmvalues72
       helm_keys:
         Reindexing: alfresco-search-enterprise.reindexing.image.tag
@@ -196,11 +281,53 @@ matrix:
       helm_key: alfresco-admin-app.image.tag
       pattern: *ga_pattern
     ondrive:
-      version: "1.1"
-      helm_target: *helmvalues
+      version: "2.0"
+      helm_target: *helmvalues72
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
+    msteams:
+      version: "1.1"
+      helm_target: *helmvalues72
+      helm_key: msTeamsService.image.tag
+      pattern: *ga_hotfixes_pattern
+    intelligence:
+      version: "~1.5.0"
+      helm_target: *helmvalues72
+      helm_key: aiTransformer.image.tag
+    trouter:
+      version: "~2.0.0"
+      compose_target: *compose72
+      compose_key: services.transform-router.image
+      helm_target: *helmvalues72
+      helm_key: transformrouter.image.tag
+    sfs:
+      version: "~2.0.0"
+      compose_target: *compose72
+      compose_key: services.shared-file-store.image
+      helm_target: *helmvalues72
+      helm_key: filestore.image.tag
+    tengine-misc:
+      version: "^2.5.0"
+      helm_target: *helmvalues72
+      helm_key: transformmisc.image.tag
+    tengine-im:
+      version: "^2.5.0"
+      helm_target: *helmvalues72
+      helm_key: imagemagick.image.tag
+    tengine-lo:
+      version: "^2.5.0"
+      helm_target: *helmvalues72
+      helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "^2.5.0"
+      helm_target: *helmvalues72
+      helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "^2.5.0"
+      helm_target: *helmvalues72
+      helm_key: tika.image.tag
   7.1.N:
+    id: 71n
     acs:
       version: "7.1"
       compose_target: &compose71 >-
@@ -220,7 +347,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: *share_image
     search:
-      version: "2"
+      version: "^2.0"
       compose_target: *compose71
       compose_key: services.solr6.image
       helm_target: *helmvalues71
@@ -228,7 +355,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: quay.io/alfresco/search-services
     search-enterprise:
-      version: "3.1"
+      version: "3"
       helm_target: *helmvalues71
       helm_keys:
         Reindexing: alfresco-search-enterprise.reindexing.image.tag
@@ -257,11 +384,53 @@ matrix:
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
     ondrive:
-      version: "1.1"
-      helm_target: *helmvalues
+      version: "2.0"
+      helm_target: *helmvalues71
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
+    msteams:
+      version: "1.1"
+      helm_target: *helmvalues71
+      helm_key: msTeamsService.image.tag
+      pattern: *ga_hotfixes_pattern
+    intelligence:
+      version: "^1.4.0"
+      helm_target: *helmvalues71
+      helm_key: aiTransformer.image.tag
+    trouter:
+      version: "^1.5.0"
+      compose_target: *compose71
+      compose_key: services.transform-router.image
+      helm_target: *helmvalues71
+      helm_key: transformrouter.image.tag
+    sfs:
+      version: "^1.5.0"
+      compose_target: *compose71
+      compose_key: services.shared-file-store.image
+      helm_target: *helmvalues71
+      helm_key: filestore.image.tag
+    tengine-misc:
+      version: "^2.5.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
+    tengine-im:
+      version: "^2.5.0"
+      helm_target: *helmvalues71
+      helm_key: imagemagick.image.tag
+    tengine-lo:
+      version: "^2.5.0"
+      helm_target: *helmvalues71
+      helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "^2.5.0"
+      helm_target: *helmvalues71
+      helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "^2.5.0"
+      helm_target: *helmvalues71
+      helm_key: tika.image.tag
   7.0.N:
+    id: 70n
     acs:
       version: "7.0"
       compose_target: &compose70 >-
@@ -281,7 +450,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: *share_image
     search:
-      version: "2"
+      version: "^2.0"
       compose_target: *compose70
       compose_key: services.solr6.image
       helm_target: *helmvalues70
@@ -302,7 +471,49 @@ matrix:
       helm_target: *helmvalues70
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
+    ondrive:
+      version: "2.0"
+      helm_target: *helmvalues70
+      helm_key: ooiService.image.tag
+      pattern: *ga_hotfixes_pattern
+    intelligence:
+      version: "^1.3.0"
+      helm_target: *helmvalues70
+      helm_key: aiTransformer.image.tag
+    trouter:
+      version: "^1.5.0"
+      compose_target: *compose70
+      compose_key: services.transform-router.image
+      helm_target: *helmvalues70
+      helm_key: transformrouter.image.tag
+    sfs:
+      version: "^1.5.0"
+      compose_target: *compose70
+      compose_key: services.shared-file-store.image
+      helm_target: *helmvalues70
+      helm_key: filestore.image.tag
+    tengine-misc:
+      version: "^2.5.0"
+      helm_target: *helmvalues
+      helm_key: transformmisc.image.tag
+    tengine-im:
+      version: "^2.5.0"
+      helm_target: *helmvalues70
+      helm_key: imagemagick.image.tag
+    tengine-lo:
+      version: "^2.5.0"
+      helm_target: *helmvalues70
+      helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version: "^2.5.0"
+      helm_target: *helmvalues70
+      helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version: "^2.5.0"
+      helm_target: *helmvalues70
+      helm_key: tika.image.tag
   community:
+    id: com
     acs:
       version: "7.4"
       compose_target: &composeOss >-
@@ -311,7 +522,7 @@ matrix:
       helm_target: &helmvaluesOss >-
         helm/alfresco-content-services/community_values.yaml
       helm_key: repository.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: docker.io/alfresco/alfresco-content-repository-community
     share:
       version: "7.4"
@@ -319,18 +530,22 @@ matrix:
       compose_key: services.share.image
       helm_target: *helmvaluesOss
       helm_key: share.image.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: docker.io/alfresco/alfresco-share
     search:
-      version: "2"
+      version: "^2.0"
       compose_target: *composeOss
       compose_key: services.solr6.image
       helm_target: *helmvaluesOss
       helm_key: alfresco-search.searchServicesImage.tag
-      pattern: *development_pattern
+      pattern: *ga_hotfixes_pattern
       image: docker.io/alfresco/alfresco-search-services
     ondrive:
       version: "1.1"
-      helm_target: *helmvalues
+      helm_target: *helmvaluesOss
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
+    tengine-aio:
+      compose_target: *composeOss
+      compose_key: services.transform-core-aio.image
+      version: "^3.1.0"
