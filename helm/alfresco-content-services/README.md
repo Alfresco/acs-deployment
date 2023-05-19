@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 5.4.0-SNAPSHOT](https://img.shields.io/badge/Version-5.4.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 7.4.0-M3](https://img.shields.io/badge/AppVersion-7.4.0--M3-informational?style=flat-square)
+![Version: 6.0.0](https://img.shields.io/badge/Version-6.0.0-informational?style=flat-square) ![AppVersion: 7.4.0](https://img.shields.io/badge/AppVersion-7.4.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -20,7 +20,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.0.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.0.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.x.x |
