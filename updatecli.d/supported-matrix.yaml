@@ -346,7 +346,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: *share_image
     search:
-      version: "^2.0"
+      version: "^2.0 <2.0.3"
       compose_target: *compose71
       compose_key: services.solr6.image
       helm_target: *helmvalues71
@@ -449,7 +449,7 @@ matrix:
       pattern: *ga_hotfixes_pattern
       image: *share_image
     search:
-      version: "^2.0"
+      version: "^2.0 <2.0.3"
       compose_target: *compose70
       compose_key: services.solr6.image
       helm_target: *helmvalues70
