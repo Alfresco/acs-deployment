@@ -52,7 +52,7 @@ alfresco-search-enterprise:
 alfresco-digital-workspace:
   image:
     tag: 3.0.1
-alfresco-admin-app:
+alfresco-control-center:
   image:
     tag: 7.9.0
 postgresql:

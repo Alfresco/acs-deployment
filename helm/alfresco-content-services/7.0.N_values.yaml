@@ -50,6 +50,8 @@ ooiService:
     tag: 2.0.0
 msTeams:
   enabled: false
+alfresco-control-center:
+  enabled: false
 global:
   tracking:
     auth: none

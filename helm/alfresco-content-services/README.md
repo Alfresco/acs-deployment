@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-admin-app(common) | 7.7.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 7.7.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
@@ -59,27 +59,27 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
 | aiTransformer.service.type | string | `"ClusterIP"` |  |
-| alfresco-admin-app.enabled | bool | `true` |  |
-| alfresco-admin-app.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
-| alfresco-admin-app.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
-| alfresco-admin-app.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
-| alfresco-admin-app.image.pullPolicy | string | `"IfNotPresent"` |  |
-| alfresco-admin-app.image.repository | string | `"quay.io/alfresco/alfresco-admin-app"` |  |
-| alfresco-admin-app.image.tag | string | `"8.0.0"` |  |
-| alfresco-admin-app.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
-| alfresco-admin-app.ingress.path | string | `"/control-center"` |  |
-| alfresco-admin-app.ingress.tls | list | `[]` |  |
-| alfresco-admin-app.nameOverride | string | `"alfresco-cc"` |  |
-| alfresco-admin-app.nodeSelector | object | `{}` |  |
-| alfresco-admin-app.resources.limits.cpu | string | `"1"` |  |
-| alfresco-admin-app.resources.limits.memory | string | `"1024Mi"` |  |
-| alfresco-admin-app.resources.requests.cpu | string | `"0.25"` |  |
-| alfresco-admin-app.resources.requests.memory | string | `"256Mi"` |  |
-| alfresco-admin-app.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
-| alfresco-admin-app.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
-| alfresco-admin-app.securityContext.runAsNonRoot | bool | `true` |  |
-| alfresco-admin-app.securityContext.runAsUser | int | `101` |  |
-| alfresco-admin-app.service.envType | string | `"frontend"` |  |
+| alfresco-control-center.enabled | bool | `true` |  |
+| alfresco-control-center.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
+| alfresco-control-center.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
+| alfresco-control-center.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
+| alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
+| alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
+| alfresco-control-center.image.tag | string | `"8.0.0"` |  |
+| alfresco-control-center.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
+| alfresco-control-center.ingress.path | string | `"/control-center"` |  |
+| alfresco-control-center.ingress.tls | list | `[]` |  |
+| alfresco-control-center.nameOverride | string | `"alfresco-cc"` |  |
+| alfresco-control-center.nodeSelector | object | `{}` |  |
+| alfresco-control-center.resources.limits.cpu | string | `"1"` |  |
+| alfresco-control-center.resources.limits.memory | string | `"1024Mi"` |  |
+| alfresco-control-center.resources.requests.cpu | string | `"0.25"` |  |
+| alfresco-control-center.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-control-center.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
+| alfresco-control-center.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
+| alfresco-control-center.securityContext.runAsNonRoot | bool | `true` |  |
+| alfresco-control-center.securityContext.runAsUser | int | `101` |  |
+| alfresco-control-center.service.envType | string | `"frontend"` |  |
 | alfresco-digital-workspace.enabled | bool | `true` |  |
 | alfresco-digital-workspace.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-digital-workspace.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |

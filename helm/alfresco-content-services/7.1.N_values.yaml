@@ -68,6 +68,8 @@ msTeamsService:
 ooiService:
   image:
     tag: 2.0.0
+alfresco-control-center:
+  enabled: false
 global:
   tracking:
     auth: none

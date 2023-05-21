@@ -46,8 +46,6 @@ ai:
   enabled: false
 s3connector:
   enabled: false
-alfresco-admin-app:
-  enabled: false
 ooi:
   enabled: false
 msTeams:

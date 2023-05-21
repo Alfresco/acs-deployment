@@ -25,7 +25,7 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: common
-    alias: alfresco-admin-app
+    alias: alfresco-control-center
     repository: https://activiti.github.io/activiti-cloud-helm-charts
     version: 7.7.0
     condition: >-

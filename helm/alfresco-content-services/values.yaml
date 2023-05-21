@@ -723,7 +723,7 @@ alfresco-digital-workspace:
     limits:
       cpu: "1"
       memory: "1024Mi"
-alfresco-admin-app:
+alfresco-control-center:
   nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-cc"
@@ -738,7 +738,7 @@ alfresco-admin-app:
     #    hosts:
     #      - chart-example.local
   image:
-    repository: quay.io/alfresco/alfresco-admin-app
+    repository: quay.io/alfresco/alfresco-control-center
     tag: 8.0.0
     pullPolicy: IfNotPresent
   env:
