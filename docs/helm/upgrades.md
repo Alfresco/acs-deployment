@@ -79,6 +79,7 @@ Some changes should be transparent some other require to align you own values.
 
 ##### Breaking remapping
 
+`alfresco-admin-app` => `alfresco-control-center`
 `alfresco-sync-service.syncservice` => `alfresco-sync-service`
 
 ## 5.4.0-M3
