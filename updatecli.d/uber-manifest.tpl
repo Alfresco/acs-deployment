@@ -258,7 +258,7 @@ targets:
     kind: yaml
     sourceid: adminAppTag_{{ $id }}
     transformers:
-      - addprefix: "quay.io/alfresco/alfresco-admin-app:"
+      - addprefix: "quay.io/alfresco/alfresco-control-center:"
     spec:
       file: {{ .adminApp.compose_target }}
       key: >-

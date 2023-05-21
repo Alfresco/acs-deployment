@@ -57,7 +57,7 @@ matrix:
       compose_target: *compose
       compose_key: services.control-center.image
       helm_target: *helmvalues
-      helm_key: alfresco-admin-app.image.tag
+      helm_key: alfresco-control-center.image.tag
       pattern: *development_pattern
     ondrive:
       version: "2"
@@ -167,7 +167,7 @@ matrix:
       compose_target: *compose73
       compose_key: services.control-center.image
       helm_target: *helmvalues73
-      helm_key: alfresco-admin-app.image.tag
+      helm_key: alfresco-control-center.image.tag
       pattern: *ga_pattern
     ondrive:
       version: "2.0"
@@ -277,7 +277,7 @@ matrix:
       compose_target: *compose72
       compose_key: services.control-center.image
       helm_target: *helmvalues72
-      helm_key: alfresco-admin-app.image.tag
+      helm_key: alfresco-control-center.image.tag
       pattern: *ga_pattern
     ondrive:
       version: "2.0"
