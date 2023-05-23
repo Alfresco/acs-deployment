@@ -91,9 +91,9 @@ sources:
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
-        kind: semver
+        kind: regex
         pattern: >-
-          {{ index . "search" "version" }}
+          ^{{ index . "search" "version" }}{{ index . "search" "pattern" }}$
   {{- end }}
   {{ $share_image := index . "share" "image" }}
   shareTag_{{ $id }}:
