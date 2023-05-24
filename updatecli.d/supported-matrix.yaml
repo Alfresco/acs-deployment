@@ -482,13 +482,13 @@ matrix:
       helm_target: *helmvalues70
       helm_key: aiTransformer.image.tag
     trouter:
-      version: "^1.5.0"
+      version: "^1.4.0"
       compose_target: *compose70
       compose_key: services.transform-router.image
       helm_target: *helmvalues70
       helm_key: transformrouter.image.tag
     sfs:
-      version: "^1.5.0"
+      version: "^0.16.0"
       compose_target: *compose70
       compose_key: services.shared-file-store.image
       helm_target: *helmvalues70
