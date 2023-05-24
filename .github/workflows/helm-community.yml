@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@b93f01d21bfdf630dc850aedfdb17fdd43221fd8
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v1.38.0
       - name: Community local deployment
         run: |
           helm dep up ./helm/alfresco-content-services
