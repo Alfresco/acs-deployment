@@ -8,7 +8,7 @@ on:
       - '! docker-compose/community-docker-compose.yml'
       - 'docker-compose/**'
       - 'test/postman/docker-compose/**'
-      - '.github/workflows/enterprise-compose.yml'
+      - '.github/workflows/docker-compose-enterprise.yml'
   push:
     branches:
       - 'master'

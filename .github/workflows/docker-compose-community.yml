@@ -7,7 +7,7 @@ on:
     paths:
       - 'docker-compose/community-docker-compose.yml'
       - 'test/postman/docker-compose/**'
-      - '.github/workflows/community-compose.yml'
+      - '.github/workflows/docker-compose-community.yml'
   push:
     branches:
       - 'master'
