@@ -7,22 +7,22 @@ transformrouter:
     tag: 1.5.3
 pdfrenderer:
   image:
-    tag: 2.6.0
+    tag: 2.5.7
 imagemagick:
   image:
-    tag: 2.6.0
+    tag: 2.5.7
 libreoffice:
   image:
-    tag: 2.6.0
+    tag: 2.5.7
 tika:
   image:
-    tag: 2.6.0
+    tag: 2.5.7
 transformmisc:
   image:
-    tag: 2.6.0
+    tag: 2.5.7
 aiTransformer:
   image:
-    tag: 1.5.0
+    tag: 1.4.5
 filestore:
   image:
     tag: 1.5.3
