@@ -47,7 +47,7 @@ alfresco-sync-service:
         tag: 13.1.0
 ooiService:
   image:
-    tag: 2.0.0
+    tag: 1.1.0.1
 msTeams:
   enabled: false
 alfresco-control-center:

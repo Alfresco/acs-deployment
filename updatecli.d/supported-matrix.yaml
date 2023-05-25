@@ -61,7 +61,7 @@ matrix:
       helm_target: *helmvalues
       helm_key: alfresco-control-center.image.tag
       pattern: *development_pattern
-    ondrive:
+    onedrive:
       version: "2"
       helm_target: *helmvalues
       helm_key: ooiService.image.tag
@@ -171,8 +171,8 @@ matrix:
       helm_target: *helmvalues73
       helm_key: alfresco-control-center.image.tag
       pattern: *ga_pattern
-    ondrive:
-      version: "2.0"
+    onedrive:
+      version: "1.1.3"
       helm_target: *helmvalues73
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
@@ -281,8 +281,8 @@ matrix:
       helm_target: *helmvalues72
       helm_key: alfresco-control-center.image.tag
       pattern: *ga_pattern
-    ondrive:
-      version: "2.0"
+    onedrive:
+      version: "1.1.3"
       helm_target: *helmvalues72
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
@@ -384,8 +384,8 @@ matrix:
       helm_target: *helmvalues71
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
-    ondrive:
-      version: "2.0"
+    onedrive:
+      version: "1.1.1"
       helm_target: *helmvalues71
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
@@ -472,8 +472,8 @@ matrix:
       helm_target: *helmvalues70
       helm_key: alfresco-digital-workspace.image.tag
       pattern: *ga_pattern
-    ondrive:
-      version: "2.0"
+    onedrive:
+      version: "1.1.0"
       helm_target: *helmvalues70
       helm_key: ooiService.image.tag
       pattern: *ga_hotfixes_pattern
