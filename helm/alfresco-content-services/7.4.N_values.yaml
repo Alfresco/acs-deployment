@@ -1,0 +1,76 @@
+# ACS 7.3.N values
+repository:
+  image:
+    tag: 7.4.0.1
+transformrouter:
+  image:
+    tag: 2.1.0
+pdfrenderer:
+  image:
+    tag: 3.1.0
+imagemagick:
+  image:
+    tag: 3.1.0
+libreoffice:
+  image:
+    tag: 3.1.0
+tika:
+  image:
+    tag: 3.1.0
+transformmisc:
+  image:
+    tag: 3.1.0
+aiTransformer:
+  image:
+    tag: 1.5.0
+filestore:
+  image:
+    tag: 2.1.0
+share:
+  image:
+    tag: 7.4.0.1
+activemq:
+  image:
+    tag: null
+alfresco-search:
+  searchServicesImage:
+    tag: 2.0.5.2
+alfresco-search-enterprise:
+  enabled: false
+  liveIndexing:
+    mediation:
+      image:
+        tag: 3.2.0
+    content:
+      image:
+        tag: 3.2.0
+    metadata:
+      image:
+        tag: 3.2.0
+    path:
+      image:
+        tag: 3.2.0
+  reindexing:
+    image:
+      tag: 3.2.0
+alfresco-digital-workspace:
+  image:
+    tag: 4.0.0
+alfresco-control-center:
+  image:
+    tag: 8.0.0
+postgresql:
+  image:
+    tag: 14.4.0
+postgresql-syncservice:
+  image:
+    tag: 14.4.0
+alfresco-sync-service:
+  image:
+    tag: 3.8.0
+ooiService:
+  image:
+    tag: 2.0.0
+msTeamsService:
+  image:
+    tag: 2.0.0

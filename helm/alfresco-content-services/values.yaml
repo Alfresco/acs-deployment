@@ -29,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 7.4.0.1
+    tag: 23.1.0-A12
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -102,9 +102,9 @@ repository:
     accessModes:
       - ReadWriteMany
     # -- Bind PVC based on storageClass (e.g. dynamic provisioning)
-    storageClass:
+    storageClass: null
     # -- Use pre-provisioned pv through its claim (e.g. static provisioning)
-    existingClaim:
+    existingClaim: null
     data:
       mountPath: /usr/local/tomcat/alf_data
       subPath: alfresco-content-services/repository-data
@@ -117,7 +117,7 @@ repository:
   # key:value maner org.alfresco.repo.content.transform.TransformerDebug: debug
   extraLogStatements: {}
   # -- An existing secret that contains REPO_ADMIN_PASSWORD as an alternative for `repository.adminPassword` value
-  existingSecretName:
+  existingSecretName: null
 # -- Declares the api-explorer service used by the content repository
 apiexplorer:
   ingress:
@@ -219,7 +219,7 @@ transformrouter:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: 2.1.0
+    tag: 2.2.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -255,7 +255,7 @@ pdfrenderer:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: 3.1.0
+    tag: 3.2.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -295,7 +295,7 @@ imagemagick:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: 3.1.0
+    tag: 3.2.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -335,7 +335,7 @@ libreoffice:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: 3.1.0
+    tag: 3.2.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -375,7 +375,7 @@ tika:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-tika
-    tag: 3.1.0
+    tag: 3.2.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -416,7 +416,7 @@ transformmisc:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: 3.1.0
+    tag: 3.2.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -454,7 +454,7 @@ aiTransformer:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 1.5.0
+    tag: 1.6.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -493,7 +493,7 @@ filestore:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 2.1.0
+    tag: 2.2.0-A1
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
@@ -543,7 +543,7 @@ filestore:
     accessModes:
       - ReadWriteOnce
     # -- Bind PVC based on storageClass (e.g. dynamic provisionning)
-    storageClass:
+    storageClass: null
     # -- Use pre-provisioned pv through its claim (e.g. static provisionning)
     existingClaim: null
     data:
@@ -556,7 +556,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 7.4.0.1
+    tag: 23.1.0-A12
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -642,7 +642,7 @@ alfresco-search:
     # You can create your own with htpasswd utilility & encode it with base64.
     # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'`
     # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
-    basicAuth:
+    basicAuth: null
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -651,18 +651,18 @@ database:
   # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false
   # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
-  driver:
+  driver: null
   # -- External Postgresql database user
-  user:
+  user: null
   # -- External Postgresql database password
-  password:
+  password: null
   # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
-  url:
+  url: null
   # -- Name of the secret managed by this chart
   secretName: &acs_database_secretName acs-alfresco-cs-dbsecret
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
   # When using embedded postgres you need to also set `postgresql.existingSecret`.
-  existingSecretName:
+  existingSecretName: null
 alfresco-search-enterprise:
   enabled: false
   elasticsearch:
@@ -673,7 +673,7 @@ alfresco-search-enterprise:
   reindexing:
     enabled: true
     postgresql:
-      url:
+      url: null
       hostname: postgresql-acs
       database: alfresco
       existingSecretName: *acs_database_secretName
@@ -694,7 +694,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.0.0
+    tag: 4.1.0-5090171880
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -739,7 +739,7 @@ alfresco-control-center:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.0.0
+    tag: 8.1.0-5090171880
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -774,7 +774,7 @@ postgresql:
   commonAnnotations:
     application: alfresco-content-services
   auth:
-    existingSecret:
+    existingSecret: null
     username: alfresco
     password: alfresco
     database: alfresco
@@ -808,22 +808,22 @@ s3connector:
   # https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
   enabled: false
   config:
-    bucketName:
-    bucketLocation:
+    bucketName: null
+    bucketLocation: null
   secrets:
-    accessKey:
-    secretKey:
-    encryption:
-    awsKmsKeyId:
+    accessKey: null
+    secretKey: null
+    encryption: null
+    awsKmsKeyId: null
   # -- An existing kubernetes secret that contains ACCESSKEY, SECRETKEY, ENCRYPTION, KMSKEYID keys
-  existingSecretName:
+  existingSecretName: null
 # -- For a full information of configuring the inbound email system, see
 # https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails
 email:
   server:
     enabled: false
     port: 1125
-    domain:
+    domain: null
     enableTLS: true
     hideTLS: false
     requireTLS: false
@@ -834,7 +834,7 @@ email:
     allowed:
       senders: .*
     blocked:
-      senders:
+      senders: null
   inbound:
     enabled: false
     unknownUser: anonymous
@@ -843,7 +843,7 @@ email:
     folder:
       overwriteDuplicates: true
   ssl:
-    secretName:
+    secretName: null
   initContainers:
     pemToKeystore:
       image:
@@ -864,17 +864,17 @@ email:
 # https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails
 mail:
   # -- SMTP(S) host server to enable delivery of site invitations, activity notifications and workflow tasks by email
-  host:
+  host: null
   port: 25
   protocol: smtps
   encoding: UTF-8
-  username:
-  password:
+  username: null
+  password: null
   # -- An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value
-  existingSecretName:
+  existingSecretName: null
   from:
     # -- Specifies the email address from which email notifications are sent
-    default:
+    default: null
     enabled: false
   smtp:
     auth: true
@@ -900,9 +900,9 @@ imap:
       port: 1144
   mail:
     from:
-      default:
+      default: null
     to:
-      default:
+      default: null
 metadataKeystore:
   # keystorePassword: ""
   # keyPassword: ""
@@ -952,7 +952,7 @@ global:
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
-  alfrescoRegistryPullSecrets:
+  alfrescoRegistryPullSecrets: null
   strategy:
     rollingUpdate:
       maxSurge: 1
