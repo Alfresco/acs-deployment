@@ -147,33 +147,23 @@ Open a PR that will:
   `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
-Once the PR has been merged, create and push the signed tag with:
+Once the PR has been merged, create the release with:
 
 ```sh
-git tag -f -s vx.x.x -m vx.x.x
-git push origin vx.x.x
+gh release create vx.x.x --generate-notes -t vx.x.x -d
 ```
 
 where `vx.x.x` is the `alfresco-content-services` version.
 
-Once the tagged workflow is successful, publish the [new release on
-GitHub](https://github.com/Alfresco/acs-deployment/releases/new).
+Once the tagged workflow is successful, review the GitHub release notes and
+usually removing dependabot entries and other not-really useful changelog
+entries. Publish the release.
 
 Now proceed and open a PR to move back to development version:
 
-* In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
-  the next development release (usually by increasing the minor version and adding
-  the `-SNAPSHOT` suffix)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the next development release (usually by increasing the
   minor version and adding the `-SNAPSHOT` suffix)
-* For every chart using `alfresco-common`
-  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
-  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
-  * Bump version to the new `alfresco-common` development version
-  * Switch `repository` back to `https://kubernetes-charts.alfresco.com/incubator`
-* Bump each subchart version to the next development release (usually by
-  increasing the minor version and adding the `-SNAPSHOT` suffix)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, overwrite and push the signed mutable tag with:
