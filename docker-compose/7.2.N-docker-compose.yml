@@ -15,11 +15,10 @@
 #
 # Using version 2 as 3 does not support resource constraint options
 # (cpu_*, mem_* limits) for non swarm mode in Compose
----
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.2.1.10
+    image: quay.io/alfresco/alfresco-content-repository:7.2.1.11
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -36,7 +35,8 @@ services:
         -Ddb.username=alfresco
         -Ddb.password=alfresco
         -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsolr.host=solr6 -Dsolr.port=8983
+        -Dsolr.host=solr6
+        -Dsolr.port=8983
         -Dsolr.secureComms=secret
         -Dsolr.sharedSecret=secret
         -Dsolr.base.url=/solr
@@ -58,7 +58,7 @@ services:
         -XX:MaxRAMPercentage=80
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:1.5.3
+    image: quay.io/alfresco/alfresco-transform-router:2.0.0
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -86,7 +86,7 @@ services:
     links:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:1.5.3
+    image: quay.io/alfresco/alfresco-shared-file-store:2.0.2
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -99,7 +99,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.2.1.10
+    image: quay.io/alfresco/alfresco-share:7.2.1.11
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -122,7 +122,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: alfresco/alfresco-search-services:2.0.3
+    image: quay.io/alfresco/search-services:2.0.3.6
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -156,7 +156,7 @@ services:
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-admin-app:7.8.1
+    image: quay.io/alfresco/alfresco-control-center:7.9.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

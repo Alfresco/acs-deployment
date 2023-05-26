@@ -91,9 +91,9 @@ sources:
       {{ template "quay_auth" }}
       {{ end }}
       versionFilter:
-        kind: semver
+        kind: regex
         pattern: >-
-          {{ index . "search" "version" }}
+          ^{{ index . "search" "version" }}{{ index . "search" "pattern" }}$
   {{- end }}
   {{ $share_image := index . "share" "image" }}
   shareTag_{{ $id }}:
@@ -258,7 +258,7 @@ targets:
     kind: yaml
     sourceid: adminAppTag_{{ $id }}
     transformers:
-      - addprefix: "quay.io/alfresco/alfresco-admin-app:"
+      - addprefix: "quay.io/alfresco/alfresco-control-center:"
     spec:
       file: {{ .adminApp.compose_target }}
       key: >-

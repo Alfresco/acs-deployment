@@ -85,7 +85,7 @@ services:
     links:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:0.16.0
+    image: quay.io/alfresco/alfresco-shared-file-store:0.16.1
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -121,7 +121,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: alfresco/alfresco-search-services:2.0.2.2
+    image: quay.io/alfresco/search-services:2.0.2.2
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -163,7 +163,7 @@ services:
       - alfresco
       - share
   sync-service:
-    image: quay.io/alfresco/service-sync:3.7.0
+    image: quay.io/alfresco/service-sync:3.7.2
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
