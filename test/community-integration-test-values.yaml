@@ -24,6 +24,8 @@ share:
   image:
     repository: alfresco/alfresco-share
 pdfrenderer:
+  livenessProbe:
+    initialDelaySeconds: 30
   resources:
     requests:
       cpu: "0.01"
@@ -32,6 +34,8 @@ pdfrenderer:
       memory: "512Mi"
   replicaCount: 1
 imagemagick:
+  livenessProbe:
+    initialDelaySeconds: 30
   resources:
     requests:
       cpu: "0.01"
@@ -40,6 +44,8 @@ imagemagick:
       memory: "512Mi"
   replicaCount: 1
 libreoffice:
+  livenessProbe:
+    initialDelaySeconds: 30
   resources:
     requests:
       cpu: "0.01"
@@ -48,6 +54,8 @@ libreoffice:
       memory: "1024Mi"
   replicaCount: 1
 tika:
+  livenessProbe:
+    initialDelaySeconds: 30
   resources:
     requests:
       cpu: "0.01"
@@ -56,6 +64,8 @@ tika:
       memory: "512Mi"
   replicaCount: 1
 transformmisc:
+  livenessProbe:
+    initialDelaySeconds: 30
   resources:
     requests:
       cpu: "0.01"
