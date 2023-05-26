@@ -8,6 +8,7 @@ on:
       - 'helm/**'
       - 'test/postman/helm/**'
       - '.github/workflows/helm*'
+      - test/community-integration-test-values.yaml
   push:
     branches:
       - 'master'
