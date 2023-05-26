@@ -5,25 +5,50 @@
 [![docker-compose (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml)
 [![docker-compose (community)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml)
 
-This project contains the code for starting the entire Alfresco Content Services (ACS) product with [Docker](https://docs.docker.com/get-started) using [Docker Compose](https://docs.docker.com/compose) or [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
+This project contains the code for starting the entire Alfresco Content
+Services (ACS) product with [Docker](https://docs.docker.com/get-started) using
+[Docker Compose](https://docs.docker.com/compose) or
+[Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
+
+Our tests are executed using Helm, kubectl versions provided by github action
+runners [Ubuntu-22.04](https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md#ubuntu-2204)
+and against EKS clusters running Kubernetes 1.21 & 1.22.
 
 ## Prerequisites
 
-By default the Enterprise version of ACS is installed. To accomplish this private Docker images stored in Quay.io are downloaded. Alfresco customers can request Quay.io credentials by logging a ticket with [Alfresco Support](https://support.alfresco.com/).
+By default the Enterprise version of ACS is installed. To accomplish this
+private Docker images stored in Quay.io are downloaded. Alfresco customers can
+request Quay.io credentials by logging a ticket with
+[Alfresco Support](https://support.alfresco.com/).
 
-The images downloaded directly from Docker Hub, or Quay.io are for a limited trial of the Enterprise version of Alfresco Content Services that goes into read-only mode after 2 days. If you'd like to try Alfresco Content Services for a longer period, request the 30-day [Download Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
+The images downloaded directly from Docker Hub, or Quay.io are for a limited
+trial of the Enterprise version of Alfresco Content Services that goes into
+read-only mode after 2 days. If you'd like to try Alfresco Content Services for
+a longer period, request the 30-day
+[Download Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
 
-To avoid license restrictions and private Docker images follow the instructions to deploy the Community Edition.
+To avoid license restrictions and private Docker images follow the instructions
+to deploy the Community Edition.
 
 ## Versioning
 
-**NOTE:** **The versioning strategy used in this project has changed, if you have previously used this project please read this section carefully!**
+**NOTE:** **The versioning strategy used in this project has changed, if you
+have previously used this project please read this section carefully!**
 
-The master branch of this repository now contains the artifacts required to deploy both the the latest work-in-progress development version and previous stable versions of ACS.
+The master branch of this repository now contains the artifacts required to
+deploy both the the latest work-in-progress development version and previous
+stable versions of ACS.
 
-The default behaviour of the deployment scripts is to use the latest work-in-progress development version however, individual files are now provided to deploy the latest hot fix version of each major.minor version of ACS. The `support/*` branches will remain in place but will no longer be maintained.
+The default behaviour is to use the latest work-in-progress development version
+however, individual files are now provided to deploy the latest hot fix version
+of each major.minor version of ACS. The `support/*` branches will remain in
+place but will no longer be maintained.
 
-A new version numbering scheme is also being introduced, during the development phase one or more milestone releases will be produced indicated by an `M` suffix, for example "5.0.0-M1". Once feature complete one or more RC releases will be produced followed by the final GA release. Upon release the repository will be tagged with the release number.
+A new version numbering scheme is also being introduced. During the development
+phase one or more milestone releases will be produced indicated by an `M`
+suffix, for example "5.0.0-M1". Once feature complete one or more RC releases
+will be produced followed by the final GA release. Upon release the repository
+will be tagged with the release number.
 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
@@ -47,10 +72,29 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.4.0-M1          | 7.4.0-M1  | 7.3.0.1 | 7.2.1.5 | 7.1.1.7 | 7.0.1.9  | 7.4.0-M1  |
 | 5.4.0-M2          | 7.4.0-M2  | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0-M2  |
 | 5.4.0-M3          | 7.4.0-M3  | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0-M3  |
+| 6.0.0             | 7.4.0     | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0     |
 
-### End of Life'ed versions
+### Why is there no 5.4.0?
 
-While our latest version of the charts should be able to deployment any version of ACS (theoretically), we only ever test deployment of _currently_ supported versions. Also we do not provide values files for older unsupported version. If you need to deploy old version we provide a reference table below to allow you find the older values files and charts. You can either try using the values file for a version with the latest charts or using the old charts.
+During the development of 5.4.0 we've started turning subcharts (search, sync,
+activemq, ...) into individual charts hosted on a new repository. That decision
+introduces some breaking changes like resource renaming and values structure
+modifications. For that reason we chose to bump to a new major version to
+capture the fact upgrades can be problematic and one sould prefer deploying new
+versuion to a new namespace rather than attempting upgrades.
+
+> Deploying to new namespace is always the preferred way of upgrading ACS as we
+> do not test charts for upgrade scenarios (even with previous versions)
+> neither do we provide roll-back facilities.
+
+### End of Life'd versions
+
+While our latest version of the charts should be able to deployment any version
+of ACS (theoretically), we only ever test deployment of _currently_ supported
+versions. Also we do not provide values files for older unsupported version. If
+you need to deploy old version we provide a reference table below to allow you
+find the older values files and charts. You can either try using the values
+file for a version with the latest charts or using the old charts.
 
 | unsupported ACS version | Last chart version providing it |
 |-------------------------|---------------------------------|
@@ -58,29 +102,6 @@ While our latest version of the charts should be able to deployment any version 
 | 6.1                     | 5.1.1                           |
 
 > These charts are mentioned for reference but are not supported.
-
-### Docker
-
-The default docker compose file contains the latest work-in-progress deployment scripts and installs the latest development version of ACS.
-
-To deploy a specific version of ACS several specific major.minor docker compose files are provided.
-
-Our tests are executed using the latest version of Docker and Docker Compose provided by GitHub Actions.
-
-### Helm
-
-Version 5.3.0 changes the way the default persistence is set up for the
-PostgreSQL database. If you did not customize the database persistance (which
-was not recommended for serious workloads). Please take a look at [this](./storage.md)
-before trying to upgrade.
-
-Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
-
-By default the latest version of the chart will always deploy the latest development version of ACS. A set of values files are also provided that can be used to deploy a specific major.minor version.
-
-NOTE: As the Helm chart no longer deploys a specific version of ACS the `appVersion` property within the chart is longer be specified.
-
-Our tests are executed using Helm 3.5.4, kubectl 1.18.9 against an EKS cluster running Kubernetes 1.21.
 
 ## Getting Started
 

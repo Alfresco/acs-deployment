@@ -15,11 +15,10 @@
 #
 # Using version 2 as 3 does not support resource constraint options
 # (cpu_*, mem_* limits) for non swarm mode in Compose
----
 version: "2"
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0-M3
+    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -55,14 +54,16 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:3.0.0
+    image: alfresco/alfresco-transform-core-aio:3.1.0
     mem_limit: 1536m
     environment:
-      JAVA_OPTS: " -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
     ports:
       - "8090:8090"
   share:
-    image: docker.io/alfresco/alfresco-share:7.4.0-M3
+    image: docker.io/alfresco/alfresco-share:7.4.0.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -85,7 +86,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.6
+    image: docker.io/alfresco/alfresco-search-services:2.0.7
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -112,7 +113,7 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   content-app:
-    image: alfresco/alfresco-content-app:3.1.0
+    image: alfresco/alfresco-content-app:4.0.0
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"

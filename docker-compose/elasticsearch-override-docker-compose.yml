@@ -1,4 +1,3 @@
----
 version: "2"
 services:
   alfresco:
@@ -45,7 +44,7 @@ services:
       - 9200:9200
       - 9300:9300
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.3.0-A9
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.3.0
     depends_on:
       - elasticsearch
       - alfresco
@@ -57,7 +56,7 @@ services:
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:3.2.0
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:3.3.0
     depends_on:
       - alfresco
     restart: on-failure:10

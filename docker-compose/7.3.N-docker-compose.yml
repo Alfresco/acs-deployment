@@ -15,7 +15,6 @@
 #
 # Using version 2 as 3 does not support resource constraint options
 # (cpu_*, mem_* limits) for non swarm mode in Compose
----
 version: "2"
 services:
   alfresco:
@@ -87,7 +86,7 @@ services:
     links:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:2.0.0
+    image: quay.io/alfresco/alfresco-shared-file-store:2.0.2
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -123,7 +122,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: alfresco/alfresco-search-services:2.0.5
+    image: quay.io/alfresco/search-services:2.0.5.2
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -157,7 +156,7 @@ services:
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-admin-app:7.8.1
+    image: quay.io/alfresco/alfresco-control-center:7.9.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -178,7 +177,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:3.7.0
+    image: quay.io/alfresco/service-sync:3.8.0
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-

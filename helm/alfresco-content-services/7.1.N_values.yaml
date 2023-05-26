@@ -1,11 +1,10 @@
----
 # ACS 7.1.N values
 repository:
   image:
     tag: 7.1.1.8
 transformrouter:
   image:
-    tag: 1.5.2
+    tag: 1.5.3
 pdfrenderer:
   image:
     tag: 2.5.7
@@ -23,10 +22,10 @@ transformmisc:
     tag: 2.5.7
 aiTransformer:
   image:
-    tag: 1.4.0
+    tag: 1.4.5
 filestore:
   image:
-    tag: 0.16.1
+    tag: 1.5.3
 share:
   image:
     tag: 7.1.1.8
@@ -55,10 +54,10 @@ postgresql:
     tag: 13.3.0
 alfresco-digital-workspace:
   image:
-    tag: 2.6.2
+    tag: 2.6.1
 alfresco-sync-service:
   image:
-    tag: 3.7.0
+    tag: 3.7.2
   postgresql:
     primary:
       image:
@@ -68,7 +67,9 @@ msTeamsService:
     tag: 1.1.0
 ooiService:
   image:
-    tag: 2.0.0
+    tag: 1.1.1
+alfresco-control-center:
+  enabled: false
 global:
   tracking:
     auth: none
