@@ -1,5 +1,6 @@
 # Alfresco Content Services Containerized Deployment
 
+[![release](https://img.shields.io/github/v/release/Alfresco/acs-deployment?display_name=release)](https://github.com/Alfresco/acs-deployment/releases/latest)
 [![helm charts (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml)
 [![helm charts (community)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-community.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-community.yml)
 [![docker-compose (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml)
@@ -80,8 +81,8 @@ During the development of 5.4.0 we've started turning subcharts (search, sync,
 activemq, ...) into individual charts hosted on a new repository. That decision
 introduces some breaking changes like resource renaming and values structure
 modifications. For that reason we chose to bump to a new major version to
-capture the fact upgrades can be problematic and one sould prefer deploying new
-versuion to a new namespace rather than attempting upgrades.
+capture the fact upgrades can be problematic and one should prefer deploying new
+version to a new namespace rather than attempting upgrades.
 
 > Deploying to new namespace is always the preferred way of upgrading ACS as we
 > do not test charts for upgrade scenarios (even with previous versions)
@@ -144,13 +145,6 @@ Open a PR that will:
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the next stable release (usually by removing the
   `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
-* For every chart using `alfresco-common`
-  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
-  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
-  * Bump version to the new `alfresco-common` stable version
-  * Switch `repository` to `https://kubernetes-charts.alfresco.com/stable`
-* Bump each subchart version to the next stable release (usually by removing the
-  `-SNAPSHOT` suffix)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, create and push the signed tag with:
