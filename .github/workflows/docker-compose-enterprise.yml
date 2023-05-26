@@ -8,7 +8,7 @@ on:
       - '! docker-compose/community-docker-compose.yml'
       - 'docker-compose/**'
       - 'test/postman/docker-compose/**'
-      - '.github/workflows/enterprise-compose.yml'
+      - '.github/workflows/docker-compose-enterprise.yml'
   push:
     branches:
       - 'master'
@@ -32,7 +32,7 @@ jobs:
       )
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.38.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.39.0
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}

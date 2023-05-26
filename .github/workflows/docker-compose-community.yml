@@ -7,7 +7,7 @@ on:
     paths:
       - 'docker-compose/community-docker-compose.yml'
       - 'test/postman/docker-compose/**'
-      - '.github/workflows/community-compose.yml'
+      - '.github/workflows/docker-compose-community.yml'
   push:
     branches:
       - 'master'
@@ -17,6 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.38.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v1.39.0
         with:
           compose_file_path: docker-compose/community-docker-compose.yml
