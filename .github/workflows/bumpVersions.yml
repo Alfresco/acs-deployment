@@ -8,6 +8,7 @@ on:
       - updatecli.d/**
     branches:
       - OPSEXP-**
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -26,7 +27,7 @@ jobs:
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.49.2
+          version: v0.51.0
 
       - name: Run Updatecli in diff mode
         if: github.event_name == 'push'
