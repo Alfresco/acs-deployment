@@ -53,29 +53,30 @@ will be tagged with the release number.
 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
-| Chart Version/Tag | Default   | 7.3.N   | 7.2.N   | 7.1.N   | 7.0.N    | Community |
-|-------------------|-----------|---------|---------|---------|----------|-----------|
-| 5.0.0-M1          | 7.0.0-M2  |         |         |         |          | 6.2.1-A8  |
-| 5.0.0-M2          | 7.0.0-M3  |         |         |         |          | 7.0.0     |
-| 5.0.0             | 7.0.0     |         |         |         |          | 7.0.0     |
-| 5.0.1             | 7.0.0     |         |         |         |          | 7.0.0     |
-| 5.1.0-M1          | 7.1.0-M1  |         |         |         |          | 7.1.0-M1  |
-| 5.1.0-M2          | 7.1.0-M2  |         |         |         | 7.0.1    | 7.1.0-M2  |
-| 5.1.0             | 7.1.0.1   |         |         |         | 7.0.1    | 7.1.0     |
-| 5.1.1             | 7.1.0.1   |         |         |         | 7.0.1    | 7.1.0     |
-| 5.2.0-M1          | 7.2.0-M1  |         |         | 7.1.0.1 | 7.0.1    | 7.2.0-M1  |
-| 5.2.0-M2          | 7.2.0-M2  |         |         | 7.1.1   | 7.0.1    | 7.2.0-M2  |
-| 5.2.0             | 7.2.0     |         |         | 7.1.1   | 7.0.1    | 7.2.0     |
-| 5.3.0-M1          | 23.1.0-M1 |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 23.1.0-M1 |
-| 5.3.0-M2          | 7.3.0-M1  |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0-M2  |
-| 5.3.0-M3          | 7.3.0-M2  |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0-M2  |
-| 5.3.0             | 7.3.0     |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0     |
-| 5.4.0-M1          | 7.4.0-M1  | 7.3.0.1 | 7.2.1.5 | 7.1.1.7 | 7.0.1.9  | 7.4.0-M1  |
-| 5.4.0-M2          | 7.4.0-M2  | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0-M2  |
-| 5.4.0-M3          | 7.4.0-M3  | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0-M3  |
-| 6.0.0             | 7.4.0     | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0     |
+| Chart Version/Tag | Default    | 7.4.N   | 7.3.N   | 7.2.N   | 7.1.N   | 7.0.N    | Community |
+|-------------------|------------|---------|---------|---------|---------|----------|-----------|
+| 5.0.0-M1          | 7.0.0-M2   |         |         |         |         |          | 6.2.1-A8  |
+| 5.0.0-M2          | 7.0.0-M3   |         |         |         |         |          | 7.0.0     |
+| 5.0.0             | 7.0.0      |         |         |         |         |          | 7.0.0     |
+| 5.0.1             | 7.0.0      |         |         |         |         |          | 7.0.0     |
+| 5.1.0-M1          | 7.1.0-M1   |         |         |         |         |          | 7.1.0-M1  |
+| 5.1.0-M2          | 7.1.0-M2   |         |         |         |         | 7.0.1    | 7.1.0-M2  |
+| 5.1.0             | 7.1.0.1    |         |         |         |         | 7.0.1    | 7.1.0     |
+| 5.1.1             | 7.1.0.1    |         |         |         |         | 7.0.1    | 7.1.0     |
+| 5.2.0-M1          | 7.2.0-M1   |         |         |         | 7.1.0.1 | 7.0.1    | 7.2.0-M1  |
+| 5.2.0-M2          | 7.2.0-M2   |         |         |         | 7.1.1   | 7.0.1    | 7.2.0-M2  |
+| 5.2.0             | 7.2.0      |         |         |         | 7.1.1   | 7.0.1    | 7.2.0     |
+| 5.3.0-M1          | 23.1.0-M1  |         |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 23.1.0-M1 |
+| 5.3.0-M2          | 7.3.0-M1   |         |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0-M2  |
+| 5.3.0-M3          | 7.3.0-M2   |         |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0-M2  |
+| 5.3.0             | 7.3.0      |         |         | 7.2.1   | 7.1.1.5 | 7.0.1.3  | 7.3.0     |
+| 5.4.0-M1          | 7.4.0-M1   |         | 7.3.0.1 | 7.2.1.5 | 7.1.1.7 | 7.0.1.9  | 7.4.0-M1  |
+| 5.4.0-M2          | 7.4.0-M2   |         | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0-M2  |
+| 5.4.0-M3          | 7.4.0-M3   |         | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0-M3  |
+| 6.0.0             | 7.4.0.1    |         | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0     |
+| 6.1.0-SNAPSHOT    | 23.1.0-A12 | 7.4.0.1 | 7.3.1   | 7.2.1.7 | 7.1.1.8 | 7.0.1.10 | 7.4.0     |
 
-### Why is there no 5.4.0?
+### Why there is no 5.4.0?
 
 During the development of 5.4.0 we've started turning subcharts (search, sync,
 activemq, ...) into individual charts hosted on a new repository. That decision
@@ -147,33 +148,23 @@ Open a PR that will:
   `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
-Once the PR has been merged, create and push the signed tag with:
+Once the PR has been merged, create the release with:
 
 ```sh
-git tag -f -s vx.x.x -m vx.x.x
-git push origin vx.x.x
+gh release create vx.x.x --generate-notes -t vx.x.x -d
 ```
 
 where `vx.x.x` is the `alfresco-content-services` version.
 
-Once the tagged workflow is successful, publish the [new release on
-GitHub](https://github.com/Alfresco/acs-deployment/releases/new).
+Once the tagged workflow is successful, review the GitHub release notes and
+usually removing dependabot entries and other not-really useful changelog
+entries. Publish the release.
 
 Now proceed and open a PR to move back to development version:
 
-* In [alfresco-common](helm/alfresco-common/Chart.yaml), bump chart version to
-  the next development release (usually by increasing the minor version and adding
-  the `-SNAPSHOT` suffix)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the next development release (usually by increasing the
   minor version and adding the `-SNAPSHOT` suffix)
-* For every chart using `alfresco-common`
-  ([alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
-  every [subchart](/helm/alfresco-content-services/charts/)) which has it as a dependency:
-  * Bump version to the new `alfresco-common` development version
-  * Switch `repository` back to `https://kubernetes-charts.alfresco.com/incubator`
-* Bump each subchart version to the next development release (usually by
-  increasing the minor version and adding the `-SNAPSHOT` suffix)
 * Run `pre-commit run --all-files helm-docs` to update docs
 
 Once the PR has been merged, overwrite and push the signed mutable tag with:

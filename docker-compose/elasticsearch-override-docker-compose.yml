@@ -44,7 +44,7 @@ services:
       - 9200:9200
       - 9300:9300
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.3.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.4.0-A1
     depends_on:
       - elasticsearch
       - alfresco
