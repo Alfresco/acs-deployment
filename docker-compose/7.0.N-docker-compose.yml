@@ -71,7 +71,7 @@ services:
     links:
       - activemq
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:2.5.3
+    image: alfresco/alfresco-transform-core-aio:2.5.7
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
