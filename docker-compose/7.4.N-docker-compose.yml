@@ -56,6 +56,8 @@ services:
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -Dfile.encoding=UTF8
+        -Dsun.jnu.encoding=UTF8
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:2.1.0

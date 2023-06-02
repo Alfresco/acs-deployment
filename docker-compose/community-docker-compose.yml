@@ -53,6 +53,8 @@ services:
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -Dfile.encoding=UTF8
+        -Dsun.jnu.encoding=UTF8
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:3.1.0
     mem_limit: 1536m

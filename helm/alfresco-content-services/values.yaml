@@ -587,6 +587,8 @@ share:
       memory: "2000Mi"
   environment:
     CATALINA_OPTS: >-
+      -Dfile.encoding=UTF8
+      -Dsun.jnu.encoding=UTF8
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
