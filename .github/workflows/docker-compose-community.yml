@@ -1,14 +1,15 @@
 ---
 name: Docker Compose (Community)
+
 on:
   pull_request:
     branches:
       - master
       - release/**
     paths:
-      - 'docker-compose/community-docker-compose.yml'
-      - 'test/postman/docker-compose/**'
-      - '.github/workflows/docker-compose-community.yml'
+      - docker-compose/community-docker-compose.yml
+      - test/postman/docker-compose/**
+      - .github/workflows/docker-compose-community.yml
   push:
     branches:
       - master

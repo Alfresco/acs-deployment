@@ -1,15 +1,16 @@
 ---
 name: Docker Compose (Enterprise)
+
 on:
   pull_request:
     branches:
       - master
       - release/**
     paths:
-      - '! docker-compose/community-docker-compose.yml'
-      - 'docker-compose/**'
-      - 'test/postman/docker-compose/**'
-      - '.github/workflows/docker-compose-enterprise.yml'
+      - "! docker-compose/community-docker-compose.yml"
+      - docker-compose/**
+      - test/postman/docker-compose/**
+      - .github/workflows/docker-compose-enterprise.yml
   push:
     branches:
       - master

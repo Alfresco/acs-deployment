@@ -6,9 +6,9 @@ on:
       - master
       - release/**
     paths:
-      - 'helm/**'
-      - 'test/postman/helm/**'
-      - '.github/workflows/helm*'
+      - helm/**
+      - test/postman/helm/**
+      - .github/workflows/helm*
   push:
     branches:
       - master

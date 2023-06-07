@@ -7,9 +7,9 @@ on:
       - master
       - release/**
     paths:
-      - "helm/**"
-      - "test/postman/helm/**"
-      - ".github/workflows/pre-commit-helm.yml"
+      - helm/**
+      - test/postman/helm/**
+      - .github/workflows/pre-commit-helm.yml
       - "**.md"
       - .pre-commit-config.yaml
   push:
