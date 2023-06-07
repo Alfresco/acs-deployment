@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - master
+      - release/**
     paths:
       - helm/**
       - test/postman/helm/**
@@ -11,6 +12,7 @@ on:
   push:
     branches:
       - master
+      - release/**
 concurrency:
   group: ${{ github.head_ref || github.ref_name || github.run_id }}
   cancel-in-progress: false

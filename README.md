@@ -122,7 +122,11 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 
 ### Helm charts release
 
-Open a PR that will:
+New releases are usually made from the default branch. When a bugfix release is
+necessary, the release is made from a branch which follows the release branch
+pattern: `release/v$Major.Minor`.
+
+Open a PR against the appropriate branch that will:
 
 * Update the [versioning table](#versioning)
 * If any updates to the updatecli pipelines is required then make the changes
