@@ -1,3 +1,4 @@
+---
 repos:
   # General hooks section
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -29,8 +30,8 @@ repos:
       - id: checkov
         files: \.yaml$
         args:
-        - --quiet
-        - --compact
+          - --quiet
+          - --compact
   # Docker Compose hooks section (excluded in pre-commit-helm workflow)
   - repo: https://github.com/IamTheFij/docker-pre-commit
     rev: v2.1.1
@@ -40,5 +41,5 @@ repos:
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.32.2
     hooks:
-    - id: markdownlint
-      args: ["--ignore", "helm/**/README.md"]
+      - id: markdownlint
+        args: ["--ignore", "helm/**/README.md"]
