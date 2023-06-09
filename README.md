@@ -123,8 +123,9 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 ### Helm charts release
 
 New releases are usually made from the default branch. When a bugfix release is
-necessary, the release is made from a branch which follows the release branch
-pattern: `release/v$Major.Minor`.
+necessary and master branch already received updates that are meant to be
+released at a later time, then the release must be made from a branch which
+follows the release branch pattern: `release/v$Major.Minor`.
 
 Open a PR against the appropriate branch that will:
 
