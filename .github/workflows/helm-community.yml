@@ -3,15 +3,17 @@ name: Helm (Community)
 on:
   pull_request:
     branches:
-      - 'master'
+      - master
+      - release/**
     paths:
-      - 'helm/**'
-      - 'test/postman/helm/**'
-      - '.github/workflows/helm*'
+      - helm/**
+      - test/postman/helm/**
+      - .github/workflows/helm*
       - test/community-integration-test-values.yaml
   push:
     branches:
-      - 'master'
+      - master
+      - release/**
 jobs:
   community_charts:
     runs-on: ubuntu-latest

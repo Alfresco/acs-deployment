@@ -4,16 +4,18 @@ name: Pre-commit (Helm)
 on:
   pull_request:
     branches:
-      - "master"
+      - master
+      - release/**
     paths:
-      - "helm/**"
-      - "test/postman/helm/**"
-      - ".github/workflows/pre-commit-helm.yml"
+      - helm/**
+      - test/postman/helm/**
+      - .github/workflows/pre-commit-helm.yml
       - "**.md"
-      - ".pre-commit-config.yaml"
+      - .pre-commit-config.yaml
   push:
     branches:
-      - "master"
+      - master
+      - release/**
 
 env:
   # https://pre-commit.com/#temporarily-disabling-hooks
