@@ -4,13 +4,15 @@ name: Pre-commit (Docker Compose)
 on:
   pull_request:
     branches:
-      - "master"
+      - master
+      - release/**
     paths:
-      - "docker-compose/**"
-      - ".pre-commit-config.yaml"
+      - docker-compose/**
+      - .pre-commit-config.yaml
   push:
     branches:
-      - "master"
+      - master
+      - release/**
 
 env:
   # https://pre-commit.com/#temporarily-disabling-hooks

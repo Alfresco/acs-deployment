@@ -3,14 +3,16 @@ name: Helm static checks
 on:
   pull_request:
     branches:
-      - 'master'
+      - master
+      - release/**
     paths:
-      - 'helm/**'
-      - 'test/postman/helm/**'
-      - '.github/workflows/helm*'
+      - helm/**
+      - test/postman/helm/**
+      - .github/workflows/helm*
   push:
     branches:
-      - 'master'
+      - master
+      - release/**
 jobs:
   build_vars:
     runs-on: ubuntu-latest
