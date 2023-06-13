@@ -20,7 +20,7 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: OPSEXP-2152-helm-build
+    rev: a45da534b25b0d6f5dc7da49e2149edfe9b29ac8
     hooks:
       - id: helm-deps-build
       - id: helm-lint
