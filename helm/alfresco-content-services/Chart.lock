@@ -1,0 +1,27 @@
+dependencies:
+- name: alfresco-common
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 2.0.0
+- name: postgresql
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 12.5.6
+- name: common
+  repository: https://activiti.github.io/activiti-cloud-helm-charts
+  version: 7.7.0
+- name: common
+  repository: https://activiti.github.io/activiti-cloud-helm-charts
+  version: 7.7.0
+- name: activemq
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 3.1.0
+- name: alfresco-search-service
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 1.1.0
+- name: alfresco-sync-service
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 4.1.0
+- name: alfresco-search-enterprise
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 1.2.0
+digest: sha256:1ec10d4d7b976fafd8343257e11c01d5b6ddde9acc0c3be5cea7d277b9690557
+generated: "2023-06-13T09:31:13.012866+02:00"

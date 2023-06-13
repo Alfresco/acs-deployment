@@ -21,7 +21,7 @@ target
 *.log
 *.log.*
 
-# Package Files #
+# Package Files
 *.jar
 *.war
 *.ear
@@ -30,11 +30,5 @@ target
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-# Helm
-*.lock
+# Helm packages
 *.tgz
-helm/alfresco-content-services/charts/activemq.yaml
-helm/alfresco-content-services/charts/alfresco-search.yaml
-helm/alfresco-content-services/charts/alfresco-search/charts/alfresco-insight-zeppelin.yaml
-helm/alfresco-content-services/charts/alfresco-sync-service.yaml
-helm/alfresco-content-services.yaml
