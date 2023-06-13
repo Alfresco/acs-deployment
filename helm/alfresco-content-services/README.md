@@ -23,7 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.1.0 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.x.x |
+| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
 
