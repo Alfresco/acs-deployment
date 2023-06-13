@@ -20,8 +20,9 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v1.22.0
+    rev: OPSEXP-2152-helm-build
     hooks:
+      - id: helm-deps-build
       - id: helm-lint
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: 2.2.139
