@@ -117,6 +117,13 @@ services:
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
+  control-center:
+    image: quay.io/alfresco/alfresco-control-center:8.0.0
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
   proxy:
     image: alfresco/alfresco-acs-nginx:3.4.2
     mem_limit: 128m
@@ -124,14 +131,15 @@ services:
       DISABLE_PROMETHEUS: "true"
       DISABLE_SYNCSERVICE: "true"
       DISABLE_ADW: "true"
-      DISABLE_CONTROL_CENTER: "true"
       ENABLE_CONTENT_APP: "true"
     depends_on:
       - alfresco
       - content-app
+      - control-center
     ports:
       - "8080:8080"
     links:
       - content-app
       - alfresco
       - share
+      - control-center
