@@ -122,16 +122,17 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
-ooiService:
+alfresco-connector-ms365:
+  enabled: true
   replicaCount: 2
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 2.0.0
+    tag: 1.1.3
     pullPolicy: IfNotPresent
     internalPort: 9095
   service:
-    name: ooi-service
+    name: ms365-service
     type: ClusterIP
     externalPort: 80
   ingress:
@@ -151,7 +152,7 @@ ooiService:
       cpu: "2"
       memory: "1000Mi"
   environment:
-    JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+  #  JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -160,6 +161,12 @@ ooiService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
+  repository:
+    # -- ACS repository host
+    host: acs-alfresco-cs-repository
+    # -- ACS repository port
+    port: 80
+    # -- A nameOverride use to compute an ACS repository service name
 # -- Enable/Disable Alfresco Content Connector for Microsoft Teams
 msTeams:
   enabled: false
