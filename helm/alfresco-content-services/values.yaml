@@ -122,9 +122,9 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
-# -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
 alfresco-connector-ms365:
   enabled: false
+# -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
   replicaCount: 2
   nodeSelector: {}
   image:
