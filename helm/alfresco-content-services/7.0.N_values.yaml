@@ -45,7 +45,7 @@ alfresco-sync-service:
     primary:
       image:
         tag: 13.1.0
-alfresco-connector-ms365:
+ooiService:
   image:
     tag: 1.1.0.1
 msTeams:
