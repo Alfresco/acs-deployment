@@ -729,7 +729,6 @@ alfresco-control-center:
     limits:
       cpu: "1"
       memory: "1024Mi"
-
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository
   # Check [PostgreSQL Bitnami chart
