@@ -127,6 +127,9 @@ ooiService:
   enabled: false
   image:
     tag: 2.0.0
+  repository:
+    nameOverride: acs-alfresco-cs-repository
+    port: 80
 # -- Enable/Disable Alfresco Content Connector for Microsoft Teams
 msTeams:
   enabled: false
