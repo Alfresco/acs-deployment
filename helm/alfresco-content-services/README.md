@@ -20,6 +20,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.1.0 |
@@ -172,38 +173,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
-| msTeams | object | `{"enabled":false}` | Enable/Disable Alfresco Content Connector for Microsoft Teams |
-| msTeamsService.alfresco.baseUrl | string | `"change_me_alf_base_url"` |  |
-| msTeamsService.alfresco.digitalWorkspace.contextPath | string | `"/workspace/"` |  |
-| msTeamsService.image.internalPort | int | `3978` |  |
-| msTeamsService.image.pullPolicy | string | `"IfNotPresent"` |  |
-| msTeamsService.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
-| msTeamsService.image.tag | string | `"2.0.0"` |  |
-| msTeamsService.ingress.path | string | `"/ms-teams-service"` |  |
-| msTeamsService.ingress.tls | list | `[]` |  |
-| msTeamsService.livenessProbe.initialDelaySeconds | int | `10` |  |
-| msTeamsService.livenessProbe.periodSeconds | int | `20` |  |
-| msTeamsService.livenessProbe.timeoutSeconds | int | `10` |  |
-| msTeamsService.microsoft.app.id | string | `"change_me_app_id"` |  |
-| msTeamsService.microsoft.app.oauth.connectionName | string | `"alfresco"` |  |
-| msTeamsService.microsoft.app.password | string | `"change_me_app_pwd"` |  |
-| msTeamsService.nodeSelector | object | `{}` |  |
-| msTeamsService.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| msTeamsService.podSecurityContext.runAsUser | int | `33041` |  |
-| msTeamsService.readinessProbe.initialDelaySeconds | int | `20` |  |
-| msTeamsService.readinessProbe.periodSeconds | int | `60` |  |
-| msTeamsService.readinessProbe.timeoutSeconds | int | `10` |  |
-| msTeamsService.replicaCount | int | `2` |  |
-| msTeamsService.resources.limits.cpu | string | `"1"` |  |
-| msTeamsService.resources.limits.memory | string | `"1000Mi"` |  |
-| msTeamsService.resources.requests.cpu | string | `"0.5"` |  |
-| msTeamsService.resources.requests.memory | string | `"1000Mi"` |  |
-| msTeamsService.service.externalPort | int | `80` |  |
-| msTeamsService.service.name | string | `"ms-teams-service"` |  |
-| msTeamsService.service.type | string | `"ClusterIP"` |  |
-| msTeamsService.teams.chat.filenameEnabled | bool | `true` |  |
-| msTeamsService.teams.chat.imageEnabled | bool | `true` |  |
-| msTeamsService.teams.chat.metadataEnabled | bool | `true` |  |
+| msTeamsService | object | `{"enabled":false,"image":{"tag":"2.0.0-A2"}}` | Enable/Disable Alfresco Content Connector for Microsoft Teams |
 | ooi | object | `{"enabled":false}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
 | ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
 | ooiService.image.internalPort | int | `9095` |  |
