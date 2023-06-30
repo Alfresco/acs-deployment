@@ -25,6 +25,6 @@ dependencies:
   version: 1.2.0
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0-alpha.0
-digest: sha256:9989910664341f27e24c8844a0f5c26f96319ca68ae69c1361572a754edd2b6a
-generated: "2023-06-28T15:43:55.469443+05:30"
+  version: 0.1.0
+digest: sha256:55750648c0a3906e2b048a0635ac8d8b0f921c6236e4efeada6e9da6b8b6ede1
+generated: "2023-07-01T02:23:02.586811+05:30"
