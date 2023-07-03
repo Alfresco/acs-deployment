@@ -2,30 +2,38 @@
 repository:
   image:
     tag: 7.2.1.11
-transformrouter:
+transformrouter: &ats-router
   image:
     tag: 2.0.0
-pdfrenderer:
+pdfrenderer: &ats-pdf
   image:
     tag: 2.5.7
-imagemagick:
+imagemagick: &ats-im
   image:
     tag: 2.5.7
-libreoffice:
+libreoffice: &ats-lo
   image:
     tag: 2.5.7
-tika:
+tika: &ats-tika
   image:
     tag: 2.5.7
-transformmisc:
+transformmisc: &ats-misc
   image:
     tag: 2.5.7
 aiTransformer:
   image:
     tag: 1.5.0
-filestore:
+filestore: &ats-fs
   image:
     tag: 2.0.2
+alfresco-transform-service:
+  transformrouter: *ats-router
+  pdfrenderer: *ats-pdf
+  imagemagick: *ats-im
+  libreoffice: *ats-lo
+  tika: *ats-tika
+  transformmisc: *ats-misc
+  filestore: *ats-fs
 share:
   image:
     tag: 7.2.1.11
