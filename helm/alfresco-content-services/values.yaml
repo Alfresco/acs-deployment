@@ -22,7 +22,7 @@ repository:
   # For details on how to manage license, see:
   # https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md
   licenseSecret: null
-  edition: Enterprise
+  edition: &acs-edition Enterprise
   replicaCount: 2
   nodeSelector: {}
   strategy:
@@ -122,6 +122,17 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
+activemq: &amq
+  nameOverride: activemq
+  enabled: true
+  # -- Possibility to choose Node for pod, with a key-value pair label
+  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
+  nodeSelector: {}
+  adminUser:
+    # -- Default username for the embedded broker admin user
+    user: admin
+    # -- Default password for the embedded broker admin user
+    password: admin
 ooiService:
   replicaCount: 2
   nodeSelector: {}
@@ -214,7 +225,8 @@ msTeamsService:
       filenameEnabled: true
       metadataEnabled: true
       imageEnabled: true
-transformrouter:
+# -- Deprecated, use alfresco-transform-service.transformrouter instead
+transformrouter: &ats-router
   replicaCount: 2
   nodeSelector: {}
   image:
@@ -248,9 +260,8 @@ transformrouter:
     limits:
       cpu: "1"
       memory: "512Mi"
-# -- Declares the alfresco-pdf-renderer service used by the content repository
-# to transform pdf files
-pdfrenderer:
+# -- Deprecated, use alfresco-transform-service.pdfrenderer instead
+pdfrenderer: &ats-pdf
   replicaCount: 2
   nodeSelector: {}
   image:
@@ -288,9 +299,8 @@ pdfrenderer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1200
-# -- Declares the alfresco-imagemagick service used by the content repository
-# to transform image files
-imagemagick:
+# -- Deprecated, use alfresco-transform-service.imagemagick instead
+imagemagick: &ats-im
   replicaCount: 2
   nodeSelector: {}
   image:
@@ -328,9 +338,8 @@ imagemagick:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 900
-# -- Declares the alfresco-libreoffice service used by the content repository
-# to transform office files
-libreoffice:
+# -- Deprecated, use alfresco-transform-service.libreoffice instead
+libreoffice: &ats-lo
   replicaCount: 2
   nodeSelector: {}
   image:
@@ -368,9 +377,8 @@ libreoffice:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 99999
     maxTransformSeconds: 1800
-# -- Declares the alfresco-tika service used by the content repository
-# to transform office files
-tika:
+# -- Deprecated, use alfresco-transform-service.tika instead
+tika: &ats-tika
   replicaCount: 2
   nodeSelector: {}
   image:
@@ -408,9 +416,8 @@ tika:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
-# -- Declares the alfresco-tika service used by the content repository
-# to transform office files
-transformmisc:
+# -- Deprecated, use alfresco-transform-service.transformmisc instead
+transformmisc: &ats-misc
   enabled: true
   replicaCount: 2
   nodeSelector: {}
@@ -486,9 +493,8 @@ aiTransformer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
-# -- Declares the alfresco-shared-file-store used by the content repository
-# and transform service
-filestore:
+# -- Deprecated, use alfresco-transform-service.filestore instead
+filestore: &ats-fs
   replicaCount: 1
   nodeSelector: {}
   image:
@@ -549,6 +555,33 @@ filestore:
     data:
       mountPath: "/tmp/Alfresco"
       subPath: "alfresco-content-services/filestore-data"
+alfresco-transform-service:
+  enabled: true
+  activemq: *amq
+  repository:
+    edition: *acs-edition
+  # -- Declares the alfresco-transform-router service used by the content repository
+  # to route transformation requests
+  transformrouter: *ats-router
+  # -- Declares the alfresco-pdf-renderer service used by the content repository
+  # to transform pdf files
+  pdfrenderer: *ats-pdf
+  # -- Declares the alfresco-imagemagick service used by the content repository
+  # to transform image files
+  imagemagick: *ats-im
+  # -- Declares the alfresco-libreoffice service used by the content repository
+  # to transform office files
+  libreoffice: *ats-lo
+  # -- Declares the alfresco-tika service used by the content repository
+  # to transform office files
+  tika: *ats-tika
+  # -- Declares the alfresco-tika service used by the content repository
+  # to transform office files
+  transformmisc: *ats-misc
+  # -- Declares the alfresco-shared-file-store used by the content repository
+  # and transform service
+  filestore: *ats-fs
+
 # -- Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
 share:
@@ -602,17 +635,6 @@ share:
   extraSideContainers: []
   extraInitContainers: []
   command: []
-activemq:
-  nameOverride: activemq
-  enabled: true
-  # -- Possibility to choose Node for pod, with a key-value pair label
-  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
-  nodeSelector: {}
-  adminUser:
-    # -- Default username for the embedded broker admin user
-    user: admin
-    # -- Default password for the embedded broker admin user
-    password: admin
 # -- external activemq connection setting when activemq.enabled=false
 messageBroker: &acs_messageBroker
   url: null
