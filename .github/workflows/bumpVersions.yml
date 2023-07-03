@@ -33,7 +33,11 @@ jobs:
           path: alfresco-updatecli
 
       - name: Preprocess values file appending existing keys only
-        run: yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' updatecli-matrix-targets.yaml | tee ./merged.yaml
+        shell: bash
+        run: |
+          yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") |
+          explode(.)' updatecli-matrix-targets.yaml |
+          tee ./merged.yaml
 
       - name: updatecli apply
         # path to values file must be relative https://github.com/updatecli/updatecli/issues/1253
