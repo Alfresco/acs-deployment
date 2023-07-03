@@ -1,0 +1,666 @@
+---
+# This file is meant to be used with updatecli uber-manifest pipeline
+# https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
+matrix:
+  next:
+    id: 231n
+    acs:
+      version:
+      pattern:
+      image:
+      compose_target: &compose231 >-
+        docker-compose/docker-compose.yml
+      compose_key: $.services.alfresco.image
+      helm_target: &helmvalues231 >-
+        helm/alfresco-content-services/values.yaml
+      helm_key: $.repository.image.tag
+    share:
+      version:
+      pattern:
+      image:
+      compose_target: *compose231
+      compose_key: $.services.share.image
+      helm_target: *helmvalues231
+      helm_key: $.share.image.tag
+    search:
+      version:
+      compose_target: *compose231
+      compose_key: $.services.solr6.image
+      image:
+      pattern:
+    search-enterprise:
+      version:
+      compose_target: >-
+        docker-compose/elasticsearch-override-docker-compose.yml
+      compose_key: $.services.search.image
+      pattern:
+    sync:
+      version:
+      compose_target: *compose231
+      compose_key: $.services.sync-service.image
+      helm_target: >-
+        helm/alfresco-content-services/values.yaml
+      helm_key: $.alfresco-sync-service.image.tag
+      pattern:
+    adw:
+      version:
+      compose_target: *compose231
+      compose_key: $.services.digital-workspace.image
+      helm_target: *helmvalues231
+      helm_key: $.alfresco-digital-workspace.image.tag
+      pattern:
+    adminApp:
+      version:
+      compose_target: *compose231
+      compose_key: $.services.control-center.image
+      helm_target: *helmvalues231
+      helm_key: $.alfresco-control-center.image.tag
+      pattern:
+    onedrive:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.ooiService.image.tag
+      pattern:
+    msteams:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.msTeamsService.image.tag
+      pattern:
+    intelligence:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.aiTransformer.image.tag
+    trouter:
+      version:
+      compose_target: *compose231
+      compose_key: $.services.transform-router.image
+      helm_target: *helmvalues231
+      helm_key: $.transformrouter.image.tag
+    sfs:
+      version:
+      compose_target: *compose231
+      compose_key: $.services.shared-file-store.image
+      helm_target: *helmvalues231
+      helm_key: $.filestore.image.tag
+    tengine-aio:
+      version:
+      compose_target: *compose231
+      compose_key: $.services.transform-core-aio.image
+    tengine-misc:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.transformmisc.image.tag
+    tengine-im:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.imagemagick.image.tag
+    tengine-lo:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.libreoffice.image.tag
+    tengine-pdf:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.pdfrenderer.image.tag
+    tengine-tika:
+      version:
+      helm_target: *helmvalues231
+      helm_key: $.tika.image.tag
+  7.4.N:
+    id: 74n
+    acs:
+      version:
+      compose_target: &compose74 >-
+        docker-compose/7.4.N-docker-compose.yml
+      compose_key: $.services.alfresco.image
+      helm_target: &helmvalues74 >-
+        helm/alfresco-content-services/7.4.N_values.yaml
+      helm_key: $.repository.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.share.image
+      helm_target: *helmvalues74
+      helm_key: $.share.image.tag
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.solr6.image
+      image:
+      pattern:
+    search-enterprise:
+      version:
+      compose_target: >-
+        docker-compose/elasticsearch-override-docker-compose.yml
+      compose_key: $.services.search.image
+      pattern:
+    sync:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.sync-service.image
+      helm_target: >-
+        helm/alfresco-content-services/values.yaml
+      helm_key: $.alfresco-sync-service.image.tag
+      pattern:
+    adw:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.digital-workspace.image
+      helm_target: *helmvalues74
+      helm_key: $.alfresco-digital-workspace.image.tag
+      pattern:
+    adminApp:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.control-center.image
+      helm_target: *helmvalues74
+      helm_key: $.alfresco-control-center.image.tag
+      pattern:
+    onedrive:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.ooiService.image.tag
+      pattern:
+    msteams:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.msTeamsService.image.tag
+      pattern:
+    intelligence:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.aiTransformer.image.tag
+    trouter:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.transform-router.image
+      helm_target: *helmvalues74
+      helm_key: $.transformrouter.image.tag
+    sfs:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.shared-file-store.image
+      helm_target: *helmvalues74
+      helm_key: $.filestore.image.tag
+    tengine-aio:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.transform-core-aio.image
+    tengine-misc:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.transformmisc.image.tag
+    tengine-im:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.imagemagick.image.tag
+    tengine-lo:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.libreoffice.image.tag
+    tengine-pdf:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.pdfrenderer.image.tag
+    tengine-tika:
+      version:
+      helm_target: *helmvalues74
+      helm_key: $.tika.image.tag
+  7.3.N:
+    id: 73n
+    acs:
+      version:
+      compose_target: &compose73 >-
+        docker-compose/7.3.N-docker-compose.yml
+      compose_key: $.services.alfresco.image
+      helm_target: &helmvalues73 >-
+        helm/alfresco-content-services/7.3.N_values.yaml
+      helm_key: $.repository.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.share.image
+      helm_target: *helmvalues73
+      helm_key: $.share.image.tag
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.solr6.image
+      helm_target: *helmvalues73
+      helm_key: $.alfresco-search.searchServicesImage.tag
+      pattern:
+      image:
+    search-enterprise:
+      version:
+      helm_target: *helmvalues73
+      helm_keys:
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
+          Content: >-
+            $.alfresco-search-enterprise.liveIndexing.content.image.tag
+          Metadata: >-
+            $.alfresco-search-enterprise.liveIndexing.metadata.image.tag
+          Path: >-
+            $.alfresco-search-enterprise.liveIndexing.path.image.tag
+      pattern:
+    sync:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.sync-service.image
+      helm_target: *helmvalues73
+      helm_key: $.alfresco-sync-service.image.tag
+      pattern:
+    adw:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.digital-workspace.image
+      helm_target: *helmvalues73
+      helm_key: $.alfresco-digital-workspace.image.tag
+      pattern:
+    adminApp:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.control-center.image
+      helm_target: *helmvalues73
+      helm_key: $.alfresco-control-center.image.tag
+      pattern:
+    onedrive:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.ooiService.image.tag
+      pattern:
+    msteams:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.msTeamsService.image.tag
+      pattern:
+    intelligence:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.aiTransformer.image.tag
+    trouter:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.transform-router.image
+      helm_target: *helmvalues73
+      helm_key: $.transformrouter.image.tag
+    sfs:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.shared-file-store.image
+      helm_target: *helmvalues73
+      helm_key: $.filestore.image.tag
+    tengine-aio:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.transform-core-aio.image
+    tengine-misc:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.transformmisc.image.tag
+    tengine-im:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.imagemagick.image.tag
+    tengine-lo:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.libreoffice.image.tag
+    tengine-pdf:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.pdfrenderer.image.tag
+    tengine-tika:
+      version:
+      helm_target: *helmvalues73
+      helm_key: $.tika.image.tag
+  7.2.N:
+    id: 72n
+    acs:
+      version:
+      compose_target: &compose72 >-
+        docker-compose/7.2.N-docker-compose.yml
+      compose_key: $.services.alfresco.image
+      helm_target: &helmvalues72 >-
+        helm/alfresco-content-services/7.2.N_values.yaml
+      helm_key: $.repository.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.share.image
+      helm_target: *helmvalues72
+      helm_key: $.share.image.tag
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.solr6.image
+      helm_target: *helmvalues72
+      helm_key: $.alfresco-search.searchServicesImage.tag
+      pattern:
+      image:
+    search-enterprise:
+      version:
+      helm_target: *helmvalues72
+      helm_keys:
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            alfresco-search-enterprise.liveIndexing.mediation.image.tag
+          Content: >-
+            alfresco-search-enterprise.liveIndexing.content.image.tag
+          Metadata: >-
+            alfresco-search-enterprise.liveIndexing.metadata.image.tag
+          Path: >-
+            alfresco-search-enterprise.liveIndexing.path.image.tag
+      pattern:
+    sync:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.sync-service.image
+      helm_target: *helmvalues72
+      helm_key: $.alfresco-sync-service.image.tag
+      pattern:
+    adw:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.digital-workspace.image
+      helm_target: *helmvalues72
+      helm_key: $.alfresco-digital-workspace.image.tag
+      pattern:
+    adminApp:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.control-center.image
+      helm_target: *helmvalues72
+      helm_key: $.alfresco-control-center.image.tag
+      pattern:
+    onedrive:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.ooiService.image.tag
+      pattern:
+    msteams:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.msTeamsService.image.tag
+      pattern:
+    intelligence:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.aiTransformer.image.tag
+    trouter:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.transform-router.image
+      helm_target: *helmvalues72
+      helm_key: $.transformrouter.image.tag
+    sfs:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.shared-file-store.image
+      helm_target: *helmvalues72
+      helm_key: $.filestore.image.tag
+    tengine-aio:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.transform-core-aio.image
+    tengine-misc:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.transformmisc.image.tag
+    tengine-im:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.imagemagick.image.tag
+    tengine-lo:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.libreoffice.image.tag
+    tengine-pdf:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.pdfrenderer.image.tag
+    tengine-tika:
+      version:
+      helm_target: *helmvalues72
+      helm_key: $.tika.image.tag
+  7.1.N:
+    id: 71n
+    acs:
+      version:
+      compose_target: &compose71 >-
+        docker-compose/7.1.N-docker-compose.yml
+      compose_key: $.services.alfresco.image
+      helm_target: &helmvalues71 >-
+        helm/alfresco-content-services/7.1.N_values.yaml
+      helm_key: $.repository.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.share.image
+      helm_target: *helmvalues71
+      helm_key: $.share.image.tag
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.solr6.image
+      helm_target: *helmvalues71
+      helm_key: $.alfresco-search.searchServicesImage.tag
+      pattern:
+      image:
+    search-enterprise:
+      version:
+      helm_target: *helmvalues71
+      helm_keys:
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            alfresco-search-enterprise.liveIndexing.mediation.image.tag
+          Content: >-
+            alfresco-search-enterprise.liveIndexing.content.image.tag
+          Metadata: >-
+            alfresco-search-enterprise.liveIndexing.metadata.image.tag
+          Path: >-
+            alfresco-search-enterprise.liveIndexing.path.image.tag
+      pattern:
+    sync:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.sync-service.image
+      helm_target: *helmvalues71
+      helm_key: $.alfresco-sync-service.image.tag
+      pattern:
+    adw:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.digital-workspace.image
+      helm_target: *helmvalues71
+      helm_key: $.alfresco-digital-workspace.image.tag
+      pattern:
+    onedrive:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.ooiService.image.tag
+      pattern:
+    msteams:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.msTeamsService.image.tag
+      pattern:
+    intelligence:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.aiTransformer.image.tag
+    trouter:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.transform-router.image
+      helm_target: *helmvalues71
+      helm_key: $.transformrouter.image.tag
+    sfs:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.shared-file-store.image
+      helm_target: *helmvalues71
+      helm_key: $.filestore.image.tag
+    tengine-aio:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.transform-core-aio.image
+    tengine-misc:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.transformmisc.image.tag
+    tengine-im:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.imagemagick.image.tag
+    tengine-lo:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.libreoffice.image.tag
+    tengine-pdf:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.pdfrenderer.image.tag
+    tengine-tika:
+      version:
+      helm_target: *helmvalues71
+      helm_key: $.tika.image.tag
+  7.0.N:
+    id: 70n
+    acs:
+      version:
+      compose_target: &compose70 >-
+        docker-compose/7.0.N-docker-compose.yml
+      compose_key: $.services.alfresco.image
+      helm_target: &helmvalues70 >-
+        helm/alfresco-content-services/7.0.N_values.yaml
+      helm_key: $.repository.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.share.image
+      helm_target: *helmvalues70
+      helm_key: $.share.image.tag
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.solr6.image
+      helm_target: *helmvalues70
+      helm_key: $.alfresco-search.searchServicesImage.tag
+      pattern:
+      image:
+    sync:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.sync-service.image
+      helm_target: *helmvalues70
+      helm_key: $.alfresco-sync-service.image.tag
+      pattern:
+    adw:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.digital-workspace.image
+      helm_target: *helmvalues70
+      helm_key: $.alfresco-digital-workspace.image.tag
+      pattern:
+    onedrive:
+      version:
+      helm_target: *helmvalues70
+      helm_key: $.ooiService.image.tag
+      pattern:
+    intelligence:
+      version:
+      helm_target: *helmvalues70
+      helm_key: $.aiTransformer.image.tag
+    trouter:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.transform-router.image
+      helm_target: *helmvalues70
+      helm_key: $.transformrouter.image.tag
+    sfs:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.shared-file-store.image
+      helm_target: *helmvalues70
+      helm_key: $.filestore.image.tag
+    tengine-aio:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.transform-core-aio.image
+    tengine-misc:
+      version:
+      helm_target: *helmvalues70
+      helm_key: $.transformmisc.image.tag
+    tengine-im:
+      version:
+      helm_target: *helmvalues70
+      helm_key: $.imagemagick.image.tag
+    tengine-lo:
+      version:
+      helm_target: *helmvalues70
+      helm_key: $.libreoffice.image.tag
+    tengine-pdf:
+      version:
+      helm_target: *helmvalues70
+      helm_key: $.pdfrenderer.image.tag
+    tengine-tika:
+      version:
+      helm_target: *helmvalues70
+      helm_key: $.tika.image.tag
+  community:
+    id: com
+    acs:
+      version:
+      compose_target: &composeOss >-
+        docker-compose/community-docker-compose.yml
+      compose_key: $.services.alfresco.image
+      helm_target: &helmvaluesOss >-
+        helm/alfresco-content-services/community_values.yaml
+      helm_key: $.repository.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.share.image
+      helm_target: *helmvaluesOss
+      helm_key: $.share.image.tag
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.solr6.image
+      helm_target: *helmvaluesOss
+      helm_key: $.alfresco-search.searchServicesImage.tag
+      pattern:
+      image:
+    tengine-aio:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.transform-core-aio.image
