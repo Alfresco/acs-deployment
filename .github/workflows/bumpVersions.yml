@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - .github/workflows/bumpVersions.yml
+      - updatecli-matrix-targets.yaml
     branches:
       - OPSEXP-**
   workflow_dispatch:

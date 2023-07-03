@@ -30,10 +30,22 @@ matrix:
       pattern:
     search-enterprise:
       version:
+      pattern:
       compose_target: >-
         docker-compose/elasticsearch-override-docker-compose.yml
       compose_key: $.services.search.image
-      pattern:
+      helm_target: *helmvalues231
+      helm_keys:
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
+          Content: >-
+            $.alfresco-search-enterprise.liveIndexing.content.image.tag
+          Metadata: >-
+            $.alfresco-search-enterprise.liveIndexing.metadata.image.tag
+          Path: >-
+            $.alfresco-search-enterprise.liveIndexing.path.image.tag
     sync:
       version:
       compose_target: *compose231
@@ -134,10 +146,19 @@ matrix:
       pattern:
     search-enterprise:
       version:
-      compose_target: >-
-        docker-compose/elasticsearch-override-docker-compose.yml
-      compose_key: $.services.search.image
       pattern:
+      helm_target: *helmvalues74
+      helm_keys:
+        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Liveindexing:
+          Mediation: >-
+            $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
+          Content: >-
+            $.alfresco-search-enterprise.liveIndexing.content.image.tag
+          Metadata: >-
+            $.alfresco-search-enterprise.liveIndexing.metadata.image.tag
+          Path: >-
+            $.alfresco-search-enterprise.liveIndexing.path.image.tag
     sync:
       version:
       compose_target: *compose74
