@@ -123,6 +123,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base64. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
+| alfresco-search.nameOverride | string | `"alfresco-search"` |  |
 | alfresco-search.nodeSelector | object | `{}` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8-A1"` |  |
