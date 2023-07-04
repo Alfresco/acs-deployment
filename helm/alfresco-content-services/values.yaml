@@ -122,17 +122,6 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
-activemq: &amq
-  nameOverride: activemq
-  enabled: true
-  # -- Possibility to choose Node for pod, with a key-value pair label
-  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
-  nodeSelector: {}
-  adminUser:
-    # -- Default username for the embedded broker admin user
-    user: admin
-    # -- Default password for the embedded broker admin user
-    password: admin
 # -- Activemq connection setting when activemq.enabled=false
 # Can reference an external broker details, or help spread details of an
 # internal one.
@@ -144,6 +133,18 @@ messageBroker: &acs_messageBroker
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
   # -- Alternatively, provide credentials via an existing secret that contains
   # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+activemq: &amq
+  nameOverride: activemq
+  enabled: true
+  # -- Possibility to choose Node for pod, with a key-value pair label
+  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
+  nodeSelector: {}
+  adminUser:
+    # -- Default username for the embedded broker admin user
+    user: admin
+    # -- Default password for the embedded broker admin user
+    password: admin
+    existingSecretName: *acs_messageBroker_secretName
   existingSecretName: null
 ooiService:
   replicaCount: 2
