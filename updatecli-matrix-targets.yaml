@@ -33,7 +33,9 @@ matrix:
       pattern:
       compose_target: >-
         docker-compose/elasticsearch-override-docker-compose.yml
-      compose_key: $.services.search.image
+      compose_keys:
+        live-indexing: $.services.search.image
+        reindexing: $.services.search-reindexing.image
       helm_target: *helmvalues231
       helm_keys:
         Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
