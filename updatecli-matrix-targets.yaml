@@ -36,7 +36,7 @@ matrix:
       compose_key: $.services.search.image
       helm_target: *helmvalues231
       helm_keys:
-        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
             $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
