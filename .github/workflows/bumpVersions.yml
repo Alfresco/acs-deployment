@@ -10,16 +10,14 @@ on:
       - OPSEXP-**
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   updatecli:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
