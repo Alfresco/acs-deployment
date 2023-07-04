@@ -133,6 +133,18 @@ activemq: &amq
     user: admin
     # -- Default password for the embedded broker admin user
     password: admin
+# -- Activemq connection setting when activemq.enabled=false
+# Can reference an external broker details, or help spread details of an
+# internal one.
+messageBroker: &acs_messageBroker
+  url: null
+  user: null
+  password: null
+  # -- Name of the secret managed by this chart
+  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  # -- Alternatively, provide credentials via an existing secret that contains
+  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  existingSecretName: null
 ooiService:
   replicaCount: 2
   nodeSelector: {}
@@ -557,11 +569,8 @@ filestore: &ats-fs
       subPath: "alfresco-content-services/filestore-data"
 alfresco-transform-service:
   enabled: true
-  activemq:
-    << : *amq
-    enabled: false
-  repository:
-    edition: *acs-edition
+  messageBroker:
+    existingSecretName: *acs_messageBroker_secretName
   # -- Declares the alfresco-transform-router service used by the content repository
   # to route transformation requests
   transformrouter: *ats-router
@@ -637,16 +646,6 @@ share:
   extraSideContainers: []
   extraInitContainers: []
   command: []
-# -- external activemq connection setting when activemq.enabled=false
-messageBroker: &acs_messageBroker
-  url: null
-  user: null
-  password: null
-  # -- Name of the secret managed by this chart
-  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains
-  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
 alfresco-search:
   enabled: true
   searchServicesImage:
