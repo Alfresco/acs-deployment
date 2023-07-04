@@ -35,8 +35,11 @@ data:
     {{- include "repository.indexConfig" . | indent 4 }}
     {{- end }}
     -Dindex.subsystem.name={{ $subsys }}
-    -Dlocal.transform.service.enabled={{ index .Values "alfresco-transform-service" "enabled" | quote }}
-    -Dtransform.service.enabled={{ index .Values "alfresco-transform-service" "enabled" | quote }}
+    -Dlocal.transform.service.enabled={{ index .Values "alfresco-transform-service" "enabled" }}
+    {{- with (index .Values "alfresco-transform-service") }}
+    {{- $ats_for_enterprise := and .filestore.enabled .transformrouter.enabled }}
+    -Dtransform.service.enabled={{ and .enabled $ats_for_enterprise }}
+    {{- end }}
     {{- if index .Values "alfresco-transform-service" "enabled" }}
     {{- include "alfresco-content-service.atsConfig" . | indent 4 }}
     {{- end }}

@@ -22,7 +22,7 @@ repository:
   # For details on how to manage license, see:
   # https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md
   licenseSecret: null
-  edition: &acs-edition Enterprise
+  edition: Enterprise
   replicaCount: 2
   nodeSelector: {}
   strategy:
@@ -58,7 +58,6 @@ repository:
     #      - chart-example.local
   environment:
     JAVA_OPTS: >-
-      -Dtransform.service.enabled=true
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
       -Dencryption.keystore.type=JCEKS

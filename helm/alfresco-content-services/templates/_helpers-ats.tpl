@@ -27,11 +27,11 @@ Get Alfresco Content Service configuration for Alfresco Transform Service
 {{- define "alfresco-content-service.atsConfig" -}}
 {{- $atsCtx := (dict "Values" (index .Values "alfresco-transform-service") "Chart" $.Chart "Release" $.Release) }}
 {{ template "alfresco-content-service.localTransformConfig" $atsCtx }}
-{{- if eq .Values.repository.edition "Enterprise" }}
-{{ template "alfresco-content-service.tengineConfig" $atsCtx }}
+{{- if and $atsCtx.Values.filestore.enabled $atsCtx.Values.transformrouter.enabled }}
 {{- $routerCtx := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
 {{- $sfsCtx := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
 -Dtransform.service.url=http://{{ template "alfresco-transform-service.fullname" $routerCtx }}
 -Dsfs.url=http://{{ template "alfresco-transform-service.fullname" $sfsCtx }}
+{{ template "alfresco-content-service.tengineConfig" $atsCtx }}
 {{- end }}
 {{- end }}
