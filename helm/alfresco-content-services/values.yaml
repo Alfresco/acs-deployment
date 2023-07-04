@@ -122,9 +122,7 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
-# -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
 ooiService:
-  enabled: false
   image:
     tag: 2.0.0
   repository:
@@ -729,6 +727,9 @@ alfresco-control-center:
     limits:
       cpu: "1"
       memory: "1024Mi"
+# -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
+ooi:
+  enabled: false
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository
   # Check [PostgreSQL Bitnami chart
