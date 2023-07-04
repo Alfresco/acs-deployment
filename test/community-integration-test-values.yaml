@@ -23,7 +23,7 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-pdfrenderer:
+pdfrenderer: &ats-pdf
   livenessProbe:
     initialDelaySeconds: 30
   resources:
@@ -33,7 +33,7 @@ pdfrenderer:
     limits:
       memory: "512Mi"
   replicaCount: 1
-imagemagick:
+imagemagick: &ats-im
   livenessProbe:
     initialDelaySeconds: 30
   resources:
@@ -43,7 +43,7 @@ imagemagick:
     limits:
       memory: "512Mi"
   replicaCount: 1
-libreoffice:
+libreoffice: &ats-lo
   livenessProbe:
     initialDelaySeconds: 30
   resources:
@@ -53,7 +53,7 @@ libreoffice:
     limits:
       memory: "1024Mi"
   replicaCount: 1
-tika:
+tika: &ats-tika
   livenessProbe:
     initialDelaySeconds: 30
   resources:
@@ -63,7 +63,7 @@ tika:
     limits:
       memory: "512Mi"
   replicaCount: 1
-transformmisc:
+transformmisc: &ats-misc
   livenessProbe:
     initialDelaySeconds: 30
   resources:
@@ -83,6 +83,17 @@ alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
 # Disable features
+alfresco-transform-service:
+  enabled: true
+  transformrouter:
+    enabled: false
+  pdfrenderer: *ats-pdf
+  imagemagick: *ats-im
+  libreoffice: *ats-lo
+  tika: *ats-tika
+  transformmisc: *ats-misc
+  filestore:
+    enabled: false
 alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:

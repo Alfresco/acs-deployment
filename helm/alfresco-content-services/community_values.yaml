@@ -1,6 +1,6 @@
 # ACS Community values
 repository:
-  edition: &acs-edition Community
+  edition: Community
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
@@ -38,8 +38,6 @@ imap:
 # Disable Enterprise only features
 alfresco-transform-service:
   enabled: true
-  repository:
-    edition: *acs-edition
   transformrouter:
     enabled: false
   pdfrenderer: *ats-pdf
