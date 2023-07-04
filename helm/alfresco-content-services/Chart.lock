@@ -26,5 +26,5 @@ dependencies:
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.1.0
-digest: sha256:66483b830037440affc3eb4adef33f0a5fe1e5041225de05877c5e8a0d5fcf43
-generated: "2023-07-01T23:20:22.225033+05:30"
+digest: sha256:1a865d73132ef768da621497e2a70d2ebbab5b24cb06d40bc5caad40d55626e7
+generated: "2023-07-04T16:42:46.439896+05:30"

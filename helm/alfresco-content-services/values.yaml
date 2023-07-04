@@ -161,8 +161,9 @@ ooiService:
     periodSeconds: 20
     timeoutSeconds: 10
 # -- Enable/Disable Alfresco Content Connector for Microsoft Teams
-msTeamsService:
+msTeams:
   enabled: false
+msTeamsService:
   image:
     tag: 2.0.0-A2
 transformrouter:
