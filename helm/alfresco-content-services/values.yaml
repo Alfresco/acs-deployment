@@ -557,7 +557,9 @@ filestore: &ats-fs
       subPath: "alfresco-content-services/filestore-data"
 alfresco-transform-service:
   enabled: true
-  activemq: *amq
+  activemq:
+    << : *amq
+    enabled: false
   repository:
     edition: *acs-edition
   # -- Declares the alfresco-transform-router service used by the content repository
