@@ -42,6 +42,7 @@ dependencies:
     condition: activemq.enabled
   - name: alfresco-transform-service
     version: 0.1.0-alpha.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-transform-service.enabled
   - name: alfresco-search-service
     alias: alfresco-search
