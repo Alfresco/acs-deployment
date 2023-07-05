@@ -26,6 +26,8 @@ matrix:
       version:
       compose_target: *compose231
       compose_key: $.services.solr6.image
+      helm_target: *helmvalues231
+      helm_key: $.alfresco-search.searchServicesImage.tag
       image:
       pattern:
     search-enterprise:
@@ -144,6 +146,8 @@ matrix:
       version:
       compose_target: *compose74
       compose_key: $.services.solr6.image
+      helm_target: *helmvalues74
+      helm_key: $.alfresco-search.searchServicesImage.tag
       image:
       pattern:
     search-enterprise:
