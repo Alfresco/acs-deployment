@@ -670,6 +670,19 @@ alfresco-search-enterprise:
     enabled: true
   messageBroker:
     existingSecretName: *acs_messageBroker_secretName
+  liveIndexing:
+    mediation:
+      image:
+        tag: 3.4.0-M1
+    content:
+      image:
+        tag: 3.4.0-M1
+    metadata:
+      image:
+        tag: 3.4.0-M1
+    path:
+      image:
+        tag: 3.4.0-M1
   reindexing:
     enabled: true
     postgresql:
@@ -677,6 +690,8 @@ alfresco-search-enterprise:
       hostname: postgresql-acs
       database: alfresco
       existingSecretName: *acs_database_secretName
+    image:
+      tag: 3.4.0-M1
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true

@@ -104,8 +104,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"3.4.0-M1"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"3.4.0-M1"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"3.4.0-M1"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.database | string | `"alfresco"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
