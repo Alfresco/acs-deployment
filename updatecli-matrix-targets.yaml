@@ -54,8 +54,7 @@ matrix:
       version:
       compose_target: *compose231
       compose_key: $.services.sync-service.image
-      helm_target: >-
-        helm/alfresco-content-services/values.yaml
+      helm_target: *helmvalues231
       helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
@@ -169,8 +168,7 @@ matrix:
       version:
       compose_target: *compose74
       compose_key: $.services.sync-service.image
-      helm_target: >-
-        helm/alfresco-content-services/values.yaml
+      helm_target: *helmvalues74
       helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
