@@ -5,38 +5,52 @@ on:
   push:
     paths:
       - .github/workflows/bumpVersions.yml
-      - updatecli.d/**
+      - updatecli-matrix-targets.yaml
     branches:
       - OPSEXP-**
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   updatecli:
     runs-on: ubuntu-latest
-    env:
-      VALUES: ./updatecli.d/supported-matrix.yaml
-      UPDATECLI_MANIFEST_FILE: ./updatecli.d/uber-manifest.tpl
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.51.0
+          version: v0.54.0
 
-      - name: Run Updatecli in diff mode
-        if: github.event_name == 'push'
+      - name: Checkout updatecli configs
+        uses: actions/checkout@v3
+        with:
+          repository: alfresco/alfresco-updatecli
+          ref: master
+          path: alfresco-updatecli
+
+      - name: Preprocess values file appending existing keys only
+        shell: bash
+        run: |
+          yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") |
+          explode(.)' updatecli-matrix-targets.yaml |
+          tee ./merged.yaml
+
+      - name: updatecli apply
+        # path to values file must be relative https://github.com/updatecli/updatecli/issues/1253
+        run: updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./merged.yaml
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-          GIT_AUTHOR_EMAIL: ${{ vars.BOT_GITHUB_EMAIL }}
-          GIT_AUTHOR_USERNAME: ${{ vars.BOT_GITHUB_USERNAME }}
-        run: |
-          export GIT_BRANCH="$GITHUB_REF_NAME"
-          updatecli diff -c "$UPDATECLI_MANIFEST_FILE" -v "$VALUES"
+
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: |
+            🛠 Updatecli pipeline acs bump
+          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump-acs' || '' }}
+          create_branch: ${{ github.event_name == 'workflow_dispatch' }}
+          push_options: ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}

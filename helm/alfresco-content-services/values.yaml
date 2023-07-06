@@ -29,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.1.0-A12
+    tag: 23.1.0-A19
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -187,7 +187,7 @@ transformrouter:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: 2.2.0-A1
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -223,7 +223,7 @@ pdfrenderer:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-pdf-renderer
-    tag: 3.2.0-A1
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -263,7 +263,7 @@ imagemagick:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-imagemagick
-    tag: 3.2.0-A1
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -303,7 +303,7 @@ libreoffice:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-libreoffice
-    tag: 3.2.0-A1
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -343,7 +343,7 @@ tika:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-tika
-    tag: 3.2.0-A1
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -384,7 +384,7 @@ transformmisc:
   nodeSelector: {}
   image:
     repository: alfresco/alfresco-transform-misc
-    tag: 3.2.0-A1
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -422,7 +422,7 @@ aiTransformer:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 1.6.0-A1
+    tag: 2.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -461,7 +461,7 @@ filestore:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 2.2.0-A1
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
@@ -524,7 +524,7 @@ share:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.1.0-A12
+    tag: 23.1.0-A19
     pullPolicy: IfNotPresent
     internalPort: 8080
   service:
@@ -594,6 +594,9 @@ messageBroker: &acs_messageBroker
 alfresco-search:
   nodeSelector: {}
   enabled: true
+  searchServicesImage:
+    repository: quay.io/alfresco/search-services
+    tag: 2.0.8-A1
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
   external:
@@ -638,6 +641,19 @@ alfresco-search-enterprise:
     enabled: true
   messageBroker:
     existingSecretName: *acs_messageBroker_secretName
+  liveIndexing:
+    mediation:
+      image:
+        tag: 3.4.0-M1
+    content:
+      image:
+        tag: 3.4.0-M1
+    metadata:
+      image:
+        tag: 3.4.0-M1
+    path:
+      image:
+        tag: 3.4.0-M1
   reindexing:
     enabled: true
     postgresql:
@@ -645,6 +661,8 @@ alfresco-search-enterprise:
       hostname: postgresql-acs
       database: alfresco
       existingSecretName: *acs_database_secretName
+    image:
+      tag: 3.4.0-M1
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -662,7 +680,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.1.0-5090171880
+    tag: 4.1.0-5421573582
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -707,7 +725,7 @@ alfresco-control-center:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.1.0-5090171880
+    tag: 8.1.0-5421573582
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -887,7 +905,7 @@ alfresco-sync-service:
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
   image:
-    tag: 3.9.0
+    tag: 4.0.0-M9
   postgresql:
     enabled: true
     image:
