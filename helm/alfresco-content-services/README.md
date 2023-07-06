@@ -60,6 +60,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
 | aiTransformer.service.type | string | `"ClusterIP"` |  |
+| alfresco-connector-msteams | object | `{"enabled":false,"image":{"tag":"2.0.0-A2"}}` | Enable/Disable Alfresco Content Connector for Microsoft Teams |
 | alfresco-control-center.enabled | bool | `true` |  |
 | alfresco-control-center.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-control-center.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
@@ -173,8 +174,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
-| msTeams | object | `{"enabled":false}` | Enable/Disable Alfresco Content Connector for Microsoft Teams |
-| msTeamsService.image.tag | string | `"2.0.0-A2"` |  |
 | ooi | object | `{"enabled":false}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
 | ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
 | ooiService.image.internalPort | int | `9095` |  |
