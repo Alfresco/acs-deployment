@@ -123,8 +123,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.nodeSelector | object | `{}` |  |
+| alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.8-A1"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
-| alfresco-sync-service.image.tag | string | `"3.10.0"` |  |
+| alfresco-sync-service.image.tag | string | `"4.0.0-M9"` |  |
 | alfresco-sync-service.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-sync-service.postgresql.auth.database | string | `"syncservice-postgresql"` |  |
 | alfresco-sync-service.postgresql.auth.enablePostgresUser | bool | `false` |  |
