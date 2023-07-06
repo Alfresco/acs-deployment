@@ -205,10 +205,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | msTeamsService.teams.chat.filenameEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.imageEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.metadataEnabled | bool | `true` |  |
-| ooi | object | `{"enabled":false}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
-| ooiService.image.tag | string | `"2.0.0"` |  |
-| ooiService.repository.nameOverride | string | `"acs-alfresco-cs-repository"` |  |
-| ooiService.repository.port | int | `80` |  |
+| ooi | object | `{"enabled":false,"image":{"tag":"2.0.0"},"repository":{"nameOverride":"acs-alfresco-cs-repository","port":80}}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
 | pdfrenderer | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"3.2.0-A1"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true,"runAsUser":33001},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"cpu":"2","memory":"1000Mi"},"requests":{"cpu":"0.25","memory":"300Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
