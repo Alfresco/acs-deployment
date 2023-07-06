@@ -34,7 +34,7 @@ activemq:
     tag: null
 alfresco-search:
   searchServicesImage:
-    tag: 2.0.5.2
+    tag: 2.0.7
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
@@ -67,7 +67,7 @@ postgresql-syncservice:
     tag: 14.4.0
 alfresco-sync-service:
   image:
-    tag: 3.8.0
+    tag: 3.10.0
 ooiService:
   image:
     tag: 2.0.0
