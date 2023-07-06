@@ -163,7 +163,6 @@ ooiService:
 # -- Enable/Disable Alfresco Content Connector for Microsoft Teams
 msTeams:
   enabled: false
-msTeamsService:
   image:
     tag: 2.0.0-A2
 transformrouter:
