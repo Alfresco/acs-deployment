@@ -58,7 +58,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.resources.limits.cpu | string | `"2"` |  |
 | aiTransformer.resources.limits.memory | string | `"1Gi"` |  |
 | aiTransformer.resources.requests.cpu | string | `"50m"` |  |
-| aiTransformer.resources.requests.memory | string | `"200m"` |  |
+| aiTransformer.resources.requests.memory | string | `"200Mi"` |  |
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
 | aiTransformer.service.type | string | `"ClusterIP"` |  |
@@ -240,7 +240,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ooiService.readinessProbe.timeoutSeconds | int | `10` |  |
 | ooiService.replicaCount | int | `2` |  |
 | ooiService.resources.limits.cpu | string | `"2"` |  |
-| ooiService.resources.limits.memory | string | `"2gi"` |  |
+| ooiService.resources.limits.memory | string | `"2Gi"` |  |
 | ooiService.resources.requests.cpu | string | `"50m"` |  |
 | ooiService.resources.requests.memory | string | `"200Mi"` |  |
 | ooiService.service.externalPort | int | `80` |  |
@@ -261,7 +261,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
 | postgresql.primary.persistence.subPath | string | `"alfresco-content-services/database-data"` |  |
 | postgresql.primary.resources.limits.cpu | string | `"8"` |  |
-| postgresql.primary.resources.limits.memory | string | `"8192Mi"` |  |
+| postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
 | repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in NTLM hash format to set at bootstrap time |
