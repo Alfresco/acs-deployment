@@ -46,7 +46,7 @@ ai:
   enabled: false
 s3connector:
   enabled: false
-ooi:
+alfresco-connector-ms365:
   enabled: false
 msTeams:
   enabled: false

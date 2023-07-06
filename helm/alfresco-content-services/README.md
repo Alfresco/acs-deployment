@@ -213,31 +213,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | msTeamsService.teams.chat.filenameEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.imageEnabled | bool | `true` |  |
 | msTeamsService.teams.chat.metadataEnabled | bool | `true` |  |
-| ooi | object | `{"enabled":false}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
-| ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
-| ooiService.image.internalPort | int | `9095` |  |
-| ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
-| ooiService.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
-| ooiService.image.tag | string | `"2.0.0"` |  |
-| ooiService.ingress.path | string | `"/ooi-service"` |  |
-| ooiService.ingress.tls | list | `[]` |  |
-| ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
-| ooiService.livenessProbe.periodSeconds | int | `20` |  |
-| ooiService.livenessProbe.timeoutSeconds | int | `10` |  |
-| ooiService.nodeSelector | object | `{}` |  |
-| ooiService.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| ooiService.podSecurityContext.runAsUser | int | `33006` |  |
-| ooiService.readinessProbe.initialDelaySeconds | int | `20` |  |
-| ooiService.readinessProbe.periodSeconds | int | `60` |  |
-| ooiService.readinessProbe.timeoutSeconds | int | `10` |  |
-| ooiService.replicaCount | int | `2` |  |
-| ooiService.resources.limits.cpu | string | `"2"` |  |
-| ooiService.resources.limits.memory | string | `"1000Mi"` |  |
-| ooiService.resources.requests.cpu | string | `"0.25"` |  |
-| ooiService.resources.requests.memory | string | `"1000Mi"` |  |
-| ooiService.service.externalPort | int | `80` |  |
-| ooiService.service.name | string | `"ooi-service"` |  |
-| ooiService.service.type | string | `"ClusterIP"` |  |
 | pdfrenderer | object | `{"environment":{"JAVA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"image":{"internalPort":8090,"pullPolicy":"IfNotPresent","repository":"alfresco/alfresco-pdf-renderer","tag":"4.0.0"},"livenessProbe":{"initialDelaySeconds":10,"livenessPercent":150,"livenessTransformPeriodSeconds":600,"maxTransformSeconds":1200,"maxTransforms":10000,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true,"runAsUser":33001},"readinessProbe":{"initialDelaySeconds":20,"periodSeconds":60,"timeoutSeconds":10},"replicaCount":2,"resources":{"limits":{"cpu":"2","memory":"1000Mi"},"requests":{"cpu":"0.25","memory":"300Mi"}},"service":{"externalPort":80,"name":"pdfrenderer","type":"ClusterIP"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
