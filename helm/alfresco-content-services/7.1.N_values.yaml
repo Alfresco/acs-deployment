@@ -65,7 +65,7 @@ alfresco-sync-service:
 msTeamsService:
   image:
     tag: 1.1.0
-ooiService:
+ooi:
   image:
     tag: 1.1.1
 alfresco-control-center:
