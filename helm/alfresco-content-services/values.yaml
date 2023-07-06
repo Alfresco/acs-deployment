@@ -715,13 +715,9 @@ alfresco-digital-workspace:
     tag: 4.1.0-5421573582
     pullPolicy: IfNotPresent
   env:
+    APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
-    # APP_CONFIG_PLUGIN_MICROSOFT_ONLINE:
-    # APP_CONFIG_MICROSOFT_ONLINE_OOI_URL:
-    # APP_CONFIG_MICROSOFT_ONLINE_CLIENTID:
-    # APP_CONFIG_MICROSOFT_ONLINE_AUTHORITY:
-    # APP_CONFIG_MICROSOFT_ONLINE_REDIRECT:
   extraEnv: |-
     {{- if .Values.global.ai.enabled }}
     - name: APP_CONFIG_PLUGIN_AI_SERVICE
