@@ -68,7 +68,7 @@ postgresql-syncservice:
 alfresco-sync-service:
   image:
     tag: 3.8.0
-ooi:
+alfresco-connector-ms365:
   image:
     tag: 2.0.0
 msTeamsService:
