@@ -160,8 +160,8 @@ ooiService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
-# -- Enable/Disable Alfresco Content Connector for Microsoft Teams
 alfresco-connector-msteams:
+  # -- Enable/Disable Alfresco Content Connector for Microsoft Teams
   enabled: false
   image:
     tag: 2.0.0-A2
