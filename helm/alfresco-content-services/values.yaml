@@ -739,9 +739,9 @@ alfresco-control-center:
     limits:
       cpu: "1"
       memory: "1024Mi"
-# -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
 alfresco-connector-ms365:
   enabled: false
+# -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
   image:
     tag: 2.0.0
   repository:

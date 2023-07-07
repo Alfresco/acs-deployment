@@ -60,7 +60,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
 | aiTransformer.service.type | string | `"ClusterIP"` |  |
-| alfresco-connector-ms365 | object | `{"enabled":false,"image":{"tag":"2.0.0"},"repository":{"nameOverride":"acs-alfresco-cs-repository","port":80}}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
+| alfresco-connector-ms365.enabled | bool | `false` |  |
+| alfresco-connector-ms365.image | object | `{"tag":"2.0.0"}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
+| alfresco-connector-ms365.repository.nameOverride | string | `"acs-alfresco-cs-repository"` |  |
+| alfresco-connector-ms365.repository.port | int | `80` |  |
 | alfresco-control-center.enabled | bool | `true` |  |
 | alfresco-control-center.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-control-center.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
