@@ -674,7 +674,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.1.0-5478881184
+    tag: 4.1.0-5421573582
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -715,7 +715,7 @@ alfresco-control-center:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.1.0-5478881184
+    tag: 8.1.0-5421573582
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
