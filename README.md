@@ -73,9 +73,10 @@ The table below shows the exact version of ACS deployed with each chart version/
 | 5.4.0-M1          | 7.4.0-M1   |         | 7.3.0.1 | 7.2.1.5  | 7.1.1.7 | 7.0.1.9  | 7.4.0-M1  |
 | 5.4.0-M2          | 7.4.0-M2   |         | 7.3.1   | 7.2.1.7  | 7.1.1.8 | 7.0.1.10 | 7.4.0-M2  |
 | 5.4.0-M3          | 7.4.0-M3   |         | 7.3.1   | 7.2.1.7  | 7.1.1.8 | 7.0.1.10 | 7.4.0-M3  |
-| 6.0.0             | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0     |
-| 6.0.1             | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0     |
-| 6.1.0-SNAPSHOT    | 23.1.0-A12 | 7.4.0.1 | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0     |
+| 6.0.0             | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
+| 6.0.1             | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
+| 6.1.0-SNAPSHOT    | 23.1.0-A12 | 7.4.0.1 | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
+| 6.1.0-M.1         | 23.1.0-A19 | 7.4.0.1 | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
 
 ### Why there is no 5.4.0?
 
@@ -127,30 +128,24 @@ necessary and master branch already received updates that are meant to be
 released at a later time, then the release must be made from a branch which
 follows the release branch pattern: `release/v$Major.Minor`.
 
-Open a PR against the appropriate branch that will:
+First ensure that:
+
+* the
+  [supported-matrix](https://github.com/Alfresco/alfresco-updatecli/blob/master/deployments/values/supported-matrix.yaml)
+  reflects the status of the currently released Alfresco products and update if
+  necessary before proceeding with the release.
+* the [Bump component
+  versions](https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml)
+  workflow has been run to reflect the changes of the current `supported-matrix`
+  in the helm charts values files.
+
+Start the release by opening a PR against the appropriate branch that will:
 
 * Update the [versioning table](#versioning)
-* If any updates to the updatecli pipelines is required then make the changes
-  and raise the PR.
-* Once the PR merge switch the `updatecli.d/supported-matrix.yaml` `latest`
-  section to "release mode" by changing all `development_pattern` by `ga_hotfixes_pattern`
-* Run locally the updatecli pipeline and commit the resulting files (except the
-  `updatecli.d/supported-matrix.yaml`) to a new branch.
-
-  ```bash
-  export QUAY_USERNAME="<VALUE>"
-  export QUAY_PASSWORD="<VALUE>"
-  export UPDATECLI_GITHUB_TOKEN="<VALUE>"
-  export GIT_AUTHOR_EMAIL='build@alfresco.com'
-  export GIT_AUTHOR_USERNAME='alfresco-build'
-  export GIT_BRANCH="$(git branch --show-current)"
-  updatecli apply --commit=true --push=false -c updatecli.d/uber-manifest.tpl -v updatecli.d/supported-matrix.yaml
-  ```
-
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
-  bump chart version to the next stable release (usually by removing the
+  bump chart version to the version you want to release (usually by removing the
   `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
-* Run `pre-commit run --all-files helm-docs` to update docs
+* Run `pre-commit run --all-files helm-docs` to update helm docs
 
 Once the PR has been merged, create the release with:
 
@@ -158,13 +153,14 @@ Once the PR has been merged, create the release with:
 gh release create vx.x.x --generate-notes -t vx.x.x -d
 ```
 
-where `vx.x.x` is the `alfresco-content-services` version.
+where `vx.x.x` is the same `alfresco-content-services` Chart version.
 
-Once the tagged workflow is successful, review the GitHub release notes and
-usually removing dependabot entries and other not-really useful changelog
-entries. Publish the release.
+Once the workflow triggered by this new tag is successful, review the GitHub release notes, usually
+removing dependabot entries and other not-really useful changelog entries.
 
-Now proceed and open a PR to move back to development version:
+Publish the release (remove draft status).
+
+Now proceed and open a PR to move back to the next development version:
 
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the next development release (usually by increasing the
