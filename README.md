@@ -144,7 +144,7 @@ Start the release by opening a PR against the appropriate branch that will:
 * Update the [versioning table](#versioning)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
   bump chart version to the version you want to release (usually by removing the
-  `-SNAPSHOT` suffix and adding `-Mx` suffix if it's a prerelease)
+  `-SNAPSHOT` suffix and adding `-M.x` suffix if it's a prerelease)
 * Run `pre-commit run --all-files helm-docs` to update helm docs
 
 Once the PR has been merged, create the release with:

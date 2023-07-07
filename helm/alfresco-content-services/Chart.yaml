@@ -5,8 +5,8 @@
 ---
 apiVersion: v2
 name: alfresco-content-services
-version: 6.1.0-SNAPSHOT
-appVersion: 23.1.0-A12
+version: 6.1.0-M.1
+appVersion: 23.1.0-A19
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
