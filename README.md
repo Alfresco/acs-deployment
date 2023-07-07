@@ -155,7 +155,7 @@ gh release create vx.x.x --generate-notes -t vx.x.x -d
 
 where `vx.x.x` is the same `alfresco-content-services` Chart version.
 
-Once the tagged workflow is successful, review the GitHub release notes, usually
+Once the workflow triggered by this new tag is successful, review the GitHub release notes, usually
 removing dependabot entries and other not-really useful changelog entries.
 
 Publish the release (remove draft status).
