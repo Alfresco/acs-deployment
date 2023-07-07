@@ -16,13 +16,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 7.7.0 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.7.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 7.11.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.2.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
