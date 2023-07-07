@@ -54,7 +54,7 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:3.1.0
+    image: alfresco/alfresco-transform-core-aio:4.0.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -113,12 +113,12 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   content-app:
-    image: alfresco/alfresco-content-app:4.0.0
+    image: alfresco/alfresco-content-app:4.1.0
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:8.0.0
+    image: quay.io/alfresco/alfresco-control-center:8.1.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
