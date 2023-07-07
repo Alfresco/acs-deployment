@@ -160,6 +160,8 @@ Start the release by opening a PR against the appropriate branch that will:
 Once the PR has been merged, create the release with:
 
 ```sh
+git tag -s vx.x.x -m vx.x.x
+git push origin vx.x.x
 gh release create vx.x.x --generate-notes -t vx.x.x -d
 ```
 
