@@ -152,6 +152,7 @@ services:
     image: quay.io/alfresco/alfresco-digital-workspace:4.1.0
     mem_limit: 128m
     environment:
+      APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"

@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 6.1.0-SNAPSHOT](https://img.shields.io/badge/Version-6.1.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 23.1.0-A12](https://img.shields.io/badge/AppVersion-23.1.0--A12-informational?style=flat-square)
+![Version: 6.1.0-M.1](https://img.shields.io/badge/Version-6.1.0--M.1-informational?style=flat-square) ![AppVersion: 23.1.0-A19](https://img.shields.io/badge/AppVersion-23.1.0--A19-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -88,6 +88,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.enabled | bool | `true` |  |
 | alfresco-digital-workspace.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-digital-workspace.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
+| alfresco-digital-workspace.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
 | alfresco-digital-workspace.extraEnv | string | `"{{- if .Values.global.ai.enabled }}\n- name: APP_CONFIG_PLUGIN_AI_SERVICE\n  value: '{{ .Values.global.ai.enabled }}'\n{{- end }}"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
