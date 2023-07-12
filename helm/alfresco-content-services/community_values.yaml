@@ -19,7 +19,6 @@ tika: &ats-tika
 transformmisc: &ats-misc
   replicaCount: 1
 share:
-  replicaCount: 1
   image:
     repository: alfresco/alfresco-share
     tag: 7.4.0.1
