@@ -15,7 +15,7 @@ Our tests are executed using Helm, kubectl versions provided by github action
 runners [Ubuntu-22.04](https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md#ubuntu-2204)
 and against EKS clusters running Kubernetes 1.21 & 1.22.
 
-## Prerequisites
+## Prerequisites test
 
 By default the Enterprise version of ACS is installed. To accomplish this
 private Docker images stored in Quay.io are downloaded. Alfresco customers can
