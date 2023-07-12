@@ -326,7 +326,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.awsKmsKeyId | string | `nil` |  |
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
-| share | object | `{"enabled":true,"image":{"repository":"quay.io/alfresco/alfresco-share","tag":"23.1.0-A19"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
+| share | object | `{"enabled":true,"image":{"repository":"quay.io/alfresco/alfresco-share","tag":"23.1.0-A19"},"service":{"port":null}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
 | tika | object | `{"image":{"repository":"alfresco/alfresco-tika","tag":"4.0.0"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformmisc | object | `{"image":{"repository":"alfresco/alfresco-transform-misc","tag":"4.0.0"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformrouter | object | `{"image":{"repository":"quay.io/alfresco/alfresco-transform-router","tag":"3.0.0"},"replicaCount":2}` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
