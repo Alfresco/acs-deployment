@@ -38,6 +38,31 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.existingSecretName | string | `nil` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
+| aiTransformer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
+| aiTransformer.image.internalPort | int | `8090` |  |
+| aiTransformer.image.pullPolicy | string | `"IfNotPresent"` |  |
+| aiTransformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
+| aiTransformer.image.tag | string | `"2.0.0"` |  |
+| aiTransformer.livenessProbe.initialDelaySeconds | int | `10` |  |
+| aiTransformer.livenessProbe.livenessPercent | int | `400` |  |
+| aiTransformer.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
+| aiTransformer.livenessProbe.maxTransformSeconds | int | `1800` |  |
+| aiTransformer.livenessProbe.maxTransforms | int | `10000` |  |
+| aiTransformer.livenessProbe.periodSeconds | int | `20` |  |
+| aiTransformer.livenessProbe.timeoutSeconds | int | `10` |  |
+| aiTransformer.nodeSelector | object | `{}` |  |
+| aiTransformer.podSecurityContext.runAsUser | int | `33015` |  |
+| aiTransformer.readinessProbe.initialDelaySeconds | int | `20` |  |
+| aiTransformer.readinessProbe.periodSeconds | int | `60` |  |
+| aiTransformer.readinessProbe.timeoutSeconds | int | `10` |  |
+| aiTransformer.replicaCount | int | `2` |  |
+| aiTransformer.resources.limits.cpu | string | `"2"` |  |
+| aiTransformer.resources.limits.memory | string | `"1Gi"` |  |
+| aiTransformer.resources.requests.cpu | string | `"50m"` |  |
+| aiTransformer.resources.requests.memory | string | `"200Mi"` |  |
+| aiTransformer.service.externalPort | int | `80` |  |
+| aiTransformer.service.name | string | `"ai-transformer"` |  |
+| aiTransformer.service.type | string | `"ClusterIP"` |  |
 | alfresco-connector-msteams.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft Teams |
 | alfresco-connector-msteams.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
 | alfresco-connector-msteams.image.tag | string | `"2.0.0-A2"` |  |
