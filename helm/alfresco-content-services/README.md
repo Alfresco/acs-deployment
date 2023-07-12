@@ -23,6 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 0.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.1.1 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
@@ -325,7 +326,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.awsKmsKeyId | string | `nil` |  |
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
-| share | object | `{"command":[],"environment":{"CATALINA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"23.1.0-A19"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"cpu":"4","memory":"2000Mi"},"requests":{"cpu":"250m","memory":"512Mi"}},"securityContext":{"capabilities":{"drop":["NET_RAW","ALL"]},"runAsNonRoot":false},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
+| share | object | `{"enabled":true,"image":{"repository":"quay.io/alfresco/alfresco-share","tag":"23.1.0-A19"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
 | tika | object | `{"image":{"repository":"alfresco/alfresco-tika","tag":"4.0.0"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformmisc | object | `{"image":{"repository":"alfresco/alfresco-transform-misc","tag":"4.0.0"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
 | transformrouter | object | `{"image":{"repository":"quay.io/alfresco/alfresco-transform-router","tag":"3.0.0"},"replicaCount":2}` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
