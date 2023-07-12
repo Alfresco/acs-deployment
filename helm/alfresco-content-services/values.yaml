@@ -97,7 +97,7 @@ repository:
     # -- Persist repository data
     enabled: true
     baseSize: 20Gi
-    # -- Specify a storageClass for dynamic provisioning
+    # -- Specify a storageClass for dynamic provisioning class
     accessModes:
       - ReadWriteMany
     # -- Bind PVC based on storageClass (e.g. dynamic provisioning)

@@ -320,7 +320,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.livenessProbe.periodSeconds | int | `20` |  |
 | repository.livenessProbe.timeoutSeconds | int | `10` |  |
 | repository.nodeSelector | object | `{}` |  |
-| repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
+| repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning class |
 | repository.persistence.baseSize | string | `"20Gi"` |  |
 | repository.persistence.data.mountPath | string | `"/usr/local/tomcat/alf_data"` |  |
 | repository.persistence.data.subPath | string | `"alfresco-content-services/repository-data"` |  |

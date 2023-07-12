@@ -35,7 +35,7 @@ email:
 imap:
   server:
     enabled: false
-# Disable Enterprise only features
+# Disable Enterprise only features test
 alfresco-transform-service:
   enabled: true
   transformrouter:
