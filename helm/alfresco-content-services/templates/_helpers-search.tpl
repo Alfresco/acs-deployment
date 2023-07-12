@@ -21,7 +21,7 @@ Alfresco Repository search configuration
 -Dsolr.base.url={{ template "alfresco-search.baseurl" . }}
 -Dsolr.secureComms={{ .Values.global.tracking.auth | default "secret" }}
 {{- else if index .Values "alfresco-search" "enabled" -}}
-{{- $alfrescoSearchContext := dict "Chart" (index $.Subcharts "alfresco-search" "Chart") "Release" $.Release "Values" (index .Values "alfresco-search") }}
+{{- $alfrescoSearchContext := dict "Chart" $.Chart "Release" $.Release "Values" (index .Values "alfresco-search") }}
 -Dsolr.host={{ template "alfresco-search.host" $alfrescoSearchContext }}
 -Dsolr.port={{ template "alfresco-search.svcPort" $alfrescoSearchContext }}
 -Dsolr.base.url={{ index .Values "alfresco-search" "ingress" "path" | default "/solr" }}
