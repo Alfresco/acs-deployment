@@ -23,56 +23,6 @@ share:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-share
-pdfrenderer:
-  livenessProbe:
-    initialDelaySeconds: 30
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
-imagemagick:
-  livenessProbe:
-    initialDelaySeconds: 30
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
-libreoffice:
-  livenessProbe:
-    initialDelaySeconds: 30
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "512Mi"
-    limits:
-      memory: "1024Mi"
-  replicaCount: 1
-tika:
-  livenessProbe:
-    initialDelaySeconds: 30
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
-transformmisc:
-  livenessProbe:
-    initialDelaySeconds: 30
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
 alfresco-search:
   resources:
     requests:
@@ -82,6 +32,67 @@ alfresco-search:
       memory: "1280Mi"
   searchServicesImage:
     repository: alfresco/alfresco-search-services
+alfresco-transform-service:
+  enabled: true
+  pdfrenderer: &ats-pdf
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  imagemagick: &ats-im
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  libreoffice: &ats-lo
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        memory: "1024Mi"
+    replicaCount: 1
+  tika: &ats-tika
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  transformmisc: &ats-misc
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  transformrouter:
+    enabled: false
+  filestore:
+    enabled: false
+pdfrenderer: *ats-pdf
+imagemagick: *ats-im
+libreoffice: *ats-lo
+tika: *ats-tika
+transformmisc: *ats-misc
 # Disable features
 alfresco-digital-workspace:
   enabled: false

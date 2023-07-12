@@ -8,15 +8,15 @@ repository:
   persistence:
     accessModes:
       - ReadWriteOnce
-pdfrenderer:
+pdfrenderer: &ats-pdf
   replicaCount: 1
-imagemagick:
+imagemagick: &ats-im
   replicaCount: 1
-libreoffice:
+libreoffice: &ats-lo
   replicaCount: 1
-tika:
+tika: &ats-tika
   replicaCount: 1
-transformmisc:
+transformmisc: &ats-misc
   replicaCount: 1
 share:
   replicaCount: 1
@@ -36,6 +36,17 @@ imap:
   server:
     enabled: false
 # Disable Enterprise only features
+alfresco-transform-service:
+  enabled: true
+  transformrouter:
+    enabled: false
+  pdfrenderer: *ats-pdf
+  imagemagick: *ats-im
+  libreoffice: *ats-lo
+  tika: *ats-tika
+  transformmisc: *ats-misc
+  filestore:
+    enabled: false
 alfresco-search-enterprise:
   enabled: false
 alfresco-digital-workspace:

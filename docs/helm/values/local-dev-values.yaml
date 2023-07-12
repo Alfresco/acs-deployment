@@ -20,48 +20,57 @@ repository:
       memory: "1024Mi"
     limits:
       memory: "1560Mi"
-transformrouter:
-  replicaCount: 1
-pdfrenderer:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
-imagemagick:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
-libreoffice:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "512Mi"
-    limits:
-      memory: "1024Mi"
-  replicaCount: 1
-tika:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
-transformmisc:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
+alfresco-tranform-service:
+  transformrouter:
+    replicaCount: 1
+  filestore:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "128Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  pdfrenderer:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  imagemagick:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  libreoffice:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        memory: "1024Mi"
+    replicaCount: 1
+  tika:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
+  transformmisc:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        memory: "512Mi"
+    replicaCount: 1
 postgresql:
   primary:
     resources:
@@ -94,14 +103,6 @@ alfresco-search-enterprise:
       limits:
         cpu: "1000m"
         memory: "1Gi"
-filestore:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "128Mi"
-    limits:
-      memory: "512Mi"
-  replicaCount: 1
 share:
   resources:
     requests:

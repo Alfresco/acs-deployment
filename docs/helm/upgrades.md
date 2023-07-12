@@ -7,6 +7,52 @@ release notes that are available via [GitHub Releases](https://github.com/Alfres
 
 Here follows a more detailed explanation of any breaking change grouped by version in which they have been released.
 
+## To be released (likely 7.0.0)
+
+### Chart modularization: Alfresco Transform Service
+
+`alfresco-content-service` now offers the ability to fully disable Alfresco
+transformation service. It became possible as we have created a dedicated chart:
+[alfresco-transform-service](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-transform-service)
+This chart is enabled by default in `alfresco-content-service` but can be
+disabled by setting `alfresco-transform-service.enabled` to `false`.
+This change also incurs a modification of the `values.yaml` structure.
+Previously, all transformer components used to be root objects in the YAML
+values definition, and `transformmisc` was the only one that used to be
+"toggle-able". Now all components' values should be placed under the root
+`alfresco-transform-service` node, and each component can be enabled/disable
+individually. So for example:
+
+```yaml
+transformmisc:
+  enabled: true
+  ...
+```
+
+Must be turned into:
+
+```yaml
+alfresco-transform-service:
+  transformmisc:
+    enabled: true
+    ...
+```
+
+and should you want to disable jodconverter transformers you can do so by using:
+
+```yaml
+alfresco-transform-service:
+  libreoffice:
+    enabled: true
+    ...
+```
+
+> Note: the values file contains an Anchor/Aliases to ensure and advertise a
+> way to have some "backward compatibility" with previous values. That
+mechanism do not propagate beyond the YAML file where it is defined so we
+strongly recommend updating your `values.yaml` to reflect the changes described
+above.
+
 ## 6.0.0
 
 ### Charts modularization

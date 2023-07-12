@@ -189,11 +189,11 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "1"
-              memory: "1500Mi"
+              cpu: "250m"
+              memory: "2Gi"
             limits:
               cpu: "4"
-              memory: "3000Mi"
+              memory: "8Gi"
         template: deployment-repository.yaml
 
   - it: should have wait-db-ready initcontainer with in-cluster db

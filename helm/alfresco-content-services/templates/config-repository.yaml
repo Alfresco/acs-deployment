@@ -16,129 +16,118 @@ data:
   RELEASE_NAME: {{ .Release.Name }}
   {{- $alfUrl := include "repo.url" $ }}
   ALFRESCO_OPTS: >-
-      -Ddeployment.method=HELM_CHART
-      -Dalfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
-      {{- if .Values.repository.licenseSecret }}
-      -Ddir.license.external=/usr/local/tomcat/shared/classes/alfresco/extension/license/
-      {{- end }}
-      -Dalfresco.host={{ include "alf.repo.host" $ }}
-      -Dalfresco.protocol={{ include "alf.protocol" $ }}
-      -Dalfresco.port={{ include "alf.repo.port" $ }}
-      -Daos.baseUrlOverwrite={{ $alfUrl }}/alfresco/aos
-      -Dcsrf.filter.origin={{ $alfUrl }}
-      -Dcsrf.filter.referer={{ $alfUrl }}/.*
-      -Dshare.protocol={{ tpl (.Values.externalProtocol | default "http") $ }}
-      -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
-      -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
-      {{- $subsys := include "repository.indexSubsystem" . }}
-      {{- if ne $subsys "none" }}
-      {{- include "repository.indexConfig" . | indent 6 }}
-      {{- end }}
-      -Dindex.subsystem.name={{ $subsys }}
-      {{- if eq .Values.repository.edition "Enterprise" }}
-      -Dtransform.service.url=http://{{ template "alfresco.shortname" . }}-router
-      -Dsfs.url=http://{{ template "alfresco.shortname" . }}-filestore:80
-      {{- end }}
-      -DlocalTransform.core-aio.url=
-      -DlocalTransform.pdfrenderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
-      -DlocalTransform.imagemagick.url=http://{{ template "content-services.shortname" . }}-imagemagick
-      -DlocalTransform.libreoffice.url=http://{{ template "content-services.shortname" . }}-libreoffice
-      -DlocalTransform.tika.url=http://{{ template "content-services.shortname" . }}-tika
-      {{- if .Values.transformmisc.enabled }}
-      -DlocalTransform.misc.url=http://{{ template "content-services.shortname" . }}-transform-misc
-      {{- end }}
-      -Dalfresco-pdf-renderer.url=http://{{ template "content-services.shortname" . }}-pdfrenderer
-      -Dimg.url=http://{{ template "content-services.shortname" . }}-imagemagick
-      -Djodconverter.url=http://{{ template "content-services.shortname" . }}-libreoffice
-      -Dtika.url=http://{{ template "content-services.shortname" . }}-tika
-      {{- if .Values.transformmisc.enabled }}
-      -Dtransform.misc.url=http://{{ template "content-services.shortname" . }}-transform-misc
-      {{- end }}
-      {{- if .Values.s3connector.enabled }}
-      {{- range $key, $val := .Values.s3connector.config }}
-      -Ds3.{{ $key }}={{ $val }}
-      {{- end }}
-      {{- end }}
-      {{- if .Values.email.server.enabled }}
-      -Demail.server.enabled={{ .Values.email.server.enabled }}
-      -Demail.server.port={{ .Values.email.server.port }}
-      -Demail.server.domain={{ .Values.email.server.domain }}
-      -Demail.server.enableTLS={{ .Values.email.server.enableTLS }}
-      -Demail.server.hideTLS={{ .Values.email.server.hideTLS }}
-      -Demail.server.requireTLS={{ .Values.email.server.requireTLS }}
-      -Demail.server.auth.enabled={{ .Values.email.server.auth.enabled }}
-      -Demail.server.connections.max={{ .Values.email.server.connections.max }}
-      -Demail.server.allowed.senders={{ .Values.email.server.allowed.senders }}
-      -Demail.server.blocked.senders={{ .Values.email.server.blocked.senders }}
-      -Demail.inbound.enabled={{ .Values.email.inbound.enabled }}
-      -Demail.inbound.unknownUser={{ .Values.email.inbound.unknownUser }}
-      -Demail.inbound.emailContributorsAuthority={{ .Values.email.inbound.emailContributorsAuthority }}
-      -Demail.handler.folder.overwriteDuplicates={{ .Values.email.handler.folder.overwriteDuplicates }}
-      -Dimap.server.enabled={{ .Values.imap.server.enabled }}
-      -Dimap.server.port={{ .Values.imap.server.port }}
-      -Dimap.server.host={{ .Values.imap.server.host }}
-      -Dimap.server.imap.enabled={{ .Values.imap.server.imap.enabled }}
-      -Dimap.server.imaps.enabled={{ .Values.imap.server.imaps.enabled }}
-      -Dimap.server.imaps.port={{ .Values.imap.server.imaps.port }}
-      -Dimap.mail.from.default={{ .Values.imap.mail.from.default }}
-      -Dimap.mail.to.default={{ .Values.imap.mail.to.default }}
-      -Dsystem.usages.enabled=true
-      -Dnotification.email.siteinvite=true
-      {{- if .Values.email.server.enableTLS }}
-      -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
-      {{- end }}
-      {{- end }}
-      {{- if .Values.mail.host }}
-      -Dmail.encoding={{ .Values.mail.encoding }}
-      -Dmail.host={{ .Values.mail.host }}
-      -Dmail.port={{ .Values.mail.port }}
-      -Dmail.protocol={{ .Values.mail.protocol }}
-      -Dmail.username={{ .Values.mail.username }}
-      -Dmail.from.default={{ .Values.mail.from.default }}
-      -Dmail.from.enabled={{ .Values.mail.from.enabled }}
-      -Dmail.smtp.auth={{ .Values.mail.smtp.auth }}
-      -Dmail.smtp.debug={{ .Values.mail.smtp.debug }}
-      -Dmail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
-      -Dmail.smtp.timeout={{ .Values.mail.smtp.timeout }}
-      -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
-      -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
-      {{- end }}
-      {{- if index .Values "alfresco-sync-service" "enabled" }}
-      -Ddsync.service.uris={{ $alfUrl }}/syncservice
-      {{- else }}
-      -Devents.subsystem.autoStart=false
-      {{- end }}
+    -Ddeployment.method=HELM_CHART
+    -Dalfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
+    {{- if .Values.repository.licenseSecret }}
+    -Ddir.license.external=/usr/local/tomcat/shared/classes/alfresco/extension/license/
+    {{- end }}
+    -Dalfresco.host={{ include "alf.repo.host" $ }}
+    -Dalfresco.protocol={{ include "alf.protocol" $ }}
+    -Dalfresco.port={{ include "alf.repo.port" $ }}
+    -Daos.baseUrlOverwrite={{ $alfUrl }}/alfresco/aos
+    -Dcsrf.filter.origin={{ $alfUrl }}
+    -Dcsrf.filter.referer={{ $alfUrl }}/.*
+    -Dshare.protocol={{ tpl (.Values.externalProtocol | default "http") $ }}
+    -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
+    -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
+    {{- $subsys := include "repository.indexSubsystem" . -}}
+    {{- if ne $subsys "none" }}
+    {{- include "repository.indexConfig" . | indent 4 }}
+    {{- end }}
+    -Dindex.subsystem.name={{ $subsys }}
+    -Dlocal.transform.service.enabled={{ index .Values "alfresco-transform-service" "enabled" }}
+    {{- with (index .Values "alfresco-transform-service") }}
+    {{- $ats_for_enterprise := and .filestore.enabled .transformrouter.enabled }}
+    -Dtransform.service.enabled={{ and .enabled $ats_for_enterprise }}
+    {{- end }}
+    {{- if index .Values "alfresco-transform-service" "enabled" }}
+    {{- include "alfresco-content-service.atsConfig" . | indent 4 }}
+    {{- end }}
+    {{- if .Values.s3connector.enabled }}
+    {{- range $key, $val := .Values.s3connector.config }}
+    -Ds3.{{ $key }}={{ $val }}
+    {{- end }}
+    {{- end }}
+    {{- if .Values.email.server.enabled }}
+    -Demail.server.enabled={{ .Values.email.server.enabled }}
+    -Demail.server.port={{ .Values.email.server.port }}
+    -Demail.server.domain={{ .Values.email.server.domain }}
+    -Demail.server.enableTLS={{ .Values.email.server.enableTLS }}
+    -Demail.server.hideTLS={{ .Values.email.server.hideTLS }}
+    -Demail.server.requireTLS={{ .Values.email.server.requireTLS }}
+    -Demail.server.auth.enabled={{ .Values.email.server.auth.enabled }}
+    -Demail.server.connections.max={{ .Values.email.server.connections.max }}
+    -Demail.server.allowed.senders={{ .Values.email.server.allowed.senders }}
+    -Demail.server.blocked.senders={{ .Values.email.server.blocked.senders }}
+    -Demail.inbound.enabled={{ .Values.email.inbound.enabled }}
+    -Demail.inbound.unknownUser={{ .Values.email.inbound.unknownUser }}
+    -Demail.inbound.emailContributorsAuthority={{ .Values.email.inbound.emailContributorsAuthority }}
+    -Demail.handler.folder.overwriteDuplicates={{ .Values.email.handler.folder.overwriteDuplicates }}
+    -Dimap.server.enabled={{ .Values.imap.server.enabled }}
+    -Dimap.server.port={{ .Values.imap.server.port }}
+    -Dimap.server.host={{ .Values.imap.server.host }}
+    -Dimap.server.imap.enabled={{ .Values.imap.server.imap.enabled }}
+    -Dimap.server.imaps.enabled={{ .Values.imap.server.imaps.enabled }}
+    -Dimap.server.imaps.port={{ .Values.imap.server.imaps.port }}
+    -Dimap.mail.from.default={{ .Values.imap.mail.from.default }}
+    -Dimap.mail.to.default={{ .Values.imap.mail.to.default }}
+    -Dsystem.usages.enabled=true
+    -Dnotification.email.siteinvite=true
+    {{- if .Values.email.server.enableTLS }}
+    -Djavax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
+    {{- end }}
+    {{- end }}
+    {{- if .Values.mail.host }}
+    -Dmail.encoding={{ .Values.mail.encoding }}
+    -Dmail.host={{ .Values.mail.host }}
+    -Dmail.port={{ .Values.mail.port }}
+    -Dmail.protocol={{ .Values.mail.protocol }}
+    -Dmail.username={{ .Values.mail.username }}
+    -Dmail.from.default={{ .Values.mail.from.default }}
+    -Dmail.from.enabled={{ .Values.mail.from.enabled }}
+    -Dmail.smtp.auth={{ .Values.mail.smtp.auth }}
+    -Dmail.smtp.debug={{ .Values.mail.smtp.debug }}
+    -Dmail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
+    -Dmail.smtp.timeout={{ .Values.mail.smtp.timeout }}
+    -Dmail.smtps.auth={{ .Values.mail.smtps.auth }}
+    -Dmail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
+    {{- end }}
+    {{- if index .Values "alfresco-sync-service" "enabled" }}
+    -Ddsync.service.uris={{ $alfUrl }}/syncservice
+    {{- else }}
+    -Devents.subsystem.autoStart=false
+    {{- end }}
   CATALINA_OPTS: >-
-      $ALFRESCO_OPTS
-      -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
-      {{- if eq .Values.database.external false }}
-      -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.primary.service.ports.postgresql }}/{{ .Values.postgresql.auth.database }}
-      {{- else }}
-      -Ddb.url={{ .Values.database.url }}
-      {{- end }}
-      {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
-      -Dmail.password=$MAIL_PASSWORD
-      {{- end }}
-      -Ddb.username=$DATABASE_USERNAME
-      -Ddb.password=$DATABASE_PASSWORD
-      {{- if .Values.s3connector.enabled }}
-      {{- if .Values.s3connector.secrets.accessKey }}
-      -Ds3.accessKey=$ACCESSKEY
-      {{- end }}
-      {{- if .Values.s3connector.secrets.secretKey }}
-      -Ds3.secretKey=$SECRETKEY
-      {{- end }}
-      {{- if .Values.s3connector.secrets.encryption }}
-      -Ds3.encryption=$ENCRYPTION
-      {{- end }}
-      {{- if .Values.s3connector.secrets.awsKmsKeyId }}
-      -Ds3.awsKmsKeyId=$KMSKEYID
-      {{- end }}
-      {{- end }}
-      -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
-      -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
-      -Dmessaging.broker.url=$BROKER_URL
-      -Dmessaging.broker.username=$BROKER_USERNAME
-      -Dmessaging.broker.password=$BROKER_PASSWORD
-      -Dencryption.ssl.truststore.location=$JAVA_HOME/lib/security/cacerts
-      -Dalfresco_user_store.adminpassword=$REPO_ADMIN_PASSWORD
+    $ALFRESCO_OPTS
+    -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
+    {{- if eq .Values.database.external false }}
+    -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.primary.service.ports.postgresql }}/{{ .Values.postgresql.auth.database }}
+    {{- else }}
+    -Ddb.url={{ .Values.database.url }}
+    {{- end }}
+    {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
+    -Dmail.password=$MAIL_PASSWORD
+    {{- end }}
+    -Ddb.username=$DATABASE_USERNAME
+    -Ddb.password=$DATABASE_PASSWORD
+    {{- if .Values.s3connector.enabled }}
+    {{- if .Values.s3connector.secrets.accessKey }}
+    -Ds3.accessKey=$ACCESSKEY
+    {{- end }}
+    {{- if .Values.s3connector.secrets.secretKey }}
+    -Ds3.secretKey=$SECRETKEY
+    {{- end }}
+    {{- if .Values.s3connector.secrets.encryption }}
+    -Ds3.encryption=$ENCRYPTION
+    {{- end }}
+    {{- if .Values.s3connector.secrets.awsKmsKeyId }}
+    -Ds3.awsKmsKeyId=$KMSKEYID
+    {{- end }}
+    {{- end }}
+    -Dmetadata-keystore.password=$METADATA_KEYSTORE_PASSWORD
+    -Dmetadata-keystore.metadata.password=$METADATA_KEY_PASSWORD
+    -Dmessaging.broker.url=$BROKER_URL
+    -Dmessaging.broker.username=$BROKER_USERNAME
+    -Dmessaging.broker.password=$BROKER_PASSWORD
+    -Dencryption.ssl.truststore.location=$JAVA_HOME/lib/security/cacerts
+    -Dalfresco_user_store.adminpassword=$REPO_ADMIN_PASSWORD
