@@ -62,6 +62,7 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-msteams.enabled
   - name: alfresco-share
+    alias: share
     version: 0.1.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: share.enabled
