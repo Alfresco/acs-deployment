@@ -58,7 +58,6 @@ repository:
     #      - chart-example.local
   environment:
     JAVA_OPTS: >-
-      -Dtransform.service.enabled=true
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
       -Dencryption.keystore.type=JCEKS
@@ -74,11 +73,11 @@ repository:
     fsGroup: 1000
   resources:
     requests:
-      cpu: "1"
-      memory: "1500Mi"
+      cpu: "250m"
+      memory: "2Gi"
     limits:
       cpu: "4"
-      memory: "3000Mi"
+      memory: "8Gi"
   # -- The startup probe to cover the worse case startup time for slow clusters
   startupProbe:
     periodSeconds: 30
@@ -122,6 +121,30 @@ repository:
 apiexplorer:
   ingress:
     path: /api-explorer
+# -- Activemq connection setting when activemq.enabled=false
+# Can reference an external broker details, or help spread details of an
+# internal one.
+messageBroker: &acs_messageBroker
+  url: null
+  user: null
+  password: null
+  # -- Name of the secret managed by this chart
+  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  # -- Alternatively, provide credentials via an existing secret that contains
+  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+activemq: &amq
+  nameOverride: activemq
+  enabled: true
+  # -- Possibility to choose Node for pod, with a key-value pair label
+  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
+  nodeSelector: {}
+  adminUser:
+    # -- Default username for the embedded broker admin user
+    user: admin
+    # -- Default password for the embedded broker admin user
+    password: admin
+    existingSecretName: *acs_messageBroker_secretName
+  existingSecretName: null
 ooiService:
   replicaCount: 2
   nodeSelector: {}
@@ -145,11 +168,11 @@ ooiService:
     runAsUser: 33006
   resources:
     requests:
-      cpu: "0.25"
-      memory: "1000Mi"
+      cpu: "50m"
+      memory: "200Mi"
     limits:
       cpu: "2"
-      memory: "1000Mi"
+      memory: "2Gi"
   environment:
     JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
   readinessProbe:
@@ -186,11 +209,11 @@ msTeamsService:
     runAsUser: 33041
   resources:
     requests:
-      cpu: "0.5"
-      memory: "1000Mi"
+      cpu: "50m"
+      memory: "200Mi"
     limits:
-      cpu: "1"
-      memory: "1000Mi"
+      cpu: "2"
+      memory: "2Gi"
   readinessProbe:
     initialDelaySeconds: 20
     periodSeconds: 60
@@ -214,241 +237,6 @@ msTeamsService:
       filenameEnabled: true
       metadataEnabled: true
       imageEnabled: true
-transformrouter:
-  replicaCount: 2
-  nodeSelector: {}
-  image:
-    repository: quay.io/alfresco/alfresco-transform-router
-    tag: 3.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8095
-  service:
-    name: transform-router
-    type: ClusterIP
-    externalPort: 80
-  environment:
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 140
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 140
-    periodSeconds: 120
-    timeoutSeconds: 60
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33016
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "300Mi"
-    limits:
-      cpu: "1"
-      memory: "512Mi"
-# -- Declares the alfresco-pdf-renderer service used by the content repository
-# to transform pdf files
-pdfrenderer:
-  replicaCount: 2
-  nodeSelector: {}
-  image:
-    repository: alfresco/alfresco-pdf-renderer
-    tag: 4.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8090
-  service:
-    name: pdfrenderer
-    type: ClusterIP
-    externalPort: 80
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33001
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "300Mi"
-    limits:
-      cpu: "2"
-      memory: "1000Mi"
-  environment:
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 150
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1200
-# -- Declares the alfresco-imagemagick service used by the content repository
-# to transform image files
-imagemagick:
-  replicaCount: 2
-  nodeSelector: {}
-  image:
-    repository: alfresco/alfresco-imagemagick
-    tag: 4.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8090
-  service:
-    name: imagemagick
-    type: ClusterIP
-    externalPort: 80
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33002
-  resources:
-    requests:
-      cpu: "0.5"
-      memory: "300Mi"
-    limits:
-      cpu: "4"
-      memory: "1000Mi"
-  environment:
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 150
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 900
-# -- Declares the alfresco-libreoffice service used by the content repository
-# to transform office files
-libreoffice:
-  replicaCount: 2
-  nodeSelector: {}
-  image:
-    repository: alfresco/alfresco-libreoffice
-    tag: 4.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8090
-  service:
-    name: libreoffice
-    type: ClusterIP
-    externalPort: 80
-  resources:
-    requests:
-      cpu: "0.5"
-      memory: "400Mi"
-    limits:
-      cpu: "4"
-      memory: "1000Mi"
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33003
-  environment:
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 250
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 99999
-    maxTransformSeconds: 1800
-# -- Declares the alfresco-tika service used by the content repository
-# to transform office files
-tika:
-  replicaCount: 2
-  nodeSelector: {}
-  image:
-    repository: alfresco/alfresco-tika
-    tag: 4.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8090
-  service:
-    name: tika
-    type: ClusterIP
-    externalPort: 80
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33004
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "600Mi"
-    limits:
-      cpu: "2"
-      memory: "1000Mi"
-  environment:
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 400
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1800
-# -- Declares the alfresco-tika service used by the content repository
-# to transform office files
-transformmisc:
-  enabled: true
-  replicaCount: 2
-  nodeSelector: {}
-  image:
-    repository: alfresco/alfresco-transform-misc
-    tag: 4.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8090
-  service:
-    name: transformmisc
-    type: ClusterIP
-    externalPort: 80
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33006
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "300Mi"
-    limits:
-      cpu: "2"
-      memory: "1000Mi"
-  environment:
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 400
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1800
 aiTransformer:
   replicaCount: 2
   nodeSelector: {}
@@ -465,11 +253,11 @@ aiTransformer:
     runAsUser: 33015
   resources:
     requests:
-      cpu: "0.25"
-      memory: "1000Mi"
+      cpu: "50m"
+      memory: "200Mi"
     limits:
       cpu: "2"
-      memory: "1000Mi"
+      memory: "1Gi"
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -486,69 +274,114 @@ aiTransformer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+alfresco-transform-service:
+  enabled: true
+  messageBroker:
+    existingSecretName: *acs_messageBroker_secretName
+  transformrouter: &ats-router
+    replicaCount: 2
+    image:
+      repository: quay.io/alfresco/alfresco-transform-router
+      tag: 3.0.0
+  # -- Deprecated, use alfresco-transform-service.pdfrenderer instead
+  pdfrenderer: &ats-pdf
+    image:
+      repository: alfresco/alfresco-pdf-renderer
+      tag: 4.0.0
+  # -- Deprecated, use alfresco-transform-service.imagemagick instead
+  imagemagick: &ats-im
+    image:
+      repository: alfresco/alfresco-imagemagick
+      tag: 4.0.0
+  # -- Deprecated, use alfresco-transform-service.libreoffice instead
+  libreoffice: &ats-lo
+    image:
+      repository: alfresco/alfresco-libreoffice
+      tag: 4.0.0
+  # -- Deprecated, use alfresco-transform-service.tika instead
+  tika: &ats-tika
+    image:
+      repository: alfresco/alfresco-tika
+      tag: 4.0.0
+  # -- Deprecated, use alfresco-transform-service.transformmisc instead
+  transformmisc: &ats-misc
+    image:
+      repository: alfresco/alfresco-transform-misc
+      tag: 4.0.0
+  aiTransformer:
+    replicaCount: 2
+    nodeSelector: {}
+    image:
+      repository: quay.io/alfresco/alfresco-ai-docker-engine
+      tag: 2.0.0
+      pullPolicy: IfNotPresent
+      internalPort: 8090
+    service:
+      name: ai-transformer
+      type: ClusterIP
+      externalPort: 80
+    podSecurityContext:
+      runAsUser: 33015
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "200Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
+    environment:
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+    readinessProbe:
+      initialDelaySeconds: 20
+      periodSeconds: 60
+      timeoutSeconds: 10
+    livenessProbe:
+      initialDelaySeconds: 10
+      periodSeconds: 20
+      timeoutSeconds: 10
+      livenessPercent: 400
+      livenessTransformPeriodSeconds: 600
+      maxTransforms: 10000
+      maxTransformSeconds: 1800
+  # -- Deprecated, use alfresco-transform-service.filestore instead
+  filestore: &ats-fs
+    replicaCount: 1
+    image:
+      repository: quay.io/alfresco/alfresco-shared-file-store
+      tag: 3.0.0
+    persistence:
+      # -- Persist filestore data
+      enabled: true
+      data:
+        mountPath: "/tmp/Alfresco"
+        subPath: "alfresco-content-services/filestore-data"
+
+# Bellow values are just provided as an example in case the same value file
+# would be used to work with older version of the chart.
+# -- Declares the alfresco-transform-router service used by the content repository
+# to route transformation requests
+transformrouter: *ats-router
+# -- Declares the alfresco-pdf-renderer service used by the content repository
+# to transform pdf files
+pdfrenderer: *ats-pdf
+# -- Declares the alfresco-imagemagick service used by the content repository
+# to transform image files
+imagemagick: *ats-im
+# -- Declares the alfresco-libreoffice service used by the content repository
+# to transform office files
+libreoffice: *ats-lo
+# -- Declares the alfresco-tika service used by the content repository
+# to transform office files
+tika: *ats-tika
+# -- Declares the alfresco-tika service used by the content repository
+# to transform office files
+transformmisc: *ats-misc
 # -- Declares the alfresco-shared-file-store used by the content repository
 # and transform service
-filestore:
-  replicaCount: 1
-  nodeSelector: {}
-  image:
-    repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 3.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8099
-  initContainer:
-    image:
-      repository: busybox
-      tag: 1.35.0
-      pullPolicy: IfNotPresent
-    resources:
-      limits:
-        cpu: "0.50"
-        memory: "10Mi"
-  service:
-    name: filestore
-    type: ClusterIP
-    externalPort: 80
-  podSecurityContext:
-    runAsUser: 33030
-    runAsGroup: 1000
-    fsGroup: 1000
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "200Mi"
-    limits:
-      cpu: "2"
-      memory: "1000Mi"
-  environment:
-    scheduler.content.age.millis: "86400000"
-    scheduler.cleanup.interval: "86400000"
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 150
-    livenessSavePeriodSeconds: 600
-  persistence:
-    # -- Persist filestore data
-    enabled: true
-    # -- Specify a storageClass for dynamic provisioning
-    accessModes:
-      - ReadWriteOnce
-    # -- Bind PVC based on storageClass (e.g. dynamic provisionning)
-    storageClass: null
-    # -- Use pre-provisioned pv through its claim (e.g. static provisionning)
-    existingClaim: null
-    data:
-      mountPath: "/tmp/Alfresco"
-      subPath: "alfresco-content-services/filestore-data"
+filestore: *ats-fs
+
 # -- Define the alfresco-share properties to use in the k8s cluster
 # This is the default presentation layer(UI) of Alfresco Content Services
 share:
@@ -580,7 +413,7 @@ share:
     runAsNonRoot: true
   resources:
     requests:
-      cpu: "1"
+      cpu: "250m"
       memory: "512Mi"
     limits:
       cpu: "4"
@@ -602,33 +435,12 @@ share:
   extraSideContainers: []
   extraInitContainers: []
   command: []
-activemq:
-  nameOverride: activemq
-  enabled: true
-  # -- Possibility to choose Node for pod, with a key-value pair label
-  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
-  nodeSelector: {}
-  adminUser:
-    # -- Default username for the embedded broker admin user
-    user: admin
-    # -- Default password for the embedded broker admin user
-    password: admin
-# -- external activemq connection setting when activemq.enabled=false
-messageBroker: &acs_messageBroker
-  url: null
-  user: null
-  password: null
-  # -- Name of the secret managed by this chart
-  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains
-  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
 alfresco-search:
-  nodeSelector: {}
   enabled: true
   searchServicesImage:
     repository: quay.io/alfresco/search-services
     tag: 2.0.8-A1
+  nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
   external:
@@ -803,11 +615,11 @@ postgresql:
       log_min_messages = LOG
     resources:
       requests:
-        cpu: "0.5"
-        memory: "1500Mi"
+        cpu: "500m"
+        memory: "1Gi"
       limits:
         cpu: "8"
-        memory: "8192Mi"
+        memory: "8Gi"
     persistence:
       # -- set the storageClass to use for dynamic provisioning.
       # setting it to null means "default storageClass".
@@ -941,11 +753,11 @@ alfresco-sync-service:
     primary:
       resources:
         requests:
-          cpu: "0.5"
-          memory: "1500Mi"
+          cpu: 250m
+          memory: 1Gi
         limits:
           cpu: "4"
-          memory: "1500Mi"
+          memory: 4Gi
   messageBroker:
     existingSecretName: *acs_messageBroker_secretName
   repository:
