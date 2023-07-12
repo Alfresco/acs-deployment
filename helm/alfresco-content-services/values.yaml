@@ -341,8 +341,7 @@ share:
   image:
     repository: quay.io/alfresco/alfresco-share
     tag: 23.1.0-A19
-  service:
-    port:
+  nameOverride: share
 alfresco-search:
   enabled: true
   searchServicesImage:
