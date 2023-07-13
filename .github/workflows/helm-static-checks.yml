@@ -38,7 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v2.5.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v2.6.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
