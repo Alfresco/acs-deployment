@@ -71,6 +71,6 @@ alfresco-sync-service:
 ooiService:
   image:
     tag: 2.0.0
-msTeamsService:
+alfresco-connector-msteams:
   image:
     tag: 2.0.0

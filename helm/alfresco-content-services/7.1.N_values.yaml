@@ -70,7 +70,7 @@ alfresco-sync-service:
     primary:
       image:
         tag: 13.3.0
-msTeamsService:
+alfresco-connector-msteams:
   image:
     tag: 1.1.0
 ooiService:
