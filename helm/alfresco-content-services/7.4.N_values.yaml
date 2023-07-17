@@ -71,6 +71,6 @@ alfresco-sync-service:
 alfresco-connector-ms365:
   image:
     tag: 2.0.0
-msTeamsService:
+alfresco-connector-msteams:
   image:
     tag: 2.0.0

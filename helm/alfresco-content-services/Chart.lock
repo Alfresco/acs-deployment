@@ -14,6 +14,9 @@ dependencies:
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.1.0
+- name: alfresco-transform-service
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 0.1.0
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 1.2.0
@@ -23,8 +26,11 @@ dependencies:
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 1.3.0
-- name: alfresco-connector-ms365
+- name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.1.0
-digest: sha256:5e94fe7e60ad7a219837452746d8b947f0aa497ee7475e11b032d0e5aecd69fa
-generated: "2023-07-07T16:45:05.975827+05:30"
+- name: alfresco-connector-ms365
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 0.2.0
+digest: sha256:753e40f2cb15d4399649353c6d898da2c67613e9d3742e73da8c7b2cc0d4565d
+generated: "2023-07-17T14:56:55.191533+05:30"

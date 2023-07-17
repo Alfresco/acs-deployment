@@ -5,7 +5,7 @@
 ---
 apiVersion: v2
 name: alfresco-content-services
-version: 6.1.0-M.1
+version: 6.1.0-SNAPSHOT
 appVersion: 23.1.0-A19
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
@@ -40,6 +40,10 @@ dependencies:
     version: 3.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
+  - name: alfresco-transform-service
+    version: 0.1.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    condition: alfresco-transform-service.enabled
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
@@ -53,8 +57,12 @@ dependencies:
     version: 1.3.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
-  - name: alfresco-connector-ms365
+  - name: alfresco-connector-msteams
     version: 0.1.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    condition: alfresco-connector-msteams.enabled
+  - name: alfresco-connector-ms365
+    version: 0.2.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-ms365.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
