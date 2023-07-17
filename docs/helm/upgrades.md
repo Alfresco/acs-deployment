@@ -21,10 +21,6 @@ Accordingly to this chart rename, also the related values has been moved from
 `.Values.msTeamsService` to
 `.Values.alfresco-connector-msteams`.
 
-Additionally values in the 7.0.N_values.yaml has been moved from
-`.Values.msTeams` to
-`.Values.alfresco-connector-msteams`.
-
 ### Chart modularization: Alfresco Transform Service
 
 `alfresco-content-service` now offers the ability to fully disable Alfresco
