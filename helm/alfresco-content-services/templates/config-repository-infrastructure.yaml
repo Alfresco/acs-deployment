@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ print $.Release.Name "infrastructure-repository" | lower |trunc 63 | trimSuffix "-" }}
+  labels:
+    {{- include "repository.labels" . | nindent 4 }}
+data:
+  REPO_HOST: {{ template "content-services.shortname" . }}-repository
+  REPO_PORT: {{ .Values.repository.service.externalPort | quote }}
