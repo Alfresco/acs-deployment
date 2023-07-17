@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 6.1.0-SNAPSHOT](https://img.shields.io/badge/Version-6.1.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 23.1.0-A19](https://img.shields.io/badge/AppVersion-23.1.0--A19-informational?style=flat-square)
+![Version: 7.0.0-SNAPSHOT](https://img.shields.io/badge/Version-7.0.0--SNAPSHOT-informational?style=flat-square) ![AppVersion: 23.1.0-A19](https://img.shields.io/badge/AppVersion-23.1.0--A19-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -21,9 +21,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.1.1 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
@@ -205,6 +206,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.elasticsearch.port | int | `9200` | The port where service is available |
 | global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
 | global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
+| global.known_urls[0] | string | `"https://localhost"` |  |
+| global.known_urls[1] | string | `"http://localhost"` |  |
 | global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |

@@ -671,6 +671,9 @@ alfresco-sync-service:
     nameOverride: alfresco-cs-repository
     port: *repositoryExternalPort
 global:
+  known_urls:
+    - https://localhost
+    - http://localhost
   # A shared secret is now required in order to authenticate connections between
   # solr and repo (typically: tracking)
   tracking:
