@@ -9,6 +9,18 @@ Here follows a more detailed explanation of any breaking change grouped by versi
 
 ## To be released (likely 7.0.0)
 
+### Msteams chart rename
+
+The previous `ms-teams-service` subchart has been renamed to
+`alfresco-connector-msteams` to better reflect the product name during the
+migration to the new
+[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts)
+repository.
+
+Accordingly to this chart rename, also the related values has been moved from
+`.Values.msTeamsService` to
+`.Values.alfresco-connector-msteams`.
+
 ### Chart modularization: Alfresco Transform Service
 
 `alfresco-content-service` now offers the ability to fully disable Alfresco

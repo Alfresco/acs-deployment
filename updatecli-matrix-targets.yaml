@@ -79,7 +79,7 @@ matrix:
     msteams:
       version:
       helm_target: *helmvalues231
-      helm_key: .msTeamsService.image.tag
+      helm_key: .alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
@@ -193,7 +193,7 @@ matrix:
     msteams:
       version:
       helm_target: *helmvalues74
-      helm_key: .msTeamsService.image.tag
+      helm_key: .alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
@@ -307,7 +307,7 @@ matrix:
     msteams:
       version:
       helm_target: *helmvalues73
-      helm_key: .msTeamsService.image.tag
+      helm_key: .alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
@@ -421,7 +421,7 @@ matrix:
     msteams:
       version:
       helm_target: *helmvalues72
-      helm_key: .msTeamsService.image.tag
+      helm_key: .alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
@@ -528,7 +528,7 @@ matrix:
     msteams:
       version:
       helm_target: *helmvalues71
-      helm_key: .msTeamsService.image.tag
+      helm_key: .alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:

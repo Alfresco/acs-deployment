@@ -183,60 +183,12 @@ ooiService:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
-# -- Enable/Disable Alfresco Content Connector for Microsoft Teams
-msTeams:
+alfresco-connector-msteams:
+  # -- Enable/Disable Alfresco Content Connector for Microsoft Teams
   enabled: false
-msTeamsService:
-  replicaCount: 2
-  nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
     tag: 2.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 3978
-  service:
-    name: ms-teams-service
-    type: ClusterIP
-    externalPort: 80
-  ingress:
-    path: /ms-teams-service
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33041
-  resources:
-    requests:
-      cpu: "50m"
-      memory: "200Mi"
-    limits:
-      cpu: "2"
-      memory: "2Gi"
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-  alfresco:
-    baseUrl: change_me_alf_base_url
-    digitalWorkspace:
-      contextPath: /workspace/
-  microsoft:
-    app:
-      id: change_me_app_id
-      password: change_me_app_pwd
-      oauth:
-        connectionName: alfresco
-  teams:
-    chat:
-      filenameEnabled: true
-      metadataEnabled: true
-      imageEnabled: true
 aiTransformer:
   replicaCount: 2
   nodeSelector: {}
