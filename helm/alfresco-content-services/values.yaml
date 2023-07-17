@@ -334,14 +334,24 @@ transformmisc: *ats-misc
 # and transform service
 filestore: *ats-fs
 
-# -- Define the alfresco-share properties to use in the k8s cluster
-# This is the default presentation layer(UI) of Alfresco Content Services
 share:
+  # -- toggle deplying Alfresco Share UI
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
     tag: 23.1.0-A19
   nameOverride: share
+  repository:
+    existingConfigMap:
+      # -- Name of the configmap which hold the repositoy connection details
+      name: infrastructure-repository
+      keys:
+        # -- Name of the key in the configmap which points to the repository
+        # service hostname
+        host: repo_svc_name
+        # -- Name of the key in the configmap which points to the repository
+        # service port
+        port: repo_svc_port
 alfresco-search:
   enabled: true
   searchServicesImage:
