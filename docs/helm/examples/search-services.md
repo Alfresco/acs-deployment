@@ -83,12 +83,10 @@ previous section).
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set externalPort="443" \
-  --set externalProtocol="https" \
-  --set externalHost="acs.YOUR-DOMAIN-NAME" \
   --set persistence.enabled=true \
   --set persistence.storageClass.enabled=true \
   --set persistence.storageClass.name="nfs-client" \
+  --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.tracking.sharedsecret=dummy \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set alfresco-search.ingress.enabled=true \

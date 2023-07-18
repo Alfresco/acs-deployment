@@ -397,13 +397,11 @@ Deploy the latest version of ACS by running the following command (replacing `YO
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set externalPort="443" \
-  --set externalProtocol="https" \
-  --set externalHost="acs.YOUR-DOMAIN-NAME" \
   --set repository.persistence.enabled=true \
   --set repository.persistence.storageClass="nfs-client" \
   --set filestore.persistence.enabled=true \
   --set filestore.persistence.storageClass="nfs-client" \
+  --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
   --atomic \
@@ -422,9 +420,7 @@ helm install acs alfresco/alfresco-content-services \
     ```bash
     helm install acs alfresco/alfresco-content-services \
     --values=community_values.yaml \
-    --set externalPort="443" \
-    --set externalProtocol="https" \
-    --set externalHost="acs.YOUR-DOMAIN-NAME" \
+    --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
     --set repository.persistence.enabled=true \
     --set repository.persistence.storageClass="nfs-client" \
     --atomic \
@@ -443,9 +439,7 @@ helm install acs alfresco/alfresco-content-services \
     ```bash
     helm install acs alfresco/alfresco-content-services \
     --values=MAJOR.MINOR.N_values.yaml \
-    --set externalPort="443" \
-    --set externalProtocol="https" \
-    --set externalHost="acs.YOUR-DOMAIN-NAME" \
+    --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
     --set repository.persistence.enabled=true \
     --set repository.persistence.storageClass="nfs-client" \
     --set filestore.persistence.enabled=true \
