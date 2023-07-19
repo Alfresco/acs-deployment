@@ -30,8 +30,8 @@ Get Alfresco Content Service configuration for Alfresco Transform Service
 {{- if and $atsCtx.Values.filestore.enabled $atsCtx.Values.transformrouter.enabled }}
 {{- $routerCtx := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
 {{- $sfsCtx := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
--Dtransform.service.url=http://{{ template "alfresco-transform-service.fullname" $routerCtx }}
--Dsfs.url=http://{{ template "alfresco-transform-service.fullname" $sfsCtx }}
+-Dtransform.service.url=http://{{ template "alfresco-transform-service.deployment-transform-router.name" $atsCtx }}
+-Dsfs.url=http://{{ template "alfresco-transform-service.deployment-filestore.name" $atsCtx }}
 {{ template "alfresco-content-service.tengineConfig" $atsCtx }}
 {{- end }}
 {{- end }}
