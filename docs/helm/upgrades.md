@@ -11,9 +11,9 @@ version in which they have been released.
 
 ## To be released (likely 7.0.0)
 
-Due to breaking changes the next version  will be a major release
+Due to breaking changes the next version will be a major release.
 
-### Msteams chart rename
+### MSTeams chart rename
 
 The previous `ms-teams-service` subchart has been renamed to
 `alfresco-connector-msteams` to better reflect the product name during the
@@ -27,7 +27,7 @@ Accordingly to this chart rename, also the related values has been moved from
 
 ### externalHost, externalPort & externalProtocol are not used anymore
 
-In previous versions of the charts one could use the values bellow to tell the
+In previous versions of the charts one could use the values below to tell the
 charts how to configure Alfresco repo & Share, specifically for security
 features (CSRF, CORS):
 
@@ -39,13 +39,13 @@ These were simple strings and did not allow for multiple domains/URLs to be
 used which is exactly one would be expect to do when configuring cross-origin
 protections.
 This is now possible as we introduce the newer `known_urls` value.
-This value can be iether passed to sshare or repo directly or set in the global
+This value can be either passed to share or repo directly or set in the global
 context. Being able to use either the subchart or the global context Allows for
 conveniently set this parameter at once for all subcharts or on the contrary
 use different values different subcharts if they do not trust the same
 domains/URLs.
 
-global setting:
+Global setting:
 
 ```yaml
 global:
@@ -54,7 +54,7 @@ global:
     - http://app.domain.local:8080/crm
 ```
 
-targeted setting:
+Targeted setting:
 
 ```yaml
 share:
@@ -69,10 +69,8 @@ repository:
 **The first item in the list will be considered the main domain where alfresco
 & Share are installed**
 
-If you want to use the `--set` switch of the `helm` command`, well first of all
-you should consider stopping doing that and use a local values override file
-instead, otherwise you can still do it by usig either of the syntax below to
-pass a list:
+If you want to use the `--set` switch of the `helm` command`, you can still do
+it by using either of the syntaxes below to pass a list:
 
 Comma separated list (commas must be escaped):
 
@@ -87,6 +85,9 @@ helm install alfresco-content-services acs \
   --set global.known_urls\[0\]=https://ecm.domain.tld
   --set global.known_urls\[1\]=http://app.domain.local:8080/crm
 ```
+
+> Note: We would encorage you to avoid using `--set` as much as possible and
+> use `--values` instead with values stored in yaml files.
 
 ### Alfresco Share chart
 
