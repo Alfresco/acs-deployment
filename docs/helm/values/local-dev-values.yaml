@@ -1,6 +1,3 @@
-externalPort: "80"
-externalProtocol: http
-externalHost: localhost
 activemq:
   resources:
     requests:

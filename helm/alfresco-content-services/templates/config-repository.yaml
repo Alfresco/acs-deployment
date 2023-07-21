@@ -14,22 +14,24 @@ data:
   {{- end }}
   {{- end }}
   RELEASE_NAME: {{ .Release.Name }}
-  {{- $alfUrl := include "repo.url" $ }}
+  {{- $alfUrl := include "alfresco-common.external.url" . }}
   ALFRESCO_OPTS: >-
     -Ddeployment.method=HELM_CHART
     -Dalfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
     {{- if .Values.repository.licenseSecret }}
     -Ddir.license.external=/usr/local/tomcat/shared/classes/alfresco/extension/license/
     {{- end }}
-    -Dalfresco.host={{ include "alf.repo.host" $ }}
-    -Dalfresco.protocol={{ include "alf.protocol" $ }}
-    -Dalfresco.port={{ include "alf.repo.port" $ }}
+    -Dalfresco.host={{ template "alfresco-common.external.host" . }}
+    -Dalfresco.protocol={{ template "alfresco-common.external.scheme" . }}
+    -Dalfresco.port={{ template "alfresco-common.external.port" . }}
     -Daos.baseUrlOverwrite={{ $alfUrl }}/alfresco/aos
     -Dcsrf.filter.origin={{ $alfUrl }}
     -Dcsrf.filter.referer={{ $alfUrl }}/.*
-    -Dshare.protocol={{ tpl (.Values.externalProtocol | default "http") $ }}
-    -Dshare.host={{ tpl (.Values.externalHost | default (printf "%s-share" (include "content-services.shortname" .))) $ }}
-    -Dshare.port={{ tpl (.Values.externalPort | default .Values.share.service.externalPort | toString) $ }}
+    {{- if .Values.share.enabled }}
+    -Dshare.protocol={{ template "alfresco-common.external.scheme" . }}
+    -Dshare.host={{ template "alfresco-common.external.host" . }}
+    -Dshare.port={{ template "alfresco-common.external.port" . }}
+    {{- end }}
     {{- $subsys := include "repository.indexSubsystem" . -}}
     {{- if ne $subsys "none" }}
     {{- include "repository.indexConfig" . | indent 4 }}

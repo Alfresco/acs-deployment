@@ -234,10 +234,9 @@ setup of the services).
 Edit your `values.yml` file so it contains below elements:
 
 ```yaml
-externalPort: 443
-externalProtocol: https
-externalHost: acs.YOUR-DOMAIN-NAME
 global:
+  known_urls:
+    - https://acs.YOUR-DOMAIN-NAME
   tracking:
     sharedsecret: dummy
   alfrescoRegistryPullSecrets: quay-registry-secret
@@ -313,9 +312,7 @@ below (at the end of the command):
 helm -n alfresco install acs \
   --repo https://kubernetes-charts.alfresco.com/stable alfresco-content-services \
   --atomic --timeout 10m0s \
-  --set externalPort="443" \
-  --set externalProtocol="https" \
-  --set externalHost="acs.YOUR-DOMAIN-NAME" \
+  --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set global.tracking.secret=dummy \
   --set global.elasticsearch.host=YOUR-DOMAIN-HOSTNAME \

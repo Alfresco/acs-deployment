@@ -90,13 +90,6 @@ helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
 helm repo update
 ```
 
-Alternatively, to use the latest in-progress development version of the Helm chart add the incubator chart repository using the following command:
-
-```bash
-helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
-helm repo update
-```
-
 Now decide whether you want to install the Community or Enterprise edition and follow the steps in the relevant section below.
 
 #### Community
@@ -106,9 +99,6 @@ To install the latest version of Community we need to use the [community_values.
 ```bash
 helm install acs alfresco/alfresco-content-services \
   --values=community_values.yaml \
-  --set externalPort="80" \
-  --set externalProtocol="http" \
-  --set externalHost="localhost" \
   --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \

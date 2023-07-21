@@ -20,14 +20,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v2.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v2.8.0
       - name: Community local deployment
         run: |
           helm dep up ./helm/alfresco-content-services
           helm install acs ./helm/alfresco-content-services \
             --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
-            --set externalPort="80" --set externalProtocol="http" \
-            --set externalHost="localhost" --wait --timeout 15m0s --values \
+            --set global.known_urls=http://localhost \
+            --wait --timeout 15m0s --values \
             test/community-integration-test-values.yaml
       - name: Spit cluster status
         if: always()

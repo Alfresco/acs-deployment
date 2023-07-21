@@ -334,59 +334,24 @@ transformmisc: *ats-misc
 # and transform service
 filestore: *ats-fs
 
-# -- Define the alfresco-share properties to use in the k8s cluster
-# This is the default presentation layer(UI) of Alfresco Content Services
 share:
-  replicaCount: 1
-  nodeSelector: {}
+  # -- toggle deplying Alfresco Share UI
+  enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
     tag: 23.1.0-A19
-    pullPolicy: IfNotPresent
-    internalPort: 8080
-  service:
-    name: share
-    type: ClusterIP
-    externalPort: 80
-  ingress:
-    path: /share
-    annotations: {}
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
-  securityContext:
-    runAsNonRoot: false
-    capabilities:
-      drop:
-        - NET_RAW
-        - ALL
-  podSecurityContext:
-    runAsNonRoot: true
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "4"
-      memory: "2000Mi"
-  environment:
-    CATALINA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 60
-    periodSeconds: 20
-    timeoutSeconds: 15
-  livenessProbe:
-    initialDelaySeconds: 200
-    periodSeconds: 20
-    timeoutSeconds: 10
-  extraVolumeMounts: []
-  extraVolumes: []
-  extraSideContainers: []
-  extraInitContainers: []
-  command: []
+  nameOverride: share
+  repository:
+    existingConfigMap:
+      # -- Name of the configmap which hold the repositoy connection details
+      name: infrastructure-repository
+      keys:
+        # -- Name of the key in the configmap which points to the repository
+        # service hostname
+        host: repo_svc_name
+        # -- Name of the key in the configmap which points to the repository
+        # service port
+        port: repo_svc_port
 alfresco-search:
   enabled: true
   searchServicesImage:
@@ -716,6 +681,9 @@ alfresco-sync-service:
     nameOverride: alfresco-cs-repository
     port: *repositoryExternalPort
 global:
+  known_urls:
+    - https://localhost
+    - http://localhost
   # A shared secret is now required in order to authenticate connections between
   # solr and repo (typically: tracking)
   tracking:
