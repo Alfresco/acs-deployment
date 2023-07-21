@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: infrastructure-repository
+  labels:
+    {{- include "repository.labels" . | nindent 4 }}
+data:
+  repo_svc_name: {{ template "content-services.shortname" . }}-repository
+  repo_svc_port: {{ .Values.repository.service.externalPort | quote }}

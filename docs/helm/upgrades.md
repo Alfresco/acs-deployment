@@ -1,15 +1,19 @@
 # Upgrading the helm charts
 
-Our helm charts are continuously improved and sometimes arise the need to introduce a breaking change.
+Our helm charts are continuously improved and sometimes arise the need to
+introduce a breaking change.
 
 To get an overview of the changes in each release, first take a look at the
 release notes that are available via [GitHub Releases](https://github.com/Alfresco/acs-deployment/releases).
 
-Here follows a more detailed explanation of any breaking change grouped by version in which they have been released.
+Here follows a more detailed explanation of any breaking change grouped by
+version in which they have been released.
 
 ## To be released (likely 7.0.0)
 
-### Msteams chart rename
+Due to breaking changes the next version will be a major release.
+
+### MSTeams chart rename
 
 The previous `ms-teams-service` subchart has been renamed to
 `alfresco-connector-msteams` to better reflect the product name during the
@@ -20,6 +24,80 @@ repository.
 Accordingly to this chart rename, also the related values has been moved from
 `.Values.msTeamsService` to
 `.Values.alfresco-connector-msteams`.
+
+### externalHost, externalPort & externalProtocol are not used anymore
+
+In previous versions of the charts one could use the values below to tell the
+charts how to configure Alfresco repo & Share, specifically for security
+features (CSRF, CORS):
+
+* `externalHost`
+* `externalPort`
+* `externalProtocol`
+
+These were simple strings and did not allow for multiple domains/URLs to be
+used which is exactly one would be expect to do when configuring cross-origin
+protections.
+This is now possible as we introduce the newer `known_urls` value.
+This value can be either passed to share or repo directly or set in the global
+context. Being able to use either the subchart or the global context Allows for
+conveniently set this parameter at once for all subcharts or on the contrary
+use different values different subcharts if they do not trust the same
+domains/URLs.
+
+Global setting:
+
+```yaml
+global:
+  known_urls:
+    - https://ecm.domain.tld
+    - http://app.domain.local:8080/crm
+```
+
+Targeted setting:
+
+```yaml
+share:
+  known_urls:
+    - https://ecm.domain.tld
+repository:
+  known_urls:
+    - https://ecm.domain.tld
+    - http://app.domain.local:8080/crm
+```
+
+**The first item in the list will be considered the main domain where alfresco
+& Share are installed**
+
+If you want to use the `--set` switch of the `helm` command`, you can still do
+it by using either of the syntaxes below to pass a list:
+
+Comma separated list (commas must be escaped):
+
+```bash
+helm install alfresco-content-services acs --set global.known_urls=https://ecm.domain.tld\,http://app.domain.local:8080/crm
+```
+
+Indexed syntax square brackets must be escaped:
+
+```bash
+helm install alfresco-content-services acs \
+  --set global.known_urls\[0\]=https://ecm.domain.tld
+  --set global.known_urls\[1\]=http://app.domain.local:8080/crm
+```
+
+> Note: We would encorage you to avoid using `--set` as much as possible and
+> use `--values` instead with values stored in yaml files.
+
+### Alfresco Share chart
+
+Alfresco is now deployed as a separate chart and can be enabled/disabled. In
+order to do so simply use the value bellow:
+
+```yaml
+share:
+ enabled: false
+```
 
 ### Chart modularization: Alfresco Transform Service
 
@@ -167,14 +245,16 @@ A default CPU resources requests and limits has been introduced to make sure
 that Kubernetes scheduler has some more hints on how properly place pods on the
 available nodes in a cluster.
 
-That could be a breaking change for helm installations on cluster that has **less than 10 cpu**.
+That could be a breaking change for helm installations on cluster that has
+**less than 10 cpu**.
 
 You can fine tune CPU resources for each pod by updating the `resources` section
 that is available for each component in their respective **values** file,
 according to the standard [kubernetes resources
 management](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes).
 
-For example, in the [alfresco-content-services values file](../../helm/alfresco-content-services/values.yaml) you can find:
+For example, in the [alfresco-content-services values
+file](../../helm/alfresco-content-services/values.yaml) you can find:
 
 ```yaml
 repository:
@@ -216,11 +296,11 @@ Details of this process depends on the type of storage and provisioner that
 was used during deployment.
 
 If you choose the second - and preferred - method, you'll then need to use
-[static provisioning method](storage.md#configuring-static-provisioning) to create a new volume and
-then instruct helm to search for a specific volume by claim name or
-`storageClass`. Using `storageClass` requires creating a new PVC too, which
-should reference the PV name to make sure a new volume is not dynamically
-created.
+[static provisioning method](storage.md#configuring-static-provisioning) to
+create a new volume and then instruct helm to search for a specific volume by
+claim name or `storageClass`. Using `storageClass` requires creating a new PVC
+too, which should reference the PV name to make sure a new volume is not
+dynamically created.
 Also,  applying `labels` to the PV and corresponding `selector` to the PVC
 helps ensure the `storageClass` will only pick the intended volume.
 
@@ -237,7 +317,8 @@ before trying to upgrade.
 
 ### Solr tracking shared secret
 
-As of chart version 5.2.0 (ACS 7.2.0) it is now required to set a shared secret for solr and repo to authenticate to each other.
+As of chart version 5.2.0 (ACS 7.2.0) it is now required to set a shared secret
+for solr and repo to authenticate to each other.
 
 ```yaml
 global:
@@ -246,7 +327,8 @@ global:
     sharedsecret: 50m3S3cretTh4t!s5tr0n6
 ```
 
-If you are deploying ACS version pre 7.2.0 with charts version 5.2.0+, make sure to set the value below to your `values.yml` file:
+If you are deploying ACS version pre 7.2.0 with charts version 5.2.0+, make
+sure to set the value below to your `values.yml` file:
 
 ```yaml
 global:
@@ -257,14 +339,20 @@ global:
 If you try to install ACS 7.2.0 and following versions, the configuration below
 is **not supported** anymore and you are **required to set a shared secret**.
 
-> :information_source: Due to protocol and ingress restrictions FTP is not exposed via the Helm chart.
+> :information_source: Due to protocol and ingress restrictions FTP is not
+> exposed via the Helm chart.
 
 ## 5.0.0
 
 ### versioning
 
-Version 5.0.0 and later of the ACS Helm chart has been updated to be version agnostic, meaning the same chart can now be used to deploy different versions of ACS.
+Version 5.0.0 and later of the ACS Helm chart has been updated to be version
+agnostic, meaning the same chart can now be used to deploy different versions
+of ACS.
 
-By default the latest version of the chart will always deploy the latest development version of ACS. A set of values files are also provided that can be used to deploy a specific major.minor version.
+By default the latest version of the chart will always deploy the latest
+development version of ACS. A set of values files are also provided that can be
+used to deploy a specific major.minor version.
 
-> As the Helm chart no longer deploys a specific version of ACS the `appVersion` property within the chart is longer be specified.
+> As the Helm chart no longer deploys a specific version of ACS the
+`appVersion` property within the chart is longer be specified.

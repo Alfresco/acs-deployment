@@ -1,9 +1,5 @@
 
-{{ if .Values.externalHost }}
-{{ $alfhost := tpl .Values.externalHost $ }}
-{{ $alfprotocol := tpl (.Values.externalProtocol | default "http") $ }}
-{{ $alfport := tpl (.Values.externalPort | default .Values.repository.service.externalPort | toString ) $ }}
-{{ $alfurl := printf "%s://%s:%s" $alfprotocol $alfhost $alfport }}
+{{ $alfurl := include "alfresco-common.external.url" . }}
 
                  _,,,,_
               .@B@@@@@@EW_
@@ -29,17 +25,15 @@ You can access all components of Alfresco Content Services using the same root a
   Content: {{ $alfurl }}/alfresco
   Share: {{ $alfurl }}/share
   API-Explorer: {{ $alfurl }}/api-explorer
-{{ if eq .Values.repository.edition "Enterprise" }}  Alfresco Digital Workspace: {{ $alfurl }}/workspace/ {{ end }}
-{{ if index .Values "alfresco-search" "ingress" "enabled" }}  Solr: {{ $alfurl }}/solr {{ end }}
-{{ if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "enabled") }}  Zeppelin: {{ $alfurl }}/zeppelin {{ end }}
+{{- if eq .Values.repository.edition "Enterprise" }}
+  Alfresco Digital Workspace: {{ $alfurl }}/workspace/
+{{- end }}
+{{- if index .Values "alfresco-search" "ingress" "enabled" }}
+  Solr: {{ $alfurl }}/solr
+{{- end }}
+{{- if (index .Values "alfresco-search" "alfresco-insight-zeppelin" "enabled") }}
+  Zeppelin: {{ $alfurl }}/zeppelin
+{{- end }}
 {{- if index .Values "alfresco-sync-service" "enabled" }}
-  {{- $alfportdsync := tpl (.Values.externalPort | toString ) $ }}
-  {{- $alfurldsync := printf "%s://%s:%s" $alfprotocol $alfhost $alfportdsync }}
-  Sync service: {{ $alfurldsync }}/syncservice/healthcheck
-{{ end }}
-{{ else }}
-If you have a specific DNS address for the cluster please run the following commands to get the application paths and configure ACS:
-
-helm upgrade --reuse-values {{ .Release.Name }} --set externalProtocol="http" --set externalHost="domain.com" --set externalPort="80" alfresco-content-services
-
-{{ end }}
+  Sync service: {{ $alfurl }}/syncservice/healthcheck
+{{- end }}

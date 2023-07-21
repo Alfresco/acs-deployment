@@ -27,13 +27,11 @@ Deploy the latest version of ACS Enterprise by running the command below (replac
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set externalPort="443" \
-  --set externalProtocol="https" \
-  --set externalHost="acs.YOUR-DOMAIN-NAME" \
   --set repository.persistence.enabled=true \
   --set repository.persistence.storageClass="nfs-client" \
   --set filestore.persistence.enabled=true \
   --set filestore.persistence.storageClass="nfs-client" \
+  --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
   --set mail.host="smtp.gmail.com" \
