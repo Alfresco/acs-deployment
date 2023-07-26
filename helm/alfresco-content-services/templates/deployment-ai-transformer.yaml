@@ -20,6 +20,9 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-ai-transformer.yaml") . | sha256sum }}
+        {{- with .Values.aiTransformer.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "ai-transformer.selectorLabels" . | nindent 8 }}
     spec:

@@ -24,6 +24,9 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-repository.yaml") . | sha256sum }}
         checksum/secretDatabase: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
         checksum/secretS3: {{ include (print $.Template.BasePath "/secret-s3.yaml") . | sha256sum }}
+        {{- with .Values.repository.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "repository.selectorLabels" . | nindent 8 }}
     spec:
