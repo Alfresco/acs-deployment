@@ -62,7 +62,7 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-msteams.enabled
   - name: alfresco-connector-ms365
-    version: 0.3.0
+    version: 0.3.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-ms365.enabled
   - name: alfresco-share
