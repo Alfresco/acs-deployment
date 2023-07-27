@@ -13,7 +13,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues231 >-
         helm/alfresco-content-services/values.yaml
-      helm_key: .repository.image.tag
+      helm_key: $.repository.image.tag
     share:
       version:
       pattern:
@@ -21,13 +21,13 @@ matrix:
       compose_target: *compose231
       compose_key: $.services.share.image
       helm_target: *helmvalues231
-      helm_key: .share.image.tag
+      helm_key: $.share.image.tag
     search:
       version:
       compose_target: *compose231
       compose_key: $.services.solr6.image
       helm_target: *helmvalues231
-      helm_key: .alfresco-search.searchServicesImage.tag
+      helm_key: $.alfresco-search.searchServicesImage.tag
       image:
       pattern:
     search-enterprise:
@@ -55,48 +55,48 @@ matrix:
       compose_target: *compose231
       compose_key: $.services.sync-service.image
       helm_target: *helmvalues231
-      helm_key: .alfresco-sync-service.image.tag
+      helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
       version:
       compose_target: *compose231
       compose_key: $.services.digital-workspace.image
       helm_target: *helmvalues231
-      helm_key: .alfresco-digital-workspace.image.tag
+      helm_key: $.alfresco-digital-workspace.image.tag
       pattern:
     adminApp:
       version:
       compose_target: *compose231
       compose_key: $.services.control-center.image
       helm_target: *helmvalues231
-      helm_key: .alfresco-control-center.image.tag
+      helm_key: $.alfresco-control-center.image.tag
       pattern:
     onedrive:
       version:
       helm_target: *helmvalues231
-      helm_key: .ooiService.image.tag
+      helm_key: $.ooiService.image.tag
       pattern:
     msteams:
       version:
       helm_target: *helmvalues231
-      helm_key: .alfresco-connector-msteams.image.tag
+      helm_key: $.alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
       helm_target: *helmvalues231
-      helm_key: .aiTransformer.image.tag
+      helm_key: $.aiTransformer.image.tag
     trouter:
       version:
       compose_target: *compose231
       compose_key: $.services.transform-router.image
       helm_target: *helmvalues231
-      helm_key: .transformrouter.image.tag
+      helm_key: $.transformrouter.image.tag
     sfs:
       version:
       compose_target: *compose231
       compose_key: $.services.shared-file-store.image
       helm_target: *helmvalues231
-      helm_key: .filestore.image.tag
+      helm_key: $.filestore.image.tag
     tengine-aio:
       version:
       compose_target: *compose231
@@ -104,23 +104,23 @@ matrix:
     tengine-misc:
       version:
       helm_target: *helmvalues231
-      helm_key: .transformmisc.image.tag
+      helm_key: $.transformmisc.image.tag
     tengine-im:
       version:
       helm_target: *helmvalues231
-      helm_key: .imagemagick.image.tag
+      helm_key: $.imagemagick.image.tag
     tengine-lo:
       version:
       helm_target: *helmvalues231
-      helm_key: .libreoffice.image.tag
+      helm_key: $.libreoffice.image.tag
     tengine-pdf:
       version:
       helm_target: *helmvalues231
-      helm_key: .pdfrenderer.image.tag
+      helm_key: $.pdfrenderer.image.tag
     tengine-tika:
       version:
       helm_target: *helmvalues231
-      helm_key: .tika.image.tag
+      helm_key: $.tika.image.tag
   7.4.N:
     id: 74n
     acs:
@@ -130,7 +130,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues74 >-
         helm/alfresco-content-services/7.4.N_values.yaml
-      helm_key: .repository.image.tag
+      helm_key: $.repository.image.tag
       pattern:
       image:
     share:
@@ -138,7 +138,7 @@ matrix:
       compose_target: *compose74
       compose_key: $.services.share.image
       helm_target: *helmvalues74
-      helm_key: .share.image.tag
+      helm_key: $.share.image.tag
       pattern:
       image:
     search:
@@ -146,7 +146,7 @@ matrix:
       compose_target: *compose74
       compose_key: $.services.solr6.image
       helm_target: *helmvalues74
-      helm_key: .alfresco-search.searchServicesImage.tag
+      helm_key: $.alfresco-search.searchServicesImage.tag
       image:
       pattern:
     search-enterprise:
@@ -154,7 +154,7 @@ matrix:
       pattern:
       helm_target: *helmvalues74
       helm_keys:
-        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
             $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
@@ -169,48 +169,48 @@ matrix:
       compose_target: *compose74
       compose_key: $.services.sync-service.image
       helm_target: *helmvalues74
-      helm_key: .alfresco-sync-service.image.tag
+      helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
       version:
       compose_target: *compose74
       compose_key: $.services.digital-workspace.image
       helm_target: *helmvalues74
-      helm_key: .alfresco-digital-workspace.image.tag
+      helm_key: $.alfresco-digital-workspace.image.tag
       pattern:
     adminApp:
       version:
       compose_target: *compose74
       compose_key: $.services.control-center.image
       helm_target: *helmvalues74
-      helm_key: .alfresco-control-center.image.tag
+      helm_key: $.alfresco-control-center.image.tag
       pattern:
     onedrive:
       version:
       helm_target: *helmvalues74
-      helm_key: .ooiService.image.tag
+      helm_key: $.ooiService.image.tag
       pattern:
     msteams:
       version:
       helm_target: *helmvalues74
-      helm_key: .alfresco-connector-msteams.image.tag
+      helm_key: $.alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
       helm_target: *helmvalues74
-      helm_key: .aiTransformer.image.tag
+      helm_key: $.aiTransformer.image.tag
     trouter:
       version:
       compose_target: *compose74
       compose_key: $.services.transform-router.image
       helm_target: *helmvalues74
-      helm_key: .transformrouter.image.tag
+      helm_key: $.transformrouter.image.tag
     sfs:
       version:
       compose_target: *compose74
       compose_key: $.services.shared-file-store.image
       helm_target: *helmvalues74
-      helm_key: .filestore.image.tag
+      helm_key: $.filestore.image.tag
     tengine-aio:
       version:
       compose_target: *compose74
@@ -218,23 +218,23 @@ matrix:
     tengine-misc:
       version:
       helm_target: *helmvalues74
-      helm_key: .transformmisc.image.tag
+      helm_key: $.transformmisc.image.tag
     tengine-im:
       version:
       helm_target: *helmvalues74
-      helm_key: .imagemagick.image.tag
+      helm_key: $.imagemagick.image.tag
     tengine-lo:
       version:
       helm_target: *helmvalues74
-      helm_key: .libreoffice.image.tag
+      helm_key: $.libreoffice.image.tag
     tengine-pdf:
       version:
       helm_target: *helmvalues74
-      helm_key: .pdfrenderer.image.tag
+      helm_key: $.pdfrenderer.image.tag
     tengine-tika:
       version:
       helm_target: *helmvalues74
-      helm_key: .tika.image.tag
+      helm_key: $.tika.image.tag
   7.3.N:
     id: 73n
     acs:
@@ -244,7 +244,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues73 >-
         helm/alfresco-content-services/7.3.N_values.yaml
-      helm_key: .repository.image.tag
+      helm_key: $.repository.image.tag
       pattern:
       image:
     share:
@@ -252,7 +252,7 @@ matrix:
       compose_target: *compose73
       compose_key: $.services.share.image
       helm_target: *helmvalues73
-      helm_key: .share.image.tag
+      helm_key: $.share.image.tag
       pattern:
       image:
     search:
@@ -260,14 +260,14 @@ matrix:
       compose_target: *compose73
       compose_key: $.services.solr6.image
       helm_target: *helmvalues73
-      helm_key: .alfresco-search.searchServicesImage.tag
+      helm_key: $.alfresco-search.searchServicesImage.tag
       pattern:
       image:
     search-enterprise:
       version:
       helm_target: *helmvalues73
       helm_keys:
-        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
             $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
@@ -283,48 +283,48 @@ matrix:
       compose_target: *compose73
       compose_key: $.services.sync-service.image
       helm_target: *helmvalues73
-      helm_key: .alfresco-sync-service.image.tag
+      helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
       version:
       compose_target: *compose73
       compose_key: $.services.digital-workspace.image
       helm_target: *helmvalues73
-      helm_key: .alfresco-digital-workspace.image.tag
+      helm_key: $.alfresco-digital-workspace.image.tag
       pattern:
     adminApp:
       version:
       compose_target: *compose73
       compose_key: $.services.control-center.image
       helm_target: *helmvalues73
-      helm_key: .alfresco-control-center.image.tag
+      helm_key: $.alfresco-control-center.image.tag
       pattern:
     onedrive:
       version:
       helm_target: *helmvalues73
-      helm_key: .ooiService.image.tag
+      helm_key: $.ooiService.image.tag
       pattern:
     msteams:
       version:
       helm_target: *helmvalues73
-      helm_key: .alfresco-connector-msteams.image.tag
+      helm_key: $.alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
       helm_target: *helmvalues73
-      helm_key: .aiTransformer.image.tag
+      helm_key: $.aiTransformer.image.tag
     trouter:
       version:
       compose_target: *compose73
       compose_key: $.services.transform-router.image
       helm_target: *helmvalues73
-      helm_key: .transformrouter.image.tag
+      helm_key: $.transformrouter.image.tag
     sfs:
       version:
       compose_target: *compose73
       compose_key: $.services.shared-file-store.image
       helm_target: *helmvalues73
-      helm_key: .filestore.image.tag
+      helm_key: $.filestore.image.tag
     tengine-aio:
       version:
       compose_target: *compose73
@@ -332,23 +332,23 @@ matrix:
     tengine-misc:
       version:
       helm_target: *helmvalues73
-      helm_key: .transformmisc.image.tag
+      helm_key: $.transformmisc.image.tag
     tengine-im:
       version:
       helm_target: *helmvalues73
-      helm_key: .imagemagick.image.tag
+      helm_key: $.imagemagick.image.tag
     tengine-lo:
       version:
       helm_target: *helmvalues73
-      helm_key: .libreoffice.image.tag
+      helm_key: $.libreoffice.image.tag
     tengine-pdf:
       version:
       helm_target: *helmvalues73
-      helm_key: .pdfrenderer.image.tag
+      helm_key: $.pdfrenderer.image.tag
     tengine-tika:
       version:
       helm_target: *helmvalues73
-      helm_key: .tika.image.tag
+      helm_key: $.tika.image.tag
   7.2.N:
     id: 72n
     acs:
@@ -358,7 +358,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues72 >-
         helm/alfresco-content-services/7.2.N_values.yaml
-      helm_key: .repository.image.tag
+      helm_key: $.repository.image.tag
       pattern:
       image:
     share:
@@ -366,7 +366,7 @@ matrix:
       compose_target: *compose72
       compose_key: $.services.share.image
       helm_target: *helmvalues72
-      helm_key: .share.image.tag
+      helm_key: $.share.image.tag
       pattern:
       image:
     search:
@@ -374,71 +374,71 @@ matrix:
       compose_target: *compose72
       compose_key: $.services.solr6.image
       helm_target: *helmvalues72
-      helm_key: .alfresco-search.searchServicesImage.tag
+      helm_key: $.alfresco-search.searchServicesImage.tag
       pattern:
       image:
     search-enterprise:
       version:
       helm_target: *helmvalues72
       helm_keys:
-        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
-            alfresco-search-enterprise.liveIndexing.mediation.image.tag
+            $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
           Content: >-
-            alfresco-search-enterprise.liveIndexing.content.image.tag
+            $.alfresco-search-enterprise.liveIndexing.content.image.tag
           Metadata: >-
-            alfresco-search-enterprise.liveIndexing.metadata.image.tag
+            $.alfresco-search-enterprise.liveIndexing.metadata.image.tag
           Path: >-
-            alfresco-search-enterprise.liveIndexing.path.image.tag
+            $.alfresco-search-enterprise.liveIndexing.path.image.tag
       pattern:
     sync:
       version:
       compose_target: *compose72
       compose_key: $.services.sync-service.image
       helm_target: *helmvalues72
-      helm_key: .alfresco-sync-service.image.tag
+      helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
       version:
       compose_target: *compose72
       compose_key: $.services.digital-workspace.image
       helm_target: *helmvalues72
-      helm_key: .alfresco-digital-workspace.image.tag
+      helm_key: $.alfresco-digital-workspace.image.tag
       pattern:
     adminApp:
       version:
       compose_target: *compose72
       compose_key: $.services.control-center.image
       helm_target: *helmvalues72
-      helm_key: .alfresco-control-center.image.tag
+      helm_key: $.alfresco-control-center.image.tag
       pattern:
     onedrive:
       version:
       helm_target: *helmvalues72
-      helm_key: .ooiService.image.tag
+      helm_key: $.ooiService.image.tag
       pattern:
     msteams:
       version:
       helm_target: *helmvalues72
-      helm_key: .alfresco-connector-msteams.image.tag
+      helm_key: $.alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
       helm_target: *helmvalues72
-      helm_key: .aiTransformer.image.tag
+      helm_key: $.aiTransformer.image.tag
     trouter:
       version:
       compose_target: *compose72
       compose_key: $.services.transform-router.image
       helm_target: *helmvalues72
-      helm_key: .transformrouter.image.tag
+      helm_key: $.transformrouter.image.tag
     sfs:
       version:
       compose_target: *compose72
       compose_key: $.services.shared-file-store.image
       helm_target: *helmvalues72
-      helm_key: .filestore.image.tag
+      helm_key: $.filestore.image.tag
     tengine-aio:
       version:
       compose_target: *compose72
@@ -446,23 +446,23 @@ matrix:
     tengine-misc:
       version:
       helm_target: *helmvalues72
-      helm_key: .transformmisc.image.tag
+      helm_key: $.transformmisc.image.tag
     tengine-im:
       version:
       helm_target: *helmvalues72
-      helm_key: .imagemagick.image.tag
+      helm_key: $.imagemagick.image.tag
     tengine-lo:
       version:
       helm_target: *helmvalues72
-      helm_key: .libreoffice.image.tag
+      helm_key: $.libreoffice.image.tag
     tengine-pdf:
       version:
       helm_target: *helmvalues72
-      helm_key: .pdfrenderer.image.tag
+      helm_key: $.pdfrenderer.image.tag
     tengine-tika:
       version:
       helm_target: *helmvalues72
-      helm_key: .tika.image.tag
+      helm_key: $.tika.image.tag
   7.1.N:
     id: 71n
     acs:
@@ -472,7 +472,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues71 >-
         helm/alfresco-content-services/7.1.N_values.yaml
-      helm_key: .repository.image.tag
+      helm_key: $.repository.image.tag
       pattern:
       image:
     share:
@@ -480,7 +480,7 @@ matrix:
       compose_target: *compose71
       compose_key: $.services.share.image
       helm_target: *helmvalues71
-      helm_key: .share.image.tag
+      helm_key: $.share.image.tag
       pattern:
       image:
     search:
@@ -488,64 +488,64 @@ matrix:
       compose_target: *compose71
       compose_key: $.services.solr6.image
       helm_target: *helmvalues71
-      helm_key: .alfresco-search.searchServicesImage.tag
+      helm_key: $.alfresco-search.searchServicesImage.tag
       pattern:
       image:
     search-enterprise:
       version:
       helm_target: *helmvalues71
       helm_keys:
-        Reindexing: alfresco-search-enterprise.reindexing.image.tag
+        Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
         Liveindexing:
           Mediation: >-
-            alfresco-search-enterprise.liveIndexing.mediation.image.tag
+            $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
           Content: >-
-            alfresco-search-enterprise.liveIndexing.content.image.tag
+            $.alfresco-search-enterprise.liveIndexing.content.image.tag
           Metadata: >-
-            alfresco-search-enterprise.liveIndexing.metadata.image.tag
+            $.alfresco-search-enterprise.liveIndexing.metadata.image.tag
           Path: >-
-            alfresco-search-enterprise.liveIndexing.path.image.tag
+            $.alfresco-search-enterprise.liveIndexing.path.image.tag
       pattern:
     sync:
       version:
       compose_target: *compose71
       compose_key: $.services.sync-service.image
       helm_target: *helmvalues71
-      helm_key: .alfresco-sync-service.image.tag
+      helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
       version:
       compose_target: *compose71
       compose_key: $.services.digital-workspace.image
       helm_target: *helmvalues71
-      helm_key: .alfresco-digital-workspace.image.tag
+      helm_key: $.alfresco-digital-workspace.image.tag
       pattern:
     onedrive:
       version:
       helm_target: *helmvalues71
-      helm_key: .ooiService.image.tag
+      helm_key: $.ooiService.image.tag
       pattern:
     msteams:
       version:
       helm_target: *helmvalues71
-      helm_key: .alfresco-connector-msteams.image.tag
+      helm_key: $.alfresco-connector-msteams.image.tag
       pattern:
     intelligence:
       version:
       helm_target: *helmvalues71
-      helm_key: .aiTransformer.image.tag
+      helm_key: $.aiTransformer.image.tag
     trouter:
       version:
       compose_target: *compose71
       compose_key: $.services.transform-router.image
       helm_target: *helmvalues71
-      helm_key: .transformrouter.image.tag
+      helm_key: $.transformrouter.image.tag
     sfs:
       version:
       compose_target: *compose71
       compose_key: $.services.shared-file-store.image
       helm_target: *helmvalues71
-      helm_key: .filestore.image.tag
+      helm_key: $.filestore.image.tag
     tengine-aio:
       version:
       compose_target: *compose71
@@ -553,23 +553,23 @@ matrix:
     tengine-misc:
       version:
       helm_target: *helmvalues71
-      helm_key: .transformmisc.image.tag
+      helm_key: $.transformmisc.image.tag
     tengine-im:
       version:
       helm_target: *helmvalues71
-      helm_key: .imagemagick.image.tag
+      helm_key: $.imagemagick.image.tag
     tengine-lo:
       version:
       helm_target: *helmvalues71
-      helm_key: .libreoffice.image.tag
+      helm_key: $.libreoffice.image.tag
     tengine-pdf:
       version:
       helm_target: *helmvalues71
-      helm_key: .pdfrenderer.image.tag
+      helm_key: $.pdfrenderer.image.tag
     tengine-tika:
       version:
       helm_target: *helmvalues71
-      helm_key: .tika.image.tag
+      helm_key: $.tika.image.tag
   7.0.N:
     id: 70n
     acs:
@@ -579,7 +579,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues70 >-
         helm/alfresco-content-services/7.0.N_values.yaml
-      helm_key: .repository.image.tag
+      helm_key: $.repository.image.tag
       pattern:
       image:
     share:
@@ -587,7 +587,7 @@ matrix:
       compose_target: *compose70
       compose_key: $.services.share.image
       helm_target: *helmvalues70
-      helm_key: .share.image.tag
+      helm_key: $.share.image.tag
       pattern:
       image:
     search:
@@ -595,7 +595,7 @@ matrix:
       compose_target: *compose70
       compose_key: $.services.solr6.image
       helm_target: *helmvalues70
-      helm_key: .alfresco-search.searchServicesImage.tag
+      helm_key: $.alfresco-search.searchServicesImage.tag
       pattern:
       image:
     sync:
@@ -603,36 +603,36 @@ matrix:
       compose_target: *compose70
       compose_key: $.services.sync-service.image
       helm_target: *helmvalues70
-      helm_key: .alfresco-sync-service.image.tag
+      helm_key: $.alfresco-sync-service.image.tag
       pattern:
     adw:
       version:
       compose_target: *compose70
       compose_key: $.services.digital-workspace.image
       helm_target: *helmvalues70
-      helm_key: .alfresco-digital-workspace.image.tag
+      helm_key: $.alfresco-digital-workspace.image.tag
       pattern:
     onedrive:
       version:
       helm_target: *helmvalues70
-      helm_key: .ooiService.image.tag
+      helm_key: $.ooiService.image.tag
       pattern:
     intelligence:
       version:
       helm_target: *helmvalues70
-      helm_key: .aiTransformer.image.tag
+      helm_key: $.aiTransformer.image.tag
     trouter:
       version:
       compose_target: *compose70
       compose_key: $.services.transform-router.image
       helm_target: *helmvalues70
-      helm_key: .transformrouter.image.tag
+      helm_key: $.transformrouter.image.tag
     sfs:
       version:
       compose_target: *compose70
       compose_key: $.services.shared-file-store.image
       helm_target: *helmvalues70
-      helm_key: .filestore.image.tag
+      helm_key: $.filestore.image.tag
     tengine-aio:
       version:
       compose_target: *compose70
@@ -640,23 +640,23 @@ matrix:
     tengine-misc:
       version:
       helm_target: *helmvalues70
-      helm_key: .transformmisc.image.tag
+      helm_key: $.transformmisc.image.tag
     tengine-im:
       version:
       helm_target: *helmvalues70
-      helm_key: .imagemagick.image.tag
+      helm_key: $.imagemagick.image.tag
     tengine-lo:
       version:
       helm_target: *helmvalues70
-      helm_key: .libreoffice.image.tag
+      helm_key: $.libreoffice.image.tag
     tengine-pdf:
       version:
       helm_target: *helmvalues70
-      helm_key: .pdfrenderer.image.tag
+      helm_key: $.pdfrenderer.image.tag
     tengine-tika:
       version:
       helm_target: *helmvalues70
-      helm_key: .tika.image.tag
+      helm_key: $.tika.image.tag
   community:
     id: com
     acs:
@@ -666,7 +666,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvaluesOss >-
         helm/alfresco-content-services/community_values.yaml
-      helm_key: .repository.image.tag
+      helm_key: $.repository.image.tag
       pattern:
       image:
     share:
@@ -674,7 +674,7 @@ matrix:
       compose_target: *composeOss
       compose_key: $.services.share.image
       helm_target: *helmvaluesOss
-      helm_key: .share.image.tag
+      helm_key: $.share.image.tag
       pattern:
       image:
     search:
@@ -682,7 +682,7 @@ matrix:
       compose_target: *composeOss
       compose_key: $.services.solr6.image
       helm_target: *helmvaluesOss
-      helm_key: .alfresco-search.searchServicesImage.tag
+      helm_key: $.alfresco-search.searchServicesImage.tag
       pattern:
       image:
     tengine-aio:
