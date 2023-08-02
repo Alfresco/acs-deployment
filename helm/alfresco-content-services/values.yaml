@@ -209,75 +209,53 @@ alfresco-transform-service:
   enabled: true
   messageBroker:
     existingSecretName: *acs_messageBroker_secretName
-  transformrouter: &ats-router
+  transformrouter:
+    # -- Declares the alfresco-transform-router service used by the content repository
+    # to route transformation requests
+    enabled: true
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
       tag: 3.0.0
-  # -- Deprecated, use alfresco-transform-service.pdfrenderer instead
-  pdfrenderer: &ats-pdf
+  pdfrenderer:
+    # -- Declares the alfresco-pdf-renderer service used by the content repository
+    # to transform pdf files
+    enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
       tag: 4.0.0
-  # -- Deprecated, use alfresco-transform-service.imagemagick instead
-  imagemagick: &ats-im
+  imagemagick:
+    # -- Declares the alfresco-imagemagick service used by the content repository
+    # to transform image files
+    enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
       tag: 4.0.0
-  # -- Deprecated, use alfresco-transform-service.libreoffice instead
-  libreoffice: &ats-lo
+  libreoffice:
+    # -- Declares the alfresco-libreoffice service used by the content repository
+    # to transform office files
+    enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
       tag: 4.0.0
-  # -- Deprecated, use alfresco-transform-service.tika instead
-  tika: &ats-tika
+  tika:
+    # -- Declares the alfresco-tika service used by the content repository
+    # to transform office files
+    enabled: true
     image:
       repository: alfresco/alfresco-tika
       tag: 4.0.0
-  # -- Deprecated, use alfresco-transform-service.transformmisc instead
-  transformmisc: &ats-misc
+  transformmisc:
+    # -- Declares the alfresco-tika service used by the content repository
+    # to transform office files
+    enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
       tag: 4.0.0
-  aiTransformer:
-    replicaCount: 2
-    nodeSelector: {}
-    image:
-      repository: quay.io/alfresco/alfresco-ai-docker-engine
-      tag: 2.0.0
-      pullPolicy: IfNotPresent
-      internalPort: 8090
-    service:
-      name: ai-transformer
-      type: ClusterIP
-      externalPort: 80
-    podSecurityContext:
-      runAsUser: 33015
-    resources:
-      requests:
-        cpu: "50m"
-        memory: "200Mi"
-      limits:
-        cpu: "2"
-        memory: "1Gi"
-    environment:
-      JAVA_OPTS: >-
-        -XX:MinRAMPercentage=50
-        -XX:MaxRAMPercentage=80
-    readinessProbe:
-      initialDelaySeconds: 20
-      periodSeconds: 60
-      timeoutSeconds: 10
-    livenessProbe:
-      initialDelaySeconds: 10
-      periodSeconds: 20
-      timeoutSeconds: 10
-      livenessPercent: 400
-      livenessTransformPeriodSeconds: 600
-      maxTransforms: 10000
-      maxTransformSeconds: 1800
-  # -- Deprecated, use alfresco-transform-service.filestore instead
-  filestore: &ats-fs
+  filestore:
+    # -- Declares the alfresco-shared-file-store used by the content repository
+    # and transform service
+    enabled: true
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
@@ -288,33 +266,8 @@ alfresco-transform-service:
       data:
         mountPath: "/tmp/Alfresco"
         subPath: "alfresco-content-services/filestore-data"
-
-# Bellow values are just provided as an example in case the same value file
-# would be used to work with older version of the chart.
-# -- Declares the alfresco-transform-router service used by the content repository
-# to route transformation requests
-transformrouter: *ats-router
-# -- Declares the alfresco-pdf-renderer service used by the content repository
-# to transform pdf files
-pdfrenderer: *ats-pdf
-# -- Declares the alfresco-imagemagick service used by the content repository
-# to transform image files
-imagemagick: *ats-im
-# -- Declares the alfresco-libreoffice service used by the content repository
-# to transform office files
-libreoffice: *ats-lo
-# -- Declares the alfresco-tika service used by the content repository
-# to transform office files
-tika: *ats-tika
-# -- Declares the alfresco-tika service used by the content repository
-# to transform office files
-transformmisc: *ats-misc
-# -- Declares the alfresco-shared-file-store used by the content repository
-# and transform service
-filestore: *ats-fs
-
 share:
-  # -- toggle deplying Alfresco Share UI
+  # -- toggle deploying Alfresco Share UI
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share

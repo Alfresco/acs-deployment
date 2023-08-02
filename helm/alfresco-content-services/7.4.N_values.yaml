@@ -21,12 +21,12 @@ alfresco-transform-service:
   transformmisc:
     image:
       tag: 4.0.0
+  filestore:
+    image:
+      tag: 3.0.0
 aiTransformer:
   image:
     tag: 2.0.0
-filestore:
-  image:
-    tag: 3.0.0
 share:
   image:
     tag: 7.4.0.1

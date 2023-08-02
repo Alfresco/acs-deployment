@@ -156,40 +156,31 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
 | alfresco-sync-service.repository.nameOverride | string | `"alfresco-cs-repository"` |  |
 | alfresco-sync-service.repository.port | int | `80` |  |
-| alfresco-transform-service.aiTransformer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| alfresco-transform-service.aiTransformer.image.internalPort | int | `8090` |  |
-| alfresco-transform-service.aiTransformer.image.pullPolicy | string | `"IfNotPresent"` |  |
-| alfresco-transform-service.aiTransformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| alfresco-transform-service.aiTransformer.image.tag | string | `"2.0.0"` |  |
-| alfresco-transform-service.aiTransformer.livenessProbe.initialDelaySeconds | int | `10` |  |
-| alfresco-transform-service.aiTransformer.livenessProbe.livenessPercent | int | `400` |  |
-| alfresco-transform-service.aiTransformer.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
-| alfresco-transform-service.aiTransformer.livenessProbe.maxTransformSeconds | int | `1800` |  |
-| alfresco-transform-service.aiTransformer.livenessProbe.maxTransforms | int | `10000` |  |
-| alfresco-transform-service.aiTransformer.livenessProbe.periodSeconds | int | `20` |  |
-| alfresco-transform-service.aiTransformer.livenessProbe.timeoutSeconds | int | `10` |  |
-| alfresco-transform-service.aiTransformer.nodeSelector | object | `{}` |  |
-| alfresco-transform-service.aiTransformer.podSecurityContext.runAsUser | int | `33015` |  |
-| alfresco-transform-service.aiTransformer.readinessProbe.initialDelaySeconds | int | `20` |  |
-| alfresco-transform-service.aiTransformer.readinessProbe.periodSeconds | int | `60` |  |
-| alfresco-transform-service.aiTransformer.readinessProbe.timeoutSeconds | int | `10` |  |
-| alfresco-transform-service.aiTransformer.replicaCount | int | `2` |  |
-| alfresco-transform-service.aiTransformer.resources.limits.cpu | string | `"2"` |  |
-| alfresco-transform-service.aiTransformer.resources.limits.memory | string | `"1Gi"` |  |
-| alfresco-transform-service.aiTransformer.resources.requests.cpu | string | `"50m"` |  |
-| alfresco-transform-service.aiTransformer.resources.requests.memory | string | `"200Mi"` |  |
-| alfresco-transform-service.aiTransformer.service.externalPort | int | `80` |  |
-| alfresco-transform-service.aiTransformer.service.name | string | `"ai-transformer"` |  |
-| alfresco-transform-service.aiTransformer.service.type | string | `"ClusterIP"` |  |
 | alfresco-transform-service.enabled | bool | `true` |  |
-| alfresco-transform-service.filestore | object | `{"image":{"repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"3.0.0"},"persistence":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"replicaCount":1}` | Deprecated, use alfresco-transform-service.filestore instead |
+| alfresco-transform-service.filestore.enabled | bool | `true` | Declares the alfresco-shared-file-store used by the content repository and transform service |
+| alfresco-transform-service.filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
+| alfresco-transform-service.filestore.image.tag | string | `"3.0.0"` |  |
+| alfresco-transform-service.filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
+| alfresco-transform-service.filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
 | alfresco-transform-service.filestore.persistence.enabled | bool | `true` | Persist filestore data |
-| alfresco-transform-service.imagemagick | object | `{"image":{"repository":"alfresco/alfresco-imagemagick","tag":"4.0.0"}}` | Deprecated, use alfresco-transform-service.imagemagick instead |
-| alfresco-transform-service.libreoffice | object | `{"image":{"repository":"alfresco/alfresco-libreoffice","tag":"4.0.0"}}` | Deprecated, use alfresco-transform-service.libreoffice instead |
+| alfresco-transform-service.filestore.replicaCount | int | `1` |  |
+| alfresco-transform-service.imagemagick.enabled | bool | `true` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
+| alfresco-transform-service.imagemagick.image.repository | string | `"alfresco/alfresco-imagemagick"` |  |
+| alfresco-transform-service.imagemagick.image.tag | string | `"4.0.0"` |  |
+| alfresco-transform-service.libreoffice.enabled | bool | `true` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
+| alfresco-transform-service.libreoffice.image.repository | string | `"alfresco/alfresco-libreoffice"` |  |
+| alfresco-transform-service.libreoffice.image.tag | string | `"4.0.0"` |  |
 | alfresco-transform-service.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
-| alfresco-transform-service.pdfrenderer | object | `{"image":{"repository":"alfresco/alfresco-pdf-renderer","tag":"4.0.0"}}` | Deprecated, use alfresco-transform-service.pdfrenderer instead |
-| alfresco-transform-service.tika | object | `{"image":{"repository":"alfresco/alfresco-tika","tag":"4.0.0"}}` | Deprecated, use alfresco-transform-service.tika instead |
-| alfresco-transform-service.transformmisc | object | `{"image":{"repository":"alfresco/alfresco-transform-misc","tag":"4.0.0"}}` | Deprecated, use alfresco-transform-service.transformmisc instead |
+| alfresco-transform-service.pdfrenderer.enabled | bool | `true` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
+| alfresco-transform-service.pdfrenderer.image.repository | string | `"alfresco/alfresco-pdf-renderer"` |  |
+| alfresco-transform-service.pdfrenderer.image.tag | string | `"4.0.0"` |  |
+| alfresco-transform-service.tika.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
+| alfresco-transform-service.tika.image.repository | string | `"alfresco/alfresco-tika"` |  |
+| alfresco-transform-service.tika.image.tag | string | `"4.0.0"` |  |
+| alfresco-transform-service.transformmisc.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
+| alfresco-transform-service.transformmisc.image.repository | string | `"alfresco/alfresco-transform-misc"` |  |
+| alfresco-transform-service.transformmisc.image.tag | string | `"4.0.0"` |  |
+| alfresco-transform-service.transformrouter.enabled | bool | `true` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
 | alfresco-transform-service.transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
 | alfresco-transform-service.transformrouter.image.tag | string | `"3.0.0"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
@@ -202,8 +193,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of configuring the inbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails |
-| filestore | object | `{"image":{"repository":"quay.io/alfresco/alfresco-shared-file-store","tag":"3.0.0"},"persistence":{"data":{"mountPath":"/tmp/Alfresco","subPath":"alfresco-content-services/filestore-data"},"enabled":true},"replicaCount":1}` | Declares the alfresco-shared-file-store used by the content repository and transform service |
-| filestore.persistence.enabled | bool | `true` | Persist filestore data |
 | global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-search-enterprise.enabled is true |
@@ -219,9 +208,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
 | global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic. Strong enough secret can be generated with `openssl rand 20 -base64` |
-| imagemagick | object | `{"image":{"repository":"alfresco/alfresco-imagemagick","tag":"4.0.0"}}` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | imap | object | `{"mail":{"from":{"default":null},"to":{"default":null}},"server":{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
-| libreoffice | object | `{"image":{"repository":"alfresco/alfresco-libreoffice","tag":"4.0.0"}}` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | mail | object | `{"encoding":"UTF-8","existingSecretName":null,"from":{"default":null,"enabled":false},"host":null,"password":null,"port":25,"protocol":"smtps","smtp":{"auth":true,"debug":false,"starttls":{"enable":true},"timeout":30000},"smtps":{"auth":true,"starttls":{"enable":true}},"username":null}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
 | mail.existingSecretName | string | `nil` | An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value |
 | mail.from.default | string | `nil` | Specifies the email address from which email notifications are sent |
@@ -230,7 +217,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
-| pdfrenderer | object | `{"image":{"repository":"alfresco/alfresco-pdf-renderer","tag":"4.0.0"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |
@@ -310,16 +296,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.awsKmsKeyId | string | `nil` |  |
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
-| share.enabled | bool | `true` | toggle deplying Alfresco Share UI |
+| share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | share.image.tag | string | `"23.1.0-A19"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
 | share.repository.existingConfigMap.name | string | `"infrastructure-repository"` | Name of the configmap which hold the repositoy connection details |
-| tika | object | `{"image":{"repository":"alfresco/alfresco-tika","tag":"4.0.0"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
-| transformmisc | object | `{"image":{"repository":"alfresco/alfresco-transform-misc","tag":"4.0.0"}}` | Declares the alfresco-tika service used by the content repository to transform office files |
-| transformrouter | object | `{"image":{"repository":"quay.io/alfresco/alfresco-transform-router","tag":"3.0.0"},"replicaCount":2}` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
 
 Alfresco Content Service will be deployed in a Kubernetes cluster. This cluster
 needs a at least 32GB memory to split among below pods:
