@@ -73,7 +73,7 @@ alfresco-sync-service:
 alfresco-connector-msteams:
   image:
     tag: 1.1.0
-ooiService:
+alfresco-connector-ms365:
   image:
     tag: 1.1.1
 alfresco-control-center:

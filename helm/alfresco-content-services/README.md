@@ -20,6 +20,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.3.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.2.0 |
@@ -64,6 +65,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | aiTransformer.service.externalPort | int | `80` |  |
 | aiTransformer.service.name | string | `"ai-transformer"` |  |
 | aiTransformer.service.type | string | `"ClusterIP"` |  |
+| alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
+| alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
+| alfresco-connector-ms365.image.tag | string | `"2.0.0"` |  |
+| alfresco-connector-ms365.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
+| alfresco-connector-ms365.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
+| alfresco-connector-ms365.repository.existingConfigMap.name | string | `"infrastructure-repository"` | Name of the configmap which hold the repositoy connection details |
 | alfresco-connector-msteams.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft Teams |
 | alfresco-connector-msteams.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
 | alfresco-connector-msteams.image.tag | string | `"2.0.0"` |  |
@@ -223,31 +230,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
-| ooi | object | `{"enabled":false}` | Enable/Disable Alfresco Collaboration Connector for Microsoft 365 |
-| ooiService.environment.JAVA_OPTS | string | `" -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"` |  |
-| ooiService.image.internalPort | int | `9095` |  |
-| ooiService.image.pullPolicy | string | `"IfNotPresent"` |  |
-| ooiService.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
-| ooiService.image.tag | string | `"2.0.0"` |  |
-| ooiService.ingress.path | string | `"/ooi-service"` |  |
-| ooiService.ingress.tls | list | `[]` |  |
-| ooiService.livenessProbe.initialDelaySeconds | int | `10` |  |
-| ooiService.livenessProbe.periodSeconds | int | `20` |  |
-| ooiService.livenessProbe.timeoutSeconds | int | `10` |  |
-| ooiService.nodeSelector | object | `{}` |  |
-| ooiService.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| ooiService.podSecurityContext.runAsUser | int | `33006` |  |
-| ooiService.readinessProbe.initialDelaySeconds | int | `20` |  |
-| ooiService.readinessProbe.periodSeconds | int | `60` |  |
-| ooiService.readinessProbe.timeoutSeconds | int | `10` |  |
-| ooiService.replicaCount | int | `2` |  |
-| ooiService.resources.limits.cpu | string | `"2"` |  |
-| ooiService.resources.limits.memory | string | `"2Gi"` |  |
-| ooiService.resources.requests.cpu | string | `"50m"` |  |
-| ooiService.resources.requests.memory | string | `"200Mi"` |  |
-| ooiService.service.externalPort | int | `80` |  |
-| ooiService.service.name | string | `"ooi-service"` |  |
-| ooiService.service.type | string | `"ClusterIP"` |  |
 | pdfrenderer | object | `{"image":{"repository":"alfresco/alfresco-pdf-renderer","tag":"4.0.0"}}` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
