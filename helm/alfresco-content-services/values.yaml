@@ -145,44 +145,23 @@ activemq: &amq
     password: admin
     existingSecretName: *acs_messageBroker_secretName
   existingSecretName: null
-ooiService:
-  replicaCount: 2
-  nodeSelector: {}
+alfresco-connector-ms365:
+  # -- Enable/Disable Alfresco Content Connector for Microsoft 365
+  enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
     tag: 2.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 9095
-  service:
-    name: ooi-service
-    type: ClusterIP
-    externalPort: 80
-  ingress:
-    path: /ooi-service
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 33006
-  resources:
-    requests:
-      cpu: "50m"
-      memory: "200Mi"
-    limits:
-      cpu: "2"
-      memory: "2Gi"
-  environment:
-    JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
+  repository:
+    existingConfigMap:
+      # -- Name of the configmap which hold the repositoy connection details
+      name: infrastructure-repository
+      keys:
+        # -- Name of the key in the configmap which points to the repository
+        # service hostname
+        host: repo_svc_name
+        # -- Name of the key in the configmap which points to the repository
+        # service port
+        port: repo_svc_port
 alfresco-connector-msteams:
   # -- Enable/Disable Alfresco Content Connector for Microsoft Teams
   enabled: false
@@ -502,9 +481,6 @@ alfresco-control-center:
     limits:
       cpu: "1"
       memory: "1024Mi"
-# -- Enable/Disable Alfresco Collaboration Connector for Microsoft 365
-ooi:
-  enabled: false
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository
   # Check [PostgreSQL Bitnami chart

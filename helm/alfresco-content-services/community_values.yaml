@@ -56,7 +56,7 @@ ai:
   enabled: false
 s3connector:
   enabled: false
-ooi:
+alfresco-connector-ms365:
   enabled: false
 alfresco-connector-msteams:
   enabled: false

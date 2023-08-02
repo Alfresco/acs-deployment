@@ -74,7 +74,7 @@ matrix:
     onedrive:
       version:
       helm_target: *helmvalues231
-      helm_key: $.ooiService.image.tag
+      helm_key: $.alfresco-connector-ms365.image.tag
       pattern:
     msteams:
       version:
@@ -188,7 +188,7 @@ matrix:
     onedrive:
       version:
       helm_target: *helmvalues74
-      helm_key: $.ooiService.image.tag
+      helm_key: $.alfresco-connector-ms365.image.tag
       pattern:
     msteams:
       version:
@@ -302,7 +302,7 @@ matrix:
     onedrive:
       version:
       helm_target: *helmvalues73
-      helm_key: $.ooiService.image.tag
+      helm_key: $.alfresco-connector-ms365.image.tag
       pattern:
     msteams:
       version:
@@ -416,7 +416,7 @@ matrix:
     onedrive:
       version:
       helm_target: *helmvalues72
-      helm_key: $.ooiService.image.tag
+      helm_key: $.alfresco-connector-ms365.image.tag
       pattern:
     msteams:
       version:
@@ -523,7 +523,7 @@ matrix:
     onedrive:
       version:
       helm_target: *helmvalues71
-      helm_key: $.ooiService.image.tag
+      helm_key: $.alfresco-connector-ms365.image.tag
       pattern:
     msteams:
       version:
@@ -615,7 +615,7 @@ matrix:
     onedrive:
       version:
       helm_target: *helmvalues70
-      helm_key: $.ooiService.image.tag
+      helm_key: $.alfresco-connector-ms365.image.tag
       pattern:
     intelligence:
       version:

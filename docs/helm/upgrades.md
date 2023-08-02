@@ -13,6 +13,18 @@ version in which they have been released.
 
 Due to breaking changes the next version will be a major release.
 
+### MS365 chart rename
+
+The previous `ooi-service` subchart has been renamed to
+`alfresco-connector-ms365` to better reflect the product name during the
+migration to the new
+[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts)
+repository.
+
+Accordingly to this chart rename, also the related values has been moved from
+`.Values.ooiService` to
+`.Values.alfresco-connector-ms365`.
+
 ### MSTeams chart rename
 
 The previous `ms-teams-service` subchart has been renamed to

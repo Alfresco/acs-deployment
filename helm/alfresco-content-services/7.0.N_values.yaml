@@ -53,7 +53,7 @@ alfresco-sync-service:
     primary:
       image:
         tag: 13.1.0
-ooiService:
+alfresco-connector-ms365:
   image:
     tag: 1.1.0.1
 alfresco-connector-msteams:
