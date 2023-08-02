@@ -52,6 +52,6 @@ jobs:
         with:
           commit_message: |
             🛠 Updatecli pipeline acs bump
-          branch: 'updatecli-bump-acs'
+          branch: updatecli-bump-acs
           create_branch: true
           push_options: '--force'
