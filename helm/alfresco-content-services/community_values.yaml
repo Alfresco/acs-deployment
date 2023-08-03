@@ -8,16 +8,6 @@ repository:
   persistence:
     accessModes:
       - ReadWriteOnce
-pdfrenderer: &ats-pdf
-  replicaCount: 1
-imagemagick: &ats-im
-  replicaCount: 1
-libreoffice: &ats-lo
-  replicaCount: 1
-tika: &ats-tika
-  replicaCount: 1
-transformmisc: &ats-misc
-  replicaCount: 1
 share:
   image:
     repository: alfresco/alfresco-share
@@ -39,11 +29,16 @@ alfresco-transform-service:
   enabled: true
   transformrouter:
     enabled: false
-  pdfrenderer: *ats-pdf
-  imagemagick: *ats-im
-  libreoffice: *ats-lo
-  tika: *ats-tika
-  transformmisc: *ats-misc
+  pdfrenderer:
+    replicaCount: 1
+  imagemagick:
+    replicaCount: 1
+  libreoffice:
+    replicaCount: 1
+  tika:
+    replicaCount: 1
+  transformmisc:
+    replicaCount: 1
   filestore:
     enabled: false
 alfresco-search-enterprise:
