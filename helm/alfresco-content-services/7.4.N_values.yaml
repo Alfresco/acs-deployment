@@ -2,30 +2,31 @@
 repository:
   image:
     tag: 7.4.0.1
-transformrouter:
-  image:
-    tag: 3.0.0
-pdfrenderer:
-  image:
-    tag: 4.0.0
-imagemagick:
-  image:
-    tag: 4.0.0
-libreoffice:
-  image:
-    tag: 4.0.0
-tika:
-  image:
-    tag: 4.0.0
-transformmisc:
-  image:
-    tag: 4.0.0
+alfresco-transform-service:
+  transformrouter:
+    image:
+      tag: 3.0.0
+  pdfrenderer:
+    image:
+      tag: 4.0.0
+  imagemagick:
+    image:
+      tag: 4.0.0
+  libreoffice:
+    image:
+      tag: 4.0.0
+  tika:
+    image:
+      tag: 4.0.0
+  transformmisc:
+    image:
+      tag: 4.0.0
+  filestore:
+    image:
+      tag: 3.0.0
 aiTransformer:
   image:
     tag: 2.0.0
-filestore:
-  image:
-    tag: 3.0.0
 share:
   image:
     tag: 7.4.0.1

@@ -6,34 +6,27 @@ aiTransformer:
   image:
     tag: 1.4.5
 alfresco-transform-service:
-  transformrouter: &ats-router
+  transformrouter:
     image:
       tag: 1.5.3
-  pdfrenderer: &ats-pdf
+  pdfrenderer:
     image:
       tag: 2.5.7
-  imagemagick: &ats-im
+  imagemagick:
     image:
       tag: 2.5.7
-  libreoffice: &ats-lo
+  libreoffice:
     image:
       tag: 2.5.7
-  tika: &ats-tika
+  tika: 
     image:
       tag: 2.5.7
-  transformmisc: &ats-misc
+  transformmisc:
     image:
       tag: 2.5.7
-  filestore: &ats-fs
+  filestore: 
     image:
       tag: 1.5.3
-transformrouter: *ats-router
-pdfrenderer: *ats-pdf
-imagemagick: *ats-im
-libreoffice: *ats-lo
-tika: *ats-tika
-transformmisc: *ats-misc
-filestore: *ats-fs
 share:
   image:
     tag: 7.1.1.8

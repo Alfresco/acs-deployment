@@ -6,8 +6,8 @@ on:
     paths:
       - .github/workflows/bumpVersions.yml
       - updatecli-matrix-targets.yaml
-    branches:
-      - OPSEXP-**
+      - helm/alfresco-content-services/*_values.yaml
+      - helm/alfresco-content-services/values.yaml
   workflow_dispatch:
 
 jobs:
@@ -48,9 +48,10 @@ jobs:
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        if: github.event_name == 'workflow_dispatch'
         with:
           commit_message: |
             🛠 Updatecli pipeline acs bump
-          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump-acs' || '' }}
-          create_branch: ${{ github.event_name == 'workflow_dispatch' }}
-          push_options: ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}
+          branch: updatecli-bump-acs
+          create_branch: true
+          push_options: '--force'
