@@ -572,6 +572,11 @@ alfresco-sync-service:
   repository:
     nameOverride: alfresco-cs-repository
     port: *repositoryExternalPort
+ai:
+  enabled: false
+  image:
+    repository: quay.io/alfresco/alfresco-ai-docker-engine
+    tag: 2.0.0
 global:
   known_urls:
     - https://localhost
@@ -600,9 +605,6 @@ global:
   # -- Choose if you want AI capabilities (globally - including ADW AI plugin)
   ai:
     enabled: false
-    image:
-      repository: quay.io/alfresco/alfresco-ai-docker-engine
-      tag: 2.0.0
     # ai:
     #   aws:
     #   accessKey:
