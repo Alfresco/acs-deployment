@@ -578,6 +578,12 @@ alfresco-ai-transformer:
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 2.0.0
+  #  aws:
+  #  accessKey:
+  #  secretAccessKey:
+  #  region:
+  #  s3Bucket:
+  #  comprehendRoleARN:
 global:
   known_urls:
     - https://localhost
@@ -606,13 +612,6 @@ global:
   # -- Choose if you want AI capabilities (globally - including ADW AI plugin)
   ai:
     enabled: false
-    # ai:
-    #   aws:
-    #   accessKey:
-    #   secretAccessKey:
-    #   region:
-    #   s3Bucket:
-    #   comprehendRoleARN:
   # -- Shared connections details for Elasticsearch/Opensearch, required when
   # alfresco-search-enterprise.enabled is true
   elasticsearch:
