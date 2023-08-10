@@ -578,12 +578,12 @@ alfresco-ai-transformer:
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 2.0.0
-  #  aws:
-  #  accessKey:
-  #  secretAccessKey:
-  #  region:
-  #  s3Bucket:
-  #  comprehendRoleARN:
+#  aws:
+#    accessKey:
+#    secretAccessKey:
+#    region:
+#    s3Bucket:
+#    comprehendRoleARN:
 global:
   known_urls:
     - https://localhost
