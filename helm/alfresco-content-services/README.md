@@ -19,7 +19,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 7.11.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | ai(alfresco-ai-transformer) | 0.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.3.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.1.0 |
@@ -41,9 +41,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.existingSecretName | string | `nil` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
-| ai.enabled | bool | `false` |  |
-| ai.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| ai.image.tag | string | `"2.0.0"` |  |
+| alfresco-ai-transformer.enabled | bool | `false` |  |
+| alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
+| alfresco-ai-transformer.image.tag | string | `"2.0.0"` |  |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
 | alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | alfresco-connector-ms365.image.tag | string | `"2.0.0"` |  |

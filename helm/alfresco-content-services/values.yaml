@@ -572,7 +572,8 @@ alfresco-sync-service:
   repository:
     nameOverride: alfresco-cs-repository
     port: *repositoryExternalPort
-ai:
+  # -- toggle deploying Alfresco ai transformer
+alfresco-ai-transformer:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
