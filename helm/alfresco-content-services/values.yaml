@@ -609,8 +609,8 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
     - quay-registry-secret
-  # -- Choose if you want AI capabilities (globally - including ADW AI plugin)
   ai:
+    # -- Enable AI capabilities in ADW AI plugin
     enabled: false
   # -- Shared connections details for Elasticsearch/Opensearch, required when
   # alfresco-search-enterprise.enabled is true
