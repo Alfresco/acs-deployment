@@ -41,6 +41,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.existingSecretName | string | `nil` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
+| alfresco-ai-transformer.enabled | bool | `false` |  |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
 | alfresco-ai-transformer.image.tag | string | `"2.0.0"` |  |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
