@@ -71,6 +71,11 @@ jobs:
       - uses: azure/setup-helm@v3
         with:
           version: "3.12.1"
+      - name: Setup aws cli
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
       - name: compute version as expected by deployment script
         id: values_to_version
         run: |
