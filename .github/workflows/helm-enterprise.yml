@@ -68,6 +68,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: azure/setup-helm@v3
+        with:
+          version: "3.12.1"
       - name: compute version as expected by deployment script
         id: values_to_version
         run: |
