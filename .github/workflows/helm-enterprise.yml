@@ -78,8 +78,8 @@ jobs:
           sudo ./aws/install
       - name: Setup dnsutils
         run: |
-          apt update
-          apt install -y dnsutils
+          sudo apt update
+          sudo apt install -y dnsutils
       - name: compute version as expected by deployment script
         id: values_to_version
         run: |
