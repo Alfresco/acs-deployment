@@ -16,7 +16,7 @@ on:
       - release/**
 jobs:
   community_charts:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
     steps:
       - uses: actions/checkout@v3
       - name: Setup cluster
