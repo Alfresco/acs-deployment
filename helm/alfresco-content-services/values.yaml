@@ -575,6 +575,8 @@ alfresco-sync-service:
   # -- toggle deploying Alfresco ai transformer
 alfresco-ai-transformer:
   enabled: false
+  messageBroker:
+    existingSecretName: *acs_messageBroker_secretName
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 2.0.0
