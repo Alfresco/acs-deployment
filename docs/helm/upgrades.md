@@ -13,6 +13,14 @@ version in which they have been released.
 
 Due to breaking changes the next version will be a major release.
 
+### Alfresco AI Transformer
+
+After migrating the AI Transformer chart to the new
+[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts)
+repository, the associated values have been moved from
+`.Values.aiTransformer` to
+`.Values.alfresco-ai-transformer`.
+
 ### MS365 chart rename
 
 The previous `ooi-service` subchart has been renamed to

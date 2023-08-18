@@ -19,6 +19,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 7.11.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.3.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.1.0 |
@@ -40,31 +41,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.existingSecretName | string | `nil` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
-| aiTransformer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| aiTransformer.image.internalPort | int | `8090` |  |
-| aiTransformer.image.pullPolicy | string | `"IfNotPresent"` |  |
-| aiTransformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| aiTransformer.image.tag | string | `"2.0.0"` |  |
-| aiTransformer.livenessProbe.initialDelaySeconds | int | `10` |  |
-| aiTransformer.livenessProbe.livenessPercent | int | `400` |  |
-| aiTransformer.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
-| aiTransformer.livenessProbe.maxTransformSeconds | int | `1800` |  |
-| aiTransformer.livenessProbe.maxTransforms | int | `10000` |  |
-| aiTransformer.livenessProbe.periodSeconds | int | `20` |  |
-| aiTransformer.livenessProbe.timeoutSeconds | int | `10` |  |
-| aiTransformer.nodeSelector | object | `{}` |  |
-| aiTransformer.podSecurityContext.runAsUser | int | `33015` |  |
-| aiTransformer.readinessProbe.initialDelaySeconds | int | `20` |  |
-| aiTransformer.readinessProbe.periodSeconds | int | `60` |  |
-| aiTransformer.readinessProbe.timeoutSeconds | int | `10` |  |
-| aiTransformer.replicaCount | int | `2` |  |
-| aiTransformer.resources.limits.cpu | string | `"2"` |  |
-| aiTransformer.resources.limits.memory | string | `"1Gi"` |  |
-| aiTransformer.resources.requests.cpu | string | `"50m"` |  |
-| aiTransformer.resources.requests.memory | string | `"200Mi"` |  |
-| aiTransformer.service.externalPort | int | `80` |  |
-| aiTransformer.service.name | string | `"ai-transformer"` |  |
-| aiTransformer.service.type | string | `"ClusterIP"` |  |
+| alfresco-ai-transformer.enabled | bool | `false` |  |
+| alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
+| alfresco-ai-transformer.image.tag | string | `"2.0.0"` |  |
+| alfresco-ai-transformer.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
 | alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | alfresco-connector-ms365.image.tag | string | `"2.0.0"` |  |
@@ -193,7 +173,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of configuring the inbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails |
-| global.ai | object | `{"enabled":false}` | Choose if you want AI capabilities (globally - including ADW AI plugin) |
+| global.ai.enabled | bool | `false` | Enable AI capabilities in ADW AI plugin |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-search-enterprise.enabled is true |
 | global.elasticsearch.host | string | `"elasticsearch-master"` | The host where service is available. The provided default is for when elasticsearch.enabled is true |

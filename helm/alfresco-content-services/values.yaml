@@ -168,43 +168,6 @@ alfresco-connector-msteams:
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
     tag: 2.0.0
-aiTransformer:
-  replicaCount: 2
-  nodeSelector: {}
-  image:
-    repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 2.0.0
-    pullPolicy: IfNotPresent
-    internalPort: 8090
-  service:
-    name: ai-transformer
-    type: ClusterIP
-    externalPort: 80
-  podSecurityContext:
-    runAsUser: 33015
-  resources:
-    requests:
-      cpu: "50m"
-      memory: "200Mi"
-    limits:
-      cpu: "2"
-      memory: "1Gi"
-  environment:
-    JAVA_OPTS: >-
-      -XX:MinRAMPercentage=50
-      -XX:MaxRAMPercentage=80
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 60
-    timeoutSeconds: 10
-  livenessProbe:
-    initialDelaySeconds: 10
-    periodSeconds: 20
-    timeoutSeconds: 10
-    livenessPercent: 400
-    livenessTransformPeriodSeconds: 600
-    maxTransforms: 10000
-    maxTransformSeconds: 1800
 alfresco-transform-service:
   enabled: true
   messageBroker:
@@ -609,6 +572,20 @@ alfresco-sync-service:
   repository:
     nameOverride: alfresco-cs-repository
     port: *repositoryExternalPort
+  # -- toggle deploying Alfresco ai transformer
+alfresco-ai-transformer:
+  enabled: false
+  messageBroker:
+    existingSecretName: *acs_messageBroker_secretName
+  image:
+    repository: quay.io/alfresco/alfresco-ai-docker-engine
+    tag: 2.0.0
+#  aws:
+#    accessKey:
+#    secretAccessKey:
+#    region:
+#    s3Bucket:
+#    comprehendRoleARN:
 global:
   known_urls:
     - https://localhost
@@ -634,16 +611,9 @@ global:
       maxUnavailable: 0
   registryPullSecrets:
     - quay-registry-secret
-  # -- Choose if you want AI capabilities (globally - including ADW AI plugin)
   ai:
+    # -- Enable AI capabilities in ADW AI plugin
     enabled: false
-    # ai:
-    #   aws:
-    #   accessKey:
-    #   secretAccessKey:
-    #   region:
-    #   s3Bucket:
-    #   comprehendRoleARN:
   # -- Shared connections details for Elasticsearch/Opensearch, required when
   # alfresco-search-enterprise.enabled is true
   elasticsearch:
