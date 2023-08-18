@@ -16,9 +16,12 @@ on:
       - release/**
 jobs:
   community_charts:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
     steps:
       - uses: actions/checkout@v3
+      - uses: azure/setup-helm@v3
+        with:
+         version: "3.12.1"
       - name: Setup cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v2.8.0
       - name: Community local deployment
