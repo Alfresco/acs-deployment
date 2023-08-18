@@ -24,7 +24,7 @@ alfresco-transform-service:
   filestore:
     image:
       tag: 3.0.0
-aiTransformer:
+alfresco-ai-transformer:
   image:
     tag: 2.0.0
 share:

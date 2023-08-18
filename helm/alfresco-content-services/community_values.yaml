@@ -47,7 +47,7 @@ alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:
   enabled: false
-ai:
+alfresco-ai-transformer:
   enabled: false
 s3connector:
   enabled: false

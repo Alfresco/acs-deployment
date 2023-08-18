@@ -2,7 +2,7 @@
 repository:
   image:
     tag: 7.0.1.10
-aiTransformer:
+alfresco-ai-transformer:
   image:
     tag: 1.3.0
 alfresco-transform-service:

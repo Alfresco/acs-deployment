@@ -84,7 +84,7 @@ matrix:
     intelligence:
       version:
       helm_target: *helmvalues231
-      helm_key: $.aiTransformer.image.tag
+      helm_key: $.alfresco-ai-transformer.image.tag
     trouter:
       version:
       compose_target: *compose231
@@ -198,7 +198,7 @@ matrix:
     intelligence:
       version:
       helm_target: *helmvalues74
-      helm_key: $.aiTransformer.image.tag
+      helm_key: $.alfresco-ai-transformer.image.tag
     trouter:
       version:
       compose_target: *compose74
@@ -312,7 +312,7 @@ matrix:
     intelligence:
       version:
       helm_target: *helmvalues73
-      helm_key: $.aiTransformer.image.tag
+      helm_key: $.alfresco-ai-transformer.image.tag
     trouter:
       version:
       compose_target: *compose73
@@ -426,7 +426,7 @@ matrix:
     intelligence:
       version:
       helm_target: *helmvalues72
-      helm_key: $.aiTransformer.image.tag
+      helm_key: $.alfresco-ai-transformer.image.tag
     trouter:
       version:
       compose_target: *compose72
@@ -533,7 +533,7 @@ matrix:
     intelligence:
       version:
       helm_target: *helmvalues71
-      helm_key: $.aiTransformer.image.tag
+      helm_key: $.alfresco-ai-transformer.image.tag
     trouter:
       version:
       compose_target: *compose71
@@ -620,7 +620,7 @@ matrix:
     intelligence:
       version:
       helm_target: *helmvalues70
-      helm_key: $.aiTransformer.image.tag
+      helm_key: $.alfresco-ai-transformer.image.tag
     trouter:
       version:
       compose_target: *compose70
