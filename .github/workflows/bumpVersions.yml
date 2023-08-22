@@ -22,7 +22,7 @@ jobs:
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.54.0
+          version: v0.57.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@v3
