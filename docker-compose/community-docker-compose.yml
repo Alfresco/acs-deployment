@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0.1
+    image: docker.io/alfresco/alfresco-content-repository-community:7.4.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -63,7 +63,7 @@ services:
     ports:
       - "8090:8090"
   share:
-    image: docker.io/alfresco/alfresco-share:7.4.0.1
+    image: docker.io/alfresco/alfresco-share:7.4.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
