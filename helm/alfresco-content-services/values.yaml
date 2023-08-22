@@ -29,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.1.0-A29
+    tag: 23.1.0-A27
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -234,7 +234,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.1.0-A29
+    tag: 23.1.0-A27
   nameOverride: share
   repository:
     existingConfigMap:
@@ -300,16 +300,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 3.3.1
+        tag: 3.4.0-M1
     content:
       image:
-        tag: 3.3.1
+        tag: 3.4.0-M1
     metadata:
       image:
-        tag: 3.3.1
+        tag: 3.4.0-M1
     path:
       image:
-        tag: 3.3.1
+        tag: 3.4.0-M1
   reindexing:
     enabled: true
     postgresql:
@@ -318,7 +318,7 @@ alfresco-search-enterprise:
       database: alfresco
       existingSecretName: *acs_database_secretName
     image:
-      tag: 3.3.1
+      tag: 3.4.0-M1
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true

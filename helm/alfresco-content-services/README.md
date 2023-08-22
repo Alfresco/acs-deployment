@@ -100,13 +100,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
-| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"3.3.1"` |  |
-| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"3.3.1"` |  |
-| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"3.3.1"` |  |
-| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"3.3.1"` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"3.4.0-M1"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"3.4.0-M1"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"3.4.0-M1"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
-| alfresco-search-enterprise.reindexing.image.tag | string | `"3.3.1"` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.database | string | `"alfresco"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
@@ -228,7 +228,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.image.internalPort | int | `8080` |  |
 | repository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| repository.image.tag | string | `"23.1.0-A29"` |  |
+| repository.image.tag | string | `"23.1.0-A27"` |  |
 | repository.ingress.annotations | object | `{}` |  |
 | repository.ingress.maxUploadSize | string | `"5g"` |  |
 | repository.ingress.path | string | `"/"` |  |
@@ -278,7 +278,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.secretKey | string | `nil` |  |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"23.1.0-A29"` |  |
+| share.image.tag | string | `"23.1.0-A27"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
