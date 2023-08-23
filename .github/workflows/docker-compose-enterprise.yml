@@ -28,12 +28,10 @@ jobs:
         run: >-
           echo "matrix_json=$(
             ls -1 docker-compose |
-              grep '^\d+' |
+              grep -P '^\d+' |
               jq -Rn '{"compose_file": [inputs]}' |
               jq -c '.compose_file += ["docker-compose.yml"]'
           )" >> $GITHUB_OUTPUT
-      - name: Debug output
-        run: echo ${{ steps.eval.outputs.matrix_json }}
 
   compose_enterprise:
     name: docker-compose enterprise
