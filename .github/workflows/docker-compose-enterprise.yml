@@ -25,13 +25,15 @@ jobs:
       - uses: actions/checkout@v3
       - name: Evaluate Matrix
         id: setup
-        run: >-
-          echo "matrix_json=$(
-            ls -1 docker-compose |
-              grep -E '^\d+' |
-              jq -Rn '{"compose_file": [inputs]}' |
-              jq -c '.compose_file += ["docker-compose.yml"]'
-          )" >> $GITHUB_OUTPUT
+        run: |
+          matrix_json=$( \
+            ls -1 docker-compose | \
+              grep -E '^\d+' | \
+              jq -Rn '{"compose_file": [inputs]}' | \
+              jq -c '.compose_file += ["docker-compose.yml"]' \
+          )
+          echo $matrix_json
+          echo "matrix_json=$matrix_json" >> $GITHUB_OUTPUT
 
   compose_enterprise:
     name: docker-compose enterprise
