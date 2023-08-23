@@ -1,10 +1,10 @@
 dependencies:
 - name: alfresco-common
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.1.0-alpha.2
+  version: 2.1.0
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 12.5.6
+  version: 12.8.5
 - name: common
   repository: https://activiti.github.io/activiti-cloud-helm-charts
   version: 7.11.0
@@ -16,27 +16,27 @@ dependencies:
   version: 3.2.0
 - name: alfresco-transform-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.1
+  version: 0.2.0
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.2.0
+  version: 1.3.0
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.2.0
+  version: 4.3.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.3.0
+  version: 1.4.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0
+  version: 0.2.0
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0-alpha.2
+  version: 0.1.0
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.3.3
+  version: 0.4.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0
-digest: sha256:4eae3ce8eab518a909b08d01ca58ee0b61af7de3a37295d58c1f32f2ca04c355
-generated: "2023-08-16T15:19:13.452893+05:30"
+  version: 0.3.0
+digest: sha256:7d87e48347f65a83de9f44e7a22d3e55d94f34b6b1d84bbb36e3c9b65e6aecdb
+generated: "2023-08-23T09:36:14.216027+02:00"
