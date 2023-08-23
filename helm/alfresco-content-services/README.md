@@ -19,16 +19,16 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 7.11.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.3.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.0-alpha.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.1.1 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.4.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.4.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.2.0 |
+| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
 
