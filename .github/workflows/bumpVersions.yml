@@ -6,8 +6,6 @@ on:
     paths:
       - .github/workflows/bumpVersions.yml
       - updatecli-matrix-targets.yaml
-      - helm/alfresco-content-services/*_values.yaml
-      - helm/alfresco-content-services/values.yaml
   workflow_dispatch:
 
 jobs:
@@ -22,7 +20,7 @@ jobs:
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.54.0
+          version: v0.57.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@v3
@@ -46,12 +44,20 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
+      - name: Regenerate helm docs if necessary
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
+        with:
+          pre-commit-args: helm-docs || true
+          skip_checkout: "true"
+
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
-        if: github.event_name == 'workflow_dispatch'
         with:
           commit_message: |
             🛠 Updatecli pipeline acs bump
-          branch: updatecli-bump-acs
-          create_branch: true
-          push_options: '--force'
+          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
+          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
+          branch: ${{ github.ref_name == 'master' && 'updatecli-bump-acs' || github.ref_name }}
+          create_branch: ${{ github.ref_name == 'master' }}
+          push_options: ${{ github.ref_name == 'master' && '--force' || '' }}
