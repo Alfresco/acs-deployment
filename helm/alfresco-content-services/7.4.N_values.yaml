@@ -1,7 +1,7 @@
 # ACS 7.3.N values
 repository:
   image:
-    tag: 7.4.0.1
+    tag: 7.4.1
 alfresco-transform-service:
   transformrouter:
     image:
@@ -29,31 +29,31 @@ alfresco-ai-transformer:
     tag: 2.0.0
 share:
   image:
-    tag: 7.4.0.1
+    tag: 7.4.1
 activemq:
   image:
     tag: null
 alfresco-search:
   searchServicesImage:
-    tag: 2.0.7
+    tag: 2.0.8
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
     mediation:
       image:
-        tag: 3.3.0.1
+        tag: 3.3.1
     content:
       image:
-        tag: 3.3.0.1
+        tag: 3.3.1
     metadata:
       image:
-        tag: 3.3.0.1
+        tag: 3.3.1
     path:
       image:
-        tag: 3.3.0.1
+        tag: 3.3.1
   reindexing:
     image:
-      tag: 3.3.0.1
+      tag: 3.3.1
 alfresco-digital-workspace:
   image:
     tag: 4.1.0

@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:7.4.0.1
+    image: docker.io/alfresco/alfresco-content-repository-community:7.4.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -63,7 +63,7 @@ services:
     ports:
       - "8090:8090"
   share:
-    image: docker.io/alfresco/alfresco-share:7.4.0.1
+    image: docker.io/alfresco/alfresco-share:7.4.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -86,7 +86,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.7
+    image: docker.io/alfresco/alfresco-search-services:2.0.8
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
