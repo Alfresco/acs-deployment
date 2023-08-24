@@ -157,6 +157,9 @@ Start the release by opening a PR against the appropriate branch that will:
   bump chart version to the version you want to release (usually by removing the
   `-SNAPSHOT` suffix and adding `-M.x` suffix if it's a prerelease)
 * Run `pre-commit run --all-files helm-docs` to update helm docs
+* Edit [upgrades docs](docs/helm/upgrades.md) renaming the `To be released`
+  section to the current version and create a new `To be released` section for
+  the future.
 
 Once the PR has been merged, create the release with:
 

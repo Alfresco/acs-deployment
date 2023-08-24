@@ -9,11 +9,13 @@ release notes that are available via [GitHub Releases](https://github.com/Alfres
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
-## To be released (likely 7.0.0)
+## To be released
 
-Due to breaking changes the next version will be a major release.
+No breaking changes since latest tag.
 
-### Alfresco AI Transformer
+## 7.0.0-M.1
+
+### Chart modularization: Alfresco AI Transformer chart rename
 
 After migrating the AI Transformer chart to the new
 [alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts)
@@ -21,7 +23,7 @@ repository, the associated values have been moved from
 `.Values.aiTransformer` to
 `.Values.alfresco-ai-transformer`.
 
-### MS365 chart rename
+### Chart modularization: MS365
 
 The previous `ooi-service` subchart has been renamed to
 `alfresco-connector-ms365` to better reflect the product name during the
@@ -33,7 +35,7 @@ Accordingly to this chart rename, also the related values has been moved from
 `.Values.ooiService` to
 `.Values.alfresco-connector-ms365`.
 
-### MSTeams chart rename
+### Chart modularization: MSTeams
 
 The previous `ms-teams-service` subchart has been renamed to
 `alfresco-connector-msteams` to better reflect the product name during the
@@ -109,7 +111,7 @@ helm install alfresco-content-services acs \
 > Note: We would encorage you to avoid using `--set` as much as possible and
 > use `--values` instead with values stored in yaml files.
 
-### Alfresco Share chart
+### Chart modularization: Alfresco Share chart
 
 Alfresco is now deployed as a separate chart and can be enabled/disabled. In
 order to do so simply use the value bellow:
