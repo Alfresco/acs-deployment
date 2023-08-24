@@ -17,7 +17,7 @@ repository:
       memory: "1024Mi"
     limits:
       memory: "1560Mi"
-alfresco-tranform-service:
+alfresco-transform-service:
   transformrouter:
     replicaCount: 1
   filestore:
@@ -108,9 +108,7 @@ share:
     limits:
       memory: "512Mi"
 alfresco-sync-service:
-  syncservice:
-    enabled: false
-postgresql-syncservice:
   enabled: false
+
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret

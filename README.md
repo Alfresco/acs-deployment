@@ -77,7 +77,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 | [6.0.1][6.0.1]         | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
 | [6.0.2][6.0.2]         | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
 | [6.1.0-M.1][6.1.0-M.1] | 23.1.0-A19 | 7.4.0.1 | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
-| 6.1.0-SNAPSHOT         | 23.1.0-A19 | 7.4.0.1 | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
+| [7.0.0-M.1][7.0.0-M.1] | 23.1.0-A27 | 7.4.1   | 7.3.1   | 7.2.1.12 | 7.1.1.8 | 7.0.1.10 | 7.4.1     |
 
 [5.0.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.0.1
 [5.1.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1
@@ -87,6 +87,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 [6.0.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.0.1
 [6.0.2]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.0.2
 [6.1.0-M.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.1.0-M.1
+[7.0.0-M.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.0-M.1
 
 ### Why there is no 5.4.0?
 
