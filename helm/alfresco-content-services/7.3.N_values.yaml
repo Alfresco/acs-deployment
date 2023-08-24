@@ -1,4 +1,5 @@
-# ACS 7.3.N values
+# This values file can be used to install ACS 7.3.x using the latest version of
+# the chart
 repository:
   image:
     tag: 7.3.1
