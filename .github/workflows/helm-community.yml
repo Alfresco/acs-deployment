@@ -23,7 +23,7 @@ jobs:
         with:
          version: "3.12.1"
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v2.8.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.1.0
       - name: Community local deployment
         run: |
           helm dep up ./helm/alfresco-content-services

@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v2.8.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
       - name: Add dependency chart repos
         run: |
           helm repo add alfresco-helm-charts https://alfresco.github.io/alfresco-helm-charts/
