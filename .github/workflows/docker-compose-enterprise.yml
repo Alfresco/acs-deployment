@@ -17,18 +17,28 @@ on:
       - release/**
 
 jobs:
+  build_vars:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix_json: ${{ steps.eval.outputs.matrix_json }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Evaluate Matrix
+        id: eval
+        run: >-
+          echo "matrix_json=$(
+            ls -1 docker-compose |
+              grep -P '^\d+' |
+              jq -Rn '{"compose_file": [inputs]}' |
+              jq -c '.compose_file += ["docker-compose.yml"]'
+          )" >> $GITHUB_OUTPUT
+
   compose_enterprise:
     name: docker-compose enterprise
+    needs: build_vars
     strategy:
       fail-fast: true
-      matrix:
-        compose_file:
-          - docker-compose.yml
-          - 7.4.N-docker-compose.yml
-          - 7.3.N-docker-compose.yml
-          - 7.2.N-docker-compose.yml
-          - 7.1.N-docker-compose.yml
-          - 7.0.N-docker-compose.yml
+      matrix: ${{ fromJSON(needs.build_vars.outputs.matrix_json) }}
     runs-on: ubuntu-latest
     if: >-
       github.event_name == 'push'
