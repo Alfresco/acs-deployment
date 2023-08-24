@@ -24,6 +24,8 @@ jobs:
       matrix:
         compose_file:
           - docker-compose.yml
+          - 7.4.N-docker-compose.yml
+          - 7.3.N-docker-compose.yml
           - 7.2.N-docker-compose.yml
           - 7.1.N-docker-compose.yml
           - 7.0.N-docker-compose.yml
