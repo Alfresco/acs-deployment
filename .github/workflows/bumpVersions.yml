@@ -6,6 +6,8 @@ on:
     paths:
       - .github/workflows/bumpVersions.yml
       - updatecli-matrix-targets.yaml
+    tags-ignore:
+      - '**'
   workflow_dispatch:
 
 jobs:
