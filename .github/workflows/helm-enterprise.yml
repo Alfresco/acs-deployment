@@ -142,3 +142,10 @@ jobs:
             --set global.alfrescoRegistryPullSecrets=regcred \
             --wait --timeout 20m0s --values \
             helm/${{ matrix.name }}/${{ matrix.values }}
+
+      - name: Spit cluster status
+        if: always()
+        run: |
+          helm ls --all-namespaces
+          kubectl get all --all-namespaces
+          kubectl describe pod

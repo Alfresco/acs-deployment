@@ -55,4 +55,3 @@ jobs:
               }
             ]
           collection: test/postman/helm/acs-test-helm-collection.json
-          insecure: true
