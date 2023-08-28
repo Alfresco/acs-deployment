@@ -76,6 +76,11 @@ alfresco-transform-service:
       limits:
         memory: "512Mi"
     replicaCount: 1
+  transformrouter:
+    replicaCount: 1
+    resources:
+      limits:
+        memory: "800Mi"
 postgresql:
   primary:
     resources:
