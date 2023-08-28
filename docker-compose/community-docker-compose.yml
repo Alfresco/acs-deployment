@@ -1,7 +1,7 @@
 # This docker-compose file will spin up an ACS community installation on a local host.
-# It requires a minimum of 5GB Memory to distribute among containers.
+# It requires at least 6GB of memory available to distribute among containers.
 #
-# For performance tuning, assign the container memory and give a percentage of
+# For performance tuning, increase each container mem_limit and give a percentage of
 # it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
 # java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
 # More details here:
