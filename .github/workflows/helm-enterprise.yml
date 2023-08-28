@@ -140,7 +140,7 @@ jobs:
             --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 20m0s --values \
+            --wait --timeout 30m0s --values \
             helm/${{ matrix.name }}/${{ matrix.values }}
 
       - name: Spit cluster status
