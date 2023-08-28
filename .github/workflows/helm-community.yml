@@ -14,6 +14,9 @@ on:
     branches:
       - master
       - release/**
+concurrency:
+  group: helm-com-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 jobs:
   community_charts:
     runs-on: [self-hosted, linux, X64]
