@@ -1,17 +1,11 @@
-# This docker-compose file will spin up an ACS cluster on a local host.
-# It requires a minimum of 13GB Memory to distribute among containers.
+# This docker-compose file will spin up an ACS community installation on a local host.
+# It requires at least 6GB of memory available to distribute among containers.
 #
-# For performance tuning, assign the container memory and give a percentage of
+# For performance tuning, increase each container mem_limit and give a percentage of
 # it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
 # java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
-#
-# Note: The docker-compose file from github.com is a limited trial that goes
-# into read-only mode after 2 days. Get the latest docker-compose.yml file with
-# a 30-day trial license by accessing the Alfresco Content Services trial
-# download page at:
-# https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
 # Using version 2 as 3 does not support resource constraint options
 # (cpu_*, mem_* limits) for non swarm mode in Compose
