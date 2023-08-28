@@ -130,7 +130,7 @@ jobs:
       - name: Create registries auth secret
         run: |
           kubectl create secret generic regcred \
-          --from-file=.dockerconfigjson=~/.docker/config.json \
+          --from-file=.dockerconfigjson=$HOME/.docker/config.json \
           --type=kubernetes.io/dockerconfigjson
 
       - name: Helm install
