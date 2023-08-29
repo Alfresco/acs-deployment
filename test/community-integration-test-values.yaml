@@ -5,6 +5,7 @@ repository:
       cpu: "0.01"
       memory: "1024Mi"
     limits:
+      cpu: "2"
       memory: "1560Mi"
   edition: Community
   replicaCount: 1
@@ -19,6 +20,7 @@ share:
       cpu: "0.01"
       memory: "256Mi"
     limits:
+      cpu: "2"
       memory: "512Mi"
   image:
     repository: alfresco/alfresco-share
@@ -33,7 +35,7 @@ alfresco-search:
     repository: alfresco/alfresco-search-services
 alfresco-transform-service:
   enabled: true
-  pdfrenderer: &ats-pdf
+  pdfrenderer:
     livenessProbe:
       initialDelaySeconds: 30
     resources:
@@ -41,9 +43,10 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
-  imagemagick: &ats-im
+  imagemagick:
     livenessProbe:
       initialDelaySeconds: 30
     resources:
@@ -51,9 +54,10 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
-  libreoffice: &ats-lo
+  libreoffice:
     livenessProbe:
       initialDelaySeconds: 30
     resources:
@@ -61,9 +65,10 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "512Mi"
       limits:
+        cpu: "2"
         memory: "1024Mi"
     replicaCount: 1
-  tika: &ats-tika
+  tika:
     livenessProbe:
       initialDelaySeconds: 30
     resources:
@@ -71,9 +76,10 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
-  transformmisc: &ats-misc
+  transformmisc:
     livenessProbe:
       initialDelaySeconds: 30
     resources:
@@ -81,17 +87,13 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
   transformrouter:
     enabled: false
   filestore:
     enabled: false
-pdfrenderer: *ats-pdf
-imagemagick: *ats-im
-libreoffice: *ats-lo
-tika: *ats-tika
-transformmisc: *ats-misc
 # Disable features
 alfresco-digital-workspace:
   enabled: false
@@ -102,6 +104,10 @@ postgresql:
     resources:
       requests:
         cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
 ai:
   enabled: false
 s3connector:

@@ -5,6 +5,7 @@ repository:
       cpu: "0.01"
       memory: "1024Mi"
     limits:
+      cpu: "2"
       memory: "1560Mi"
   replicaCount: 2
   persistence:
@@ -16,6 +17,7 @@ share:
       cpu: "0.01"
       memory: "256Mi"
     limits:
+      cpu: "2"
       memory: "512Mi"
 alfresco-search:
   resources:
@@ -35,6 +37,7 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
   imagemagick:
@@ -45,6 +48,7 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
   libreoffice:
@@ -55,6 +59,7 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "512Mi"
       limits:
+        cpu: "2"
         memory: "1024Mi"
     replicaCount: 1
   tika:
@@ -65,6 +70,7 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
   transformmisc:
@@ -75,18 +81,24 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
+        cpu: "2"
         memory: "512Mi"
     replicaCount: 1
   transformrouter:
     replicaCount: 1
     resources:
       limits:
+        cpu: "2"
         memory: "800Mi"
 postgresql:
   primary:
     resources:
       requests:
         cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
 email:
   server:
     enabled: false
@@ -95,3 +107,6 @@ email:
 imap:
   server:
     enabled: false
+# maybe enable later
+alfresco-sync-service:
+  enabled: false
