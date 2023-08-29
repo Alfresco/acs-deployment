@@ -41,6 +41,7 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl logs -l app=acs-alfresco-cs-repository
       - name: Wait ACS to warm up
         run: sleep 60
       - name: run Postman tests
