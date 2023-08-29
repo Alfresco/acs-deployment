@@ -141,7 +141,7 @@ jobs:
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
             --set 'global.registryPullSecrets[0]=regcred' \
-            --wait --timeout 30m0s \
+            --wait --timeout 15m0s \
             --values helm/${{ matrix.name }}/${{ matrix.values }} \
             --values test/enterprise-integration-test-values.yaml
 
