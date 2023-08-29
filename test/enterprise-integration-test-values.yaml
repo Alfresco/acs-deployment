@@ -6,7 +6,7 @@ repository:
       memory: "1024Mi"
     limits:
       memory: "1560Mi"
-  replicaCount: 1
+  replicaCount: 2
   persistence:
     accessModes:
       - ReadWriteOnce
