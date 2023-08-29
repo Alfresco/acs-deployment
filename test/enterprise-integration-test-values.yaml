@@ -23,6 +23,7 @@ alfresco-search:
       cpu: "0.01"
       memory: "512Mi"
     limits:
+      cpu: "2"
       memory: "1280Mi"
 alfresco-transform-service:
   enabled: true
