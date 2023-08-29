@@ -151,3 +151,19 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+
+      - name: run Postman tests
+        uses: matt-ball/newman-action@v1.0.4
+        with:
+          globalVar: >-
+            [
+              {
+                "key":"protocol",
+                "value":"http"
+              },
+              {
+                "key":"url",
+                "value":"localhost"
+              }
+            ]
+          collection: test/postman/helm/acs-test-helm-collection.json
