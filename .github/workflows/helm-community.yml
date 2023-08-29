@@ -33,7 +33,7 @@ jobs:
           helm install acs ./helm/alfresco-content-services \
             --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
-            --wait --timeout 15m0s --values \
+            --wait --timeout 20m0s --values \
             test/community-integration-test-values.yaml
       - name: Spit cluster status
         if: always()
