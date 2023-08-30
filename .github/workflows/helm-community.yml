@@ -22,11 +22,14 @@ jobs:
     runs-on: [self-hosted, linux, X64]
     steps:
       - uses: actions/checkout@v3
+
       - uses: azure/setup-helm@v3
         with:
          version: "3.12.1"
+
       - name: Setup cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.1.0
+
       - name: Helm install
         run: |
           helm dep up ./helm/alfresco-content-services
@@ -35,6 +38,7 @@ jobs:
             --set global.known_urls=http://localhost \
             --wait --timeout 15m0s --values \
             test/community-integration-test-values.yaml
+
       - name: Spit cluster status
         if: always()
         run: |
@@ -42,10 +46,13 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl logs -l app=acs-alfresco-cs-repository
+
       - name: Wait ACS to warm up
         run: sleep 60
+
       - name: run Postman tests
         uses: matt-ball/newman-action@v1.0.4
+        id: newman
         with:
           globalVar: >-
             [
@@ -59,3 +66,10 @@ jobs:
               }
             ]
           collection: test/postman/helm/acs-test-helm-collection.json
+
+      - name: Spit cluster status after tests
+        if: always() && steps.newman.outcome != 'skipped'
+        run: |
+          helm ls --all-namespaces
+          kubectl get all --all-namespaces
+          kubectl describe pod
