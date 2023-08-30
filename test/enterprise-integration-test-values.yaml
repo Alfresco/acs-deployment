@@ -105,6 +105,12 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "800Mi"
+    readinessProbe:
+      initialDelaySeconds: 40
+      timeoutSeconds: 20
+    livenessProbe:
+      initialDelaySeconds: 40
+      timeoutSeconds: 20
 postgresql:
   primary:
     resources:
