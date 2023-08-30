@@ -153,24 +153,16 @@ jobs:
           kubectl describe pod
           kubectl logs -l app=acs-alfresco-search-solr --tail=100
 
-      - uses: Wandalen/wretry.action@a163f62ae554a8f3cbe27b23db15b60c0ae2e93c
+      - uses: nick-fields/retry@v2
         id: newman
         with:
-          action: matt-ball/newman-action@v1.0.4
-          attempt_limit: 5
-          with: |
-            globalVar: >-
-              [
-                {
-                  "key":"protocol",
-                  "value":"http"
-                },
-                {
-                  "key":"url",
-                  "value":"localhost"
-                }
-              ]
-            collection: test/postman/helm/acs-test-helm-collection.json
+          timeout_minutes: 1
+          max_attempts: 5
+          command: >-
+            docker run --network=host
+            -v $(pwd)/test/postman:/etc/postman
+            -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
+            --global-var protocol=http --global-var url=localhost
 
       - name: Spit cluster status after tests
         if: always() && steps.newman.outcome != 'skipped'
