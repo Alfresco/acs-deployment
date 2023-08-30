@@ -123,6 +123,13 @@ email:
 imap:
   server:
     enabled: false
-# maybe enable later
 alfresco-sync-service:
-  enabled: false
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: "0.01"
+          memory: "512Mi"
+        limits:
+          cpu: "2"
+          memory: "1Gi"
