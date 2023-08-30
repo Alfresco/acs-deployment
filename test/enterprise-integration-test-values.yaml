@@ -89,6 +89,8 @@ alfresco-transform-service:
   transformmisc:
     livenessProbe:
       initialDelaySeconds: 30
+      periodSeconds: 60
+      timeoutSeconds: 15
     resources:
       requests:
         cpu: "0.01"
