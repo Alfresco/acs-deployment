@@ -145,7 +145,7 @@ jobs:
             --values helm/${{ matrix.name }}/${{ matrix.values }} \
             --values test/enterprise-integration-test-values.yaml
 
-      - name: Spit cluster status
+      - name: Spit cluster status after install
         if: always()
         run: |
           helm ls --all-namespaces
@@ -154,6 +154,7 @@ jobs:
 
       - name: run Postman tests
         uses: matt-ball/newman-action@v1.0.4
+        id: newman
         with:
           globalVar: >-
             [
@@ -167,3 +168,10 @@ jobs:
               }
             ]
           collection: test/postman/helm/acs-test-helm-collection.json
+
+      - name: Spit cluster status after tests
+        if: always() && steps.newman.outcome != 'skipped'
+        run: |
+          helm ls --all-namespaces
+          kubectl get all --all-namespaces
+          kubectl describe pod
