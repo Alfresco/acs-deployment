@@ -24,10 +24,10 @@ share:
       memory: "512Mi"
   readinessProbe:
     initialDelaySeconds: 60
-    timeoutSeconds: 30
+    timeoutSeconds: 45
   livenessProbe:
     initialDelaySeconds: 60
-    timeoutSeconds: 30
+    timeoutSeconds: 45
   image:
     repository: alfresco/alfresco-share
 alfresco-search:
