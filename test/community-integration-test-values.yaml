@@ -22,6 +22,12 @@ share:
     limits:
       cpu: "2"
       memory: "512Mi"
+  readinessProbe:
+    initialDelaySeconds: 60
+    timeoutSeconds: 30
+  livenessProbe:
+    initialDelaySeconds: 60
+    timeoutSeconds: 30
   image:
     repository: alfresco/alfresco-share
 alfresco-search:
