@@ -22,7 +22,7 @@ jobs:
     if: >-
       github.event_name == 'push'
       || (
-        github.event.pull_request.head.user.login == 'Alfresco'
+        ! github.event.repository.fork
         && github.actor != 'dependabot[bot]'
       )
     outputs:
@@ -54,8 +54,9 @@ jobs:
         run: |
           CHARTS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
           echo "json=$CHARTS" >> $GITHUB_OUTPUT
+
   helm_integration:
-    runs-on: [self-hosted, linux, X64]
+    runs-on: [self-hosted]
     needs:
       - build_vars
     name: Helm ${{ matrix.name }} ${{ matrix.values }}
@@ -94,36 +95,6 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
-      - name: compute version as expected by deployment script
-        id: values_to_version
-        run: |
-          VFILE="${{ matrix.values }}"
-          if [ "${VFILE}" == 'values.yaml' ]; then
-            V='latest'
-          else
-            V=${VFILE%_values.yaml}
-          fi
-          SANITIZED_V=$(echo ${{ matrix.name }} | sed -r 's/[[:punct:]]?(.)[[:alnum:]]*/\1/g')-${V//./}
-          SANITIZED_V=${SANITIZED_V,,}
-          echo "Release prefix to $SANITIZED_V"
-          echo "app_version=$V" >> $GITHUB_OUTPUT
-          echo "app_prefix=${SANITIZED_V}" >> $GITHUB_OUTPUT
-      # - uses: >-
-      #     Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-helm@v3.1.0
-      #   with:
-      #     skip_checkout: "true"
-      #     test_newman: "true"
-      #     chart_name: ${{ matrix.name }}
-      #     release_prefix: ${{ steps.values_to_version.outputs.app_prefix }}
-      #     acs_version: ${{ steps.values_to_version.outputs.app_version }}
-      #     aws_access_key_id: ${{ secrets.ACS_CLUSTER_AWS_ACCESS_KEY_ID }}
-      #     aws_secret_access_key: ${{ secrets.ACS_CLUSTER_AWS_SECRET_ACCESS_KEY }}
-      #     docker_username: ${{ secrets.DOCKER_USERNAME }}
-      #     docker_password: ${{ secrets.DOCKER_PASSWORD }}
-      #     quay_username: ${{ secrets.QUAY_USERNAME }}
-      #     quay_password: ${{ secrets.QUAY_PASSWORD }}
-      #     acm_certificate: ${{ secrets.ACM_CERTIFICATE }}
-      #     aws_sg: ${{ secrets.AWS_SG }}
       - name: Setup cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.1.0
 
@@ -151,7 +122,6 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl logs -l app=acs-alfresco-search-solr --tail=100
 
       - uses: nick-fields/retry@v2
         id: newman
@@ -171,4 +141,3 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl logs -l app=acs-alfresco-search-solr --tail=100
