@@ -151,10 +151,6 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          echo "ACS REPO LOGS"
-          kubectl logs -l app=acs-alfresco-cs-repository --tail=500
-          echo "ACS REPO LOGS PREVIOUS"
-          kubectl logs -l app=acs-alfresco-cs-repository --tail=500 --previous
 
       - name: run Postman tests
         uses: matt-ball/newman-action@v1.0.4
