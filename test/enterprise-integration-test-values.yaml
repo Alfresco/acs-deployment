@@ -11,6 +11,13 @@ repository:
   persistence:
     accessModes:
       - ReadWriteOnce
+  startupProbe:
+    failureThreshold: 20
+  #readinessProbe:
+  #  initialDelaySeconds: 120
+  #  failureThreshold: 12
+  #livenessProbe:
+  #  initialDelaySeconds: 260
 share:
   resources:
     requests:
