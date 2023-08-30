@@ -26,6 +26,10 @@ share:
     limits:
       cpu: "2"
       memory: "512Mi"
+  readinessProbe:
+    initialDelaySeconds: 60
+  livenessProbe:
+    initialDelaySeconds: 60
 alfresco-search:
   resources:
     requests:
