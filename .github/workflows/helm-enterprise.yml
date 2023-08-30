@@ -151,6 +151,7 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl logs -l app=acs-alfresco-search-solr --tail=100
 
       - name: run Postman tests
         uses: matt-ball/newman-action@v1.0.4
@@ -175,3 +176,4 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl logs -l app=acs-alfresco-search-solr --tail=100
