@@ -55,7 +55,7 @@ messageBroker:
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
   # -- Alternatively, provide credentials via an existing secret that contains
   # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-activemq: &amq
+activemq:
   nameOverride: activemq
   enabled: true
   # -- Possibility to choose Node for pod, with a key-value pair label
