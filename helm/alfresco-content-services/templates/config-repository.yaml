@@ -15,7 +15,7 @@ data:
   {{- end }}
   RELEASE_NAME: {{ .Release.Name }}
   {{- $alfUrl := include "alfresco-common.external.url" . }}
-  ALFRESCO_OPTS: >-
+  CATALINA_OPTS: >-
     -Ddeployment.method=HELM_CHART
     -Dalfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
     {{- if .Values.repository.licenseSecret }}
@@ -99,8 +99,6 @@ data:
     {{- else }}
     -Devents.subsystem.autoStart=false
     {{- end }}
-  CATALINA_OPTS: >-
-    $ALFRESCO_OPTS
     -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
     {{- if eq .Values.database.external false }}
     -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.primary.service.ports.postgresql }}/{{ .Values.postgresql.auth.database }}
