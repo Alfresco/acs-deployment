@@ -7,13 +7,12 @@ repository:
     limits:
       cpu: "2"
       memory: "1560Mi"
-  edition: Community
-  replicaCount: 1
+  replicaCount: 2
   persistence:
     accessModes:
       - ReadWriteOnce
-  image:
-    repository: alfresco/alfresco-content-repository-community
+  startupProbe:
+    failureThreshold: 20
 share:
   resources:
     requests:
@@ -28,8 +27,6 @@ share:
   livenessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
-  image:
-    repository: alfresco/alfresco-share
 alfresco-search:
   resources:
     requests:
@@ -38,8 +35,6 @@ alfresco-search:
     limits:
       cpu: "2"
       memory: "1280Mi"
-  searchServicesImage:
-    repository: alfresco/alfresco-search-services
 alfresco-transform-service:
   enabled: true
   pdfrenderer:
@@ -89,6 +84,8 @@ alfresco-transform-service:
   transformmisc:
     livenessProbe:
       initialDelaySeconds: 30
+      periodSeconds: 60
+      timeoutSeconds: 15
     resources:
       requests:
         cpu: "0.01"
@@ -98,14 +95,17 @@ alfresco-transform-service:
         memory: "512Mi"
     replicaCount: 1
   transformrouter:
-    enabled: false
-  filestore:
-    enabled: false
-# Disable features
-alfresco-digital-workspace:
-  enabled: false
-alfresco-sync-service:
-  enabled: false
+    replicaCount: 1
+    resources:
+      limits:
+        cpu: "2"
+        memory: "800Mi"
+    readinessProbe:
+      initialDelaySeconds: 40
+      timeoutSeconds: 20
+    livenessProbe:
+      initialDelaySeconds: 40
+      timeoutSeconds: 20
 postgresql:
   primary:
     resources:
@@ -115,10 +115,6 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
-ai:
-  enabled: false
-s3connector:
-  enabled: false
 email:
   server:
     enabled: false
@@ -127,5 +123,13 @@ email:
 imap:
   server:
     enabled: false
-alfresco-admin-app:
-  enabled: false
+alfresco-sync-service:
+  postgresql:
+    primary:
+      resources:
+        requests:
+          cpu: "0.01"
+          memory: "512Mi"
+        limits:
+          cpu: "2"
+          memory: "1Gi"

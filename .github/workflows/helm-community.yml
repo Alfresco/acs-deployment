@@ -14,45 +14,71 @@ on:
     branches:
       - master
       - release/**
+concurrency:
+  group: helm-com-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 jobs:
   community_charts:
-    runs-on: [self-hosted, linux, X64]
+    runs-on: [self-hosted]
     steps:
       - uses: actions/checkout@v3
+
       - uses: azure/setup-helm@v3
         with:
          version: "3.12.1"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        if: ${{ ! github.event.repository.fork }}
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Setup cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.1.0
-      - name: Community local deployment
+
+      - name: Create registries auth secret
+        if: ${{ ! github.event.repository.fork }}
+        run: |
+          kubectl create secret generic regcred \
+          --from-file=.dockerconfigjson=$HOME/.docker/config.json \
+          --type=kubernetes.io/dockerconfigjson
+
+      - name: Helm install
         run: |
           helm dep up ./helm/alfresco-content-services
           helm install acs ./helm/alfresco-content-services \
             --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
+            --set global.alfrescoRegistryPullSecrets=regcred \
             --wait --timeout 15m0s --values \
             test/community-integration-test-values.yaml
+
       - name: Spit cluster status
         if: always()
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+
       - name: Wait ACS to warm up
         run: sleep 60
-      - name: run Postman tests
-        uses: matt-ball/newman-action@v1.0.4
+
+      - uses: nick-fields/retry@v2
+        id: newman
         with:
-          globalVar: >-
-            [
-              {
-                "key":"protocol",
-                "value":"http"
-              },
-              {
-                "key":"url",
-                "value":"localhost"
-              }
-            ]
-          collection: test/postman/helm/acs-test-helm-collection.json
-          insecure: true
+          timeout_minutes: 1
+          retry_wait_seconds: 30
+          max_attempts: 5
+          command: >-
+            docker run --network=host
+            -v $(pwd)/test/postman:/etc/postman
+            -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
+            --global-var protocol=http --global-var url=localhost
+
+      - name: Spit cluster status after tests
+        if: always() && steps.newman.outcome != 'skipped'
+        run: |
+          helm ls --all-namespaces
+          kubectl get all --all-namespaces
+          kubectl describe pod
