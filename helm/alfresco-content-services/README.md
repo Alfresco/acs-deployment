@@ -216,58 +216,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
 | repository.adminPassword | string | `"209c6174da490caeb422f3fa5a7ae634"` | Administrator password for ACS in NTLM hash format to set at bootstrap time |
-| repository.command | list | `[]` |  |
 | repository.edition | string | `"Enterprise"` |  |
-| repository.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=DESede"` |  |
 | repository.existingSecretName | string | `nil` | An existing secret that contains REPO_ADMIN_PASSWORD as an alternative for `repository.adminPassword` value |
-| repository.extraInitContainers | list | `[]` |  |
 | repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value maner org.alfresco.repo.content.transform.TransformerDebug: debug |
-| repository.extraSideContainers | list | `[]` |  |
-| repository.extraVolumeMounts | list | `[]` |  |
-| repository.extraVolumes | list | `[]` |  |
-| repository.image.hazelcastPort | int | `5701` |  |
-| repository.image.internalPort | int | `8080` |  |
-| repository.image.pullPolicy | string | `"IfNotPresent"` |  |
-| repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| repository.image.tag | string | `"23.1.0-A27"` |  |
-| repository.ingress.annotations | object | `{}` |  |
-| repository.ingress.maxUploadSize | string | `"5g"` |  |
-| repository.ingress.path | string | `"/"` |  |
-| repository.ingress.tls | list | `[]` |  |
-| repository.initContainers.db.image.pullPolicy | string | `"IfNotPresent"` |  |
-| repository.initContainers.db.image.repository | string | `"busybox"` |  |
-| repository.initContainers.db.image.tag | string | `"1.35.0"` |  |
-| repository.initContainers.db.resources.limits.cpu | string | `"0.25"` |  |
-| repository.initContainers.db.resources.limits.memory | string | `"10Mi"` |  |
 | repository.licenseSecret | string | `nil` | The name of the secret holding the ACS repository license if any. it must be contained within a `data['*.lic']` property For details on how to manage license, see: https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md |
-| repository.livenessProbe.initialDelaySeconds | int | `130` |  |
-| repository.livenessProbe.periodSeconds | int | `20` |  |
-| repository.livenessProbe.timeoutSeconds | int | `10` |  |
-| repository.nodeSelector | object | `{}` |  |
 | repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | repository.persistence.baseSize | string | `"20Gi"` |  |
-| repository.persistence.data.mountPath | string | `"/usr/local/tomcat/alf_data"` |  |
-| repository.persistence.data.subPath | string | `"alfresco-content-services/repository-data"` |  |
 | repository.persistence.enabled | bool | `true` | Persist repository data |
-| repository.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisioning) |
-| repository.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisioning) |
-| repository.podSecurityContext.fsGroup | int | `1000` |  |
-| repository.podSecurityContext.runAsGroup | int | `1000` |  |
-| repository.podSecurityContext.runAsNonRoot | bool | `true` |  |
-| repository.podSecurityContext.runAsUser | int | `33000` |  |
-| repository.readinessProbe.failureThreshold | int | `6` |  |
-| repository.readinessProbe.initialDelaySeconds | int | `60` |  |
-| repository.readinessProbe.periodSeconds | int | `20` |  |
-| repository.readinessProbe.timeoutSeconds | int | `10` |  |
 | repository.replicaCount | int | `2` |  |
-| repository.resources.limits.cpu | string | `"4"` |  |
-| repository.resources.limits.memory | string | `"8Gi"` |  |
-| repository.resources.requests.cpu | string | `"250m"` |  |
-| repository.resources.requests.memory | string | `"2Gi"` |  |
 | repository.service.externalPort | int | `80` |  |
-| repository.service.name | string | `"alfresco"` |  |
-| repository.service.type | string | `"ClusterIP"` |  |
-| repository.startupProbe | object | `{"failureThreshold":10,"periodSeconds":30}` | The startup probe to cover the worse case startup time for slow clusters |
 | repository.strategy.type | string | `"Recreate"` |  |
 | s3connector.config.bucketLocation | string | `nil` |  |
 | s3connector.config.bucketName | string | `nil` |  |
