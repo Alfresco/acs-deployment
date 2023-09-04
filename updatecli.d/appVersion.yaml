@@ -1,0 +1,17 @@
+name: Chart appVersion sync
+
+sources:
+  valuesRepositoryImageTag:
+    name: Repository tag
+    kind: yaml
+    spec:
+      file: helm/alfresco-content-services/values.yaml
+      key: $.repository.image.tag
+
+targets:
+  chartAppVersion:
+    name: alfresco-content-services appVersion
+    kind: yaml
+    spec:
+      file: helm/alfresco-content-services/Chart.yaml
+      key: $.appVersion

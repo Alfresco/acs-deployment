@@ -46,6 +46,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
+      - name: updatecli apply to sync appVersion in Chart.yaml
+        run: updatecli apply -c updatecli.d/appVersion.yaml
+
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
       - name: Regenerate helm docs if necessary
         uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
