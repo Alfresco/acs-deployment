@@ -40,6 +40,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Ensure no dependencies are pre-release versions
+        run: |
+          ! grep -e "-alpha" -e "-SNAPSHOT" helm/${{ matrix.charts }}/Chart.yaml
       - name: Publish chart
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v3.1.0
