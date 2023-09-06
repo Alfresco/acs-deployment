@@ -2,9 +2,13 @@
 Create a default fully qualified name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "content-services.fullname" -}}
+{{- define "alfresco-content-services.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "content-services.fullname" -}}
+{{- template "alfresco-content-services.fullname" . }}
 {{- end -}}
 
 {{- define "content-services.chart" -}}

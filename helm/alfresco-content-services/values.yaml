@@ -26,13 +26,16 @@ database:
   # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
   url: null
   # -- Name of the secret managed by this chart
-  configMapName: &acs_database_cmName infrastructure-repository
+  configMapName: &acs_database_cmName >-
+    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
+    {{ include (printf "%s.fullname" $.Chart.Name) $ }}
   # -- Name of the secret managed by this chart
   secretName: &acs_database_secretName alfresco-cs-database
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
   # When using embedded postgres you need to also set `postgresql.existingSecret`.
   existingSecretName: null
 alfresco-repository:
+  nameOverride: alfresco-repository
   configuration:
     db:
       existingConfigMap:

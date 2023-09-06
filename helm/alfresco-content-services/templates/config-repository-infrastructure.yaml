@@ -2,9 +2,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: infrastructure-repository
+  {{- $ctx := dict "Values" (dict "nameOverride" "infrastructure") "Chart" .Chart "Release" .Release }}
+  name: {{ template "alfresco-content-services.fullname" $ctx }}
   labels:
     {{- include "repository.labels" . | nindent 4 }}
 data:
-  repo_svc_name: {{ template "content-services.shortname" . }}-repository
+  {{- $repoCtx := dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release }}
+  repo_svc_name: {{ template "alfresco-repository.fullname" $repoCtx }}
   repo_svc_port: {{ .Values.repository.service.externalPort | quote }}
