@@ -14,6 +14,24 @@
 # max heap to 1/4th of container's memory which may not be ideal. Hence, setting
 # up explicit Container memory and then assigning a percentage of it to the JVM
 # for performance tuning.
+database:
+  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
+  external: false
+  # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
+  driver: null
+  # -- External Postgresql database user
+  user: null
+  # -- External Postgresql database password
+  password: null
+  # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
+  url: null
+  # -- Name of the secret managed by this chart
+  configMapName: &acs_database_cmName alfresco-cs-database
+  # -- Name of the secret managed by this chart
+  secretName: &acs_database_secretName alfresco-cs-database
+  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+  # When using embedded postgres you need to also set `postgresql.existingSecret`.
+  existingSecretName: null
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
@@ -197,22 +215,6 @@ alfresco-search:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
-database:
-  # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
-  external: false
-  # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
-  driver: null
-  # -- External Postgresql database user
-  user: null
-  # -- External Postgresql database password
-  password: null
-  # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
-  url: null
-  # -- Name of the secret managed by this chart
-  secretName: &acs_database_secretName acs-alfresco-cs-dbsecret
-  # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
-  # When using embedded postgres you need to also set `postgresql.existingSecret`.
-  existingSecretName: null
 alfresco-search-enterprise:
   enabled: false
   elasticsearch:
