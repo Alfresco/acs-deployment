@@ -1,6 +1,6 @@
-# Alfresco Content Services Helm Deployment with Docker For Desktop
+# Alfresco Content Services Helm Deployment with Desktop
 
-This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [Docker for Desktop](https://docs.docker.com/desktop/).
+This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [Rancher Desktop](https://rancherdesktop.io/) and  [Docker for Desktop](https://docs.docker.com/desktop/).
 
 ## Prerequisites
 
@@ -8,35 +8,31 @@ This page describes how to deploy Alfresco Content Services (ACS) Enterprise or 
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes
 - A machine with at least 16GB memory
-- [Docker for Desktop](https://docs.docker.com/desktop/) for container management installed
-- Latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) is installed
-- Latest version of [Helm](https://helm.sh/docs/intro/install) is installed
-
-The following instructions are also applicable to [Rancher Desktop](https://rancherdesktop.io/) users. Rancher desktop will provide `kubectl` and `helm` out of the box. it is open source but less mature than Docker desktop.
-
-## Configure Docker for Desktop
-
-In order to deploy onto Docker for Desktop we need to configure it with as much CPU and memory as possible on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below. Similar resource requirement apply to Rancher Desktop.
-
-![Resources](./diagrams/dfd-resources.png)
-
-### Docker for Desktop specific configuration
-
-To deploy the Helm charts Kubernetes needs to be enabled, this can be done from the "Kubernetes" tab, as shown in the screenshot below. Press the "Apply & Restart" button to confirm.
-
-![k8s Enabled](./diagrams/dfd-k8s-enabled.png)
+- [Rancher for Desktop](https://rancherdesktop.io/). Rancher Desktop includes kubectl and Helm as pre-installed tools, ready to use right after installation.
 
 ### Rancher Desktop specific configuration
 
 Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable Traefik. You may need to exit and restart Rancher Desktop for the change to take effect. Ref: [Setup NGINX Ingress Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
 
-## Deploy
+### Docker Desktop specific configuration
 
-Once Docker for Desktop is running follow the steps in the following sections to deploy ACS (Enterprise or Community) to your local machine.
+[Prerequisites](./desktop-deployment.md#Prerequisites) are consistent with those for Docker Desktop. Additionally, it is essential to install the latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) & [Helm](https://helm.sh/docs/intro/install).
+
+After the installation of Docker Desktop, the following configurations should be adjusted within Docker Desktop settings.
+`Settings > Resources > Advanced > CPUs:8, Memory: 16GB, Swap: 1GB`
+`Settings > kubernetes > Enable Kubernetes`
+
+After making the necessary settings `Apply and restart` the docker desktop.
+
+## Deployment
+
+After successfully launching Rancher Desktop, proceed with the instructions provided in the following sections to install ACS (Enterprise or Community) on your local system.
+
+> Note: To execute the deployment on Docker Desktop, please adhere to the same set of deployment instructions provided below.
 
 ### Namespace
 
-Namespaces in Kubernetes isolate workloads from each other, create a namespace to host ACS inside the cluster using the following command (we'll then use the `alfresco` namepsace throughout the rest of the tutorial):
+To establish an isolated environment for ACS within the Kubernetes cluster, initiate the creation of a Kubernetes namespace using the provided command. Throughout the subsequent sections of this tutorial, we will consistently refer to this namespace as 'alfresco'
 
 ```bash
 kubectl create namespace alfresco
@@ -44,14 +40,14 @@ kubectl create namespace alfresco
 
 ### Ingress
 
-Add the chart repository using the following command:
+Utilize the subsequent command to include the chart repository:
 
 ```bash
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 ```
 
-Deploy an ingress controller into the alfresco namespace using the command below:
+Execute the following command to install an ingress controller within the 'alfresco' namespace:
 
 ```bash
 helm install acs-ingress ingress-nginx/ingress-nginx --version=4.4.0 \
@@ -68,20 +64,20 @@ helm install acs-ingress ingress-nginx/ingress-nginx --version=4.4.0 \
 # Verify NGINX is up and running
 kubectl get pods --namespace alfresco
 
-NAME                                                    READY   STATUS    RESTARTS   AGE
-acs-ingress-ingress-nginx-controller-77b76b95f7-hf9hq   1/1     Running   0          2m55s
+NAME                                                   READY   STATUS    RESTARTS   AGE
+acs-ingress-ingress-nginx-controller-5647c976f-f7b6q   1/1     Running   0          98m
 
 # Verify expose localhost:80
 kubectl get svc --namespace alfresco
 
 NAME                                             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-acs-ingress-ingress-nginx-controller-admission   ClusterIP      10.43.244.72   <none>          443/TCP                      69m
-acs-ingress-ingress-nginx-controller             LoadBalancer   10.43.182.81   192.168.1.146   80:31155/TCP,443:32209/TCP   69m
+acs-ingress-ingress-nginx-controller-admission   ClusterIP      10.43.42.230   <none>          443/TCP                      98m
+acs-ingress-ingress-nginx-controller             LoadBalancer   10.43.90.117   192.168.29.69   80:31363/TCP,443:30980/TCP   98m
 ```
 
 ### ACS
 
-This repository allows you to either deploy a system using released stable artifact or the latest in-progress development artifacts.
+This repository offers you the option to either deploy a system using stable released artifacts or the latest in-progress development artifacts.
 
 To use a released version of the Helm chart add the stable chart repository using the following command:
 
@@ -89,8 +85,6 @@ To use a released version of the Helm chart add the stable chart repository usin
 helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
 helm repo update
 ```
-
-Now decide whether you want to install the Community or Enterprise edition and follow the steps in the relevant section below.
 
 #### Community
 
@@ -133,28 +127,7 @@ helm install acs alfresco/alfresco-content-services \
   --timeout 10m0s \
   --namespace alfresco
 ```
-
-> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
-
-The command above installs the latest version of ACS Enterprise.
-
-#### Enterprise deployment for previous versions
-
-To deploy a previous version of ACS Enterprise follow the steps below.
-
-1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
-2. Deploy the specific version of ACS by running the following command:
-
-   ```bash
-   helm install acs alfresco/alfresco-content-services \
-   --values MAJOR.MINOR.N_values.yaml \
-   --values local-dev-values.yaml \
-   --atomic \
-   --timeout 10m0s \
-   --namespace alfresco
-   ```
-
-> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
+> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./rancher-desktop-deployment.md#troubleshooting) tips.
 
 ## Access
 
@@ -187,9 +160,6 @@ If you deployed Enterprise you'll also have access to:
 
 If your deployment fails it's most likely to be caused by resource limitations, please refer to the sections below for more information. Please also consult the [Helm Troubleshooting section](./README.md#Troubleshooting) for more generic troubleshooting tips and tricks.
 
-### Lack Of Resources
-
-The most common reason for deployment failures with Docker for Desktop is lack of memory or disk space. Check the "Resources" tab in Docker for Desktop's preferences pane, increase the allocation if you can and re-try.
 
 To save the deployment of two more pods you can also try disabling the Sync Service, to do that provide the additional `--set` option below with your helm install command:
 
