@@ -126,6 +126,7 @@ helm install acs alfresco/alfresco-content-services \
   --timeout 10m0s \
   --namespace alfresco
 ```
+
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./rancher-desktop-deployment.md#troubleshooting) tips.
 
 The provided command installs the most current version of ACS Enterprise.
