@@ -103,8 +103,7 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Enterprise localhost deployment
 
-See the [registry authentication](registry-authentication.md) page to configure
-credentials to access the Alfresco Enterprise registry.
+To configure credentials for accessing the Alfresco Enterprise registry, please review the information provided in the [registry authentication](registry-authentication.md)
 
 The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster
 and therefore requires a large amount of resources out-of-the-box. To reduce the
@@ -128,6 +127,26 @@ helm install acs alfresco/alfresco-content-services \
   --namespace alfresco
 ```
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./rancher-desktop-deployment.md#troubleshooting) tips.
+
+The provided command installs the most current version of ACS Enterprise.
+
+#### Enterprise deployment for previous versions
+
+To deploy a previous version of ACS Enterprise follow the steps below.
+
+1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
+2. Deploy the specific version of ACS by running the following command:
+
+   ```bash
+   helm install acs alfresco/alfresco-content-services \
+   --values MAJOR.MINOR.N_values.yaml \
+   --values local-dev-values.yaml \
+   --atomic \
+   --timeout 10m0s \
+   --namespace alfresco
+   ```
+
+> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
 ## Access
 
@@ -158,8 +177,11 @@ If you deployed Enterprise you'll also have access to:
 
 ## Troubleshooting
 
-If your deployment fails it's most likely to be caused by resource limitations, please refer to the sections below for more information. Please also consult the [Helm Troubleshooting section](./README.md#Troubleshooting) for more generic troubleshooting tips and tricks.
+In the event of a deployment failure, it is important to recognize that resource constraints are a common underlying cause. For further insights and guidance, please refer to the dedicated sections below for detailed information on resource-related issues. Additionally, you can find more comprehensive troubleshooting advice in the [Helm Troubleshooting section](./README.md#Troubleshooting)
 
+### Lack Of Resources
+
+One of the most prevalent causes of deployment failures when using Rancher for Desktop is insufficient memory or CPU resources. It is imperative to ensure that an adequate amount of resources is allocated to prevent deployment failures.
 
 To save the deployment of two more pods you can also try disabling the Sync Service, to do that provide the additional `--set` option below with your helm install command:
 
