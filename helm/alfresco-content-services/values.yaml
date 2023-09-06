@@ -26,12 +26,21 @@ database:
   # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
   url: null
   # -- Name of the secret managed by this chart
-  configMapName: &acs_database_cmName alfresco-cs-database
+  configMapName: &acs_database_cmName infrastructure-repository
   # -- Name of the secret managed by this chart
   secretName: &acs_database_secretName alfresco-cs-database
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
   # When using embedded postgres you need to also set `postgresql.existingSecret`.
   existingSecretName: null
+alfresco-repository:
+  configuration:
+    db:
+      existingConfigMap:
+        name: *acs_database_cmName
+        keys:
+          url: DATABASE_URL
+      existingSecret:
+        name: *acs_database_secretName
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"

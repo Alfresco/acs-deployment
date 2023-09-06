@@ -99,17 +99,9 @@ data:
     {{- else }}
     -Devents.subsystem.autoStart=false
     {{- end }}
-    -Ddb.driver={{ .Values.database.driver | default "org.postgresql.Driver" }}
-    {{- if eq .Values.database.external false }}
-    -Ddb.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}:{{ .Values.postgresql.primary.service.ports.postgresql }}/{{ .Values.postgresql.auth.database }}
-    {{- else }}
-    -Ddb.url={{ .Values.database.url }}
-    {{- end }}
     {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
     -Dmail.password=$MAIL_PASSWORD
     {{- end }}
-    -Ddb.username=$DATABASE_USERNAME
-    -Ddb.password=$DATABASE_PASSWORD
     {{- if .Values.s3connector.enabled }}
     {{- if .Values.s3connector.secrets.accessKey }}
     -Ds3.accessKey=$ACCESSKEY

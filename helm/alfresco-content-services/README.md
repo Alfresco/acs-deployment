@@ -99,6 +99,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
 | alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
+| alfresco-repository.configuration.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` |  |
+| alfresco-repository.configuration.db.existingConfigMap.name | string | `"infrastructure-repository"` |  |
+| alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"3.4.0-M1"` |  |
@@ -109,7 +112,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
 | alfresco-search-enterprise.reindexing.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.database | string | `"alfresco"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
+| alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
 | alfresco-search-enterprise.reindexing.postgresql.url | string | `nil` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
@@ -166,11 +169,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.transformrouter.image.tag | string | `"3.0.1-A3"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
+| database.configMapName | string | `"infrastructure-repository"` | Name of the secret managed by this chart |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
 | database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
 | database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
 | database.password | string | `nil` | External Postgresql database password |
-| database.secretName | string | `"acs-alfresco-cs-dbsecret"` | Name of the secret managed by this chart |
+| database.secretName | string | `"alfresco-cs-database"` | Name of the secret managed by this chart |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of configuring the inbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails |
