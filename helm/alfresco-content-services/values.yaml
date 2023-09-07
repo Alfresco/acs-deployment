@@ -29,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.1.0-A27
+    tag: 23.1.0-A35
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -179,42 +179,42 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 3.0.1-A3
+      tag: 3.1.0-A1
   pdfrenderer:
     # -- Declares the alfresco-pdf-renderer service used by the content repository
     # to transform pdf files
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 4.0.1-A3
+      tag: 4.1.0-A1
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 4.0.1-A3
+      tag: 4.1.0-A1
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 4.0.1-A3
+      tag: 4.1.0-A1
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 4.0.1-A3
+      tag: 4.1.0-A1
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 4.0.1-A3
+      tag: 4.1.0-A1
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -222,7 +222,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 3.0.1-A3
+      tag: 3.1.0-A1
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -234,7 +234,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.1.0-A27
+    tag: 23.1.0-A35
   nameOverride: share
   repository:
     existingConfigMap:
@@ -251,7 +251,7 @@ alfresco-search:
   enabled: true
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.0.8
+    tag: 2.1.0-A1
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -300,16 +300,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 3.4.0-M1
+        tag: 3.4.0-A3
     content:
       image:
-        tag: 3.4.0-M1
+        tag: 3.4.0-A3
     metadata:
       image:
-        tag: 3.4.0-M1
+        tag: 3.4.0-A3
     path:
       image:
-        tag: 3.4.0-M1
+        tag: 3.4.0-A3
   reindexing:
     enabled: true
     postgresql:
@@ -318,7 +318,7 @@ alfresco-search-enterprise:
       database: alfresco
       existingSecretName: *acs_database_secretName
     image:
-      tag: 3.4.0-M1
+      tag: 3.4.0-A3
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -549,7 +549,7 @@ alfresco-sync-service:
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
   image:
-    tag: 4.0.0-M10
+    tag: 4.0.0-A16
   postgresql:
     enabled: true
     image:
@@ -579,7 +579,7 @@ alfresco-ai-transformer:
     existingSecretName: *acs_messageBroker_secretName
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 2.0.1-A4
+    tag: 2.1.0-A1
 #  aws:
 #    accessKey:
 #    secretAccessKey:

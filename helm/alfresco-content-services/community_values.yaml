@@ -16,7 +16,7 @@ share:
 alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
-    tag: 2.0.8
+    tag: 2.0.8.1
 email:
   server:
     enabled: false
