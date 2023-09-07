@@ -14,6 +14,7 @@ matrix:
       helm_target: &helmvalues231 >-
         helm/alfresco-content-services/values.yaml
       helm_key: $.repository.image.tag
+      helm_update_appVersion: true
     share:
       version:
       pattern:
