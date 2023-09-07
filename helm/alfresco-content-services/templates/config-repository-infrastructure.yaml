@@ -12,3 +12,4 @@ data:
   repo_svc_port: {{ .Values.repository.service.externalPort | quote }}
   {{- $db_url := include "alfresco-content-service.database.repo" $ }}
   {{ template "alfresco-repository.db.cm" (dict "url" $db_url "driver" .Values.database.driver) }}
+  {{ template "alfresco-repository.mq.cm" (include "alfresco-content-service.mq.url" .) }}

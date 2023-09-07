@@ -101,6 +101,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include \"alfresco-content-services.fullname\" $ctx }}"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
+| alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include \"alfresco-content-services.fullname\" $ctx }}"` |  |
+| alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
@@ -198,7 +200,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | mail.existingSecretName | string | `nil` | An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value |
 | mail.from.default | string | `nil` | Specifies the email address from which email notifications are sent |
 | mail.host | string | `nil` | SMTP(S) host server to enable delivery of site invitations, activity notifications and workflow tasks by email |
-| messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection setting when activemq.enabled=false Can reference an external broker details, or help spread details of an internal one. |
+| messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection details (activemq.enabled msut also be set to false) |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
