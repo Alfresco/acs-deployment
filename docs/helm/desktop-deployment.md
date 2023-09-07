@@ -1,4 +1,4 @@
-# Alfresco Content Services Helm Deployment with Desktop
+# Alfresco Content Services Helm Deployment on local machines
 
 This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [Rancher Desktop](https://rancherdesktop.io/) and  [Docker for Desktop](https://docs.docker.com/desktop/).
 
@@ -8,7 +8,9 @@ This page describes how to deploy Alfresco Content Services (ACS) Enterprise or 
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes
 - A machine with at least 16GB memory
-- [Rancher for Desktop](https://rancherdesktop.io/). Rancher Desktop includes kubectl and Helm as pre-installed tools, ready to use right after installation.
+Having installed one between:
+- [Rancher for Desktop](https://rancherdesktop.io/). Includes kubectl and Helm, ready to use right after installation.
+- [Docker for Desktop](https://docs.docker.com/desktop/). Requires separate install of kubectl and Helm.
 
 ### Rancher Desktop specific configuration
 
@@ -19,16 +21,15 @@ Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable Traefik.
 [Prerequisites](./desktop-deployment.md#Prerequisites) are consistent with those for Docker Desktop. Additionally, it is essential to install the latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) & [Helm](https://helm.sh/docs/intro/install).
 
 After the installation of Docker Desktop, the following configurations should be adjusted within Docker Desktop settings.
-`Settings > Resources > Advanced > CPUs:8, Memory: 16GB, Swap: 1GB`
-`Settings > kubernetes > Enable Kubernetes`
+
+- `Settings > Resources > Advanced > CPUs:8, Memory: 16GB, Swap: 1GB`
+- `Settings > kubernetes > Enable Kubernetes`
 
 After making the necessary settings `Apply and restart` the docker desktop.
 
 ## Deployment
 
-After successfully launching Rancher Desktop, proceed with the instructions provided in the following sections to install ACS (Enterprise or Community) on your local system.
-
-> Note: To execute the deployment on Docker Desktop, please adhere to the same set of deployment instructions provided below.
+Please proceed to execute the instructions detailed in the following sections for the installation of ACS (Enterprise or Community edition) on your local system.
 
 ### Namespace
 
@@ -40,14 +41,14 @@ kubectl create namespace alfresco
 
 ### Ingress
 
-Utilize the subsequent command to include the chart repository:
+Add the ingress-nginx chart repository:
 
 ```bash
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 ```
 
-Execute the following command to install an ingress controller within the 'alfresco' namespace:
+Install an ingress-nginx controller within the 'alfresco' namespace:
 
 ```bash
 helm install acs-ingress ingress-nginx/ingress-nginx --version=4.4.0 \
@@ -127,7 +128,7 @@ helm install acs alfresco/alfresco-content-services \
   --namespace alfresco
 ```
 
-> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./rancher-desktop-deployment.md#troubleshooting) tips.
+> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](#troubleshooting) tips.
 
 The provided command installs the most current version of ACS Enterprise.
 
@@ -182,7 +183,7 @@ In the event of a deployment failure, it is important to recognize that resource
 
 ### Lack Of Resources
 
-One of the most prevalent causes of deployment failures when using Rancher for Desktop is insufficient memory or CPU resources. It is imperative to ensure that an adequate amount of resources is allocated to prevent deployment failures.
+One of the most prevalent causes of deployment failures is insufficient memory or CPU resources. It is imperative to ensure that an adequate amount of resources is allocated to prevent deployment failures.
 
 To save the deployment of two more pods you can also try disabling the Sync Service, to do that provide the additional `--set` option below with your helm install command:
 
