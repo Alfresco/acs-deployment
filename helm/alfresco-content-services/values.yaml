@@ -28,7 +28,7 @@ database:
   # -- Name of the secret managed by this chart
   configMapName: &acs_database_cmName >-
     {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
-    {{ include (printf "%s.fullname" $.Chart.Name) $ }}
+    {{ include "alfresco-content-services.fullname" $ctx }}
   # -- Name of the secret managed by this chart
   secretName: &acs_database_secretName alfresco-cs-database
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
@@ -40,8 +40,6 @@ alfresco-repository:
     db:
       existingConfigMap:
         name: *acs_database_cmName
-        keys:
-          url: DATABASE_URL
       existingSecret:
         name: *acs_database_secretName
 repository:

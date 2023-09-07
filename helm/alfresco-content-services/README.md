@@ -99,8 +99,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
 | alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
-| alfresco-repository.configuration.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` |  |
-| alfresco-repository.configuration.db.existingConfigMap.name | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include (printf \"%s.fullname\" $.Chart.Name) $ }}"` |  |
+| alfresco-repository.configuration.db.existingConfigMap.name | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include \"alfresco-content-services.fullname\" $ctx }}"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
@@ -170,7 +169,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.transformrouter.image.tag | string | `"3.0.1-A3"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
-| database.configMapName | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include (printf \"%s.fullname\" $.Chart.Name) $ }}"` | Name of the secret managed by this chart |
+| database.configMapName | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include \"alfresco-content-services.fullname\" $ctx }}"` | Name of the secret managed by this chart |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
 | database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
 | database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
