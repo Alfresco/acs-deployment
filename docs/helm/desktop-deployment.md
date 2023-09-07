@@ -8,9 +8,9 @@ This page describes how to deploy Alfresco Content Services (ACS) Enterprise or 
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes
 - A machine with at least 16GB memory
-Having installed one between:
-- [Rancher for Desktop](https://rancherdesktop.io/). Includes kubectl and Helm, ready to use right after installation.
-- [Docker for Desktop](https://docs.docker.com/desktop/). Requires separate install of kubectl and Helm.
+- Having installed one between:
+  - [Rancher for Desktop](https://rancherdesktop.io/). Includes kubectl and Helm, ready to use right after installation.
+  - [Docker for Desktop](https://docs.docker.com/desktop/). Requires separate install of kubectl and Helm.
 
 ### Rancher Desktop specific configuration
 
@@ -80,7 +80,7 @@ acs-ingress-ingress-nginx-controller             LoadBalancer   10.43.90.117   1
 
 This repository offers you the option to either deploy a system using stable released artifacts or the latest in-progress development artifacts.
 
-To use a released version of the Helm chart add the stable chart repository using the following command:
+To use a released version of the Helm chart add the stable chart repository:
 
 ```bash
 helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
@@ -89,7 +89,7 @@ helm repo update
 
 #### Community
 
-To install the latest version of Community we need to use the [community_values.yaml file](../../helm/alfresco-content-services). Once downloaded execute the command below to deploy.
+To install the latest version of Community we need to use the [community_values.yaml file](../../helm/alfresco-content-services). Once downloaded, execute the following to initiate the deployment.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
@@ -117,7 +117,7 @@ To install the Enterprise on localhost we need to use the local-dev-values.yaml
 curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/local-dev-values.yaml
 ```
 
-Once downloaded execute the command below to deploy.
+Once downloaded, execute the following to initiate the deployment.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
@@ -137,7 +137,7 @@ The provided command installs the most current version of ACS Enterprise.
 To deploy a previous version of ACS Enterprise follow the steps below.
 
 1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
-2. Deploy the specific version of ACS by running the following command:
+2. Deploying the specific version of ACS can be achieved by executing the following:
 
    ```bash
    helm install acs alfresco/alfresco-content-services \
