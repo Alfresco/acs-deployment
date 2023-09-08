@@ -7,6 +7,6 @@ metadata:
 data:
   {{- $databaseURL := .Values.database.url }}
   {{- if eq .Values.database.external false }}
-  {{- $databaseURL = (printf "jdbc:postgresql://%s-%s:%d/%s" .Release.Name .Values.postgresql.nameOverride .Values.postgresql.primary.service.ports.postgresql .Values.postgresql.auth.database) }}
+  {{- $databaseURL = (printf "jdbc:postgresql://%s-%s:%d/%s" .Release.Name .Values.postgresql.nameOverride (int .Values.postgresql.primary.service.ports.postgresql) .Values.postgresql.auth.database) }}
   {{- end }}
   DATABASE_URL: {{ $databaseURL }}
