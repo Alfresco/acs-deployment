@@ -8,24 +8,24 @@ This page describes how to deploy Alfresco Content Services (ACS) Enterprise or 
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes
 - A machine with at least 16GB memory
-- Having installed one between:
+- Having installed either of:
   - [Rancher for Desktop](https://rancherdesktop.io/). Includes kubectl and Helm, ready to use right after installation.
   - [Docker for Desktop](https://docs.docker.com/desktop/). Requires separate install of kubectl and Helm.
 
 ### Rancher Desktop specific configuration
 
-Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable Traefik. You may need to exit and restart Rancher Desktop for the change to take effect. Ref: [Setup NGINX Ingress Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
+Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable the default ingress controller. You may need to exit and restart Rancher Desktop for the change to take effect. Ref: [Setup NGINX Ingress Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
 
 ### Docker Desktop specific configuration
 
-[Prerequisites](./desktop-deployment.md#Prerequisites) are consistent with those for Docker Desktop. Additionally, it is essential to install the latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) & [Helm](https://helm.sh/docs/intro/install).
+On top of the Docker desktop [Prerequisites](./desktop-deployment.md#Prerequisites), it is essential to install the latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) & [Helm](https://helm.sh/docs/intro/install).
 
 After the installation of Docker Desktop, the following configurations should be adjusted within Docker Desktop settings.
 
 - `Settings > Resources > Advanced > CPUs:8, Memory: 16GB, Swap: 1GB`
 - `Settings > kubernetes > Enable Kubernetes`
 
-After making the necessary settings `Apply and restart` the docker desktop.
+After changing the necessary settings `Apply and restart` the docker desktop.
 
 ## Deployment
 
@@ -87,9 +87,9 @@ helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
 helm repo update
 ```
 
-#### Community
+#### Community localhost deployment
 
-To install the latest version of Community we need to use the [community_values.yaml file](../../helm/alfresco-content-services). Once downloaded, execute the following to initiate the deployment.
+To install the latest version of Community we need to download the [community_values.yaml file](../../helm/alfresco-content-services). Once downloaded, execute the following to initiate the deployment.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
@@ -103,6 +103,8 @@ helm install acs alfresco/alfresco-content-services \
 > NOTE: The command will wait until the deployment is ready so please be patient.
 
 #### Enterprise localhost deployment
+
+ACS enterprise version needs to pull container images from private image repositories.
 
 To configure credentials for accessing the Alfresco Enterprise registry, please review the information provided in the [registry authentication](registry-authentication.md)
 
@@ -130,7 +132,7 @@ helm install acs alfresco/alfresco-content-services \
 
 > NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](#troubleshooting) tips.
 
-The provided command installs the most current version of ACS Enterprise.
+The `helm` command above installs the most current released version of ACS Enterprise.
 
 #### Enterprise deployment for previous versions
 
@@ -179,7 +181,7 @@ If you deployed Enterprise you'll also have access to:
 
 ## Troubleshooting
 
-In the event of a deployment failure, it is important to recognize that resource constraints are a common underlying cause. For further insights and guidance, please refer to the dedicated sections below for detailed information on resource-related issues. Additionally, you can find more comprehensive troubleshooting advice in the [Helm Troubleshooting section](./README.md#Troubleshooting)
+In the event of a deployment failure, it is important to recognize that resource constraints are a common underlying cause. For further insights and guidance. Additionally, you can find more comprehensive troubleshooting advice in the [Helm Troubleshooting section](./README.md#Troubleshooting)
 
 ### Lack Of Resources
 
