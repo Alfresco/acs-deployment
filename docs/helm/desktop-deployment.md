@@ -105,7 +105,6 @@ helm install acs alfresco/alfresco-content-services \
 #### Enterprise localhost deployment
 
 ACS enterprise version needs to pull container images from private image repositories.
-
 To configure credentials for accessing the Alfresco Enterprise registry, please review the information provided in the [registry authentication](registry-authentication.md)
 
 The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster
