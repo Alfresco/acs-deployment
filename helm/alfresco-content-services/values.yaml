@@ -312,11 +312,11 @@ alfresco-search-enterprise:
         tag: 3.4.0-M1
   reindexing:
     enabled: true
-    postgresql:
-      url: null
-      hostname: postgresql-acs
-      database: alfresco
-      existingSecretName: *acs_database_secretName
+    db:
+      existingSecret:
+        name: *acs_database_secretName
+      existingConfigMap:
+        name: FIXME
     image:
       tag: 3.4.0-M1
 alfresco-digital-workspace:

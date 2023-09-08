@@ -105,12 +105,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"FIXME"` |  |
+| alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"acs-alfresco-cs-dbsecret"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
 | alfresco-search-enterprise.reindexing.image.tag | string | `"3.4.0-M1"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.database | string | `"alfresco"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.url | string | `nil` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | alfresco-search.enabled | bool | `true` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
