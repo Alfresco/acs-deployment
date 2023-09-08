@@ -105,7 +105,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
-| alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"FIXME"` |  |
+| alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"acs-alfresco-cs-dbconfigmap"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"acs-alfresco-cs-dbsecret"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
 | alfresco-search-enterprise.reindexing.image.tag | string | `"3.4.0-M1"` |  |
@@ -163,6 +163,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.transformrouter.image.tag | string | `"3.0.1-A3"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
+| database.configMapName | string | `"acs-alfresco-cs-dbconfigmap"` |  |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
 | database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
 | database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
