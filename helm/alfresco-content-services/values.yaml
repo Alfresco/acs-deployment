@@ -14,6 +14,8 @@
 # max heap to 1/4th of container's memory which may not be ideal. Hence, setting
 # up explicit Container memory and then assigning a percentage of it to the JVM
 # for performance tuning.
+infrastructure:
+  configMapName: &infrastructure_cmName alfresco-infrastructure
 database:
   # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false
@@ -26,9 +28,7 @@ database:
   # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
   url: null
   # -- Name of the secret managed by this chart
-  configMapName: &infrastructure_cmName >-
-    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
-    {{ include "alfresco-content-services.fullname" $ctx }}
+  configMapName: *infrastructure_cmName
   # -- Name of the secret managed by this chart
   secretName: &acs_database_secretName alfresco-cs-database
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
@@ -193,7 +193,7 @@ share:
   repository:
     existingConfigMap:
       # -- Name of the configmap which hold the repositoy connection details
-      name: infrastructure-repository
+      name: *infrastructure_cmName
       keys:
         # -- Name of the key in the configmap which points to the repository
         # service hostname

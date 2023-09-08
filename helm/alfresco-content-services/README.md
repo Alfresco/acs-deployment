@@ -99,9 +99,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
 | alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-digital-workspace.service.envType | string | `"frontend"` |  |
-| alfresco-repository.configuration.db.existingConfigMap.name | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include \"alfresco-content-services.fullname\" $ctx }}"` |  |
+| alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
-| alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include \"alfresco-content-services.fullname\" $ctx }}"` |  |
+| alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
@@ -171,7 +171,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.transformrouter.image.tag | string | `"3.0.1-A3"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
-| database.configMapName | string | `"{{- $ctx := dict \"Values\" (dict \"nameOverride\" \"alfresco-database\") \"Chart\" .Chart \"Release\" .Release }} {{ include \"alfresco-content-services.fullname\" $ctx }}"` | Name of the secret managed by this chart |
+| database.configMapName | string | `"alfresco-infrastructure"` | Name of the secret managed by this chart |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
 | database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
 | database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
@@ -196,6 +196,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
 | global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic. Strong enough secret can be generated with `openssl rand 20 -base64` |
 | imap | object | `{"mail":{"from":{"default":null},"to":{"default":null}},"server":{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
+| infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | mail | object | `{"encoding":"UTF-8","existingSecretName":null,"from":{"default":null,"enabled":false},"host":null,"password":null,"port":25,"protocol":"smtps","smtp":{"auth":true,"debug":false,"starttls":{"enable":true},"timeout":30000},"smtps":{"auth":true,"starttls":{"enable":true}},"username":null}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
 | mail.existingSecretName | string | `nil` | An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value |
 | mail.from.default | string | `nil` | Specifies the email address from which email notifications are sent |
@@ -246,7 +247,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
-| share.repository.existingConfigMap.name | string | `"infrastructure-repository"` | Name of the configmap which hold the repositoy connection details |
+| share.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which hold the repositoy connection details |
 
 Alfresco Content Service will be deployed in a Kubernetes cluster. This cluster
 needs a at least 32GB memory to split among below pods:

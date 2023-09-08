@@ -2,8 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  {{- $ctx := dict "Values" (dict "nameOverride" "infrastructure") "Chart" .Chart "Release" .Release }}
-  name: {{ template "alfresco-content-services.fullname" $ctx }}
+  name: {{ .Values.infrastructure.configMapName }}
   labels:
     {{- include "repository.labels" . | nindent 4 }}
 data:
