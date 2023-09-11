@@ -22,7 +22,7 @@ jobs:
     outputs:
       matrix_json: ${{ steps.eval.outputs.matrix_json }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Evaluate Matrix
         id: eval
         run: >-
