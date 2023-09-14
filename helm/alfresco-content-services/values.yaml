@@ -41,8 +41,9 @@ messageBroker:
   password: null
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains
-  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+search:
+  # -- Name of the secret managed by this chart
+  secretName: &acs_search_secretName solr-shared-secret
 alfresco-repository:
   nameOverride: alfresco-repository
   configuration:
@@ -56,6 +57,12 @@ alfresco-repository:
         name: *infrastructure_cmName
       existingSecret:
         name: *acs_database_secretName
+    search:
+      flavor: solr6
+      existingConfigMap:
+        name: *infrastructure_cmName
+      existingSecret:
+        name: solr-shared-secret
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
@@ -203,6 +210,13 @@ share:
         port: repo_svc_port
 alfresco-search:
   enabled: true
+  repository:
+    existingConfigMap:
+      name: *infrastructure_cmName
+      keys:
+        host: repo_svc_name
+        port: repo_svc_port
+        securecomms: SEARCH_SECURECOMMS
   searchServicesImage:
     repository: quay.io/alfresco/search-services
     tag: 2.0.8

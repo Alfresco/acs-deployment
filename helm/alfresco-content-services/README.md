@@ -25,7 +25,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.8 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.4.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.2.0 |
@@ -103,6 +103,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"alfresco-cs-database"` |  |
+| alfresco-repository.configuration.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-repository.configuration.search.existingSecret.name | string | `"solr-shared-secret"` |  |
+| alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
@@ -125,6 +128,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.nameOverride | string | `"alfresco-search"` |  |
+| alfresco-search.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
+| alfresco-search.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
+| alfresco-search.repository.existingConfigMap.keys.securecomms | string | `"SEARCH_SECURECOMMS"` |  |
+| alfresco-search.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
@@ -241,6 +248,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.awsKmsKeyId | string | `nil` |  |
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
+| search.secretName | string | `"solr-shared-secret"` | Name of the secret managed by this chart |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | share.image.tag | string | `"23.1.0-A27"` |  |
