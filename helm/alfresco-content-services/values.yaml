@@ -47,6 +47,8 @@ search:
 alfresco-repository:
   nameOverride: alfresco-repository
   configuration:
+    repository:
+      existingConfigMap: repository
     db:
       existingConfigMap:
         name: *infrastructure_cmName
