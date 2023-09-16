@@ -64,7 +64,7 @@ alfresco-repository:
       existingConfigMap:
         name: *infrastructure_cmName
       existingSecret:
-        name: solr-shared-secret
+        name: *acs_search_secretName
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
@@ -219,6 +219,10 @@ alfresco-search:
         host: repo_svc_name
         port: repo_svc_port
         securecomms: SEARCH_SECURECOMMS
+    existingSecret:
+      name: *acs_search_secretName
+      keys:
+        shared-secret: SOLR_SECRET
   searchServicesImage:
     repository: quay.io/alfresco/search-services
     tag: 2.0.8
