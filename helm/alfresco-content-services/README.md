@@ -108,6 +108,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"solr-shared-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
+| alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
+| alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
+| alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"3.4.0-M1"` |  |
@@ -237,9 +240,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.existingSecretName | string | `nil` | An existing secret that contains REPO_ADMIN_PASSWORD as an alternative for `repository.adminPassword` value |
 | repository.extraLogStatements | object | `{}` | Provide additional log statements by adding classes and/or packages in a key:value maner org.alfresco.repo.content.transform.TransformerDebug: debug |
 | repository.licenseSecret | string | `nil` | The name of the secret holding the ACS repository license if any. it must be contained within a `data['*.lic']` property For details on how to manage license, see: https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md |
-| repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
-| repository.persistence.baseSize | string | `"20Gi"` |  |
-| repository.persistence.enabled | bool | `true` | Persist repository data |
 | repository.replicaCount | int | `2` |  |
 | repository.service.externalPort | int | `80` |  |
 | repository.strategy.type | string | `"Recreate"` |  |

@@ -65,6 +65,13 @@ alfresco-repository:
         name: *infrastructure_cmName
       existingSecret:
         name: *acs_search_secretName
+  persistence:
+    # -- Persist repository data
+    enabled: true
+    baseSize: 20Gi
+    # -- Specify a storageClass for dynamic provisioning
+    accessModes:
+      - ReadWriteMany
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
@@ -79,13 +86,6 @@ repository:
     externalPort: 80
   strategy:
     type: Recreate
-  persistence:
-    # -- Persist repository data
-    enabled: true
-    baseSize: 20Gi
-    # -- Specify a storageClass for dynamic provisioning
-    accessModes:
-      - ReadWriteMany
   # -- Provide additional log statements by adding classes and/or packages in a
   # key:value maner org.alfresco.repo.content.transform.TransformerDebug: debug
   extraLogStatements: {}
