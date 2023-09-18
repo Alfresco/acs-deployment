@@ -35,7 +35,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.1.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.2.0
 
       - name: Create registries auth secret
         if: ${{ ! github.event.repository.fork }}
