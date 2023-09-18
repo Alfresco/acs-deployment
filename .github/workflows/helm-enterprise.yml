@@ -30,7 +30,7 @@ jobs:
       ver_json: ${{ steps.app_versions.outputs.json }}
       chart_names: ${{ steps.chart_names.outputs.json}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - id: getcharts
@@ -65,7 +65,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: azure/setup-helm@v3
         with:
