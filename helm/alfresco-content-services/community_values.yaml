@@ -2,6 +2,7 @@
 # the latest version of the chart
 repository:
   edition: Community
+alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
