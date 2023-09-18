@@ -99,7 +99,7 @@ jobs:
       - name: Setup cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-2242-kindaction
         with:
-          nginx-ingress-ref: controller-v1.8.2
+          ingress-nginx-ref: controller-v1.8.2
 
       - name: Create registries auth secret
         run: |
