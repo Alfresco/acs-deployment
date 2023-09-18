@@ -136,7 +136,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
 | alfresco-search.repository.existingConfigMap.keys.securecomms | string | `"SEARCH_SECURECOMMS"` |  |
 | alfresco-search.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-search.repository.existingSecret.keys.shared-secret | string | `"SOLR_SECRET"` |  |
+| alfresco-search.repository.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` |  |
 | alfresco-search.repository.existingSecret.name | string | `"solr-shared-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8"` |  |
