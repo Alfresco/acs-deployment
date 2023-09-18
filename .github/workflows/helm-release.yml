@@ -13,7 +13,7 @@ jobs:
       app_json: ${{ steps.getcharts.outputs.app }}
       chart_names: ${{ steps.chart_names.outputs.json}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - id: getcharts
@@ -37,7 +37,7 @@ jobs:
       matrix:
         charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Ensure no dependencies are pre-release versions
