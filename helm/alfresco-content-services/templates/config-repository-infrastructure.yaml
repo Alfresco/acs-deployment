@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.infrastructure.configMapName }}
   labels:
-    {{- include "repository.labels" . | nindent 4 }}
+    {{- include "alfresco-content-services.labels" . | nindent 4 }}
 data:
   {{- $repoCtx := dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release }}
   repo_svc_name: {{ template "alfresco-repository.fullname" $repoCtx }}
