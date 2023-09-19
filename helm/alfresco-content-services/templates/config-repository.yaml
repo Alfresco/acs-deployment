@@ -27,7 +27,7 @@ data:
     transform.service.enabled={{ and .enabled $ats_for_enterprise }}
     {{- end }}
     {{- if index .Values "alfresco-transform-service" "enabled" }}
-    {{- include "alfresco-content-service.atsConfig" . | indent 4 }}
+    {{- include "alfresco-content-services.atsConfig" . | indent 4 }}
     {{- end }}
     {{/*
     {{- if .Values.s3connector.enabled }}

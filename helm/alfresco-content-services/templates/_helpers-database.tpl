@@ -1,10 +1,10 @@
 {{/*
 Compute the repository database URL
 
-Usage: include "alfresco-content-service.database.repo" $
+Usage: include "alfresco-content-services.database.repo" $
 
 */}}
-{{- define "alfresco-content-service.database.repo" -}}
+{{- define "alfresco-content-services.database.repo" -}}
 {{- with .Values }}
   {{- if and (not .database.url) (not .postgresql.enabled) }}
     {{- fail "You must either set database.url or postgresql.enabled" }}
