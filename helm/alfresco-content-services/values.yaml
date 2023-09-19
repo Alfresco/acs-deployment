@@ -46,6 +46,9 @@ search:
   secretName: &acs_search_secretName solr-shared-secret
 alfresco-repository:
   nameOverride: alfresco-repository
+  image:
+    repository: quay.io/alfresco/alfresco-content-repository
+    tag: 23.1.0-A27
   configuration:
     repository:
       existingConfigMap: repository

@@ -107,6 +107,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.search.existingSecret.name | string | `"solr-shared-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
+| alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
+| alfresco-repository.image.tag | string | `"23.1.0-A27"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
