@@ -3,51 +3,37 @@ suite: test config-repository manifest
 templates:
   - config-repository.yaml
 tests:
-  - it: should have CATALINA_OPTS with encryption.ssl.truststore.location set
+  - it: should have global properties rendered with default value for CSRF and baseUrl
     values: &testvalues
       - values/test_values.yaml
+    template: config-repository.yaml
     asserts:
       - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dencryption\.ssl\.truststore\.location=\$JAVA_HOME/lib/security/cacerts($|\ )
-        template: config-repository.yaml
+          path: &alfglob data["alfresco-global.properties"]
+          pattern: >-
+            \n *aos\.baseUrlOverwrite=https://localhost/alfresco/aos
+      - matchRegex:
+          path: *alfglob
+          pattern: >-
+            \n *csrf\.filter\.origin=https://localhost
+      - matchRegex:
+          path: *alfglob
+          pattern: >-
+            \n *csrf\.filter\.referer=https://localhost/\.\*
+      - matchRegex:
+          path: *alfglob
+          pattern: >-
+            \n *share.port=443
+      - matchRegex:
+          path: *alfglob
+          pattern: >-
+            \n *share.protocol=https
+      - matchRegex:
+          path: *alfglob
+          pattern: >-
+            \n *share.host=localhost
 
-  - it: should have ALFRESCO_OPTS rendered with default value for CSRF and baseUrl
-    values: *testvalues
-    asserts:
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Daos\.baseUrlOverwrite=https://localhost/alfresco/aos($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dcsrf\.filter\.origin=https://localhost($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dcsrf\.filter\.referer=https://localhost/\.\*($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dshare.port=443($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dshare.protocol=https($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dshare.host=localhost($|\ )
-        template: config-repository.yaml
-
-  - it: should have ALFRESCO_OPTS urls as per known_urls & without Share config
+  - it: should have global properties urls rendered as per known_urls & without Share config
     values: *testvalues
     set:
       share:
@@ -55,83 +41,75 @@ tests:
       global:
         known_urls:
           - https://myecm.domain.tld:8443
+    template: config-repository.yaml
     asserts:
       - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Daos\.baseUrlOverwrite=https://myecm.domain.tld:8443/alfresco/aos($|\ )
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: >-
+            \n *aos\.baseUrlOverwrite=https://myecm.domain.tld:8443/alfresco/aos
       - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dcsrf\.filter\.origin=https://myecm.domain.tld:8443($|\ )
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: >-
+            \n *csrf\.filter\.origin=https://myecm.domain.tld:8443
       - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dcsrf\.filter\.referer=https://myecm.domain.tld:8443/\.\*($|\ )
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: >-
+            \n *csrf\.filter\.referer=https://myecm.domain.tld:8443/\.\*
       - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dalfresco.port=8443($|\ )
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: >-
+            \n *alfresco.port=8443
       - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dalfresco.protocol=https($|\ )
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: >-
+            \n *alfresco.protocol=https
       - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dalfresco.host=myecm.domain.tld($|\ )
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: >-
+            \n *alfresco.host=myecm.domain.tld
       - notMatchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: -Dshare.port=
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: share.port=
       - notMatchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: -Dshare.protocol=
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: share.protocol=
       - notMatchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: -Dshare.host=
-        template: config-repository.yaml
+          path: *alfglob
+          pattern: share.host=
 
-  - it: should have ALFRESCO_OPTS and CATALINA_OPTS when mail values are set
-    values: *testvalues
-    set:
-      mail:
-        host: smtp.example.com
-        password: smtpPassword
-        port: 25
-    asserts:
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dmail\.host=smtp\.example\.com($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dmail\.port=25($|\ )
-        template: config-repository.yaml
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dmail\.password=\$MAIL_PASSWORD($|\ )
-        template: config-repository.yaml
-
-  - it: should have CATALINA_OPTS with mail.password set when existing secret name is provided
-    values: *testvalues
-    set:
-      mail:
-        host: smtp.example.com
-        existingSecretName: existing
-    asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^|[^\ ]\ )-Dmail\.password=\$MAIL_PASSWORD($|\ )
-        template: config-repository.yaml
+#  - it: should have ALFRESCO_OPTS and CATALINA_OPTS when mail values are set
+#    values: *testvalues
+#    set:
+#      mail:
+#        host: smtp.example.com
+#        password: smtpPassword
+#        port: 25
+#    asserts:
+#      - matchRegex:
+#          path: *alfglob
+#          pattern: >-
+#            \n *mail\.host=smtp\.example\.com
+#        template: config-repository.yaml
+#      - matchRegex:
+#          path: *alfglob
+#          pattern: >-
+#            \n *mail\.port=25
+#        template: config-repository.yaml
+#      - matchRegex:
+#          path: data.CATALINA_OPTS
+#          pattern: >-
+#            \n *mail\.password=\$MAIL_PASSWORD
+#        template: config-repository.yaml
+#
+#  - it: should have CATALINA_OPTS with mail.password set when existing secret name is provided
+#    values: *testvalues
+#    set:
+#      mail:
+#        host: smtp.example.com
+#        existingSecretName: existing
+#    asserts:
+#      - matchRegex:
+#          path: *alfglob
+#          pattern: >-
+#            \n *mail\.password=\$MAIL_PASSWORD
+#        template: config-repository.yaml

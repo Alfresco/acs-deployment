@@ -1,3 +1,0 @@
-{{- if and (not .Values.repository.persistence.existingClaim) .Values.repository.persistence.enabled }}
-{{ include "component_pvc" .Values.repository }}
-{{- end }}

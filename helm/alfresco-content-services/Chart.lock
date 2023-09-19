@@ -11,6 +11,9 @@ dependencies:
 - name: common
   repository: https://activiti.github.io/activiti-cloud-helm-charts
   version: 7.11.0
+- name: alfresco-repository
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 0.1.0-alpha.8
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.3.0
@@ -19,7 +22,7 @@ dependencies:
   version: 0.2.0
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.3.0
+  version: 2.0.0-alpha.2
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 4.3.0
@@ -38,5 +41,5 @@ dependencies:
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.3.0
-digest: sha256:6ad76091912aee0b130d5eef18bb86666eedabe0eb708d2b964c47ef5afe4fb6
-generated: "2023-08-29T09:00:00.411365+02:00"
+digest: sha256:c7e9f04977366989ad65cce34d440772066efd76fe0a1998dd6a9c4ed37e8cc9
+generated: "2023-09-18T12:59:32.145111+02:00"

@@ -1,5 +1,5 @@
 ---
-repository:
+alfresco-repository:
   resources:
     requests:
       cpu: "0.01"
