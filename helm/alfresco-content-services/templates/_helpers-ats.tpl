@@ -1,7 +1,7 @@
 {{/*
 Local transformers config
 */}}
-{{- define "alfresco-content-service.localTransformConfig" -}}
+{{- define "alfresco-content-services.localTransformConfig" -}}
 localTransform.core-aio.url=
 localTransform.pdfrenderer.url=http://{{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
 localTransform.imagemagick.url=http://{{ template "alfresco-transform-service.deployment-imagemagick.name" . }}
@@ -13,7 +13,7 @@ localTransform.misc.url=http://{{ template "alfresco-transform-service.deploymen
 {{/*
 ATS Tengines config
 */}}
-{{- define "alfresco-content-service.tengineConfig" -}}
+{{- define "alfresco-content-services.tengineConfig" -}}
 alfresco-pdf-renderer.url=http://{{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
 img.url=http://{{ template "alfresco-transform-service.deployment-imagemagick.name" . }}
 jodconverter.url=http://{{ template "alfresco-transform-service.deployment-libreoffice.name" . }}
@@ -24,14 +24,14 @@ transform.misc.url=http://{{ template "alfresco-transform-service.deployment-tra
 {{/*
 Get Alfresco Content Service configuration for Alfresco Transform Service
 */}}
-{{- define "alfresco-content-service.atsConfig" -}}
+{{- define "alfresco-content-services.atsConfig" -}}
 {{- $atsCtx := (dict "Values" (index .Values "alfresco-transform-service") "Chart" $.Chart "Release" $.Release) }}
-{{ template "alfresco-content-service.localTransformConfig" $atsCtx }}
+{{ template "alfresco-content-services.localTransformConfig" $atsCtx }}
 {{- if and $atsCtx.Values.filestore.enabled $atsCtx.Values.transformrouter.enabled }}
 {{- $routerCtx := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
 {{- $sfsCtx := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
 transform.service.url=http://{{ template "alfresco-transform-service.deployment-transform-router.name" $atsCtx }}
 sfs.url=http://{{ template "alfresco-transform-service.deployment-filestore.name" $atsCtx }}
-{{ template "alfresco-content-service.tengineConfig" $atsCtx }}
+{{ template "alfresco-content-services.tengineConfig" $atsCtx }}
 {{- end }}
 {{- end }}

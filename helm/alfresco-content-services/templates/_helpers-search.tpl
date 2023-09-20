@@ -1,10 +1,10 @@
 {{/*
 Compute the search URL
 
-Usage: include "alfresco-content-service.search.url" $
+Usage: include "alfresco-content-services.search.url" $
 
 */}}
-{{- define "alfresco-content-service.search.url" -}}
+{{- define "alfresco-content-services.search.url" -}}
 {{- with .Values }}
   {{- if or .search.url $.Values.global.elasticsearch.url }}
     {{- .search.url | default $.Values.global.elasticsearch.url }}
@@ -25,10 +25,10 @@ Usage: include "alfresco-content-service.search.url" $
 {{/*
 Compute the search "flavor"
 
-Usage: include "alfresco-content-service.search.flavor" $
+Usage: include "alfresco-content-services.search.flavor" $
 
 */}}
-{{- define "alfresco-content-service.search.flavor" -}}
+{{- define "alfresco-content-services.search.flavor" -}}
 {{- with .Values }}
   {{- if .search.flavor }}
     {{- .search.flavor }}

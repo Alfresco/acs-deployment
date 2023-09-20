@@ -4,16 +4,16 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.infrastructure.configMapName }}
   labels:
-    {{- include "repository.labels" . | nindent 4 }}
+    {{- include "alfresco-content-services.labels" . | nindent 4 }}
 data:
   {{- $repoCtx := dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release }}
   repo_svc_name: {{ template "alfresco-repository.fullname" $repoCtx }}
   repo_svc_port: {{ .Values.repository.service.externalPort | quote }}
-  {{- $db_url := include "alfresco-content-service.database.repo" $ }}
+  {{- $db_url := include "alfresco-content-services.database.repo" $ }}
   {{ template "alfresco-repository.db.cm" (dict "url" $db_url "driver" .Values.database.driver) }}
-  {{ template "alfresco-repository.mq.cm" (include "alfresco-content-service.mq.url" .) }}
+  {{ template "alfresco-repository.mq.cm" (include "alfresco-content-services.mq.url" .) }}
   {{- $search_url := "" }}
-  {{- $search_flavor := include "alfresco-content-service.search.flavor" . }}
+  {{- $search_flavor := include "alfresco-content-services.search.flavor" . }}
   {{- $searchCtx := dict "Values" (index .Values "alfresco-search") "Chart" .Chart "Release" .Release }}
   {{- if index .Values "alfresco-search" "enabled" }}
   {{- $search_url = printf "http://%s-solr/solr" (include "alfresco-search-service.fullname" $searchCtx) }}
@@ -25,4 +25,4 @@ data:
   {{- if ne "noindex" $search_flavor }}
   SEARCH_URL: {{ $search_url }}
   {{- end }}
-  SEARCH_FLAVOR: {{ template "alfresco-content-service.search.flavor" . }}
+  SEARCH_FLAVOR: {{ template "alfresco-content-services.search.flavor" . }}
