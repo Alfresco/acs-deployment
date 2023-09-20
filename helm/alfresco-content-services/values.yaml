@@ -251,7 +251,7 @@ alfresco-search:
   enabled: true
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.1.0-A1
+    tag: 2.0.8.1
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
