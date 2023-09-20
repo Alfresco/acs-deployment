@@ -1,0 +1,43 @@
+---
+suite: test repository properties in a secret
+templates:
+  - config-repository-infrastructure.yaml
+  - secret-search.yaml
+tests:
+  - it: should render default config (solr6 with secret)
+    values: &testvalues
+      - values/test_values.yaml
+    template: config-repository-infrastructure.yaml
+    asserts:
+      - equal:
+          path: data.SOLR_SECRET
+          value: ZHVtbXk=
+        template: secret-search.yaml
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: secret
+      - equal:
+          path: data.SEARCH_URL
+          value: http://RELEASE-NAME-alfresco-search-solr/solr
+      - equal:
+          path: data.SEARCH_HOST
+          value: RELEASE-NAME-alfresco-search-solr
+      - equal:
+          path: data.SEARCH_PORT
+          value: "80"
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: solr6
+      - equal:
+          path: data.SOLR_BASE_URL
+          value: /solr
+  - it: should not render a secret render property with default credentials
+    values: *testvalues
+    set:
+      global:
+        search:
+          securecomms: none
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: secret-search.yaml
