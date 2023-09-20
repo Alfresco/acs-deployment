@@ -17,12 +17,12 @@ data:
   {{- $searchCtx := dict "Values" (index .Values "alfresco-search") "Chart" .Chart "Release" .Release }}
   {{- if index .Values "alfresco-search" "enabled" }}
   {{- $search_url = printf "http://%s-solr/solr" (include "alfresco-search-service.fullname" $searchCtx) }}
-  SEARCH_SECURECOMMS: {{ .Values.global.tracking.auth | default "secret" }}
   SEARCH_HOST: {{ template "alfresco-common.url.host" $search_url }}
   SEARCH_PORT: {{ include "alfresco-common.url.port" $search_url | quote }}
   SOLR_BASE_URL: {{ include "alfresco-common.url.path" $search_url | default "/solr" }}
   {{- end }}
   {{- if ne "noindex" $search_flavor }}
+  SEARCH_SECURECOMMS: {{ .Values.global.search.securecomms }}
   SEARCH_URL: {{ $search_url }}
   {{- end }}
   SEARCH_FLAVOR: {{ template "alfresco-content-services.search.flavor" . }}

@@ -204,10 +204,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
 | global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
+| global.search.flavor | string | `nil` | set the type of search service used externally (solr6 of elasticsearch) |
+| global.search.secretName | string | `"solr-shared-secret"` | Name of the secret managed by this chart |
+| global.search.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
+| global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
+| global.search.url | string | `nil` | set this URL if you have an external search service |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
-| global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic. Strong enough secret can be generated with `openssl rand 20 -base64` |
 | imap | object | `{"mail":{"from":{"default":null},"to":{"default":null}},"server":{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | mail | object | `{"encoding":"UTF-8","existingSecretName":null,"from":{"default":null,"enabled":false},"host":null,"password":null,"port":25,"protocol":"smtps","smtp":{"auth":true,"debug":false,"starttls":{"enable":true},"timeout":30000},"smtps":{"auth":true,"starttls":{"enable":true}},"username":null}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
@@ -251,7 +254,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.awsKmsKeyId | string | `nil` |  |
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
-| search.secretName | string | `"solr-shared-secret"` | Name of the secret managed by this chart |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | share.image.tag | string | `"23.1.0-M4"` |  |

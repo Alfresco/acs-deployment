@@ -14,6 +14,8 @@
 # max heap to 1/4th of container's memory which may not be ideal. Hence, setting
 # up explicit Container memory and then assigning a percentage of it to the JVM
 # for performance tuning.
+infrastructure:
+  configMapName: &infrastructure_cmName alfresco-infrastructure
 global:
   # -- list of trusted URLs.
   # URLs a re used to configure Cross-origin protections
@@ -21,17 +23,17 @@ global:
   known_urls:
     - https://localhost
     - http://localhost
-  # A shared secret is now required in order to authenticate connections between
-  # solr and repo (typically: tracking)
-  tracking:
-    # -- Select how solr and repo authenticate to each other
-    # none: work only prior to acs 7.2 (and was the default)
-    # secret: use a shared secret (to specify using `tracking.sharedsecret`)
-    # https: to use mTLS auth (require appropriate certificate configuration)
-    auth: secret
-    # -- Shared secret to authenticate repo/solr traffic.
-    # Strong enough secret can be generated with `openssl rand 20 -base64`
-    sharedsecret: null
+  search:
+    # -- set this URL if you have an external search service
+    url: null
+    # -- set the type of search service used externally (solr6 of elasticsearch)
+    flavor: null
+    # -- set the security level used with the external search service (secret, none or https)
+    securecomms: secret
+    # -- Mandatory secret to provide when using Solr search with 'secret' security level
+    sharedSecret: null
+    # -- Name of the secret managed by this chart
+    secretName: &acs_search_secretName solr-shared-secret
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -57,8 +59,6 @@ global:
     user: null
     # -- The password required to access the service, if any
     password: null
-infrastructure:
-  configMapName: &infrastructure_cmName alfresco-infrastructure
 database:
   # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false
@@ -84,9 +84,6 @@ messageBroker:
   password: null
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
-search:
-  # -- Name of the secret managed by this chart
-  secretName: &acs_search_secretName solr-shared-secret
 alfresco-repository:
   nameOverride: alfresco-repository
   image:
