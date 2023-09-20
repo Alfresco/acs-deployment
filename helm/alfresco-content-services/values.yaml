@@ -287,6 +287,7 @@ database:
   url: null
   # -- Name of the secret managed by this chart
   secretName: &acs_database_secretName acs-alfresco-cs-dbsecret
+  configMapName: &acs_database_configMapName acs-alfresco-cs-dbconfigmap
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
   # When using embedded postgres you need to also set `postgresql.existingSecret`.
   existingSecretName: null
@@ -312,11 +313,11 @@ alfresco-search-enterprise:
         tag: 3.4.0-M1
   reindexing:
     enabled: true
-    postgresql:
-      url: null
-      hostname: postgresql-acs
-      database: alfresco
-      existingSecretName: *acs_database_secretName
+    db:
+      existingSecret:
+        name: *acs_database_secretName
+      existingConfigMap:
+        name: *acs_database_configMapName
     image:
       tag: 3.4.0-M1
 alfresco-digital-workspace:

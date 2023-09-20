@@ -23,7 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 1.4.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 2.0.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 1.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.3.0 |
@@ -105,12 +105,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"3.4.0-M1"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"acs-alfresco-cs-dbconfigmap"` |  |
+| alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"acs-alfresco-cs-dbsecret"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
 | alfresco-search-enterprise.reindexing.image.tag | string | `"3.4.0-M1"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.database | string | `"alfresco"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.existingSecretName | string | `"acs-alfresco-cs-dbsecret"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.hostname | string | `"postgresql-acs"` |  |
-| alfresco-search-enterprise.reindexing.postgresql.url | string | `nil` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | alfresco-search.enabled | bool | `true` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
@@ -165,6 +163,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.transformrouter.image.tag | string | `"3.0.1-A3"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | apiexplorer | object | `{"ingress":{"path":"/api-explorer"}}` | Declares the api-explorer service used by the content repository |
+| database.configMapName | string | `"acs-alfresco-cs-dbconfigmap"` |  |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
 | database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |
 | database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |

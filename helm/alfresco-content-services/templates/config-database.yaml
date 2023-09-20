@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.database.configMapName }}
+  labels:
+    {{- include "repository.labels" . | nindent 4 }}
+data:
+  {{- $databaseURL := .Values.database.url }}
+  {{- if not .Values.database.external }}
+  {{- $databaseURL = (printf "jdbc:postgresql://%s-%s:%d/%s" .Release.Name .Values.postgresql.nameOverride (int .Values.postgresql.primary.service.ports.postgresql) .Values.postgresql.auth.database) }}
+  {{- end }}
+  DATABASE_URL: {{ $databaseURL }}
