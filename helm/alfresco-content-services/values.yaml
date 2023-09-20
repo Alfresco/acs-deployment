@@ -299,6 +299,8 @@ alfresco-digital-workspace:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 4.2.0
     pullPolicy: IfNotPresent
+  registryPullSecrets:
+    - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -340,6 +342,8 @@ alfresco-control-center:
     repository: quay.io/alfresco/alfresco-control-center
     tag: 8.2.0
     pullPolicy: IfNotPresent
+  registryPullSecrets:
+    - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -570,8 +574,6 @@ global:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  registryPullSecrets:
-    - quay-registry-secret
   ai:
     # -- Enable AI capabilities in ADW AI plugin
     enabled: false

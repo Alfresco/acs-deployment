@@ -67,6 +67,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.ingress.tls | list | `[]` |  |
 | alfresco-control-center.nameOverride | string | `"alfresco-cc"` |  |
 | alfresco-control-center.nodeSelector | object | `{}` |  |
+| alfresco-control-center.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-control-center.resources.limits.cpu | string | `"1"` |  |
 | alfresco-control-center.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-control-center.resources.requests.cpu | string | `"0.25"` |  |
@@ -90,6 +91,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
 | alfresco-digital-workspace.nodeSelector | object | `{}` |  |
+| alfresco-digital-workspace.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-digital-workspace.resources.limits.cpu | string | `"1"` |  |
 | alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-digital-workspace.resources.requests.cpu | string | `"0.25"` |  |
@@ -203,7 +205,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.known_urls[0] | string | `"https://localhost"` |  |
 | global.known_urls[1] | string | `"http://localhost"` |  |
-| global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
