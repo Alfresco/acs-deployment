@@ -1,13 +1,13 @@
 ---
 suite: test repository properties in a secret
 templates:
-  - config-repository-infrastructure.yaml
+  - config-infrastructure.yaml
   - secret-search.yaml
 tests:
   - it: should render default config (solr6 with secret)
     values: &testvalues
       - values/test_values.yaml
-    template: config-repository-infrastructure.yaml
+    template: config-infrastructure.yaml
     asserts:
       - equal:
           path: data.SOLR_SECRET
