@@ -2,7 +2,7 @@
 # the chart
 repository:
   image:
-    tag: 7.4.1
+    tag: 7.4.1.1
 alfresco-transform-service:
   transformrouter:
     image:
@@ -30,13 +30,13 @@ alfresco-ai-transformer:
     tag: 2.0.0
 share:
   image:
-    tag: 7.4.1
+    tag: 7.4.1.1
 activemq:
   image:
     tag: null
 alfresco-search:
   searchServicesImage:
-    tag: 2.0.8
+    tag: 2.0.8.1
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
@@ -57,10 +57,10 @@ alfresco-search-enterprise:
       tag: 3.3.1
 alfresco-digital-workspace:
   image:
-    tag: 4.1.0
+    tag: 4.2.0
 alfresco-control-center:
   image:
-    tag: 8.1.0
+    tag: 8.2.0
 postgresql:
   image:
     tag: 14.4.0

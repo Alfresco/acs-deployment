@@ -29,7 +29,7 @@ repository:
     type: Recreate
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.1.0-A27
+    tag: 23.1.0-M4
     pullPolicy: IfNotPresent
     internalPort: 8080
     hazelcastPort: 5701
@@ -179,42 +179,42 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 3.0.1-A3
+      tag: 3.1.0-M1
   pdfrenderer:
     # -- Declares the alfresco-pdf-renderer service used by the content repository
     # to transform pdf files
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 4.0.1-A3
+      tag: 5.0.0-A1
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 4.0.1-A3
+      tag: 5.0.0-A1
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 4.0.1-A3
+      tag: 5.0.0-A1
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 4.0.1-A3
+      tag: 5.0.0-A1
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 4.0.1-A3
+      tag: 5.0.0-A1
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -222,7 +222,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 3.0.1-A3
+      tag: 3.1.0-M1
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -234,7 +234,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.1.0-A27
+    tag: 23.1.0-M4
   nameOverride: share
   repository:
     existingConfigMap:
@@ -251,7 +251,7 @@ alfresco-search:
   enabled: true
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.0.8
+    tag: 2.0.8.1
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -301,16 +301,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 3.4.0-M1
+        tag: 4.0.0-M1
     content:
       image:
-        tag: 3.4.0-M1
+        tag: 4.0.0-M1
     metadata:
       image:
-        tag: 3.4.0-M1
+        tag: 4.0.0-M1
     path:
       image:
-        tag: 3.4.0-M1
+        tag: 4.0.0-M1
   reindexing:
     enabled: true
     db:
@@ -319,7 +319,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *acs_database_configMapName
     image:
-      tag: 3.4.0-M1
+      tag: 4.0.0-M1
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -337,7 +337,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.1.0-5529585677
+    tag: 4.2.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -378,7 +378,7 @@ alfresco-control-center:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.1.0-5529585677
+    tag: 8.2.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -550,7 +550,7 @@ alfresco-sync-service:
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
   image:
-    tag: 4.0.0-M10
+    tag: 4.0.0-M11
   postgresql:
     enabled: true
     image:
@@ -580,7 +580,7 @@ alfresco-ai-transformer:
     existingSecretName: *acs_messageBroker_secretName
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 2.0.1-A4
+    tag: 2.1.0-M1
 #  aws:
 #    accessKey:
 #    secretAccessKey:
