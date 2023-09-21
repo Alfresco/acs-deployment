@@ -293,6 +293,9 @@ alfresco-search:
     #      - chart-example.local
 alfresco-search-enterprise:
   enabled: false
+  ats:
+    existingConfigMap:
+      name: *infrastructure_cmName
   elasticsearch:
     # -- Enables the embedded elasticsearch cluster
     enabled: true

@@ -115,6 +115,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
+| alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.0-M1"` |  |
