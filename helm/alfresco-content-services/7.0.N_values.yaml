@@ -57,5 +57,5 @@ alfresco-connector-msteams:
 alfresco-control-center:
   enabled: false
 global:
-  tracking:
-    auth: none
+  search:
+    securecomms: none

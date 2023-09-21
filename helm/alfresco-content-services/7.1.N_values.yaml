@@ -75,5 +75,5 @@ alfresco-connector-ms365:
 alfresco-control-center:
   enabled: false
 global:
-  tracking:
-    auth: none
+  search:
+    securecomms: none
