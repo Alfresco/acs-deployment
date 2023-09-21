@@ -144,11 +144,15 @@ First ensure that:
 * the
   [supported-matrix](https://github.com/Alfresco/alfresco-updatecli/blob/master/deployments/values/supported-matrix.yaml)
   reflects the status of the currently released Alfresco products and update if
-  necessary before proceeding with the release.
-* the [Bump component
-  versions](https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml)
+  necessary before proceeding.
+* the [components charts](https://github.com/Alfresco/alfresco-helm-charts) used
+  in [alfresco-content-services](helm/alfresco-content-services/Chart.yaml) have
+  been released in stable version (no pre-release version should be present in
+  Chart.yaml), with up-to-date components versions by running the [Bump versions
+  workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml)
+* the [Bump versions](https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml)
   workflow has been run to reflect the changes of the current `supported-matrix`
-  in the helm charts values files.
+  in the helm charts values files and to grab the latest helm charts dependencies.
 
 Start the release by opening a PR against the appropriate branch that will:
 

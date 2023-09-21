@@ -1,11 +1,9 @@
 name: "Helm autodiscovery for charts dependencies"
 
-   
 autodiscovery:
   crawlers:
     helm:
       # Increment manually because we have custom rules
       versionincrement: none
-      # Tags in values are handled via dedicated uber-manifest.tpl in
-      # alfresco-updatecli
+      # Tags in values are handled separately via uber-manifest.tpl
       ignorecontainer: true

@@ -1,5 +1,5 @@
 ---
-name: Bump component versions
+name: Bump versions
 
 on:
   push:
@@ -10,14 +10,68 @@ on:
       - '**'
   workflow_dispatch:
     inputs:
+      update-type:
+        description: 'Which dependencies to bump'
+        type: choice
+        options:
+        - charts
+        - values
       alfresco-updatecli-ref:
         description: "The version to use for alfresco/alfresco-updatecli configs"
         type: string
         default: master
 
+env:
+  UPDATE_CLI_VERSION: v0.57.0
+
 jobs:
-  updatecli:
+  bump-charts-dependencies:
     runs-on: ubuntu-latest
+    name: Helm charts dependencies
+    if: inputs.update-type == 'charts'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+      - name: Login to quay.io
+        uses: docker/login-action@v2
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+
+      - name: Install Updatecli
+        uses: updatecli/updatecli-action@v2
+        with:
+          version: ${{ env.UPDATE_CLI_VERSION }}
+
+      - run: updatecli apply --experimental
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
+      - name: Regenerate helm docs if necessary
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
+        with:
+          pre-commit-args: helm-docs || true
+          skip_checkout: "true"
+
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: |
+            🛠 Updatecli pipeline bump
+          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
+          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
+          branch: ${{ github.ref_name == 'main' && 'updatecli-bump-helm' || github.ref_name }}
+          create_branch: ${{ github.ref_name == 'main' }}
+          push_options: ${{ github.ref_name == 'main' && '--force' || '' }}
+
+  bump-values-dependencies:
+    runs-on: ubuntu-latest
+    name: Image tags values dependencies
+    if: inputs.update-type == 'values'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +81,7 @@ jobs:
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.57.0
+          version: ${{ env.UPDATE_CLI_VERSION }}
 
       - name: Checkout updatecli configs
         uses: actions/checkout@v4
