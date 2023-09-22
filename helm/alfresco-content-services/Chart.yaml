@@ -17,7 +17,7 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: alfresco-common
-    version: 2.1.0
+    version: 3.0.0-alpha.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     version: 12.8.5
@@ -56,7 +56,7 @@ dependencies:
     version: 4.3.0
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 2.0.0-alpha.0
+    version: 3.0.0-alpha.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams

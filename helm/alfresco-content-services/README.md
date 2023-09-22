@@ -20,11 +20,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.8 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 2.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.3.0 |
@@ -67,6 +67,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.ingress.tls | list | `[]` |  |
 | alfresco-control-center.nameOverride | string | `"alfresco-cc"` |  |
 | alfresco-control-center.nodeSelector | object | `{}` |  |
+| alfresco-control-center.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-control-center.resources.limits.cpu | string | `"1"` |  |
 | alfresco-control-center.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-control-center.resources.requests.cpu | string | `"0.25"` |  |
@@ -90,6 +91,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
 | alfresco-digital-workspace.nodeSelector | object | `{}` |  |
+| alfresco-digital-workspace.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-digital-workspace.resources.limits.cpu | string | `"1"` |  |
 | alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
 | alfresco-digital-workspace.resources.requests.cpu | string | `"0.25"` |  |
@@ -113,6 +115,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
+| alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.0-M1"` |  |
@@ -201,13 +204,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.elasticsearch.port | int | `9200` | The port where service is available |
 | global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
 | global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
-| global.known_urls[0] | string | `"https://localhost"` |  |
-| global.known_urls[1] | string | `"http://localhost"` |  |
-| global.registryPullSecrets[0] | string | `"quay-registry-secret"` |  |
+| global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
+| global.search.flavor | string | `nil` | set the type of search service used externally (solr6 of elasticsearch) |
+| global.search.secretName | string | `"solr-shared-secret"` | Name of the secret managed by this chart |
+| global.search.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
+| global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
+| global.search.url | string | `nil` | set this URL if you have an external search service |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
-| global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic. Strong enough secret can be generated with `openssl rand 20 -base64` |
 | imap | object | `{"mail":{"from":{"default":null},"to":{"default":null}},"server":{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | mail | object | `{"encoding":"UTF-8","existingSecretName":null,"from":{"default":null,"enabled":false},"host":null,"password":null,"port":25,"protocol":"smtps","smtp":{"auth":true,"debug":false,"starttls":{"enable":true},"timeout":30000},"smtps":{"auth":true,"starttls":{"enable":true}},"username":null}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
@@ -251,7 +255,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | s3connector.secrets.awsKmsKeyId | string | `nil` |  |
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
-| search.secretName | string | `"solr-shared-secret"` | Name of the secret managed by this chart |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | share.image.tag | string | `"23.1.0-M4"` |  |

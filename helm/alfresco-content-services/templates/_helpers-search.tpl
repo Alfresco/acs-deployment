@@ -6,8 +6,8 @@ Usage: include "alfresco-content-services.search.url" $
 */}}
 {{- define "alfresco-content-services.search.url" -}}
 {{- with .Values }}
-  {{- if or .search.url $.Values.global.elasticsearch.url }}
-    {{- .search.url | default $.Values.global.elasticsearch.url }}
+  {{- if .global.search.url }}
+    {{- .global.search.url }}
   {{- else if and (index . "alfresco-search-enterprise" "enabled")  (index . "alfresco-search-enterprise" "elasticsearch" "enabled") }}
     {{- with (index . "alfresco-search-enterprise") }}
       {{/* DRY needs a named template in subchart */}}
@@ -30,8 +30,8 @@ Usage: include "alfresco-content-services.search.flavor" $
 */}}
 {{- define "alfresco-content-services.search.flavor" -}}
 {{- with .Values }}
-  {{- if .search.flavor }}
-    {{- .search.flavor }}
+  {{- if .global.search.flavor }}
+    {{- .global.search.flavor }}
   {{- else if (index . "alfresco-search-enterprise" "enabled") }}
       {{- print "elasticsearch" }}
   {{- else if (index . "alfresco-search" "enabled") }}

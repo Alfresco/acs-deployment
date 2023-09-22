@@ -1,7 +1,7 @@
 ---
 suite: test ActiveMQ config
 templates:
-  - config-repository-infrastructure.yaml
+  - config-infrastructure.yaml
   - secret-message-broker.yaml
 tests:
   - it: should render default ActiveMQ
@@ -11,7 +11,7 @@ tests:
       - equal:
           path: data.BROKER_URL
           value: failover:(nio://RELEASE-NAME-activemq-broker:61616)?timeout=3000&jms.useCompression=true
-        template: config-repository-infrastructure.yaml
+        template: config-infrastructure.yaml
       - equal:
           path: data.BROKER_USERNAME
           value: YWRtaW4=
@@ -27,7 +27,7 @@ tests:
       - equal:
           path: data.BROKER_URL
           value: failover:(nio://somebroker:61616)
-        template: config-repository-infrastructure.yaml
+        template: config-infrastructure.yaml
       - equal:
           path: data.BROKER_USERNAME
           value: YWxmcmVzY28=
