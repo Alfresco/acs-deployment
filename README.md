@@ -78,6 +78,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 | [6.0.2][6.0.2]         | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
 | [6.1.0-M.1][6.1.0-M.1] | 23.1.0-A19 | 7.4.0.1 | 7.3.1   | 7.2.1.11 | 7.1.1.8 | 7.0.1.10 | 7.4.0.1   |
 | [7.0.0-M.1][7.0.0-M.1] | 23.1.0-A27 | 7.4.1   | 7.3.1   | 7.2.1.12 | 7.1.1.8 | 7.0.1.10 | 7.4.1     |
+| [7.0.0-M.2][7.0.0-M.2] | 23.1.0-M4  | 7.4.1.1 | 7.3.1   | 7.2.1.12 | 7.1.1.8 | 7.0.1.10 | 7.4.1.1   |
 
 [5.0.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.0.1
 [5.1.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1
@@ -88,6 +89,7 @@ The table below shows the exact version of ACS deployed with each chart version/
 [6.0.2]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.0.2
 [6.1.0-M.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.1.0-M.1
 [7.0.0-M.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.0-M.1
+[7.0.0-M.2]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.0-M.2
 
 ### Why there is no 5.4.0?
 
@@ -158,8 +160,8 @@ Start the release by opening a PR against the appropriate branch that will:
 
 * Update the [versioning table](#versioning)
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
-  bump chart version to the version you want to release (usually by removing the
-  `-SNAPSHOT` suffix and adding `-M.x` suffix if it's a prerelease)
+  bump chart version to the version you want to release (use `-M.x` suffix if
+  it's a prerelease)
 * Run `pre-commit run --all-files helm-docs` to update helm docs
 * Edit [upgrades docs](docs/helm/upgrades.md) renaming the `To be released`
   section to the current version and create a new `To be released` section for
@@ -180,22 +182,7 @@ removing dependabot entries and other not-really useful changelog entries.
 
 Publish the release (remove draft status).
 
-Now proceed and open a PR to move back to the next development version:
-
-* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
-  bump chart version to the next development release (usually by increasing the
-  minor version and adding the `-SNAPSHOT` suffix)
-* Run `pre-commit run --all-files helm-docs` to update docs
-
-Once the PR has been merged, overwrite and push the signed mutable tag with:
-
-```sh
-git tag -d vx.x.x-SNAPSHOT
-git tag -f -s vx.x.x-SNAPSHOT -m vx.x.x-SNAPSHOT
-git push origin vx.x.x-SNAPSHOT --force
-```
-
-Once the tagged workflow is successful, the release process has completed.
+Once the tagged workflow is successful, the release process is completed.
 
 ## How to update workflow diagrams of Alfresco latest version
 

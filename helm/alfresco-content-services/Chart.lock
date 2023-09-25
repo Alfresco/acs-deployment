@@ -22,21 +22,21 @@ dependencies:
   version: 1.3.0
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.3.0
+  version: 4.4.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.0.0-alpha.0
+  version: 2.0.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.2.0
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0
+  version: 0.1.1
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.4.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.3.0
-digest: sha256:dd03e4dd3198c86c65e35b2ac43cb2883a91cd27b943319b3ecd6b19ded3d283
-generated: "2023-09-08T16:36:16.483837+02:00"
+digest: sha256:95c0793bd427c4ef6def9c9a62e850896685e0b5f52230294eef6872508abb8d
+generated: "2023-09-21T09:14:02.271557+02:00"
