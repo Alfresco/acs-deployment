@@ -106,9 +106,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.configuration.repository.existingConfigMap | string | `"repository"` |  |
+| alfresco-repository.configuration.repository.existingSecrets[0].key | string | `"license.lic"` |  |
+| alfresco-repository.configuration.repository.existingSecrets[0].name | string | `"repository-secrets"` |  |
+| alfresco-repository.configuration.repository.existingSecrets[0].purpose | string | `"acs-license"` |  |
+| alfresco-repository.configuration.repository.existingSecrets[1].key | string | `"MAIL_PASSWORD"` |  |
+| alfresco-repository.configuration.repository.existingSecrets[1].name | string | `"outbound-email"` |  |
 | alfresco-repository.configuration.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.search.existingSecret.name | string | `"solr-shared-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
+| alfresco-repository.environment.JAVA_OPTS | string | `"-Dmail.password=$MAIL_PASSWORD"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | alfresco-repository.image.tag | string | `"23.1.0-A27"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
@@ -205,6 +211,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
 | global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
+| global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
+| global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
+| global.mail.port | int | `587` | SMTP server port |
+| global.mail.protocol | string | `"smtp"` | SMTP protocol to use. Either smtp or smtps |
 | global.search.flavor | string | `nil` | set the type of search service used externally (solr6 of elasticsearch) |
 | global.search.secretName | string | `"solr-shared-secret"` | Name of the secret managed by this chart |
 | global.search.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
@@ -214,10 +224,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | imap | object | `{"mail":{"from":{"default":null},"to":{"default":null}},"server":{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
-| mail | object | `{"encoding":"UTF-8","existingSecretName":null,"from":{"default":null,"enabled":false},"host":null,"password":null,"port":25,"protocol":"smtps","smtp":{"auth":true,"debug":false,"starttls":{"enable":true},"timeout":30000},"smtps":{"auth":true,"starttls":{"enable":true}},"username":null}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
-| mail.existingSecretName | string | `nil` | An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value |
-| mail.from.default | string | `nil` | Specifies the email address from which email notifications are sent |
-| mail.host | string | `nil` | SMTP(S) host server to enable delivery of site invitations, activity notifications and workflow tasks by email |
 | messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection details (activemq.enabled msut also be set to false) |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
