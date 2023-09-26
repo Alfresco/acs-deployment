@@ -30,7 +30,7 @@ data:
     {{- include "alfresco-content-services.atsConfig" . | indent 4 }}
     {{- end }}
     {{- with .Values.global.mail }}
-    {{- if or .host }}
+    {{- if .host }}
     mail.host={{ .host }}
     mail.port={{ .port }}
     mail.protocol={{ .protocol }}
