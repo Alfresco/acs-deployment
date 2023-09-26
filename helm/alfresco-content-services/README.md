@@ -23,7 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.10 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.11 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.1 |
@@ -111,10 +111,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.repository.existingSecrets[0].purpose | string | `"acs-license"` |  |
 | alfresco-repository.configuration.repository.existingSecrets[1].key | string | `"MAIL_PASSWORD"` |  |
 | alfresco-repository.configuration.repository.existingSecrets[1].name | string | `"outbound-email"` |  |
+| alfresco-repository.configuration.repository.existingSecrets[1].purpose | string | `"property:mail.password"` |  |
 | alfresco-repository.configuration.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.search.existingSecret.name | string | `"solr-shared-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
-| alfresco-repository.environment.JAVA_OPTS | string | `"-Dmail.password=$MAIL_PASSWORD"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | alfresco-repository.image.tag | string | `"23.1.0-A27"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |

@@ -115,6 +115,7 @@ alfresco-repository:
           purpose: acs-license
         - name: outbound-email
           key: MAIL_PASSWORD
+          purpose: property:mail.password
     db:
       existingConfigMap:
         name: *infrastructure_cmName
@@ -138,9 +139,6 @@ alfresco-repository:
     # -- Specify a storageClass for dynamic provisioning
     accessModes:
       - ReadWriteMany
-  environment:
-    JAVA_OPTS: >-
-      -Dmail.password=$MAIL_PASSWORD
 repository:
   # -- Administrator password for ACS in NTLM hash format to set at bootstrap time
   adminPassword: "209c6174da490caeb422f3fa5a7ae634"
