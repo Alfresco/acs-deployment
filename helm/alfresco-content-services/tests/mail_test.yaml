@@ -1,0 +1,23 @@
+---
+suite: test mail features
+templates:
+  - secret-mail.yaml
+tests:
+  - it: should not render a secret by default
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should not have a secret manifest at all when existingSecretName is set
+    values: *testvalues
+    set:
+      global:
+        mail:
+          host: smtp.domain.tld
+          username: someone
+          password: somepass
+    asserts:
+      - equal:
+          path: data.MAIL_PASSWORD
+          value: c29tZXBhc3M=

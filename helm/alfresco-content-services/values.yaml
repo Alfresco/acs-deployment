@@ -23,6 +23,23 @@ global:
   known_urls:
     - https://localhost
     - http://localhost
+  # -- For a full information of configuring the outbound email system, see
+  # https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails
+  mail:
+    # -- SMTP server to use for the system to send outgoing email
+    host: null
+    # -- SMTP server port
+    port: 587
+    # -- SMTP protocol to use. Either smtp or smtps
+    protocol: smtp
+    username: anonymous
+    password: null
+    smtp:
+      auth: true
+      starttls:
+        enable: true
+    smtps:
+      auth: true
   search:
     # -- set this URL if you have an external search service
     url: null
@@ -92,6 +109,13 @@ alfresco-repository:
   configuration:
     repository:
       existingConfigMap: repository
+      existingSecrets:
+        - name: repository-secrets
+          key: license.lic
+          purpose: acs-license
+        - name: outbound-email
+          key: MAIL_PASSWORD
+          purpose: property:mail.password
     db:
       existingConfigMap:
         name: *infrastructure_cmName
@@ -503,32 +527,6 @@ email:
         repository: busybox
         tag: 1.35.0
         pullPolicy: IfNotPresent
-# -- For a full information of configuring the outbound email system, see
-# https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails
-mail:
-  # -- SMTP(S) host server to enable delivery of site invitations, activity notifications and workflow tasks by email
-  host: null
-  port: 25
-  protocol: smtps
-  encoding: UTF-8
-  username: null
-  password: null
-  # -- An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value
-  existingSecretName: null
-  from:
-    # -- Specifies the email address from which email notifications are sent
-    default: null
-    enabled: false
-  smtp:
-    auth: true
-    debug: false
-    timeout: 30000
-    starttls:
-      enable: true
-  smtps:
-    auth: true
-    starttls:
-      enable: true
 # -- For a full information of configuring the imap subsystem, see
 # https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties
 imap:

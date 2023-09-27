@@ -29,6 +29,19 @@ data:
     {{- if index .Values "alfresco-transform-service" "enabled" }}
     {{- include "alfresco-content-services.atsConfig" . | indent 4 }}
     {{- end }}
+    {{- with .Values.global.mail }}
+    {{- if .host }}
+    mail.host={{ .host }}
+    mail.port={{ .port }}
+    mail.protocol={{ .protocol }}
+    mail.smtp.auth={{ .smtp.auth }}
+    mail.smtps.auth={{ .smtp.auth }}
+    mail.smtp.starttls.enable={{ .smtp.starttls.enable }}
+    {{- if or .smtp.auth .smtps.auth }}
+    mail.username={{ .username }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
     {{/*
     {{- if .Values.s3connector.enabled }}
     {{- range $key, $val := .Values.s3connector.config }}
@@ -64,28 +77,10 @@ data:
     javax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
     {{- end }}
     {{- end }}
-    {{- if .Values.mail.host }}
-    mail.encoding={{ .Values.mail.encoding }}
-    mail.host={{ .Values.mail.host }}
-    mail.port={{ .Values.mail.port }}
-    mail.protocol={{ .Values.mail.protocol }}
-    mail.username={{ .Values.mail.username }}
-    mail.from.default={{ .Values.mail.from.default }}
-    mail.from.enabled={{ .Values.mail.from.enabled }}
-    mail.smtp.auth={{ .Values.mail.smtp.auth }}
-    mail.smtp.debug={{ .Values.mail.smtp.debug }}
-    mail.smtp.starttls.enable={{ .Values.mail.smtp.starttls.enable }}
-    mail.smtp.timeout={{ .Values.mail.smtp.timeout }}
-    mail.smtps.auth={{ .Values.mail.smtps.auth }}
-    mail.smtps.starttls.enable={{ .Values.mail.smtps.starttls.enable }}
-    {{- end }}
     {{- if index .Values "alfresco-sync-service" "enabled" }}
     dsync.service.uris={{ $alfUrl }}/syncservice
     {{- else }}
     events.subsystem.autoStart=false
-    {{- end }}
-    {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
-    mail.password=$MAIL_PASSWORD
     {{- end }}
     {{- if .Values.s3connector.enabled }}
     {{- if .Values.s3connector.secrets.accessKey }}
