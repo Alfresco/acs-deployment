@@ -146,7 +146,6 @@ repository:
   # it must be contained within a `data['*.lic']` property
   # For details on how to manage license, see:
   # https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md
-  licenseSecret: null
   replicaCount: 2
   service:
     externalPort: 80
