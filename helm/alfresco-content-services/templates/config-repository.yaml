@@ -8,7 +8,7 @@ data:
   alfresco-global.properties: |
     {{- $alfUrl := include "alfresco-common.external.url" . }}
     deployment.method=HELM_CHART
-    alfresco.cluster.enabled={{ gt (.Values.repository.replicaCount | int) 1 }}
+    alfresco.cluster.enabled={{ gt (index .Values "alfresco-repository" "replicaCount" | int) 1 }}
     alfresco.host={{ template "alfresco-common.external.host" . }}
     alfresco.protocol={{ template "alfresco-common.external.scheme" . }}
     alfresco.port={{ template "alfresco-common.external.port" . }}
@@ -20,7 +20,6 @@ data:
     share.host={{ template "alfresco-common.external.host" . }}
     share.port={{ template "alfresco-common.external.port" . }}
     {{- end }}
-    alfresco_user_store.adminpassword={{ .Values.repository.adminPassword }}
     local.transform.service.enabled={{ index .Values "alfresco-transform-service" "enabled" }}
     {{- with (index .Values "alfresco-transform-service") }}
     {{- $ats_for_enterprise := and .filestore.enabled .transformrouter.enabled }}
