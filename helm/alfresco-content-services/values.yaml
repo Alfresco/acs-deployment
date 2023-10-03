@@ -147,7 +147,6 @@ repository:
   # For details on how to manage license, see:
   # https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md
   licenseSecret: null
-  edition: Enterprise
   replicaCount: 2
   service:
     externalPort: 80
