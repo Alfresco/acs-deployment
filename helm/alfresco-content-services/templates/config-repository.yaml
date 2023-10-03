@@ -41,45 +41,16 @@ data:
     {{- end }}
     {{- end }}
     {{- end }}
+    {{- if index .Values "alfresco-sync-service" "enabled" }}
+    dsync.service.uris={{ $alfUrl }}/syncservice
+    {{- else }}
+    events.subsystem.autoStart=false
+    {{- end }}
     {{/*
     {{- if .Values.s3connector.enabled }}
     {{- range $key, $val := .Values.s3connector.config }}
     s3.{{ $key }}={{ $val }}
     {{- end }}
-    {{- end }}
-    {{- if .Values.email.server.enabled }}
-    email.server.enabled={{ .Values.email.server.enabled }}
-    email.server.port={{ .Values.email.server.port }}
-    email.server.domain={{ .Values.email.server.domain }}
-    email.server.enableTLS={{ .Values.email.server.enableTLS }}
-    email.server.hideTLS={{ .Values.email.server.hideTLS }}
-    email.server.requireTLS={{ .Values.email.server.requireTLS }}
-    email.server.auth.enabled={{ .Values.email.server.auth.enabled }}
-    email.server.connections.max={{ .Values.email.server.connections.max }}
-    email.server.allowed.senders={{ .Values.email.server.allowed.senders }}
-    email.server.blocked.senders={{ .Values.email.server.blocked.senders }}
-    email.inbound.enabled={{ .Values.email.inbound.enabled }}
-    email.inbound.unknownUser={{ .Values.email.inbound.unknownUser }}
-    email.inbound.emailContributorsAuthority={{ .Values.email.inbound.emailContributorsAuthority }}
-    email.handler.folder.overwriteDuplicates={{ .Values.email.handler.folder.overwriteDuplicates }}
-    imap.server.enabled={{ .Values.imap.server.enabled }}
-    imap.server.port={{ .Values.imap.server.port }}
-    imap.server.host={{ .Values.imap.server.host }}
-    imap.server.imap.enabled={{ .Values.imap.server.imap.enabled }}
-    imap.server.imaps.enabled={{ .Values.imap.server.imaps.enabled }}
-    imap.server.imaps.port={{ .Values.imap.server.imaps.port }}
-    imap.mail.from.default={{ .Values.imap.mail.from.default }}
-    imap.mail.to.default={{ .Values.imap.mail.to.default }}
-    system.usages.enabled=true
-    notification.email.siteinvite=true
-    {{- if .Values.email.server.enableTLS }}
-    javax.net.ssl.keyStore=/var/run/secrets/java.io/keystores/keystore.jks -Djavax.net.ssl.keyStorePassword=changeit
-    {{- end }}
-    {{- end }}
-    {{- if index .Values "alfresco-sync-service" "enabled" }}
-    dsync.service.uris={{ $alfUrl }}/syncservice
-    {{- else }}
-    events.subsystem.autoStart=false
     {{- end }}
     {{- if .Values.s3connector.enabled }}
     {{- if .Values.s3connector.secrets.accessKey }}
