@@ -161,7 +161,7 @@ alfresco-connector-ms365:
   repository:
     existingConfigMap:
       # -- Name of the configmap which hold the repositoy connection details
-      name: infrastructure-repository
+      name: *infrastructure_cmName
       keys:
         # -- Name of the key in the configmap which points to the repository
         # service hostname
