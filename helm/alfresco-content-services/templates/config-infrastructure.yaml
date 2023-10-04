@@ -9,7 +9,7 @@ data:
   {{- $repoCtx := dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release }}
   {{- $atsCtx := dict "Values" (index .Values "alfresco-transform-service") "Chart" $.Chart "Release" $.Release }}
   repo_svc_name: {{ template "alfresco-repository.fullname" $repoCtx }}
-  repo_svc_port: {{ .Values.repository.service.externalPort | quote }}
+  repo_svc_port: {{ index .Values "alfresco-repository" "service" "port" | default 80 | quote }}
   {{- $db_url := include "alfresco-content-services.database.repo" $ }}
   {{ template "alfresco-repository.db.cm" (dict "url" $db_url "driver" .Values.database.driver) }}
   {{ template "alfresco-repository.mq.cm" (include "alfresco-content-services.mq.url" .) }}
