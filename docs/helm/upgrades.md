@@ -9,9 +9,17 @@ release notes that are available via [GitHub Releases](https://github.com/Alfres
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
-## To be released
+## 7.0.0
 
-No breaking changes since latest tag.
+### Chart modularization: Alfresco repository
+
+Repository is now deployed as part of an independent subchart. Checkout
+[alfresco-repository](https://github.com/Alfresco/alfresco-helm-charts/charts/alfresco-repository/README.md)
+for details on how to use that new chart.
+
+This `alfresco-content-services` chart is now essentially a wrapper of subcharts
+which mostly produces secrets and configmaps in order to coordinate them.
+Most documentation now link to the chart dedicated to the Alfresco component.
 
 ## 7.0.0-M.1
 
