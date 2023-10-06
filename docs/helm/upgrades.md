@@ -4,7 +4,8 @@ Our helm charts are continuously improved and sometimes arise the need to
 introduce a breaking change.
 
 To get an overview of the changes in each release, first take a look at the
-release notes that are available via [GitHub Releases](https://github.com/Alfresco/acs-deployment/releases).
+release notes that are available via [GitHub
+Releases](https://github.com/Alfresco/acs-deployment/releases).
 
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
@@ -54,21 +55,22 @@ the previous values so please read the next chapter to understand how it works.
 
 As explained above the search configuration has moved. It is now uses a common
 section for both Alfresco Search service (Solr based) and Alfresco Search
-Enterprise (Elasticsearch based). If you use a fully internal deployment
-(that's a setup one should only consider for testing/dev purposes, not prod)
-enabling/disabling appropriate components (e.g. enable `alfresco-search-
-nterprise` & disable `alfresco-search`) should be enough. Of course if Solr is
-the chosen search engine, it is still necessary to pass a shared secret.
+Enterprise (Elasticsearch based). If you use a fully internal deployment (that's
+a setup one should only consider for testing/dev purposes, not prod)
+enabling/disabling appropriate components (e.g. enable
+`alfresco-search-enterprise` & disable `alfresco-search`) should be enough. Of
+course if Solr is the chosen search engine, it is still necessary to pass a
+shared secret.
 
 > Note: A "fully internal deployment" for Alfresco Search Enterprise actually
-> means having both the Alfresco Elasticsearch connectors AND elasticsearc
+> means having both the Alfresco Elasticsearch connectors AND elasticsearch
 > itself inside the cluster.
 
 Passing the Solr shared secret requires the new value: `global.search.sharedSecret`
 
-Leveraging an external search component can be done using b providing its URL,
-type and access details. For example, the below values would make the
-repository use an external elasticsearch instance:
+Leveraging an external search component can be done using by providing its URL,
+type and access details. For example, the below values would make the repository
+use an external elasticsearch instance:
 
 ```yaml
 global:
@@ -80,8 +82,11 @@ global:
 
 ### Removed the "metadataKeystore" values
 
-The `metadataKeystore.*` where aused to pass part of the java keystore related properties to deal with custom metadata encryption keys. The new `alfresco-repository` chart offers a more generic way of dealing with custom keystore together with a more cohesive way of passing both sensitive and non sensitive properties.
-Please refer to [alfresco-repository chart keystore
+The `metadataKeystore.*` where used to pass part of the java keystore related
+properties to deal with custom metadata encryption keys. The new
+`alfresco-repository` chart offers a more generic way of dealing with custom
+keystore together with a more cohesive way of passing both sensitive and non
+sensitive properties. Please refer to [alfresco-repository chart keystore
 documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/keystores.md)
 and the [alfresco-repository chart properties
 documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/repository-properties.md)
@@ -202,7 +207,7 @@ helm install alfresco-content-services acs \
   --set global.known_urls\[1\]=http://app.domain.local:8080/crm
 ```
 
-> Note: We would encorage you to avoid using `--set` as much as possible and
+> Note: We would encourage you to avoid using `--set` as much as possible and
 > use `--values` instead with values stored in yaml files.
 
 ### Chart modularization: Alfresco Share chart
