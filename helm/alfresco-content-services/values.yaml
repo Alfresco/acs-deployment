@@ -446,13 +446,6 @@ postgresql:
       # Make sure the root folder has the appropriate permissions/ownhership set.
       existingClaim: null
       subPath: "alfresco-content-services/database-data"
-# -- For a full information of configuring the imap subsystem, see
-# https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties
-metadataKeystore:
-  # keystorePassword: ""
-  # keyPassword: ""
-  defaultKeystorePassword: "mp6yc0UD9e"
-  defaultKeyPassword: "oKIWzVdEdA"
 alfresco-sync-service:
   # -- Toggle deployment of Alfresco Sync Service (Desktop-Sync)
   # Check [Alfresco Sync Service

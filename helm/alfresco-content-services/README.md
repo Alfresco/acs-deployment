@@ -223,7 +223,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection details (activemq.enabled msut also be set to false) |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
-| metadataKeystore | object | `{"defaultKeyPassword":"oKIWzVdEdA","defaultKeystorePassword":"mp6yc0UD9e"}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |

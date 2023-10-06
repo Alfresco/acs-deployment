@@ -78,6 +78,14 @@ global:
     securecomms: https
 ```
 
+### Removed the "metadataKeystore" values
+
+The `metadataKeystore.*` where aused to pass part of the java keystore related properties to deal with custom metadata encryption keys. The new `alfresco-repository` chart offers a more generic way of dealing with custom keystore together with a more cohesive way of passing both sensitive and non sensitive properties.
+Please refer to [alfresco-repository chart keystore
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/keystores.md)
+and the [alfresco-repository chart properties
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/repository-properties.md)
+
 ### Removed the "s3connector" values
 
 `s3connector.*` used to be used for S3 bucket content store configuration. They
