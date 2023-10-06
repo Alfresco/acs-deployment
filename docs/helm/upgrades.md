@@ -11,6 +11,71 @@ version in which they have been released.
 
 ## 7.0.0
 
+### Values refactoring
+
+Some of the values has been moved to different places, most of the time to
+better represent the fact it's linked to a specific component/subchart, or that
+it's a shared/third party component.
+
+#### moved the former "mail" values
+
+The former `mail.*` values were used to control the configuration of the
+outgoing SMTP service in alfresco repository. We consider this mail
+configuration an 3rd party architecture component admin provide to Alfresco
+platform so any component can send emails. For this reason it's been moved to
+`global.mail`.
+
+#### moved the former "email" values
+
+`email.*`values were used to configure Alfresco repository inbound SMTP service
+ As this configuration details are not considered architecture related (but is
+just component config), it's been moved to the `alfresco-repository` subchart:
+`alfresco-repository.configuration.smtp.*`
+
+#### moved the former "imap" values
+
+`imap.*`values were used to configure Alfresco repository inbound SMTP service.
+As this configuration details are not considered architecture related (but is
+just component config), it's been moved to the `alfresco-repository` subchart:
+`alfresco-repository.configuration.imap.*`
+
+#### renamed search related configuration
+
+With ACS 7.2 we introduced a mandatory parameter used to pass the secret used
+for Solr tracking/querying: `global.tracking.sharedsecret`. As we also
+introduced Alfresco Enterprise search in the mean time and now offer the
+ability to use both Solr or Elasticsearch external instance, it became more
+sensible to move the whole search related configuration to its own section in
+the `global` context. For that reason the new section `global.search.*` now
+holds the search related connection details. It is not as strict mirroring of
+the previous values so please read the next chapter to understand how it works.
+
+### New common Search configuration
+
+As explained above the search configuration has moved. It is now uses a common
+section for both Alfresco Search service (Solr based) and Alfresco Search
+Enterprise (Elasticsearch based). If you use a fully internal deployment
+(that's a setup one should only consider for testing/dev purposes, not prod)
+enabling/disabling appropriate components (e.g. enable `alfresco-search-
+nterprise` & disable `alfresco-search`) should be enough. Of course if Solr is
+the chosen search engine, it is still necessary to pass a shared secret.
+
+> Note: A "fully internal deployment" for Alfresco Search Enterprise actually
+> means having both the Alfresco Elasticsearch connectors AND elasticsearc
+> itself inside the cluster.
+
+Passing the Solr shared secret requires the new value: `global.search.sharedSecret`
+
+Leveraging an external search component can be done using b providing its URL, type and access details. For example, the below values would make the repository use an external elasticsearch instance:
+
+```yaml
+global:
+  search:
+    url: https://myopensearch.domain.tld/
+    flavor: elasticsearch
+    securecomms: https
+```
+
 ### Chart modularization: Alfresco repository
 
 Repository is now deployed as part of an independent subchart. Checkout
