@@ -165,11 +165,11 @@ To deploy a previous version of ACS Enterprise follow the steps below.
 
    ```bash
    helm install acs alfresco/alfresco-content-services \
-   --values MAJOR.MINOR.N_values.yaml \
-   --values local-dev-values.yaml \
-   --atomic \
-   --timeout 10m0s \
-   --namespace alfresco
+     --values MAJOR.MINOR.N_values.yaml \
+     --values local-dev-values.yaml \
+     --atomic \
+     --timeout 10m0s \
+     --namespace alfresco
    ```
 
 > NOTE: The command will wait until the deployment is ready so please be

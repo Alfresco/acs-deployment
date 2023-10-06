@@ -26,11 +26,11 @@ setup of the services):
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set repository.persistence.enabled=false \
+  --set alfresco-repository.persistence.enabled=false \
   --set filestore.persistence.enabled=true \
   --set filestore.persistence.storageClass="nfs-client" \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
-  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --set global.search.sharedSecret:=$(openssl rand -hex 24) \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set postgresql.enabled=false \
   --set database.external=true \

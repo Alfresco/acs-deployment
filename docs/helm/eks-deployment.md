@@ -79,12 +79,14 @@ that we need to perform to prepare the cluster for ACS to be installed.
 ### DNS
 
 1. Create a hosted zone in Route53 using [these
-   steps](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html) if you don't already have one available.
+   steps](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html)
+   if you don't already have one available.
 
 2. Create a public certificate for the hosted zone created in step 1 in
    Certificate Manager using [these
    steps](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html)
-   if you don't have one already available and make a note of the certificate ARN for use later.
+   if you don't have one already available and make a note of the certificate
+   ARN for use later.
 
 3. Create a file called `external-dns.yaml` with the text below (replacing
    `YOUR-DOMAIN-NAME` with the domain name you created in step 1). This manifest
@@ -172,7 +174,11 @@ that we need to perform to prepare the cluster for ACS to be installed.
    `YOUR-NODE-GROUP` with the nodegroup from the step above):
 
     ```bash
-    aws eks describe-nodegroup --cluster-name YOUR-CLUSTER-NAME --nodegroup-name YOUR-NODE-GROUP --query "nodegroup.nodeRole" --output text
+    aws eks describe-nodegroup \
+      --cluster-name YOUR-CLUSTER-NAME \
+      --nodegroup-name YOUR-NODE-GROUP \
+      --query "nodegroup.nodeRole" \
+      --output text
     ```
 
 7. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role
@@ -225,14 +231,20 @@ you can alternatively:
    below (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
 
     ```bash
-    aws eks describe-cluster --name YOUR-CLUSTER-NAME --query "cluster.resourcesVpcConfig.vpcId" --output text
+    aws eks describe-cluster \
+      --name YOUR-CLUSTER-NAME \
+      --query "cluster.resourcesVpcConfig.vpcId" \
+      --output text
     ```
 
 3. Find The CIDR range of VPC using the command below (replacing `VPC-ID` with
    the ID retrieved in the previous step):
 
     ```bash
-    aws ec2 describe-vpcs --vpc-ids VPC-ID --query "Vpcs[].CidrBlock" --output text
+    aws ec2 describe-vpcs \
+      --vpc-ids VPC-ID \
+      --query "Vpcs[].CidrBlock" \
+      --output text
     ```
 
 4. Go to the [Security Groups section of the VPC
@@ -270,7 +282,10 @@ you can alternatively:
         volumeBindingMode: Immediate
     EOT
     helm repo add aws-efs-csi-driver https://kubernetes-sigs.github.io/aws-efs-csi-driver
-    helm upgrade --install aws-efs-csi-driver --namespace kube-system aws-efs-csi-driver/aws-efs-csi-driver -f aws-efs-values.yml
+    helm upgrade aws-efs-csi-driver aws-efs-csi-driver/aws-efs-csi-driver \
+      --install \
+      --namespace kube-system \
+      -f aws-efs-values.yml
     ```
 
 > Note: the `storageClass` is set to `Retain` for obvious safety reasons. That
@@ -304,7 +319,11 @@ eksctl create iamserviceaccount \
 Enable the addon referencing the IAM role created previously:
 
 ```sh
-eksctl create addon --name aws-ebs-csi-driver --cluster $EKS_CLUSTER_NAME --service-account-role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/AmazonEKS_EBS_CSI_DriverRole --force
+eksctl create addon \
+  --name aws-ebs-csi-driver \
+  --cluster $EKS_CLUSTER_NAME \
+  --service-account-role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/AmazonEKS_EBS_CSI_DriverRole \
+  --force
 ```
 
 At this point the provisioning of EBS volumes using the default GP2
