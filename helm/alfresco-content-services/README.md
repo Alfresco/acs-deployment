@@ -221,12 +221,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.search.url | string | `nil` | set this URL if you have an external search service |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| imap | object | `{"mail":{"from":{"default":null},"to":{"default":null}},"server":{"enabled":false,"host":"0.0.0.0","imap":{"enabled":true},"imaps":{"enabled":true,"port":1144},"port":1143}}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection details (activemq.enabled msut also be set to false) |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
-| metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
-| metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
+| metadataKeystore | object | `{"defaultKeyPassword":"oKIWzVdEdA","defaultKeystorePassword":"mp6yc0UD9e"}` | For a full information of configuring the imap subsystem, see https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |

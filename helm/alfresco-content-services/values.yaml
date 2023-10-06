@@ -491,21 +491,6 @@ email:
         pullPolicy: IfNotPresent
 # -- For a full information of configuring the imap subsystem, see
 # https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties
-imap:
-  server:
-    enabled: false
-    host: "0.0.0.0"
-    port: 1143
-    imap:
-      enabled: true
-    imaps:
-      enabled: true
-      port: 1144
-  mail:
-    from:
-      default: null
-    to:
-      default: null
 metadataKeystore:
   # keystorePassword: ""
   # keyPassword: ""

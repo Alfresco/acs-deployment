@@ -120,9 +120,6 @@ email:
     enabled: false
   inbound:
     enabled: false
-imap:
-  server:
-    enabled: false
 alfresco-sync-service:
   postgresql:
     primary:

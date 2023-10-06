@@ -122,8 +122,5 @@ email:
     enabled: false
   inbound:
     enabled: false
-imap:
-  server:
-    enabled: false
 alfresco-admin-app:
   enabled: false
