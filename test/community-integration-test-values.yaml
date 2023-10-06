@@ -117,8 +117,6 @@ postgresql:
         memory: "1Gi"
 ai:
   enabled: false
-s3connector:
-  enabled: false
 email:
   server:
     enabled: false

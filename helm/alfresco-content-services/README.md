@@ -244,14 +244,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
-| s3connector.config.bucketLocation | string | `nil` |  |
-| s3connector.config.bucketName | string | `nil` |  |
-| s3connector.enabled | bool | `false` | Enable the S3 Connector For a full list of properties on the S3 connector see: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html |
-| s3connector.existingSecretName | string | `nil` | An existing kubernetes secret that contains ACCESSKEY, SECRETKEY, ENCRYPTION, KMSKEYID keys |
-| s3connector.secrets.accessKey | string | `nil` |  |
-| s3connector.secrets.awsKmsKeyId | string | `nil` |  |
-| s3connector.secrets.encryption | string | `nil` |  |
-| s3connector.secrets.secretKey | string | `nil` |  |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | share.image.tag | string | `"23.1.0-M4"` |  |

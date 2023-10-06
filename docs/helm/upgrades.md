@@ -66,7 +66,9 @@ the chosen search engine, it is still necessary to pass a shared secret.
 
 Passing the Solr shared secret requires the new value: `global.search.sharedSecret`
 
-Leveraging an external search component can be done using b providing its URL, type and access details. For example, the below values would make the repository use an external elasticsearch instance:
+Leveraging an external search component can be done using b providing its URL,
+type and access details. For example, the below values would make the
+repository use an external elasticsearch instance:
 
 ```yaml
 global:
@@ -75,6 +77,17 @@ global:
     flavor: elasticsearch
     securecomms: https
 ```
+
+### Removed the "s3connector" values
+
+`s3connector.*` used to be used for S3 bucket content store configuration. They
+have been removed completely from the chart and must now be configured using
+one of the mechanisms provided by the `alfresco-repository` subchart. Also note
+that using this values has always required and still requires using a custom
+image embedding the Alfresco S3 connector.
+
+Please refer to the [alfresco-repository chart
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/properties.md)
 
 ### Chart modularization: Alfresco repository
 

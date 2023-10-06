@@ -49,8 +49,6 @@ alfresco-sync-service:
   enabled: false
 alfresco-ai-transformer:
   enabled: false
-s3connector:
-  enabled: false
 alfresco-connector-ms365:
   enabled: false
 alfresco-connector-msteams:

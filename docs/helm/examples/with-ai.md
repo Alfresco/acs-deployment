@@ -1,6 +1,9 @@
-# Alfresco Content Services Helm Deployment with Intelligence Services
+# ACS Helm Deployment with Intelligence Services
 
-By default, [Alfresco Intelligence Services](https://docs.alfresco.com/intelligence/concepts/ai-welcome.html) feature is disabled, this example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) with AIS enabled.
+By default, [Alfresco Intelligence
+Services](https://docs.alfresco.com/intelligence/concepts/ai-welcome.html)
+feature is disabled, this example describes how to deploy ACS onto
+[EKS](https://aws.amazon.com/eks) with AIS enabled.
 
 The diagram below shows the deployment produced by this example:
 
@@ -8,15 +11,20 @@ The diagram below shows the deployment produced by this example:
 
 ## Prerequisites
 
-Follow the [AWS Services](with-aws-services.md) example up until the [Deploy](with-aws-services.md#deploy) section and return to this page.
+Follow the [AWS Services](with-aws-services.md) example up until the
+[Deploy](with-aws-services.md#deploy) section and return to this page.
 
 ## Setup S3 Bucket
 
-Follow the steps in the official documentation to [setup an IAM user and an S3 bucket](https://docs.alfresco.com/intelligence/concepts/aws-setup.html) for use by AIS.
+Follow the steps in the official documentation to [setup an IAM user and an S3
+bucket](https://docs.alfresco.com/intelligence/concepts/aws-setup.html) for use
+by AIS.
 
 ## Deploy
 
-When we bring all this together we can deploy ACS using the command below (replacing all the `YOUR-XZY` properties with the values gathered during the setup of the services):
+When we bring all this together we can deploy ACS using the command below
+(replacing all the `YOUR-XZY` properties with the values gathered during the
+setup of the services):
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
@@ -28,9 +36,6 @@ helm install acs alfresco/alfresco-content-services \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
   --set share.image.repository="quay.io/alfresco/alfresco-share-aws" \
-  --set s3connector.enabled=true \
-  --set s3connector.config.bucketName="YOUR-BUCKET-NAME" \
-  --set s3connector.config.bucketLocation="YOUR-AWS-REGION" \
   --set postgresql.enabled=false \
   --set database.external=true \
   --set database.driver="org.postgresql.Driver" \
