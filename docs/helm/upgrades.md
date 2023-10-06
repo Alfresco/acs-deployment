@@ -4,14 +4,113 @@ Our helm charts are continuously improved and sometimes arise the need to
 introduce a breaking change.
 
 To get an overview of the changes in each release, first take a look at the
-release notes that are available via [GitHub Releases](https://github.com/Alfresco/acs-deployment/releases).
+release notes that are available via [GitHub
+Releases](https://github.com/Alfresco/acs-deployment/releases).
 
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
-## To be released
+## 7.0.0
 
-No breaking changes since latest tag.
+### Values refactoring
+
+Some of the values has been moved to different places, most of the time to
+better represent the fact it's linked to a specific component/subchart, or that
+it's a shared/third party component.
+
+#### moved the former "mail" values
+
+The former `mail.*` values were used to control the configuration of the
+outgoing SMTP service in alfresco repository. We consider this mail
+configuration an 3rd party architecture component admin provide to Alfresco
+platform so any component can send emails. For this reason it's been moved to
+`global.mail`.
+
+#### moved the former "email" values
+
+`email.*`values were used to configure Alfresco repository inbound SMTP service
+ As this configuration details are not considered architecture related (but is
+just component config), it's been moved to the `alfresco-repository` subchart:
+`alfresco-repository.configuration.smtp.*`
+
+#### moved the former "imap" values
+
+`imap.*`values were used to configure Alfresco repository inbound SMTP service.
+As this configuration details are not considered architecture related (but is
+just component config), it's been moved to the `alfresco-repository` subchart:
+`alfresco-repository.configuration.imap.*`
+
+#### renamed search related configuration
+
+With ACS 7.2 we introduced a mandatory parameter used to pass the secret used
+for Solr tracking/querying: `global.tracking.sharedsecret`. As we also
+introduced Alfresco Enterprise search in the mean time and now offer the
+ability to use both Solr or Elasticsearch external instance, it became more
+sensible to move the whole search related configuration to its own section in
+the `global` context. For that reason the new section `global.search.*` now
+holds the search related connection details. It is not as strict mirroring of
+the previous values so please read the next chapter to understand how it works.
+
+### New common Search configuration
+
+As explained above the search configuration has moved. It is now uses a common
+section for both Alfresco Search service (Solr based) and Alfresco Search
+Enterprise (Elasticsearch based). If you use a fully internal deployment (that's
+a setup one should only consider for testing/dev purposes, not prod)
+enabling/disabling appropriate components (e.g. enable
+`alfresco-search-enterprise` & disable `alfresco-search`) should be enough. Of
+course if Solr is the chosen search engine, it is still necessary to pass a
+shared secret.
+
+> Note: A "fully internal deployment" for Alfresco Search Enterprise actually
+> means having both the Alfresco Elasticsearch connectors AND elasticsearch
+> itself inside the cluster.
+
+Passing the Solr shared secret requires the new value: `global.search.sharedSecret`
+
+Leveraging an external search component can be done using by providing its URL,
+type and access details. For example, the below values would make the repository
+use an external elasticsearch instance:
+
+```yaml
+global:
+  search:
+    url: https://myopensearch.domain.tld/
+    flavor: elasticsearch
+    securecomms: https
+```
+
+### Removed the "metadataKeystore" values
+
+The `metadataKeystore.*` where used to pass part of the java keystore related
+properties to deal with custom metadata encryption keys. The new
+`alfresco-repository` chart offers a more generic way of dealing with custom
+keystore together with a more cohesive way of passing both sensitive and non
+sensitive properties. Please refer to [alfresco-repository chart keystore
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/keystores.md)
+and the [alfresco-repository chart properties
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/repository-properties.md)
+
+### Removed the "s3connector" values
+
+`s3connector.*` used to be used for S3 bucket content store configuration. They
+have been removed completely from the chart and must now be configured using
+one of the mechanisms provided by the `alfresco-repository` subchart. Also note
+that using this values has always required and still requires using a custom
+image embedding the Alfresco S3 connector.
+
+Please refer to the [alfresco-repository chart
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/properties.md)
+
+### Chart modularization: Alfresco repository
+
+Repository is now deployed as part of an independent subchart. Checkout
+[alfresco-repository](https://github.com/Alfresco/alfresco-helm-charts/charts/alfresco-repository/README.md)
+for details on how to use that new chart.
+
+This `alfresco-content-services` chart is now essentially a wrapper of subcharts
+which mostly produces secrets and configmaps in order to coordinate them.
+Most documentation now link to the chart dedicated to the Alfresco component.
 
 ## 7.0.0-M.1
 
@@ -108,7 +207,7 @@ helm install alfresco-content-services acs \
   --set global.known_urls\[1\]=http://app.domain.local:8080/crm
 ```
 
-> Note: We would encorage you to avoid using `--set` as much as possible and
+> Note: We would encourage you to avoid using `--set` as much as possible and
 > use `--values` instead with values stored in yaml files.
 
 ### Chart modularization: Alfresco Share chart

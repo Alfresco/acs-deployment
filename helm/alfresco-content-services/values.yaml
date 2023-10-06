@@ -161,7 +161,7 @@ alfresco-connector-ms365:
   repository:
     existingConfigMap:
       # -- Name of the configmap which hold the repositoy connection details
-      name: infrastructure-repository
+      name: *infrastructure_cmName
       keys:
         # -- Name of the key in the configmap which points to the repository
         # service hostname
@@ -446,86 +446,6 @@ postgresql:
       # Make sure the root folder has the appropriate permissions/ownhership set.
       existingClaim: null
       subPath: "alfresco-content-services/database-data"
-s3connector:
-  # -- Enable the S3 Connector
-  # For a full list of properties on the S3 connector see:
-  # https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html
-  enabled: false
-  config:
-    bucketName: null
-    bucketLocation: null
-  secrets:
-    accessKey: null
-    secretKey: null
-    encryption: null
-    awsKmsKeyId: null
-  # -- An existing kubernetes secret that contains ACCESSKEY, SECRETKEY, ENCRYPTION, KMSKEYID keys
-  existingSecretName: null
-# -- For a full information of configuring the inbound email system, see
-# https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails
-email:
-  server:
-    enabled: false
-    port: 1125
-    domain: null
-    enableTLS: true
-    hideTLS: false
-    requireTLS: false
-    auth:
-      enabled: true
-    connections:
-      max: 3
-    allowed:
-      senders: .*
-    blocked:
-      senders: null
-  inbound:
-    enabled: false
-    unknownUser: anonymous
-    emailContributorsAuthority: EMAIL_CONTRIBUTORS
-  handler:
-    folder:
-      overwriteDuplicates: true
-  ssl:
-    secretName: null
-  initContainers:
-    pemToKeystore:
-      image:
-        repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
-        tag: 1.1-16
-        pullPolicy: IfNotPresent
-    pemToTruststore:
-      image:
-        repository: registry.access.redhat.com/redhat-sso-7/sso71-openshift
-        tag: 1.1-16
-        pullPolicy: IfNotPresent
-    setPerms:
-      image:
-        repository: busybox
-        tag: 1.35.0
-        pullPolicy: IfNotPresent
-# -- For a full information of configuring the imap subsystem, see
-# https://docs.alfresco.com/content-services/latest/config/email/#enable-imap-protocol-using-alfresco-globalproperties
-imap:
-  server:
-    enabled: false
-    host: "0.0.0.0"
-    port: 1143
-    imap:
-      enabled: true
-    imaps:
-      enabled: true
-      port: 1144
-  mail:
-    from:
-      default: null
-    to:
-      default: null
-metadataKeystore:
-  # keystorePassword: ""
-  # keyPassword: ""
-  defaultKeystorePassword: "mp6yc0UD9e"
-  defaultKeyPassword: "oKIWzVdEdA"
 alfresco-sync-service:
   # -- Toggle deployment of Alfresco Sync Service (Desktop-Sync)
   # Check [Alfresco Sync Service

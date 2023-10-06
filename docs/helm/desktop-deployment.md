@@ -1,10 +1,14 @@
 # Alfresco Content Services Helm Deployment on local machines
 
-This page describes how to deploy Alfresco Content Services (ACS) Enterprise or Community using [Helm](https://helm.sh) onto [Rancher Desktop](https://rancherdesktop.io/) and  [Docker for Desktop](https://docs.docker.com/desktop/).
+This page describes how to deploy Alfresco Content Services (ACS) Enterprise or
+Community using [Helm](https://helm.sh) onto [Rancher
+Desktop](https://rancherdesktop.io/) and  [Docker for
+Desktop](https://docs.docker.com/desktop/).
 
 ## Prerequisites
 
-- You've read the projects [main README](/README.md#prerequisites) prerequisites section
+- You've read the projects [main README](/README.md#prerequisites)
+prerequisites section
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes
 - A machine with at least 16GB memory
@@ -14,13 +18,21 @@ This page describes how to deploy Alfresco Content Services (ACS) Enterprise or 
 
 ### Rancher Desktop specific configuration
 
-Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable the default ingress controller. You may need to exit and restart Rancher Desktop for the change to take effect. Ref: [Setup NGINX Ingress Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
+Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable the
+default ingress controller. You may need to exit and restart Rancher Desktop
+for the change to take effect. Ref: [Setup NGINX Ingress
+Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
 
 ### Docker Desktop specific configuration
 
-On top of the Docker desktop [Prerequisites](./desktop-deployment.md#Prerequisites), it is essential to install the latest version of [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) & [Helm](https://helm.sh/docs/intro/install).
+On top of the Docker desktop
+[Prerequisites](./desktop-deployment.md#Prerequisites), it is essential to
+install the latest version of
+[Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) &
+[Helm](https://helm.sh/docs/intro/install).
 
-After the installation of Docker Desktop, the following configurations should be adjusted within Docker Desktop settings.
+After the installation of Docker Desktop, the following configurations should
+be adjusted within Docker Desktop settings.
 
 - `Settings > Resources > Advanced > CPUs:8, Memory: 16GB, Swap: 1GB`
 - `Settings > kubernetes > Enable Kubernetes`
@@ -29,11 +41,16 @@ After changing the necessary settings `Apply and restart` the docker desktop.
 
 ## Deployment
 
-Please proceed to execute the instructions detailed in the following sections for the installation of ACS (Enterprise or Community edition) on your local system.
+Please proceed to execute the instructions detailed in the following sections
+for the installation of ACS (Enterprise or Community edition) on your local
+system.
 
 ### Namespace
 
-To establish an isolated environment for ACS within the Kubernetes cluster, initiate the creation of a Kubernetes namespace using the provided command. Throughout the subsequent sections of this tutorial, we will consistently refer to this namespace as 'alfresco'
+To establish an isolated environment for ACS within the Kubernetes cluster,
+initiate the creation of a Kubernetes namespace using the provided command.
+Throughout the subsequent sections of this tutorial, we will consistently
+refer to this namespace as 'alfresco'
 
 ```bash
 kubectl create namespace alfresco
@@ -52,11 +69,11 @@ Install an ingress-nginx controller within the 'alfresco' namespace:
 
 ```bash
 helm install acs-ingress ingress-nginx/ingress-nginx --version=4.4.0 \
---set controller.scope.enabled=true \
---set controller.scope.namespace=alfresco \
---set rbac.create=true \
---atomic \
---namespace alfresco
+  --set controller.scope.enabled=true \
+  --set controller.scope.namespace=alfresco \
+  --set rbac.create=true \
+  --atomic \
+  --namespace alfresco
 ```
 
 > NOTE: The command will wait until the deployment is ready so please be patient.
@@ -78,7 +95,8 @@ acs-ingress-ingress-nginx-controller             LoadBalancer   10.43.90.117   1
 
 ### ACS
 
-This repository offers you the option to either deploy a system using stable released artifacts or the latest in-progress development artifacts.
+This repository offers you the option to either deploy a system using stable
+released artifacts or the latest in-progress development artifacts.
 
 To use a released version of the Helm chart add the stable chart repository:
 
@@ -89,12 +107,14 @@ helm repo update
 
 #### Community localhost deployment
 
-To install the latest version of Community we need to download the [community_values.yaml file](../../helm/alfresco-content-services). Once downloaded, execute the following to initiate the deployment.
+To install the latest version of Community we need to download the
+[community_values.yaml file](../../helm/alfresco-content-services). Once
+downloaded, execute the following to initiate the deployment.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
   --values=community_values.yaml \
-  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
   --namespace=alfresco
@@ -105,7 +125,9 @@ helm install acs alfresco/alfresco-content-services \
 #### Enterprise localhost deployment
 
 ACS enterprise version needs to pull container images from private image repositories.
-To configure credentials for accessing the Alfresco Enterprise registry, please review the information provided in the [registry authentication](registry-authentication.md)
+To configure credentials for accessing the Alfresco Enterprise registry, please
+review the information provided in the [registry
+authentication](registry-authentication.md)
 
 The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster
 and therefore requires a large amount of resources out-of-the-box. To reduce the
@@ -123,13 +145,14 @@ Once downloaded, execute the following to initiate the deployment.
 ```bash
 helm install acs alfresco/alfresco-content-services \
   --values local-dev-values.yaml \
-  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
   --namespace alfresco
 ```
 
-> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](#troubleshooting) tips.
+> NOTE: The command will wait until the deployment is ready so please be
+> patient. See below for [troubleshooting](#troubleshooting) tips.
 
 The `helm` command above installs the most current released version of ACS Enterprise.
 
@@ -142,14 +165,16 @@ To deploy a previous version of ACS Enterprise follow the steps below.
 
    ```bash
    helm install acs alfresco/alfresco-content-services \
-   --values MAJOR.MINOR.N_values.yaml \
-   --values local-dev-values.yaml \
-   --atomic \
-   --timeout 10m0s \
-   --namespace alfresco
+     --values MAJOR.MINOR.N_values.yaml \
+     --values local-dev-values.yaml \
+     --atomic \
+     --timeout 10m0s \
+     --namespace alfresco
    ```
 
-> NOTE: The command will wait until the deployment is ready so please be patient. See below for [troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
+> NOTE: The command will wait until the deployment is ready so please be
+patient. See below for
+[troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
 
 ## Access
 
@@ -180,19 +205,29 @@ If you deployed Enterprise you'll also have access to:
 
 ## Troubleshooting
 
-In the event of a deployment failure, it is important to recognize that resource constraints are a common underlying cause. For further insights and guidance. Additionally, you can find more comprehensive troubleshooting advice in the [Helm Troubleshooting section](./README.md#Troubleshooting)
+In the event of a deployment failure, it is important to recognize that
+resource constraints are a common underlying cause. For further insights and
+guidance. Additionally, you can find more comprehensive troubleshooting advice
+in the [Helm Troubleshooting section](./README.md#Troubleshooting)
 
 ### Lack Of Resources
 
-One of the most prevalent causes of deployment failures is insufficient memory or CPU resources. It is imperative to ensure that an adequate amount of resources is allocated to prevent deployment failures.
+One of the most prevalent causes of deployment failures is insufficient memory
+or CPU resources. It is imperative to ensure that an adequate amount of
+resources is allocated to prevent deployment failures.
 
-To save the deployment of two more pods you can also try disabling the Sync Service, to do that provide the additional `--set` option below with your helm install command:
+To save the deployment of two more pods you can also try disabling the Sync
+Service, to do that provide the additional `--set` option below with your helm
+install command:
 
 ```bash
 --set alfresco-sync-service.enabled=false
 ```
 
-If you need to reduce the memory footprint further the JVM memory settings in most pods use the `MaxRAMPercentage` option so lowering the various `limits.memory` and `requests.memory` values will also reduce the JVM memory allocation.
+If you need to reduce the memory footprint further the JVM memory settings in
+most pods use the `MaxRAMPercentage` option so lowering the various
+`limits.memory` and `requests.memory` values will also reduce the JVM memory
+allocation.
 
 ### Timeout
 
@@ -202,10 +237,13 @@ If the deployment fails and rolls back with following error:
 Error: release acs failed, and has been uninstalled due to atomic being set: timed out waiting for the condition
 ```
 
-You may should check resources above and then re-run the deployment with either an increased timeout, eg. --timeout 15m0s. Alteratively run without following:
+You may should check resources above and then re-run the deployment with either
+an increased timeout, eg. --timeout 15m0s. Alteratively run without following:
 
 ```bash
 --atomic --timeout 10m0s
 ```
 
-and then monitor the logs for any failing pods. Please also consult the [Helm Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes Dashboard and more generic troubleshooting tips and tricks.
+and then monitor the logs for any failing pods. Please also consult the [Helm
+Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes
+Dashboard and more generic troubleshooting tips and tricks.
