@@ -117,10 +117,5 @@ postgresql:
         memory: "1Gi"
 ai:
   enabled: false
-email:
-  server:
-    enabled: false
-  inbound:
-    enabled: false
 alfresco-admin-app:
   enabled: false

@@ -16,11 +16,6 @@ alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
     tag: 2.0.8.1
-email:
-  server:
-    enabled: false
-  inbound:
-    enabled: false
 # Disable Enterprise only features
 alfresco-transform-service:
   enabled: true

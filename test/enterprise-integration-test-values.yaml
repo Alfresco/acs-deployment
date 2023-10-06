@@ -115,11 +115,6 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
-email:
-  server:
-    enabled: false
-  inbound:
-    enabled: false
 alfresco-sync-service:
   postgresql:
     primary:
