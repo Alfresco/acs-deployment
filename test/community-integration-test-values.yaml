@@ -1,5 +1,5 @@
 ---
-repository:
+alfresco-repository:
   resources:
     requests:
       cpu: "0.01"
@@ -117,15 +117,5 @@ postgresql:
         memory: "1Gi"
 ai:
   enabled: false
-s3connector:
-  enabled: false
-email:
-  server:
-    enabled: false
-  inbound:
-    enabled: false
-imap:
-  server:
-    enabled: false
 alfresco-admin-app:
   enabled: false

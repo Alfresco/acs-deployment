@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.infrastructure.configMapName }}
+  labels:
+    {{- include "alfresco-content-services.labels" . | nindent 4 }}
+data:
+  {{- $repoCtx := dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release }}
+  {{- $atsCtx := dict "Values" (index .Values "alfresco-transform-service") "Chart" $.Chart "Release" $.Release }}
+  repo_svc_name: {{ template "alfresco-repository.fullname" $repoCtx }}
+  repo_svc_port: {{ index .Values "alfresco-repository" "service" "port" | default 80 | quote }}
+  {{- $db_url := include "alfresco-content-services.database.repo" $ }}
+  {{ template "alfresco-repository.db.cm" (dict "url" $db_url "driver" .Values.database.driver) }}
+  {{ template "alfresco-repository.mq.cm" (include "alfresco-content-services.mq.url" .) }}
+  {{- $search_url := "" }}
+  {{- $search_flavor := include "alfresco-content-services.search.flavor" . }}
+  {{- if ne "noindex" $search_flavor }}
+    {{- if .Values.global.search.url }}
+      {{- $search_url = .Values.global.search.url }}
+    {{- else if eq "solr6" $search_flavor }}
+      {{- $searchCtx := dict "Values" (index .Values "alfresco-search") "Chart" .Chart "Release" .Release }}
+      {{- $search_url = printf "http://%s-solr/solr" (include "alfresco-search-service.fullname" $searchCtx) }}
+    {{- else if eq "elasticsearch" $search_flavor }}
+      {{- $searchCtx := dict "Values" (index .Values "alfresco-search-enterprise") "Chart" .Chart "Release" .Release }}
+      {{- with (index .Values "alfresco-search-enterprise" "elasticsearch") }}
+        {{- $search_url = printf "%s://%s-%s:%v" .protocol .clusterName .nodeGroup .httpPort }}
+      {{- end }}
+      {{- $search_comms := "" }}
+      {{- if hasPrefix "https://" $search_url }}
+        {{- $search_comms = "https" }}
+      {{- else }}
+        {{- $search_comms = "none" }}
+      {{- end }}
+      {{- $_ := set .Values.global.search "securecomms" $search_comms }}
+    {{- end }}
+    {{- printf "SEARCH_SECURECOMMS: %s" .Values.global.search.securecomms | nindent 2}}
+    {{- printf "SEARCH_URL: %s" $search_url | nindent 2 }}
+    {{- printf "SEARCH_HOST: %s" (include "alfresco-common.url.host" $search_url) | nindent 2 }}
+    {{- printf "SEARCH_PORT: %s" (include "alfresco-common.url.port" $search_url | quote) | nindent 2 }}
+    {{- if eq "solr6" $search_flavor }}
+      {{- printf "SOLR_BASE_URL: %s" (include "alfresco-common.url.path" $search_url | default "/solr") | nindent 2 }}
+    {{- end }}
+  {{- end }}
+  SEARCH_FLAVOR: {{ template "alfresco-content-services.search.flavor" . }}
+  {{- if index .Values "alfresco-search-enterprise" "enabled" }}
+    {{- if index .Values "alfresco-transform-service" "enabled" }}
+      {{- $ats_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-transform-router.name" $atsCtx)) }}
+      {{- $sfs_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-filestore.name" $atsCtx)) }}
+      {{- include "alfresco-search-enterprise.ats.fullurl" $ats_baseurl | nindent 2 }}
+      {{- include "alfresco-search-enterprise.sfs.fullurl" $sfs_baseurl | nindent 2 }}
+    {{- else }}
+      {{- fail "Alfresco Search Enterprise has been enabled but no Transformation service has been provided" }}
+    {{- end }}
+  {{- end }}

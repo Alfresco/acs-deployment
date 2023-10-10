@@ -25,7 +25,7 @@ You can access all components of Alfresco Content Services using the same root a
   Content: {{ $alfurl }}/alfresco
   Share: {{ $alfurl }}/share
   API-Explorer: {{ $alfurl }}/api-explorer
-{{- if eq .Values.repository.edition "Enterprise" }}
+{{- if index .Values "alfresco-digital-workspace" "enabled" }}
   Alfresco Digital Workspace: {{ $alfurl }}/workspace/
 {{- end }}
 {{- if index .Values "alfresco-search" "ingress" "enabled" }}
