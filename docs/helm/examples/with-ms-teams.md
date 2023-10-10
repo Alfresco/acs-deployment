@@ -1,9 +1,12 @@
-# Alfresco Content Services Helm Deployment with Microsoft Teams Connector (Microsoft Teams Integration)
+# ACS Helm Deployment with Microsoft Teams Connector
 
-The [Alfresco Microsoft Teams Connector](https://docs.alfresco.com/)enables Microsoft Teams clients to be
-used to search content within ACS (Alfesco Content Services) and send messages to Teams Chat / Channels with preview links to Alfresco Digital Workspace. By default, this feature is disabled.
+The [Alfresco Microsoft Teams Connector](https://docs.alfresco.com/) enables
+Microsoft Teams clients to be used to search content within ACS and send
+messages to Teams Chat / Channels with preview links to Alfresco Digital
+Workspace. By default, this feature is disabled.
 
-This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks) with Microsoft Teams Integration enabled.
+This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks)
+with Microsoft Teams Integration enabled.
 
 The diagram below shows the deployment produced by this example:
 
@@ -11,7 +14,8 @@ The diagram below shows the deployment produced by this example:
 
 ## Prerequisites
 
-Follow the [AWS Services](with-aws-services.md) example up until the [Deploy](with-aws-services.md#deploy) section and return to this page.
+Follow the [AWS Services](with-aws-services.md) example up until the
+[Deploy](with-aws-services.md#deploy) section and return to this page.
 
 ## Deploy
 
@@ -19,15 +23,12 @@ When we bring all this together we can deploy ACS using the command below (repla
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set repository.persistence.enabled=true \
+  --set alfresco-repository.persistence.enabled=true \
   --set filestore.persistence.enabled=true \
   --set filestore.persistence.storageClass="nfs-client" \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
-  --set global.tracking.sharedsecret=$(openssl rand -hex 24) \
+  --set global.search.sharedSecret:=$(openssl rand -hex 24) \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-  --set s3connector.enabled=true \
-  --set s3connector.config.bucketName="YOUR-BUCKET-NAME" \
-  --set s3connector.config.bucketLocation="YOUR-AWS-REGION" \
   --set postgresql.enabled=false \
   --set database.external=true \
   --set database.driver="org.postgresql.Driver" \

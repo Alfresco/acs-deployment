@@ -1,7 +1,6 @@
 # This values file can be used to install the latest ACS Community version using
 # the latest version of the chart
-repository:
-  edition: Community
+alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
@@ -17,14 +16,6 @@ alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
     tag: 2.0.8.1
-email:
-  server:
-    enabled: false
-  inbound:
-    enabled: false
-imap:
-  server:
-    enabled: false
 # Disable Enterprise only features
 alfresco-transform-service:
   enabled: true
@@ -49,8 +40,6 @@ alfresco-digital-workspace:
 alfresco-sync-service:
   enabled: false
 alfresco-ai-transformer:
-  enabled: false
-s3connector:
   enabled: false
 alfresco-connector-ms365:
   enabled: false

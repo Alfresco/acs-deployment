@@ -237,8 +237,8 @@ Edit your `values.yml` file so it contains below elements:
 global:
   known_urls:
     - https://acs.YOUR-DOMAIN-NAME
-  tracking:
-    sharedsecret: dummy
+  search:
+    sharedSecret: dummy
   alfrescoRegistryPullSecrets: quay-registry-secret
   elasticsearch:
     host: YOUR-DOMAIN-HOSTNAME
@@ -246,20 +246,19 @@ global:
     protocol: https
     user: YOUR-DOMAIN-MASTER-USERNAME
     password: YOUR-DOMAIN-MASTER-PASSWORD
-repository:
+alfresco-repository:
   image:
     repository: alfresco-content-repository-aws
   persistence:
     enabled: false
+  environement:
+    CATALIAN_OPTS: >-
+      -Ds3.bucketName=YOUR-BUCKET-NAME
+      -Ds3.bucketLocation=YOUS_AWS_REGION
 filestore:
   persistence:
     enabled: true
     storageClass: nfs-client
-s3connector:
-  enabled: true
-  config:
-    bucketName: YOUR-BUCKET-NAME
-    bucketLocation: YOUR-AWS-REGION
 postgresql:
   enabled: false
 database:
@@ -314,20 +313,18 @@ helm -n alfresco install acs \
   --atomic --timeout 10m0s \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-  --set global.tracking.secret=dummy \
+  --set global.search.sharedSecret=dummy \
   --set global.elasticsearch.host=YOUR-DOMAIN-HOSTNAME \
   --set global.elasticsearch.port=443 \
   --set global.elasticsearch.protocol=https \
   --set global.elasticsearch.user=YOUR-DOMAIN-MASTER-USERNAME \
   --set global.elasticsearch.password=YOUR-DOMAIN-MASTER-PASSWORD \
-  --set repository.persistence.enabled=false \
-  --set repository.image.repository=alfresco-content-repository-aws \
+  --set alfresco-repository.persistence.enabled=false \
+  --set alfresco-repository.image.repository=alfresco-content-repository-aws \
   --set filestore.persistence.enabled=true \
   --set filestore.persistence.storageClass="nfs-client" \
-  --set repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
-  --set s3connector.enabled=true \
-  --set s3connector.config.bucketName="YOUR-BUCKET-NAME" \
-  --set s3connector.config.bucketLocation="YOUR-AWS-REGION" \
+  --set alfresco-repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
+  --set alfresco-repository.environment.CATALINA_OPTS="-Ds3.bucketName=YOUR-BUCKET-NAME -Ds3.bucketLocation=YOUS_AWS_REGION" \
   --set postgresql.enabled=false \
   --set database.external=true \
   --set database.driver="org.postgresql.Driver" \

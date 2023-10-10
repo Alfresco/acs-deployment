@@ -13,7 +13,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues231 >-
         helm/alfresco-content-services/values.yaml
-      helm_key: $.repository.image.tag
+      helm_key: $.alfresco-repository.image.tag
       helm_update_appVersion: true
     share:
       version:
@@ -131,7 +131,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues74 >-
         helm/alfresco-content-services/7.4.N_values.yaml
-      helm_key: $.repository.image.tag
+      helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
     share:
@@ -245,7 +245,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues73 >-
         helm/alfresco-content-services/7.3.N_values.yaml
-      helm_key: $.repository.image.tag
+      helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
     share:
@@ -359,7 +359,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues72 >-
         helm/alfresco-content-services/7.2.N_values.yaml
-      helm_key: $.repository.image.tag
+      helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
     share:
@@ -473,7 +473,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues71 >-
         helm/alfresco-content-services/7.1.N_values.yaml
-      helm_key: $.repository.image.tag
+      helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
     share:
@@ -580,7 +580,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues70 >-
         helm/alfresco-content-services/7.0.N_values.yaml
-      helm_key: $.repository.image.tag
+      helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
     share:
@@ -667,7 +667,7 @@ matrix:
       compose_key: $.services.alfresco.image
       helm_target: &helmvaluesOss >-
         helm/alfresco-content-services/community_values.yaml
-      helm_key: $.repository.image.tag
+      helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
     share:

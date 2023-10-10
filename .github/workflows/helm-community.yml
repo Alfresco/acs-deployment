@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - release/**
+      - next/**
     paths:
       - helm/**
       - test/postman/helm/**
@@ -51,11 +52,16 @@ jobs:
           --from-file=.dockerconfigjson=$HOME/.docker/config.json \
           --type=kubernetes.io/dockerconfigjson
 
+      - name: Set nginx ingress config
+        run: |
+          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
+          -p '{"data": {"allow-snippet-annotations":"true"}}'
+
       - name: Helm install
         run: |
           helm dep up ./helm/alfresco-content-services
           helm install acs ./helm/alfresco-content-services \
-            --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
+            --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
             --wait --timeout 15m0s --values \

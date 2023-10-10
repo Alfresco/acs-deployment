@@ -1,6 +1,6 @@
 # This values file can be used to install ACS 7.1.x using the latest version of
 # the chart
-repository:
+alfresco-repository:
   image:
     tag: 7.1.1.8
 alfresco-ai-transformer:
@@ -32,6 +32,8 @@ share:
   image:
     tag: 7.1.1.8
 alfresco-search:
+  repository:
+    securecomms: none
   searchServicesImage:
     tag: 2.0.2.2
 alfresco-search-enterprise:
@@ -73,5 +75,5 @@ alfresco-connector-ms365:
 alfresco-control-center:
   enabled: false
 global:
-  tracking:
-    auth: none
+  search:
+    securecomms: none

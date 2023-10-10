@@ -1,41 +1,38 @@
-# alfresco-common is a library so can only be tested from
-# another chart
 ---
-suite: test alfresco-common library
+suite: test ActiveMQ config
 templates:
+  - config-infrastructure.yaml
   - secret-message-broker.yaml
-  - deployment-repository.yaml
-  - config-repository.yaml
-  - secret-database.yaml
-  - secret-s3.yaml
-  - secret-repository.yaml
-  - config-dev-log4j-properties.yaml
 tests:
-  - it: should render ActiveMQ embedded secret
+  - it: should render default ActiveMQ
     values:
       - values/test_values.yaml
-      - values/externalBroker_values.yaml
     asserts:
-      - contains:
-          path: spec.template.spec.containers[0].envFrom
-          content:
-            secretRef:
-              name: acs-alfresco-cs-brokersecret
-        template: deployment-repository.yaml
       - equal:
           path: data.BROKER_URL
-          value: ZmFpbG92ZXIobmlvOi8vc29tZWJyb2tlcjo2MTYxNik=
+          value: failover:(nio://RELEASE-NAME-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+        template: config-infrastructure.yaml
+      - equal:
+          path: data.BROKER_USERNAME
+          value: YWRtaW4=
         template: secret-message-broker.yaml
-
-  - it: should render custom secret
+      - equal:
+          path: data.BROKER_PASSWORD
+          value: YWRtaW4=
+        template: secret-message-broker.yaml
+  - it: should render ActiveMQ URL from values
     values:
-      - values/test_values.yaml
-    set:
-      messageBroker.existingSecretName: acs-credentials
+      - values/externalBroker_values.yaml
     asserts:
-      - contains:
-          path: spec.template.spec.containers[0].envFrom
-          content:
-            secretRef:
-              name: acs-credentials
-        template: deployment-repository.yaml
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(nio://somebroker:61616)
+        template: config-infrastructure.yaml
+      - equal:
+          path: data.BROKER_USERNAME
+          value: YWxmcmVzY28=
+        template: secret-message-broker.yaml
+      - equal:
+          path: data.BROKER_PASSWORD
+          value: YWxmcmVzY28=
+        template: secret-message-broker.yaml

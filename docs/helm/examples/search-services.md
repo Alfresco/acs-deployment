@@ -13,18 +13,20 @@ container based environments. Some are mentioned bellow:
   workload scheduling or the ephemeral nature of containers in general.
 
 For that reason we recommend for production environments to install Search
-services alongside the Kubernetes cluster and config the Helm charts to not
+services alongside the Kubernetes cluster and configure the Helm charts to not
 deploy it and instead point the repository to the external one.
 
 ## Configuring Helm chart
 
-Bellow we explain how to configure the Helm chart to point the repository to an
-external Solr instance.
+Below we explain how to configure the Helm chart to point the repository to a
+Solr instance outside of the kubernetes cluster.
 
 Installing Solr instance(s) is out of the scope of this document, but it can be
-done following the [Search service documentation](https://docs.alfresco.com/insight-engine/latest/install/options/#install-without-mutual-tls---http-with-secret-word-zip),
+done following the [Search service
+documentation](https://docs.alfresco.com/insight-engine/latest/install/options/#install-without-mutual-tls---http-with-secret-word-zip),
 or by using the Ansible playbook (replication setup require an additional
-load-balancer), as explained [here](https://github.com/Alfresco/alfresco-ansible-deployment/blob/master/docs/search-services-deployment-guide.md).
+load-balancer), as explained
+[here](https://github.com/Alfresco/alfresco-ansible-deployment/blob/master/docs/search-services-deployment-guide.md).
 
 On the chart side you need to:
 
@@ -34,14 +36,13 @@ On the chart side you need to:
 
   ```yaml
   global:
-    tracking:
-      auth: secret
-      sharedsecret: dummy
+    search:
+      url: http://internal-load-balancer-ac3a091cb.eu-west-1.elb.amazonaws.com/solr
+      flavor: solr6
+      securecomms: secret
+      sharedSecret: d0ntT3llAny0n3
   alfresco-search:
     enabled: false
-    external:
-      host: internal-load-balancer-ac3a091cb.eu-west-1.elb.amazonaws.com
-      port: 80
   ```
 
 In this example an internal load balancer is created and aims a target group
@@ -73,7 +74,7 @@ api, so it doesn't make much sense to use external access.
 
 Follow the [EKS deployment](../eks-deployment.md) guide up until the
 [ACS](../eks-deployment.md#acs) section, once the docker registry secret is
-installed return to this page.
+installed come back here.
 
 Deploy the latest version of ACS Enterprise by running the command below
 (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created previously and
@@ -83,57 +84,16 @@ previous section).
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set persistence.enabled=true \
-  --set persistence.storageClass.enabled=true \
-  --set persistence.storageClass.name="nfs-client" \
+  --set alfresco-repository.persistence.enabled=true \
+  --set alfresco-repository.persistence.storageClass.enabled=true \
+  --set alfresco-repository.persistence.storageClass.name="nfs-client" \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
-  --set global.tracking.sharedsecret=dummy \
+  --set global.search.securecomms=none \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set alfresco-search.ingress.enabled=true \
+  --set alfresco-search.ingress.annotations.nginx\.ingress.kubernetes\.io/whitelist-source-range=10.0.0.0/8 \
   --set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
-  --set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \
   --atomic \
   --timeout 10m0s \
   --namespace=alfresco
 ```
-
-### Upgrade ACS Helm Chart With Search External Access
-
-If you've previously deployed ACS where external search access was disabled
-(the default) you can run the following `helm upgrade` command to enable
-external access for `/solr` (replacing `YOUR-BASIC-AUTH` and `YOUR-IPS` with
-the encoded basic authentication string and list of whitelisted IP addresses
-you prepared in the "Prepare Data" section):
-
-```bash
-helm upgrade acs alfresco/alfresco-content-services \
---set alfresco-search.ingress.enabled=true \
---set alfresco-search.ingress.basicAuth="YOUR-BASIC-AUTH" \
---set alfresco-search.ingress.whitelist_ips="YOUR_IPS" \
-```
-
-> **Note:** There are known issues when upgrading a Helm chart relating to Helm
-> cache.
-
-- `https://github.com/Kubernetes/helm/issues/3275`
-- `https://github.com/Kubernetes/helm/issues/1193`
-- `https://github.com/Kubernetes/helm/pull/4146`
-
-If your `helm upgrade` fails due to any of these example errors:
-
-```bash
-Error: UPGRADE FAILED: no Secret with the name "nosy-tapir-alfresco-search-solr" found
-(or)
-Error: UPGRADE FAILED: no Ingress with the name "nosy-tapir-alfresco-search-solr" found
-```
-
-Then, simply delete that resource.  Below is an example:
-
-```bash
-kubectl delete secret nosy-tapir-alfresco-search-solr --namespace=alfresco
-(or)
-kubectl delete ingress nosy-tapir-alfresco-search-solr --namespace=alfresco
-```
-
-And re-try above Upgrade ACS Helm Chart steps which will also re-create the
-above deleted resource.

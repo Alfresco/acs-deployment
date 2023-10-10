@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - release/**
+      - next/**
     paths:
       - helm/**
       - test/postman/helm/**
@@ -99,7 +100,7 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.3.3
         with:
           ingress-nginx-ref: controller-v1.8.2
-  
+
       - name: Set nginx ingress config
         run: |
           kubectl -n ingress-nginx patch cm ingress-nginx-controller \
@@ -111,14 +112,18 @@ jobs:
           --from-file=.dockerconfigjson=$HOME/.docker/config.json \
           --type=kubernetes.io/dockerconfigjson
 
+      - name: Set nginx ingress config
+        run: |
+          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
+          -p '{"data": {"allow-snippet-annotations":"true"}}'
+
       - name: Helm install
         run: |
           helm dep up ./helm/alfresco-content-services
           helm install acs ./helm/alfresco-content-services \
-            --set global.tracking.sharedsecret="$(openssl rand -hex 24)" \
+            --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --set 'global.registryPullSecrets[0]=regcred' \
             --wait --timeout 15m0s \
             --values helm/${{ matrix.name }}/${{ matrix.values }} \
             --values test/enterprise-integration-test-values.yaml

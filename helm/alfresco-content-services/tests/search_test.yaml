@@ -1,71 +1,98 @@
 ---
-suite: test search related rendering
+suite: test repository properties in a secret
 templates:
-  - config-repository.yaml
+  - config-infrastructure.yaml
+  - secret-search.yaml
 tests:
-  - it: should configure ACS without any search subsystem
+  - it: should render default config (solr6 with secret)
     values: &testvalues
       - values/test_values.yaml
-    set:
-      alfresco-search:
-        enabled: false
+    template: config-infrastructure.yaml
     asserts:
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Dindex.subsystem.name=none($|\ )
-  - it: should configure ACS with external Solr
+      - equal:
+          path: data.SOLR_SECRET
+          value: ZHVtbXk=
+        template: secret-search.yaml
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: secret
+      - equal:
+          path: data.SEARCH_URL
+          value: http://RELEASE-NAME-alfresco-search-solr/solr
+      - equal:
+          path: data.SEARCH_HOST
+          value: RELEASE-NAME-alfresco-search-solr
+      - equal:
+          path: data.SEARCH_PORT
+          value: "80"
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: solr6
+      - equal:
+          path: data.SOLR_BASE_URL
+          value: /solr
+  - it: should render an external config
     values: *testvalues
     set:
-      alfresco-search:
-        enabled: false
-        external:
-          host: somehostwheresolrservesrequests
-          port: 8983
+      global:
+        search:
+          url: https://mysearch.domain.tld:8984/search
+          sharedSecret: supersecret
+    template: config-infrastructure.yaml
     asserts:
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Dindex.subsystem.name=solr6($|\ )
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Dsolr.host=somehostwheresolrservesrequests($|\ )
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Dsolr.port=8983($|\ )
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Dsolr.secureComms=secret($|\ )
-  - it: should configure ACS with external ElasticSearch
+      - equal:
+          path: data.SOLR_SECRET
+          value: c3VwZXJzZWNyZXQ=
+        template: secret-search.yaml
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: secret
+      - equal:
+          path: data.SEARCH_URL
+          value: https://mysearch.domain.tld:8984/search
+      - equal:
+          path: data.SEARCH_HOST
+          value: mysearch.domain.tld
+      - equal:
+          path: data.SEARCH_PORT
+          value: "8984"
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: solr6
+      - equal:
+          path: data.SOLR_BASE_URL
+          value: /search
+  - it: should render an enterprise search config (embedded)
     values: *testvalues
     set:
       alfresco-search:
         enabled: false
       alfresco-search-enterprise:
         enabled: true
-        elasticsearch:
-          host: some.opensearch.endpoint
-          port: 443
-          protocol: https
-          user: user
-          password: pass
+    template: config-infrastructure.yaml
     asserts:
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Dindex.subsystem.name=elasticsearch($|\ )
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Delasticsearch.host=some.opensearch.endpoint($|\ )
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Delasticsearch.secureComms=https($|\ )
-      - matchRegex:
-          path: data.ALFRESCO_OPTS
-          pattern: |-
-            (^|\w\s+)-Delasticsearch.user=user($|\ )
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: none
+      - equal:
+          path: data.SEARCH_URL
+          value: http://elasticsearch-master:9200
+      - equal:
+          path: data.SEARCH_HOST
+          value: elasticsearch-master
+      - equal:
+          path: data.SEARCH_PORT
+          value: "9200"
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: elasticsearch
+  - it: should not render a secret render property with default credentials
+    values: *testvalues
+    set:
+      global:
+        search:
+          securecomms: none
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: secret-search.yaml

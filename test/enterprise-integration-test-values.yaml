@@ -1,5 +1,5 @@
 ---
-repository:
+alfresco-repository:
   resources:
     requests:
       cpu: "0.01"
@@ -115,14 +115,6 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
-email:
-  server:
-    enabled: false
-  inbound:
-    enabled: false
-imap:
-  server:
-    enabled: false
 alfresco-sync-service:
   postgresql:
     primary:

@@ -1,6 +1,6 @@
 # This values file can be used to install ACS 7.4.x using the latest version of
 # the chart
-repository:
+alfresco-repository:
   image:
     tag: 7.4.1.1
 alfresco-transform-service:

@@ -6,7 +6,7 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
-repository:
+alfresco-repository:
   replicaCount: 1
   persistence:
     accessModes:
