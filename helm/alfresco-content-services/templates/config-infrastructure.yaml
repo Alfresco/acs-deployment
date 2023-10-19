@@ -12,7 +12,7 @@ data:
   repo_svc_port: {{ index .Values "alfresco-repository" "service" "port" | default 80 | quote }}
   {{- $db_url := include "alfresco-content-services.database.repo" $ }}
   {{ template "alfresco-repository.db.cm" (dict "url" $db_url "driver" .Values.database.driver) }}
-  {{ template "alfresco-repository.mq.cm" (include "alfresco-content-services.mq.url" .) }}
+  {{ template "alfresco-common.activemq.cm" (include "alfresco-content-services.mq.url" .) }}
   {{- $search_url := "" }}
   {{- $search_flavor := include "alfresco-content-services.search.flavor" . }}
   {{- if ne "noindex" $search_flavor }}
