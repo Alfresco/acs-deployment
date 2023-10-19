@@ -128,11 +128,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.0.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.0.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.0.0-M1"` |  |
+| alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
 | alfresco-search-enterprise.reindexing.image.tag | string | `"4.0.0-M1"` |  |
+| alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | alfresco-search.enabled | bool | `true` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |

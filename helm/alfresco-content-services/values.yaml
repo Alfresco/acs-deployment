@@ -301,6 +301,8 @@ alfresco-search-enterprise:
     # -- Enables the embedded elasticsearch cluster
     enabled: true
   messageBroker:
+    existingConfigMap:
+      name: *infrastructure_cmName
     existingSecretName: *acs_messageBroker_secretName
   liveIndexing:
     mediation:
@@ -317,6 +319,9 @@ alfresco-search-enterprise:
         tag: 4.0.0-M1
   reindexing:
     enabled: true
+    repository:
+      existingConfigMap:
+        name: *infrastructure_cmName
     db:
       existingSecret:
         name: *acs_database_secretName
