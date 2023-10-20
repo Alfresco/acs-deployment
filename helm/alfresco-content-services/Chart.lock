@@ -28,7 +28,7 @@ dependencies:
   version: 4.4.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.0.0-alpha.4
+  version: 3.0.0-alpha.5
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.2.0
@@ -41,5 +41,5 @@ dependencies:
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.3.0
-digest: sha256:dd01b62703e2f71c7093b62267bd7f279da3e2e4656df46ddd6195349dc72bbd
-generated: "2023-10-19T17:09:53.652807+02:00"
+digest: sha256:1ede4451b1e2f358aa2a9b28ca9c6ea593ad5a2f5d29f9a131ea7c218e8dd1ab
+generated: "2023-10-20T14:43:11.192329+02:00"
