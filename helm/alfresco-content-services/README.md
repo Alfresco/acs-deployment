@@ -204,7 +204,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.secretName | string | `"alfresco-cs-database"` | Name of the secret managed by this chart |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
+| elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `false` | Enables the embedded elasticsearch cluster |
+| elasticsearch.replicas | int | `1` |  |
 | global.ai.enabled | bool | `false` | Enable AI capabilities in ADW AI plugin |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
