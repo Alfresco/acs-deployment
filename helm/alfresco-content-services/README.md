@@ -29,6 +29,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.2.0 |
+| https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
