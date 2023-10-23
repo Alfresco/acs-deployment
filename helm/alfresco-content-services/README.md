@@ -204,12 +204,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.user | string | `nil` | External Postgresql database user |
 | global.ai.enabled | bool | `false` | Enable AI capabilities in ADW AI plugin |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
-| global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-search-enterprise.enabled is true |
-| global.elasticsearch.host | string | `"elasticsearch-master"` | The host where service is available. The provided default is for when elasticsearch.enabled is true |
-| global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
-| global.elasticsearch.port | int | `9200` | The port where service is available |
-| global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
-| global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
