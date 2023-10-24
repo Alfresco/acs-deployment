@@ -118,6 +118,9 @@ alfresco-repository:
         name: *infrastructure_cmName
       existingSecret:
         name: *acs_search_secretName
+        keys:
+          username: SEARCH_USERNAME
+          password: SEARCH_PASSWORD
   persistence:
     # -- Persist repository data
     enabled: true
