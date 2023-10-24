@@ -47,7 +47,13 @@ services:
         -Dalfresco.secureComms.secret=secret
     ports:
       - "8083:8983" # Browser port
-  # Disable the default solr6 service
+  # Disable the default elastcisearch service
   search:
+    image: alpine:latest
+    command: "true"
+  search-reindexing:
+    image: alpine:latest
+    command: "true"
+  elasticsearch:
     image: alpine:latest
     command: "true"
