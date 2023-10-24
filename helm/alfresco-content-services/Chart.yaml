@@ -17,7 +17,7 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: alfresco-common
-    version: 3.0.0-alpha.2
+    version: 3.0.0-alpha.3
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     version: 12.8.5
@@ -36,7 +36,7 @@ dependencies:
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository
-    version: 0.1.0-alpha.18
+    version: 0.1.0-alpha.19
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
     version: 3.3.0
@@ -56,7 +56,7 @@ dependencies:
     version: 4.4.0
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 3.0.0-alpha.1
+    version: 3.0.0-alpha.6
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
@@ -76,4 +76,8 @@ dependencies:
     version: 0.3.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
+  - name: elasticsearch
+    repository: https://helm.elastic.co
+    version: 7.17.3
+    condition: elasticsearch.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

@@ -69,6 +69,8 @@ tests:
         enabled: false
       alfresco-search-enterprise:
         enabled: true
+      elasticsearch:
+        enabled: true
     template: config-infrastructure.yaml
     asserts:
       - equal:
@@ -89,10 +91,25 @@ tests:
   - it: should not render a secret render property with default credentials
     values: *testvalues
     set:
-      global:
-        search:
-          securecomms: none
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: false
     asserts:
       - hasDocuments:
           count: 0
         template: secret-search.yaml
+  - it: Should complain on missing search index
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: true
+    template: config-infrastructure.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            Chart is configured to use Alfresco Search Enterprise but no index
+            backend has been provided. Set one using either global.search.url
+            or elasticsearch.enabled

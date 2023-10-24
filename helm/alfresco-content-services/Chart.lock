@@ -1,7 +1,7 @@
 dependencies:
 - name: alfresco-common
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.0.0-alpha.2
+  version: 3.0.0-alpha.3
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.8.5
@@ -13,7 +13,7 @@ dependencies:
   version: 7.11.0
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0-alpha.18
+  version: 0.1.0-alpha.19
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.3.0
@@ -28,7 +28,7 @@ dependencies:
   version: 4.4.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.0.0-alpha.1
+  version: 3.0.0-alpha.6
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.2.0
@@ -41,5 +41,8 @@ dependencies:
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.3.0
-digest: sha256:6a533094da7cc78446fb85fe0fc7ca6e61e24d207ea63ffa6a6a808f6af5aab7
-generated: "2023-10-13T19:53:57.940715+02:00"
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.17.3
+digest: sha256:baff6c44e199f18cfcedac5c5329d667480576f0b8ddf7be5640563da791370e
+generated: "2023-10-23T15:00:16.909173+02:00"

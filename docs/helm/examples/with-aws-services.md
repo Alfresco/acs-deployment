@@ -238,17 +238,17 @@ global:
   known_urls:
     - https://acs.YOUR-DOMAIN-NAME
   search:
-    sharedSecret: dummy
-  alfrescoRegistryPullSecrets: quay-registry-secret
-  elasticsearch:
-    host: YOUR-DOMAIN-HOSTNAME
-    port: 443
-    protocol: https
-    user: YOUR-DOMAIN-MASTER-USERNAME
+    url: https://YOUR-DOMAIN-HOSTNAME/
+    username: YOUR-DOMAIN-MASTER-USERNAME
     password: YOUR-DOMAIN-MASTER-PASSWORD
+  alfrescoRegistryPullSecrets: quay-registry-secret
 alfresco-repository:
   image:
     repository: alfresco-content-repository-aws
+  configuration:
+    search:
+      flavor: elasticsearch
+      securecomms: https
   persistence:
     enabled: false
   environement:
@@ -313,14 +313,13 @@ helm -n alfresco install acs \
   --atomic --timeout 10m0s \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-  --set global.search.sharedSecret=dummy \
-  --set global.elasticsearch.host=YOUR-DOMAIN-HOSTNAME \
-  --set global.elasticsearch.port=443 \
-  --set global.elasticsearch.protocol=https \
-  --set global.elasticsearch.user=YOUR-DOMAIN-MASTER-USERNAME \
-  --set global.elasticsearch.password=YOUR-DOMAIN-MASTER-PASSWORD \
+  --set global.search.url=https://YOUR-DOMAIN-HOSTNAME \
+  --set global.search.username=YOUR-DOMAIN-MASTER-USERNAME \
+  --set global.search.password=YOUR-DOMAIN-MASTER-PASSWORD \
   --set alfresco-repository.persistence.enabled=false \
   --set alfresco-repository.image.repository=alfresco-content-repository-aws \
+  --set alfresco-repository.configuration.search.flavor=elasticsearch \
+  --set alfresco-repository.configuration.search.securecomms=https \
   --set filestore.persistence.enabled=true \
   --set filestore.persistence.storageClass="nfs-client" \
   --set alfresco-repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \

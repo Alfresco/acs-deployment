@@ -31,6 +31,7 @@ jobs:
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.3.3
       - name: Add dependency chart repos
         run: |
-          helm repo add alfresco-helm-charts https://alfresco.github.io/alfresco-helm-charts/
+          helm repo add alfresco-helm-charts https://alfresco.github.io/alfresco-helm-charts
           helm repo add activiti-cloud-helm-charts https://activiti.github.io/activiti-cloud-helm-charts
+          helm repo add elasticsearch https://helm.elastic.co
       - uses: pre-commit/action@v3.0.0
