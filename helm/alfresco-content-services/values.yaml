@@ -50,7 +50,7 @@ global:
     # -- Mandatory secret to provide when using Solr search with 'secret' security level
     sharedSecret: null
     # -- Name of the secret managed by this chart
-    secretName: &acs_search_secretName solr-shared-secret
+    secretName: &acs_search_secretName alfresco-search-secret
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -62,20 +62,6 @@ global:
   ai:
     # -- Enable AI capabilities in ADW AI plugin
     enabled: false
-  # -- Shared connections details for Elasticsearch/Opensearch, required when
-  # alfresco-search-enterprise.enabled is true
-  elasticsearch:
-    # -- The host where service is available. The provided default is for when
-    # elasticsearch.enabled is true
-    host: elasticsearch-master
-    # -- The port where service is available
-    port: 9200
-    # -- Valid values are http or https
-    protocol: http
-    # -- The username required to access the service, if any
-    user: null
-    # -- The password required to access the service, if any
-    password: null
 database:
   # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false
@@ -132,6 +118,9 @@ alfresco-repository:
         name: *infrastructure_cmName
       existingSecret:
         name: *acs_search_secretName
+        keys:
+          username: SEARCH_USERNAME
+          password: SEARCH_PASSWORD
   persistence:
     # -- Persist repository data
     enabled: true
@@ -294,13 +283,17 @@ alfresco-search:
     #      - chart-example.local
 alfresco-search-enterprise:
   enabled: false
+  search:
+    existingConfigMap:
+      name: *infrastructure_cmName
+    existingSecret:
+      name: *acs_search_secretName
   ats:
     existingConfigMap:
       name: *infrastructure_cmName
-  elasticsearch:
-    # -- Enables the embedded elasticsearch cluster
-    enabled: true
   messageBroker:
+    existingConfigMap:
+      name: *infrastructure_cmName
     existingSecretName: *acs_messageBroker_secretName
   liveIndexing:
     mediation:
@@ -317,6 +310,9 @@ alfresco-search-enterprise:
         tag: 4.0.0-M1
   reindexing:
     enabled: true
+    repository:
+      existingConfigMap:
+        name: *infrastructure_cmName
     db:
       existingSecret:
         name: *acs_database_secretName
@@ -489,3 +485,8 @@ alfresco-ai-transformer:
 #    region:
 #    s3Bucket:
 #    comprehendRoleARN:
+elasticsearch:
+  # -- Enables the embedded elasticsearch cluster
+  enabled: false
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"

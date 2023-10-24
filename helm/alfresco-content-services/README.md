@@ -20,15 +20,16 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.18 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.0-alpha.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.19 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.0-alpha.6 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.2.0 |
+| https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
@@ -113,7 +114,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.repository.existingSecrets[1].name | string | `"outbound-email"` |  |
 | alfresco-repository.configuration.repository.existingSecrets[1].purpose | string | `"property:mail.password"` |  |
 | alfresco-repository.configuration.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-repository.configuration.search.existingSecret.name | string | `"solr-shared-secret"` |  |
+| alfresco-repository.configuration.search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` |  |
+| alfresco-repository.configuration.search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` |  |
+| alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | alfresco-repository.image.tag | string | `"23.1.0-A27"` |  |
@@ -122,17 +125,20 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-search-enterprise.elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.0.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.0.0-M1"` |  |
 | alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.0.0-M1"` |  |
+| alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
 | alfresco-search-enterprise.reindexing.image.tag | string | `"4.0.0-M1"` |  |
+| alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | alfresco-search.enabled | bool | `true` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
@@ -146,7 +152,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingConfigMap.keys.securecomms | string | `"SEARCH_SECURECOMMS"` |  |
 | alfresco-search.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search.repository.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` |  |
-| alfresco-search.repository.existingSecret.name | string | `"solr-shared-secret"` |  |
+| alfresco-search.repository.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8.1"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
@@ -200,21 +206,18 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.secretName | string | `"alfresco-cs-database"` | Name of the secret managed by this chart |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
+| elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
+| elasticsearch.enabled | bool | `false` | Enables the embedded elasticsearch cluster |
+| elasticsearch.replicas | int | `1` |  |
 | global.ai.enabled | bool | `false` | Enable AI capabilities in ADW AI plugin |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
-| global.elasticsearch | object | `{"host":"elasticsearch-master","password":null,"port":9200,"protocol":"http","user":null}` | Shared connections details for Elasticsearch/Opensearch, required when alfresco-search-enterprise.enabled is true |
-| global.elasticsearch.host | string | `"elasticsearch-master"` | The host where service is available. The provided default is for when elasticsearch.enabled is true |
-| global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
-| global.elasticsearch.port | int | `9200` | The port where service is available |
-| global.elasticsearch.protocol | string | `"http"` | Valid values are http or https |
-| global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
 | global.mail.port | int | `587` | SMTP server port |
 | global.mail.protocol | string | `"smtp"` | SMTP protocol to use. Either smtp or smtps |
 | global.search.flavor | string | `nil` | set the type of search service used externally (solr6 of elasticsearch) |
-| global.search.secretName | string | `"solr-shared-secret"` | Name of the secret managed by this chart |
+| global.search.secretName | string | `"alfresco-search-secret"` | Name of the secret managed by this chart |
 | global.search.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
 | global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
 | global.search.url | string | `nil` | set this URL if you have an external search service |
