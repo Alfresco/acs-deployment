@@ -20,10 +20,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 7.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.19 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0-alpha.21 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.0-alpha.6 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.1.1 |
