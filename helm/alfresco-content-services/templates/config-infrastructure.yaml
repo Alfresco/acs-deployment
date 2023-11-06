@@ -28,7 +28,7 @@ data:
       {{- with .Values.elasticsearch }}
       {{- if .enabled }}
         {{- $esProto := .protocol | default "http" }}
-        {{- $esHost := printf "%s-%s" (.clusterName | default "elastcisearch") (.nodeGroup | default "master") }}
+        {{- $esHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
         {{- $esPort := .port | default 9200 }}
         {{- $search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
       {{- else }}
