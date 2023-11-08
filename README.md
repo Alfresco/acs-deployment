@@ -147,14 +147,9 @@ First ensure that:
   [supported-matrix](https://github.com/Alfresco/alfresco-updatecli/blob/master/deployments/values/supported-matrix.yaml)
   reflects the status of the currently released Alfresco products and update if
   necessary before proceeding.
-* the [components charts](https://github.com/Alfresco/alfresco-helm-charts) used
-  in [alfresco-content-services](helm/alfresco-content-services/Chart.yaml) have
-  been released in stable version (no pre-release version should be present in
-  Chart.yaml), with up-to-date components versions by running the [Bump versions
-  workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml)
-* the [Bump versions](https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml)
-  workflow has been run to reflect the changes of the current `supported-matrix`
-  in the helm charts values files and to grab the latest helm charts dependencies.
+* the [components charts](https://github.com/Alfresco/alfresco-helm-charts) have
+  been released in stable versions (no pre-release version should be present in
+  Chart.yaml).
 
 Start the release by opening a PR against the appropriate branch that will:
 
@@ -166,6 +161,14 @@ Start the release by opening a PR against the appropriate branch that will:
 * Edit [upgrades docs](docs/helm/upgrades.md) renaming the `To be released`
   section to the current version and create a new `To be released` section for
   the future.
+* Run [Bump versions][1] workflow against the same newly created branch, the
+  first time with `charts` option. Inspect the changes pushed on the branch,
+  revert unwanted changes if necessary.
+* Run [Bump versions][1] workflow against the same branch with option `values`.
+  Inspect the changes pushed on the branch, revert unwanted changes if
+  necessary.
+
+[1]: https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml
 
 Once the PR has been merged, create the release with:
 
