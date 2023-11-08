@@ -4,7 +4,7 @@
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 7.0.0-M.2
+version: 7.0.0
 appVersion: 23.1.0-M4
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
