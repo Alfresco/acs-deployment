@@ -38,7 +38,7 @@ alfresco-search:
   searchServicesImage:
     tag: 2.0.8.2
   insightEngineImage:
-    tag: 2.0.8.1
+    tag: 2.0.8.2
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
