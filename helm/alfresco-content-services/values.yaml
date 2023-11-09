@@ -182,35 +182,35 @@ alfresco-transform-service:
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 4.0.0
+      tag: 5.0.0
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 4.0.0
+      tag: 5.0.0
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 4.0.0
+      tag: 5.0.0
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 4.0.0
+      tag: 5.0.0
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 4.0.0
+      tag: 5.0.0
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
