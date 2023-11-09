@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 7.4.1.1
+    tag: 7.4.1.2
 alfresco-transform-service:
   transformrouter:
     image:
@@ -30,13 +30,13 @@ alfresco-ai-transformer:
     tag: 2.0.0
 share:
   image:
-    tag: 7.4.1.1
+    tag: 7.4.1.2
 activemq:
   image:
     tag: null
 alfresco-search:
   searchServicesImage:
-    tag: 2.0.8.1
+    tag: 2.0.8.2
   insightEngineImage:
     tag: 2.0.8.1
 alfresco-search-enterprise:
@@ -71,7 +71,7 @@ postgresql-syncservice:
     tag: 14.4.0
 alfresco-sync-service:
   image:
-    tag: 3.10.0
+    tag: 3.11.0
 alfresco-connector-ms365:
   image:
     tag: 2.0.0

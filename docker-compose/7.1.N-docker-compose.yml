@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.1.1.8
+    image: quay.io/alfresco/alfresco-content-repository:7.1.0.6
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -98,7 +98,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.1.1.8
+    image: quay.io/alfresco/alfresco-share:7.1.0.6
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -145,7 +145,7 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:2.6.2
+    image: quay.io/alfresco/alfresco-digital-workspace:2.6.1
     mem_limit: 128m
     environment:
       APP_CONFIG_AUTH_TYPE: "BASIC"
