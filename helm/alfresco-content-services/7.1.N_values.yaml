@@ -36,6 +36,8 @@ alfresco-search:
     securecomms: none
   searchServicesImage:
     tag: 2.0.2.2
+  insightEngineImage:
+    tag: 2.0.2.2
 alfresco-search-enterprise:
   liveIndexing:
     mediation:

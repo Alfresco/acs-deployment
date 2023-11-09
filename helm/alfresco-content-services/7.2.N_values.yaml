@@ -34,6 +34,8 @@ share:
 alfresco-search:
   searchServicesImage:
     tag: 2.0.3.6
+  insightEngineImage:
+    tag: 2.0.3.6
 alfresco-search-enterprise:
   liveIndexing:
     mediation:
