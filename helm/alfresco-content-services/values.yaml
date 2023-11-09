@@ -481,7 +481,7 @@ alfresco-ai-transformer:
     existingSecretName: *acs_messageBroker_secretName
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 2.0.0
+    tag: 3.0.0
 #  aws:
 #    accessKey:
 #    secretAccessKey:
