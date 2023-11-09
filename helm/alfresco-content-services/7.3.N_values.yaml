@@ -9,9 +9,6 @@ alfresco-ai-transformer:
 share:
   image:
     tag: 7.3.1.1
-activemq:
-  image:
-    tag: null
 alfresco-transform-service:
   transformrouter:
     image:

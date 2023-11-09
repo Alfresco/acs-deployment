@@ -31,9 +31,6 @@ alfresco-ai-transformer:
 share:
   image:
     tag: 7.4.1.2
-activemq:
-  image:
-    tag: null
 alfresco-search:
   searchServicesImage:
     tag: 2.0.8.2
