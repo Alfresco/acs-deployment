@@ -26,7 +26,8 @@ the compatibility with the values structure which remained almost stable since
 the v6 release.
 
 Please review the new [values](helm/alfresco-content-services/values.yaml)
-carefully and adapt any custom configuration you may have.
+carefully and adapt any custom configuration you may have. You can read the
+[upgrades guide](docs/helm/upgrades.md) for more details on the changes.
 
 > Deploying to new namespace is always the preferred way of upgrading ACS as we
 > do not test charts for upgrade scenarios (even with previous versions)
@@ -38,9 +39,9 @@ The ACS Enterprise version is installed by default, using Docker images from
 Quay.io. If you're an Alfresco customer, you can request Quay.io credentials by
 logging a ticket with [Hyland Community](https://community.hyland.com).
 
-The images from provide a limited trial of the Enterprise version of Alfresco
-Content Services, which switches to read-only mode after 2 days. For a longer
-trial, you can request the 30-day [Download
+The repository Docker image provides a limited trial of the Enterprise version
+of Alfresco Content Services, which switches to read-only mode after 2 days. For
+a longer trial, you can request the 30-day [Download
 Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
 
 The Community Edition can be installed without the need of a license or quay.io
