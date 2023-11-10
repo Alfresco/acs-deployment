@@ -23,6 +23,8 @@ default ingress controller. You may need to exit and restart Rancher Desktop
 for the change to take effect. Ref: [Setup NGINX Ingress
 Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
 
+Then proceed to the [deployment](#deployment) section to install ingress-nginx.
+
 ### Docker Desktop specific configuration
 
 On top of the Docker desktop
