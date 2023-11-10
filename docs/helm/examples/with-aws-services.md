@@ -257,10 +257,11 @@ alfresco-repository:
     CATALIAN_OPTS: >-
       -Ds3.bucketName=YOUR-BUCKET-NAME
       -Ds3.bucketLocation=YOUS_AWS_REGION
-filestore:
-  persistence:
-    enabled: true
-    storageClass: nfs-client
+alfresco-transform-service:
+  filestore:
+    persistence:
+      enabled: true
+      storageClass: nfs-client
 postgresql:
   enabled: false
 database:
