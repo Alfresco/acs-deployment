@@ -32,7 +32,7 @@ helm install acs alfresco/alfresco-content-services \
   --set alfresco-transform-service.filestore.persistence.enabled=true \
   --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
-  --set global.search.sharedSecret:=$(openssl rand -hex 24) \
+  --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set alfresco-repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
   --set share.image.repository="quay.io/alfresco/alfresco-share-aws" \
