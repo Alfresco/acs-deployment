@@ -6,50 +6,55 @@
 [![docker-compose (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml)
 [![docker-compose (community)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml)
 
-This project contains the code for starting the entire Alfresco Content
-Services (ACS) product with [Docker](https://docs.docker.com/get-started) using
-[Docker Compose](https://docs.docker.com/compose) or
+This project contains the code for running Alfresco Content Services (ACS) with
+[Docker](https://docs.docker.com/get-started) using [Docker
+Compose](https://docs.docker.com/compose) or on
 [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
-Our tests are executed using Helm, kubectl versions provided by github action
-runners [Ubuntu-22.04](https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md#ubuntu-2204)
-and against EKS clusters running Kubernetes 1.21 & 1.22.
+Automated tests for helm charts are running on KinD cluster v1.25 and EKS v1.27.
+
+## Important changes for helm charts
+
+The v7.0.0 release is the first release of the acs helm charts which completely
+leverage the new individual subcharts we started releasing since March 2023 in a
+dedicated repo:
+[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts).
+
+This change will make life easier to whoever want to customize or extend the
+helm deployments and simplify the future maintenance, at the cost of breaking
+the compatibility with the values structure which remained almost stable since
+the v6 release.
+
+Please review the new [values](helm/alfresco-content-services/values.yaml)
+carefully and adapt any custom configuration you may have.
+
+> Deploying to new namespace is always the preferred way of upgrading ACS as we
+> do not test charts for upgrade scenarios (even with previous versions)
+> neither do we provide roll-back facilities.
 
 ## Prerequisites
 
-By default the Enterprise version of ACS is installed. To accomplish this
-private Docker images stored in Quay.io are downloaded. Alfresco customers can
-request Quay.io credentials by logging a ticket with
-[Alfresco Support](https://support.alfresco.com/).
+The ACS Enterprise version is installed by default, using Docker images from
+Quay.io. If you're an Alfresco customer, you can request Quay.io credentials by
+logging a ticket with [Hyland Community](https://community.hyland.com).
 
-The images downloaded directly from Docker Hub, or Quay.io are for a limited
-trial of the Enterprise version of Alfresco Content Services that goes into
-read-only mode after 2 days. If you'd like to try Alfresco Content Services for
-a longer period, request the 30-day
-[Download Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
+The images from provide a limited trial of the Enterprise version of Alfresco
+Content Services, which switches to read-only mode after 2 days. For a longer
+trial, you can request the 30-day [Download
+Trial](https://www.alfresco.com/platform/content-services-ecm/trial/download).
 
-To avoid license restrictions and private Docker images follow the instructions
-to deploy the Community Edition.
+The Community Edition can be installed without the need of a license or quay.io
+account.
 
 ## Versioning
 
-**NOTE:** **The versioning strategy used in this project has changed, if you
-have previously used this project please read this section carefully!**
-
 The master branch of this repository now contains the artifacts required to
 deploy both the the latest work-in-progress development version and previous
-stable versions of ACS.
+stable versions of ACS that are still supported.
 
-The default behaviour is to use the latest work-in-progress development version
-however, individual files are now provided to deploy the latest hot fix version
-of each major.minor version of ACS. The `support/*` branches will remain in
-place but will no longer be maintained.
-
-A new version numbering scheme is also being introduced. During the development
-phase one or more milestone releases will be produced indicated by an `M`
-suffix, for example "5.0.0-M1". Once feature complete one or more RC releases
-will be produced followed by the final GA release. Upon release the repository
-will be tagged with the release number.
+During the development phase, one or more milestone releases will be produced
+indicated by an `-M` suffix, for example `6.0.0-M.1``. Once an ACS version
+become GA, also a GA release of this repository will be published.
 
 The table below shows the exact version of ACS deployed with each chart version/tag.
 
@@ -95,16 +100,11 @@ The table below shows the exact version of ACS deployed with each chart version/
 
 ### Why there is no 5.4.0?
 
-During the development of 5.4.0 we've started turning subcharts (search, sync,
-activemq, ...) into individual charts hosted on a new repository. That decision
-introduces some breaking changes like resource renaming and values structure
-modifications. For that reason we chose to bump to a new major version to
-capture the fact upgrades can be problematic and one should prefer deploying new
-version to a new namespace rather than attempting upgrades.
-
-> Deploying to new namespace is always the preferred way of upgrading ACS as we
-> do not test charts for upgrade scenarios (even with previous versions)
-> neither do we provide roll-back facilities.
+During the development of 5.4.0 we've started moving individual components
+templates (search, sync, activemq, ...) into individual charts on
+[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts). That
+decision introduced some breaking changes like resource renaming and values
+structure modifications that has been shipped since v6.0.0.
 
 ### End of Life'd versions
 
@@ -120,7 +120,7 @@ file for a version with the latest charts or using the old charts.
 | 6.2                     | 5.3.0                           |
 | 6.1                     | 5.1.1                           |
 
-> These charts are mentioned for reference but are not supported.
+> These charts should not be used for any new deployment but just for reference.
 
 ## Getting Started
 
@@ -167,8 +167,8 @@ Start the release by opening a PR against the appropriate branch that will:
   first time with `charts` option. Inspect the changes pushed on the branch,
   revert unwanted changes if necessary.
 * Run [Bump versions][1] workflow against the same branch with option `values`.
-  Inspect the changes pushed on the branch, revert unwanted changes if
-  necessary.
+  This will update both docker compose tags and helm charts values.
+  Inspect the changes pushed on the branch, looking for any missing update.
 
 [1]: https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml
 
