@@ -45,18 +45,20 @@ The rest of this document assume EFS is used for SFS. To disable it replace
 the values below:
 
 ```yaml
-filestore:
-  persistence:
-    enabled: true
-    storageClass: nfs-client
+alfresco-transform-service:
+  filestore:
+    persistence:
+      enabled: true
+      storageClass: nfs-client
 ```
 
 with:
 
 ```yaml
-filestore:
-  persistence:
-    enabled: false  # or use helm CLI --set filestore.persistence.enabled=false
+alfresco-transform-service:
+  filestore:
+    persistence:
+      enabled: false  # or use helm CLI --set alfresco-transform-service.filestore.persistence.enabled=false
 ```
 
 ## Setup Services
@@ -320,8 +322,8 @@ helm -n alfresco install acs \
   --set alfresco-repository.image.repository=alfresco-content-repository-aws \
   --set alfresco-repository.configuration.search.flavor=elasticsearch \
   --set alfresco-repository.configuration.search.securecomms=https \
-  --set filestore.persistence.enabled=true \
-  --set filestore.persistence.storageClass="nfs-client" \
+  --set alfresco-transform-service.filestore.persistence.enabled=true \
+  --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
   --set alfresco-repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
   --set alfresco-repository.environment.CATALINA_OPTS="-Ds3.bucketName=YOUR-BUCKET-NAME -Ds3.bucketLocation=YOUS_AWS_REGION" \
   --set postgresql.enabled=false \

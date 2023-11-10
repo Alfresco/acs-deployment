@@ -24,8 +24,8 @@ When we bring all this together we can deploy ACS using the command below (repla
 ```bash
 helm install acs alfresco/alfresco-content-services \
   --set alfresco-repository.persistence.enabled=true \
-  --set filestore.persistence.enabled=true \
-  --set filestore.persistence.storageClass="nfs-client" \
+  --set alfresco-transform-service.filestore.persistence.enabled=true \
+  --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.search.sharedSecret:=$(openssl rand -hex 24) \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \

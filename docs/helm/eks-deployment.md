@@ -464,8 +464,8 @@ Deploy the latest version of ACS by running the following command (replacing
 helm install acs alfresco/alfresco-content-services \
   --set alfresco-repository.persistence.enabled=true \
   --set alfresco-repository.persistence.storageClass="nfs-client" \
-  --set filestore.persistence.enabled=true \
-  --set filestore.persistence.storageClass="nfs-client" \
+  --set alfresco-transform-service.filestore.persistence.enabled=true \
+  --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
   --set global.search.sharedSecret=$(openssl rand -hex 24) \
@@ -510,8 +510,8 @@ helm install acs alfresco/alfresco-content-services \
     --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
     --set alfresco-repository.persistence.enabled=true \
     --set alfresco-repository.persistence.storageClass="nfs-client" \
-    --set filestore.persistence.enabled=true \
-    --set filestore.persistence.storageClass="nfs-client" \
+    --set alfresco-transform-service.filestore.persistence.enabled=true \
+    --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --set global.search.sharedSecret=$(openssl rand -hex 24) \
     --atomic \
