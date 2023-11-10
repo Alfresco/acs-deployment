@@ -19,13 +19,13 @@ alfresco-transform-service:
   libreoffice:
     image:
       tag: 2.5.7
-  tika: 
+  tika:
     image:
       tag: 2.5.7
   transformmisc:
     image:
       tag: 2.5.7
-  filestore: 
+  filestore:
     image:
       tag: 1.5.3
 share:
@@ -35,6 +35,8 @@ alfresco-search:
   repository:
     securecomms: none
   searchServicesImage:
+    tag: 2.0.2.2
+  insightEngineImage:
     tag: 2.0.2.2
 alfresco-search-enterprise:
   liveIndexing:
@@ -58,7 +60,7 @@ postgresql:
     tag: 13.3.0
 alfresco-digital-workspace:
   image:
-    tag: 2.6.1
+    tag: 2.6.2
 alfresco-sync-service:
   image:
     tag: 3.7.2
