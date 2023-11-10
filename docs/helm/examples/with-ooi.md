@@ -42,7 +42,7 @@ helm install acs alfresco/alfresco-content-services \
   --set messageBroker.url="YOUR-MQ-ENDPOINT" \
   --set messageBroker.user="alfresco" \
   --set messageBroker.password="YOUR-MQ-PASSWORD" \
-  --set ooi.enabled=true \
+  --set alfresco-connector-ms365.enabled=true \
   --set-string alfresco-digital-workspace.env.APP_CONFIG_PLUGIN_MICROSOFT_ONLINE="true" \
   --set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_OOI_URL="https://YOUR-EXTERNAL-HOST/ooi-service/api/-default-/private/office-integration/versions/1/edit-sessions/" \
   --set alfresco-digital-workspace.env.APP_CONFIG_MICROSOFT_ONLINE_CLIENTID="YOUR-ADW-MS-ONLINE-CLIENT-ID" \

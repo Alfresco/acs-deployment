@@ -40,14 +40,14 @@ helm install acs alfresco/alfresco-content-services \
   --set messageBroker.user="alfresco" \
   --set messageBroker.password="YOUR-MQ-PASSWORD" \
   --set msTeams.enabled=true \
-  --set msTeamsService.alfresco.baseUrl="https://acs.YOUR-DOMAIN-NAME:443"
-  --set msTeamsService.alfresco.digitalWorkspace.contextPath="/workspace/" \
-  --set msTeamsService.microsoft.app.id="YOUR-MS-APP-ID" \
-  --set msTeamsService.microsoft.app.password="YOUR-MS-APP-PWD" \
-  --set msTeamsService.microsoft.app.oauth.connectionName="alfresco" \
-  --set msTeamsService.teams.chat.filenameEnabled=true \
-  --set msTeamsService.teams.chat.metadataEnabled=true \
-  --set msTeamsService.teams.chat.imageEnabled=true \
+  --set alfresco-connector-msteams.alfresco.baseUrl="https://acs.YOUR-DOMAIN-NAME:443" \
+  --set alfresco-connector-msteams.alfresco.digitalWorkspace.contextPath="/workspace/" \
+  --set alfresco-connector-msteams.microsoft.app.id="YOUR-MS-APP-ID" \
+  --set alfresco-connector-msteams.microsoft.app.password="YOUR-MS-APP-PWD" \
+  --set alfresco-connector-msteams.microsoft.app.oauth.connectionName="alfresco" \
+  --set alfresco-connector-msteams.teams.chat.filenameEnabled=true \
+  --set alfresco-connector-msteams.teams.chat.metadataEnabled=true \
+  --set alfresco-connector-msteams.teams.chat.imageEnabled=true \
   --atomic \
   --timeout 10m0s \
   --namespace=alfresco
