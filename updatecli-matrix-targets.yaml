@@ -2,8 +2,8 @@
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
 matrix:
-  next:
-    id: 231n
+  23.N:
+    id: 23n
     acs:
       version:
       pattern:
@@ -28,7 +28,9 @@ matrix:
       compose_target: *compose231
       compose_key: $.services.solr6.image
       helm_target: *helmvalues231
-      helm_key: $.alfresco-search.searchServicesImage.tag
+      helm_keys: &search_helm_keys
+        search: $.alfresco-search.searchServicesImage.tag
+        insight: $.alfresco-search.insightEngineImage.tag
       image:
       pattern:
     search-enterprise:
@@ -147,7 +149,7 @@ matrix:
       compose_target: *compose74
       compose_key: $.services.solr6.image
       helm_target: *helmvalues74
-      helm_key: $.alfresco-search.searchServicesImage.tag
+      helm_keys: *search_helm_keys
       image:
       pattern:
     search-enterprise:
@@ -261,7 +263,7 @@ matrix:
       compose_target: *compose73
       compose_key: $.services.solr6.image
       helm_target: *helmvalues73
-      helm_key: $.alfresco-search.searchServicesImage.tag
+      helm_keys: *search_helm_keys
       pattern:
       image:
     search-enterprise:
@@ -375,7 +377,7 @@ matrix:
       compose_target: *compose72
       compose_key: $.services.solr6.image
       helm_target: *helmvalues72
-      helm_key: $.alfresco-search.searchServicesImage.tag
+      helm_keys: *search_helm_keys
       pattern:
       image:
     search-enterprise:
@@ -489,7 +491,7 @@ matrix:
       compose_target: *compose71
       compose_key: $.services.solr6.image
       helm_target: *helmvalues71
-      helm_key: $.alfresco-search.searchServicesImage.tag
+      helm_keys: *search_helm_keys
       pattern:
       image:
     search-enterprise:
@@ -596,7 +598,7 @@ matrix:
       compose_target: *compose70
       compose_key: $.services.solr6.image
       helm_target: *helmvalues70
-      helm_key: $.alfresco-search.searchServicesImage.tag
+      helm_keys: *search_helm_keys
       pattern:
       image:
     sync:

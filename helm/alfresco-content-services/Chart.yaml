@@ -4,8 +4,8 @@
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 7.0.0-M.2
-appVersion: 23.1.0-M4
+version: 7.0.0
+appVersion: 23.1.0
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
   - content
@@ -17,7 +17,7 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: alfresco-common
-    version: 3.0.0-alpha.4
+    version: 3.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     version: 12.8.5
@@ -26,37 +26,37 @@ dependencies:
   - name: common
     alias: alfresco-control-center
     repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 7.11.0
+    version: 8.0.0
     condition: >-
       alfresco-admin-app.enabled
   - name: common
     alias: alfresco-digital-workspace
     repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 7.11.0
+    version: 8.0.0
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository
-    version: 0.1.0-alpha.21
+    version: 0.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
-    version: 3.3.0
+    version: 3.4.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
   - name: alfresco-transform-service
-    version: 0.2.0
+    version: 0.3.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-transform-service.enabled
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 2.0.0-alpha.2
+    version: 2.0.0
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 4.4.0
+    version: 4.5.0
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 3.0.0-alpha.6
+    version: 3.0.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
@@ -65,7 +65,7 @@ dependencies:
     condition: alfresco-connector-msteams.enabled
   - name: alfresco-share
     alias: share
-    version: 0.1.1
+    version: 0.2.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: share.enabled
   - name: alfresco-connector-ms365
@@ -73,7 +73,7 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-ms365.enabled
   - name: alfresco-ai-transformer
-    version: 0.3.0
+    version: 0.4.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
   - name: elasticsearch
