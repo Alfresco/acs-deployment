@@ -39,7 +39,7 @@ repos:
       - id: docker-compose-check
         exclude: override-docker-compose.yml
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.32.2
+    rev: v0.37.0
     hooks:
       - id: markdownlint
         args: ["--ignore", "helm/**/README.md"]
