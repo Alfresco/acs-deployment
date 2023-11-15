@@ -112,11 +112,6 @@ jobs:
           --from-file=.dockerconfigjson=$HOME/.docker/config.json \
           --type=kubernetes.io/dockerconfigjson
 
-      - name: Set nginx ingress config
-        run: |
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-          -p '{"data": {"allow-snippet-annotations":"true"}}'
-
       - name: Helm install
         run: |
           helm dep up ./helm/alfresco-content-services
