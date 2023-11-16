@@ -36,9 +36,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@kind-wait
         with:
           ingress-nginx-ref: controller-v1.8.2
+          kind-version: v0.19.0
+          kind-node-image: kindest/node:v1.27.1@sha256:b7d12ed662b873bd8510879c1846e87c7e676a79fefc93e17b2a52989d3ff42b
 
       - name: Set nginx ingress config
         run: |
