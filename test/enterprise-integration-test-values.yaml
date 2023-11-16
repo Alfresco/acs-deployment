@@ -31,6 +31,10 @@ share:
   livenessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
+  environment:
+    CATALINA_OPTS: >-
+      -XX:MaxRAMPercentage=80
+      -XX:MaxRAM=536870912
 alfresco-search:
   resources:
     requests:
