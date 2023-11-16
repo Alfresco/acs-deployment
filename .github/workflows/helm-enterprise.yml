@@ -58,6 +58,7 @@ jobs:
 
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-32G-8CPU
+    timeout-minutes: 20
     needs:
       - build_vars
     name: Helm ${{ matrix.name }} ${{ matrix.values }}
