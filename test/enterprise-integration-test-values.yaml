@@ -6,7 +6,7 @@ alfresco-repository:
       memory: "1024Mi"
     limits:
       cpu: "2"
-      memory: "3Gi"
+      memory: "2Gi"
   replicaCount: 2
   persistence:
     accessModes:
@@ -15,7 +15,8 @@ alfresco-repository:
     failureThreshold: 20
   environment:
     JAVA_OPTS: >-
-      -XX:MaxRAMPercentage=50
+      -XX:MaxRAMPercentage=80
+      -XX:MaxRAM=2147483648
 share:
   resources:
     requests:
