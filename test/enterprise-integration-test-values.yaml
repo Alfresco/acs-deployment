@@ -6,7 +6,7 @@ alfresco-repository:
       memory: "1024Mi"
     limits:
       cpu: "2"
-      memory: "1800Mi"
+      memory: "2048Mi"
   replicaCount: 2
   persistence:
     accessModes:
