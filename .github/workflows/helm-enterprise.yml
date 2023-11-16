@@ -89,7 +89,7 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@kind-wait
         with:
           ingress-nginx-ref: controller-v1.8.2
-          kind-wait: 80s
+          kind-wait: 180s
 
       - name: Set nginx ingress config
         run: |
