@@ -13,6 +13,9 @@ alfresco-repository:
       - ReadWriteOnce
   startupProbe:
     failureThreshold: 20
+  environment:
+    JAVA_OPTS: >-
+      -XX:MaxRAMPercentage=70
 share:
   resources:
     requests:
