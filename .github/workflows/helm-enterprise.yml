@@ -57,7 +57,7 @@ jobs:
           echo "json=$CHARTS" >> $GITHUB_OUTPUT
 
   helm_integration:
-    runs-on: alfrescoPub-ubuntu2204-16G-4CPU
+    runs-on: alfrescoPub-ubuntu2204-32G-8CPU
     needs:
       - build_vars
     name: Helm ${{ matrix.name }} ${{ matrix.values }}
