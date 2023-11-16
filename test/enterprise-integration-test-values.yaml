@@ -6,7 +6,7 @@ alfresco-repository:
       memory: "1024Mi"
     limits:
       cpu: "2"
-      memory: "1560Mi"
+      memory: "1800Mi"
   replicaCount: 2
   persistence:
     accessModes:
@@ -79,7 +79,7 @@ alfresco-transform-service:
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "600Mi"
     replicaCount: 1
   transformmisc:
     livenessProbe:
