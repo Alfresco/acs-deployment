@@ -129,7 +129,6 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl logs -l app=alfresco-repository
 
       - uses: nick-fields/retry@v2
         id: newman
