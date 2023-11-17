@@ -135,8 +135,8 @@ jobs:
         id: newman
         with:
           timeout_minutes: 1
-          retry_wait_seconds: 30
-          max_attempts: 3
+          retry_wait_seconds: 20
+          max_attempts: 5
           command: >-
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
