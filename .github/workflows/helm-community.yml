@@ -21,6 +21,7 @@ concurrency:
 jobs:
   community_charts:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -61,7 +62,7 @@ jobs:
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 15m0s --values \
+            --wait --timeout 5m0s --values \
             test/community-integration-test-values.yaml
 
       - name: Spit cluster status

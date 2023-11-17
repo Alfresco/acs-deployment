@@ -58,7 +58,7 @@ jobs:
 
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-32G-8CPU
-    timeout-minutes: 20
+    timeout-minutes: 10
     needs:
       - build_vars
     name: Helm ${{ matrix.name }} ${{ matrix.values }}
@@ -118,7 +118,7 @@ jobs:
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 15m0s \
+            --wait --timeout 5m0s \
             --values helm/${{ matrix.name }}/${{ matrix.values }} \
             --values test/enterprise-integration-test-values.yaml \
             ${{ steps.extra-values.outputs.helm_install_params }}
@@ -136,7 +136,7 @@ jobs:
         with:
           timeout_minutes: 1
           retry_wait_seconds: 30
-          max_attempts: 5
+          max_attempts: 3
           command: >-
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
