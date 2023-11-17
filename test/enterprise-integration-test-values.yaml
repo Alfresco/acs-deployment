@@ -13,10 +13,6 @@ alfresco-repository:
       - ReadWriteOnce
   startupProbe:
     failureThreshold: 20
-  environment:
-    JAVA_OPTS: >-
-      -XX:MaxRAMPercentage=80
-      -XX:MaxRAM=2147483648
 share:
   resources:
     requests:
@@ -31,10 +27,6 @@ share:
   livenessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
-  environment:
-    CATALINA_OPTS: >-
-      -XX:MaxRAMPercentage=80
-      -XX:MaxRAM=536870912
 alfresco-search:
   resources:
     requests:
@@ -56,10 +48,6 @@ alfresco-transform-service:
         cpu: "2"
         memory: "512Mi"
     replicaCount: 1
-    environment:
-      JAVA_OPTS: >-
-        -XX:MaxRAMPercentage=80
-        -XX:MaxRAM=536870912
   imagemagick:
     livenessProbe:
       initialDelaySeconds: 30
@@ -71,10 +59,6 @@ alfresco-transform-service:
         cpu: "2"
         memory: "512Mi"
     replicaCount: 1
-    environment:
-      JAVA_OPTS: >-
-        -XX:MaxRAMPercentage=80
-        -XX:MaxRAM=536870912
   libreoffice:
     livenessProbe:
       initialDelaySeconds: 30
@@ -86,10 +70,6 @@ alfresco-transform-service:
         cpu: "2"
         memory: "1024Mi"
     replicaCount: 1
-    environment:
-      JAVA_OPTS: >-
-        -XX:MaxRAMPercentage=80
-        -XX:MaxRAM=1073741824
   tika:
     livenessProbe:
       initialDelaySeconds: 30
@@ -101,10 +81,6 @@ alfresco-transform-service:
         cpu: "2"
         memory: "600Mi"
     replicaCount: 1
-    environment:
-      JAVA_OPTS: >-
-        -XX:MaxRAMPercentage=80
-        -XX:MaxRAM=629145600
   transformmisc:
     livenessProbe:
       initialDelaySeconds: 30
@@ -117,10 +93,6 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "512Mi"
-    environment:
-      JAVA_OPTS: >-
-        -XX:MaxRAMPercentage=80
-        -XX:MaxRAM=536870912
     replicaCount: 1
   transformrouter:
     replicaCount: 1
@@ -128,10 +100,6 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "800Mi"
-    environment:
-      JAVA_OPTS: >-
-        -XX:MaxRAMPercentage=80
-        -XX:MaxRAM=838860800
     readinessProbe:
       initialDelaySeconds: 40
       timeoutSeconds: 20
