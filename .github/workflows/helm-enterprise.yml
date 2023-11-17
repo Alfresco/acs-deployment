@@ -57,7 +57,7 @@ jobs:
           echo "json=$CHARTS" >> $GITHUB_OUTPUT
 
   helm_integration:
-    runs-on: alfrescoPub-ubuntu2204-32G-8CPU
+    runs-on: alfrescoPub-ubuntu2204-16G-4CPU
     timeout-minutes: 10
     needs:
       - build_vars
