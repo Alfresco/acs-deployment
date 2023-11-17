@@ -29,7 +29,7 @@ alfresco-transform-service:
     environment:
       JAVA_OPTS: >-
         -XX:MaxRAMPercentage=80
-        -XX:MaxRAM=629145600
+        -XX:MaxRAM=536870912
   transformmisc:
     environment:
       JAVA_OPTS: >-
