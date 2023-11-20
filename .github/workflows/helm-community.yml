@@ -20,7 +20,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   community_charts:
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -39,8 +40,6 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.8.0
         with:
           ingress-nginx-ref: controller-v1.8.2
-          kind-version: v0.19.0
-          kind-node-image: kindest/node:v1.27.1@sha256:b7d12ed662b873bd8510879c1846e87c7e676a79fefc93e17b2a52989d3ff42b
 
       - name: Set nginx ingress config
         run: |
@@ -61,7 +60,7 @@ jobs:
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 15m0s --values \
+            --wait --timeout 5m0s --values \
             test/community-integration-test-values.yaml
 
       - name: Spit cluster status
