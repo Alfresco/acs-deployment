@@ -57,7 +57,8 @@ jobs:
           echo "json=$CHARTS" >> $GITHUB_OUTPUT
 
   helm_integration:
-    runs-on: [self-hosted]
+    runs-on: alfrescoPub-ubuntu2204-16G-4CPU
+    timeout-minutes: 10
     needs:
       - build_vars
     name: Helm ${{ matrix.name }} ${{ matrix.values }}
@@ -89,8 +90,6 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v3.8.0
         with:
           ingress-nginx-ref: controller-v1.8.2
-          kind-version: v0.19.0
-          kind-node-image: kindest/node:v1.27.1@sha256:b7d12ed662b873bd8510879c1846e87c7e676a79fefc93e17b2a52989d3ff42b
 
       - name: Set nginx ingress config
         run: |
@@ -103,6 +102,15 @@ jobs:
           --from-file=.dockerconfigjson=$HOME/.docker/config.json \
           --type=kubernetes.io/dockerconfigjson
 
+      - name: Check if cgroup v2 workaround is needed
+        id: extra-values
+        run: |
+          acs_version=$(echo ${{ matrix.values }} | cut -d'.' -f1,2)
+          is_affected=$(echo "$acs_version <= 7.2" | bc -l)
+          if [ "$is_affected" -eq 1 ]; then
+            echo "helm_install_params=--values test/cgroup-v2-workaround-values.yaml" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Helm install
         run: |
           helm dep up ./helm/alfresco-content-services
@@ -110,9 +118,10 @@ jobs:
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 15m0s \
+            --wait --timeout 6m0s \
             --values helm/${{ matrix.name }}/${{ matrix.values }} \
-            --values test/enterprise-integration-test-values.yaml
+            --values test/enterprise-integration-test-values.yaml \
+            ${{ steps.extra-values.outputs.helm_install_params }}
 
       - name: Spit cluster status after install
         if: always()
@@ -125,7 +134,7 @@ jobs:
         id: newman
         with:
           timeout_minutes: 1
-          retry_wait_seconds: 30
+          retry_wait_seconds: 20
           max_attempts: 5
           command: >-
             docker run --network=host
