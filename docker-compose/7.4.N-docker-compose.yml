@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.4.1.2
+    image: quay.io/alfresco/alfresco-content-repository:7.4.1.3
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -58,7 +58,7 @@ services:
         -XX:MaxRAMPercentage=80
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:3.0.0
+    image: quay.io/alfresco/alfresco-transform-router:3.0.1
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -72,7 +72,7 @@ services:
     links:
       - activemq
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:4.0.0
+    image: alfresco/alfresco-transform-core-aio:4.0.1
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -86,7 +86,7 @@ services:
     links:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:3.0.0
+    image: quay.io/alfresco/alfresco-shared-file-store:3.0.1
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -99,7 +99,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.4.1.2
+    image: quay.io/alfresco/alfresco-share:7.4.1.3
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -178,7 +178,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:3.11.0
+    image: quay.io/alfresco/service-sync:3.11.1
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
