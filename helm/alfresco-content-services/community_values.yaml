@@ -11,7 +11,7 @@ alfresco-repository:
 share:
   image:
     repository: alfresco/alfresco-share
-    tag: 23.1.0
+    tag: 23.1.1
 alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
