@@ -1,7 +1,6 @@
 # This values file can be used to install the latest ACS Community version using
 # the latest version of the chart
 alfresco-repository:
-  edition: Community
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
