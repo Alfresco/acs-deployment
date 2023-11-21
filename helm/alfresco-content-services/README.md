@@ -18,17 +18,17 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |------------|------|---------|
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 8.0.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 8.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.4.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.2.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.5.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.3.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.5.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.3.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
