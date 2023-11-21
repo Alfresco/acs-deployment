@@ -7,13 +7,6 @@ alfresco-repository:
     limits:
       cpu: "2"
       memory: "1560Mi"
-  edition: Community
-  replicaCount: 1
-  persistence:
-    accessModes:
-      - ReadWriteOnce
-  image:
-    repository: alfresco/alfresco-content-repository-community
 share:
   resources:
     requests:
@@ -28,8 +21,6 @@ share:
   livenessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
-  image:
-    repository: alfresco/alfresco-share
 alfresco-search:
   resources:
     requests:
@@ -38,10 +29,7 @@ alfresco-search:
     limits:
       cpu: "2"
       memory: "1280Mi"
-  searchServicesImage:
-    repository: alfresco/alfresco-search-services
 alfresco-transform-service:
-  enabled: true
   pdfrenderer:
     livenessProbe:
       initialDelaySeconds: 30
@@ -52,7 +40,6 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "512Mi"
-    replicaCount: 1
   imagemagick:
     livenessProbe:
       initialDelaySeconds: 30
@@ -63,7 +50,6 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "512Mi"
-    replicaCount: 1
   libreoffice:
     livenessProbe:
       initialDelaySeconds: 30
@@ -74,7 +60,6 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "1024Mi"
-    replicaCount: 1
   tika:
     livenessProbe:
       initialDelaySeconds: 30
@@ -85,7 +70,6 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "512Mi"
-    replicaCount: 1
   transformmisc:
     livenessProbe:
       initialDelaySeconds: 30
@@ -96,16 +80,7 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "512Mi"
-    replicaCount: 1
-  transformrouter:
-    enabled: false
-  filestore:
-    enabled: false
 # Disable features
-alfresco-digital-workspace:
-  enabled: false
-alfresco-sync-service:
-  enabled: false
 postgresql:
   primary:
     resources:
@@ -115,7 +90,3 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
-ai:
-  enabled: false
-alfresco-admin-app:
-  enabled: false
