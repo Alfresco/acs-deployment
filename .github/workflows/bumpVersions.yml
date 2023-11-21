@@ -22,7 +22,7 @@ on:
         default: master
 
 env:
-  UPDATE_CLI_VERSION: v0.57.0
+  UPDATE_CLI_VERSION: v0.66.1
   DEFAULT_BRANCH_NAME: master
 
 jobs:
