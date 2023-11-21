@@ -2,13 +2,13 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 7.3.1.1
+    tag: 7.3.1.2
 alfresco-ai-transformer:
   image:
-    tag: 1.5.0
+    tag: 1.5.1
 share:
   image:
-    tag: 7.3.1.1
+    tag: 7.3.1.2
 alfresco-transform-service:
   transformrouter:
     image:
@@ -41,19 +41,19 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 3.2.0.1
+        tag: 3.2.0.2
     content:
       image:
-        tag: 3.2.0.1
+        tag: 3.2.0.2
     metadata:
       image:
-        tag: 3.2.0.1
+        tag: 3.2.0.2
     path:
       image:
-        tag: 3.2.0.1
+        tag: 3.2.0.2
   reindexing:
     image:
-      tag: 3.2.0.1
+      tag: 3.2.0.2
 alfresco-digital-workspace:
   image:
     tag: 3.1.1

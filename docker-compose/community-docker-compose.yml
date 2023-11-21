@@ -48,7 +48,7 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.0.0
+    image: alfresco/alfresco-transform-core-aio:5.0.1
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -57,7 +57,7 @@ services:
     ports:
       - "8090:8090"
   share:
-    image: docker.io/alfresco/alfresco-share:23.1.0
+    image: docker.io/alfresco/alfresco-share:23.1.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
