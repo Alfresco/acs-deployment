@@ -7,3 +7,10 @@ autodiscovery:
       versionincrement: none
       # Tags in values are handled separately via uber-manifest.tpl
       ignorecontainer: true
+
+      # Skip dependencies we are not interested to bump automatically (testing dependencies)
+      ignore:
+        - path: helm/alfresco-content-services
+          dependencies:
+            postgresql: ">0.0.1"
+            elasticsearch: ">0.0.1"
