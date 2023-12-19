@@ -39,11 +39,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.4.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.7.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-plugin@v5.4.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-plugin@v5.7.0
         with:
           plugin_url: https://github.com/helm-unittest/helm-unittest
       - run: |
@@ -58,11 +58,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.4.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.7.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v5.4.0
+          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v5.7.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           helm-options: --values tests/values/test_values.yaml
