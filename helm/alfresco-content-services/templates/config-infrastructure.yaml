@@ -52,13 +52,18 @@ data:
     {{- end }}
   {{- end }}
   SEARCH_FLAVOR: {{ template "alfresco-content-services.search.flavor" . }}
-  {{- if index .Values "alfresco-search-enterprise" "enabled" }}
-    {{- if index .Values "alfresco-transform-service" "enabled" }}
-      {{- $ats_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-transform-router.name" $atsCtx)) }}
-      {{- $sfs_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-filestore.name" $atsCtx)) }}
+  {{- with (index .Values "alfresco-transform-service") }}
+  {{- if and .enabled .filestore.enabled .transformrouter.enabled }}
+  SFS_BASE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" $atsCtx }}
+    {{- $ats_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-transform-router.name" $atsCtx)) }}
+    {{- $sfs_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-filestore.name" $atsCtx)) }}
+    {{- if index $.Values "alfresco-search-enterprise" "enabled" }}
       {{- include "alfresco-search-enterprise.ats.fullurl" $ats_baseurl | nindent 2 }}
       {{- include "alfresco-search-enterprise.sfs.fullurl" $sfs_baseurl | nindent 2 }}
-    {{- else }}
-      {{- fail "Alfresco Search Enterprise has been enabled but no Transformation service has been provided" }}
     {{- end }}
+  {{- else if index $.Values "alfresco-search-enterprise" "enabled" }}
+      {{- fail "Alfresco Search Enterprise has been enabled but Transformation service is not available" }}
+  {{- else if index $.Values "alfresco-ai-transformer" "enabled" }}
+      {{- fail "Alfresco Intelligence service has been enabled but Transformation service is not available" }}
+  {{- end }}
   {{- end }}
