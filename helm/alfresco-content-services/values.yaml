@@ -43,7 +43,7 @@ global:
   search:
     # -- set this URL if you have an external search service
     url: null
-    # -- set the type of search service used externally (solr6 of elasticsearch)
+    # -- set the type of search service used externally (solr6 or elasticsearch)
     flavor: null
     # -- set the security level used with the external search service (secret, none or https)
     securecomms: secret
@@ -80,7 +80,7 @@ database:
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
   # When using embedded postgres you need to also set `postgresql.existingSecret`.
   existingSecretName: null
-# -- Activemq connection details (activemq.enabled msut also be set to false)
+# -- Activemq connection details (activemq.enabled must also be set to false)
 messageBroker:
   url: null
   user: null
@@ -149,7 +149,7 @@ alfresco-connector-ms365:
     tag: 2.0.0
   repository:
     existingConfigMap:
-      # -- Name of the configmap which hold the repositoy connection details
+      # -- Name of the configmap which hold the repository connection details
       name: *infrastructure_cmName
       keys:
         # -- Name of the key in the configmap which points to the repository
@@ -234,7 +234,7 @@ share:
   nameOverride: share
   repository:
     existingConfigMap:
-      # -- Name of the configmap which hold the repositoy connection details
+      # -- Name of the configmap which hold the repository connection details
       name: *infrastructure_cmName
       keys:
         # -- Name of the key in the configmap which points to the repository
@@ -276,7 +276,7 @@ alfresco-search:
     # -- Alfresco Search services endpoint ('/solr')
     enabled: false
     # -- Default solr basic auth user/password: admin / admin
-    # You can create your own with htpasswd utilility & encode it with base64.
+    # You can create your own with htpasswd utility & encode it with base64.
     # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'`
     # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
     basicAuth: null
@@ -442,7 +442,7 @@ postgresql:
       # setting it to null means "default storageClass".
       storageClass: null
       # -- provide an existing persistent volume claim name to persist SQL data
-      # Make sure the root folder has the appropriate permissions/ownhership set.
+      # Make sure the root folder has the appropriate permissions/ownership set.
       existingClaim: null
       subPath: "alfresco-content-services/database-data"
 alfresco-sync-service:
