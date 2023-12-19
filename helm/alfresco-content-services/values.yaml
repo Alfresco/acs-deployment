@@ -474,20 +474,13 @@ alfresco-sync-service:
   repository:
     nameOverride: alfresco-repository
     port: 80
-  # -- toggle deploying Alfresco ai transformer
 alfresco-ai-transformer:
+  # -- toggle deploying Alfresco ai transformer for more details about configuration check
+  # https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer
   enabled: false
-  messageBroker:
-    existingSecretName: *acs_messageBroker_secretName
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 3.0.1
-#  aws:
-#    accessKey:
-#    secretAccessKey:
-#    region:
-#    s3Bucket:
-#    comprehendRoleARN:
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: false
