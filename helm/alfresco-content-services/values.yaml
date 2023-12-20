@@ -481,6 +481,20 @@ alfresco-ai-transformer:
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 3.0.1
+  sfs:
+    existingConfigMap:
+      # -- Name of the configmap which holds the ATS shared filestore URL
+      name: *infrastructure_cmName
+      keys:
+        # -- Name of the key within the configmap which holds the sfs url
+        url: SFS_URL
+  messageBroker:
+    existingConfigMap:
+      # -- Name of the configmap which holds the message broker URL
+      name: *infrastructure_cmName
+    existingSecret:
+      # -- Name of the configmap which holds the message broker credentials
+      name: *acs_messageBroker_secretName
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: false

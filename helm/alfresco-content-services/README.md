@@ -46,6 +46,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
 | alfresco-ai-transformer.image.tag | string | `"3.0.1"` |  |
+| alfresco-ai-transformer.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
+| alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
+| alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
+| alfresco-ai-transformer.sfs.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
 | alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | alfresco-connector-ms365.image.tag | string | `"2.0.0"` |  |
