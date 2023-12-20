@@ -56,7 +56,7 @@ dependencies:
     version: 4.5.1
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 3.0.3
+    version: 3.1.0-alpha.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
@@ -73,7 +73,7 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-ms365.enabled
   - name: alfresco-ai-transformer
-    version: 1.0.0-alpha.1
+    version: 1.0.0-alpha.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
   - name: elasticsearch
