@@ -4,7 +4,7 @@
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 7.0.2
+version: 7.0.3
 appVersion: 23.1.1
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
@@ -56,7 +56,7 @@ dependencies:
     version: 4.5.1
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 3.0.2
+    version: 3.0.3
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
