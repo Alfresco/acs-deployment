@@ -7,7 +7,6 @@ metadata:
     {{- include "alfresco-content-services.labels" . | nindent 4 }}
 data:
   {{- $repoCtx := dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release }}
-  {{- $atsCtx := dict "Values" (index .Values "alfresco-transform-service") "Chart" $.Chart "Release" $.Release }}
   {{- $repo_svc_name := include "alfresco-repository.fullname" $repoCtx }}
   {{- $repo_svc_port := index .Values "alfresco-repository" "service" "port" | default 80 }}
   repo_svc_name: {{ $repo_svc_name }}
@@ -53,6 +52,7 @@ data:
   {{- end }}
   SEARCH_FLAVOR: {{ template "alfresco-content-services.search.flavor" . }}
   {{- with (index .Values "alfresco-transform-service") }}
+  {{- $atsCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
   {{- if and .enabled .filestore.enabled .transformrouter.enabled }}
   SFS_URL: {{ template "alfresco-common.sfs.fullurl" (printf "http://%s" (include "alfresco-transform-service.deployment-filestore.name" $atsCtx)) }}
     {{- $ats_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-transform-router.name" $atsCtx)) }}
