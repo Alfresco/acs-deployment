@@ -26,7 +26,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.0.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.2.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.5.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.3.2 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
