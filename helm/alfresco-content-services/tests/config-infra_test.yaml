@@ -75,9 +75,11 @@ tests:
       global.search.url: https://mydomain.opensearch.domain.tld
       global.search.flavor: elasticsearch
       global.search.securecomms: none
-      postgresql.enabled: false
+      # commented to test url has precedence
+      #postgresql.enabled: false
       database.url: jdbc:mariadb://rdbms.domain.local/alfdb
-      activemq.enabled: false
+      # commented to test url has precedence
+      #activemq.enabled: false
       messageBroker.url: >-
         failover:(ssl://mq1.dc1.infra.local,ssl://mq2.dc2.infra.local)?timeout=3000&jms.useCompression=true
     asserts:
