@@ -1,0 +1,140 @@
+---
+suite: test config-infrastructure manifest
+templates:
+  - config-infrastructure.yaml
+tests:
+  - it: should not render minimal infra
+    values: &testvalues
+      - values/test_values.yaml
+    set:
+      alfresco-search.enabled: false
+      alfresco-search-enterprise.enabled: false
+      alfresco-transform-service.enabled: false
+    asserts:
+      - notExists:
+          path: data.SEARCH_SECURECOMMS
+      - notExists:
+          path: data.SEARCH_HOST
+      - notExists:
+          path: data.SEARCH_PORT
+      - notExists:
+          path: data.SEARCH_URL
+      - notExists:
+          path: data.SOLR_BASE_URL
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: noindex
+      - notExists:
+          path: data.SFS_URL
+      - notExists:
+          path: data.ATS_URL
+
+  - it: should render the default infra (solr)
+    values: *testvalues
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(nio://RELEASE-NAME-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+      - equal:
+          path: data.DATABASE_URL
+          value: jdbc:postgresql://RELEASE-NAME-postgresql-acs:5432/alfresco
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: org.postgresql.Driver
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: secret
+      - equal:
+          path: data.SEARCH_HOST
+          value: RELEASE-NAME-alfresco-search-solr
+      - equal:
+          path: data.SEARCH_PORT
+          value: "80"
+      - equal:
+          path: data.SEARCH_URL
+          value: http://RELEASE-NAME-alfresco-search-solr/solr
+      - equal:
+          path: data.SOLR_BASE_URL
+          value: /solr
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: solr6
+      - equal:
+          path: data.SFS_URL
+          value: >-
+            http://RELEASE-NAME-filestore/alfresco/api/-default-/private/sfs/versions/1/file/
+      - notExists:
+          path: data.ATS_URL
+
+  - it: should render a custom infra (elasticsearch)
+    values: *testvalues
+    set:
+      alfresco-search.enabled: false
+      alfresco-search-enterprise.enabled: true
+      elasticsearch.enabled: false
+      global.search.url: https://mydomain.opensearch.domain.tld
+      global.search.flavor: elasticsearch
+      global.search.securecomms: none
+      # commented to test url has precedence
+      #postgresql.enabled: false
+      database.url: jdbc:mariadb://rdbms.domain.local/alfdb
+      # commented to test url has precedence
+      #activemq.enabled: false
+      messageBroker.url: >-
+        failover:(ssl://mq1.dc1.infra.local,ssl://mq2.dc2.infra.local)?timeout=3000&jms.useCompression=true
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(ssl://mq1.dc1.infra.local,ssl://mq2.dc2.infra.local)?timeout=3000&jms.useCompression=true
+      - equal:
+          path: data.DATABASE_URL
+          value: jdbc:mariadb://rdbms.domain.local/alfdb
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: org.mariadb.jdbc.Driver
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: none
+      - equal:
+          path: data.SEARCH_HOST
+          value: mydomain.opensearch.domain.tld
+      - equal:
+          path: data.SEARCH_PORT
+          value: "443"
+      - equal:
+          path: data.SEARCH_URL
+          value: https://mydomain.opensearch.domain.tld
+      - notExists:
+          path: data.SOLR_BASE_URL
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: elasticsearch
+      - equal:
+          path: data.SFS_URL
+          value: >-
+            http://RELEASE-NAME-filestore/alfresco/api/-default-/private/sfs/versions/1/file/
+      - equal:
+          path: data.ATS_URL
+          value: >-
+            http://RELEASE-NAME-transform-router/transform/config
+
+  - it: should fail rendering charts with search enterprise without ATS enterprise
+    values: *testvalues
+    set:
+      elasticsearch.enabled: true
+      alfresco-search-enterprise.enabled: true
+      alfresco-transform-service.transformrouter.enabled: false
+    asserts:
+      - failedTemplate:
+          errorMEssage: >-
+            Alfresco Search Enterprise has been enabled but Transformation service is not available
+  - it: should fail rendering charts for enterprise components without ATS enterprise
+    values: *testvalues
+    set:
+      elasticsearch.enabled: true
+      alfresco-ai-transformer.enabled: true
+      alfresco-transform-service.filestore.enabled: false
+    asserts:
+      - failedTemplate:
+          errorMEssage: >-
+            Alfresco Intelligence service has been enabled but Transformation service is not available
