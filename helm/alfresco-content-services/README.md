@@ -28,7 +28,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.5.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 0.3.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.0.0-alpha.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
@@ -189,7 +189,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.libreoffice.enabled | bool | `true` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | alfresco-transform-service.libreoffice.image.repository | string | `"alfresco/alfresco-libreoffice"` |  |
 | alfresco-transform-service.libreoffice.image.tag | string | `"5.0.1"` |  |
-| alfresco-transform-service.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-transform-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
+| alfresco-transform-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-transform-service.pdfrenderer.enabled | bool | `true` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | alfresco-transform-service.pdfrenderer.image.repository | string | `"alfresco/alfresco-pdf-renderer"` |  |
 | alfresco-transform-service.pdfrenderer.image.tag | string | `"5.0.1"` |  |

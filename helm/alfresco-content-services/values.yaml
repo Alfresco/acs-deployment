@@ -167,7 +167,11 @@ alfresco-connector-msteams:
 alfresco-transform-service:
   enabled: true
   messageBroker:
-    existingSecretName: *acs_messageBroker_secretName
+    existingConfigMap:
+      # -- Name of the configmap which holds the ATS shared filestore URL
+      name: *infrastructure_cmName
+    existingSecret:
+      name: *acs_messageBroker_secretName
   transformrouter:
     # -- Declares the alfresco-transform-router service used by the content repository
     # to route transformation requests
