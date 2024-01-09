@@ -7,7 +7,6 @@ metadata:
     {{- include "alfresco-content-services.labels" . | nindent 4 }}
 data:
   {{- $repoCtx := dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release }}
-  {{- $atsCtx := dict "Values" (index .Values "alfresco-transform-service") "Chart" $.Chart "Release" $.Release }}
   {{- $repo_svc_name := include "alfresco-repository.fullname" $repoCtx }}
   {{- $repo_svc_port := index .Values "alfresco-repository" "service" "port" | default 80 }}
   repo_svc_name: {{ $repo_svc_name }}
@@ -52,13 +51,17 @@ data:
     {{- end }}
   {{- end }}
   SEARCH_FLAVOR: {{ template "alfresco-content-services.search.flavor" . }}
-  {{- if index .Values "alfresco-search-enterprise" "enabled" }}
-    {{- if index .Values "alfresco-transform-service" "enabled" }}
-      {{- $ats_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-transform-router.name" $atsCtx)) }}
-      {{- $sfs_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-filestore.name" $atsCtx)) }}
+  {{- with (index .Values "alfresco-transform-service") }}
+  {{- $atsCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
+  {{- if and .enabled .filestore.enabled .transformrouter.enabled }}
+  SFS_URL: {{ template "alfresco-common.sfs.fullurl" (printf "http://%s" (include "alfresco-transform-service.deployment-filestore.name" $atsCtx)) }}
+    {{- $ats_baseurl := (printf "http://%s" (include "alfresco-transform-service.deployment-transform-router.name" $atsCtx)) }}
+    {{- if index $.Values "alfresco-search-enterprise" "enabled" }}
       {{- include "alfresco-search-enterprise.ats.fullurl" $ats_baseurl | nindent 2 }}
-      {{- include "alfresco-search-enterprise.sfs.fullurl" $sfs_baseurl | nindent 2 }}
-    {{- else }}
-      {{- fail "Alfresco Search Enterprise has been enabled but no Transformation service has been provided" }}
     {{- end }}
+  {{- else if index $.Values "alfresco-search-enterprise" "enabled" }}
+      {{- fail "Alfresco Search Enterprise has been enabled but Transformation service is not available" }}
+  {{- else if index $.Values "alfresco-ai-transformer" "enabled" }}
+      {{- fail "Alfresco Intelligence service has been enabled but Transformation service is not available" }}
+  {{- end }}
   {{- end }}
