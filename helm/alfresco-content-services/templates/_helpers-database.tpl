@@ -15,3 +15,21 @@ Usage: include "alfresco-content-services.database.repo" $
   {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Compute the sync-service database URL
+
+Usage: include "alfresco-content-services.database.sync" $
+
+*/}}
+{{- define "alfresco-content-services.database.sync" -}}
+{{- with .Values }}
+  {{- if and (not .database.sync.url) (not (index . "postgresql-sync" "enabled")) }}
+    {{- fail "You must either set database.sync.url or postgresql-sync.enabled values" }}
+  {{- else }}
+    {{- $pg_port := index . "postgresql-sync" "primary" "service" "ports" "postgresql" | toString }}
+    {{- $pg_url := printf "postgresql://%s-%s:%s/%s" $.Release.Name (index . "postgresql-sync" "nameOverride") $pg_port (index . "postgresql-sync" "auth" "database") }}
+    {{- .database.sync.url | default $pg_url }}
+  {{- end }}
+{{- end }}
+{{- end -}}
