@@ -475,7 +475,7 @@ alfresco-sync-service:
     existingConfigMap:
       name: *infrastructure_cmName
       keys:
-        url: DATABASE_SYNC_URL
+        url: SYNC_DATABASE_URL
   messageBroker:
     existingSecret:
       name: *acs_messageBroker_secretName
@@ -487,7 +487,6 @@ alfresco-sync-service:
       keys:
         host: repo_svc_name
         port: repo_svc_port
-        scheme: http
 postgresql-sync:
   # -- Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service
   enabled: true
