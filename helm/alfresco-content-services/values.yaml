@@ -456,23 +456,6 @@ alfresco-sync-service:
   enabled: true
   image:
     tag: 4.0.1
-  postgresql:
-    enabled: true
-    image:
-      tag: 14.4.0
-    auth:
-      enablePostgresUser: false
-      username: alfresco
-      password: admin
-      database: syncservice-postgresql
-    primary:
-      resources:
-        requests:
-          cpu: 250m
-          memory: 1Gi
-        limits:
-          cpu: "4"
-          memory: 4Gi
   database:
     existingSecret:
       name: alfresco-sync-database
@@ -492,6 +475,24 @@ alfresco-sync-service:
         host: repo_svc_name
         port: repo_svc_port
         scheme: http
+postgresql-sync:
+  # -- Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service
+  enabled: true
+  image:
+    tag: 14.4.0
+  auth:
+    enablePostgresUser: false
+    username: alfresco
+    password: admin
+    database: syncservice-postgresql
+  primary:
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1Gi
+      limits:
+        cpu: "4"
+        memory: 4Gi
 alfresco-ai-transformer:
   # -- toggle deploying Alfresco ai transformer for more details about configuration check
   # https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer

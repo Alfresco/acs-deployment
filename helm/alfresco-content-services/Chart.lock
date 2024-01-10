@@ -5,6 +5,9 @@ dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.8.5
+- name: postgresql
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 12.8.5
 - name: common
   repository: https://activiti.github.io/activiti-cloud-helm-charts
   version: 8.0.0

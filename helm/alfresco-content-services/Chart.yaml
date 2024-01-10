@@ -23,6 +23,11 @@ dependencies:
     version: 12.8.5
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
+  - name: postgresql
+    version: 12.8.5
+    repository: oci://registry-1.docker.io/bitnamicharts
+    alias: postgresql-sync
+    condition: postgresql-sync.enabled
   - name: common
     alias: alfresco-control-center
     repository: https://activiti.github.io/activiti-cloud-helm-charts
