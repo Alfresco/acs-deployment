@@ -491,6 +491,7 @@ alfresco-sync-service:
 postgresql-sync:
   # -- Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service
   enabled: true
+  nameOverride: postgresql-sync
   image:
     tag: 14.4.0
   auth:

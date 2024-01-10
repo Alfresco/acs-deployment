@@ -241,6 +241,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.auth.username | string | `"alfresco"` |  |
 | postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
 | postgresql-sync.image.tag | string | `"14.4.0"` |  |
+| postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
 | postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
 | postgresql-sync.primary.resources.limits.memory | string | `"4Gi"` |  |
 | postgresql-sync.primary.resources.requests.cpu | string | `"250m"` |  |
