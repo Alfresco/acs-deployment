@@ -476,8 +476,12 @@ alfresco-sync-service:
   messageBroker:
     existingSecretName: *acs_messageBroker_secretName
   repository:
-    nameOverride: alfresco-repository
-    port: 80
+    existingConfigMap:
+      name: *infrastructure_cmName
+      keys:
+        host: repo_svc_name
+        port: repo_svc_port
+        scheme: http
 alfresco-ai-transformer:
   # -- toggle deploying Alfresco ai transformer for more details about configuration check
   # https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer

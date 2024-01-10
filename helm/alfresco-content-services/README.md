@@ -173,8 +173,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.postgresql.primary.resources.limits.memory | string | `"4Gi"` |  |
 | alfresco-sync-service.postgresql.primary.resources.requests.cpu | string | `"250m"` |  |
 | alfresco-sync-service.postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
-| alfresco-sync-service.repository.nameOverride | string | `"alfresco-repository"` |  |
-| alfresco-sync-service.repository.port | int | `80` |  |
+| alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
+| alfresco-sync-service.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
+| alfresco-sync-service.repository.existingConfigMap.keys.scheme | string | `"http"` |  |
+| alfresco-sync-service.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-transform-service.enabled | bool | `true` |  |
 | alfresco-transform-service.filestore.enabled | bool | `true` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | alfresco-transform-service.filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
