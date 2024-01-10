@@ -162,7 +162,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8.2"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
 | alfresco-sync-service.image.tag | string | `"4.0.1"` |  |
-| alfresco-sync-service.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-sync-service.postgresql.auth.database | string | `"syncservice-postgresql"` |  |
 | alfresco-sync-service.postgresql.auth.enablePostgresUser | bool | `false` |  |
 | alfresco-sync-service.postgresql.auth.password | string | `"admin"` |  |

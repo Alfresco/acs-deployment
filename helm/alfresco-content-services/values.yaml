@@ -474,7 +474,10 @@ alfresco-sync-service:
           cpu: "4"
           memory: 4Gi
   messageBroker:
-    existingSecretName: *acs_messageBroker_secretName
+    existingSecret:
+      name: *acs_messageBroker_secretName
+    existingConfigMap:
+      name: *infrastructure_cmName
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
