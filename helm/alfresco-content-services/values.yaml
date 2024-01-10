@@ -473,6 +473,13 @@ alfresco-sync-service:
         limits:
           cpu: "4"
           memory: 4Gi
+  database:
+    existingSecret:
+      name: alfresco-sync-database
+    existingConfigMap:
+      name: *infrastructure_cmName
+      keys:
+        url: DATABASE_SYNC_URL
   messageBroker:
     existingSecret:
       name: *acs_messageBroker_secretName

@@ -160,6 +160,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8.2"` |  |
+| alfresco-sync-service.database.existingConfigMap.keys.url | string | `"DATABASE_SYNC_URL"` |  |
+| alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-sync-service.database.existingSecret.name | string | `"alfresco-sync-database"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
 | alfresco-sync-service.image.tag | string | `"4.0.1"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
