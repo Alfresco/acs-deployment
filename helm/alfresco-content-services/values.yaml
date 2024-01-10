@@ -80,6 +80,19 @@ database:
   # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
   # When using embedded postgres you need to also set `postgresql.existingSecret`.
   existingSecretName: null
+  sync:
+    # -- Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image.
+    driver: null
+    # -- External Postgresql database user
+    user: null
+    # -- External Postgresql database password
+    password: null
+    # -- External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco`
+    url: null
+    # -- Name of the secret managed by this chart
+    configMapName: *infrastructure_cmName
+    # -- Name of the secret managed by this chart
+    secretName: &sync_database_secretName alfresco-cs-sync
 # -- Activemq connection details (activemq.enabled must also be set to false)
 messageBroker:
   url: null
@@ -458,7 +471,7 @@ alfresco-sync-service:
     tag: 4.0.1
   database:
     existingSecret:
-      name: alfresco-sync-database
+      name: *sync_database_secretName
     existingConfigMap:
       name: *infrastructure_cmName
       keys:

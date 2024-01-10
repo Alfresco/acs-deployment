@@ -163,7 +163,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8.2"` |  |
 | alfresco-sync-service.database.existingConfigMap.keys.url | string | `"DATABASE_SYNC_URL"` |  |
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-sync-service.database.existingSecret.name | string | `"alfresco-sync-database"` |  |
+| alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
 | alfresco-sync-service.image.tag | string | `"4.0.1"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
@@ -207,6 +207,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
 | database.password | string | `nil` | External Postgresql database password |
 | database.secretName | string | `"alfresco-cs-database"` | Name of the secret managed by this chart |
+| database.sync.configMapName | string | `"alfresco-infrastructure"` | Name of the secret managed by this chart |
+| database.sync.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
+| database.sync.password | string | `nil` | External Postgresql database password |
+| database.sync.secretName | string | `"alfresco-cs-sync"` | Name of the secret managed by this chart |
+| database.sync.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
+| database.sync.user | string | `nil` | External Postgresql database user |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
