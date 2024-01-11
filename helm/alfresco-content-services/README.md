@@ -27,9 +27,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.1.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 4.5.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.0.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.0.0-alpha.2 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
+| oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
@@ -160,21 +161,16 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | alfresco-search.searchServicesImage.tag | string | `"2.0.8.2"` |  |
+| alfresco-sync-service.database.existingConfigMap.keys.url | string | `"SYNC_DATABASE_URL"` |  |
+| alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
 | alfresco-sync-service.image.tag | string | `"4.0.1"` |  |
-| alfresco-sync-service.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
-| alfresco-sync-service.postgresql.auth.database | string | `"syncservice-postgresql"` |  |
-| alfresco-sync-service.postgresql.auth.enablePostgresUser | bool | `false` |  |
-| alfresco-sync-service.postgresql.auth.password | string | `"admin"` |  |
-| alfresco-sync-service.postgresql.auth.username | string | `"alfresco"` |  |
-| alfresco-sync-service.postgresql.enabled | bool | `true` |  |
-| alfresco-sync-service.postgresql.image.tag | string | `"14.4.0"` |  |
-| alfresco-sync-service.postgresql.primary.resources.limits.cpu | string | `"4"` |  |
-| alfresco-sync-service.postgresql.primary.resources.limits.memory | string | `"4Gi"` |  |
-| alfresco-sync-service.postgresql.primary.resources.requests.cpu | string | `"250m"` |  |
-| alfresco-sync-service.postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
-| alfresco-sync-service.repository.nameOverride | string | `"alfresco-repository"` |  |
-| alfresco-sync-service.repository.port | int | `80` |  |
+| alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
+| alfresco-sync-service.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
+| alfresco-sync-service.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-transform-service.enabled | bool | `true` |  |
 | alfresco-transform-service.filestore.enabled | bool | `true` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | alfresco-transform-service.filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
@@ -210,6 +206,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.external | bool | `false` | Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true. |
 | database.password | string | `nil` | External Postgresql database password |
 | database.secretName | string | `"alfresco-cs-database"` | Name of the secret managed by this chart |
+| database.sync.configMapName | string | `"alfresco-infrastructure"` | Name of the secret managed by this chart |
+| database.sync.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
+| database.sync.password | string | `nil` | External Postgresql database password |
+| database.sync.secretName | string | `"alfresco-cs-sync"` | Name of the secret managed by this chart |
+| database.sync.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
+| database.sync.user | string | `nil` | External Postgresql database user |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
@@ -232,6 +234,17 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection details (activemq.enabled must also be set to false) |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
+| postgresql-sync.auth.database | string | `"syncservice-postgresql"` |  |
+| postgresql-sync.auth.enablePostgresUser | bool | `false` |  |
+| postgresql-sync.auth.password | string | `"admin"` |  |
+| postgresql-sync.auth.username | string | `"alfresco"` |  |
+| postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
+| postgresql-sync.image.tag | string | `"14.4.0"` |  |
+| postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
+| postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
+| postgresql-sync.primary.resources.limits.memory | string | `"4Gi"` |  |
+| postgresql-sync.primary.resources.requests.cpu | string | `"250m"` |  |
+| postgresql-sync.primary.resources.requests.memory | string | `"1Gi"` |  |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |

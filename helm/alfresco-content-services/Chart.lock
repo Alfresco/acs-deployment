@@ -5,6 +5,9 @@ dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.8.5
+- name: postgresql
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 12.8.5
 - name: common
   repository: https://activiti.github.io/activiti-cloud-helm-charts
   version: 8.0.0
@@ -25,7 +28,7 @@ dependencies:
   version: 2.0.0
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.5.1
+  version: 5.0.0-alpha.1
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.1.0-alpha.1
@@ -44,5 +47,5 @@ dependencies:
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
-digest: sha256:02be1c10b63c9e03784d7d7ef53893da3cc4bb46cb975274876ad791e16c0f14
-generated: "2024-01-09T16:33:13.116899+01:00"
+digest: sha256:51536deb76355c975200cec27a9be5d8bbd5c40da819d558a549a353ef50de13
+generated: "2024-01-11T09:31:51.429814+01:00"
