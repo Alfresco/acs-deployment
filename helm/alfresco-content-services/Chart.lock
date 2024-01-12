@@ -40,12 +40,12 @@ dependencies:
   version: 0.3.0
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.4.0
+  version: 0.5.0-alpha.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 1.0.0-alpha.4
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
-digest: sha256:51536deb76355c975200cec27a9be5d8bbd5c40da819d558a549a353ef50de13
-generated: "2024-01-11T09:31:51.429814+01:00"
+digest: sha256:8bf899da48dbc09ff55ecc8f6c8a84b59819ddc30a9cf1ee0458a4b754b07de5
+generated: "2024-01-11T15:00:37.996027+05:30"
