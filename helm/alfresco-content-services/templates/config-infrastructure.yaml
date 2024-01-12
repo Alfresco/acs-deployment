@@ -26,8 +26,7 @@ data:
     {{- if .Values.global.search.url }}
       {{- $search_url = .Values.global.search.url }}
     {{- else if eq "solr6" $search_flavor }}
-      {{- $searchCtx := dict "Values" (index .Values "alfresco-search") "Chart" .Chart "Release" .Release }}
-      {{- $search_url = printf "http://%s-solr/solr" (include "alfresco-search-service.fullname" $searchCtx) }}
+      {{- $search_url = printf "http://%s/solr" (include "alfresco-search-service.deployment.name" .) }}
     {{- else if eq "elasticsearch" $search_flavor }}
       {{- with .Values.elasticsearch }}
       {{- if .enabled }}
