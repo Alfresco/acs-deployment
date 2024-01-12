@@ -27,7 +27,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.1.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 2.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.0.0-alpha.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.0.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.0.0-alpha.2 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
@@ -241,6 +241,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
 | postgresql-sync.image.tag | string | `"14.4.0"` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
+| postgresql-sync.primary.extendedConfiguration | string | `"max_connections = 150\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
 | postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
 | postgresql-sync.primary.resources.limits.memory | string | `"4Gi"` |  |
 | postgresql-sync.primary.resources.requests.cpu | string | `"250m"` |  |
