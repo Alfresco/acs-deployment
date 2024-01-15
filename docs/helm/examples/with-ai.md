@@ -22,18 +22,52 @@ by AIS.
 
 ## Deploy
 
+Create a local values file to contain Helm charts' configuration options (`ai-values.yaml`):
+
+```yaml
+alfresco-ai-transformer:
+  enabled: true
+  fullnameOverride: alfresco-intelligence-service
+  aws:
+    accessKeyId: YOUR-AI-AWS-ACCESS-KEY-ID
+    secretAccessKey: YOUR-AI-AWS-SECRET-KEY
+    region: YOUR-AWS-REGION
+    s3Bucket: YOUR-AI-BUCKET-NAME
+    comprehendRoleARN: YOUR-AI-AWS-COMPREHEND-ROLE-ARN
+alfresco-transform-service:
+  filestore:
+    persistence.enabled: true
+    storageClass: nfs-client
+  transformrouter:
+    environment: |-
+      JAVA_OPTS: -XX:MaxRAMPercentage=80
+      TRANSFORMER_URL_AWS_AI: http://alfresco-intelligence-service
+      TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
+      TRANSFORMER_ROUTES_ADDITIONAL_AI: "/etc/ats-routes/ai-pipeline-routes.json"
+    volumeMounts:
+      - name: ai-transform-routes
+        mountPath: /etc/ats-routes
+    volumes: |-
+      - name: ai-routes
+        configMap:
+          names: ai-transform-pipelines
+          items:
+            - key: ai-pipeline-routes.json
+              path: ai-pipeline-routes.json
+```
+
+> Replace AWS credentials and Kubernetes storageClass with actual values
+
 When we bring all this together we can deploy ACS using the command below
 (replacing all the `YOUR-XZY` properties with the values gathered during the
 setup of the services):
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --set alfresco-repository.persistence.enabled=false \
-  --set alfresco-transform-service.filestore.persistence.enabled=true \
-  --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
   --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
   --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+  --set alfresco-repository.persistence.enabled=false \
   --set alfresco-repository.image.repository="quay.io/alfresco/alfresco-content-repository-aws" \
   --set share.image.repository="quay.io/alfresco/alfresco-share-aws" \
   --set postgresql.enabled=false \
@@ -47,11 +81,7 @@ helm install acs alfresco/alfresco-content-services \
   --set messageBroker.user="alfresco" \
   --set messageBroker.password="YOUR-MQ-PASSWORD" \
   --set global.ai.enabled=true \
-  --set ai.aws.accessKey="YOUR-AI-AWS-ACCESS-KEY-ID" \
-  --set ai.aws.secretAccessKey="YOUR-AI-AWS-SECRET-KEY" \
-  --set ai.aws.region="YOUR-AWS-REGION" \
-  --set ai.aws.s3Bucket="YOUR-AI-BUCKET-NAME" \
-  --set ai.aws.comprehendRoleARN="YOUR-AI-AWS-COMPREHEND-ROLE-ARN" \
+  -f ai-values.yaml \
   --atomic \
   --timeout 10m0s \
   --namespace=alfresco
