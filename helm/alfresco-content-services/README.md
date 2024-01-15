@@ -45,6 +45,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
+| alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
 | alfresco-ai-transformer.image.tag | string | `"3.0.1"` |  |
 | alfresco-ai-transformer.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |

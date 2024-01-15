@@ -518,6 +518,8 @@ alfresco-ai-transformer:
   # -- toggle deploying Alfresco ai transformer for more details about configuration check
   # https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer
   enabled: false
+  # -- Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service
+  fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
     tag: 3.0.1
