@@ -18,10 +18,10 @@ tests:
           value: secret
       - equal:
           path: data.SEARCH_URL
-          value: http://RELEASE-NAME-alfresco-search-solr/solr
+          value: http://RELEASE-NAME-solr/solr
       - equal:
           path: data.SEARCH_HOST
-          value: RELEASE-NAME-alfresco-search-solr
+          value: RELEASE-NAME-solr
       - equal:
           path: data.SEARCH_PORT
           value: "80"
