@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:23.1.1
+    image: quay.io/alfresco/alfresco-content-repository:23.2.0-M1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -58,7 +58,7 @@ services:
         -XX:MaxRAMPercentage=80
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.0.1
+    image: quay.io/alfresco/alfresco-transform-router:4.0.2-A1
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -72,7 +72,7 @@ services:
     links:
       - activemq
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.0.1
+    image: alfresco/alfresco-transform-core-aio:5.0.2-A1
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -86,7 +86,7 @@ services:
     links:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.0.1
+    image: quay.io/alfresco/alfresco-shared-file-store:4.0.2-A1
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -99,7 +99,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:23.1.1
+    image: quay.io/alfresco/alfresco-share:23.2.0-M1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -149,7 +149,7 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:4.3.0
+    image: quay.io/alfresco/alfresco-digital-workspace:4.4.0-7545215653
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -159,7 +159,7 @@ services:
       APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:8.3.0
+    image: quay.io/alfresco/alfresco-control-center:8.4.0-7545215653
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -180,7 +180,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:4.0.1
+    image: quay.io/alfresco/service-sync:5.0.0-M2
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-

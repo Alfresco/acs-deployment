@@ -47,7 +47,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| alfresco-ai-transformer.image.tag | string | `"3.0.1"` |  |
+| alfresco-ai-transformer.image.tag | string | `"3.0.2-A1"` |  |
 | alfresco-ai-transformer.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
@@ -67,7 +67,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
 | alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
-| alfresco-control-center.image.tag | string | `"8.3.0"` |  |
+| alfresco-control-center.image.tag | string | `"8.4.0-7545215653"` |  |
 | alfresco-control-center.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
 | alfresco-control-center.ingress.path | string | `"/control-center"` |  |
 | alfresco-control-center.ingress.tls | list | `[]` |  |
@@ -89,7 +89,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
-| alfresco-digital-workspace.image.tag | string | `"4.3.0"` |  |
+| alfresco-digital-workspace.image.tag | string | `"4.4.0-7545215653"` |  |
 | alfresco-digital-workspace.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
 | alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-digital-workspace.ingress.path | string | `"/workspace"` |  |
@@ -123,23 +123,23 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| alfresco-repository.image.tag | string | `"23.1.1"` |  |
+| alfresco-repository.image.tag | string | `"23.2.0-M1"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `false` |  |
-| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.0.1"` |  |
-| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.0.0.1"` |  |
-| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.0.0.1"` |  |
-| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.0.0.1"` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.1.0-A4"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.1.0-A4"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.1.0-A4"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.1.0-A4"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
-| alfresco-search-enterprise.reindexing.image.tag | string | `"4.0.0.1"` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"4.1.0-A4"` |  |
 | alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
@@ -165,7 +165,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
-| alfresco-sync-service.image.tag | string | `"4.0.1"` |  |
+| alfresco-sync-service.image.tag | string | `"5.0.0-M2"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
@@ -174,31 +174,31 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.enabled | bool | `true` |  |
 | alfresco-transform-service.filestore.enabled | bool | `true` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | alfresco-transform-service.filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
-| alfresco-transform-service.filestore.image.tag | string | `"4.0.1"` |  |
+| alfresco-transform-service.filestore.image.tag | string | `"4.0.2-A1"` |  |
 | alfresco-transform-service.filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | alfresco-transform-service.filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
 | alfresco-transform-service.filestore.persistence.enabled | bool | `true` | Persist filestore data |
 | alfresco-transform-service.filestore.replicaCount | int | `1` |  |
 | alfresco-transform-service.imagemagick.enabled | bool | `true` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | alfresco-transform-service.imagemagick.image.repository | string | `"alfresco/alfresco-imagemagick"` |  |
-| alfresco-transform-service.imagemagick.image.tag | string | `"5.0.1"` |  |
+| alfresco-transform-service.imagemagick.image.tag | string | `"5.0.2-A1"` |  |
 | alfresco-transform-service.libreoffice.enabled | bool | `true` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | alfresco-transform-service.libreoffice.image.repository | string | `"alfresco/alfresco-libreoffice"` |  |
-| alfresco-transform-service.libreoffice.image.tag | string | `"5.0.1"` |  |
+| alfresco-transform-service.libreoffice.image.tag | string | `"5.0.2-A1"` |  |
 | alfresco-transform-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-transform-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-transform-service.pdfrenderer.enabled | bool | `true` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | alfresco-transform-service.pdfrenderer.image.repository | string | `"alfresco/alfresco-pdf-renderer"` |  |
-| alfresco-transform-service.pdfrenderer.image.tag | string | `"5.0.1"` |  |
+| alfresco-transform-service.pdfrenderer.image.tag | string | `"5.0.2-A1"` |  |
 | alfresco-transform-service.tika.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
 | alfresco-transform-service.tika.image.repository | string | `"alfresco/alfresco-tika"` |  |
-| alfresco-transform-service.tika.image.tag | string | `"5.0.1"` |  |
+| alfresco-transform-service.tika.image.tag | string | `"5.0.2-A1"` |  |
 | alfresco-transform-service.transformmisc.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
 | alfresco-transform-service.transformmisc.image.repository | string | `"alfresco/alfresco-transform-misc"` |  |
-| alfresco-transform-service.transformmisc.image.tag | string | `"5.0.1"` |  |
+| alfresco-transform-service.transformmisc.image.tag | string | `"5.0.2-A1"` |  |
 | alfresco-transform-service.transformrouter.enabled | bool | `true` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
 | alfresco-transform-service.transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
-| alfresco-transform-service.transformrouter.image.tag | string | `"4.0.1"` |  |
+| alfresco-transform-service.transformrouter.image.tag | string | `"4.0.2-A1"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | database.configMapName | string | `"alfresco-infrastructure"` | Name of the secret managed by this chart |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
@@ -264,7 +264,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"23.1.1"` |  |
+| share.image.tag | string | `"23.2.0-M1"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
