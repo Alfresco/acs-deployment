@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 7.0.3](https://img.shields.io/badge/Version-7.0.3-informational?style=flat-square) ![AppVersion: 23.1.1](https://img.shields.io/badge/AppVersion-23.1.1-informational?style=flat-square)
+![Version: 7.1.0-M.1](https://img.shields.io/badge/Version-7.1.0--M.1-informational?style=flat-square) ![AppVersion: 23.1.1](https://img.shields.io/badge/AppVersion-23.1.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
