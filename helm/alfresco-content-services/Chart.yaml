@@ -17,7 +17,7 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: alfresco-common
-    version: 3.1.0
+    version: 3.1.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     version: 12.8.5

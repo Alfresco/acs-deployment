@@ -62,7 +62,7 @@ tests:
       - equal:
           path: data.SFS_URL
           value: >-
-            http://RELEASE-NAME-filestore/alfresco/api/-default-/private/sfs/versions/1/file/
+            http://RELEASE-NAME-filestore/alfresco/api/-default-/private/sfs/versions/1/file
       - notExists:
           path: data.ATS_URL
 
@@ -112,7 +112,7 @@ tests:
       - equal:
           path: data.SFS_URL
           value: >-
-            http://RELEASE-NAME-filestore/alfresco/api/-default-/private/sfs/versions/1/file/
+            http://RELEASE-NAME-filestore/alfresco/api/-default-/private/sfs/versions/1/file
       - equal:
           path: data.ATS_URL
           value: >-
