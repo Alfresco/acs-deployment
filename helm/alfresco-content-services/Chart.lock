@@ -22,7 +22,7 @@ dependencies:
   version: 3.4.1
 - name: alfresco-transform-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.3.2
+  version: 1.0.0
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.0.0

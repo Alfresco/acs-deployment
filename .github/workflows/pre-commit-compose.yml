@@ -17,7 +17,7 @@ on:
 
 env:
   # https://pre-commit.com/#temporarily-disabling-hooks
-  SKIP: helm-docs,helm-deps-build,helm-lint,checkov
+  SKIP: helm-docs,helm-deps-build,helmlint,checkov
 
 jobs:
   pre_commit:
