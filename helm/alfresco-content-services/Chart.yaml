@@ -78,7 +78,7 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-ms365.enabled
   - name: alfresco-ai-transformer
-    version: 1.0.0-alpha.4
+    version: 1.0.0-alpha.6
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
   - name: elasticsearch

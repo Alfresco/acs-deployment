@@ -19,7 +19,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 8.0.0 |
 | https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 8.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 1.0.0-alpha.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 1.0.0-alpha.6 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.5.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
