@@ -125,9 +125,6 @@ alfresco-sync-service:
         limits:
           cpu: "2"
           memory: "1Gi"
-global:
-  ai:
-    enabled: true
 alfresco-ai-transformer:
   enabled: true
   aws:
