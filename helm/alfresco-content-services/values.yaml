@@ -189,42 +189,42 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.0.2-A1
+      tag: 4.0.1
   pdfrenderer:
     # -- Declares the alfresco-pdf-renderer service used by the content repository
     # to transform pdf files
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 5.0.2-A1
+      tag: 5.0.1
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 5.0.2-A1
+      tag: 5.0.1
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 5.0.2-A1
+      tag: 5.0.1
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 5.0.2-A1
+      tag: 5.0.1
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 5.0.2-A1
+      tag: 5.0.1
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -232,7 +232,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.0.2-A1
+      tag: 4.0.1
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -315,16 +315,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.1.0-A4
+        tag: 4.0.0.1
     content:
       image:
-        tag: 4.1.0-A4
+        tag: 4.0.0.1
     metadata:
       image:
-        tag: 4.1.0-A4
+        tag: 4.0.0.1
     path:
       image:
-        tag: 4.1.0-A4
+        tag: 4.0.0.1
   reindexing:
     enabled: true
     repository:
@@ -336,7 +336,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 4.1.0-A4
+      tag: 4.0.0.1
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -354,7 +354,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.4.0-7545215653
+    tag: 4.3.0
     pullPolicy: IfNotPresent
   registryPullSecrets:
     - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
@@ -392,7 +392,7 @@ alfresco-control-center:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.4.0-7545215653
+    tag: 8.3.0
     pullPolicy: IfNotPresent
   registryPullSecrets:
     - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
@@ -514,7 +514,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.0.2-A1
+    tag: 3.0.1
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
