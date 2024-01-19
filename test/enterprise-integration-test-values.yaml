@@ -125,3 +125,14 @@ alfresco-sync-service:
         limits:
           cpu: "2"
           memory: "1Gi"
+global:
+  ai:
+    enabled: true
+alfresco-ai-transformer:
+  enabled: true
+  aws:
+    accessKeyId: AAAAAAAAAAAAAAAAA
+    secretAccessKey: ZZZZZZZZZZZZZZZZZ
+    s3Bucket: somebucket
+    region: us-east-1
+    comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
