@@ -38,7 +38,7 @@ alfresco-transform-service:
     persistence.enabled: true
     storageClass: nfs-client
   transformrouter:
-    environment: |-
+    environment:
       JAVA_OPTS: -XX:MaxRAMPercentage=80
       TRANSFORMER_URL_AWS_AI: http://alfresco-intelligence-service
       TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
@@ -46,7 +46,7 @@ alfresco-transform-service:
     volumeMounts:
       - name: ai-transform-routes
         mountPath: /etc/ats-routes
-    volumes: |-
+    volumes:
       - name: ai-routes
         configMap:
           names: ai-transform-pipelines
