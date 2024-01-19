@@ -45,7 +45,7 @@ jobs:
           ! grep -e "-alpha" -e "-SNAPSHOT" helm/${{ matrix.charts }}/Chart.yaml
       - name: Publish chart
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v5.7.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v5.12.0
         with:
           chart_name: ${{ matrix.charts }}
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
