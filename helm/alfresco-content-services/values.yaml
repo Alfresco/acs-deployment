@@ -59,9 +59,6 @@ global:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  ai:
-    # -- Enable AI capabilities in ADW AI plugin
-    enabled: false
 database:
   # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false
@@ -365,11 +362,6 @@ alfresco-digital-workspace:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
-  extraEnv: |-
-    {{- if .Values.global.ai.enabled }}
-    - name: APP_CONFIG_PLUGIN_AI_SERVICE
-      value: '{{ .Values.global.ai.enabled }}'
-    {{- end }}
   securityContext:
     runAsNonRoot: true
     runAsUser: 101
