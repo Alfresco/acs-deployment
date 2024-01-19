@@ -14,7 +14,8 @@ matrix:
       helm_target: &helmvaluesNext >-
         helm/alfresco-content-services/values.yaml
       helm_key: $.alfresco-repository.image.tag
-      helm_update_appVersion: true
+      # keep the unused anchor to detect multiple usages when copying blocks for new versions
+      helm_update_appVersion: &helm_update_appVersion true
     share:
       version:
       pattern:
@@ -131,7 +132,6 @@ matrix:
       helm_target: &helmvalues23n >-
         helm/alfresco-content-services/23.N_values.yaml
       helm_key: $.alfresco-repository.image.tag
-      helm_update_appVersion: true
     share:
       version:
       pattern:
