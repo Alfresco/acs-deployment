@@ -27,7 +27,6 @@ Create a local values file to contain Helm charts' configuration options (`ai-va
 ```yaml
 alfresco-ai-transformer:
   enabled: true
-  fullnameOverride: alfresco-intelligence-service
   aws:
     accessKeyId: YOUR-AI-AWS-ACCESS-KEY-ID
     secretAccessKey: YOUR-AI-AWS-SECRET-KEY
