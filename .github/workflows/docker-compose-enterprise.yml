@@ -41,6 +41,7 @@ jobs:
       fail-fast: true
       matrix: ${{ fromJSON(needs.build_vars.outputs.matrix_json) }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: >-
       github.event_name == 'push'
       || (
