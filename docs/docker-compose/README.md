@@ -1,6 +1,7 @@
 # Alfresco Content Services Docker Compose Deployment
 
-This page describes how to quickly deploy Alfresco Content Services (ACS) using Docker Compose.
+This page describes how to quickly deploy Alfresco Content Services (ACS) using
+Docker Compose.
 
 Using one of the Enterprise compose files will deploy the following system:
 
@@ -12,53 +13,78 @@ Using the Community compose file will deploy the following system:
 
 ## Considerations
 
-The Docker Compose file is undergoing continual development and improvement, and should not be used "as is" for your production environments, but should help you save time and effort deploying Alfresco Content Services for your organisation.
+The Docker Compose files are provided to easy spin up ACS environments. It is
+suited for test or demo environment but certainly not for production use.
 
 ## Prerequisites
 
-As well as the prerequisites mentioned on the [main README](/README.md#prerequisites) you will need a machine with at least 13GB of memory and the following software installed:
+As well as the prerequisites mentioned on the [main
+README](/README.md#prerequisites) you will need a machine with at least 13GB of
+free memory and the following software installed:
 
 * [Docker](https://www.docker.com/products/docker-desktop)
 * [Docker Compose](https://docs.docker.com/compose/install)
 
 ## Configure Docker for Desktop
 
-In order to deploy onto Docker for Desktop we need to allocate at least [13 Gb](../../docker-compose/docker-compose.yml) (preferably 16 Gb) to the Docker Engine on the "Resources" tab in Docker for Desktop's preferences pane as shown in the screenshot below. This is required because insufficient memory will cause containers to exit without warning.
+In order to deploy onto Docker for Desktop we need to allocate at least 16Gb to
+the Docker engine on the "Resources" tab in Docker for Desktop's preferences
+pane as shown in the screenshot below.
+This is required because insufficient memory will cause containers to exit
+without warning (the very minimum is 13GB but 16 brings some freedom to your
+Docker Daemon).
 
 ![Resources](../../docs/helm/diagrams/dfd-resources.png)
 
 ## Deploy
 
-1. Clone this repository or download one of the docker compose files from [here](../../docker-compose)
-2. Navigate to the folder where the docker compose file you want to use is located
-3. Log in to Quay.io with your credentials: ```docker login quay.io``` (only required if you're running an Enterprise version)
-4. Run ```docker-compose up``` to use the latest version of ACS Enterprise or ```docker-compose -f major.minor.N-docker-compose.yml up``` to use a specific version of ACS
+1. Clone this repository or download one of the docker compose files from
+   [here](../../docker-compose)
+2. Navigate to the folder where the docker compose file you want to use is
+   located
+3. Log in to Quay.io with your credentials: `docker login quay.io` (only
+   required if you're running an Enterprise version)
+4. Run `docker-compose up` to use the latest version of ACS Enterprise or
+   `docker-compose -f major.minor.N-docker-compose.yml up` to use a specific
+   version of ACS
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
    * Control Center: [http://<machine_ip>:8080/admin](http://localhost:8080/admin)
    * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
    * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
    * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
-6. If you requested an extended trial license navigate to the Admin Console and apply your license:
-   * [http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (```<machine_ip>``` will usually just be ```localhost```)
-   * Default username and password is ```admin```
+6. If you requested an extended trial license navigate to the Admin Console and
+   apply your license:
+   * [http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (`<machine_ip>` will usually just be `localhost`)
+   * Default username and password is `admin`
    * See [Uploading a new license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense) for more details
 
-### Search Enterprise 3.0 (Elasticsearch)
+### Choosing a search engine
 
-You can provision the latest Alfresco with the new search subsystem based on Elasticsearch rather than solr with:
+Alfresco comes either with Solr or Elasticsearch as a Full Text Search engine.
+By default ACS enterprise flavor 23 and above are shiped with Elasticsearch.
+Versions 7.x enterprise and all Community versions are shipped with Solr.
+
+It is of course possible to keep on using Solr on the latest Enterprise
+versions. To do so just use the extra argument shown bellow:
 
 ```bash
-docker-compose -f docker-compose.yml -f elasticsearch-override-docker-compose.yml up -d
+docker-compose -f docker-compose.yml -f solr6-override-docker-compose.yml up -d
 ```
 
 ### Troubleshooting Search Enterprise
 
-Make sure that exposed ports are open on your host. Check the _docker-compose.yml_ file to determine the exposed ports - refer to the ```host:container``` port definitions. You'll see they include 5432, 8080, 8083 and others.
+Make sure that exposed ports are open on your host. Check the
+_docker-compose.yml_ file to determine the exposed ports - refer to the
+`host:container` port definitions. You'll see they include 5432, 8080, 8083 and
+others.
 
-If Docker is running on your local machine, the IP address will be just _localhost_.
+If Docker is running on your local machine, the IP address will be just
+_localhost_.
 
-If you're using the [Docker Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows), run the following command to find the IP address:
+If you're using the [Docker
+Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows), run the
+following command to find the IP address:
 
 ```bash
 docker-machine ip
@@ -66,7 +92,9 @@ docker-machine ip
 
 ## Configure
 
-The provided Docker compose file provides some default configuration, the sections below show the full set of environment variables exposed by each of the containers in the deployment.
+The provided Docker compose file provides some default configuration, the
+sections below show the full set of environment variables exposed by each of
+the containers in the deployment.
 
 ### Alfresco Content Repository (alfresco)
 
@@ -88,7 +116,7 @@ The provided Docker compose file provides some default configuration, the sectio
 
 ```yml
 share:
-   image: quay.io/alfresco/alfresco-share:7.1.1
+   image: quay.io/alfresco/alfresco-share:23.1.1
       mem_limit: 1g
       environment:
          REPO_HOST: "alfresco"
@@ -165,6 +193,18 @@ share:
 | BASE_PATH            |                                                                                             | `./`          |
 | APP_CONFIG_AUTH_TYPE | The authentication type. To use Single Sign-on mode you must change this property to OAUTH. | BASIC         |
 | APP_CONFIG_PROVIDER  | config provider                                                                             | ECM           |
+
+### Alfresco Search Enterprise (elasticsearch)
+
+| Property                                             | Description                                                                       | Default value                                                                       |
+|------------------------------------------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL | URL where to fetch supported media type (typically t-router URL)                  | `http://transform-core-aio:8090/transform/config`                                   |
+| ALFRESCO_SHAREDFILESTORE_BASEURL                     | URL where to fetch renditions from (typically the shared filestore URL)           | `http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/` |
+| SPRING_ACTIVEMQ_BROKERURL                            | URL of the ACTIVEMQ message broker                                                | `nio://activemq:61616`                                                              |
+| SPRING_ELASTICSEARCH_REST_URIS                       | URL of the Elastisearch REST API                                                  | `http://elasticsearch:9200`                                                         |
+| SPRING_DATASOURCE_URL (reindexing only)              | JDBC URL of the repository database                                               | `jdbc:postgresql://postgres:5432/alfresco`                                          |
+| SPRING_DATASOURCE_USERNAME (reindexing only)         | Username to authenticate to the repository database                               | `alfresco`                                                                          |
+| SPRING_DATASOURCE_PASSWORD (reindexing only)         | Password to authenticate to the repository database                               | `alfresco`                                                                          |
 
 ### Alfresco Search Services (solr6)
 
