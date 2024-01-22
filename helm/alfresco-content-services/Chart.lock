@@ -43,9 +43,9 @@ dependencies:
   version: 0.5.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.0.0-alpha.6
+  version: 1.0.0
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
-digest: sha256:8e1b79d92cbcdbd995e16bc1e242dc1af32e6a3458d571148aeefe6c5fb80412
-generated: "2024-01-19T14:05:50.371933+01:00"
+digest: sha256:24db78b7f6f37b85df35d476d968dfa12d1878f6c3fd9b470596d9210b2e3658
+generated: "2024-01-22T08:55:19.914387698Z"
