@@ -1,0 +1,13 @@
+alfresco-transform-service:
+  messageBroker:
+    url: "tcp://activemq:61616"
+    user: alfresco
+    password: alfresco
+alfresco-ai-transformer:
+  enabled: true
+  aws:
+    accessKeyId: AAAAAAAAAAAAAAAAA
+    secretAccessKey: ZZZZZZZZZZZZZZZZZ
+    s3Bucket: somebucket
+    region: us-east-1
+    comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend

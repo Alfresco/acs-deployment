@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 7.0.3](https://img.shields.io/badge/Version-7.0.3-informational?style=flat-square) ![AppVersion: 23.1.1](https://img.shields.io/badge/AppVersion-23.1.1-informational?style=flat-square)
+![Version: 8.0.0-M.1](https://img.shields.io/badge/Version-8.0.0--M.1-informational?style=flat-square) ![AppVersion: 23.2.0-M1](https://img.shields.io/badge/AppVersion-23.2.0--M1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -16,19 +16,19 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 8.0.0 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 8.0.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 8.1.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 8.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 1.0.0-alpha.6 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.5.0-alpha.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.1.0-alpha.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.5.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.0.0-alpha.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.0.0-alpha.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.0.0 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
@@ -123,7 +123,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| alfresco-repository.image.tag | string | `"23.1.1"` |  |
+| alfresco-repository.image.tag | string | `"23.2.0-M1"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
@@ -151,7 +151,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| alfresco-search.insightEngineImage.tag | string | `"2.0.8.2"` |  |
+| alfresco-search.insightEngineImage.tag | string | `"2.0.9"` |  |
 | alfresco-search.nameOverride | string | `"alfresco-search"` |  |
 | alfresco-search.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-search.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
@@ -160,12 +160,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` |  |
 | alfresco-search.repository.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.0.8.2"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.9"` |  |
 | alfresco-sync-service.database.existingConfigMap.keys.url | string | `"SYNC_DATABASE_URL"` |  |
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
-| alfresco-sync-service.image.tag | string | `"4.0.1"` |  |
+| alfresco-sync-service.image.tag | string | `"5.0.0-M2"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
@@ -264,7 +264,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"23.1.1"` |  |
+| share.image.tag | string | `"23.2.0-M1"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |

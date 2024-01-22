@@ -23,7 +23,10 @@ repos:
     rev: v2.1.0
     hooks:
       - id: helm-deps-build
-      - id: helm-lint
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.23
+    hooks:
+      - id: helmlint
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: 2.3.288
     hooks:

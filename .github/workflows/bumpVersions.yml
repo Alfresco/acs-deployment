@@ -1,5 +1,6 @@
 ---
 name: Bump versions
+run-name: Bump ${{ inputs.update-type }} using alfresco-updatecli/${{ inputs.alfresco-updatecli-ref }}
 
 on:
   push:
@@ -22,7 +23,7 @@ on:
         default: master
 
 env:
-  UPDATE_CLI_VERSION: v0.66.1
+  UPDATE_CLI_VERSION: v0.71.0
   DEFAULT_BRANCH_NAME: master
 
 jobs:
@@ -47,7 +48,7 @@ jobs:
         with:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
-      - run: updatecli apply --experimental
+      - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -62,7 +63,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5.0.0
         with:
           commit_message: |
-            🛠 Updatecli pipeline bump
+            🛠 Updatecli pipeline charts bump
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-helm' || github.ref_name }}
@@ -117,7 +118,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5.0.0
         with:
           commit_message: |
-            🛠 Updatecli pipeline acs bump
+            🛠 Updatecli pipeline values bump
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-acs' || github.ref_name }}
