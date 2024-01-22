@@ -1,18 +1,24 @@
-# This docker-compose file will spin up an ACS community installation on a local host.
-# It requires at least 6GB of memory available to distribute among containers.
+# This docker-compose file will spin up an ACS cluster on a local host.
+# It requires a minimum of 13GB Memory to distribute among containers.
 #
-# For performance tuning, increase each container mem_limit and give a percentage of
+# For performance tuning, assign the container memory and give a percentage of
 # it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
 # java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
+#
+# Note: The docker-compose file from github.com is a limited trial that goes
+# into read-only mode after 2 days. Get the latest docker-compose.yml file with
+# a 30-day trial license by accessing the Alfresco Content Services trial
+# download page at:
+# https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
 # Using version 2 as 3 does not support resource constraint options
 # (cpu_*, mem_* limits) for non swarm mode in Compose
 version: "2"
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:23.1.0
+    image: quay.io/alfresco/alfresco-content-repository:23.1.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -31,7 +37,6 @@ services:
         -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
         -Dsolr.host=solr6
         -Dsolr.port=8983
-        -Dsolr.http.connection.timeout=1000
         -Dsolr.secureComms=secret
         -Dsolr.sharedSecret=secret
         -Dsolr.base.url=/solr
@@ -40,13 +45,32 @@ services:
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
-        -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
+        -Dtransform.service.enabled=true
+        -Dtransform.service.url=http://transform-router:8095
+        -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
+        -Dcsrf.filter.enabled=false
+        -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+  transform-router:
+    mem_limit: 512m
+    image: quay.io/alfresco/alfresco-transform-router:4.0.1
+    environment:
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+      ACTIVEMQ_URL: nio://activemq:61616
+      CORE_AIO_URL: http://transform-core-aio:8090
+      FILE_STORE_URL: >-
+        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
+    ports:
+      - "8095:8095"
+    links:
+      - activemq
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.0.1
     mem_limit: 1536m
@@ -54,10 +78,28 @@ services:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+      ACTIVEMQ_URL: nio://activemq:61616
+      FILE_STORE_URL: >-
+        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8090:8090"
+    links:
+      - activemq
+  shared-file-store:
+    image: quay.io/alfresco/alfresco-shared-file-store:4.0.1
+    mem_limit: 512m
+    environment:
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+      scheduler.content.age.millis: 86400000
+      scheduler.cleanup.interval: 86400000
+    ports:
+      - "8099:8099"
+    volumes:
+      - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: docker.io/alfresco/alfresco-share:23.1.1
+    image: quay.io/alfresco/alfresco-share:23.1.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -80,7 +122,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.9
+    image: quay.io/alfresco/search-services:2.0.9
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -106,11 +148,16 @@ services:
       - "5672:5672" # AMQP
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
-  content-app:
-    image: alfresco/alfresco-content-app:4.3.0
+  digital-workspace:
+    image: quay.io/alfresco/alfresco-digital-workspace:4.3.0
     mem_limit: 128m
     environment:
-      APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
+      APP_CONFIG_PLUGIN_PROCESS_SERVICE: "false"
+      APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
+      APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
     image: quay.io/alfresco/alfresco-control-center:8.3.0
     mem_limit: 128m
@@ -121,19 +168,36 @@ services:
   proxy:
     image: alfresco/alfresco-acs-nginx:3.4.2
     mem_limit: 128m
-    environment:
-      DISABLE_PROMETHEUS: "true"
-      DISABLE_SYNCSERVICE: "true"
-      DISABLE_ADW: "true"
-      ENABLE_CONTENT_APP: "true"
     depends_on:
       - alfresco
-      - content-app
+      - digital-workspace
       - control-center
     ports:
       - "8080:8080"
     links:
-      - content-app
+      - digital-workspace
       - alfresco
       - share
       - control-center
+  sync-service:
+    image: quay.io/alfresco/service-sync:4.0.1
+    mem_limit: 1g
+    environment:
+      JAVA_OPTS: >-
+        -Dsql.db.driver=org.postgresql.Driver
+        -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dsql.db.username=alfresco
+        -Dsql.db.password=alfresco
+        -Dmessaging.broker.host=activemq
+        -Drepo.hostname=alfresco
+        -Drepo.port=8080
+        -Ddw.server.applicationConnectors[0].type=http
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+    ports:
+      - "9090:9090"
+volumes:
+  shared-file-store-volume:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs

@@ -10,6 +10,23 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## 8.0.0-M.1
+
+* `.global.ai.enabled` has been removed since adw doesn't need anymore to
+  explicitly enable the AI features.
+* Postgres database configuration for Sync Service has been moved from
+  `.alfresco-sync-service.postgresql` to `.postgresql-sync`. Connection details
+  for database can be provided also via an existing configMap/secret in
+  `.alfresco-sync-service.database`. Message broker configuration has been split
+  from a single secret provided via
+  `.alfresco-sync-service.messaBroker.existingSecretName` to two separate
+  existing configMap/secret. More details at [sync chart
+  docs](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-sync-service/README.md)
+* ATS message broker configuration has been split from a single secret provided
+  via `.alfresco-transform-service.messageBroker.existingSecretName` to two separate existing configMap/secret.
+  More details at [ATS chart docs](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-transform-service/README.md)
+* AI transformer configuration has been refactored, please take a look at the updated [AI example docs](./examples/with-ai.md)
+
 ## 7.0.0
 
 ### Values refactoring

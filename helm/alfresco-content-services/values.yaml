@@ -101,7 +101,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.1.1
+    tag: 23.2.0-M1
   configuration:
     repository:
       existingConfigMap: repository
@@ -244,7 +244,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.1.1
+    tag: 23.2.0-M1
   nameOverride: share
   repository:
     existingConfigMap:
@@ -272,10 +272,10 @@ alfresco-search:
         sharedSecret: SOLR_SECRET
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.0.8.2
+    tag: 2.0.9
   insightEngineImage:
     repository: quay.io/alfresco/insight-engine
-    tag: 2.0.8.2
+    tag: 2.0.9
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -460,7 +460,7 @@ alfresco-sync-service:
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
   image:
-    tag: 4.0.1
+    tag: 5.0.0-M2
   database:
     existingSecret:
       name: *sync_database_secretName
