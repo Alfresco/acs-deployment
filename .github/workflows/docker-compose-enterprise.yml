@@ -60,3 +60,4 @@ jobs:
         working-directory: docker-compose
         run: |
           docker-compose -f ${{ matrix.compose_file }} logs alfresco
+          docker-compose -f ${{ matrix.compose_file }} logs solr6
