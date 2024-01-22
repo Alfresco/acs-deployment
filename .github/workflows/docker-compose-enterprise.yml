@@ -60,6 +60,12 @@ jobs:
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
 
+      - name: Show docker ps
+        if: always()
+        working-directory: docker-compose
+        run: |
+          docker-compose -f ${{ matrix.compose_file }} ps
+
       - name: Show alfresco logs
         if: always()
         working-directory: docker-compose
