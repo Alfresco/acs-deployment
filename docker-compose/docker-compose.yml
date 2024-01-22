@@ -54,6 +54,13 @@ services:
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 1m
+      start_interval: 20s
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.0.1
@@ -67,7 +74,7 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8095:8095"
-    links:
+    depends_on:
       - activemq
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.0.1
@@ -81,7 +88,7 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8090:8090"
-    links:
+    depends_on:
       - activemq
   shared-file-store:
     image: quay.io/alfresco/alfresco-shared-file-store:4.0.1
@@ -150,8 +157,6 @@ services:
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
   search-reindexing:
     image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.0.0.1
-    depends_on:
-      - alfresco
     restart: on-failure:10
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -161,6 +166,11 @@ services:
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_DATASOURCE_PASSWORD: alfresco
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
+    depends_on:
+      postgres:
+        condition: service_started
+      alfresco:
+        condition: service_healthy
   activemq:
     image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
     mem_limit: 1g
@@ -189,13 +199,9 @@ services:
   proxy:
     image: alfresco/alfresco-acs-nginx:3.4.2
     mem_limit: 128m
-    depends_on:
-      - alfresco
-      - digital-workspace
-      - control-center
     ports:
       - "8080:8080"
-    links:
+    depends_on:
       - digital-workspace
       - alfresco
       - share
