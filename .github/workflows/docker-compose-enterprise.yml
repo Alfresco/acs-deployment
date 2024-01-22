@@ -56,7 +56,7 @@ jobs:
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
       - name: Debug alfresco on failure
-        if: failure() || cancelled()
+        if: always()
         working-directory: docker-compose
         run: |
           docker-compose -f ${{ matrix.compose_file }} logs alfresco
