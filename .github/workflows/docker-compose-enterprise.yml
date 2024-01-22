@@ -52,7 +52,8 @@ jobs:
         && github.event.pull_request.head.user.login == 'Alfresco'
       )
     steps:
-      - uses: >-
+      - name: Verify docker-compose
+        uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@debug-verify-compose
         timeout-minutes: 10
         with:
