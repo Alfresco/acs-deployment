@@ -59,9 +59,15 @@ jobs:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
-      - name: Debug alfresco on failure
+
+      - name: Show alfresco logs
         if: always()
         working-directory: docker-compose
         run: |
           docker-compose -f ${{ matrix.compose_file }} logs alfresco
+
+      - name: Show solr logs
+        if: always()
+        working-directory: docker-compose
+        run: |
           docker-compose -f ${{ matrix.compose_file }} logs solr6
