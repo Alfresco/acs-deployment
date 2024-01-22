@@ -60,7 +60,6 @@ services:
       timeout: 3s
       retries: 3
       start_period: 1m
-      start_interval: 20s
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.0.1
