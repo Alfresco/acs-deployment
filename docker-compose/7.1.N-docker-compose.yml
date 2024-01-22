@@ -15,6 +15,9 @@
 #
 # Using version 2 as 3 does not support resource constraint options
 # (cpu_*, mem_* limits) for non swarm mode in Compose
+#
+# Java processes requires setting -XX:MaxRAM= due to cgroupv2 changes in recent Linux kernels
+# https://hub.alfresco.com/t5/alfresco-content-services-blog/acs-containers-and-cgroup-v2-in-acs-up-to-7-2/ba-p/318039
 version: "2"
 services:
   alfresco:
@@ -55,6 +58,7 @@ services:
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=1900m
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:2.1.1
@@ -62,6 +66,7 @@ services:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=512m
       ACTIVEMQ_URL: nio://activemq:61616
       CORE_AIO_URL: http://transform-core-aio:8090
       FILE_STORE_URL: >-
@@ -77,6 +82,7 @@ services:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=1536m
       ACTIVEMQ_URL: nio://activemq:61616
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
@@ -91,6 +97,7 @@ services:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=512m
       scheduler.content.age.millis: 86400000
       scheduler.cleanup.interval: 86400000
     ports:
@@ -106,6 +113,7 @@ services:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=1g
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
         -Dalfresco.context=alfresco
@@ -178,6 +186,7 @@ services:
         -Ddw.server.applicationConnectors[0].type=http
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=1g
     ports:
       - "9090:9090"
 volumes:
