@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:23.2.0-M1
+    image: quay.io/alfresco/alfresco-content-repository:23.1.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -107,7 +107,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:23.2.0-M1
+    image: quay.io/alfresco/alfresco-share:23.1.1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -206,15 +206,15 @@ services:
   proxy:
     image: alfresco/alfresco-acs-nginx:3.4.2
     mem_limit: 128m
+    depends_on:
+      - alfresco
+      - digital-workspace
+      - control-center
+      - share
     ports:
       - "8080:8080"
-    depends_on:
-      - digital-workspace
-      - alfresco
-      - share
-      - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:5.0.0-M2
+    image: quay.io/alfresco/service-sync:4.0.1
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
