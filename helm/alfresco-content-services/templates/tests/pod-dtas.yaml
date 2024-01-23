@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dtas
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+  - name: dtas
+    image: quay.io/alfresco-deployment-test-automation-scripts:master
+    args:
+    - -c
+    - /usr/src/dtas/config/config.json
+    volumeMounts:
+    - name: config-volume
+      mountPath: /usr/src/dtas/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: dtas-config
+  restartPolicy: OnFailure
+  imagePullSecrets:
+  - name: quay-registry-secret

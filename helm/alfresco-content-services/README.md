@@ -214,6 +214,19 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.sync.user | string | `nil` | External Postgresql database user |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
+| dtas.config.assertions.acs.edition | string | `"Enterprise"` |  |
+| dtas.config.assertions.acs.identity | bool | `false` |  |
+| dtas.config.assertions.acs.modules[0].id | string | `"org.alfresco.integrations.google.docs"` |  |
+| dtas.config.assertions.acs.modules[0].installed | bool | `true` |  |
+| dtas.config.assertions.acs.modules[0].version | string | `"4.0.0"` |  |
+| dtas.config.assertions.acs.modules[1].id | string | `"alfresco-aos-module"` |  |
+| dtas.config.assertions.acs.modules[1].installed | bool | `true` |  |
+| dtas.config.assertions.acs.modules[1].version | string | `"2.0.0"` |  |
+| dtas.config.assertions.acs.version | string | `"23.1.1"` |  |
+| dtas.config.assertions.adw.base_path | string | `"/workspace"` |  |
+| dtas.config.config.host | string | `"https://hydra.dev.envalfresco.com"` |  |
+| dtas.config.config.password | string | `"admin"` |  |
+| dtas.config.config.username | string | `"admin"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `false` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |
