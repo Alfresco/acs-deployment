@@ -62,7 +62,7 @@ Docker Daemon).
 ### Choosing a search engine
 
 Alfresco comes either with Solr or Elasticsearch as a Full Text Search engine.
-By default ACS enterprise flavor 23 and above are shiped with Elasticsearch.
+By default ACS enterprise flavor 23 and above are shipped with Elasticsearch.
 Versions 7.x enterprise and all Community versions are shipped with Solr.
 
 It is of course possible to keep on using Solr on the latest Enterprise

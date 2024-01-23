@@ -1,3 +1,5 @@
+# Check documentation below if need help using this file:
+# https://github.com/Alfresco/acs-deployment/tree/master/docs/docker-compose#choosing-a-search-engine
 version: "2"
 services:
   alfresco:
@@ -49,11 +51,11 @@ services:
       - "8083:8983" # Browser port
   # Disable the default elastcisearch service
   search:
-    image: alpine:latest
+    image: busybox:musl
     command: "true"
   search-reindexing:
-    image: alpine:latest
+    image: busybox:musl
     command: "true"
   elasticsearch:
-    image: alpine:latest
+    image: busybox:musl
     command: "true"
