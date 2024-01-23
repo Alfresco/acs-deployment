@@ -27,6 +27,7 @@ dependencies:
   - name: postgresql
     repository: oci://registry-1.docker.io/bitnamicharts
     version: 13.4.0
+    alias: repository-database
   - name: alfresco-repository
     repository: https://alfresco.github.io/alfresco-helm-charts/
     version: 0.1.3
