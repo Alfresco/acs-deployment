@@ -26,8 +26,6 @@ matrix:
       helm_key: $.share.image.tag
     search:
       version:
-      compose_target: *composeNext
-      compose_key: $.services.solr6.image
       helm_target: *helmvaluesNext
       helm_keys: &search_helm_keys
         search: $.alfresco-search.searchServicesImage.tag
@@ -37,6 +35,10 @@ matrix:
     search-enterprise:
       version:
       pattern:
+      compose_target: *composeNext
+      compose_keys:
+        live-indexing: $.services.search.image
+        reindexing: $.services.search-reindexing.image
       helm_target: *helmvaluesNext
       helm_keys:
         Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
@@ -142,7 +144,7 @@ matrix:
       helm_key: $.share.image.tag
     search:
       version:
-      compose_target: *compose23n
+      compose_target: docker-compose/solr6-override-docker-compose.yml
       compose_key: $.services.solr6.image
       helm_target: *helmvalues23n
       helm_keys: *search_helm_keys
@@ -151,8 +153,7 @@ matrix:
     search-enterprise:
       version:
       pattern:
-      compose_target: >-
-        docker-compose/elasticsearch-override-docker-compose.yml
+      compose_target: *compose23n
       compose_keys:
         live-indexing: $.services.search.image
         reindexing: $.services.search-reindexing.image
