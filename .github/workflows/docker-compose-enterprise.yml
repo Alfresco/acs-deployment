@@ -17,6 +17,10 @@ on:
       - master
       - release/**
 
+concurrency:
+  group: compose-ent-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   build_vars:
     runs-on: ubuntu-latest
@@ -48,8 +52,10 @@ jobs:
         && github.event.pull_request.head.user.login == 'Alfresco'
       )
     steps:
-      - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.12.0
+      - name: Verify docker-compose
+        uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.13.0
+        timeout-minutes: 10
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}
