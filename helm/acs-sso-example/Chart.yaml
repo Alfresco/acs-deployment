@@ -23,3 +23,10 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "23.1.1"
 
+dependencies:
+  - name: postgresql
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 13.4.0
+  - name: alfresco-repository
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.1.3
