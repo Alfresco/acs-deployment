@@ -9,6 +9,8 @@ repository-database:
     username: alfresco
     password: alfresco
   primary:
+    persistence:
+      enabled: false
     extendedConfiguration: |
       max_connections = 150
       shared_buffers = 512MB
@@ -26,6 +28,8 @@ repository-database:
         memory: 4Gi
 
 activemq:
+  persistence:
+    enabled: false
   adminUser:
     user: alfresco
     password: alfresco

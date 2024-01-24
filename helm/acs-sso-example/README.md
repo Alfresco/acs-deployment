@@ -18,6 +18,7 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | activemq.adminUser.password | string | `"alfresco"` |  |
 | activemq.adminUser.user | string | `"alfresco"` |  |
+| activemq.persistence.enabled | bool | `false` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"repository-message-broker"` |  |
@@ -28,6 +29,7 @@ A Helm chart for Kubernetes
 | repository-database.auth.username | string | `"alfresco"` |  |
 | repository-database.nameOverride | string | `"repository-database"` |  |
 | repository-database.primary.extendedConfiguration | string | `"max_connections = 150\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
+| repository-database.primary.persistence.enabled | bool | `false` |  |
 | repository-database.primary.resources.limits.cpu | string | `"4"` |  |
 | repository-database.primary.resources.limits.memory | string | `"4Gi"` |  |
 | repository-database.primary.resources.requests.cpu | string | `"250m"` |  |
