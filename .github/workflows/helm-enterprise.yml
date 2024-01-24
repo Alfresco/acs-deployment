@@ -135,18 +135,13 @@ jobs:
         id: helm_test
         run: helm test acs --timeout 10m0s
 
-      - name: Spit dtas pod logs after tests
+      - name: Spit cluster status after helm test
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
           kubectl logs dtas
-          echo =====
-          kubectl logs -l app.kubernetes.io/name=transform-router
-          echo =====
-          kubectl logs -l app.kubernetes.io/name=imagemagick
-          echo =====
-          kubectl logs -l app.kubernetes.io/name=libreoffice
-          echo =====
-          kubectl logs -l app.kubernetes.io/name=tika
+          helm ls --all-namespaces
+          kubectl get all --all-namespaces
+          kubectl describe pod
 
       - name: Run Newman tests
         uses: nick-fields/retry@v2
@@ -161,7 +156,7 @@ jobs:
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
             --global-var protocol=http --global-var url=localhost
 
-      - name: Spit cluster status after tests
+      - name: Spit cluster status after newman tests
         if: always() && steps.newman.outcome != 'skipped'
         run: |
           helm ls --all-namespaces
