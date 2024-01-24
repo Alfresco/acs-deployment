@@ -536,15 +536,16 @@ elasticsearch:
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 dtas:
+  enabled: true
   config:
     config:
-      host: https://hydra.dev.envalfresco.com
+      host: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
       username: admin
       password: admin
     assertions:
       acs:
         edition: Enterprise
-        version: 23.1.1
+        version: 23.2.0
         identity: false
         modules:
         - id: org.alfresco.integrations.google.docs

@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: dtas-config
-  annotations:
-    "helm.sh/hook": test
-data:
-  config.json: "{}"
