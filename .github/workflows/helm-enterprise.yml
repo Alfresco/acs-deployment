@@ -132,7 +132,13 @@ jobs:
           kubectl describe pod
 
       - name: Run helm test
+        id: helm_test
         run: helm test acs
+
+      - name: Spit dtas pod logs after tests
+        if: always() && steps.helm_test.outcome != 'skipped'
+        run: |
+          kubectl logs dtas
 
       - name: Run Newman tests
         uses: nick-fields/retry@v2
