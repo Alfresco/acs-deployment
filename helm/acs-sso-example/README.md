@@ -20,8 +20,8 @@ A Helm chart for Kubernetes
 | activemq.adminUser.user | string | `"alfresco"` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"repository-database"` |  |
-| alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"activemq"` |  |
-| alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"activemq"` |  |
+| alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"repository-message-broker"` |  |
+| alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.replicaCount | int | `1` |  |
 | repository-database.nameOverride | string | `"repository-database"` |  |
 | repository-database.primary.auth.database | string | `"alfresco"` |  |

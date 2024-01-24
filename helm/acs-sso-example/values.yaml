@@ -40,6 +40,6 @@ alfresco-repository:
         name: repository-database
     messageBroker:
       existingConfigMap:
-        name: activemq
+        name: repository-message-broker
       existingSecret:
-        name: activemq
+        name: repository-message-broker
