@@ -10,6 +10,7 @@ A Helm chart for Kubernetes
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.3 |
+| https://codecentric.github.io/helm-charts | keycloakx | 2.3.0 |
 | oci://registry-1.docker.io/bitnamicharts | repository-database(postgresql) | 13.4.0 |
 
 ## Values

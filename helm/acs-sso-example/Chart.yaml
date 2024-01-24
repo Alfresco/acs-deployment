@@ -28,6 +28,9 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     version: 13.4.0
     alias: repository-database
+  - name: keycloakx
+    repository: https://codecentric.github.io/helm-charts
+    version: 2.3.0
   - name: alfresco-repository
     repository: https://alfresco.github.io/alfresco-helm-charts/
     version: 0.1.3
