@@ -41,10 +41,17 @@
 
 [install kind](https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx)
 
+```sh
+kubectl -n ingress-nginx patch cm ingress-nginx-controller \
+  -p '{"data": {"allow-snippet-annotations":"true"}}'
+```
+
+```sh
 kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
+```
 
 ## Install metrics server
 
