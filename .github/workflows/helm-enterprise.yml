@@ -133,7 +133,7 @@ jobs:
 
       - name: Run helm test
         id: helm_test
-        run: helm test acs
+        run: helm test acs --timeout 10m0s
 
       - name: Spit dtas pod logs after tests
         if: always() && steps.helm_test.outcome != 'skipped'
