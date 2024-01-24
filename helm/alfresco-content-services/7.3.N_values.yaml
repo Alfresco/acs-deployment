@@ -75,3 +75,8 @@ alfresco-connector-ms365:
 alfresco-connector-msteams:
   image:
     tag: 1.1.0
+dtas:
+  config:
+    assertions:
+      acs:
+        version: 7.3.1

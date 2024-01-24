@@ -79,3 +79,8 @@ alfresco-control-center:
 global:
   search:
     securecomms: none
+dtas:
+  config:
+    assertions:
+      acs:
+        version: 7.1.1
