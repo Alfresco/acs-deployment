@@ -5,12 +5,12 @@ metadata:
   labels:
   {{ template "acs-sso-example.labels" . }}
 data:
-  {{- with (index .Values "activemq") }}
+  {{- with .Values.activemq }}
   {{- $mqPort := .services | default dict }}
   {{- $mqPort = $mqPort.broker | default dict }}
   {{- $mqPort = $mqPort.ports| default dict }}
   {{- $mqPort = $mqPort.external | default dict }}
   {{- $mqPort = $mqPort.openwire | default 61616 }}
   {{- $mqCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
-  BROKER_URL: {{ template "alfresco-common.activemq.url.withFailover" (printf "nio://%s-broker:%v" (include "activemq.fullname" $mqCtx) $mqPort) | quote }}
+  BROKER_URL: {{ include "alfresco-common.activemq.url.withFailover" (printf "nio://%s-broker:%v" (include "activemq.fullname" $mqCtx) $mqPort) | quote }}
   {{- end }}
