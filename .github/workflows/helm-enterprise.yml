@@ -139,6 +139,14 @@ jobs:
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
           kubectl logs dtas
+          echo =====
+          kubectl logs -l app.kubernetes.io/name=transform-router
+          echo =====
+          kubectl logs -l app.kubernetes.io/name=imagemagick
+          echo =====
+          kubectl logs -l app.kubernetes.io/name=libreoffice
+          echo =====
+          kubectl logs -l app.kubernetes.io/name=tika
 
       - name: Run Newman tests
         uses: nick-fields/retry@v2
