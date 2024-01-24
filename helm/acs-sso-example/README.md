@@ -8,6 +8,7 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.3 |
 | oci://registry-1.docker.io/bitnamicharts | repository-database(postgresql) | 13.4.0 |
 
@@ -15,6 +16,8 @@ A Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| activemq.adminUser.password | string | `"alfresco"` |  |
+| activemq.adminUser.user | string | `"alfresco"` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"activemq"` |  |

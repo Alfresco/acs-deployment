@@ -25,6 +25,11 @@ repository-database:
         cpu: "4"
         memory: 4Gi
 
+activemq:
+  adminUser:
+    user: alfresco
+    password: alfresco
+
 alfresco-repository:
   replicaCount: 1
   configuration:
