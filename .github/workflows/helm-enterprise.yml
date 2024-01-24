@@ -131,6 +131,9 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
 
+      - name: Helm test
+        run: helm test acs
+
       - uses: nick-fields/retry@v2
         id: newman
         with:
