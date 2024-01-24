@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repository-database
+  labels:
+  {{ template "acs-sso-example.labels" . }}
+data:
+  DATABASE_DRIVER: org.postgresql.Driver
+  {{- with (index .Values "repository-database") }}
+  {{- $pgPort := $.Values.global | default dict }}
+  {{- $pgPort = $pgPort | default dict }}
+  {{- $pgPort = $pgPort.service | default dict }}
+  {{- $pgPort = $pgPort.ports | default dict }}
+  {{- $pgPort = coalesce $pgPort.postgresql .primary.service.ports.postgresql 5432 }}
+  {{- $dbCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
+  DATABASE_URL: {{ printf "jdbc:postgresql://%s:%v/%s" (include "postgresql.v1.primary.fullname" $dbCtx) $pgPort .primary.auth.database | quote }}
+  {{- end }}

@@ -12,5 +12,5 @@ data:
   {{- $mqPort = $mqPort.external | default dict }}
   {{- $mqPort = $mqPort.openwire | default 61616 }}
   {{- $mqCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
-  BROKER_URL: {{ template "alfresco-common.activemq.url.withFailover" (printf "nio://%s-broker:%v" (include "activemq.fullname" $mqCtx) $mqPort) }}
+  BROKER_URL: {{ template "alfresco-common.activemq.url.withFailover" (printf "nio://%s-broker:%v" (include "activemq.fullname" $mqCtx) $mqPort) | quote }}
   {{- end }}
