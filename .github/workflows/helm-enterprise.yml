@@ -131,10 +131,11 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
 
-      - name: Helm test
+      - name: Run helm test
         run: helm test acs
 
-      - uses: nick-fields/retry@v2
+      - name: Run Newman tests
+        uses: nick-fields/retry@v2
         id: newman
         with:
           timeout_minutes: 1
