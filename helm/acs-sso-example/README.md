@@ -23,10 +23,10 @@ A Helm chart for Kubernetes
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.replicaCount | int | `1` |  |
+| repository-database.auth.database | string | `"alfresco"` |  |
+| repository-database.auth.password | string | `"alfresco"` |  |
+| repository-database.auth.username | string | `"alfresco"` |  |
 | repository-database.nameOverride | string | `"repository-database"` |  |
-| repository-database.primary.auth.database | string | `"alfresco"` |  |
-| repository-database.primary.auth.password | string | `"alfresco"` |  |
-| repository-database.primary.auth.username | string | `"alfresco"` |  |
 | repository-database.primary.extendedConfiguration | string | `"max_connections = 150\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
 | repository-database.primary.resources.limits.cpu | string | `"4"` |  |
 | repository-database.primary.resources.limits.memory | string | `"4Gi"` |  |

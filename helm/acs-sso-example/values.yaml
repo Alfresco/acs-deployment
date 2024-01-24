@@ -4,11 +4,11 @@
 
 repository-database:
   nameOverride: repository-database
+  auth:
+    database: alfresco
+    username: alfresco
+    password: alfresco
   primary:
-    auth:
-      database: alfresco
-      username: alfresco
-      password: alfresco
     extendedConfiguration: |
       max_connections = 150
       shared_buffers = 512MB

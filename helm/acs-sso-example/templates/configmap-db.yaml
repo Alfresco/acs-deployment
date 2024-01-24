@@ -12,5 +12,5 @@ data:
   {{- $pgPort = $pgPort.ports | default dict }}
   {{- $pgPort = coalesce $pgPort.postgresql .primary.service.ports.postgresql 5432 }}
   {{- $dbCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
-  DATABASE_URL: {{ printf "jdbc:postgresql://%s:%v/%s" (include "postgresql.v1.primary.fullname" $dbCtx) $pgPort .primary.auth.database | quote }}
+  DATABASE_URL: {{ printf "jdbc:postgresql://%s:%v/%s" (include "postgresql.v1.primary.fullname" $dbCtx) $pgPort .auth.database | quote }}
   {{- end }}
