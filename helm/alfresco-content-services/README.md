@@ -228,6 +228,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.config.password | string | `"admin"` |  |
 | dtas.config.config.username | string | `"admin"` |  |
 | dtas.enabled | bool | `true` |  |
+| dtas.image.pullPolicy | string | `"Always"` |  |
+| dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
+| dtas.image.tag | string | `"master"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `false` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |

@@ -537,6 +537,10 @@ elasticsearch:
 
 dtas:
   enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
+    tag: master
+    pullPolicy: Always
   config:
     config:
       host: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
