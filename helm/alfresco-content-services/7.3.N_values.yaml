@@ -82,7 +82,7 @@ dtas:
         version: 7.3.1
         modules:
         - id: org.alfresco.integrations.google.docs
-          version: 3.4.2
+          version: 3.3.0
           installed: true
         - id: alfresco-aos-module
           version: 2.0.0
