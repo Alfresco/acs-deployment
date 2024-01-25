@@ -11,3 +11,4 @@ alfresco-ai-transformer:
     s3Bucket: somebucket
     region: us-east-1
     comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
+# test me
