@@ -7,7 +7,7 @@ alfresco-repository:
     limits:
       cpu: "2"
       memory: "2Gi"
-  replicaCount: 2
+  replicaCount: 1
   persistence:
     accessModes:
       - ReadWriteOnce
