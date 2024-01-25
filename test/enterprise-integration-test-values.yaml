@@ -68,7 +68,7 @@ alfresco-transform-service:
         memory: "512Mi"
       limits:
         cpu: "2"
-        memory: "2048Mi"
+        memory: "1024Mi"
     replicaCount: 1
   tika:
     livenessProbe:
@@ -79,7 +79,7 @@ alfresco-transform-service:
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "1Gi"
+        memory: "512Mi"
     replicaCount: 1
   transformmisc:
     livenessProbe:
@@ -139,4 +139,3 @@ dtas:
   additionalArgs:
     # https://alfresco.atlassian.net/browse/ACS-6670
     - -k not test_renditions
-    - --tb=auto
