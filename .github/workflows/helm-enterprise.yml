@@ -62,7 +62,7 @@ jobs:
     timeout-minutes: 10
     needs:
       - build_vars
-    name: Helm ${{ matrix.name }} ${{ matrix.values }}
+    name: ${{ matrix.values }} on ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
