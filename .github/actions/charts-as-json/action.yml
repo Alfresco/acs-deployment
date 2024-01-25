@@ -27,7 +27,7 @@ runs:
       run: |
         for CHART_ROOT in ${{ inputs.charts-root }}/*/; do
           CHART=$(basename $CHART_ROOT)
-          VALUES_FILES=$(find ${{ inputs.charts-root }}/"${CHART}" -type f -depth 1 -name "*values.yaml" ! -name "linter_values.yaml" || true)
+          VALUES_FILES=$(find ${{ inputs.charts-root }}/"${CHART}" -type f -name "*values.yaml" ! -name "linter_values.yaml" -depth 1)
           VALUES=${VALUES_FILES//${CHART_ROOT}/}
           yq e "$YQ_FILTER" "${{ inputs.charts-root }}/${CHART}/Chart.yaml" | \
           jq -c --arg v "${VALUES}" '.values=($v | split("\n"))' > /tmp/outputs_${CHART}.json
