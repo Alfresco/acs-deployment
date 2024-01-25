@@ -143,6 +143,9 @@ activemq:
 
 alfresco-repository:
   replicaCount: 1
+  image:
+    repository: alfresco/alfresco-content-repository-community
+    tag: 23.2.0-A12
   configuration:
     repository:
       existingConfigMap: repository-properties

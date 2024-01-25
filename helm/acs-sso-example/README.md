@@ -25,6 +25,8 @@ A Helm chart for Kubernetes
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.configuration.repository.existingConfigMap | string | `"repository-properties"` |  |
+| alfresco-repository.image.repository | string | `"alfresco/alfresco-content-repository-community"` |  |
+| alfresco-repository.image.tag | string | `"23.2.0-A12"` |  |
 | alfresco-repository.ingress.hosts[0].host | string | `"localhost"` |  |
 | alfresco-repository.ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | alfresco-repository.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
