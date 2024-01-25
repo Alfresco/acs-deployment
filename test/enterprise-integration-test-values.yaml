@@ -127,6 +127,7 @@ alfresco-sync-service:
           memory: "1Gi"
 alfresco-ai-transformer:
   enabled: true
+  replicaCount: 1
   aws:
     accessKeyId: AAAAAAAAAAAAAAAAA
     secretAccessKey: ZZZZZZZZZZZZZZZZZ
