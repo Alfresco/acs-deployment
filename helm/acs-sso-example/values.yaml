@@ -169,6 +169,24 @@ alfresco-repository:
             pathType: Prefix
 
 alfresco-share:
+  nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
     tag: 23.2.0-A12
+  repository:
+    existingConfigMap:
+      name: share-repository
+  extraVolumes:
+    - name: share-properties
+      configMap:
+        name: share-properties
+  extraVolumeMounts:
+    - name: share-properties
+      mountPath: >-
+        /usr/local/tomcat/webapps/share/WEB-INF/classes/share-config.properties
+  ingress:
+    hosts:
+      - host: localhost
+        paths:
+          - path: /share
+            pathType: Prefix

@@ -34,8 +34,17 @@ A Helm chart for Kubernetes
 | alfresco-repository.ingress.hosts[0].paths[1].path | string | `"/api-explorer"` |  |
 | alfresco-repository.ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
 | alfresco-repository.replicaCount | int | `1` |  |
+| alfresco-share.extraVolumeMounts[0].mountPath | string | `"/usr/local/tomcat/webapps/share/WEB-INF/classes/share-config.properties"` |  |
+| alfresco-share.extraVolumeMounts[0].name | string | `"share-properties"` |  |
+| alfresco-share.extraVolumes[0].configMap.name | string | `"share-properties"` |  |
+| alfresco-share.extraVolumes[0].name | string | `"share-properties"` |  |
 | alfresco-share.image.repository | string | `"alfresco/alfresco-share"` |  |
 | alfresco-share.image.tag | string | `"23.2.0-A12"` |  |
+| alfresco-share.ingress.hosts[0].host | string | `"localhost"` |  |
+| alfresco-share.ingress.hosts[0].paths[0].path | string | `"/share"` |  |
+| alfresco-share.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| alfresco-share.nameOverride | string | `"alfresco-share"` |  |
+| alfresco-share.repository.existingConfigMap.name | string | `"share-repository"` |  |
 | global.known_urls | list | `["http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | keycloakx.admin.password | string | `nil` | @default randomly generated on first deployment get value using: kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d |
 | keycloakx.admin.realm[0].clients[0].clientId | string | `"alfresco"` |  |

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: share-repository
+  labels: {{- include "acs-sso-example.labels" . | nindent 4 }}
+data:
+  {{- with (index .Values "alfresco-repository") }}
+  {{- $repoCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
+  REPO_HOST: {{ template "alfresco-repository.fullname" $repoCtx }}
+  {{- end }}
+  {{- with (index .Values "alfresco-repository") }}
+  {{- $reposvc := .service | default dict }}
+  REPO_PORT:  $reposvc.port | default 80 }}
+  {{- end }}
