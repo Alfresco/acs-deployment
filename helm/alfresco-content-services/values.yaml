@@ -536,11 +536,12 @@ elasticsearch:
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 dtas:
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
     tag: master
     pullPolicy: Always
+  additionalArgs: []
   config:
     config:
       host: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local

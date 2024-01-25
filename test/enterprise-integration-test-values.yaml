@@ -7,7 +7,7 @@ alfresco-repository:
     limits:
       cpu: "2"
       memory: "2Gi"
-  replicaCount: 1
+  replicaCount: 2
   persistence:
     accessModes:
       - ReadWriteOnce
@@ -134,3 +134,8 @@ alfresco-ai-transformer:
     s3Bucket: somebucket
     region: us-east-1
     comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
+dtas:
+  enabled: true
+  additionalArgs:
+    # https://alfresco.atlassian.net/browse/ACS-6670
+    - -k 'not test_renditions'
