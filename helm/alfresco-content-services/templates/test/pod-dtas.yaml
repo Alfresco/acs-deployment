@@ -12,9 +12,9 @@ spec:
     imagePullPolicy: {{ .Values.dtas.image.pullPolicy }}
     args:
     - --configuration=/usr/src/dtas/config/config.json
-    {{- range .Values.dtas.additionalArgs -}}
+    {{- range .Values.dtas.additionalArgs }}
     - {{ . }}
-    {{- end -}}
+    {{- end }}
     volumeMounts:
     - name: config-volume
       mountPath: /usr/src/dtas/config
