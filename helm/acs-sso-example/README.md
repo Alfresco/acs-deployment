@@ -24,16 +24,25 @@ A Helm chart for Kubernetes
 | alfresco-repository.configuration.db.existingSecret.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"repository-message-broker"` |  |
+| alfresco-repository.configuration.repository.existingConfigMap | string | `"repository-properties"` |  |
 | alfresco-repository.replicaCount | int | `1` |  |
-| extraEnv | string | `"- name: KEYCLOAK_ADMIN\n  value: admin\n- name: KEYCLOAK_ADMIN_PASSWORD\n  value: admin\n- name: JAVA_OPTS_APPEND\n  value: >-\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
-| keycloakx.admin.password | string | `nil` | @default andomly generated on first deployment get value using: kubectl -n alfresco get secrets keycloak-admin -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 - |
-| keycloakx.admin.username | string | `nil` | @default admin |
+| global.known_urls | list | `["http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
+| keycloakx.admin.password | string | `nil` | @default randomly generated on first deployment get value using: kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d |
+| keycloakx.admin.username | string | `"admin"` | Keycloak admin username |
 | keycloakx.command[0] | string | `"/opt/keycloak/bin/kc.sh"` |  |
 | keycloakx.command[1] | string | `"start"` |  |
 | keycloakx.command[2] | string | `"--http-enabled=true"` |  |
 | keycloakx.command[3] | string | `"--http-port=8080"` |  |
 | keycloakx.command[4] | string | `"--hostname-strict=false"` |  |
 | keycloakx.command[5] | string | `"--hostname-strict-https=false"` |  |
+| keycloakx.extraEnv | string | `"- name: JAVA_OPTS_APPEND\n  value: >-\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
+| keycloakx.extraEnvFrom | string | `"- configMapRef:\n    name: keycloak\n- secretRef:\n    name: keycloak\n"` |  |
+| keycloakx.http.relativePath | string | `"/auth"` |  |
+| keycloakx.ingress.enabled | bool | `true` |  |
+| keycloakx.ingress.rules[0].host | string | `"localhost"` |  |
+| keycloakx.ingress.rules[0].paths[0].path | string | `"{{ .Values.http.relativePath }}"` |  |
+| keycloakx.ingress.rules[0].paths[0].pathType | string | `"Prefix"` |  |
+| keycloakx.nameOverride | string | `"keycloak"` |  |
 | repository-database.auth.database | string | `"alfresco"` |  |
 | repository-database.auth.password | string | `"alfresco"` |  |
 | repository-database.auth.username | string | `"alfresco"` |  |

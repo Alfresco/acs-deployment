@@ -2,6 +2,13 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  # -- list of trusted URLs.
+  # URLs a re used to configure Cross-origin protections
+  # Also the first entry is considered the main hosting domain of the platform.
+  known_urls:
+    - http://localhost
+
 repository-database:
   nameOverride: repository-database
   auth:
@@ -28,13 +35,13 @@ repository-database:
         memory: 4Gi
 
 keycloakx:
+  nameOverride: keycloak
   admin:
     # -- Keycloak admin username
-    # -- @default admin
-    username: null
+    username: admin
     # -- Keycloak admin password
-    # -- @default andomly generated on first deployment get value using:
-    # kubectl -n alfresco get secrets keycloak-admin -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -
+    # -- @default randomly generated on first deployment get value using:
+    # kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d
     password: null
   command:
     - "/opt/keycloak/bin/kc.sh"
@@ -43,14 +50,24 @@ keycloakx:
     - "--http-port=8080"
     - "--hostname-strict=false"
     - "--hostname-strict-https=false"
-extraEnv: |
-  - name: KEYCLOAK_ADMIN
-    value: admin
-  - name: KEYCLOAK_ADMIN_PASSWORD
-    value: admin
-  - name: JAVA_OPTS_APPEND
-    value: >-
-      -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+  http:
+    relativePath: /auth
+  ingress:
+    enabled: true
+    rules:
+      - host: localhost
+        paths:
+          - path: "{{ .Values.http.relativePath }}"
+            pathType: Prefix
+  extraEnvFrom: |
+    - configMapRef:
+        name: keycloak
+    - secretRef:
+        name: keycloak
+  extraEnv: |
+    - name: JAVA_OPTS_APPEND
+      value: >-
+        -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
 
 activemq:
   persistence:
@@ -62,6 +79,8 @@ activemq:
 alfresco-repository:
   replicaCount: 1
   configuration:
+    repository:
+      existingConfigMap: repository-properties
     db:
       existingConfigMap:
         name: repository-database
