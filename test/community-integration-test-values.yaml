@@ -90,3 +90,5 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
+dtas:
+  enabled: true

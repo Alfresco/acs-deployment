@@ -92,3 +92,16 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+
+      - name: Run helm test
+        id: helm_test
+        run: helm test acs --timeout 15m0s
+
+      - name: Spit cluster status after helm test
+        if: always() && steps.helm_test.outcome != 'skipped'
+        run: |
+          kubectl logs dtas
+          kubectl logs -l app.kubernetes.io/name=transform-router --tail=-1
+          helm ls --all-namespaces
+          kubectl get all --all-namespaces
+          kubectl describe pod
