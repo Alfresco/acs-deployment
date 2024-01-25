@@ -138,4 +138,4 @@ dtas:
   enabled: true
   additionalArgs:
     # https://alfresco.atlassian.net/browse/ACS-6670
-    - -k 'not test_renditions'
+    - -k not test_renditions
