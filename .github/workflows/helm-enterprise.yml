@@ -10,6 +10,7 @@ on:
       - helm/**
       - test/postman/helm/**
       - .github/workflows/helm*
+      - .github/actions/charts-as-json/**
   push:
     branches:
       - master
