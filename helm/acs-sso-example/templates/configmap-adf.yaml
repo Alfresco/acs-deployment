@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adf
+  labels: {{- include "acs-sso-example.labels" . | nindent 4 }}
+data:
+  {{- with .Values.keycloakx }}
+  {{- $kCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
+  ADF_AUTH_SERVER_URL: {{ printf "http://%s-http%s/realms/%s" (include "keycloak.fullname" $kCtx) .http.relativePath (index .admin.realm 0 "realm") }}
+  {{- end }}

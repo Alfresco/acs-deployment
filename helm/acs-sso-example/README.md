@@ -21,6 +21,18 @@ A Helm chart for Kubernetes
 | activemq.adminUser.password | string | `"alfresco"` |  |
 | activemq.adminUser.user | string | `"alfresco"` |  |
 | activemq.persistence.enabled | bool | `false` |  |
+| alfresco-content-app.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
+| alfresco-content-app.env.APP_CONFIG_AUTH_TYPE | string | `"OAUTH"` |  |
+| alfresco-content-app.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
+| alfresco-content-app.image.pullPolicy | string | `"IfNotPresent"` |  |
+| alfresco-content-app.image.repository | string | `"alfresco/alfresco-content-app"` |  |
+| alfresco-content-app.image.tag | string | `"4.3.0"` |  |
+| alfresco-content-app.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
+| alfresco-content-app.ingress.className | string | `"nginx"` |  |
+| alfresco-content-app.ingress.path | string | `"/workspace"` |  |
+| alfresco-content-app.ingress.tls | list | `[]` |  |
+| alfresco-content-app.nameOverride | string | `"alfresco-content-app"` |  |
+| alfresco-content-app.service.envType | string | `"frontend"` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"repository-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"repository-message-broker"` |  |
@@ -45,6 +57,7 @@ A Helm chart for Kubernetes
 | alfresco-share.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-share.nameOverride | string | `"alfresco-share"` |  |
 | alfresco-share.repository.existingConfigMap.name | string | `"share-repository"` |  |
+| extraEnv | string | `"- name: APP_CONFIG_IDENTITY_HOST\n  valueFrom:\n    configMapRef:\n      name: adf\n      key: ADF_AUTH_SERVER_URL\nsecurityContext:\n  runAsNonRoot: true\n  runAsUser: 101\n  capabilities:\n    drop:\n      - NET_RAW\n      - ALL\nresources:\n  requests:\n    cpu: \"0.25\"\n    memory: \"256Mi\"\n  limits:\n    cpu: \"1\"\n    memory: \"1024Mi\"\n"` |  |
 | global.known_urls | list | `["http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | keycloakx.admin.password | string | `nil` | @default randomly generated on first deployment get value using: kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d |
 | keycloakx.admin.realm[0].clients[0].clientId | string | `"alfresco"` |  |

@@ -190,3 +190,42 @@ alfresco-share:
         paths:
           - path: /share
             pathType: Prefix
+
+alfresco-content-app:
+  nameOverride: alfresco-content-app
+  service:
+    envType: frontend
+  ingress:
+    className: nginx
+    path: /workspace
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
+    tls: []
+  image:
+    repository: alfresco/alfresco-content-app
+    tag: 4.3.0
+    pullPolicy: IfNotPresent
+  env:
+    APP_CONFIG_PROVIDER: "ECM"
+    APP_CONFIG_AUTH_TYPE: "OAUTH"
+    API_URL: "{protocol}//{hostname}{:port}"
+extraEnv: |
+  - name: APP_CONFIG_IDENTITY_HOST
+    valueFrom:
+      configMapRef:
+        name: adf
+        key: ADF_AUTH_SERVER_URL
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 101
+    capabilities:
+      drop:
+        - NET_RAW
+        - ALL
+  resources:
+    requests:
+      cpu: "0.25"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "1024Mi"
