@@ -37,6 +37,9 @@ A Helm chart for Kubernetes
 | keycloakx.command[5] | string | `"--hostname-strict-https=false"` |  |
 | keycloakx.extraEnv | string | `"- name: JAVA_OPTS_APPEND\n  value: >-\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
 | keycloakx.extraEnvFrom | string | `"- configMapRef:\n    name: keycloak\n- secretRef:\n    name: keycloak\n"` |  |
+| keycloakx.extraInitContainers | string | `"- image: busybox:1.36\n  imagePullPolicy: IfNotPresent\n  name: theme-fetcher\n  command: [sh]\n  args:\n    - -c\n    - |\n      wget https://github.com/Alfresco/alfresco-keycloak-theme/releases/download/0.3.5/alfresco-keycloak-theme-0.3.5.zip -O alfresco.zip\n      unzip -d /themes alfresco.zip\n  volumeMounts:\n    - name: theme\n      mountPath: /themes\n"` |  |
+| keycloakx.extraVolumeMounts | string | `"- name: theme\n  mountPath: /opt/keycloak/themes\n"` |  |
+| keycloakx.extraVolumes | string | `"- name: theme\n  emptyDir: {}\n"` |  |
 | keycloakx.http.relativePath | string | `"/auth"` |  |
 | keycloakx.ingress.enabled | bool | `true` |  |
 | keycloakx.ingress.rules[0].host | string | `"localhost"` |  |

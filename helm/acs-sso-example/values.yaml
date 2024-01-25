@@ -68,6 +68,25 @@ keycloakx:
     - name: JAVA_OPTS_APPEND
       value: >-
         -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+  extraVolumeMounts: |
+    - name: theme
+      mountPath: /opt/keycloak/themes
+  extraVolumes: |
+    - name: theme
+      emptyDir: {}
+  extraInitContainers: |
+    - image: busybox:1.36
+      imagePullPolicy: IfNotPresent
+      name: theme-fetcher
+      command: [sh]
+      args:
+        - -c
+        - |
+          wget https://github.com/Alfresco/alfresco-keycloak-theme/releases/download/0.3.5/alfresco-keycloak-theme-0.3.5.zip -O alfresco.zip
+          unzip -d /themes alfresco.zip
+      volumeMounts:
+        - name: theme
+          mountPath: /themes
 
 activemq:
   persistence:
