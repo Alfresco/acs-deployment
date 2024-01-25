@@ -167,3 +167,8 @@ alfresco-repository:
             pathType: Prefix
           - path: /api-explorer
             pathType: Prefix
+
+alfresco-share:
+  image:
+    repository: alfresco/alfresco-share
+    tag: 23.2.0-A12
