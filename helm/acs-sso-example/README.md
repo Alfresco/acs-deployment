@@ -25,6 +25,11 @@ A Helm chart for Kubernetes
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"repository-message-broker"` |  |
 | alfresco-repository.configuration.repository.existingConfigMap | string | `"repository-properties"` |  |
+| alfresco-repository.ingress.hosts[0].host | string | `"localhost"` |  |
+| alfresco-repository.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| alfresco-repository.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| alfresco-repository.ingress.hosts[0].paths[1].path | string | `"/api-explorer"` |  |
+| alfresco-repository.ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
 | alfresco-repository.replicaCount | int | `1` |  |
 | global.known_urls | list | `["http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | keycloakx.admin.password | string | `nil` | @default randomly generated on first deployment get value using: kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d |
@@ -32,9 +37,9 @@ A Helm chart for Kubernetes
 | keycloakx.admin.realm[0].clients[0].enabled | bool | `true` |  |
 | keycloakx.admin.realm[0].clients[0].implicitFlowEnabled | bool | `true` |  |
 | keycloakx.admin.realm[0].clients[0].publicClient | bool | `true` |  |
-| keycloakx.admin.realm[0].clients[0].redirectUris[0] | string | `"https://localhost/*"` |  |
+| keycloakx.admin.realm[0].clients[0].redirectUris[0] | string | `"http://localhost/*"` |  |
 | keycloakx.admin.realm[0].clients[0].standardFlowEnabled | bool | `true` |  |
-| keycloakx.admin.realm[0].clients[0].webOrigins[0] | string | `"https://localhost"` |  |
+| keycloakx.admin.realm[0].clients[0].webOrigins[0] | string | `"http://localhost"` |  |
 | keycloakx.admin.realm[0].defaultLocale | string | `"en"` |  |
 | keycloakx.admin.realm[0].enabled | bool | `true` |  |
 | keycloakx.admin.realm[0].id | string | `"alfresco"` |  |
@@ -78,6 +83,7 @@ A Helm chart for Kubernetes
 | keycloakx.ingress.rules[0].host | string | `"localhost"` |  |
 | keycloakx.ingress.rules[0].paths[0].path | string | `"{{ .Values.http.relativePath }}"` |  |
 | keycloakx.ingress.rules[0].paths[0].pathType | string | `"Prefix"` |  |
+| keycloakx.ingress.tls | list | `[]` |  |
 | keycloakx.nameOverride | string | `"keycloak"` |  |
 | repository-database.auth.database | string | `"alfresco"` |  |
 | repository-database.auth.password | string | `"alfresco"` |  |

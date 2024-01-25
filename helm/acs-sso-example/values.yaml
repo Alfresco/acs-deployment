@@ -56,9 +56,9 @@ keycloakx:
             implicitFlowEnabled: true
             publicClient: true
             redirectUris:
-              - https://localhost/*
+              - http://localhost/*
             webOrigins:
-              - https://localhost
+              - http://localhost
         users:
           - username: admin
             enabled: true
@@ -94,6 +94,7 @@ keycloakx:
     relativePath: /auth
   ingress:
     enabled: true
+    tls: []
     rules:
       - host: localhost
         paths:
@@ -155,3 +156,11 @@ alfresco-repository:
         name: repository-message-broker
       existingSecret:
         name: repository-message-broker
+  ingress:
+    hosts:
+      - host: localhost
+        paths:
+          - path: /
+            pathType: Prefix
+          - path: /api-explorer
+            pathType: Prefix
