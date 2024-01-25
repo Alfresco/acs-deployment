@@ -8,5 +8,6 @@ data:
     authentication.chain = identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
     identity-service.authentication.enabled = true
     identity-service.realm = alfresco
-    identity-service.auth-server-url = {{ template "alfresco-common.external.host" . }}
+    {{- $kCtx := dict "Values" .Values.keycloakx "Chart" .Chart "Release" .Release }}
+    identity-service.auth-server-url = http://{{ include "keycloak.fullname" $kCtx }}-http{{ .Values.keycloakx.http.relativePath }}
     identity-service.enable-basic-auth = true
