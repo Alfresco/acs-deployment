@@ -27,6 +27,31 @@ repository-database:
         cpu: "4"
         memory: 4Gi
 
+keycloakx:
+  admin:
+    # -- Keycloak admin username
+    # -- @default admin
+    username: null
+    # -- Keycloak admin password
+    # -- @default andomly generated on first deployment get value using:
+    # kubectl -n alfresco get secrets keycloak-admin -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -
+    password: null
+  command:
+    - "/opt/keycloak/bin/kc.sh"
+    - "start"
+    - "--http-enabled=true"
+    - "--http-port=8080"
+    - "--hostname-strict=false"
+    - "--hostname-strict-https=false"
+extraEnv: |
+  - name: KEYCLOAK_ADMIN
+    value: admin
+  - name: KEYCLOAK_ADMIN_PASSWORD
+    value: admin
+  - name: JAVA_OPTS_APPEND
+    value: >-
+      -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+
 activemq:
   persistence:
     enabled: false
