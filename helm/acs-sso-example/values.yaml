@@ -43,13 +43,53 @@ keycloakx:
     # -- @default randomly generated on first deployment get value using:
     # kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d
     password: null
+    realm:
+      - id: alfresco
+        realm: alfresco
+        enabled: true
+        sslRequired: none
+        loginTheme: alfresco
+        clients:
+          - clientId: alfresco
+            enabled: true
+            standardFlowEnabled: true
+            implicitFlowEnabled: true
+            publicClient: true
+            redirectUris:
+              - https://localhost/*
+            webOrigins:
+              - https://localhost
+        users:
+          - username: admin
+            enabled: true
+            credentials:
+              - type: password
+                value: secret
+        internationalizationEnabled: true
+        defaultLocale: en
+        supportedLocales:
+          - "ca"
+          - "de"
+          - "en"
+          - "es"
+          - "fr"
+          - "it"
+          - "ja"
+          - "lt"
+          - "nl"
+          - "no"
+          - "pt-BR"
+          - "ru"
+          - "sv"
+          - "zh-CN"
   command:
-    - "/opt/keycloak/bin/kc.sh"
-    - "start"
-    - "--http-enabled=true"
-    - "--http-port=8080"
-    - "--hostname-strict=false"
-    - "--hostname-strict-https=false"
+    - /opt/keycloak/bin/kc.sh
+    - start
+    - --http-enabled=true
+    - --http-port=8080
+    - --hostname-strict=false
+    - --hostname-strict-https=false
+    - --import-realm
   http:
     relativePath: /auth
   ingress:
@@ -71,9 +111,14 @@ keycloakx:
   extraVolumeMounts: |
     - name: theme
       mountPath: /opt/keycloak/themes
+    - name: realm
+      mountPath: /opt/keycloak/data/import
   extraVolumes: |
     - name: theme
       emptyDir: {}
+    - name: realm
+      secret:
+        secretName: keycloak-realm
   extraInitContainers: |
     - image: busybox:1.36
       imagePullPolicy: IfNotPresent

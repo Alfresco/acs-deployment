@@ -28,6 +28,38 @@ A Helm chart for Kubernetes
 | alfresco-repository.replicaCount | int | `1` |  |
 | global.known_urls | list | `["http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | keycloakx.admin.password | string | `nil` | @default randomly generated on first deployment get value using: kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d |
+| keycloakx.admin.realm[0].clients[0].clientId | string | `"alfresco"` |  |
+| keycloakx.admin.realm[0].clients[0].enabled | bool | `true` |  |
+| keycloakx.admin.realm[0].clients[0].implicitFlowEnabled | bool | `true` |  |
+| keycloakx.admin.realm[0].clients[0].publicClient | bool | `true` |  |
+| keycloakx.admin.realm[0].clients[0].redirectUris[0] | string | `"https://localhost/*"` |  |
+| keycloakx.admin.realm[0].clients[0].standardFlowEnabled | bool | `true` |  |
+| keycloakx.admin.realm[0].clients[0].webOrigins[0] | string | `"https://localhost"` |  |
+| keycloakx.admin.realm[0].defaultLocale | string | `"en"` |  |
+| keycloakx.admin.realm[0].enabled | bool | `true` |  |
+| keycloakx.admin.realm[0].id | string | `"alfresco"` |  |
+| keycloakx.admin.realm[0].internationalizationEnabled | bool | `true` |  |
+| keycloakx.admin.realm[0].loginTheme | string | `"alfresco"` |  |
+| keycloakx.admin.realm[0].realm | string | `"alfresco"` |  |
+| keycloakx.admin.realm[0].sslRequired | string | `"none"` |  |
+| keycloakx.admin.realm[0].supportedLocales[0] | string | `"ca"` |  |
+| keycloakx.admin.realm[0].supportedLocales[10] | string | `"pt-BR"` |  |
+| keycloakx.admin.realm[0].supportedLocales[11] | string | `"ru"` |  |
+| keycloakx.admin.realm[0].supportedLocales[12] | string | `"sv"` |  |
+| keycloakx.admin.realm[0].supportedLocales[13] | string | `"zh-CN"` |  |
+| keycloakx.admin.realm[0].supportedLocales[1] | string | `"de"` |  |
+| keycloakx.admin.realm[0].supportedLocales[2] | string | `"en"` |  |
+| keycloakx.admin.realm[0].supportedLocales[3] | string | `"es"` |  |
+| keycloakx.admin.realm[0].supportedLocales[4] | string | `"fr"` |  |
+| keycloakx.admin.realm[0].supportedLocales[5] | string | `"it"` |  |
+| keycloakx.admin.realm[0].supportedLocales[6] | string | `"ja"` |  |
+| keycloakx.admin.realm[0].supportedLocales[7] | string | `"lt"` |  |
+| keycloakx.admin.realm[0].supportedLocales[8] | string | `"nl"` |  |
+| keycloakx.admin.realm[0].supportedLocales[9] | string | `"no"` |  |
+| keycloakx.admin.realm[0].users[0].credentials[0].type | string | `"password"` |  |
+| keycloakx.admin.realm[0].users[0].credentials[0].value | string | `"secret"` |  |
+| keycloakx.admin.realm[0].users[0].enabled | bool | `true` |  |
+| keycloakx.admin.realm[0].users[0].username | string | `"admin"` |  |
 | keycloakx.admin.username | string | `"admin"` | Keycloak admin username |
 | keycloakx.command[0] | string | `"/opt/keycloak/bin/kc.sh"` |  |
 | keycloakx.command[1] | string | `"start"` |  |
@@ -35,11 +67,12 @@ A Helm chart for Kubernetes
 | keycloakx.command[3] | string | `"--http-port=8080"` |  |
 | keycloakx.command[4] | string | `"--hostname-strict=false"` |  |
 | keycloakx.command[5] | string | `"--hostname-strict-https=false"` |  |
+| keycloakx.command[6] | string | `"--import-realm"` |  |
 | keycloakx.extraEnv | string | `"- name: JAVA_OPTS_APPEND\n  value: >-\n    -Djgroups.dns.query={{ include \"keycloak.fullname\" . }}-headless\n"` |  |
 | keycloakx.extraEnvFrom | string | `"- configMapRef:\n    name: keycloak\n- secretRef:\n    name: keycloak\n"` |  |
 | keycloakx.extraInitContainers | string | `"- image: busybox:1.36\n  imagePullPolicy: IfNotPresent\n  name: theme-fetcher\n  command: [sh]\n  args:\n    - -c\n    - |\n      wget https://github.com/Alfresco/alfresco-keycloak-theme/releases/download/0.3.5/alfresco-keycloak-theme-0.3.5.zip -O alfresco.zip\n      unzip -d /themes alfresco.zip\n  volumeMounts:\n    - name: theme\n      mountPath: /themes\n"` |  |
-| keycloakx.extraVolumeMounts | string | `"- name: theme\n  mountPath: /opt/keycloak/themes\n"` |  |
-| keycloakx.extraVolumes | string | `"- name: theme\n  emptyDir: {}\n"` |  |
+| keycloakx.extraVolumeMounts | string | `"- name: theme\n  mountPath: /opt/keycloak/themes\n- name: realm\n  mountPath: /opt/keycloak/data/import\n"` |  |
+| keycloakx.extraVolumes | string | `"- name: theme\n  emptyDir: {}\n- name: realm\n  secret:\n    secretName: keycloak-realm\n"` |  |
 | keycloakx.http.relativePath | string | `"/auth"` |  |
 | keycloakx.ingress.enabled | bool | `true` |  |
 | keycloakx.ingress.rules[0].host | string | `"localhost"` |  |
