@@ -139,3 +139,4 @@ dtas:
   additionalArgs:
     # https://alfresco.atlassian.net/browse/ACS-6670
     - -k not test_renditions
+    - --tb=auto

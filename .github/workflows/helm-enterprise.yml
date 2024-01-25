@@ -159,7 +159,6 @@ jobs:
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
           kubectl logs dtas
-          kubectl logs -l app.kubernetes.io/name=transform-router --tail=-1
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
