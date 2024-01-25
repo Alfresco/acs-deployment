@@ -80,3 +80,10 @@ dtas:
     assertions:
       acs:
         version: 7.2.1
+        modules:
+        - id: org.alfresco.integrations.google.docs
+          version: 3.2.1.3
+          installed: true
+        - id: alfresco-aos-module
+          version: 2.0.0
+          installed: true
