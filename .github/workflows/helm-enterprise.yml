@@ -93,36 +93,46 @@ jobs:
           ingress-nginx-ref: controller-v1.8.2
 
       - name: Set nginx ingress config
-        run: |
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-            -p '{"data": {"allow-snippet-annotations":"true"}}'
+        run: >-
+          kubectl -n ingress-nginx patch cm ingress-nginx-controller
+          -p '{"data": {"allow-snippet-annotations":"true"}}'
 
       - name: Create registries auth secret
-        run: |
-          kubectl create secret generic regcred \
-          --from-file=.dockerconfigjson=$HOME/.docker/config.json \
+        run: >-
+          kubectl create secret generic regcred
+          --from-file=.dockerconfigjson=$HOME/.docker/config.json
           --type=kubernetes.io/dockerconfigjson
 
       - name: Check if cgroup v2 workaround is needed
-        id: extra-values
+        id: cgroupv2-workaround-extra-values
         run: |
           acs_version=$(echo ${{ matrix.values }} | cut -d'.' -f1,2)
           is_affected=$(echo "$acs_version <= 7.2" | bc -l)
           if [ "$is_affected" -eq 1 ]; then
+            echo "Enabling cgroupv v2 workaround"
             echo "helm_install_params=--values test/cgroup-v2-workaround-values.yaml" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Helm install
+      - name: Check if we want clustered tests
+        id: clustered-extra-values
         run: |
-          helm dep up ./helm/alfresco-content-services
-          helm install acs ./helm/alfresco-content-services \
-            --set global.search.sharedSecret="$(openssl rand -hex 24)" \
-            --set global.known_urls=http://localhost \
-            --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 6m0s \
-            --values helm/${{ matrix.name }}/${{ matrix.values }} \
-            --values test/enterprise-integration-test-values.yaml \
-            ${{ steps.extra-values.outputs.helm_install_params }}
+          if [ "${{ matrix.values }}" = "values.yaml" ]; then
+            echo "Enabling clustered tests"
+            echo "helm_install_params=--set alfresco-repository.replicaCount=2 --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Helm install
+        run: >-
+          helm dep up ./helm/alfresco-content-services &&
+          helm install acs ./helm/alfresco-content-services
+          --set global.search.sharedSecret="$(openssl rand -hex 24)"
+          --set global.known_urls=http://localhost
+          --set global.alfrescoRegistryPullSecrets=regcred
+          --wait --timeout 6m0s
+          --values helm/${{ matrix.name }}/${{ matrix.values }}
+          --values test/enterprise-integration-test-values.yaml
+          ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
+          ${{ steps.clustered-extra-values.outputs.helm_install_params }}
 
       - name: Spit cluster status after install
         if: always()
