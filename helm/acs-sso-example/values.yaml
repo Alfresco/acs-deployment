@@ -135,6 +135,7 @@ keycloakx:
           mountPath: /themes
 
 activemq:
+  nameOverride: alfresco-share
   persistence:
     enabled: false
   adminUser:
@@ -184,7 +185,7 @@ alfresco-share:
     - name: share-properties
       mountPath: >-
         /usr/local/tomcat/webapps/share/WEB-INF/classes/share-config.properties
-      subPath: share-properties
+      subPath: share.properties
   ingress:
     hosts:
       - host: localhost

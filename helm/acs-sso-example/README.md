@@ -21,6 +21,7 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | activemq.adminUser.password | string | `"alfresco"` |  |
 | activemq.adminUser.user | string | `"alfresco"` |  |
+| activemq.nameOverride | string | `"alfresco-share"` |  |
 | activemq.persistence.enabled | bool | `false` |  |
 | alfresco-content-app.enabled | bool | `true` |  |
 | alfresco-content-app.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
@@ -63,7 +64,7 @@ A Helm chart for Kubernetes
 | alfresco-repository.replicaCount | int | `1` |  |
 | alfresco-share.extraVolumeMounts[0].mountPath | string | `"/usr/local/tomcat/webapps/share/WEB-INF/classes/share-config.properties"` |  |
 | alfresco-share.extraVolumeMounts[0].name | string | `"share-properties"` |  |
-| alfresco-share.extraVolumeMounts[0].subPath | string | `"share-properties"` |  |
+| alfresco-share.extraVolumeMounts[0].subPath | string | `"share.properties"` |  |
 | alfresco-share.extraVolumes[0].configMap.name | string | `"share-properties"` |  |
 | alfresco-share.extraVolumes[0].name | string | `"share-properties"` |  |
 | alfresco-share.image.repository | string | `"alfresco/alfresco-share"` |  |
