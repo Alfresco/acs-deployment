@@ -536,6 +536,7 @@ elasticsearch:
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 dtas:
+  # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
