@@ -21,7 +21,7 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | activemq.adminUser.password | string | `"alfresco"` |  |
 | activemq.adminUser.user | string | `"alfresco"` |  |
-| activemq.nameOverride | string | `"alfresco-share"` |  |
+| activemq.nameOverride | string | `"activemq"` |  |
 | activemq.persistence.enabled | bool | `false` |  |
 | alfresco-content-app.enabled | bool | `true` |  |
 | alfresco-content-app.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |

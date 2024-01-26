@@ -135,7 +135,7 @@ keycloakx:
           mountPath: /themes
 
 activemq:
-  nameOverride: alfresco-share
+  nameOverride: activemq
   persistence:
     enabled: false
   adminUser:
