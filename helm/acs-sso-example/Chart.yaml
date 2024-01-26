@@ -40,3 +40,7 @@ dependencies:
   - name: alfresco-share
     repository: https://alfresco.github.io/alfresco-helm-charts/
     version: 0.3.0
+  - name: common
+    alias: alfresco-content-app
+    repository: https://activiti.github.io/activiti-cloud-helm-charts
+    version: 8.2.0

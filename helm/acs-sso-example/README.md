@@ -8,6 +8,7 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-content-app(common) | 8.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 0.3.0 |
