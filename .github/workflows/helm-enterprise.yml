@@ -114,7 +114,7 @@ jobs:
           fi
 
       - name: Check if we want additional helm customizations
-        id: clustered-extra-values
+        id: configurable-extra-values
         run: |
           if [ "${{ matrix.values }}" = "values.yaml" ]; then
             echo "Enabling clustered tests"
@@ -136,7 +136,7 @@ jobs:
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
-          ${{ steps.clustered-extra-values.outputs.helm_install_params }}
+          ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Spit cluster status after install
         if: always()
