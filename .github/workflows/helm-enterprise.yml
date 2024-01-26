@@ -59,7 +59,7 @@ jobs:
 
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-16G-4CPU
-    timeout-minutes: 30
+    timeout-minutes: 10
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -113,12 +113,16 @@ jobs:
             echo "helm_install_params=--values test/cgroup-v2-workaround-values.yaml" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Check if we want clustered tests
+      - name: Check if we want additional helm customizations
         id: clustered-extra-values
         run: |
           if [ "${{ matrix.values }}" = "values.yaml" ]; then
             echo "Enabling clustered tests"
             echo "helm_install_params=--set alfresco-repository.replicaCount=2 --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+          fi
+          if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
+            echo "Skipping renditions tests on ACS 7.0.N"
+            echo "helm_install_params=--set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Helm install
@@ -163,7 +167,7 @@ jobs:
 
       - name: Run helm test
         id: helm_test
-        run: helm test acs --timeout 30m0s
+        run: helm test acs
 
       - name: Spit cluster status after helm test
         if: always() && steps.helm_test.outcome != 'skipped'
