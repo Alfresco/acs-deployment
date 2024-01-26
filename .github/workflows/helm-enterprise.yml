@@ -165,7 +165,7 @@ jobs:
         uses: nick-fields/retry@v2
         id: helm_test
         with:
-          timeout_minutes: 2
+          timeout_minutes: 3
           retry_wait_seconds: 20
           max_attempts: 5
           command: helm test acs
