@@ -2,19 +2,22 @@
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2.0-A12](https://img.shields.io/badge/AppVersion-23.2.0--A12-informational?style=flat-square)
 
-An example Chart to demonstrate how to integrate [Codecentricx keycloakx
-chart](https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx)
+An example Chart to demonstrate how to compose your own Alfresco platform
+from individual component charts we provide and integrate [Codecentric
+keycloakx chart](https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx)
 
 check the [step by step documentation](./docs/step-by-step-guide.md) to better
-understand the whole or simply review the `values.yaml` file if you're
-familiar with [Helm](ttps://helm.sh) & [Kubernetes](https://kubernetes.io).
+understand chart composition works or simply review the `values.yaml` file if
+you're familiar with [Helm](ttps://helm.sh) &
+[Kubernetes](https://kubernetes.io).
 
 > Note: this chart is just an example that can run on a localhost only.
 > It ships ACS repo, the repository database, the message broker, the
 > Keycloak IdP and front end applications (Share and Content app) & no other
 > component.
-> :warning: All components have persistence disabled so all data is lost after a
-> deployment is destroyed or rolled back!
+
+:warning: All components have persistence disabled so all data is lost after a
+deployment is destroyed or rolled back!
 
 ## Requirements
 
