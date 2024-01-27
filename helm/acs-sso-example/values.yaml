@@ -8,7 +8,9 @@ global:
   # Also the first entry is considered the main hosting domain of the platform.
   known_urls:
     - http://localhost
-
+# -- Configure the ACS repository Postgres database as per
+# https://github.com/bitnami/charts/tree/002c752f871c8fa068a770dc80fec4cf798798ab/bitnami/postgresql
+# @default -- check values.yaml
 repository-database:
   nameOverride: repository-database
   auth:
@@ -34,16 +36,21 @@ repository-database:
         cpu: "4"
         memory: 4Gi
 
+# -- Configure the ACS Keycloak Identity provider as per
+# https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0
+# @default -- check values.yaml
 keycloakx:
   nameOverride: keycloak
   admin:
     # -- Keycloak admin username
     username: admin
-    # -- Keycloak admin password
-    # -- @default randomly generated on first deployment get value using:
-    # kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d
+    # -- Keycloak admin password.
+    # By default generated on first deployment, to get its value use:<br>
+    # <code>kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d</code>
+    # @default -- random ascii string
     password: null
     realm:
+        # -- Alfresco Realm definition
       - id: alfresco
         realm: alfresco
         enabled: true
@@ -60,10 +67,12 @@ keycloakx:
             webOrigins:
               - http://localhost
         users:
-          - username: admin
+          - # -- default Alfresco admin user
+            username: admin
             enabled: true
             credentials:
               - type: password
+                # -- default Alfresco admin password
                 value: secret
         internationalizationEnabled: true
         defaultLocale: en
@@ -134,6 +143,9 @@ keycloakx:
         - name: theme
           mountPath: /themes
 
+# -- Configure the ACS ActiveMQ message broker as per
+# https://github.com/Alfresco/alfresco-helm-charts/tree/activemq-3.4.1/charts/activemq
+# @default -- check values.yaml
 activemq:
   nameOverride: activemq
   persistence:
@@ -142,6 +154,9 @@ activemq:
     user: alfresco
     password: alfresco
 
+# -- Configure the ACS repository as per
+# https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-repository-0.1.3/charts/alfresco-repository
+# @default -- check values.yaml
 alfresco-repository:
   replicaCount: 1
   image:
@@ -169,6 +184,9 @@ alfresco-repository:
           - path: /api-explorer
             pathType: Prefix
 
+# -- Configure the Alfresco Share as per
+# https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-share-0.3.0/charts/alfresco-share
+# @default -- check values.yaml
 alfresco-share:
   nameOverride: alfresco-share
   image:
@@ -193,6 +211,9 @@ alfresco-share:
           - path: /share
             pathType: Prefix
 
+# -- Configure the Alfresco Conent-app as per
+# https://github.com/Activiti/activiti-cloud-common-chart/tree/8.2.0/charts/common
+# @default -- check values.yaml
 alfresco-content-app:
   nameOverride: alfresco-content-app
   enabled: true
