@@ -158,6 +158,7 @@ activemq:
 # https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-repository-0.1.3/charts/alfresco-repository
 # @default -- check values.yaml
 alfresco-repository:
+  nameOverride: alfresco-repository
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community

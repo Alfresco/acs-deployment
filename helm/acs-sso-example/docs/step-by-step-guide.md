@@ -313,6 +313,7 @@ shows how to configure the repo db and message broker using configmaps and secre
 
 ```yaml
 alfresco-repository:
+  nameOverride: alfresco-repository
   # Use Community
   replicaCount: 1
   image:
