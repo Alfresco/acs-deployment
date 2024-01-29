@@ -2,9 +2,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: dtas
+  name: dtas-{{ randAlpha 5 | lower }}
   annotations:
     "helm.sh/hook": test
+  labels:
+    {{- include "alfresco-content-services.labels" . | nindent 4 }}
+    app.kubernetes.io/component: dtas
 spec:
   containers:
   - name: dtas
