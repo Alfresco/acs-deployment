@@ -38,7 +38,7 @@ work together.
 
 ### Architecture of the deployment
 
-The following components are deployed by the example chart:
+In the document bellow we discuss an initial basic setup as shown below:
 
 ```mermaid
 flowchart TB
@@ -59,6 +59,9 @@ repo ==> repodb
 ```
 
 > Note: there is no search component neither is there a transformation service.
+
+This set up will be enriched with more components configured for SSO using
+vanilla keycloak [here](./sso-guide.md)
 
 ## Pre-requisites
 
