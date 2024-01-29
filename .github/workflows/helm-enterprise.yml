@@ -38,13 +38,14 @@ jobs:
         uses: ./.github/actions/charts-as-json
         with:
           charts-root: helm
-      - name: Remove community values
+      - name: Keep only ACS enterprise
         id: app_versions
         env:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
           JQ_FILTER: >-
-            [inputs | .charts[] | {name: .name, values: .values[]}]
-            | del(.[] | select(.values=="community_values.yaml"))
+            [inputs | .charts[] | {name: .name, values: .values[]}
+            | del(. | select(.values=="community_values.yaml"))
+            | select(.name=="alfresco-content-services")]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
           VERS=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
@@ -53,7 +54,6 @@ jobs:
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-16G-4CPU
     timeout-minutes: 10
-    if: matrix.name == 'alfresco-conetn-services'
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
