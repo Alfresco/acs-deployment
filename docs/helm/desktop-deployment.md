@@ -176,7 +176,7 @@ To deploy a previous version of ACS Enterprise follow the steps below.
 
 > NOTE: The command will wait until the deployment is ready so please be
 patient. See below for
-[troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
+[troubleshooting](#troubleshooting) tips.
 
 ## Access
 
