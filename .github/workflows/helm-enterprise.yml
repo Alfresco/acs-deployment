@@ -172,7 +172,7 @@ jobs:
       - name: Spit cluster status after helm test
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
-          kubectl logs dtas
+          kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
