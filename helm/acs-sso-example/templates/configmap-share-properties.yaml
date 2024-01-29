@@ -11,5 +11,7 @@ data:
     aims.realm = {{ index .admin.realm 0 "realm" }}
     aims.resource = {{ index .admin.realm 0 "clients" 0 "clientId" }}
     aims.publicClient=true
+    aims.principalAttribute=sub
+    aims.publicClient=true
     aims.authServerUrl = {{ printf "http://%s-http%s" (include "keycloak.fullname" $kCtx) .http.relativePath }}
     {{- end }}
