@@ -105,7 +105,8 @@ keycloakx:
     enabled: true
     tls: []
     rules:
-      - host: localhost
+      - host: >-
+          {{ template "alfresco-common.external.host" $ }}
         paths:
           - path: "{{ .Values.http.relativePath }}"
             pathType: Prefix
