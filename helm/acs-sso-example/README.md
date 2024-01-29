@@ -116,13 +116,9 @@ random ascii string
       "enabled": true,
       "implicitFlowEnabled": true,
       "publicClient": true,
-      "redirectUris": [
-        "http://localhost/*"
-      ],
+      "redirectUris": "{{- $redirectUris := list }} {{- range (index (include \"alfresco-common.known.urls\" $ | mustFromJson) \"known_urls\") }} {{- $redirectUris = append $redirectUris (printf \"%s/*\" .) }} {{- end }} {{- $redirectUris }}",
       "standardFlowEnabled": true,
-      "webOrigins": [
-        "http://localhost"
-      ]
+      "webOrigins": "{{ index (include \"alfresco-common.known.urls\" $ | mustFromJson) \"known_urls\" }}"
     }
   ],
   "defaultLocale": "en",

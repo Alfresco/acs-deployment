@@ -62,10 +62,14 @@ keycloakx:
             standardFlowEnabled: true
             implicitFlowEnabled: true
             publicClient: true
-            redirectUris:
-              - http://localhost/*
-            webOrigins:
-              - http://localhost
+            redirectUris: >-
+              {{- $redirectUris := list }}
+              {{- range (index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls") }}
+              {{- $redirectUris = append $redirectUris (printf "%s/*" .) }}
+              {{- end }}
+              {{- $redirectUris }}
+            webOrigins: >-
+              {{ index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls" }}
         users:
           - # -- default Alfresco admin user
             username: admin
