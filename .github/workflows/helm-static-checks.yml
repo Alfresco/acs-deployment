@@ -48,7 +48,9 @@ jobs:
           plugin_url: https://github.com/helm-unittest/helm-unittest
       - name: Run Helm unit tests if present
         run: |
-          [ -d "helm/${{ matrix.charts.name }}/tests" ] && helm unittest helm/${{ matrix.charts.name }}
+          if [ -d "helm/${{ matrix.charts.name }}/tests" ]; then helm unittest helm/${{ matrix.charts.name }}
+          else echo "${{ matrix.charts.name }} chart has no unit tests... skipping."
+          fi
   helm_yaml_lint:
     needs:
       - build_vars
