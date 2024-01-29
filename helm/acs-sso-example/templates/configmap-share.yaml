@@ -6,9 +6,7 @@ metadata:
 data:
   {{- with (index .Values "alfresco-repository") }}
   {{- $repoCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
-  REPO_HOST: {{ template "alfresco-repository.fullname" $repoCtx }}
-  {{- end }}
-  {{- with (index .Values "alfresco-repository") }}
   {{- $reposvc := .service | default dict }}
+  REPO_HOST: {{ template "alfresco-repository.fullname" $repoCtx }}
   REPO_PORT: {{ $reposvc.port | default 80 | quote }}
   {{- end }}
