@@ -10,5 +10,5 @@ data:
   {{- end }}
   {{- with (index .Values "alfresco-repository") }}
   {{- $reposvc := .service | default dict }}
-  REPO_PORT:  $reposvc.port | default 80 }}
+  REPO_PORT: {{ $reposvc.port | default 80 | quote }}
   {{- end }}
