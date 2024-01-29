@@ -19,6 +19,12 @@ you're familiar with [Helm](ttps://helm.sh) &
 :warning: All components have persistence disabled so all data is lost after a
 deployment is destroyed or rolled back!
 
+**Homepage:** <https://www.alfresco.com>
+
+## Source Code
+
+* <https://github.com/Alfresco/acs-deployment/helm/acs-sso-example>
+
 ## Requirements
 
 | Repository | Name | Version |
