@@ -47,7 +47,7 @@ jobs:
         with:
           plugin_url: https://github.com/helm-unittest/helm-unittest
       - run: |
-          helm unittest helm/${{ matrix.charts.name }}
+          [ -d helm/${{ matrix.charts.name }}/tests ] && helm unittest helm/${{ matrix.charts.name }}
   helm_yaml_lint:
     needs:
       - build_vars
