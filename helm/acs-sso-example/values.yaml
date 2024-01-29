@@ -197,7 +197,7 @@ alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
-    tag: 23.2.0-A12
+    tag: 23.2.0-A13
   repository:
     existingConfigMap:
       name: share-repository
