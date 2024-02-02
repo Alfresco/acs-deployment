@@ -229,9 +229,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.config.password | string | `"admin"` |  |
 | dtas.config.config.username | string | `"admin"` |  |
 | dtas.enabled | bool | `false` | Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only) |
-| dtas.image.pullPolicy | string | `"Always"` |  |
+| dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
-| dtas.image.tag | string | `"master"` |  |
+| dtas.image.tag | string | `"v1.5.1"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `false` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |
