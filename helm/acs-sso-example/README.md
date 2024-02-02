@@ -3,13 +3,15 @@
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2.0-A12](https://img.shields.io/badge/AppVersion-23.2.0--A12-informational?style=flat-square)
 
 An example Chart to demonstrate how to compose your own Alfresco platform
-from individual component charts we provide and integrate [Codecentric
-keycloakx chart](https://github.com/codecentric/helm-charts/tree/master/charts/keycloakx)
+with SSO on kubernetes using a nthrid party Keycloak.
+if you're familiar with [Helm](ttps://helm.sh) &
+[Kubernetes](https://kubernetes.io) taking a look at the `values.yaml` should
+be enough but the principals are also documented in two differents steps:
 
-check the [step by step documentation](./docs/step-by-step-guide.md) to better
-understand chart composition works or simply review the `values.yaml` file if
-you're familiar with [Helm](ttps://helm.sh) &
-[Kubernetes](https://kubernetes.io).
+* Composing your ACS from individual component charts we provide.
+  Check the [step by step documentation](./docs/step-by-step-guide.md)
+* SSO integration, to add keycloak and configure Alfresco applications
+  accordingly: [SSO guide](./docs/step-by-step-guide.md)
 
 > Note: this chart is just an example that can run on a localhost only.
 > It ships ACS repo, the repository database, the message broker, the
