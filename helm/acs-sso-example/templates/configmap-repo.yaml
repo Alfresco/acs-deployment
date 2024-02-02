@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repository-properties
+  labels: {{- include "acs-sso-example.labels" . | nindent 4 }}
+data:
+  alfresco-global.properties: |
+    authentication.chain = identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
+    identity-service.authentication.enabled = true
+    identity-service.realm = alfresco
+    {{- $kCtx := dict "Values" .Values.keycloakx "Chart" .Chart "Release" .Release }}
+    identity-service.auth-server-url = http://{{ include "keycloak.fullname" $kCtx }}-http{{ .Values.keycloakx.http.relativePath }}
+    identity-service.enable-basic-auth = true

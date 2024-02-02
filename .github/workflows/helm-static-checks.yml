@@ -46,8 +46,11 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/helm-plugin@v5.13.0
         with:
           plugin_url: https://github.com/helm-unittest/helm-unittest
-      - run: |
-          helm unittest helm/${{ matrix.charts.name }}
+      - name: Run Helm unit tests if present
+        run: |
+          if [ -d "helm/${{ matrix.charts.name }}/tests" ]; then helm unittest helm/${{ matrix.charts.name }}
+          else echo "${{ matrix.charts.name }} chart has no unit tests... skipping."
+          fi
   helm_yaml_lint:
     needs:
       - build_vars
@@ -65,4 +68,6 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v5.13.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
-          helm-options: --values tests/values/test_values.yaml
+          helm-options: >-
+            --set global.search.sharedSecret=dummy
+            --set global.search.alfrescoRegistryPullSecrets=dummy

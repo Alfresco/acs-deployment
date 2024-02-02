@@ -31,10 +31,12 @@ repos:
     rev: 2.3.288
     hooks:
       - id: checkov
-        files: \.yaml$
+        types: [yaml]
         args:
           - --quiet
           - --compact
+          - --config-file
+          - .checkov.yaml
   # Docker Compose hooks section (excluded in pre-commit-helm workflow)
   - repo: https://github.com/IamTheFij/docker-pre-commit
     rev: v2.1.1

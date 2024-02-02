@@ -1,0 +1,260 @@
+# Default values for acs-sso-example.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  # -- list of trusted URLs.
+  # URLs a re used to configure Cross-origin protections
+  # Also the first entry is considered the main hosting domain of the platform.
+  known_urls:
+    - http://localhost
+# -- Configure the ACS repository Postgres database as per
+# https://github.com/bitnami/charts/tree/002c752f871c8fa068a770dc80fec4cf798798ab/bitnami/postgresql
+# @default -- check values.yaml
+repository-database:
+  nameOverride: repository-database
+  auth:
+    database: alfresco
+    username: alfresco
+    password: alfresco
+  primary:
+    persistence:
+      enabled: false
+    extendedConfiguration: |
+      max_connections = 150
+      shared_buffers = 512MB
+      effective_cache_size = 2GB
+      wal_level = minimal
+      max_wal_senders = 0
+      max_replication_slots = 0
+      log_min_messages = LOG
+    resources:
+      requests:
+        cpu: 250m
+        memory: 1Gi
+      limits:
+        cpu: "4"
+        memory: 4Gi
+
+# -- Configure the ACS Keycloak Identity provider as per
+# https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0
+# @default -- check values.yaml
+keycloakx:
+  nameOverride: keycloak
+  admin:
+    # -- Keycloak admin username
+    username: admin
+    # -- Keycloak admin password.
+    # By default generated on first deployment, to get its value use:<br>
+    # <code>kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d</code>
+    # @default -- random ascii string
+    password: null
+    realm:
+        # -- Alfresco Realm definition
+      - id: alfresco
+        realm: alfresco
+        enabled: true
+        sslRequired: none
+        loginTheme: alfresco
+        clients:
+          - clientId: alfresco
+            enabled: true
+            standardFlowEnabled: true
+            implicitFlowEnabled: true
+            publicClient: true
+            redirectUris: >-
+              {{- $redirectUris := list }}
+              {{- range (index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls") }}
+              {{- $redirectUris = append $redirectUris (printf "%s/*" .) }}
+              {{- end }}
+              {{- $redirectUris }}
+            webOrigins: >-
+              {{ index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls" }}
+        users:
+          -  # -- default Alfresco admin user
+            username: admin
+            enabled: true
+            credentials:
+              - type: password
+                # -- default Alfresco admin password
+                value: secret
+        internationalizationEnabled: true
+        defaultLocale: en
+        supportedLocales:
+          - "ca"
+          - "de"
+          - "en"
+          - "es"
+          - "fr"
+          - "it"
+          - "ja"
+          - "lt"
+          - "nl"
+          - "no"
+          - "pt-BR"
+          - "ru"
+          - "sv"
+          - "zh-CN"
+  command:
+    - /opt/keycloak/bin/kc.sh
+    - start
+    - --http-enabled=true
+    - --http-port=8080
+    - --hostname-strict=false
+    - --hostname-strict-https=false
+    - --import-realm
+  http:
+    relativePath: /auth
+  ingress:
+    enabled: true
+    tls: []
+    rules:
+      - host: >-
+          {{ template "alfresco-common.external.host" $ }}
+        paths:
+          - path: "{{ .Values.http.relativePath }}"
+            pathType: Prefix
+  extraEnvFrom: |
+    - configMapRef:
+        name: keycloak
+    - secretRef:
+        name: keycloak
+  extraEnv: |
+    - name: JAVA_OPTS_APPEND
+      value: >-
+        -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
+  extraVolumeMounts: |
+    - name: theme
+      mountPath: /opt/keycloak/themes
+    - name: realm
+      mountPath: /opt/keycloak/data/import
+  extraVolumes: |
+    - name: theme
+      emptyDir: {}
+    - name: realm
+      secret:
+        secretName: keycloak-realm
+  extraInitContainers: |
+    - image: busybox:1.36
+      imagePullPolicy: IfNotPresent
+      name: theme-fetcher
+      command: [sh]
+      args:
+        - -c
+        - |
+          wget https://github.com/Alfresco/alfresco-keycloak-theme/releases/download/0.3.5/alfresco-keycloak-theme-0.3.5.zip -O alfresco.zip
+          unzip -d /themes alfresco.zip
+      volumeMounts:
+        - name: theme
+          mountPath: /themes
+
+# -- Configure the ACS ActiveMQ message broker as per
+# https://github.com/Alfresco/alfresco-helm-charts/tree/activemq-3.4.1/charts/activemq
+# @default -- check values.yaml
+activemq:
+  nameOverride: activemq
+  persistence:
+    enabled: false
+  adminUser:
+    user: alfresco
+    password: alfresco
+
+# -- Configure the ACS repository as per
+# https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-repository-0.1.3/charts/alfresco-repository
+# @default -- check values.yaml
+alfresco-repository:
+  nameOverride: alfresco-repository
+  replicaCount: 1
+  image:
+    repository: alfresco/alfresco-content-repository-community
+    tag: 23.2.0-A12
+  configuration:
+    repository:
+      existingConfigMap: repository-properties
+    db:
+      existingConfigMap:
+        name: repository-database
+      existingSecret:
+        name: repository-database
+    messageBroker:
+      existingConfigMap:
+        name: repository-message-broker
+      existingSecret:
+        name: repository-message-broker
+  ingress:
+    hosts:
+      - host: localhost
+        paths:
+          - path: /
+            pathType: Prefix
+          - path: /api-explorer
+            pathType: Prefix
+
+# -- Configure the Alfresco Share as per
+# https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-share-0.3.0/charts/alfresco-share
+# @default -- check values.yaml
+alfresco-share:
+  nameOverride: alfresco-share
+  image:
+    repository: alfresco/alfresco-share
+    tag: 23.2.0-A13
+  repository:
+    existingConfigMap:
+      name: share-repository
+  extraVolumes:
+    - name: share-properties
+      configMap:
+        name: share-properties
+  extraVolumeMounts:
+    - name: share-properties
+      mountPath: >-
+        /usr/local/tomcat/webapps/share/WEB-INF/classes/share-config.properties
+      subPath: share.properties
+  ingress:
+    hosts:
+      - host: localhost
+        paths:
+          - path: /share
+            pathType: Prefix
+
+# -- Configure the Alfresco Conent-app as per
+# https://github.com/Activiti/activiti-cloud-common-chart/tree/8.2.0/charts/common
+# @default -- check values.yaml
+alfresco-content-app:
+  nameOverride: alfresco-content-app
+  enabled: true
+  service:
+    envType: frontend
+  ingress:
+    ingressClassName: nginx
+    hostName: localhost
+    path: /workspace
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 5g
+      nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
+    tls: []
+  image:
+    repository: alfresco/alfresco-content-app
+    tag: 4.3.0
+    pullPolicy: IfNotPresent
+  env:
+    APP_CONFIG_PROVIDER: ECM
+    APP_CONFIG_AUTH_TYPE: OAUTH
+    API_URL: "{protocol}//{hostname}{:port}"
+    APP_CONFIG_OAUTH2_HOST: "{protocol}//{hostname}{:port}/auth/realms/alfresco"
+    APP_CONFIG_OAUTH2_CLIENTID: alfresco
+    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/assets/silent-refresh.html"
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 101
+    capabilities:
+      drop:
+        - NET_RAW
+        - ALL
+  resources:
+    requests:
+      cpu: "0.25"
+      memory: "256Mi"
+    limits:
+      cpu: "1"
+      memory: "1024Mi"

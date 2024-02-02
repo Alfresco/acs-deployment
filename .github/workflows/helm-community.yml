@@ -19,9 +19,40 @@ concurrency:
   group: helm-com-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 jobs:
+  build_vars:
+    runs-on: ubuntu-latest
+    outputs:
+      ver_json: ${{ steps.app_versions.outputs.json }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get charts
+        id: getcharts
+        uses: ./.github/actions/charts-as-json
+        with:
+          charts-root: helm
+      - name: Keep only ACS enterprise
+        id: app_versions
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
+          JQ_FILTER: >-
+            [inputs | .charts[] | {name: .name, values: .values[]}
+            | select(.values=="community_values.yaml" or .name=="acs-sso-example")]
+        run: |
+          echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
+          VERS=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
+          echo "json=$VERS" >> $GITHUB_OUTPUT
+
   community_charts:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs:
+      - build_vars
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -55,14 +86,15 @@ jobs:
 
       - name: Helm install
         run: |
-          helm dep up ./helm/alfresco-content-services
-          helm install acs ./helm/alfresco-content-services \
+          helm dep up .
+          helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
             --wait --timeout 5m0s \
-            --values helm/alfresco-content-services/community_values.yaml \
-            --values test/community-integration-test-values.yaml
+            --values ${{ matrix.values }} \
+            --values ../../test/community-integration-test-values.yaml
+        working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status
         if: always()
@@ -76,6 +108,7 @@ jobs:
 
       - uses: nick-fields/retry@v2
         id: newman
+        if: matrix.name == 'alfresco-content-services'
         with:
           timeout_minutes: 1
           retry_wait_seconds: 30
