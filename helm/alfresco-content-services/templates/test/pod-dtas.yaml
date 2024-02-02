@@ -1,0 +1,31 @@
+{{- if .Values.dtas.enabled -}}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dtas-{{ randAlpha 5 | lower }}
+  annotations:
+    "helm.sh/hook": test
+  labels:
+    {{- include "alfresco-content-services.labels" . | nindent 4 }}
+    app.kubernetes.io/component: dtas
+spec:
+  containers:
+  - name: dtas
+    image: {{ .Values.dtas.image.repository }}:{{ .Values.dtas.image.tag }}
+    imagePullPolicy: {{ .Values.dtas.image.pullPolicy }}
+    args:
+    - --configuration=/usr/src/dtas/config/config.json
+    {{- range .Values.dtas.additionalArgs }}
+    - {{ . }}
+    {{- end }}
+    volumeMounts:
+    - name: config-volume
+      mountPath: /usr/src/dtas/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: dtas-config
+  restartPolicy: Never
+  imagePullSecrets:
+  - name: {{ .Values.global.alfrescoRegistryPullSecrets}}
+{{- end -}}

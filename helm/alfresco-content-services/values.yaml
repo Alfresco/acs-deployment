@@ -534,3 +534,31 @@ elasticsearch:
   enabled: false
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+
+dtas:
+  # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
+  enabled: false
+  image:
+    repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
+    tag: v1.5.1
+    pullPolicy: IfNotPresent
+  additionalArgs: []
+  config:
+    config:
+      host: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
+      username: admin
+      password: admin
+    assertions:
+      acs:
+        edition: Enterprise
+        version: 23.2.0
+        identity: false
+        modules:
+        - id: org.alfresco.integrations.google.docs
+          version: 4.0.0
+          installed: true
+        - id: alfresco-aos-module
+          version: 2.0.0
+          installed: true
+      adw:
+        base_path: "/workspace"

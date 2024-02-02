@@ -7,7 +7,8 @@ alfresco-repository:
     limits:
       cpu: "2"
       memory: "2Gi"
-  replicaCount: 2
+  # https://alfresco.atlassian.net/browse/ACS-6670
+  replicaCount: 1
   persistence:
     accessModes:
       - ReadWriteOnce
@@ -57,7 +58,7 @@ alfresco-transform-service:
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "1Gi"
     replicaCount: 1
   libreoffice:
     livenessProbe:
@@ -127,9 +128,12 @@ alfresco-sync-service:
           memory: "1Gi"
 alfresco-ai-transformer:
   enabled: true
+  replicaCount: 1
   aws:
     accessKeyId: AAAAAAAAAAAAAAAAA
     secretAccessKey: ZZZZZZZZZZZZZZZZZ
     s3Bucket: somebucket
     region: us-east-1
     comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
+dtas:
+  enabled: true
