@@ -421,7 +421,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: 14.4.0
+    tag: 15.5.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
@@ -484,7 +484,7 @@ postgresql-sync:
   enabled: true
   nameOverride: postgresql-sync
   image:
-    tag: 14.4.0
+    tag: 15.5.0
   auth:
     enablePostgresUser: false
     username: alfresco

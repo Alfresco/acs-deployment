@@ -256,7 +256,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.auth.password | string | `"admin"` |  |
 | postgresql-sync.auth.username | string | `"alfresco"` |  |
 | postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
-| postgresql-sync.image.tag | string | `"14.4.0"` |  |
+| postgresql-sync.image.tag | string | `"15.5.0"` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
 | postgresql-sync.primary.extendedConfiguration | string | `"max_connections = 150\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
 | postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
@@ -270,7 +270,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository Check [PostgreSQL Bitnami chart Documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) |
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql.image.tag | string | `"14.4.0"` |  |
+| postgresql.image.tag | string | `"15.5.0"` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.extendedConfiguration | string | `"max_connections = 250\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
 | postgresql.primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
