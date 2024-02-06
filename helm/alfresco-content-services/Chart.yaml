@@ -70,7 +70,7 @@ dependencies:
     condition: alfresco-connector-msteams.enabled
   - name: alfresco-share
     alias: share
-    version: 0.3.0
+    version: 0.4.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: share.enabled
   - name: alfresco-connector-ms365
