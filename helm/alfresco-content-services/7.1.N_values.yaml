@@ -58,16 +58,15 @@ alfresco-search-enterprise:
 postgresql:
   image:
     tag: 13.3.0
+postgresql-sync:
+  image:
+    tag: 13.3.0
 alfresco-digital-workspace:
   image:
     tag: 2.6.2
 alfresco-sync-service:
   image:
     tag: 3.11.1
-  postgresql:
-    primary:
-      image:
-        tag: 13.3.0
 alfresco-connector-msteams:
   image:
     tag: 1.1.0
