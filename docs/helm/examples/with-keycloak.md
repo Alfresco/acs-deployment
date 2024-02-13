@@ -4,11 +4,23 @@ In this section we are going to describe how to install Alfresco with Helm on
 your Kubernetes cluster using an externally provisioned (or third party)
 Keycloak server.
 
+## Prerequisites
+
+* Have already created a realm with default settings (e.g. `alfresco`)
+* Have already created a client inside the previously mentioned realm with:
+  * Implicit flow enabled
+  * Redirect URIs and Web Origins appropriately configured for your Alfresco installation
+
+You can further customize the login appearance by applying the
+[alfresco keycloak theme](https://github.com/Alfresco/alfresco-keycloak-theme).
+
+## Helm configuration
+
 You can follow your [preferred helm deployment guide](../), but before proceeding with
 the `helm install` or `helm upgrade` commands, you need to provide additional values and
 resources as described below.
 
-## Repository config
+### Repository config
 
 Create a configmap which overrides the identity service properties:
 
@@ -35,7 +47,7 @@ alfresco-repository:
       existingConfigMap: repository-properties
 ```
 
-## Share config
+### Share config
 
 Create a configmap which overrides the identity service properties:
 
@@ -69,7 +81,7 @@ share:
       subPath: share.properties
 ```
 
-## Digital Workspace and Control Center config
+### Digital Workspace and Control Center config
 
 Set the following values:
 
