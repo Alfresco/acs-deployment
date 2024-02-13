@@ -1,0 +1,90 @@
+# ACS Helm Deployment with an external Keycloak server
+
+In this section we are going to describe how to install Alfresco with Helm on
+your Kubernetes cluster using an externally provisioned (or third party)
+Keycloak server.
+
+You can follow your [preferred helm deployment guide](../), but before proceeding with
+the `helm install` or `helm upgrade` commands, you need to provide additional values and
+resources as described below.
+
+## Repository config
+
+Create a configmap which overrides the identity service properties:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repository-properties
+data:
+  alfresco-global.properties: |
+    authentication.chain = identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
+    identity-service.authentication.enabled = true
+    identity-service.realm = alfresco
+    identity-service.auth-server-url = ids.example.com
+    identity-service.enable-basic-auth = true
+```
+
+And set the following values:
+
+```yaml
+alfresco-repository:
+  configuration:
+    repository:
+      existingConfigMap: repository-properties
+```
+
+## Share config
+
+Create a configmap which overrides the identity service properties:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: share-properties
+data:
+  share.properties: |
+    aims.enabled=true
+    aims.realm = YOUR-REALM
+    aims.resource = YOUR-CLIENT-ID
+    aims.publicClient = true
+    aims.principalAttribute = sub
+    aims.authServerUrl = https://ids.example.com
+```
+
+And set the following values:
+
+```yaml
+share:
+  extraVolumes:
+    - name: share-properties
+      configMap:
+        name: share-properties
+  extraVolumeMounts:
+    - name: share-properties
+      mountPath: >-
+        /usr/local/tomcat/webapps/share/WEB-INF/classes/share-config.properties
+      subPath: share.properties
+```
+
+## Digital Workspace and Control Center config
+
+Set the following values:
+
+```yaml
+alfresco-digital-workspace:
+  env:
+    APP_CONFIG_AUTH_TYPE: OAUTH
+    APP_CONFIG_OAUTH2_HOST: https://ids.example.com/auth/realms/YOUR-REALM
+    APP_CONFIG_OAUTH2_CLIENTID: YOUR-CLIENT-ID
+alfresco-control-center:
+  env:
+    APP_CONFIG_AUTH_TYPE: OAUTH
+    APP_CONFIG_OAUTH2_HOST: https://ids.example.com/auth/realms/YOUR-REALM
+    APP_CONFIG_OAUTH2_CLIENTID: YOUR-CLIENT-ID
+```
+
+See [Identity Service tutorial](https://docs.alfresco.com/identity-service/latest/tutorial/sso/saml/#step-7-configure-alfresco-digital-workspace)
+for more configuration options.
