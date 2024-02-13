@@ -60,40 +60,7 @@ kubectl create namespace alfresco
 
 ### Ingress
 
-Add the ingress-nginx chart repository:
-
-```bash
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-```
-
-Install an ingress-nginx controller within the 'alfresco' namespace:
-
-```bash
-helm install acs-ingress ingress-nginx/ingress-nginx --version=4.4.0 \
-  --set controller.scope.enabled=true \
-  --set controller.scope.namespace=alfresco \
-  --set rbac.create=true \
-  --atomic \
-  --namespace alfresco
-```
-
-> NOTE: The command will wait until the deployment is ready so please be patient.
-
-```bash
-# Verify NGINX is up and running
-kubectl get pods --namespace alfresco
-
-NAME                                                   READY   STATUS    RESTARTS   AGE
-acs-ingress-ingress-nginx-controller-5647c976f-f7b6q   1/1     Running   0          98m
-
-# Verify expose localhost:80
-kubectl get svc --namespace alfresco
-
-NAME                                             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-acs-ingress-ingress-nginx-controller-admission   ClusterIP      10.43.42.230   <none>          443/TCP                      98m
-acs-ingress-ingress-nginx-controller             LoadBalancer   10.43.90.117   192.168.29.69   80:31363/TCP,443:30980/TCP   98m
-```
+See [ingress-nginx](ingress-nginx.md) section.
 
 ### ACS
 
