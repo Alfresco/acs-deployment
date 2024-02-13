@@ -37,15 +37,14 @@ adf --> keycloak
 
 ## Keycloak
 
-As of Alfresco 23.1 Alfresco Identity Service is notrequired anymore. It is
-possible to use a vanilla Keyloak distribution. In this document we will use
-the [Codecentric Keyloak
-chart](https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0/charts/keycloakx)
+As of Alfresco 23.1 Alfresco Identity Service is not required anymore. It is
+possible to use a vanilla Keyloak distribution. In this document we will use the
+[Codecentric Keyloak chart](https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0/charts/keycloakx)
 so we can reuse similar patterns of integration we've been using earlier.
 
 ### Declaring the dependency
 
-Add elow lines in `Chart.yaml`
+Add below lines in `Chart.yaml`
 
 ```yaml
 dependencies:
@@ -56,9 +55,8 @@ dependencies:
 
 ### Configure Keycloak
 
-If you want to aply custom configuration as you build your own charts, refer to
-the [Codecentric keycloak chart's
-doc](https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0/charts/keycloakx).
+If you want to apply custom configuration as you build your own charts, refer to
+the [chart README](https://artifacthub.io/packages/helm/codecentric/keycloakx).
 
 In this example we'll start by simply adding the basic configuration in the
 `values.yaml` file:
@@ -77,7 +75,7 @@ keycloakx:
   http:
     relativePath: /auth  # keycloak http api will be available under this path
   ingress:
-    enabled: true  # enabled extrenal accesss the keycloak
+    enabled: true  # enabled external access the keycloak
     tls: []  # disable https for this example
     rules:
       - host: >-
@@ -115,9 +113,7 @@ also a realm Alfresco applications will be configured in as client(s).
 
 #### Keycloak admin
 
-As explained in the [Codecentric keycloak chart's
-doc](https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0/charts/keycloakx)
-admin creadentails can be passed as a kubernetes secret. Here we will create
+Admin credentials can be passed as a kubernetes secret. Here we will create
 this secret from the umbrella chart values which we'll add as shown below in
 the same `values.yaml` file:
 
@@ -132,7 +128,7 @@ keycloakx:
 ```
 
 Now, let's create the secret we'll use to pass to the keycloakx chart in
-`templates/secret-idp.yaml:
+`templates/secret-idp.yaml`:
 
 ```yaml
 {{- if empty (lookup "v1" "Secret" $.Release.Namespace "keycloak") }}
@@ -154,16 +150,14 @@ data:
 
 #### Alfresco realm
 
-Still, relying on the [Codecentric keycloak chart's
-doc](https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0/charts/keycloakx)
-we can see that in order to create a realm we need to:
+In order to create a realm we need to:
 
 - provide the json definition of the realm
 - mount it in the `/opt/keycloak/data/import` folder in the pod
 - ensure keycloak is started with the `--import` switch.
 
 Again, in order to provide the realm definition we'll use values in the
-umbrealla chart `values.yaml`:
+umbrella chart `values.yaml`:
 
 ```yaml
 keycloakx:
@@ -240,17 +234,16 @@ data:
 
 #### Alfresco theme
 
-According to the [Codecentric keycloak chart's
-  doc](https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0/charts/keycloakx)
-importing a theme requires adding the theme's code to the `/opt/keycloak/themes`
-directory. configmap or secrets are not well suited for that as this is a whole
+Importing a theme requires adding the theme's code to the `/opt/keycloak/themes`
+directory. Configmap or Secrets are not well suited for that as this is a whole
 directory structure we need to mount and also because such resources are also
 limited in size. A good alternative is to create an [ephemeral
-volume](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/) and
-use an [init
+volume](https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/) and use
+an [init
 container](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)
-and use it to populate the ephemral volume the main container of the keycloak will use later on in the pod's lifecycle.
-All of this is done using values in the `values.yaml` file as shown below:
+and use it to populate the ephemeral volume the main container of the keycloak
+will use later on in the pod's lifecycle. All of this is done using values in
+the `values.yaml` file as shown below:
 
 ```yaml
 # Ephemeral volume
@@ -278,12 +271,13 @@ extraInitContainers: |
 
 ## Alfresco repository SSO configuration
 
-Now let's amend the ACS config to enable SSO. Well do it using a feature of th
-[alfresco-repository](ihttps://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-repository-0.1.3/charts/alfresco-repository)
-chart which allow us use a configmap as the `alfresco-global.properties` file.
+Now let's amend the ACS config to enable SSO. Well do it using a feature of the
+[alfresco-repository] chart which allow us use a configmap as the
+`alfresco-global.properties` file.
 
-The configmap needs to contains what you you put in the `alfresco-global.properties` file and you can use templating to populate it.
-E.g. in `templates/configmap-repo.yaml`
+The configmap needs to contains what you put in the `alfresco-global.properties`
+file and you can use templating to populate it. E.g. in
+`templates/configmap-repo.yaml`
 
 ```yaml
 apiVersion: v1
@@ -302,12 +296,12 @@ data:
 ```
 
 `identity-service.realm` needs to match the name of the realm defined earlier.
-To get the right `identity-service.auth-server-url` we are computing the ontext
+To get the right `identity-service.auth-server-url` we are computing the context
 of the keycloakx subcharts in `$kCtx` (using `nameOverride`) and pass that
-ontext to the same templating code used in the subchart to give the service a
+context to the same templating code used in the subchart to give the service a
 name. This is because here you here we're using localhost as a domain, but if
-you use a true DNS domain the repo ccould point tpo this instead (which you can
-set in `known_urls` and use `alfresco-common.externak.url`).
+you use a true DNS domain the repo could point tpo this instead (which you can
+set in `known_urls` and use `alfresco-common.external.url`).
 
 Then in the `values.yaml` file add below configuration to `alfresco-repository`:
 
@@ -334,11 +328,11 @@ In `Chart.yaml`
 
 ### Configuring Alfresco Share
 
-In `values .yaml` we add the required config as per the [chart's
-doc](https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-repository-0.1.3/charts/alfresco-share):
+In `values .yaml` we add the required config as per the
+[share chart doc](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-share):
 
 ```yaml
-alfresco-share
+alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
@@ -363,7 +357,7 @@ alfresco-share
             pathType: Prefix
 ```
 
-And create the configmap we need.
+Then we proceed in creating the few configmaps we need.
 
 The first one to tell Share where the repo is in `templates/configmap-share.yaml`:
 
@@ -399,7 +393,6 @@ data:
     aims.resource = {{ index .admin.realm 0 "clients" 0 "clientId" }}
     aims.publicClient=true
     aims.principalAttribute=sub
-    aims.publicClient=true
     aims.authServerUrl = {{ printf "http://%s-http%s" (include "keycloak.fullname" $kCtx) .http.relativePath }}
     {{- end }}
 ```
@@ -417,7 +410,7 @@ In `Chart.yaml:
     version: 8.2.0
 ```
 
-### Configurinf Alfresco Content App
+### Configuring Alfresco Content App
 
 The content-app basic and SSO configuration sits only in the `values.yaml` file.
 Pay special attention to providing OAUTH2 urls that match your realm
@@ -472,3 +465,5 @@ We can now build and deploy the chart:
 helm dep up # pull dependencies
 helm install --generate-name --atomic .
 ```
+
+[alfresco-repository]: https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-repository

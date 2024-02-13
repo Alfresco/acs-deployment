@@ -73,7 +73,7 @@ need a kubernetes distribution setup on your local machine.
 > We usually use
 > [KinD](https://kind.sigs.k8s.io/docs/user/quick-start/#installation) but
 > Docker-desktop, Podman or miinkube should be OK to use if properly configured.
-i
+
 Give your kubernetes setup 8GB of RAM and a few CPUs.
 
 ### Ingress
@@ -91,7 +91,7 @@ installed and configured to handle local traffic on port 80.
 
 Make sure the nginx ingress controller have the following settings enabled:
 
-- `allow-snippet-annotations` set to`true`
+- `allow-snippet-annotations` set to `true`
 - `proxy-buffer-size` set to `12k`
 
 You can do that at installation time using [nginx-ingress
@@ -451,7 +451,7 @@ architecture we wanted and all the configured components should be configured
 properly to work together.
 
 ```bash
-helm dep up # pull dependencies
+helm dep build # pull dependencies
 helm install --generate-name --atomic .
 ```
 
