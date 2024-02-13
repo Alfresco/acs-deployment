@@ -30,10 +30,14 @@ config:
     additionalGlobalProperties:
       "authentication.chain": identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
       "identity-service.authentication.enabled": true
-      "identity-service.realm": alfresco
+      "identity-service.realm": YOUR-REALM
       "identity-service.auth-server-url": https://ids.example.com
       "identity-service.enable-basic-auth": true
+      "alfresco_user_store.adminusername": "admin@alfresco.com"
 ```
+
+* `alfresco_user_store.adminusername` can be used to override the default admin username,
+  in case your realm admin user doesn't match the default `admin` username.
 
 ### Share config
 
@@ -77,12 +81,12 @@ Set the following values:
 alfresco-digital-workspace:
   env:
     APP_CONFIG_AUTH_TYPE: OAUTH
-    APP_CONFIG_OAUTH2_HOST: https://ids.example.com/auth/realms/YOUR-REALM
+    APP_CONFIG_OAUTH2_HOST: https://ids.example.com/realms/YOUR-REALM
     APP_CONFIG_OAUTH2_CLIENTID: YOUR-CLIENT-ID
 alfresco-control-center:
   env:
     APP_CONFIG_AUTH_TYPE: OAUTH
-    APP_CONFIG_OAUTH2_HOST: https://ids.example.com/auth/realms/YOUR-REALM
+    APP_CONFIG_OAUTH2_HOST: https://ids.example.com/realms/YOUR-REALM
     APP_CONFIG_OAUTH2_CLIENTID: YOUR-CLIENT-ID
 ```
 
