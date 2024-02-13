@@ -18,33 +18,21 @@ You can further customize the login appearance by applying the
 
 You can follow your [preferred helm deployment guide](../), but before proceeding with
 the `helm install` or `helm upgrade` commands, you need to provide additional values and
-resources as described below.
+a configmap as described below.
 
 ### Repository config
 
-Create a configmap which overrides the identity service properties:
+Set the following values:
 
 ```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: repository-properties
-data:
-  alfresco-global.properties: |
-    authentication.chain = identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
-    identity-service.authentication.enabled = true
-    identity-service.realm = alfresco
-    identity-service.auth-server-url = https://ids.example.com
-    identity-service.enable-basic-auth = true
-```
-
-And set the following values:
-
-```yaml
-alfresco-repository:
-  configuration:
-    repository:
-      existingConfigMap: repository-properties
+config:
+  repository:
+    additionalGlobalProperties:
+      "authentication.chain": identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
+      "identity-service.authentication.enabled": true
+      "identity-service.realm": alfresco
+      "identity-service.auth-server-url": https://ids.example.com
+      "identity-service.enable-basic-auth": true
 ```
 
 ### Share config

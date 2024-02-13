@@ -200,6 +200,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
 | alfresco-transform-service.transformrouter.image.tag | string | `"4.0.1"` |  |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
+| config.repository.additionalGlobalProperties | object | `{}` |  |
+| config.repository.configMapName | string | `"repository"` |  |
 | database.configMapName | string | `"alfresco-infrastructure"` | Name of the secret managed by this chart |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
 | database.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. When using embedded postgres you need to also set `postgresql.existingSecret`. |

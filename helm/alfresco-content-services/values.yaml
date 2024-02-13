@@ -16,6 +16,10 @@
 # for performance tuning.
 infrastructure:
   configMapName: &infrastructure_cmName alfresco-infrastructure
+config:
+  repository:
+    configMapName: &repository_cmName repository
+    additionalGlobalProperties: {}
 global:
   # -- list of trusted URLs.
   # URLs a re used to configure Cross-origin protections
@@ -104,7 +108,7 @@ alfresco-repository:
     tag: 23.2.0-M1
   configuration:
     repository:
-      existingConfigMap: repository
+      existingConfigMap: *repository_cmName
       existingSecrets:
         - name: repository-secrets
           key: license.lic
