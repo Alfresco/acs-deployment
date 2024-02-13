@@ -22,7 +22,7 @@ data:
     authentication.chain = identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
     identity-service.authentication.enabled = true
     identity-service.realm = alfresco
-    identity-service.auth-server-url = ids.example.com
+    identity-service.auth-server-url = https://ids.example.com
     identity-service.enable-basic-auth = true
 ```
 
