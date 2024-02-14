@@ -40,21 +40,20 @@ elasticsearch:
   esJavaOpts: "-Xmx512m -Xms512m"
   resources:
     requests:
-      cpu: "100m"
+      cpu: "0.01"
       memory: "512Mi"
     limits:
-      cpu: "1000m"
+      cpu: "1"
       memory: "1Gi"
 alfresco-search-enterprise:
   resources:
     requests:
-      cpu: "100m"
+      cpu: "0.01"
       memory: "128Mi"
     limits:
       cpu: "1"
       memory: "1Gi"
 alfresco-transform-service:
-  enabled: true
   pdfrenderer:
     livenessProbe:
       initialDelaySeconds: 30
@@ -133,16 +132,24 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
+postgresql-sync: &postgresql-sync
+  primary:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
 alfresco-sync-service:
-  postgresql:
-    primary:
-      resources:
-        requests:
-          cpu: "0.01"
-          memory: "512Mi"
-        limits:
-          cpu: "2"
-          memory: "1Gi"
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+    limits:
+      cpu: "2"
+      memory: "1Gi"
+  postgresql: *postgresql-sync
 alfresco-ai-transformer:
   enabled: true
   replicaCount: 1
@@ -152,5 +159,14 @@ alfresco-ai-transformer:
     s3Bucket: somebucket
     region: us-east-1
     comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+activemq:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
 dtas:
   enabled: true
