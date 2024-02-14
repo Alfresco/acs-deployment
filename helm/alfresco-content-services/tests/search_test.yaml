@@ -4,9 +4,18 @@ templates:
   - config-infrastructure.yaml
   - secret-search.yaml
 tests:
-  - it: should render default config (solr6 with secret)
+  - it: should render solr6 with secret
     values: &testvalues
       - values/test_values.yaml
+    set:
+      alfresco-search:
+        enabled: true
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: solr6
     template: config-infrastructure.yaml
     asserts:
       - equal:
@@ -31,13 +40,21 @@ tests:
       - equal:
           path: data.SOLR_BASE_URL
           value: /solr
-  - it: should render an external config
+  - it: should render an external config with solr
     values: *testvalues
     set:
       global:
         search:
           url: https://mysearch.domain.tld:8984/search
           sharedSecret: supersecret
+      alfresco-search:
+        enabled: true
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: solr6
     template: config-infrastructure.yaml
     asserts:
       - equal:
@@ -102,10 +119,8 @@ tests:
   - it: Should complain on missing search index
     values: *testvalues
     set:
-      alfresco-search:
+      elasticsearch:
         enabled: false
-      alfresco-search-enterprise:
-        enabled: true
     template: config-infrastructure.yaml
     asserts:
       - failedTemplate:
@@ -113,3 +128,29 @@ tests:
             Chart is configured to use Alfresco Search Enterprise but no index
             backend has been provided. Set one using either global.search.url
             or elasticsearch.enabled
+
+  - it: Should complain on search flavour mismatch
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: true
+      alfresco-search-enterprise:
+        enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            .Values.alfresco-repository.search.flavor must be set to solr6
+        template: secret-search.yaml
+
+  - it: Should complain on search flavour mismatch (elasticsearch)
+    values: *testvalues
+    set:
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: solr6
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            .Values.alfresco-repository.search.flavor must be set to elasticsearch
+        template: secret-search.yaml
