@@ -15,8 +15,9 @@ helm upgrade --install ingress-nginx ingress-nginx \
   --namespace ingress-nginx --create-namespace
 ```
 
-Enable snippet annotations which is disabled by default for security reasons but
-we still requires it for `alfresco-search-services`.
+Enable snippet annotations which is disabled by default for security reasons, but
+we still requires it for `alfresco-search-services` while still filtering only
+the ones we strictly need.
 
 ```bash
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
