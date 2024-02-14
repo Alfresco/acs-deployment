@@ -39,6 +39,7 @@ share:
   image:
     tag: 7.0.1.3
 alfresco-search:
+  enabled: true
   repository:
     securecomms: none
   searchServicesImage:
