@@ -36,6 +36,23 @@ alfresco-search:
     limits:
       cpu: "2"
       memory: "1280Mi"
+elasticsearch:
+  esJavaOpts: "-Xmx512m -Xms512m"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+alfresco-search-enterprise:
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
 alfresco-transform-service:
   enabled: true
   pdfrenderer:
