@@ -168,5 +168,13 @@ activemq:
     requests:
       cpu: "0.01"
       memory: "512Mi"
+alfresco-digital-workspace:
+  resources:
+    requests:
+      cpu: "0.01"
+alfresco-control-center:
+  resources:
+    requests:
+      cpu: "0.01"
 dtas:
   enabled: true

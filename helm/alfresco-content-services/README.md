@@ -75,9 +75,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.nodeSelector | object | `{}` |  |
 | alfresco-control-center.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-control-center.resources.limits.cpu | string | `"1"` |  |
-| alfresco-control-center.resources.limits.memory | string | `"1024Mi"` |  |
-| alfresco-control-center.resources.requests.cpu | string | `"0.25"` |  |
-| alfresco-control-center.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-control-center.resources.limits.memory | string | `"512Mi"` |  |
+| alfresco-control-center.resources.requests.cpu | string | `"0.1"` |  |
+| alfresco-control-center.resources.requests.memory | string | `"128Mi"` |  |
 | alfresco-control-center.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-control-center.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
 | alfresco-control-center.securityContext.runAsNonRoot | bool | `true` |  |
@@ -98,9 +98,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.nodeSelector | object | `{}` |  |
 | alfresco-digital-workspace.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-digital-workspace.resources.limits.cpu | string | `"1"` |  |
-| alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
-| alfresco-digital-workspace.resources.requests.cpu | string | `"0.25"` |  |
-| alfresco-digital-workspace.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-digital-workspace.resources.limits.memory | string | `"512Mi"` |  |
+| alfresco-digital-workspace.resources.requests.cpu | string | `"0.1"` |  |
+| alfresco-digital-workspace.resources.requests.memory | string | `"128Mi"` |  |
 | alfresco-digital-workspace.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-digital-workspace.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
 | alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
