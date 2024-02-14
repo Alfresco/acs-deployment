@@ -121,7 +121,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` |  |
 | alfresco-repository.configuration.search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` |  |
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
-| alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
+| alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | alfresco-repository.image.tag | string | `"23.2.0-M1"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
@@ -129,7 +129,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-search-enterprise.enabled | bool | `false` |  |
+| alfresco-search-enterprise.enabled | bool | `true` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.0.1"` |  |
 | alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.0.0.1"` |  |
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.0.0.1"` |  |
@@ -144,7 +144,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
-| alfresco-search.enabled | bool | `true` |  |
+| alfresco-search.enabled | bool | `false` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
 | alfresco-search.external.port | string | `nil` | Port of the external solr6 instance. |
 | alfresco-search.ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utility & encode it with base64. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
@@ -235,7 +235,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
 | dtas.image.tag | string | `"v1.5.1"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
-| elasticsearch.enabled | bool | `false` | Enables the embedded elasticsearch cluster |
+| elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |

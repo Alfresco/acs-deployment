@@ -3,6 +3,13 @@
 alfresco-repository:
   image:
     tag: 7.0.1.10
+  configuration:
+    search:
+      flavor: solr6
+alfresco-search-enterprise:
+  enabled: false
+elasticsearch:
+  enabled: false
 alfresco-ai-transformer:
   image:
     tag: 1.3.0

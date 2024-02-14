@@ -3,6 +3,9 @@
 alfresco-repository:
   image:
     tag: 7.2.1.13
+  configuration:
+    search:
+      flavor: solr6
 alfresco-ai-transformer:
   image:
     tag: 1.5.1
@@ -37,6 +40,7 @@ alfresco-search:
   insightEngineImage:
     tag: 2.0.3.6
 alfresco-search-enterprise:
+  enabled: false
   liveIndexing:
     mediation:
       image:
@@ -53,6 +57,8 @@ alfresco-search-enterprise:
   reindexing:
     image:
       tag: 3.1.1.1
+elasticsearch:
+  enabled: false
 alfresco-digital-workspace:
   image:
     tag: 3.0.1

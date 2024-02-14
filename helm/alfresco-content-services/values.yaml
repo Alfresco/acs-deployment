@@ -127,7 +127,7 @@ alfresco-repository:
       existingSecret:
         name: *acs_database_secretName
     search:
-      flavor: solr6
+      flavor: elasticsearch
       existingConfigMap:
         name: *infrastructure_cmName
       existingSecret:
@@ -262,7 +262,7 @@ share:
         # service port
         port: repo_svc_port
 alfresco-search:
-  enabled: true
+  enabled: false
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
@@ -303,7 +303,7 @@ alfresco-search:
     #    hosts:
     #      - chart-example.local
 alfresco-search-enterprise:
-  enabled: false
+  enabled: true
   search:
     existingConfigMap:
       name: *infrastructure_cmName
@@ -535,7 +535,7 @@ alfresco-ai-transformer:
       name: *acs_messageBroker_secretName
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
-  enabled: false
+  enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
