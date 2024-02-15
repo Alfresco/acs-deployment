@@ -1,0 +1,13 @@
+hazelcast:
+  javaOpts: -Dhazelcast.config=/data/hazelcast/hazelcast.xml
+  existingConfigMap: manual-hazelcast-configuration
+mancenter:
+  enabled: true
+  yaml:
+    hazelcast-client:
+      cluster-name: test
+      network:
+        kubernetes:
+          enabled: true
+          service-name: hazelcast
+          namespace: default
