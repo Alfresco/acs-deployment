@@ -11,9 +11,9 @@ data:
         <cluster-name>test</cluster-name>
         <management-center data-access-enabled="true">
             <trusted-interfaces>
-                <interface>https://hazelcast-mancenter</interface>
+                <interface>10.42.0.*</interface>
             </trusted-interfaces>
-        </management-center>
+        </management-center>         
         <!-- Ephemeral lock store map definition -->
         <map name="lockStore">
             <backup-count>1</backup-count>
@@ -27,7 +27,6 @@ data:
         <network>
             <join>
                 <kubernetes enabled="true">
-                    <namespace>default</namespace>
                     <service-name>hazelcast</service-name>
                 </kubernetes>
             </join>

@@ -6,8 +6,3 @@ mancenter:
   yaml:
     hazelcast-client:
       cluster-name: test
-      network:
-        kubernetes:
-          enabled: true
-          service-name: hazelcast
-          namespace: default
