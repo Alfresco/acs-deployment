@@ -70,7 +70,6 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v5.13.1
         with:
           chart-dir: helm/${{ matrix.charts.name }}
-          yamllint-config-path: .yamllint.yaml
           helm-options: >-
             --set global.search.sharedSecret=dummy
             --set global.search.alfrescoRegistryPullSecrets=dummy
