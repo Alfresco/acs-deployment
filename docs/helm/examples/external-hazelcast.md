@@ -65,11 +65,11 @@
     apiVersion: v1
     kind: ConfigMap
     metadata:
-    name: manual-hazelcast-configuration
-    labels:
-      app.kubernetes.io/name: hazelcast
+      name: manual-hazelcast-configuration
+      labels:
+        app.kubernetes.io/name: hazelcast
     data:
-    hazelcast.xml: |
+      hazelcast.xml: |
     ```
 
     Now copy generated xml configuration into manifest file. (Remember to corectly indent copied text)
@@ -98,13 +98,13 @@
 
     ```yaml
     alfresco-repository:
-    replicaCount: 3
-    config:
-    repository:
-      additionalGlobalProperties: 
-      alfresco.hazelcast.embedded: false
-      alfresco.hazelcast.client.address: hazelcast:5701
-      alfresco.cluster.name: test
+      replicaCount: 3
+      config:
+        repository:
+          additionalGlobalProperties: 
+            alfresco.hazelcast.embedded: false
+            alfresco.hazelcast.client.address: hazelcast:5701
+            alfresco.cluster.name: test
     ```
 
     ```bash
