@@ -67,7 +67,7 @@
     metadata:
     name: manual-hazelcast-configuration
     labels:
-        app.kubernetes.io/name: hazelcast
+      app.kubernetes.io/name: hazelcast
     data:
     hazelcast.xml: |
     ```
@@ -84,10 +84,10 @@
 
     ```yaml
     hazelcast:
-    javaOpts: -Dhazelcast.config=/data/hazelcast/hazelcast.xml
-    existingConfigMap: manual-hazelcast-configuration
+      javaOpts: -Dhazelcast.config=/data/hazelcast/hazelcast.xml
+      existingConfigMap: manual-hazelcast-configuration
     mancenter:
-    enabled: false
+      enabled: true
     ```
 
     ```bash
@@ -101,10 +101,10 @@
     replicaCount: 3
     config:
     repository:
-        additionalGlobalProperties: 
-        alfresco.hazelcast.embedded: false
-        alfresco.hazelcast.client.address: hazelcast:5701
-        alfresco.cluster.name: test
+      additionalGlobalProperties: 
+      alfresco.hazelcast.embedded: false
+      alfresco.hazelcast.client.address: hazelcast:5701
+      alfresco.cluster.name: test
     ```
 
     ```bash
