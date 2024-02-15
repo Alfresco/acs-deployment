@@ -3,7 +3,9 @@
 - [Alfresco Content Services Helm Deployment with external Hazelcast
   cluster](#alfresco-content-services-helm-deployment-with-external-hazelcast-cluster).
   - [Prerequisites](#prerequisites)
+  - [Warning](#warning)
   - [Step by step guide](#step-by-step-guide)
+  - [Tests](#tests)
 
 ## Prerequisites
 
@@ -12,6 +14,15 @@
     Helm, ready to use right after installation.
   - [Docker for Desktop](https://docs.docker.com/desktop/). Requires separate
     install of kubectl and Helm.
+
+## Warning
+
+  This feautre won't be showing proper server details on Alfresco UI in
+  Repository Server Clustering under section Cluster Members. Alfresco
+  repository pod will be still present after scaling it down. Pod with new name
+  will be added to list but the older will still remain. To verify that the
+  solution is working you can check managment center or do manual test described
+  in [Tests](#tests)
 
 ## Step by step guide
 
@@ -132,4 +143,48 @@
     --atomic \
     --timeout 10m0s \
     --values acs-hazelcast.yaml
+    ```
+
+## Tests
+
+1. Make sure that you have installed fresh environment. Do not login into
+   Alfresco UI yet.
+
+2. Add ubuntu deployment.
+
+    ```bash
+    helm repo add open https://simonmisencik.github.io/helm-charts
+    helm repo update
+    helm install testing open/ubuntu
+    ```
+
+3. Get into a shell of container created by previous commands.
+
+    ```bash
+    kubectl exec --stdin --tty testing-ubuntu -- /bin/bash
+    ```
+
+4. Execute curl command against all hazelcast nodes.
+
+    ```bash
+    curl http://hazelcast-0.hazelcast.default.svc.cluster.local:5701/hazelcast/rest/maps/cache.usernameToTicketIdCache/admin -o -
+    ```
+
+    ```bash
+    curl http://hazelcast-1.hazelcast.default.svc.cluster.local:5701/hazelcast/rest/maps/cache.usernameToTicketIdCache/admin -o -
+    ```
+
+    ```bash
+    curl http://hazelcast-2.hazelcast.default.svc.cluster.local:5701/hazelcast/rest/maps/cache.usernameToTicketIdCache/admin -o -
+    ```
+
+    You should get empty response.
+
+5. Login into [Alfresco
+   UI](http://localhost/alfresco/s/enterprise/admin/admin-clustering) and after
+   that repeat commands from previous step. You should see resposne from all
+   nodes simillar to this:
+
+    ```bash
+    ????????admin????(92023d8ea10294a2e32b238963e67d8013342e30
     ```
