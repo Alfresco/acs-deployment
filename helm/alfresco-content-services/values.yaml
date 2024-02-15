@@ -360,17 +360,14 @@ alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-dw"
-  service:
-    envType: frontend
   ingress:
-    path: /workspace
     annotations:
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    hosts:
+      - paths:
+          - path: /workspace
+            pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 4.3.0
@@ -381,6 +378,7 @@ alfresco-digital-workspace:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
+    BASE_PATH: /workspace
   securityContext:
     runAsNonRoot: true
     runAsUser: 101
@@ -399,16 +397,14 @@ alfresco-control-center:
   nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-cc"
-  service:
-    envType: frontend
   ingress:
-    path: /control-center
     annotations:
-      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    hosts:
+      - paths:
+          - path: /control-center
+            pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
     tag: 8.3.0
@@ -419,6 +415,7 @@ alfresco-control-center:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     API_URL: "{protocol}//{hostname}{:port}"
+    BASE_PATH: /control-center
   securityContext:
     runAsNonRoot: true
     runAsUser: 101
