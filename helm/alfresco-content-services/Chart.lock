@@ -31,7 +31,7 @@ dependencies:
   version: 5.1.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.2.2
+  version: 3.2.3
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.4.1
@@ -47,5 +47,5 @@ dependencies:
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
-digest: sha256:224edd6d6084d306631fb25a07ba2e2e79c7bf3d6a4c30b4c5a05bf2fc6fe894
-generated: "2024-02-15T12:57:11.079168+01:00"
+digest: sha256:45dcb19bf056071f33d91986b1315e5c98d8d9fb764025c5cf7342af04c6eb5c
+generated: "2024-02-15T16:53:23.229958+01:00"
