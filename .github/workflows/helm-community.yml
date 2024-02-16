@@ -91,7 +91,7 @@ jobs:
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 5m0s \
+            --wait --timeout 6m0s \
             --values ${{ matrix.values }} \
             --values ../../test/community-integration-test-values.yaml
         working-directory: helm/${{ matrix.name }}
