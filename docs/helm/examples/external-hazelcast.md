@@ -17,11 +17,11 @@
 
 ## Warning
 
-  This feautre won't be showing proper server details on Alfresco UI in
+  This feature won't be showing proper server details on Alfresco UI in
   Repository Server Clustering under section Cluster Members. Alfresco
   repository pod will be still present after scaling it down. Pod with new name
   will be added to list but the older will still remain. To verify that the
-  solution is working you can check managment center or do manual test described
+  solution is working you can check management center or do manual test described
   in [Tests](#tests)
 
 ## Step by step guide
@@ -41,10 +41,10 @@
    field  should be treated as a password, as if matching it allows
    client-server / member-member connection.
 
-4. Add appropriate configation for kubernetes autodiscovery feature and [rest
+4. Add appropriate configuration for kubernetes autodiscovery feature and [rest
    api
    groups](https://docs.hazelcast.com/hazelcast/5.3/maintain-cluster/rest-api#using-rest-endpoint-groups)
-   depending on your choise.
+   depending on your choice.
 
     ```xml
     <network>
@@ -66,7 +66,7 @@
     </jet>
     ```
 
-5. Accoringly change the values for managment center. Put internal network
+5. Accordingly change the values for management center. Put internal network
    address of your k8s.
 
     ```xml
@@ -92,7 +92,7 @@
     ```
 
     Now copy generated xml configuration into manifest file. (Remember to
-    corectly indent copied text)
+    correctly indent copied text)
 
 7. Deploy created [manifest](external-hazelcast_files/configmap-hazelcast.yaml)
 
@@ -182,8 +182,8 @@
 
 5. Login into [Alfresco
    UI](http://localhost/alfresco/s/enterprise/admin/admin-clustering) and after
-   that repeat commands from previous step. You should see resposne from all
-   nodes simillar to this:
+   that repeat commands from previous step. You should see response from all
+   nodes similar to this:
 
     ```bash
     ????????admin????(92023d8ea10294a2e32b238963e67d8013342e30
