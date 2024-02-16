@@ -69,8 +69,8 @@
     </jet>
     ```
 
-5. Accordingly change the values for management center. Put internal network
-   address of your k8s.
+5. Optionally change the values for management center. Either enter the internal
+   network address of your k8s or delete the whole section.
 
     ```xml
     <management-center data-access-enabled="true">
