@@ -40,6 +40,7 @@ tests:
       - equal:
           path: data.SOLR_BASE_URL
           value: /solr
+
   - it: should render an external config with solr
     values: *testvalues
     set:
@@ -79,6 +80,7 @@ tests:
       - equal:
           path: data.SOLR_BASE_URL
           value: /search
+
   - it: should render an enterprise search config (embedded)
     values: *testvalues
     set:
@@ -105,6 +107,7 @@ tests:
       - equal:
           path: data.SEARCH_FLAVOR
           value: elasticsearch
+
   - it: should not render a secret render property with default credentials
     values: *testvalues
     set:
@@ -116,6 +119,7 @@ tests:
       - hasDocuments:
           count: 0
         template: secret-search.yaml
+
   - it: Should complain on missing search index
     values: *testvalues
     set:
@@ -154,3 +158,20 @@ tests:
           errorMessage: >-
             .Values.alfresco-repository.search.flavor must be set to elasticsearch
         template: secret-search.yaml
+
+  - it: Should allow fallback on solr when both are enabled
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: true
+      alfresco-search-enterprise:
+        enabled: true
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: solr6
+    asserts:
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: solr6
+        template: config-infrastructure.yaml
