@@ -1,0 +1,9 @@
+alfresco-repository:
+  replicaCount: 3
+config:
+  repository:
+    additionalGlobalProperties: 
+      alfresco.hazelcast.embedded: false
+      alfresco.hazelcast.client.address: hazelcast:5701
+      alfresco.cluster.name: test
+      alfresco.cluster.deadNodes.cleaner.inactivePeriodMilliseconds: 6000
