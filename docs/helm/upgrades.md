@@ -13,7 +13,8 @@ version in which they have been released.
 ## Unreleased
 
 * Search Enterprise is now the default search engine when installing Enterprise
-  version.
+  version. For production it's suggested to use an [external elaticsearch
+  index](examples/with-external-infrastructure.md#elasticsearch-index).
 
 ## 8.0.0-M.1
 
@@ -24,7 +25,7 @@ version in which they have been released.
   for database can be provided also via an existing configMap/secret in
   `.alfresco-sync-service.database`. Message broker configuration has been split
   from a single secret provided via
-  `.alfresco-sync-service.messaBroker.existingSecretName` to two separate
+  `.alfresco-sync-service.messageBroker.existingSecretName` to two separate
   existing configMap/secret. More details at [sync chart
   docs](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-sync-service/README.md)
 * ATS message broker configuration has been split from a single secret provided
