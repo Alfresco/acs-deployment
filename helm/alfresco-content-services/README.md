@@ -210,6 +210,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.secretName | string | `"alfresco-cs-database"` | Name of the secret managed by this chart |
 | database.sync.configMapName | string | `"alfresco-infrastructure"` | Name of the secret managed by this chart |
 | database.sync.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
+| database.sync.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. |
 | database.sync.password | string | `nil` | External Postgresql database password |
 | database.sync.secretName | string | `"alfresco-cs-sync"` | Name of the secret managed by this chart |
 | database.sync.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
@@ -243,6 +244,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
 | global.mail.port | int | `587` | SMTP server port |
 | global.mail.protocol | string | `"smtp"` | SMTP protocol to use. Either smtp or smtps |
+| global.search.existingSecretName | string | `nil` | Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys. |
 | global.search.flavor | string | `nil` | set the type of search service used externally (solr6 or elasticsearch) |
 | global.search.password | string | `nil` | Set password for authentication against the external elasticsearch service |
 | global.search.secretName | string | `"alfresco-search-secret"` | Name of the secret managed by this chart |
@@ -253,8 +255,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
-| messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection details (activemq.enabled must also be set to false) |
+| messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. |
+| messageBroker.password | string | `nil` | External message broker password |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
+| messageBroker.url | string | `nil` | Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`. |
+| messageBroker.user | string | `nil` | External message broker user |
 | postgresql-sync.auth.database | string | `"syncservice-postgresql"` |  |
 | postgresql-sync.auth.enablePostgresUser | bool | `false` |  |
 | postgresql-sync.auth.password | string | `"admin"` |  |

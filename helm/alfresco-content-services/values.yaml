@@ -59,6 +59,8 @@ global:
     password: null
     # -- Name of the secret managed by this chart
     secretName: &acs_search_secretName alfresco-search-secret
+    # -- Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
+    existingSecretName: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -98,13 +100,19 @@ database:
     configMapName: *infrastructure_cmName
     # -- Name of the secret managed by this chart
     secretName: &sync_database_secretName alfresco-cs-sync
-# -- Activemq connection details (activemq.enabled must also be set to false)
+    # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+    existingSecretName: null
 messageBroker:
+  # -- Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`.
   url: null
+  # -- External message broker user
   user: null
+  # -- External message broker password
   password: null
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  # -- Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys.
+  existingSecretName: null
 alfresco-repository:
   nameOverride: alfresco-repository
   image:
