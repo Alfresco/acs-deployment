@@ -91,7 +91,7 @@ jobs:
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 5m0s \
+            --wait --timeout 6m0s \
             --values ${{ matrix.values }} \
             --values ../../test/community-integration-test-values.yaml
         working-directory: helm/${{ matrix.name }}
@@ -102,9 +102,6 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-
-      - name: Wait ACS to warm up
-        run: sleep 60
 
       - uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v.3.0.0
         id: newman
