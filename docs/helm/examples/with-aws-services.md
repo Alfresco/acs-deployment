@@ -280,6 +280,8 @@ alfresco-search:
   enabled: false
 alfresco-search-enterprise:
   enabled: true
+elasticsearch:
+  enabled: false
 alfresco-sync-service:
   messageBroker: *acs_messageBroker
   database:

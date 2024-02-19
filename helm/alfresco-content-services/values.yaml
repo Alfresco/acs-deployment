@@ -53,6 +53,10 @@ global:
     securecomms: secret
     # -- Mandatory secret to provide when using Solr search with 'secret' security level
     sharedSecret: null
+    # -- Set username for authentication against the external elasticsearch service
+    username: null
+    # -- Set password for authentication against the external elasticsearch service
+    password: null
     # -- Name of the secret managed by this chart
     secretName: &acs_search_secretName alfresco-search-secret
   # -- If a private image registry a secret can be defined and passed to

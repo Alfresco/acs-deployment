@@ -244,10 +244,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.mail.port | int | `587` | SMTP server port |
 | global.mail.protocol | string | `"smtp"` | SMTP protocol to use. Either smtp or smtps |
 | global.search.flavor | string | `nil` | set the type of search service used externally (solr6 or elasticsearch) |
+| global.search.password | string | `nil` | Set password for authentication against the external elasticsearch service |
 | global.search.secretName | string | `"alfresco-search-secret"` | Name of the secret managed by this chart |
 | global.search.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
 | global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
 | global.search.url | string | `nil` | set this URL if you have an external search service |
+| global.search.username | string | `nil` | Set username for authentication against the external elasticsearch service |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
