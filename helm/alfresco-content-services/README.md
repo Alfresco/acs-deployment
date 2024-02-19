@@ -109,7 +109,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"alfresco-cs-database"` |  |
+| alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-repository.configuration.repository.existingConfigMap | string | `"repository"` |  |
 | alfresco-repository.configuration.repository.existingSecrets[0].key | string | `"license.lic"` |  |
 | alfresco-repository.configuration.repository.existingSecrets[0].name | string | `"repository-secrets"` |  |

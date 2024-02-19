@@ -137,7 +137,7 @@ alfresco-repository:
       existingConfigMap:
         name: *infrastructure_cmName
       existingSecret:
-        name: *acs_database_secretName
+        name: *acs_messageBroker_secretName
     search:
       flavor: elasticsearch
       existingConfigMap:
