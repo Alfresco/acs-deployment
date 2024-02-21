@@ -45,7 +45,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.image.repository | string | `"quay.io/alfresco/alfresco-activemq"` |  |
 | activemq.image.tag | string | `"5.18.3-jre17-rockylinux8"` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
-| activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
@@ -76,16 +75,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-control-center.ingress.tls | list | `[]` |  |
 | alfresco-control-center.nameOverride | string | `"alfresco-cc"` |  |
-| alfresco-control-center.nodeSelector | object | `{}` |  |
-| alfresco-control-center.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
-| alfresco-control-center.resources.limits.cpu | string | `"1"` |  |
-| alfresco-control-center.resources.limits.memory | string | `"512Mi"` |  |
-| alfresco-control-center.resources.requests.cpu | string | `"0.1"` |  |
-| alfresco-control-center.resources.requests.memory | string | `"128Mi"` |  |
-| alfresco-control-center.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
-| alfresco-control-center.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
-| alfresco-control-center.securityContext.runAsNonRoot | bool | `true` |  |
-| alfresco-control-center.securityContext.runAsUser | int | `101` |  |
 | alfresco-digital-workspace.enabled | bool | `true` |  |
 | alfresco-digital-workspace.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-digital-workspace.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
@@ -99,16 +88,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
-| alfresco-digital-workspace.nodeSelector | object | `{}` |  |
-| alfresco-digital-workspace.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
-| alfresco-digital-workspace.resources.limits.cpu | string | `"1"` |  |
-| alfresco-digital-workspace.resources.limits.memory | string | `"512Mi"` |  |
-| alfresco-digital-workspace.resources.requests.cpu | string | `"0.1"` |  |
-| alfresco-digital-workspace.resources.requests.memory | string | `"128Mi"` |  |
-| alfresco-digital-workspace.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
-| alfresco-digital-workspace.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
-| alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
-| alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
