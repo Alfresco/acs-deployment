@@ -16,19 +16,19 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 8.1.0 |
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 8.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 1.1.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-control-center(common) | 8.2.0 |
+| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-digital-workspace(common) | 8.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 1.1.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.4.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.6.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.4.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.3.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.5.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.5.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
@@ -75,9 +75,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.nodeSelector | object | `{}` |  |
 | alfresco-control-center.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-control-center.resources.limits.cpu | string | `"1"` |  |
-| alfresco-control-center.resources.limits.memory | string | `"1024Mi"` |  |
-| alfresco-control-center.resources.requests.cpu | string | `"0.25"` |  |
-| alfresco-control-center.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-control-center.resources.limits.memory | string | `"512Mi"` |  |
+| alfresco-control-center.resources.requests.cpu | string | `"0.1"` |  |
+| alfresco-control-center.resources.requests.memory | string | `"128Mi"` |  |
 | alfresco-control-center.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-control-center.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
 | alfresco-control-center.securityContext.runAsNonRoot | bool | `true` |  |
@@ -98,9 +98,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.nodeSelector | object | `{}` |  |
 | alfresco-digital-workspace.registryPullSecrets[0] | string | `"{{ $.Values.global.alfrescoRegistryPullSecrets }}"` |  |
 | alfresco-digital-workspace.resources.limits.cpu | string | `"1"` |  |
-| alfresco-digital-workspace.resources.limits.memory | string | `"1024Mi"` |  |
-| alfresco-digital-workspace.resources.requests.cpu | string | `"0.25"` |  |
-| alfresco-digital-workspace.resources.requests.memory | string | `"256Mi"` |  |
+| alfresco-digital-workspace.resources.limits.memory | string | `"512Mi"` |  |
+| alfresco-digital-workspace.resources.requests.cpu | string | `"0.1"` |  |
+| alfresco-digital-workspace.resources.requests.memory | string | `"128Mi"` |  |
 | alfresco-digital-workspace.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | alfresco-digital-workspace.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
 | alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
@@ -109,7 +109,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"alfresco-cs-database"` |  |
+| alfresco-repository.configuration.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-repository.configuration.repository.existingConfigMap | string | `"repository"` |  |
 | alfresco-repository.configuration.repository.existingSecrets[0].key | string | `"license.lic"` |  |
 | alfresco-repository.configuration.repository.existingSecrets[0].name | string | `"repository-secrets"` |  |
@@ -121,7 +121,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` |  |
 | alfresco-repository.configuration.search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` |  |
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
-| alfresco-repository.configuration.search.flavor | string | `"solr6"` |  |
+| alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | alfresco-repository.image.tag | string | `"23.2.0-M1"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
@@ -129,7 +129,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-search-enterprise.enabled | bool | `false` |  |
+| alfresco-search-enterprise.enabled | bool | `true` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.0.1"` |  |
 | alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.0.0.1"` |  |
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.0.0.1"` |  |
@@ -144,7 +144,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
-| alfresco-search.enabled | bool | `true` |  |
+| alfresco-search.enabled | bool | `false` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
 | alfresco-search.external.port | string | `nil` | Port of the external solr6 instance. |
 | alfresco-search.ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utility & encode it with base64. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
@@ -210,6 +210,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.secretName | string | `"alfresco-cs-database"` | Name of the secret managed by this chart |
 | database.sync.configMapName | string | `"alfresco-infrastructure"` | Name of the secret managed by this chart |
 | database.sync.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
+| database.sync.existingSecretName | string | `nil` | An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys. |
 | database.sync.password | string | `nil` | External Postgresql database password |
 | database.sync.secretName | string | `"alfresco-cs-sync"` | Name of the secret managed by this chart |
 | database.sync.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
@@ -235,7 +236,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
 | dtas.image.tag | string | `"v1.5.1"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
-| elasticsearch.enabled | bool | `false` | Enables the embedded elasticsearch cluster |
+| elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
@@ -243,16 +244,22 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
 | global.mail.port | int | `587` | SMTP server port |
 | global.mail.protocol | string | `"smtp"` | SMTP protocol to use. Either smtp or smtps |
+| global.search.existingSecretName | string | `nil` | Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys. |
 | global.search.flavor | string | `nil` | set the type of search service used externally (solr6 or elasticsearch) |
+| global.search.password | string | `nil` | Set password for authentication against the external elasticsearch service |
 | global.search.secretName | string | `"alfresco-search-secret"` | Name of the secret managed by this chart |
 | global.search.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
 | global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
 | global.search.url | string | `nil` | set this URL if you have an external search service |
+| global.search.username | string | `nil` | Set username for authentication against the external elasticsearch service |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
-| messageBroker | object | `{"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | Activemq connection details (activemq.enabled must also be set to false) |
+| messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. |
+| messageBroker.password | string | `nil` | External message broker password |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
+| messageBroker.url | string | `nil` | Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`. |
+| messageBroker.user | string | `nil` | External message broker user |
 | postgresql-sync.auth.database | string | `"syncservice-postgresql"` |  |
 | postgresql-sync.auth.enablePostgresUser | bool | `false` |  |
 | postgresql-sync.auth.password | string | `"admin"` |  |

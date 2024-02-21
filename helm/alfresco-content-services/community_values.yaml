@@ -8,11 +8,19 @@ alfresco-repository:
   persistence:
     accessModes:
       - ReadWriteOnce
+  configuration:
+    search:
+      flavor: solr6
+alfresco-search-enterprise:
+  enabled: false
+elasticsearch:
+  enabled: false
 share:
   image:
     repository: alfresco/alfresco-share
     tag: 23.1.1
 alfresco-search:
+  enabled: true
   searchServicesImage:
     repository: alfresco/alfresco-search-services
     tag: 2.0.9
@@ -33,8 +41,6 @@ alfresco-transform-service:
     replicaCount: 1
   filestore:
     enabled: false
-alfresco-search-enterprise:
-  enabled: false
 alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:

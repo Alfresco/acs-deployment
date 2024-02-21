@@ -53,8 +53,14 @@ global:
     securecomms: secret
     # -- Mandatory secret to provide when using Solr search with 'secret' security level
     sharedSecret: null
+    # -- Set username for authentication against the external elasticsearch service
+    username: null
+    # -- Set password for authentication against the external elasticsearch service
+    password: null
     # -- Name of the secret managed by this chart
     secretName: &acs_search_secretName alfresco-search-secret
+    # -- Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
+    existingSecretName: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -94,13 +100,19 @@ database:
     configMapName: *infrastructure_cmName
     # -- Name of the secret managed by this chart
     secretName: &sync_database_secretName alfresco-cs-sync
-# -- Activemq connection details (activemq.enabled must also be set to false)
+    # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+    existingSecretName: null
 messageBroker:
+  # -- Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`.
   url: null
+  # -- External message broker user
   user: null
+  # -- External message broker password
   password: null
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  # -- Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys.
+  existingSecretName: null
 alfresco-repository:
   nameOverride: alfresco-repository
   image:
@@ -125,9 +137,9 @@ alfresco-repository:
       existingConfigMap:
         name: *infrastructure_cmName
       existingSecret:
-        name: *acs_database_secretName
+        name: *acs_messageBroker_secretName
     search:
-      flavor: solr6
+      flavor: elasticsearch
       existingConfigMap:
         name: *infrastructure_cmName
       existingSecret:
@@ -262,7 +274,7 @@ share:
         # service port
         port: repo_svc_port
 alfresco-search:
-  enabled: true
+  enabled: false
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
@@ -303,7 +315,7 @@ alfresco-search:
     #    hosts:
     #      - chart-example.local
 alfresco-search-enterprise:
-  enabled: false
+  enabled: true
   search:
     existingConfigMap:
       name: *infrastructure_cmName
@@ -375,11 +387,11 @@ alfresco-digital-workspace:
         - ALL
   resources:
     requests:
-      cpu: "0.25"
-      memory: "256Mi"
+      cpu: "0.1"
+      memory: "128Mi"
     limits:
       cpu: "1"
-      memory: "1024Mi"
+      memory: "512Mi"
 alfresco-control-center:
   nodeSelector: {}
   enabled: true
@@ -413,11 +425,11 @@ alfresco-control-center:
         - ALL
   resources:
     requests:
-      cpu: "0.25"
-      memory: "256Mi"
+      cpu: "0.1"
+      memory: "128Mi"
     limits:
       cpu: "1"
-      memory: "1024Mi"
+      memory: "512Mi"
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository
   # Check [PostgreSQL Bitnami chart
@@ -535,7 +547,7 @@ alfresco-ai-transformer:
       name: *acs_messageBroker_secretName
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
-  enabled: false
+  enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 

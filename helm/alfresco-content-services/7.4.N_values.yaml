@@ -3,6 +3,9 @@
 alfresco-repository:
   image:
     tag: 7.4.1.3
+  configuration:
+    search:
+      flavor: solr6
 alfresco-transform-service:
   transformrouter:
     image:
@@ -32,6 +35,7 @@ share:
   image:
     tag: 7.4.1.3
 alfresco-search:
+  enabled: true
   searchServicesImage:
     tag: 2.0.9
   insightEngineImage:
@@ -54,6 +58,8 @@ alfresco-search-enterprise:
   reindexing:
     image:
       tag: 3.3.1.1
+elasticsearch:
+  enabled: false
 alfresco-digital-workspace:
   image:
     tag: 4.2.0

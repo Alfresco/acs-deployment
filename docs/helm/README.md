@@ -80,6 +80,7 @@ There are also several [examples](./examples) showing how to deploy with various
 * [Deploy with Intelligence Services](./examples/with-ai.md)
 * [Deploy with Microsoft 365 Connector (Office Online Integration)](./examples/with-ooi.md)
 * [Deploy with external Keycloak SSO authentication](./examples/with-keycloak.md)
+* [Deploy with external infrastructure components](./examples/with-external-infrastructure.md) (e.g. elasticsearch, activemq, postgres)
 * [Enable access to Search Services](./examples/search-services.mdi#enable-alfresco-search-services-external-access)
 * [Enable Email Services](./examples/email-enabled.md)
 * [Use a custom metadata keystore](./examples/custom-metadata-keystore.md)

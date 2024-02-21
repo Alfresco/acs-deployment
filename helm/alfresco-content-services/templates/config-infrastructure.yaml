@@ -29,14 +29,14 @@ data:
       {{- $search_url = printf "http://%s/solr" (include "alfresco-search-service.deployment.name" .) }}
     {{- else if eq "elasticsearch" $search_flavor }}
       {{- with .Values.elasticsearch }}
-      {{- if .enabled }}
-        {{- $esProto := .protocol | default "http" }}
-        {{- $esHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
-        {{- $esPort := .port | default 9200 }}
-        {{- $search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
-      {{- else }}
-        {{- fail "Chart is configured to use Alfresco Search Enterprise but no index backend has been provided. Set one using either global.search.url or elasticsearch.enabled" }}
-      {{- end }}
+        {{- if .enabled }}
+          {{- $esProto := .protocol | default "http" }}
+          {{- $esHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
+          {{- $esPort := .port | default 9200 }}
+          {{- $search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
+        {{- else }}
+          {{- fail "Chart is configured to use Alfresco Search Enterprise but no index backend has been provided. Set one using either global.search.url or elasticsearch.enabled" }}
+        {{- end }}
       {{- end }}
       {{- $search_comms := "" }}
       {{- if hasPrefix "https://" $search_url }}
