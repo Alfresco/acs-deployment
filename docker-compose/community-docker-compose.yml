@@ -80,7 +80,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.9
+    image: docker.io/alfresco/alfresco-search-services:2.0.9.1
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco

@@ -117,7 +117,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.2.0-M1
+    tag: 23.2.0-A21
   configuration:
     repository:
       existingConfigMap: *repository_cmName
@@ -207,42 +207,42 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.0.1
+      tag: 4.1.0-A1
   pdfrenderer:
     # -- Declares the alfresco-pdf-renderer service used by the content repository
     # to transform pdf files
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 5.0.1
+      tag: 5.1.0
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 5.0.1
+      tag: 5.1.0
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 5.0.1
+      tag: 5.1.0
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 5.0.1
+      tag: 5.1.0-A1
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 5.0.1
+      tag: 5.1.0
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -250,7 +250,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.0.1
+      tag: 4.1.0-A1
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -262,7 +262,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.2.0-M1
+    tag: 23.2.0-A21
   nameOverride: share
   repository:
     existingConfigMap:
@@ -290,10 +290,10 @@ alfresco-search:
         sharedSecret: SOLR_SECRET
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.0.9
+    tag: 2.0.9.1
   insightEngineImage:
     repository: quay.io/alfresco/insight-engine
-    tag: 2.0.9
+    tag: 2.0.9.1
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -333,16 +333,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.0.0.1
+        tag: 4.1.0-A4
     content:
       image:
-        tag: 4.0.0.1
+        tag: 4.1.0-A4
     metadata:
       image:
-        tag: 4.0.0.1
+        tag: 4.1.0-A4
     path:
       image:
-        tag: 4.0.0.1
+        tag: 4.1.0-A4
   reindexing:
     enabled: true
     repository:
@@ -354,7 +354,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 4.0.0.1
+      tag: 4.1.0-A4
 alfresco-digital-workspace:
   nodeSelector: {}
   enabled: true
@@ -372,7 +372,7 @@ alfresco-digital-workspace:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.3.0
+    tag: 4.4.0-7989911312
     pullPolicy: IfNotPresent
   registryPullSecrets:
     - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
@@ -410,7 +410,7 @@ alfresco-control-center:
     #      - chart-example.local
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.3.0
+    tag: 8.4.0-7989911312
     pullPolicy: IfNotPresent
   registryPullSecrets:
     - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
@@ -478,7 +478,7 @@ alfresco-sync-service:
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
   image:
-    tag: 5.0.0-M2
+    tag: 5.0.0-A14
   database:
     existingSecret:
       name: *sync_database_secretName
@@ -532,7 +532,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.0.1
+    tag: 3.1.0-A1
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
@@ -552,7 +552,6 @@ elasticsearch:
   enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false
