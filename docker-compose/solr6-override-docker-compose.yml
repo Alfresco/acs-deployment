@@ -31,7 +31,7 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
   solr6:
-    image: quay.io/alfresco/search-services:2.0.9.1
+    image: quay.io/alfresco/search-services:2.0.9
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco

@@ -36,9 +36,9 @@ share:
     tag: 23.1.1
 alfresco-search:
   searchServicesImage:
-    tag: 2.0.9.1
+    tag: 2.0.9
   insightEngineImage:
-    tag: 2.0.9.1
+    tag: 2.0.9
 alfresco-search-enterprise:
   liveIndexing:
     mediation:
