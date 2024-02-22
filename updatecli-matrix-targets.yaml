@@ -20,8 +20,6 @@ matrix:
       version:
       pattern:
       image:
-      compose_target: *composeNext
-      compose_key: $.services.activemq.image
       helm_target: *helmvaluesNext
       helm_key: $.activemq.image.tag
     share:
@@ -146,8 +144,6 @@ matrix:
       version:
       pattern:
       image:
-      compose_target: *compose23n
-      compose_key: $.services.activemq.image
       helm_target: *helmvalues23n
       helm_key: $.activemq.image.tag
     share:
@@ -270,8 +266,6 @@ matrix:
       image:
     activemq:
       version:
-      compose_target: *compose74
-      compose_key: $.services.activemq.image
       helm_target: *helmvalues74
       helm_key: $.activemq.image.tag
       pattern:
@@ -392,8 +386,6 @@ matrix:
       image:
     activemq:
       version:
-      compose_target: *compose73
-      compose_key: $.services.activemq.image
       helm_target: *helmvalues73
       helm_key: $.activemq.image.tag
       pattern:
@@ -514,8 +506,6 @@ matrix:
       image:
     activemq:
       version:
-      compose_target: *compose72
-      compose_key: $.services.activemq.image
       helm_target: *helmvalues72
       helm_key: $.activemq.image.tag
       pattern:
@@ -636,8 +626,6 @@ matrix:
       image:
     activemq:
       version:
-      compose_target: *compose71
-      compose_key: $.services.activemq.image
       helm_target: *helmvalues71
       helm_key: $.activemq.image.tag
       pattern:
@@ -751,8 +739,6 @@ matrix:
       image:
     activemq:
       version:
-      compose_target: *compose70
-      compose_key: $.services.activemq.image
       helm_target: *helmvalues70
       helm_key: $.activemq.image.tag
       pattern:
@@ -846,8 +832,6 @@ matrix:
       image:
     activemq:
       version:
-      compose_target: *composeOss
-      compose_key: $.services.activemq.image
       helm_target: *helmvaluesOss
       helm_key: $.activemq.image.tag
       pattern:
