@@ -11,6 +11,9 @@ alfresco-repository:
   configuration:
     search:
       flavor: solr6
+activemq:
+  image:
+    tag: 5.18.3-jre17-rockylinux8
 alfresco-search-enterprise:
   enabled: false
 elasticsearch:

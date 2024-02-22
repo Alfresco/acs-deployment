@@ -179,7 +179,7 @@ services:
       alfresco:
         condition: service_healthy
   activemq:
-    image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
+    image: quay.io/alfresco/alfresco-activemq:5.18.3-jre17-rockylinux8
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console

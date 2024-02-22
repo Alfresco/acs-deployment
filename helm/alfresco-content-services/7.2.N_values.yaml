@@ -6,6 +6,9 @@ alfresco-repository:
   configuration:
     search:
       flavor: solr6
+activemq:
+  image:
+    tag: 5.16.7-jre17-rockylinux8
 alfresco-ai-transformer:
   image:
     tag: 1.5.1

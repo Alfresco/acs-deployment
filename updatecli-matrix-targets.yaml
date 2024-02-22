@@ -16,6 +16,14 @@ matrix:
       helm_key: $.alfresco-repository.image.tag
       # keep the unused anchor to detect multiple usages when copying blocks for new versions
       helm_update_appVersion: &helm_update_appVersion true
+    activemq:
+      version:
+      pattern:
+      image:
+      compose_target: *composeNext
+      compose_key: $.services.activemq.image
+      helm_target: *helmvaluesNext
+      helm_key: $.activemq.image.tag
     share:
       version:
       pattern:
@@ -134,6 +142,14 @@ matrix:
       helm_target: &helmvalues23n >-
         helm/alfresco-content-services/23.N_values.yaml
       helm_key: $.alfresco-repository.image.tag
+    activemq:
+      version:
+      pattern:
+      image:
+      compose_target: *compose23n
+      compose_key: $.services.activemq.image
+      helm_target: *helmvalues23n
+      helm_key: $.activemq.image.tag
     share:
       version:
       pattern:
@@ -252,6 +268,14 @@ matrix:
       helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
+    activemq:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.activemq.image
+      helm_target: *helmvalues74
+      helm_key: $.activemq.image.tag
+      pattern:
+      image:
     share:
       version:
       compose_target: *compose74
@@ -364,6 +388,14 @@ matrix:
       helm_target: &helmvalues73 >-
         helm/alfresco-content-services/7.3.N_values.yaml
       helm_key: $.alfresco-repository.image.tag
+      pattern:
+      image:
+    activemq:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.activemq.image
+      helm_target: *helmvalues73
+      helm_key: $.activemq.image.tag
       pattern:
       image:
     share:
@@ -480,6 +512,14 @@ matrix:
       helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
+    activemq:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.activemq.image
+      helm_target: *helmvalues72
+      helm_key: $.activemq.image.tag
+      pattern:
+      image:
     share:
       version:
       compose_target: *compose72
@@ -594,6 +634,14 @@ matrix:
       helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
+    activemq:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.activemq.image
+      helm_target: *helmvalues71
+      helm_key: $.activemq.image.tag
+      pattern:
+      image:
     share:
       version:
       compose_target: *compose71
@@ -701,6 +749,14 @@ matrix:
       helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
+    activemq:
+      version:
+      compose_target: *compose70
+      compose_key: $.services.activemq.image
+      helm_target: *helmvalues70
+      helm_key: $.activemq.image.tag
+      pattern:
+      image:
     share:
       version:
       compose_target: *compose70
@@ -786,6 +842,14 @@ matrix:
       helm_target: &helmvaluesOss >-
         helm/alfresco-content-services/community_values.yaml
       helm_key: $.alfresco-repository.image.tag
+      pattern:
+      image:
+    activemq:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.activemq.image
+      helm_target: *helmvaluesOss
+      helm_key: $.activemq.image.tag
       pattern:
       image:
     share:
