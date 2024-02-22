@@ -13,6 +13,7 @@ alfresco-repository:
       flavor: solr6
 activemq:
   image:
+    repository: docker.io/alfresco/alfresco-activemq
     tag: 5.18.3-jre17-rockylinux8
 alfresco-search-enterprise:
   enabled: false
