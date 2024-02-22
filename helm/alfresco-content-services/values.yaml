@@ -155,6 +155,9 @@ alfresco-repository:
     accessModes:
       - ReadWriteMany
 activemq:
+  image:
+    repository: quay.io/alfresco/alfresco-activemq
+    tag: 5.18.3-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
   # -- Possibility to choose Node for pod, with a key-value pair label
