@@ -27,7 +27,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.5.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
@@ -166,10 +166,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.database.existingConfigMap.keys.url | string | `"SYNC_DATABASE_URL"` |  |
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
-| alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
+| alfresco-sync-service.enabled | bool | `true` |  |
 | alfresco-sync-service.image.tag | string | `"5.0.0-M2"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-sync-service.replicaCount | int | `2` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
 | alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
 | alfresco-sync-service.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
