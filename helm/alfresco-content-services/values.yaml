@@ -371,7 +371,6 @@ alfresco-digital-workspace:
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//{hostname}{:port}"
     BASE_PATH: /workspace
 alfresco-control-center:
   enabled: true
@@ -391,7 +390,6 @@ alfresco-control-center:
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//{hostname}{:port}"
     BASE_PATH: /control-center
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository

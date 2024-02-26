@@ -63,7 +63,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-connector-msteams.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
 | alfresco-connector-msteams.image.tag | string | `"2.0.0"` |  |
 | alfresco-control-center.enabled | bool | `true` |  |
-| alfresco-control-center.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-control-center.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
 | alfresco-control-center.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
 | alfresco-control-center.env.BASE_PATH | string | `"/control-center"` |  |
@@ -76,7 +75,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.ingress.tls | list | `[]` |  |
 | alfresco-control-center.nameOverride | string | `"alfresco-cc"` |  |
 | alfresco-digital-workspace.enabled | bool | `true` |  |
-| alfresco-digital-workspace.env.API_URL | string | `"{protocol}//{hostname}{:port}"` |  |
 | alfresco-digital-workspace.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
 | alfresco-digital-workspace.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
 | alfresco-digital-workspace.env.BASE_PATH | string | `"/workspace"` |  |
