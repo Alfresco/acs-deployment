@@ -477,8 +477,8 @@ alfresco-sync-service:
   # -- Toggle deployment of Alfresco Sync Service (Desktop-Sync)
   # Check [Alfresco Sync Service
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
-  replicaCount: 1
   enabled: true
+  replicaCount: 1
   image:
     tag: 5.0.0-M2
   database:
