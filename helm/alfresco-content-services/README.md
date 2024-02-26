@@ -27,7 +27,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.5.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.2.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
@@ -170,6 +170,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.image.tag | string | `"5.0.0-M2"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-sync-service.replicaCount | int | `1` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
 | alfresco-sync-service.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |

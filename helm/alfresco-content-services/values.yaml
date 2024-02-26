@@ -478,6 +478,7 @@ alfresco-sync-service:
   # Check [Alfresco Sync Service
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
+  replicaCount: 1
   image:
     tag: 5.0.0-M2
   database:
