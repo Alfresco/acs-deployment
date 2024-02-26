@@ -170,7 +170,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.image.tag | string | `"5.0.0-M2"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
-| alfresco-sync-service.replicaCount | int | `2` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
+| alfresco-sync-service.replicaCount | int | `1` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
 | alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
 | alfresco-sync-service.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
