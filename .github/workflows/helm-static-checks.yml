@@ -40,11 +40,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.13.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.15.1
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-plugin@v5.13.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-plugin@v5.15.1
         with:
           plugin_url: https://github.com/helm-unittest/helm-unittest
       - name: Run Helm unit tests if present
@@ -63,11 +63,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.13.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v5.15.1
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v5.13.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v5.15.1
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           helm-options: >-

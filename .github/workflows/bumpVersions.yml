@@ -52,9 +52,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.13.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.15.1
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.13.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.15.1
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -107,9 +107,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.13.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.15.1
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.13.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.15.1
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
