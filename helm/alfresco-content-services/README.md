@@ -86,6 +86,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
+| alfresco-digital-workspace.securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| alfresco-digital-workspace.securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
+| alfresco-digital-workspace.securityContext.capabilities.drop[1] | string | `"ALL"` |  |
+| alfresco-digital-workspace.securityContext.runAsNonRoot | bool | `true` |  |
+| alfresco-digital-workspace.securityContext.runAsUser | int | `101` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
