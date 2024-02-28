@@ -12,7 +12,7 @@ matrix:
         docker-compose/pre-release-docker-compose.yml
       compose_key: $.services.alfresco.image
       helm_target: &helmvaluesNext >-
-        helm/alfresco-content-services/pre_release_values.yaml
+        helm/alfresco-content-services/pre-release_values.yaml
       helm_key: $.alfresco-repository.image.tag
       # keep the unused anchor to detect multiple usages when copying blocks for new versions
       helm_update_appVersion: &helm_update_appVersion false
