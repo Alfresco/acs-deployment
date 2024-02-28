@@ -51,16 +51,16 @@ account.
 
 As of version 8.0.0 of the chart we have changed the release policy.
 Previously, the chart was released together with the ACS product and we were
-delivering additionnal values files for each major release of ACS (e.g. 7.3,
+delivering additional values files for each major release of ACS (e.g. 7.3,
 7.4, ...) and chart version were bumped with a similar increment as ACS.
 With version 6.0.0, we started applying major versions bumps to reflect
 breaking changes in the chart, despite only minor ACS release happened.
 
 With 8.0.0 onward, the release pace of the chart is completely independent from
-the product versions. We will also stick to semver principles when choosing
+the product versions. We will also stick to Semver principles when choosing
 next version number, meaning that:
 
-* patch version will be used for bugfixes (last digit)
+* patch version will be used for bug fixes (last digit)
 * minor version will be used for new features and modifications which do not
   introduce breaking changes in the configuration interface.
 * major version will be used for changes which involve breaking changes in the
@@ -73,10 +73,10 @@ deploy your ACS version, using the appropriate values file. For that reason we
 stop providing the table mapping chart versions with the ACS version they
 deploy (by default). Instead we'll just maintain the list of deprecated versions
 versions mapped with the latest versions of the charts we tested deployment
-with, so you can use that version to deploy older ACS version on kubernetes.
-Check the [ACS End of Life'd versions](#acs-end-of-lifed-versions)
+with, so you can use that version to deploy older ACS version on Kubernetes.
+Check the [ACS End of Life'd versions](#acs-end-of-lifed-versions) paragraph.
 
-You are encoraged to always use the latest version of the chart to deploy your
+You are encouraged to always use the latest version of the chart to deploy your
 currently supported ACS version, using the appropriate values file.
 
 Finally, the master branch of this repository used to contain the latest
