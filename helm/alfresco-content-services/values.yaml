@@ -571,7 +571,7 @@ dtas:
     assertions:
       acs:
         edition: Enterprise
-        version: 23.2.0
+        version: 23.1.1
         identity: false
         modules:
         - id: org.alfresco.integrations.google.docs
