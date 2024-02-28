@@ -16,25 +16,25 @@ alfresco-ai-transformer:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 2.1.2
+      tag: 2.1.1
   pdfrenderer:
     image:
-      tag: 3.1.2
+      tag: 3.1.1
   imagemagick:
     image:
-      tag: 3.1.2
+      tag: 3.1.1
   libreoffice:
     image:
-      tag: 3.1.2
+      tag: 3.1.1
   tika:
     image:
-      tag: 3.1.2
+      tag: 3.1.1
   transformmisc:
     image:
-      tag: 3.1.2
+      tag: 3.1.1
   filestore:
     image:
-      tag: 2.1.2
+      tag: 2.1.1
 share:
   image:
     tag: 7.2.1.13

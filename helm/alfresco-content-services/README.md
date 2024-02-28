@@ -153,7 +153,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| alfresco-search.insightEngineImage.tag | string | `"2.0.9.1"` |  |
+| alfresco-search.insightEngineImage.tag | string | `"2.0.9"` |  |
 | alfresco-search.nameOverride | string | `"alfresco-search"` |  |
 | alfresco-search.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-search.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
@@ -162,7 +162,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` |  |
 | alfresco-search.repository.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.0.9.1"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.9"` |  |
 | alfresco-sync-service.database.existingConfigMap.keys.url | string | `"SYNC_DATABASE_URL"` |  |
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
