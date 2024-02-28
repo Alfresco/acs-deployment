@@ -561,7 +561,8 @@ dtas:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
     tag: v1.5.1
     pullPolicy: IfNotPresent
-  additionalArgs: []
+  additionalArgs:
+    - --tb=short
   config:
     config:
       host: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
