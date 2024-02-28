@@ -141,6 +141,7 @@ matrix:
       helm_target: &helmvaluesCurrent >-
         helm/alfresco-content-services/values.yaml
       helm_key: $.alfresco-repository.image.tag
+      helm_update_appVersion: true
     activemq:
       version:
       pattern:
