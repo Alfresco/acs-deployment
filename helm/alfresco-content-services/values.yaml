@@ -372,14 +372,6 @@ alfresco-digital-workspace:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
     BASE_PATH: /workspace
-  securityContext:
-    runAsUser: 101
-    runAsNonRoot: true
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - NET_RAW
-        - ALL
 alfresco-control-center:
   enabled: true
   nameOverride: "alfresco-cc"

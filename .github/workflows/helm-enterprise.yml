@@ -138,8 +138,6 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl logs -l app.kubernetes.io/name=alfresco-dw --tail=-1
-          kubectl logs -l app.kubernetes.io/name=alfresco-cc --tail=-1
 
       - name: Run Newman tests
         uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v.3.0.0
