@@ -66,7 +66,7 @@ next version number, meaning that:
 * major version will be used for changes which involve breaking changes in the
   configuration interface.
 
-The `alfresco-conetnt-services` chart has always provided the ability to deploy
+The `alfresco-content-services` chart has always provided the ability to deploy
 any currently supported version of ACS and its components and will continue to
 do so. You are encoraged to always use the latest version of the chart to
 deploy your ACS version, using the appropriate values file. For that reason we
@@ -80,12 +80,12 @@ You are encouraged to always use the latest version of the chart to deploy your
 currently supported ACS version, using the appropriate values file.
 
 Finally, the master branch of this repository used to contain the latest
-versions, including non-released, versions!
+versions, including non-released versions!
 We're also moving away from this pattern and the chart will now only ever
 deploy released versions of our products.
 
 Should you want to try our latest dev versions, we now provide an additional
-values file called `pre-realeses_values.yaml` which will be bumped on a regular
+values file called `pre-release_values.yaml` which will be bumped on a regular
 basis.
 
 This also means we will not produce `-M*` versions of the chart anymore.
