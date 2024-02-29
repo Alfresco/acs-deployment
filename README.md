@@ -90,7 +90,7 @@ basis.
 
 This also means we will not produce `-M*` versions of the chart anymore.
 
-Check the [Release page](./releases) for the list of existing versions.
+Check the [Release page](https://github.com/Alfresco/acs-deployment/releases) for the list of existing versions.
 
 ### ACS End of Life'd versions
 
