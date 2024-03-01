@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 8.0.0-M.1](https://img.shields.io/badge/Version-8.0.0--M.1-informational?style=flat-square) ![AppVersion: 23.2.0-M1](https://img.shields.io/badge/AppVersion-23.2.0--M1-informational?style=flat-square)
+![Version: 8.0.0-M.1](https://img.shields.io/badge/Version-8.0.0--M.1-informational?style=flat-square) ![AppVersion: 23.1.1](https://img.shields.io/badge/AppVersion-23.1.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -125,7 +125,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| alfresco-repository.image.tag | string | `"23.2.0-M1"` |  |
+| alfresco-repository.image.tag | string | `"23.1.1"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
@@ -167,7 +167,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
-| alfresco-sync-service.image.tag | string | `"5.0.0-M2"` |  |
+| alfresco-sync-service.image.tag | string | `"4.0.1"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-sync-service.replicaCount | int | `1` |  |
@@ -220,7 +220,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.sync.user | string | `nil` | External Postgresql database user |
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
-| dtas.additionalArgs | list | `[]` |  |
+| dtas.additionalArgs[0] | string | `"--tb=short"` |  |
 | dtas.config.assertions.acs.edition | string | `"Enterprise"` |  |
 | dtas.config.assertions.acs.identity | bool | `false` |  |
 | dtas.config.assertions.acs.modules[0].id | string | `"org.alfresco.integrations.google.docs"` |  |
@@ -229,7 +229,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.assertions.acs.modules[1].id | string | `"alfresco-aos-module"` |  |
 | dtas.config.assertions.acs.modules[1].installed | bool | `true` |  |
 | dtas.config.assertions.acs.modules[1].version | string | `"2.0.0"` |  |
-| dtas.config.assertions.acs.version | string | `"23.2.0"` |  |
+| dtas.config.assertions.acs.version | string | `"23.1.1"` |  |
 | dtas.config.assertions.adw.base_path | string | `"/workspace"` |  |
 | dtas.config.config.host | string | `"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"` |  |
 | dtas.config.config.password | string | `"admin"` |  |
@@ -294,7 +294,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"23.2.0-M1"` |  |
+| share.image.tag | string | `"23.1.1"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
