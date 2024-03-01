@@ -95,7 +95,7 @@
 7. Deploy created [manifest](external-hazelcast_files/configmap-hazelcast.yaml)
 
     ```bash
-    kubectl apply -f configmap-hazelcast.yaml 
+    kubectl apply -f configmap-hazelcast.yaml
     ```
 
 8. Deploy hazelcast with [values](external-hazelcast_files/hazelcast.yaml)
@@ -128,15 +128,15 @@
       replicaCount: 3
       config:
         repository:
-          additionalGlobalProperties: 
+          additionalGlobalProperties:
             alfresco.hazelcast.embedded: false
             alfresco.hazelcast.client.address: hazelcast:5701
             alfresco.cluster.name: test
     ```
 
     ```bash
-    helm upgrade acs helm/alfresco-content-services \    
-    --values local-dev-values.yaml \
+    helm upgrade acs helm/alfresco-content-services \
+    --values local-dev_values.yaml \
     --set global.search.sharedSecret=$(openssl rand -hex 24) \
     --atomic \
     --timeout 10m0s \
