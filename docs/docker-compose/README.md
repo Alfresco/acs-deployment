@@ -44,9 +44,9 @@ Docker Daemon).
    located
 3. Log in to Quay.io with your credentials: `docker login quay.io` (only
    required if you're running an Enterprise version)
-4. Run `docker-compose up` to use the latest version of ACS Enterprise or
-   `docker-compose -f major.minor.N-docker-compose.yml up` to use a specific
-   version of ACS
+4. Run `docker compose up` to use the latest version of ACS Enterprise,
+   `docker compose -f major.minor.N-docker-compose.yml up` to use a previous
+   version of ACS, or `docker compose -f pre-release-docker-compose.yml up`
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
    * Control Center: [http://<machine_ip>:8080/admin](http://localhost:8080/admin)
@@ -69,7 +69,7 @@ It is of course possible to keep on using Solr on the latest Enterprise
 versions. To do so just use the extra argument shown bellow:
 
 ```bash
-docker-compose -f docker-compose.yml -f solr6-override-docker-compose.yml up -d
+docker compose -f docker-compose.yml -f solr6-override-docker-compose.yml up -d
 ```
 
 ### Troubleshooting Search Enterprise
@@ -341,18 +341,18 @@ To customise the Docker Compose deployment, for example applying AMPs, we recomm
 To bring the system down and cleanup the containers run the following command:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## Troubleshooting
 
-If you have issues running `docker-compose up` after deleting a previous Docker Compose cluster, try replacing step 4 with the following command:
+If you have issues running `docker compose up` after deleting a previous Docker Compose cluster, try replacing step 4 with the following command:
 
 ```bash
-docker-compose down && docker-compose build --no-cache && docker-compose up
+docker compose down && docker compose build --no-cache && docker compose up
 ```
 
-If you are experiencing issues running `docker-compose up` on Windows environments due to unavailable or reserved ports and get errors such as:
+If you are experiencing issues running `docker compose up` on Windows environments due to unavailable or reserved ports and get errors such as:
 
 > bind: An attempt was made to access a socket in a way forbidden by its access permissions
 
@@ -360,7 +360,7 @@ would mean that Windows winnat service has reserved the port range that docker c
 
 ```bash
 net stop winnat
-docker-compose up
+docker compose up
 net start winnat
 ```
 
