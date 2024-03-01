@@ -103,17 +103,17 @@ and therefore requires a large amount of resources out-of-the-box. To reduce the
 size of the deployment so it can run on a single machine we'll need to reduce
 the number of pods deployed and the memory requirements for several others.
 
-To install the Enterprise on localhost we need to use the local-dev-values.yaml
+To install the Enterprise on localhost we need to use the local-dev_values.yaml
 
 ```bash
-curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/local-dev-values.yaml
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/local-dev_values.yaml
 ```
 
 Once downloaded, execute the following to initiate the deployment.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --values local-dev-values.yaml \
+  --values local-dev_values.yaml \
   --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
@@ -135,7 +135,7 @@ To deploy a previous version of ACS Enterprise follow the steps below.
    ```bash
    helm install acs alfresco/alfresco-content-services \
      --values MAJOR.MINOR.N_values.yaml \
-     --values local-dev-values.yaml \
+     --values local-dev_values.yaml \
      --atomic \
      --timeout 10m0s \
      --namespace alfresco
@@ -157,7 +157,7 @@ To deploy ACS platform with the latest development version follow the steps belo
    ```bash
    helm install acs alfresco/alfresco-content-services \
      --values pre-release_values.yaml \
-     --values local-dev-values.yaml \
+     --values local-dev_values.yaml \
      --atomic \
      --timeout 10m0s \
      --namespace alfresco
