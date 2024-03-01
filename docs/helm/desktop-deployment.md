@@ -145,6 +145,28 @@ To deploy a previous version of ACS Enterprise follow the steps below.
 patient. See below for
 [troubleshooting](#troubleshooting) tips.
 
+#### Development versions deployment
+
+To deploy ACS platform with the latest development version follow the steps below.
+
+1. Download the
+   [pre-release_values.yaml
+   file](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/pre-release_values.yaml)
+2. Deploy ACS by executing the following command:
+
+   ```bash
+   helm install acs alfresco/alfresco-content-services \
+     --values pre-release_values.yaml \
+     --values local-dev-values.yaml \
+     --atomic \
+     --timeout 10m0s \
+     --namespace alfresco
+   ```
+
+> NOTE: The command will wait until the deployment is ready so please be
+patient. See below for
+[troubleshooting](#troubleshooting) tips.
+
 ## Access
 
 When the deployment has completed the following URLs will be available:
