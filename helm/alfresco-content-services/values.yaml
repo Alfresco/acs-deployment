@@ -529,14 +529,14 @@ dtas:
     assertions:
       acs:
         edition: Enterprise
-        version: 23.1.1
+        version: 23.2.0
         identity: false
         modules:
         - id: org.alfresco.integrations.google.docs
-          version: 4.0.0
+          version: 4.1.0
           installed: true
         - id: alfresco-aos-module
-          version: 2.0.0
+          version: 3.0.0
           installed: true
       adw:
         base_path: "/workspace"

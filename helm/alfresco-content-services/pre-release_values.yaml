@@ -85,5 +85,5 @@ dtas:
         version: 23.2.0
         modules:
         - id: org.alfresco.integrations.google.docs
-          version: 4.1.0-A2
+          version: 4.1.0
           installed: true
