@@ -141,10 +141,9 @@ First ensure that:
 
 Start the release by opening a PR against the appropriate branch that will:
 
-* Update the [versioning table](#versioning)
+* Update the [EOL table](#acs-end-of-lifed-versions) in case a version is deprecated
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
-  bump chart version to the version you want to release (use `-M.x` suffix if
-  it's a prerelease)
+  bump chart version to the version you want to release
 * Run `pre-commit run --all-files helm-docs` to update helm docs
 * Edit [upgrades docs](docs/helm/upgrades.md) renaming the `To be released`
   section to the current version and create a new `To be released` section for
