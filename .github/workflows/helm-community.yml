@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: azure/setup-helm@v3
+      - uses: azure/setup-helm@v4
         with:
          version: "3.12.1"
 
