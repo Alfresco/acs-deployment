@@ -31,8 +31,8 @@ deployment is destroyed or rolled back!
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://activiti.github.io/activiti-cloud-helm-charts | alfresco-content-app(common) | 8.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-content-app(alfresco-adf-app) | 0.1.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 0.3.0 |
 | https://codecentric.github.io/helm-charts | keycloakx | 2.3.0 |
