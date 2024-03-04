@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 23.2.0-A21
+    tag: 23.2.1
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
@@ -34,7 +34,7 @@ alfresco-ai-transformer:
     tag: 3.1.1-A1
 share:
   image:
-    tag: 23.2.0-A21
+    tag: 23.2.1
 alfresco-search:
   searchServicesImage:
     tag: 2.0.9.1
@@ -44,25 +44,25 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.0.1-A3
+        tag: 4.1.0-A7
     content:
       image:
-        tag: 4.0.1-A3
+        tag: 4.1.0-A7
     metadata:
       image:
-        tag: 4.0.1-A3
+        tag: 4.1.0-A7
     path:
       image:
-        tag: 4.0.1-A3
+        tag: 4.1.0-A7
   reindexing:
     image:
-      tag: 4.0.1-A3
+      tag: 4.1.0-A7
 alfresco-digital-workspace:
   image:
-    tag: 4.4.0-8081773191
+    tag: 4.4.0
 alfresco-control-center:
   image:
-    tag: 8.4.0-8081773191
+    tag: 8.4.0
 postgresql:
   image:
     tag: 14.4.0
@@ -71,7 +71,7 @@ postgresql-syncservice:
     tag: 14.4.0
 alfresco-sync-service:
   image:
-    tag: 5.0.0-A14
+    tag: 5.0.0-M3
 alfresco-connector-ms365:
   image:
     tag: 2.0.0

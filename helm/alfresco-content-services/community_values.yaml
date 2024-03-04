@@ -4,7 +4,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.1.0
+    tag: 23.2.1
   persistence:
     accessModes:
       - ReadWriteOnce
@@ -22,12 +22,12 @@ elasticsearch:
 share:
   image:
     repository: alfresco/alfresco-share
-    tag: 23.1.1
+    tag: 23.2.1
 alfresco-search:
   enabled: true
   searchServicesImage:
     repository: alfresco/alfresco-search-services
-    tag: 2.0.9
+    tag: 2.0.9.1
 # Disable Enterprise only features
 alfresco-transform-service:
   enabled: true
