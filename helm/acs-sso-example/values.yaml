@@ -223,12 +223,8 @@ alfresco-share:
 alfresco-content-app:
   nameOverride: alfresco-content-app
   enabled: true
-  service:
-    envType: frontend
   ingress:
-    ingressClassName: nginx
-    hostName: localhost
-    path: /workspace
+    className: nginx
     annotations:
       nginx.ingress.kubernetes.io/proxy-body-size: 5g
       nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
@@ -240,21 +236,7 @@ alfresco-content-app:
   env:
     APP_CONFIG_PROVIDER: ECM
     APP_CONFIG_AUTH_TYPE: OAUTH
-    API_URL: "{protocol}//{hostname}{:port}"
     APP_CONFIG_OAUTH2_HOST: "{protocol}//{hostname}{:port}/auth/realms/alfresco"
     APP_CONFIG_OAUTH2_CLIENTID: alfresco
     APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/assets/silent-refresh.html"
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 101
-    capabilities:
-      drop:
-        - NET_RAW
-        - ALL
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "256Mi"
-    limits:
-      cpu: "1"
-      memory: "1024Mi"
+    BASE_PATH: /

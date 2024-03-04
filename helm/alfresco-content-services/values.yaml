@@ -160,9 +160,6 @@ activemq:
     tag: 5.18.3-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
-  # -- Possibility to choose Node for pod, with a key-value pair label
-  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
-  nodeSelector: {}
   adminUser:
     # -- Default username for the embedded broker admin user
     user: admin
@@ -357,82 +354,43 @@ alfresco-search-enterprise:
     image:
       tag: 4.0.0.1
 alfresco-digital-workspace:
-  nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-dw"
-  service:
-    envType: frontend
   ingress:
-    path: /workspace
     annotations:
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    hosts:
+      - paths:
+          - path: /workspace
+            pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
     tag: 4.3.0
     pullPolicy: IfNotPresent
-  registryPullSecrets:
-    - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//{hostname}{:port}"
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 101
-    capabilities:
-      drop:
-        - NET_RAW
-        - ALL
-  resources:
-    requests:
-      cpu: "0.1"
-      memory: "128Mi"
-    limits:
-      cpu: "1"
-      memory: "512Mi"
+    BASE_PATH: /workspace
 alfresco-control-center:
-  nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-cc"
-  service:
-    envType: frontend
   ingress:
-    path: /control-center
     annotations:
-      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    hosts:
+      - paths:
+          - path: /control-center
+            pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
     tag: 8.3.0
     pullPolicy: IfNotPresent
-  registryPullSecrets:
-    - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//{hostname}{:port}"
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 101
-    capabilities:
-      drop:
-        - NET_RAW
-        - ALL
-  resources:
-    requests:
-      cpu: "0.1"
-      memory: "128Mi"
-    limits:
-      cpu: "1"
-      memory: "512Mi"
+    BASE_PATH: /control-center
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository
   # Check [PostgreSQL Bitnami chart

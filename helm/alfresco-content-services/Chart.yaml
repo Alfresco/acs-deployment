@@ -28,16 +28,16 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     alias: postgresql-sync
     condition: postgresql-sync.enabled
-  - name: common
+  - name: alfresco-adf-app
     alias: alfresco-control-center
-    repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 8.2.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.1.0-alpha.1
     condition: >-
       alfresco-control-center.enabled
-  - name: common
+  - name: alfresco-adf-app
     alias: alfresco-digital-workspace
-    repository: https://activiti.github.io/activiti-cloud-helm-charts
-    version: 8.2.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.1.0-alpha.1
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository

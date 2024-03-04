@@ -437,7 +437,6 @@ alfresco-content-app:
   env:
     APP_CONFIG_PROVIDER: ECM
     APP_CONFIG_AUTH_TYPE: OAUTH
-    API_URL: "{protocol}//{hostname}{:port}"
     APP_CONFIG_OAUTH2_HOST: "{protocol}//{hostname}{:port}/auth/realms/alfresco"
     APP_CONFIG_OAUTH2_CLIENTID: alfresco
     APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/assets/silent-refresh.html"
