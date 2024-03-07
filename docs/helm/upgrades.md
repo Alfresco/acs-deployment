@@ -10,7 +10,7 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
-## Unreleased
+## 8.0.0
 
 * Search Enterprise is now the default search engine when installing Enterprise
   version. For production it's suggested to use an [external elaticsearch
