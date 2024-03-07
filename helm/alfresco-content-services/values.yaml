@@ -366,7 +366,7 @@ alfresco-digital-workspace:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.4.0
+    tag: 4.4.1
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -385,7 +385,7 @@ alfresco-control-center:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.4.0
+    tag: 8.4.1
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
