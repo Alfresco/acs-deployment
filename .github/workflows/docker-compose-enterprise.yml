@@ -54,7 +54,7 @@ jobs:
     steps:
       - name: Verify docker-compose
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.13.1
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.19.0
         timeout-minutes: 10
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
