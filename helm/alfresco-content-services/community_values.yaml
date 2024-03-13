@@ -2,10 +2,6 @@
 # the latest version of the chart
 alfresco-repository:
   replicaCount: 1
-  strategy:
-    type: Recreate
-  autoscaling:
-    enabled: false
   image:
     repository: alfresco/alfresco-content-repository-community
     tag: 23.2.1
