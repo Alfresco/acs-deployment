@@ -1,8 +1,10 @@
 ---
 alfresco-repository:
+  autoscaling:
+    enabled: true
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "1"
       memory: "1024Mi"
     limits:
       cpu: "2"
