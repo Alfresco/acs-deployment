@@ -1,5 +1,8 @@
 ---
 alfresco-repository:
+  strategy:
+    type: Recreate
+    rollingUpdate: null
   resources:
     requests:
       cpu: "0.01"

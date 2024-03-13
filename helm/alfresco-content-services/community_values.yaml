@@ -4,6 +4,7 @@ alfresco-repository:
   replicaCount: 1
   strategy:
     type: Recreate
+    rollingUpdate: null
   autoscaling:
     enabled: false
   image:
