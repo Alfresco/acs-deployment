@@ -82,9 +82,10 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v5.13.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-2524
         with:
           ingress-nginx-ref: controller-v1.8.2
+          with-metrics: "true"
 
       - name: Set nginx ingress config
         run: >-
@@ -158,6 +159,7 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl get hpa
 
       - name: Run helm test
         id: helm_test
@@ -170,4 +172,4 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl get events
+          kubectl get hpa
