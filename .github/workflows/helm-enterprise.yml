@@ -170,3 +170,4 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl get events
