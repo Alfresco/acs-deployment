@@ -61,7 +61,7 @@ dependencies:
     version: 5.2.1
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 3.2.3
+    version: 3.2.4
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
