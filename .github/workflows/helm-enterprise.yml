@@ -121,23 +121,25 @@ jobs:
           fi
 
       - name: Helm install
-        run: >-
+        run: |
           helm dep up ./helm/alfresco-content-services &&
-          helm install acs ./helm/alfresco-content-services
-          --set global.search.sharedSecret="$(openssl rand -hex 24)"
-          --set global.known_urls=http://localhost
-          --set global.alfrescoRegistryPullSecrets=regcred
-          --wait --timeout 7m0s
-          --values helm/${{ matrix.name }}/${{ matrix.values }}
-          --values test/enterprise-integration-test-values.yaml
-          ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
-          ${{ steps.configurable-extra-values.outputs.helm_install_params }}
+          helm install acs ./helm/alfresco-content-services \
+            --set global.search.sharedSecret="$(openssl rand -hex 24)" \
+            --set global.known_urls=http://localhost \
+            --set global.alfrescoRegistryPullSecrets=regcred \
+            --values helm/${{ matrix.name }}/${{ matrix.values }} \
+            --values test/enterprise-integration-test-values.yaml \
+            ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }} \
+            ${{ steps.configurable-extra-values.outputs.helm_install_params }}
+          kubectl get pods --watch-only &
+          KWPID=$!
+          kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
 
       - name: Spit cluster status after install
         if: always()
         run: |
-          helm ls --all-namespaces
-          kubectl get all --all-namespaces
+          helm ls --all-namespaces --all
+          helm status acs --show-resources
           kubectl describe pod
 
       - name: Run Newman tests
@@ -156,7 +158,6 @@ jobs:
       - name: Spit cluster status after newman tests
         if: always() && steps.newman.outcome != 'skipped'
         run: |
-          helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
@@ -169,7 +170,6 @@ jobs:
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
           kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
-          helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
