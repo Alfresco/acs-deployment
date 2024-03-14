@@ -44,19 +44,19 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.1.0-A7
+        tag: 4.1.0-A8
     content:
       image:
-        tag: 4.1.0-A7
+        tag: 4.1.0-A8
     metadata:
       image:
-        tag: 4.1.0-A7
+        tag: 4.1.0-A8
     path:
       image:
-        tag: 4.1.0-A7
+        tag: 4.1.0-A8
   reindexing:
     image:
-      tag: 4.1.0-A7
+      tag: 4.1.0-A8
 alfresco-digital-workspace:
   image:
     tag: 4.4.1-8187474196
@@ -71,7 +71,7 @@ postgresql-syncservice:
     tag: 14.4.0
 alfresco-sync-service:
   image:
-    tag: 5.0.0-M3
+    tag: 5.0.0-A16
 alfresco-connector-ms365:
   image:
     tag: 2.0.0

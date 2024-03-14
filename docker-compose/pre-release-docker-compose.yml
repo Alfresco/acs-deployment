@@ -147,7 +147,7 @@ services:
       - 9200:9200
       - 9300:9300
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0-A7
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0-A8
     mem_limit: 1g
     depends_on:
       - elasticsearch
@@ -160,7 +160,7 @@ services:
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.1.0-A7
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.1.0-A8
     mem_limit: 1g
     restart: on-failure:10
     environment:

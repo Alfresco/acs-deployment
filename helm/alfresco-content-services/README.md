@@ -1,6 +1,6 @@
 # alfresco-content-services
 
-![Version: 8.0.0](https://img.shields.io/badge/Version-8.0.0-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)
+![Version: 8.0.1](https://img.shields.io/badge/Version-8.0.1-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -24,7 +24,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.6.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.4.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.6.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.2.1 |
@@ -110,16 +110,16 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
-| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.0.1"` |  |
-| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.0.0.1"` |  |
-| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.0.0.1"` |  |
-| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.0.0.1"` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"4.0.1"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"4.0.1"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.0.1"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.0.1"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
-| alfresco-search-enterprise.reindexing.image.tag | string | `"4.0.0.1"` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"4.0.1"` |  |
 | alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
