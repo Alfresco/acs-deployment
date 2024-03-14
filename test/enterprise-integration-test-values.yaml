@@ -2,8 +2,6 @@
 alfresco-repository:
   autoscaling:
     enabled: true
-    scaleUp:
-      stabilizationWindowSeconds: 5
   resources:
     requests:
       cpu: "0.5"
