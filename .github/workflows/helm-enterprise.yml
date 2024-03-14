@@ -159,7 +159,7 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl get hpa
+          kubectl events --for deployment/acs-alfresco-repository
 
       - name: Run helm test
         id: helm_test
@@ -172,4 +172,4 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl get hpa
+          kubectl events --for deployment/acs-alfresco-repository
