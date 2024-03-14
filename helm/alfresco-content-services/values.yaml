@@ -331,16 +331,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
     content:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
     metadata:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
     path:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
   reindexing:
     enabled: true
     repository:
@@ -352,7 +352,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 4.0.0.1
+      tag: 4.0.1
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
