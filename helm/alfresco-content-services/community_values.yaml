@@ -2,7 +2,7 @@
 # the latest version of the chart
 alfresco-repository:
   autoscaling:
-    enabled: true
+    enabled: false
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
