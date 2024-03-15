@@ -111,16 +111,14 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [ "${{ matrix.values }}" = "values.yaml" ]; then
-            echo "Enabling clustered tests"
-            echo "helm_install_params=--set alfresco-repository.replicaCount=2 --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
-          fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
             echo "Skipping renditions tests on ACS 7.0.N"
             echo "helm_install_params=--set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Helm install
+        env:
+          VALUES_FILE: ${{ matrix.values }}
         run: |
           helm dep up ./helm/alfresco-content-services &&
           helm install acs ./helm/alfresco-content-services \
@@ -134,6 +132,9 @@ jobs:
           kubectl get pods --watch-only &
           KWPID=$!
           kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
+          if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo "Waiting for ESC Reindexing job to complete"
+            kubectl wait --timeout=4m --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
+          fi
 
       - name: Spit cluster status after install
         if: always()
