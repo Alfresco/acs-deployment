@@ -53,7 +53,7 @@ jobs:
 
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-16G-4CPU
-    timeout-minutes: 10
+    timeout-minutes: 12
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -137,8 +137,10 @@ jobs:
           KWPID=$!
           kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
           if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo "Waiting for ESC Reindexing job to complete"
-            kubectl logs jobs/acs-alfresco-search-enterprise-reindexing &
-            kubectl wait --timeout=4m --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
+            kubectl logs jobs/acs-alfresco-search-enterprise-reindexing -c wait-for-repository -f
+            sleep 5
+            kubectl logs jobs/acs-alfresco-search-enterprise-reindexing -c alfresco-search-enterprise-reindexing -f &
+            kubectl wait --timeout=5m --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
           fi
 
       - name: Spit cluster status after install
