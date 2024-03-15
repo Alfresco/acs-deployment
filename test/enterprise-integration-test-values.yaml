@@ -42,7 +42,7 @@ elasticsearch:
   esJavaOpts: "-Xmx512m -Xms512m"
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.25"
       memory: "512Mi"
     limits:
       cpu: "1"
@@ -94,7 +94,7 @@ alfresco-transform-service:
       initialDelaySeconds: 30
     resources:
       requests:
-        cpu: "0.01"
+        cpu: "0.25"
         memory: "256Mi"
       limits:
         cpu: "2"
@@ -152,19 +152,6 @@ alfresco-sync-service:
       cpu: "2"
       memory: "1Gi"
   postgresql: *postgresql-sync
-alfresco-ai-transformer:
-  enabled: true
-  replicaCount: 1
-  aws:
-    accessKeyId: AAAAAAAAAAAAAAAAA
-    secretAccessKey: ZZZZZZZZZZZZZZZZZ
-    s3Bucket: somebucket
-    region: us-east-1
-    comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "512Mi"
 activemq:
   resources:
     requests:
