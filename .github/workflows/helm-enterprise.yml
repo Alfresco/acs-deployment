@@ -111,6 +111,10 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
+          if [ "${{ matrix.values }}" = "values.yaml" ]; then
+            echo "Enabling clustered tests"
+            echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+          fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
             echo "Skipping renditions tests on ACS 7.0.N"
             echo "helm_install_params=--set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"

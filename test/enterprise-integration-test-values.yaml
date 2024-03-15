@@ -1,7 +1,5 @@
 ---
 alfresco-repository:
-  autoscaling:
-    enabled: true
   resources:
     requests:
       cpu: "0.5"
@@ -129,7 +127,7 @@ postgresql:
   primary:
     resources:
       requests:
-        cpu: "0.01"
+        cpu: "0.25"
         memory: "512Mi"
       limits:
         cpu: "2"
