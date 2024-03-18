@@ -113,7 +113,9 @@ jobs:
         run: |
           if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml"]; then
             echo "Enabling clustered tests"
-            echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+            echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true \
+              --set alfresco-repository.autoscaling.maxReplicas=2 \
+              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
             echo "Skipping renditions tests on ACS 7.0.N"
@@ -180,3 +182,18 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
+
+      - name: Check HPA behavior (${{ matrix.values }})
+        if: matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml'
+        run: |
+          echo -n "Repository should have 2 replicas after Helm test... "
+          SETSIZE=$(kubectl get deployment/acs-alfresco-repository -o jsonpath='{@.spec.replicas}')
+          if [ "$SETSIZE" -ne 2 ]; then
+            echo "Got $SETSIZE instead"
+            exit 1
+          else
+            echo "Got $SETSIZE. Now waiting for scaling down"
+            kubectl patch hpa acs-alfresco-repository \
+              -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
+            kubectl wait --timeout=40s --for=jsonpath='spec.replicas'=1 hpa/acs-alfresco-repository
+          fi
