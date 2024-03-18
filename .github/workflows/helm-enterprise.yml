@@ -85,7 +85,7 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v5.20.0
         with:
           ingress-nginx-ref: controller-v1.8.2
-          with-metrics: "true"
+          metrics: "true"
 
       - name: Set nginx ingress config
         run: >-
