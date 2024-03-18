@@ -123,7 +123,6 @@ alfresco-transform-service:
       initialDelaySeconds: 40
       timeoutSeconds: 20
     livenessProbe:
-      path: /transform/config
       initialDelaySeconds: 40
       timeoutSeconds: 20
 postgresql:

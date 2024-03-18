@@ -180,6 +180,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.transformrouter.enabled | bool | `true` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
 | alfresco-transform-service.transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
 | alfresco-transform-service.transformrouter.image.tag | string | `"4.1.0"` |  |
+| alfresco-transform-service.transformrouter.livenessProbe.path | string | `"/transform/config"` | Overrride liveness probe endpoint to work around https://alfresco.atlassian.net/browse/ACS-7269 |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | config.repository.additionalGlobalProperties | object | `{}` |  |
 | config.repository.configMapName | string | `"repository"` |  |
