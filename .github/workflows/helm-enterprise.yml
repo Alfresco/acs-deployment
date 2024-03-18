@@ -111,7 +111,7 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [ "${{ matrix.values }}" = "values.yaml" ]; then
+          if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml"]; then
             echo "Enabling clustered tests"
             echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
