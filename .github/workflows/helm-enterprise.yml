@@ -113,11 +113,10 @@ jobs:
         id: configurable-extra-values
         run: |
           if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
-            echo "Enabling clustered tests"
+            echo "Enabling clustered tests via auto-scalling: 2 replicas max, 20s stabilization window"
             echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true \
               --set alfresco-repository.autoscaling.maxReplicas=2 \
-              --set alfresco-repository.autoscaling.scaleUp.stabilizationWindowSeconds=20 \
-              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+              --set alfresco-repository.autoscaling.behavior.scaleUp.stabilizationWindowSeconds=20" >> "$GITHUB_OUTPUT"
           fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
             echo "Skipping renditions tests on ACS 7.0.N"
@@ -184,8 +183,10 @@ jobs:
           kubectl events --for deployment/acs-alfresco-repository
 
       - name: Check HPA behavior (${{ matrix.values }})
-        if: matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml'
+        if: always() && (matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml') && steps.helm_test.outcome != 'skipped'
         run: |
+          echo "Checking current repo hpa status"
+          kubectl get hpa acs-alfresco-repository
           echo -n "Repository should have 2 replicas after Helm test... "
           SETSIZE=$(kubectl get deployment/acs-alfresco-repository -o jsonpath='{@.spec.replicas}')
           if [ "$SETSIZE" -ne 2 ]; then
