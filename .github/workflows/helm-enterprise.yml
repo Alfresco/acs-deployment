@@ -99,11 +99,12 @@ jobs:
           --type=kubernetes.io/dockerconfigjson
 
       - name: Check if cgroup v2 workaround is needed
+        if: startsWith(matrix.values, '7.')
+        env:
+          VALUES_FILE: ${{ matrix.values }}
         id: cgroupv2-workaround-extra-values
         run: |
-          acs_version=$(echo ${{ matrix.values }} | cut -d'.' -f1,2)
-          is_affected=$(echo "$acs_version <= 7.2" | bc -l)
-          if [ "$is_affected" -eq 1 ]; then
+          if [ ${VALUES_FILE:2:1} -le 2 ]; then
             echo "Enabling cgroupv v2 workaround"
             echo "helm_install_params=--values test/cgroup-v2-workaround-values.yaml" >> "$GITHUB_OUTPUT"
           fi
@@ -111,10 +112,11 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml"]; then
+          if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
             echo "Enabling clustered tests"
             echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true \
               --set alfresco-repository.autoscaling.maxReplicas=2 \
+              --set alfresco-repository.autoscaling.scaleUp.stabilizationWindowSeconds=20 \
               --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
@@ -139,8 +141,6 @@ jobs:
           KWPID=$!
           kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
           if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo "Waiting for ESC Reindexing job to complete"
-            kubectl logs jobs/acs-alfresco-search-enterprise-reindexing -c wait-for-repository -f > /dev/null
-            kubectl logs deployments/acs-transform-router -f &
             kubectl wait --timeout=5m --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
           fi
 
