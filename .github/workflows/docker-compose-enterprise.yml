@@ -27,7 +27,7 @@ jobs:
     outputs:
       matrix_json: ${{ steps.eval.outputs.matrix_json }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
       - name: Evaluate Matrix
         id: eval
         run: >-
@@ -54,7 +54,7 @@ jobs:
     steps:
       - name: Verify docker-compose
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.13.1
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.20.0
         timeout-minutes: 10
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
