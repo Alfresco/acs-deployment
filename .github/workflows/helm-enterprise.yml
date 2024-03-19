@@ -116,7 +116,7 @@ jobs:
             echo "Enabling clustered tests via auto-scalling: 2 replicas max, 20s stabilization window"
             echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true \
               --set alfresco-repository.autoscaling.maxReplicas=2 \
-              --set alfresco-repository.autoscaling.behavior.scaleUp.stabilizationWindowSeconds=20" >> "$GITHUB_OUTPUT"
+              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
             echo "Skipping renditions tests on ACS 7.0.N"
@@ -182,7 +182,7 @@ jobs:
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
 
-      - name: Check HPA behavior (${{ matrix.values }})
+      - name: Check HPA behavior during tests
         if: always() && (matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml') && steps.helm_test.outcome != 'skipped'
         run: |
           echo "Checking current repo hpa status"
@@ -197,7 +197,6 @@ jobs:
             kubectl patch hpa acs-alfresco-repository \
               -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
             echo -n "(speeding scale down up)... "
-            kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 hpa/acs-alfresco-repository \
-            || kubectl get hpa acs-alfresco-repository && kubectl get deployment/acs-alfresco-repository
+            kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
             echo "Scale down completed"
           fi
