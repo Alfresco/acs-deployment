@@ -116,6 +116,7 @@ jobs:
             echo "Enabling clustered tests via auto-scalling: 2 replicas max, 20s stabilization window"
             echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true \
               --set alfresco-repository.autoscaling.maxReplicas=2 \
+              --set alfresco-repository.autoscaling.behavior.scaleUp.stabilizationWindowSeconds=20 \
               --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
@@ -198,6 +199,6 @@ jobs:
             kubectl patch hpa acs-alfresco-repository \
               -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
             echo -n "(speeding scale down up)... "
-            kubectl wait --timeout=40s --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
+            kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
             echo "Scale down completed"
           fi
