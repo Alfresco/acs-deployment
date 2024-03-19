@@ -193,8 +193,10 @@ jobs:
             echo "Got $SETSIZE instead"
             exit 1
           else
-            echo "Got $SETSIZE. Now waiting for scaling down"
+            echo -n "Got $SETSIZE. Now waiting for scaling down. "
             kubectl patch hpa acs-alfresco-repository \
               -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
-            kubectl wait --timeout=40s --for=jsonpath='spec.replicas'=1 hpa/acs-alfresco-repository
+            echo -n "(speeding scale down up)... "
+            kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 hpa/acs-alfresco-repository
+            echo "Scale down completed"
           fi
