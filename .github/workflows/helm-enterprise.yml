@@ -113,7 +113,7 @@ jobs:
         id: configurable-extra-values
         run: |
           if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
-            echo "Enabling clustered tests via auto-scalling: 2 replicas max, 20s stabilization window"
+            echo "Enabling clustered tests via auto-scaling: 2 replicas max, 20s stabilization window"
             echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true \
               --set alfresco-repository.autoscaling.maxReplicas=2 \
               --set alfresco-repository.autoscaling.behavior.scaleUp.stabilizationWindowSeconds=20 \
