@@ -125,8 +125,6 @@ jobs:
           fi
 
       - name: Helm install
-        env:
-          VALUES_FILE: ${{ matrix.values }}
         run: |
           helm dep up ./helm/alfresco-content-services &&
           helm install acs ./helm/alfresco-content-services \
@@ -137,7 +135,12 @@ jobs:
             --values test/enterprise-integration-test-values.yaml \
             ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }} \
             ${{ steps.configurable-extra-values.outputs.helm_install_params }}
-          kubectl get pods --watch-only &
+
+      - name: Watch Helm deployment
+        env:
+          VALUES_FILE: ${{ matrix.values }}
+        run: |
+          kubectl get pods --watch &
           KWPID=$!
           kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
           if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo "Waiting for ESC Reindexing job to complete"
