@@ -125,16 +125,16 @@ jobs:
           fi
 
       - name: Helm install
-        run: |
+        run: >-
           helm dep up ./helm/alfresco-content-services &&
-          helm install acs ./helm/alfresco-content-services \
-            --set global.search.sharedSecret="$(openssl rand -hex 24)" \
-            --set global.known_urls=http://localhost \
-            --set global.alfrescoRegistryPullSecrets=regcred \
-            --values helm/${{ matrix.name }}/${{ matrix.values }} \
-            --values test/enterprise-integration-test-values.yaml \
-            ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }} \
-            ${{ steps.configurable-extra-values.outputs.helm_install_params }}
+          helm install acs ./helm/alfresco-content-services
+          --set global.search.sharedSecret="$(openssl rand -hex 24)"
+          --set global.known_urls=http://localhost
+          --set global.alfrescoRegistryPullSecrets=regcred
+          --values helm/${{ matrix.name }}/${{ matrix.values }}
+          --values test/enterprise-integration-test-values.yaml
+          ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
+          ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Watch Helm deployment
         env:
@@ -143,8 +143,9 @@ jobs:
           kubectl get pods --watch &
           KWPID=$!
           kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
-          if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo "Waiting for ESC Reindexing job to complete"
+          if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo -n "Waiting for ESC Reindexing job to complete... "
             kubectl wait --timeout=5m --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
+            echo "Completed."
           fi
 
       - name: Spit cluster status after install
