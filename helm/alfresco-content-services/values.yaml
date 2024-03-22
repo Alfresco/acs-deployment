@@ -206,6 +206,10 @@ alfresco-transform-service:
     image:
       repository: quay.io/alfresco/alfresco-transform-router
       tag: 4.1.0
+    livenessProbe:
+      # -- Overrride liveness probe endpoint to work around
+      # https://alfresco.atlassian.net/browse/ACS-7269
+      path: /transform/config
   pdfrenderer:
     # -- Declares the alfresco-pdf-renderer service used by the content repository
     # to transform pdf files

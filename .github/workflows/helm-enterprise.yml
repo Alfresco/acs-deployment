@@ -30,7 +30,7 @@ jobs:
     outputs:
       ver_json: ${{ steps.app_versions.outputs.json }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
         with:
           fetch-depth: 0
       - name: Get charts
@@ -53,7 +53,7 @@ jobs:
 
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-16G-4CPU
-    timeout-minutes: 10
+    timeout-minutes: 12
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -62,29 +62,30 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
 
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@b7246b12e77f7134dc2d460a3d5bad15bbe29390
         with:
-          version: "3.12.1"
+          version: "3.14.3"
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20  # v3.1.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Login to Quay.io
-        uses: docker/login-action@v3
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20  # v3.1.0
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v5.13.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v5.20.0
         with:
           ingress-nginx-ref: controller-v1.8.2
+          metrics: "true"
 
       - name: Set nginx ingress config
         run: >-
@@ -98,11 +99,12 @@ jobs:
           --type=kubernetes.io/dockerconfigjson
 
       - name: Check if cgroup v2 workaround is needed
+        if: startsWith(matrix.values, '7.')
+        env:
+          VALUES_FILE: ${{ matrix.values }}
         id: cgroupv2-workaround-extra-values
         run: |
-          acs_version=$(echo ${{ matrix.values }} | cut -d'.' -f1,2)
-          is_affected=$(echo "$acs_version <= 7.2" | bc -l)
-          if [ "$is_affected" -eq 1 ]; then
+          if [ ${VALUES_FILE:2:1} -le 2 ]; then
             echo "Enabling cgroupv v2 workaround"
             echo "helm_install_params=--values test/cgroup-v2-workaround-values.yaml" >> "$GITHUB_OUTPUT"
           fi
@@ -110,9 +112,12 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [ "${{ matrix.values }}" = "values.yaml" ]; then
-            echo "Enabling clustered tests"
-            echo "helm_install_params=--set alfresco-repository.replicaCount=2 --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+          if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
+            echo "Enabling clustered tests via auto-scaling: 2 replicas max, 10s stabilization window"
+            echo "helm_install_params=--set alfresco-repository.autoscaling.enabled=true \
+              --set alfresco-repository.autoscaling.maxReplicas=2 \
+              --set alfresco-repository.autoscaling.behavior.scaleUp.stabilizationWindowSeconds=10 \
+              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
           if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
             echo "Skipping renditions tests on ACS 7.0.N"
@@ -126,21 +131,32 @@ jobs:
           --set global.search.sharedSecret="$(openssl rand -hex 24)"
           --set global.known_urls=http://localhost
           --set global.alfrescoRegistryPullSecrets=regcred
-          --wait --timeout 7m0s
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
+      - name: Watch Helm deployment
+        env:
+          VALUES_FILE: ${{ matrix.values }}
+        run: |
+          kubectl get pods --watch &
+          KWPID=$!
+          kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
+          if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo -n "Waiting for ESC Reindexing job to complete... "
+            kubectl wait --timeout=5m --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
+            echo "Completed."
+          fi
+
       - name: Spit cluster status after install
         if: always()
         run: |
-          helm ls --all-namespaces
-          kubectl get all --all-namespaces
+          helm ls --all-namespaces --all
+          helm status acs --show-resources
           kubectl describe pod
 
       - name: Run Newman tests
-        uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v.3.0.0
+        uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v3.0.0
         id: newman
         with:
           timeout_minutes: 1
@@ -155,9 +171,9 @@ jobs:
       - name: Spit cluster status after newman tests
         if: always() && steps.newman.outcome != 'skipped'
         run: |
-          helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl events --for deployment/acs-alfresco-repository
 
       - name: Run helm test
         id: helm_test
@@ -167,6 +183,26 @@ jobs:
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
           kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
-          helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl events --for deployment/acs-alfresco-repository
+
+      - name: Check HPA behavior during tests
+        if: always() && (matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml') && steps.helm_test.outcome != 'skipped'
+        run: |
+          echo "Checking current repo hpa status"
+          kubectl get hpa acs-alfresco-repository
+          echo -n "Repository should have 2 replicas after Helm test... "
+          SETSIZE=$(kubectl get deployment/acs-alfresco-repository -o jsonpath='{@.spec.replicas}')
+          if [ "$SETSIZE" -ne 2 ]; then
+            echo "Got $SETSIZE instead"
+            exit 1
+          else
+            echo "Got $SETSIZE"
+            echo -n "Now waiting for scale down"
+            kubectl patch hpa acs-alfresco-repository \
+              -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
+            echo -n "(speeding scale down up)... "
+            kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
+            echo "Scale down completed"
+          fi
