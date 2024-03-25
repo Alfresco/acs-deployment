@@ -32,7 +32,7 @@ jobs:
     name: Helm charts dependencies
     if: inputs.update-type == 'charts'
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
@@ -76,7 +76,7 @@ jobs:
     if: inputs.update-type == 'values'
     steps:
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
@@ -86,7 +86,7 @@ jobs:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
       - name: Checkout updatecli configs
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
         with:
           repository: alfresco/alfresco-updatecli
           ref: ${{ inputs.alfresco-updatecli-ref || env.DEFAULT_BRANCH_NAME }}
