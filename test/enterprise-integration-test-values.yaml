@@ -2,7 +2,7 @@
 alfresco-repository:
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.5"
       memory: "1024Mi"
     limits:
       cpu: "2"
@@ -31,7 +31,7 @@ share:
 alfresco-search:
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.25"
       memory: "512Mi"
     limits:
       cpu: "2"
@@ -40,7 +40,7 @@ elasticsearch:
   esJavaOpts: "-Xmx512m -Xms512m"
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.25"
       memory: "512Mi"
     limits:
       cpu: "1"
@@ -48,7 +48,7 @@ elasticsearch:
 alfresco-search-enterprise:
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.1"
       memory: "128Mi"
     limits:
       cpu: "1"
@@ -92,11 +92,11 @@ alfresco-transform-service:
       initialDelaySeconds: 30
     resources:
       requests:
-        cpu: "0.01"
+        cpu: "0.25"
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "1Gi"
     replicaCount: 1
   transformmisc:
     livenessProbe:
@@ -127,8 +127,8 @@ postgresql:
   primary:
     resources:
       requests:
-        cpu: "0.01"
-        memory: "512Mi"
+        cpu: "0.5"
+        memory: "1Gi"
       limits:
         cpu: "2"
         memory: "1Gi"
@@ -150,6 +150,19 @@ alfresco-sync-service:
       cpu: "2"
       memory: "1Gi"
   postgresql: *postgresql-sync
+activemq:
+  resources:
+    requests:
+      cpu: "0.1"
+      memory: "512Mi"
+alfresco-digital-workspace:
+  resources:
+    requests:
+      cpu: "0.01"
+alfresco-control-center:
+  resources:
+    requests:
+      cpu: "0.01"
 alfresco-ai-transformer:
   enabled: true
   replicaCount: 1
@@ -163,18 +176,5 @@ alfresco-ai-transformer:
     requests:
       cpu: "0.01"
       memory: "512Mi"
-activemq:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "512Mi"
-alfresco-digital-workspace:
-  resources:
-    requests:
-      cpu: "0.01"
-alfresco-control-center:
-  resources:
-    requests:
-      cpu: "0.01"
 dtas:
   enabled: true

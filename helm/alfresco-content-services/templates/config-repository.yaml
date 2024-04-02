@@ -8,7 +8,6 @@ data:
   alfresco-global.properties: |
     {{- $alfUrl := include "alfresco-common.external.url" . }}
     deployment.method=HELM_CHART
-    alfresco.cluster.enabled={{ gt (index .Values "alfresco-repository" "replicaCount" | int) 1 }}
     alfresco.host={{ template "alfresco-common.external.host" . }}
     alfresco.protocol={{ template "alfresco-common.external.scheme" . }}
     alfresco.port={{ template "alfresco-common.external.port" . }}
