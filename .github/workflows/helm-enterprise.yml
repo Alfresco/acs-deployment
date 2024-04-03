@@ -45,6 +45,8 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | del(. | select(.values=="community_values.yaml"))
+            | del(. | select(.values=="7.1.N_values.yaml"))
+            | del(. | select(.values=="7.2.N_values.yaml"))
             | select(.name=="alfresco-content-services")]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
@@ -61,9 +63,6 @@ jobs:
       fail-fast: false
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
-        exlcude:
-          - values: 7.1.N_values.yaml
-          - values: 7.2.N_values.yaml
     steps:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
 
