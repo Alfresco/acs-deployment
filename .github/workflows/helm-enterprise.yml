@@ -38,7 +38,7 @@ jobs:
         uses: ./.github/actions/charts-as-json
         with:
           charts-root: helm
-      - name: Keep only ACS enterprise
+      - name: Keep only ACS enterprise without deprecated versions
         id: app_versions
         env:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
