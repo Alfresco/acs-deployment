@@ -52,7 +52,6 @@ jobs:
           echo "json=$VERS" >> $GITHUB_OUTPUT
 
   helm_integration:
-    if: (${{ matrix.values }} != '7.1.N_values.yaml') || (${{ matrix.values }} != '7.2.N_values.yaml') # skip CI for 7.1 and 7.2
     runs-on: alfrescoPub-ubuntu2204-16G-4CPU
     timeout-minutes: 12
     needs:
@@ -61,7 +60,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
+        ${{ insert }}: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
+        exlcude:
+          - values: 7.1.N_values.yaml
+          - values: 7.2.N_values.yaml
     steps:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
 
