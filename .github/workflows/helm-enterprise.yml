@@ -60,7 +60,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ${{ insert }}: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
+        include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
         exlcude:
           - values: 7.1.N_values.yaml
           - values: 7.2.N_values.yaml
