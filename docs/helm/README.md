@@ -6,11 +6,11 @@ The Helm chart in this repository supports deploying the Enterprise or Community
 
 The Enterprise configuration will deploy the following system:
 
-![Helm Deployment Enterprise](./diagrams/helm-enterprise.png)
+![Helm Deployment Enterprise](./images/helm-enterprise.png)
 
 The Community configuration will deploy the following system:
 
-![Helm Deployment Community](./diagrams/helm-community.png)
+![Helm Deployment Community](./images/helm-community.png)
 
 ## Overview
 
@@ -114,7 +114,7 @@ To customise the Helm deployment, for example applying AMPs, we recommend follow
 
 The easiest way to troubleshoot issues on a Kubernetes deployment is to use the [Lens](https://k8slens.dev) desktop application, which is available for Mac, Windows and Linux. Follow the [getting started guide](https://docs.k8slens.dev/v4.0.3/getting-started) to configure your environment.
 
-![Lens Application](./diagrams/k8s-lens.png)
+![Lens Application](./images/k8s-lens.png)
 
 ### Kubernetes Dashboard
 
@@ -138,7 +138,7 @@ Alternatively, the traditional Kubernetes dashboard can also be used. Presuming 
 
 5. Select "alfresco" from the "Namespace" drop-down menu, click the "Pods" link and click on a pod name. To view the logs press the Menu icon in the toolbar as highlighted in the screenshot below:
 
-    ![Kubernetes Dashboard](./diagrams/k8s-dashboard.png)
+    ![Kubernetes Dashboard](./images/k8s-dashboard.png)
 
 ### Port-Forwarding To A Pod
 

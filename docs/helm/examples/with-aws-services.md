@@ -16,7 +16,7 @@ and use [S3](https://aws.amazon.com/s3) for content storage,
 
 The diagram below shows the deployment produced by this example:
 
-![Helm with AWS Services](../diagrams/helm-eks-aws-services.png)
+![Helm with AWS Services](../images/helm-eks-aws-services.png)
 
 ## Prerequisites
 
@@ -115,7 +115,7 @@ the information required to deploy ACS.
 
     The end result should resemble something similar to the screenshot below:
 
-    ![S3 IAM Policy](../diagrams/eks-s3-iam-policy.png)
+    ![S3 IAM Policy](../images/eks-s3-iam-policy.png)
 
 ### RDS
 
@@ -140,12 +140,12 @@ the information required to deploy ACS.
 3. Select the database with the "Writer" role and click on the default security
    group link (as shown in the screenshot below)
 
-    ![DB Security Group](../diagrams/eks-db-security-group.png)
+    ![DB Security Group](../images/eks-db-security-group.png)
 
 4. Add an inbound rule for PostgreSQL traffic from the VPC CIDR range (it will
    be the same as the NFS rule setup earlier) as shown in the screenshot below:
 
-    ![DB Inbound Rules](../diagrams/eks-db-inbound-rules.png)
+    ![DB Inbound Rules](../images/eks-db-inbound-rules.png)
 
 5. Finally, take a note of the database Endpoint (shown in the screenshot in
    step 3)
@@ -182,7 +182,7 @@ the information required to deploy ACS.
    range (it will be the same as the NFS rule setup earlier) as shown in the
    screenshot below:
 
-    ![MQ Inbound Rules](../diagrams/eks-mq-inbound-rules.png)
+    ![MQ Inbound Rules](../images/eks-mq-inbound-rules.png)
 
 4. Finally, take a note of the OpenWire Endpoint displayed in the "Connections"
    section

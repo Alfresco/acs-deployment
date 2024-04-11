@@ -10,11 +10,11 @@ availability zones to eliminate a single point of failure.
 
 The Enterprise configuration will deploy the following system:
 
-![ACS Enterprise on EKS](./diagrams/helm-eks-enterprise.png)
+![ACS Enterprise on EKS](./images/helm-eks-enterprise.png)
 
 The Community configuration will deploy the following system:
 
-![ACS Community on EKS](./diagrams/helm-eks-community.png)
+![ACS Community on EKS](./images/helm-eks-community.png)
 
 ## Prerequisites
 
@@ -185,7 +185,7 @@ that we need to perform to prepare the cluster for ACS to be installed.
    discovered in the previous step and attach the "AmazonRoute53FullAccess"
    managed policy as shown in the screenshot below:
 
-    ![Attach Policy](./diagrams/eks-attach-policy.png)
+    ![Attach Policy](./images/eks-attach-policy.png)
 
 ### Storage
 
@@ -225,7 +225,7 @@ you can alternatively:
    ensuring a mount target is created in each subnet. Make a note of the File
    System ID (circled in the screenshot below).
 
-    ![EFS](./diagrams/eks-efs.png)
+    ![EFS](./images/eks-efs.png)
 
 2. Find The ID of VPC created when your cluster was built using the command
    below (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
@@ -252,13 +252,13 @@ you can alternatively:
    for the VPC using the ID retrieved in step 2, as shown in the screenshot
    below:
 
-    ![VPC Default Security Group](./diagrams/eks-vpc-security-group.png)
+    ![VPC Default Security Group](./images/eks-vpc-security-group.png)
 
 5. Click on the default security group for the VPC (highlighted in the
    screenshot above) and add an inbound rule for NFS traffic from the VPC CIDR
    range as shown in the screenshot below:
 
-    ![NFS Inbound Rules](./diagrams/eks-nfs-inbound-rules.png)
+    ![NFS Inbound Rules](./images/eks-nfs-inbound-rules.png)
 
 6. Deploy the AWS EFS csi storage driver using the following commands,
    replacing `fs-SOMEUUID` with the string "file-system-id" where

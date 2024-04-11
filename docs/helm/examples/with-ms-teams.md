@@ -10,7 +10,7 @@ with Microsoft Teams Integration enabled.
 
 The diagram below shows the deployment produced by this example:
 
-![Helm with Microsoft Teams Integration](../diagrams/helm-eks-s3-rds-mq-ms-teams-TODO.png)
+![Helm with Microsoft Teams Integration](../images/helm-eks-s3-rds-mq-ms-teams-TODO.png)
 
 ## Prerequisites
 

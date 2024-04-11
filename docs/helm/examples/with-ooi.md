@@ -11,7 +11,7 @@ with OOI enabled.
 
 The diagram below shows the deployment produced by this example:
 
-![Helm with Office Online Integration](../diagrams/helm-eks-s3-rds-mq-ooi.png)
+![Helm with Office Online Integration](../images/helm-eks-s3-rds-mq-ooi.png)
 
 ## Prerequisites
 
