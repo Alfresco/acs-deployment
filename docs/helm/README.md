@@ -147,6 +147,37 @@ See [kubernetes documentation](https://kubernetes.io/docs/tasks/access-applicati
 
 Any component of the deployment that is not exposed via ingress rules can be accessed in this way, for example Alfresco Search, DB or individual transformers.
 
+### Connecting to the JMX interface
+
+In order to connect to the JMX interface of the Alfresco Content Services
+repository, you can use the following values:
+
+```yaml
+alfresco-repository:
+  environment:
+    JAVA_OPTS: >-
+      -Dcom.sun.management.jmxremote
+      -Dalfresco.jmx.connector.enabled=true
+      -Dalfresco.rmi.services.port=9876
+      -Dcom.sun.management.jmxremote.rmi.port=9876
+      -Dcom.sun.management.jmxremote.port=9876
+      -Dcom.sun.management.jmxremote.ssl=false
+      -Dcom.sun.management.jmxremote.authenticate=false
+```
+
+Then use pod port orwarding as explained above:
+
+```bash
+kubectl port-forward acs-alfresco-cs-repository-69545958df-6wzl6 9876:9876 -n alfresco
+```
+
+> Where you need to use the right pod & namespace names that match your deployment
+
+You can now connect to the JMX interface using a JMX client like JConsole or
+VisualVM using the netwrok socker `localhost:9876`.
+
+![VisualVM connected to acs pod](./images/visualvm.png)
+
 ### Viewing Log Files Via Command Line
 
 Log files for individual pods can also be viewed from the command line using the kubectl utility.
