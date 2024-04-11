@@ -19,7 +19,7 @@ This mechanism can be reused by different charts or sub-charts in the same way.
 
 The logic used in the template is depicted b the diagram below:
 
-![persistence of storage in acs chart](diagrams/charts-storage-persistence.png)
+![persistence of storage in acs chart](images/charts-storage-persistence.png)
 
 Whatever the option you choose, start by enabling persistence under the
 component which needs it:

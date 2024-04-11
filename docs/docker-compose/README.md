@@ -5,11 +5,11 @@ Docker Compose.
 
 Using one of the Enterprise compose files will deploy the following system:
 
-![Docker Compose Enterprise](./diagrams/docker-compose-enterprise.png)
+![Docker Compose Enterprise](./images/docker-compose-enterprise.png)
 
 Using the Community compose file will deploy the following system:
 
-![Docker Compose Community](./diagrams/docker-compose-community.png)
+![Docker Compose Community](./images/docker-compose-community.png)
 
 ## Considerations
 
@@ -34,7 +34,7 @@ This is required because insufficient memory will cause containers to exit
 without warning (the very minimum is 13GB but 16 brings some freedom to your
 Docker Daemon).
 
-![Resources](../../docs/helm/diagrams/dfd-resources.png)
+![Resources](../../docs/helm/images/dfd-resources.png)
 
 ## Deploy
 
