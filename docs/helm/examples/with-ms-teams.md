@@ -8,10 +8,6 @@ Workspace. By default, this feature is disabled.
 This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks)
 with Microsoft Teams Integration enabled.
 
-The diagram below shows the deployment produced by this example:
-
-![Helm with Microsoft Teams Integration](../images/helm-eks-s3-rds-mq-ms-teams-TODO.png)
-
 ## Prerequisites
 
 Follow the [AWS Services](with-aws-services.md) example up until the
