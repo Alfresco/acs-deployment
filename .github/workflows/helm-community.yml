@@ -72,6 +72,7 @@ jobs:
         with:
           ingress-nginx-ref: controller-v1.8.2
           kind-version: v0.22.0
+          kind-node-image: kindest/node:v1.29.2@sha256:51a1434a5397193442f0be2a297b488b6c919ce8a3931be0ce822606ea5ca245
 
       - name: Set nginx ingress config
         run: |
