@@ -156,6 +156,7 @@ jobs:
           helm ls --all-namespaces --all
           helm status acs --show-resources
           kubectl describe pod
+          kubectl logs -l app.kubernetes.io/component=alfresco-sync-service --tail=-1
 
       - name: Run Newman tests
         uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v3.0.0
