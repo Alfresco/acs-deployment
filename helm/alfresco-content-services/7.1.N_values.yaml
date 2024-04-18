@@ -77,7 +77,7 @@ alfresco-digital-workspace:
     tag: 2.6.2
 alfresco-sync-service:
   image:
-    tag: 3.11.1
+    tag: 3.11.3
 alfresco-connector-msteams:
   image:
     tag: 1.1.0

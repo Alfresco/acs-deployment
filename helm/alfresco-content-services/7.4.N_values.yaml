@@ -13,37 +13,37 @@ activemq:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 3.0.1
+      tag: 4.1.1
   pdfrenderer:
     image:
-      tag: 4.0.1
+      tag: 5.1.1
   imagemagick:
     image:
-      tag: 4.0.1
+      tag: 5.1.1
   libreoffice:
     image:
-      tag: 4.0.1
+      tag: 5.1.1
   tika:
     image:
-      tag: 4.0.1
+      tag: 5.1.1
   transformmisc:
     image:
-      tag: 4.0.1
+      tag: 5.1.1
   filestore:
     image:
-      tag: 3.0.1
+      tag: 4.1.1
 alfresco-ai-transformer:
   image:
-    tag: 2.0.1
+    tag: 3.1.2
 share:
   image:
     tag: 7.4.1.6
 alfresco-search:
   enabled: true
   searchServicesImage:
-    tag: 2.0.9.1
+    tag: 2.0.10
   insightEngineImage:
-    tag: 2.0.9.1
+    tag: 2.0.10
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
@@ -78,13 +78,13 @@ postgresql-sync:
     tag: 14.10.0
 alfresco-sync-service:
   image:
-    tag: 3.11.1
+    tag: 3.11.3
 alfresco-connector-ms365:
   image:
-    tag: 2.0.0
+    tag: 2.0.1
 alfresco-connector-msteams:
   image:
-    tag: 2.0.0
+    tag: 2.0.1
 dtas:
   config:
     assertions:

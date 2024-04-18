@@ -157,7 +157,7 @@ alfresco-repository:
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.18.3-jre17-rockylinux8
+    tag: 5.18.4-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
   adminUser:
@@ -172,7 +172,7 @@ alfresco-connector-ms365:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 2.0.0
+    tag: 2.0.1
   repository:
     existingConfigMap:
       # -- Name of the configmap which hold the repository connection details
@@ -189,7 +189,7 @@ alfresco-connector-msteams:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 2.0.0
+    tag: 2.0.1
 alfresco-transform-service:
   enabled: true
   messageBroker:
@@ -205,7 +205,7 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.1.0
+      tag: 4.1.1
     livenessProbe:
       # -- Overrride liveness probe endpoint to work around
       # https://alfresco.atlassian.net/browse/ACS-7269
@@ -216,35 +216,35 @@ alfresco-transform-service:
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 5.1.0
+      tag: 5.1.1
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 5.1.0
+      tag: 5.1.1
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 5.1.0
+      tag: 5.1.1
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 5.1.0
+      tag: 5.1.1
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 5.1.0
+      tag: 5.1.1
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -252,7 +252,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.1.0
+      tag: 4.1.1
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -292,10 +292,10 @@ alfresco-search:
         sharedSecret: SOLR_SECRET
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.0.9.1
+    tag: 2.0.10
   insightEngineImage:
     repository: quay.io/alfresco/insight-engine
-    tag: 2.0.9.1
+    tag: 2.0.10
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -442,7 +442,7 @@ alfresco-sync-service:
   enabled: true
   replicaCount: 1
   image:
-    tag: 4.0.1
+    tag: 5.0.0
   database:
     existingSecret:
       name: *sync_database_secretName
@@ -496,7 +496,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.1.0
+    tag: 3.1.2
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL

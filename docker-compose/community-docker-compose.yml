@@ -48,7 +48,7 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.0
+    image: alfresco/alfresco-transform-core-aio:5.1.1
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -80,7 +80,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.9.1
+    image: docker.io/alfresco/alfresco-search-services:2.0.10
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
