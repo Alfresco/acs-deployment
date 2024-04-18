@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 23.3.0-A10
+    tag: 23.3.0-A9
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
