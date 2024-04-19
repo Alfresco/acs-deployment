@@ -35,7 +35,8 @@ jobs:
             ls -1 docker-compose |
               grep -P '^\d+' |
               jq -Rn '{"compose_file": [inputs]}' |
-              jq -c '.compose_file += ["docker-compose.yml"]'
+              jq -c '.compose_file += ["docker-compose.yml"]' |
+              jq -c '.compose_file += ["pre-release-docker-compose.yml"]'
           )" >> $GITHUB_OUTPUT
 
   compose_enterprise:
