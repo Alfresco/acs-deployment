@@ -1,7 +1,7 @@
 *.class
 
-war/overlays
-alfresco/*
+# vim
+.*.swp
 
 # Eclipse
 .classpath

@@ -49,73 +49,50 @@ account.
 
 ## Versioning
 
-The master branch of this repository now contains the artifacts required to
-deploy both the the latest work-in-progress development version and previous
-stable versions of ACS that are still supported.
+As of version 8.0.0 of the chart we have changed the release policy.
+Previously, the chart was released together with the ACS product and we were
+delivering additional values files for each major release of ACS (e.g. 7.3,
+7.4, ...) and chart version were bumped with a similar increment as ACS.
+With version 6.0.0, we started applying major versions bumps to reflect
+breaking changes in the chart, despite only minor ACS release happened.
 
-During the development phase, one or more milestone releases will be produced
-indicated by an `-M` suffix, for example `6.0.0-M.1``. Once an ACS version
-become GA, also a GA release of this repository will be published.
+With 8.0.0 onward, the release pace of the chart is completely independent from
+the product versions. We will also stick to Semver principles when choosing
+next version number, meaning that:
 
-The table below shows the exact version of ACS deployed with each chart version/tag.
+* patch version will be used for bug fixes (last digit)
+* minor version will be used for new features and modifications which do not
+  introduce breaking changes in the configuration interface.
+* major version will be used for changes which involve breaking changes in the
+  configuration interface.
 
-| Chart Version/Tag      | Default    | 7.4.N   | 7.3.N   | 7.2.N    | 7.1.N    | 7.0.N    | Community |
-|------------------------|------------|---------|---------|----------|----------|----------|-----------|
-| 5.0.0-M1               | 7.0.0-M2   |         |         |          |          |          | 6.2.1-A8  |
-| 5.0.0-M2               | 7.0.0-M3   |         |         |          |          |          | 7.0.0     |
-| 5.0.0                  | 7.0.0      |         |         |          |          |          | 7.0.0     |
-| [5.0.1][5.0.1]         | 7.0.0      |         |         |          |          |          | 7.0.0     |
-| 5.1.0-M1               | 7.1.0-M1   |         |         |          |          |          | 7.1.0-M1  |
-| 5.1.0-M2               | 7.1.0-M2   |         |         |          |          | 7.0.1    | 7.1.0-M2  |
-| 5.1.0                  | 7.1.0.1    |         |         |          |          | 7.0.1    | 7.1.0     |
-| [5.1.1][5.1.1]         | 7.1.0.1    |         |         |          |          | 7.0.1    | 7.1.0     |
-| 5.2.0-M1               | 7.2.0-M1   |         |         |          | 7.1.0.1  | 7.0.1    | 7.2.0-M1  |
-| 5.2.0-M2               | 7.2.0-M2   |         |         |          | 7.1.1    | 7.0.1    | 7.2.0-M2  |
-| [5.2.0][5.2.0]         | 7.2.0      |         |         |          | 7.1.1    | 7.0.1    | 7.2.0     |
-| 5.3.0-M1               | 23.1.0-M1  |         |         | 7.2.1    | 7.1.1.5  | 7.0.1.3  | 23.1.0-M1 |
-| 5.3.0-M2               | 7.3.0-M1   |         |         | 7.2.1    | 7.1.1.5  | 7.0.1.3  | 7.3.0-M2  |
-| 5.3.0-M3               | 7.3.0-M2   |         |         | 7.2.1    | 7.1.1.5  | 7.0.1.3  | 7.3.0-M2  |
-| [5.3.0][5.3.0]         | 7.3.0      |         |         | 7.2.1    | 7.1.1.5  | 7.0.1.3  | 7.3.0     |
-| 5.4.0-M1               | 7.4.0-M1   |         | 7.3.0.1 | 7.2.1.5  | 7.1.1.7  | 7.0.1.9  | 7.4.0-M1  |
-| 5.4.0-M2               | 7.4.0-M2   |         | 7.3.1   | 7.2.1.7  | 7.1.1.8  | 7.0.1.10 | 7.4.0-M2  |
-| 5.4.0-M3               | 7.4.0-M3   |         | 7.3.1   | 7.2.1.7  | 7.1.1.8  | 7.0.1.10 | 7.4.0-M3  |
-| [6.0.0][6.0.0]         | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8  | 7.0.1.10 | 7.4.0.1   |
-| [6.0.1][6.0.1]         | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8  | 7.0.1.10 | 7.4.0.1   |
-| [6.0.2][6.0.2]         | 7.4.0.1    |         | 7.3.1   | 7.2.1.11 | 7.1.1.8  | 7.0.1.10 | 7.4.0.1   |
-| [6.1.0-M.1][6.1.0-M.1] | 23.1.0-A19 | 7.4.0.1 | 7.3.1   | 7.2.1.11 | 7.1.1.8  | 7.0.1.10 | 7.4.0.1   |
-| [7.0.0-M.1][7.0.0-M.1] | 23.1.0-A27 | 7.4.1   | 7.3.1   | 7.2.1.12 | 7.1.1.8  | 7.0.1.10 | 7.4.1     |
-| [7.0.0-M.2][7.0.0-M.2] | 23.1.0-M4  | 7.4.1.1 | 7.3.1   | 7.2.1.12 | 7.1.1.8  | 7.0.1.10 | 7.4.1.1   |
-| [7.0.0][7.0.0]         | 23.1.0     | 7.4.1.2 | 7.3.1.1 | 7.2.1.12 | 7.1.1.8  | 7.0.1.10 | 23.1.0    |
-| [7.0.1][7.0.1]         | 23.1.1     | 7.4.1.3 | 7.3.1.2 | 7.2.1.13 | 7.1.1.10 | 7.0.1.10 | 23.1.0    |
-| [7.0.2][7.0.2]         | 23.1.1     | 7.4.1.3 | 7.3.1.2 | 7.2.1.13 | 7.1.1.10 | 7.0.1.10 | 23.1.0    |
-| [7.0.3][7.0.3]         | 23.1.1     | 7.4.1.3 | 7.3.1.2 | 7.2.1.13 | 7.1.1.10 | 7.0.1.10 | 23.1.0    |
-| [8.0.0-M.1][8.0.0-M.1] | 23.2.0-M1  | 7.4.1.3 | 7.3.1.2 | 7.2.1.13 | 7.1.1.10 | 7.0.1.10 | 23.1.0    |
+The `alfresco-content-services` chart has always provided the ability to deploy
+any currently supported version of ACS and its components and will continue to
+do so. You are encoraged to always use the latest version of the chart to
+deploy your ACS version, using the appropriate values file. For that reason we
+stop providing the table mapping chart versions with the ACS version they
+deploy (by default). Instead we'll just maintain the list of deprecated versions
+versions mapped with the latest versions of the charts we tested deployment
+with, so you can use that version to deploy older ACS version on Kubernetes.
+Check the [ACS End of Life'd versions](#acs-end-of-lifed-versions) paragraph.
 
-[5.0.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.0.1
-[5.1.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.1.1
-[5.2.0]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.2.0
-[5.3.0]: https://github.com/Alfresco/acs-deployment/releases/tag/v5.3.0
-[6.0.0]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.0.0
-[6.0.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.0.1
-[6.0.2]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.0.2
-[6.1.0-M.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v6.1.0-M.1
-[7.0.0-M.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.0-M.1
-[7.0.0-M.2]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.0-M.2
-[7.0.0]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.0
-[7.0.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.1
-[7.0.2]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.2
-[7.0.3]: https://github.com/Alfresco/acs-deployment/releases/tag/v7.0.3
-[8.0.0-M.1]: https://github.com/Alfresco/acs-deployment/releases/tag/v8.0.0-M.1
+You are encouraged to always use the latest version of the chart to deploy your
+currently supported ACS version, using the appropriate values file.
 
-### Why there is no 5.4.0?
+Finally, the master branch of this repository used to contain the latest
+versions, including non-released versions!
+We're also moving away from this pattern and the chart will now only ever
+deploy released versions of our products.
 
-During the development of 5.4.0 we've started moving individual components
-templates (search, sync, activemq, ...) into individual charts on
-[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts). That
-decision introduced some breaking changes like resource renaming and values
-structure modifications that has been shipped since v6.0.0.
+Should you want to try our latest dev versions, we now provide an additional
+values file called `pre-release_values.yaml` which will be bumped on a regular
+basis.
 
-### End of Life'd versions
+This also means we will not produce `-M*` versions of the chart anymore.
+
+Check the [Release page](https://github.com/Alfresco/acs-deployment/releases) for the list of existing versions.
+
+### ACS End of Life'd versions
 
 While our latest version of the charts should be able to deployment any version
 of ACS (theoretically), we only ever test deployment of _currently_ supported
@@ -126,6 +103,7 @@ file for a version with the latest charts or using the old charts.
 
 | unsupported ACS version | Last chart version providing it |
 |-------------------------|---------------------------------|
+| 7.0                     | 8.0.1                           |
 | 6.2                     | 5.3.0                           |
 | 6.1                     | 5.1.1                           |
 
@@ -164,10 +142,9 @@ First ensure that:
 
 Start the release by opening a PR against the appropriate branch that will:
 
-* Update the [versioning table](#versioning)
+* Update the [EOL table](#acs-end-of-lifed-versions) in case a version is deprecated
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
-  bump chart version to the version you want to release (use `-M.x` suffix if
-  it's a prerelease)
+  bump chart version to the version you want to release
 * Run `pre-commit run --all-files helm-docs` to update helm docs
 * Edit [upgrades docs](docs/helm/upgrades.md) renaming the `To be released`
   section to the current version and create a new `To be released` section for
@@ -200,7 +177,7 @@ Once the tagged workflow is successful, the release process is completed.
 
 ## How to update workflow diagrams of Alfresco latest version
 
-* Go to the `docs/docker-compose/diagrams` and/or `docs/helm/diagrams` folders of the repository and there you will find 2 plantuml source files and their PNG diagram files.
+* Go to the `docs/docker-compose/images` and/or `docs/helm/images` folders of the repository and there you will find 2 plantuml source files and their PNG diagram files.
 * Update the plantuml(.puml) files for enterprise/community edition with latest changes as required.
 * Once you are done with the changes, you can generate the diagrams with 2 ways.
 

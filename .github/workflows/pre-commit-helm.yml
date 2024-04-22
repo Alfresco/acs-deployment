@@ -27,11 +27,15 @@ jobs:
     name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.12.0
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # 4.1.2
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.23.0
       - name: Add dependency chart repos
         run: |
-          helm repo add alfresco-helm-charts https://alfresco.github.io/alfresco-helm-charts
-          helm repo add activiti-cloud-helm-charts https://activiti.github.io/activiti-cloud-helm-charts
-          helm repo add elasticsearch https://helm.elastic.co
-      - uses: pre-commit/action@v3.0.0
+          for repo in $(yq eval-all \
+          '. as $item ireduce ({}; . *+ $item ) | [.dependencies[].repository | select(. == "http*")] | unique | .[]' \
+          ./helm/*/Chart.yaml); do repo_name=$(echo "$repo" | awk -F/ '{print $3}')
+            helm repo add "$repo_name" "$repo"
+          done
+
+      - name: Run  Pre-commit hooks
+        uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd  # v3.0.1

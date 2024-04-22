@@ -7,47 +7,22 @@ on:
       - v**
 
 jobs:
-  build_vars:
-    runs-on: ubuntu-latest
-    outputs:
-      app_json: ${{ steps.getcharts.outputs.app }}
-      chart_names: ${{ steps.chart_names.outputs.json}}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - id: getcharts
-        uses: ./.github/actions/charts-as-json
-        with:
-          charts-root: helm
-      - id: chart_names
-        env:
-          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
-          JQ_FILTER: $json | [.charts[].name]
-        run: |
-          CHARTS=$(jq -nc --argjson json '${{ env.JSON }}' '${{ env.JQ_FILTER }}')
-          echo "json=$CHARTS" >> $GITHUB_OUTPUT
   publish:
     runs-on: ubuntu-latest
-    needs:
-      - build_vars
-    strategy:
-      max-parallel: 1
-      fail-fast: true
-      matrix:
-        charts: ${{ fromJSON(needs.build_vars.outputs.chart_names) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
         with:
           fetch-depth: 0
+
       - name: Ensure no dependencies are pre-release versions
         run: |
-          ! grep -e "-alpha" -e "-SNAPSHOT" helm/${{ matrix.charts }}/Chart.yaml
+          ! grep -e "-alpha" -e "-SNAPSHOT" helm/alfresco-content-services/Chart.yaml
+
       - name: Publish chart
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v5.12.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v5.23.0
         with:
-          chart_name: ${{ matrix.charts }}
+          chart_name: alfresco-content-services
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
           github_email: ${{ secrets.BOT_GITHUB_EMAIL }}

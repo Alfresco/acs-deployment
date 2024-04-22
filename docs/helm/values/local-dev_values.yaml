@@ -42,7 +42,7 @@ alfresco-transform-service:
         cpu: "0.01"
         memory: "256Mi"
       limits:
-        memory: "512Mi"
+        memory: "1Gi"
     replicaCount: 1
   libreoffice:
     resources:
@@ -91,15 +91,15 @@ alfresco-search-enterprise:
     limits:
       cpu: "1"
       memory: "1Gi"
-  elasticsearch:
-    esJavaOpts: "-Xmx512m -Xms512m"
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "512Mi"
-      limits:
-        cpu: "1000m"
-        memory: "1Gi"
+elasticsearch:
+  esJavaOpts: "-Xmx512m -Xms512m"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
 share:
   resources:
     requests:

@@ -31,6 +31,10 @@ tests:
 
   - it: should render the default infra (solr)
     values: *testvalues
+    set:
+      alfresco-search.enabled: true
+      alfresco-search-enterprise.enabled: false
+      alfresco-repository.configuration.search.flavor: solr6
     asserts:
       - equal:
           path: data.BROKER_URL
@@ -128,10 +132,11 @@ tests:
       - failedTemplate:
           errorMEssage: >-
             Alfresco Search Enterprise has been enabled but Transformation service is not available
+
   - it: should fail rendering charts for enterprise components without ATS enterprise
     values: *testvalues
     set:
-      elasticsearch.enabled: true
+      alfresco-search-enterprise.enabled: false
       alfresco-ai-transformer.enabled: true
       alfresco-transform-service.filestore.enabled: false
     asserts:

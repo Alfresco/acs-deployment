@@ -2,12 +2,13 @@
 alfresco-repository:
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.5"
       memory: "1024Mi"
     limits:
       cpu: "2"
       memory: "2Gi"
-  replicaCount: 2
+  # https://alfresco.atlassian.net/browse/ACS-6670
+  replicaCount: 1
   persistence:
     accessModes:
       - ReadWriteOnce
@@ -30,13 +31,29 @@ share:
 alfresco-search:
   resources:
     requests:
-      cpu: "0.01"
+      cpu: "0.25"
       memory: "512Mi"
     limits:
       cpu: "2"
       memory: "1280Mi"
+elasticsearch:
+  esJavaOpts: "-Xmx512m -Xms512m"
+  resources:
+    requests:
+      cpu: "0.25"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+alfresco-search-enterprise:
+  resources:
+    requests:
+      cpu: "0.1"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
 alfresco-transform-service:
-  enabled: true
   pdfrenderer:
     livenessProbe:
       initialDelaySeconds: 30
@@ -57,7 +74,7 @@ alfresco-transform-service:
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "1Gi"
     replicaCount: 1
   libreoffice:
     livenessProbe:
@@ -75,11 +92,11 @@ alfresco-transform-service:
       initialDelaySeconds: 30
     resources:
       requests:
-        cpu: "0.01"
+        cpu: "0.25"
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "1Gi"
     replicaCount: 1
   transformmisc:
     livenessProbe:
@@ -110,26 +127,54 @@ postgresql:
   primary:
     resources:
       requests:
+        cpu: "0.5"
+        memory: "1Gi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
+postgresql-sync: &postgresql-sync
+  primary:
+    resources:
+      requests:
         cpu: "0.01"
         memory: "512Mi"
       limits:
         cpu: "2"
         memory: "1Gi"
 alfresco-sync-service:
-  postgresql:
-    primary:
-      resources:
-        requests:
-          cpu: "0.01"
-          memory: "512Mi"
-        limits:
-          cpu: "2"
-          memory: "1Gi"
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+    limits:
+      cpu: "2"
+      memory: "1Gi"
+  postgresql: *postgresql-sync
+activemq:
+  resources:
+    requests:
+      cpu: "0.1"
+      memory: "512Mi"
+alfresco-digital-workspace:
+  resources:
+    requests:
+      cpu: "0.01"
+alfresco-control-center:
+  resources:
+    requests:
+      cpu: "0.01"
 alfresco-ai-transformer:
   enabled: true
+  replicaCount: 1
   aws:
     accessKeyId: AAAAAAAAAAAAAAAAA
     secretAccessKey: ZZZZZZZZZZZZZZZZZ
     s3Bucket: somebucket
     region: us-east-1
     comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+dtas:
+  enabled: true

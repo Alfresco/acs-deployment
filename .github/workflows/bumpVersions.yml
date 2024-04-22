@@ -32,19 +32,19 @@ jobs:
     name: Helm charts dependencies
     if: inputs.update-type == 'charts'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Login to quay.io
-        uses: docker/login-action@v3
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20  # v3.1.0
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@v2
+        uses: updatecli/updatecli-action@9b35aa663a924d5d5faf89dac76594e3034bcf1f  # v2.56.0
         with:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
@@ -52,15 +52,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.12.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.23.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.12.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.23.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.0.0
+        uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d  # v5.0.0
         with:
           commit_message: |
             🛠 Updatecli pipeline charts bump
@@ -76,17 +76,17 @@ jobs:
     if: inputs.update-type == 'values'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@v2
+        uses: updatecli/updatecli-action@9b35aa663a924d5d5faf89dac76594e3034bcf1f  # v2.56.0
         with:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
       - name: Checkout updatecli configs
-        uses: actions/checkout@v4
+        uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
         with:
           repository: alfresco/alfresco-updatecli
           ref: ${{ inputs.alfresco-updatecli-ref || env.DEFAULT_BRANCH_NAME }}
@@ -107,15 +107,15 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.12.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.23.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.12.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.23.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@v5.0.0
+        uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d  # v5.0.0
         with:
           commit_message: |
             🛠 Updatecli pipeline values bump

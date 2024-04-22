@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: share-properties
+  labels: {{- include "acs-sso-example.labels" . | nindent 4 }}
+data:
+  share.properties: |
+    aims.enabled = true
+    {{- with .Values.keycloakx }}
+    {{- $kCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
+    aims.realm = {{ index .admin.realm 0 "realm" }}
+    aims.resource = {{ index .admin.realm 0 "clients" 0 "clientId" }}
+    aims.publicClient=true
+    aims.principalAttribute=sub
+    aims.publicClient=true
+    aims.authServerUrl = {{ printf "http://%s-http%s" (include "keycloak.fullname" $kCtx) .http.relativePath }}
+    {{- end }}

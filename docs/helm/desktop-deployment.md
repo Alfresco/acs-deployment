@@ -60,40 +60,7 @@ kubectl create namespace alfresco
 
 ### Ingress
 
-Add the ingress-nginx chart repository:
-
-```bash
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-```
-
-Install an ingress-nginx controller within the 'alfresco' namespace:
-
-```bash
-helm install acs-ingress ingress-nginx/ingress-nginx --version=4.4.0 \
-  --set controller.scope.enabled=true \
-  --set controller.scope.namespace=alfresco \
-  --set rbac.create=true \
-  --atomic \
-  --namespace alfresco
-```
-
-> NOTE: The command will wait until the deployment is ready so please be patient.
-
-```bash
-# Verify NGINX is up and running
-kubectl get pods --namespace alfresco
-
-NAME                                                   READY   STATUS    RESTARTS   AGE
-acs-ingress-ingress-nginx-controller-5647c976f-f7b6q   1/1     Running   0          98m
-
-# Verify expose localhost:80
-kubectl get svc --namespace alfresco
-
-NAME                                             TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-acs-ingress-ingress-nginx-controller-admission   ClusterIP      10.43.42.230   <none>          443/TCP                      98m
-acs-ingress-ingress-nginx-controller             LoadBalancer   10.43.90.117   192.168.29.69   80:31363/TCP,443:30980/TCP   98m
-```
+See [ingress-nginx](ingress-nginx.md) section.
 
 ### ACS
 
@@ -136,17 +103,17 @@ and therefore requires a large amount of resources out-of-the-box. To reduce the
 size of the deployment so it can run on a single machine we'll need to reduce
 the number of pods deployed and the memory requirements for several others.
 
-To install the Enterprise on localhost we need to use the local-dev-values.yaml
+To install the Enterprise on localhost we need to use the local-dev_values.yaml
 
 ```bash
-curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/local-dev-values.yaml
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/local-dev_values.yaml
 ```
 
 Once downloaded, execute the following to initiate the deployment.
 
 ```bash
 helm install acs alfresco/alfresco-content-services \
-  --values local-dev-values.yaml \
+  --values local-dev_values.yaml \
   --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
@@ -168,7 +135,7 @@ To deploy a previous version of ACS Enterprise follow the steps below.
    ```bash
    helm install acs alfresco/alfresco-content-services \
      --values MAJOR.MINOR.N_values.yaml \
-     --values local-dev-values.yaml \
+     --values local-dev_values.yaml \
      --atomic \
      --timeout 10m0s \
      --namespace alfresco
@@ -176,7 +143,29 @@ To deploy a previous version of ACS Enterprise follow the steps below.
 
 > NOTE: The command will wait until the deployment is ready so please be
 patient. See below for
-[troubleshooting](./docker-desktop-deployment.md#troubleshooting) tips.
+[troubleshooting](#troubleshooting) tips.
+
+#### Development versions deployment
+
+To deploy ACS platform with the latest development version follow the steps below.
+
+1. Download the
+   [pre-release_values.yaml
+   file](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/pre-release_values.yaml)
+2. Deploy ACS by executing the following command:
+
+   ```bash
+   helm install acs alfresco/alfresco-content-services \
+     --values pre-release_values.yaml \
+     --values local-dev_values.yaml \
+     --atomic \
+     --timeout 10m0s \
+     --namespace alfresco
+   ```
+
+> NOTE: The command will wait until the deployment is ready so please be
+patient. See below for
+[troubleshooting](#troubleshooting) tips.
 
 ## Access
 

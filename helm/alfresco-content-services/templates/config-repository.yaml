@@ -1,14 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: repository
+  name: {{ .Values.config.repository.configMapName }}
   labels:
     {{- include "alfresco-content-services.labels" . | nindent 4 }}
 data:
   alfresco-global.properties: |
     {{- $alfUrl := include "alfresco-common.external.url" . }}
     deployment.method=HELM_CHART
-    alfresco.cluster.enabled={{ gt (index .Values "alfresco-repository" "replicaCount" | int) 1 }}
     alfresco.host={{ template "alfresco-common.external.host" . }}
     alfresco.protocol={{ template "alfresco-common.external.scheme" . }}
     alfresco.port={{ template "alfresco-common.external.port" . }}
@@ -45,4 +44,7 @@ data:
     dsync.service.uris={{ $alfUrl }}/syncservice
     {{- else }}
     events.subsystem.autoStart=false
+    {{- end }}
+    {{- range $key, $value := .Values.config.repository.additionalGlobalProperties }}
+    {{ $key }}={{ $value }}
     {{- end }}

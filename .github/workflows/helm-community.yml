@@ -19,25 +19,56 @@ concurrency:
   group: helm-com-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 jobs:
+  build_vars:
+    runs-on: ubuntu-latest
+    outputs:
+      ver_json: ${{ steps.app_versions.outputs.json }}
+    steps:
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
+        with:
+          fetch-depth: 0
+      - name: Get charts
+        id: getcharts
+        uses: ./.github/actions/charts-as-json
+        with:
+          charts-root: helm
+      - name: Keep only ACS enterprise
+        id: app_versions
+        env:
+          JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
+          JQ_FILTER: >-
+            [inputs | .charts[] | {name: .name, values: .values[]}
+            | select(.values=="community_values.yaml" or .name=="acs-sso-example")]
+        run: |
+          echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
+          VERS=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
+          echo "json=$VERS" >> $GITHUB_OUTPUT
+
   community_charts:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs:
+      - build_vars
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
 
-      - uses: azure/setup-helm@v3
+      - uses: azure/setup-helm@b7246b12e77f7134dc2d460a3d5bad15bbe29390  # v4.1.0
         with:
          version: "3.12.1"
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20  # v3.1.0
         if: ${{ ! github.event.repository.fork }}
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v5.12.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v5.23.0
         with:
           ingress-nginx-ref: controller-v1.8.2
 
@@ -55,14 +86,15 @@ jobs:
 
       - name: Helm install
         run: |
-          helm dep up ./helm/alfresco-content-services
-          helm install acs ./helm/alfresco-content-services \
+          helm dep up .
+          helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
             --set global.alfrescoRegistryPullSecrets=regcred \
-            --wait --timeout 5m0s \
-            --values helm/alfresco-content-services/community_values.yaml \
-            --values test/community-integration-test-values.yaml
+            --wait --timeout 6m0s \
+            --values ${{ matrix.values }} \
+            --values ../../test/community-integration-test-values.yaml
+        working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status
         if: always()
@@ -71,11 +103,9 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
 
-      - name: Wait ACS to warm up
-        run: sleep 60
-
-      - uses: nick-fields/retry@v2
+      - uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v.3.0.0
         id: newman
+        if: matrix.name == 'alfresco-content-services'
         with:
           timeout_minutes: 1
           retry_wait_seconds: 30

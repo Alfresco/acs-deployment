@@ -1,0 +1,308 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manual-hazelcast-configuration
+  labels:
+    app.kubernetes.io/name: hazelcast
+data:
+  hazelcast.xml: |
+    <?xml version="1.0" ?>
+    <hazelcast xmlns="http://www.hazelcast.com/schema/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.hazelcast.com/schema/config            http://www.hazelcast.com/schema/config/hazelcast-config-5.3.xsd">
+        <cluster-name>test</cluster-name>
+        <management-center data-access-enabled="true">
+            <trusted-interfaces>
+                <interface>10.42.0.*</interface>
+            </trusted-interfaces>
+        </management-center>         
+        <!-- Ephemeral lock store map definition -->
+        <map name="lockStore">
+            <backup-count>1</backup-count>
+            <!-- No overall size limit, since this would result in ephemeral locks being evicted. -->
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <eviction eviction-policy="NONE" max-size-policy="PER_NODE" size="0"/>
+            <!-- TTL here must match LockServiceImpl.MAX_EPHEMERAL_LOCK_SECONDS -->
+            <time-to-live-seconds>172800</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+        </map>
+        <network>
+            <join>
+                <kubernetes enabled="true">
+                    <service-name>hazelcast</service-name>
+                </kubernetes>
+            </join>
+            <rest-api enabled="true">
+                <endpoint-group name="DATA" enabled="true"/>
+            </rest-api>
+        </network>
+        <jet enabled="true">
+        </jet>
+        <map name="cache.contentDataSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="130000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.contentUrlSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="130000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.contentUrlMasterKeySharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="NONE" max-size-policy="PER_NODE" size="0"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <near-cache>
+                <eviction max-size-policy="ENTRY_COUNT" eviction-policy="LRU" size="50"/>
+                <max-idle-seconds>0</max-idle-seconds>
+                <time-to-live-seconds>0</time-to-live-seconds>
+            </near-cache>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.contentUrlEncryptingMasterKeySharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="NONE" max-size-policy="PER_NODE" size="0"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <near-cache>
+                <eviction max-size-policy="ENTRY_COUNT" eviction-policy="LRU" size="50"/>
+                <max-idle-seconds>0</max-idle-seconds>
+                <time-to-live-seconds>0</time-to-live-seconds>
+            </near-cache>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.node.parentAssocsSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="130000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.userToAuthoritySharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="5000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.authenticationSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="5000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.permissionsAccessSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="50000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.readersSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="10000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.readersDeniedSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="10000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.nodeOwnerSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="40000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.personSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.ticketsCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.usernameToTicketIdCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.webServicesQuerySessionSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.aclSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="50000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.aclEntitySharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="50000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.executingActionsCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.tagscopeSummarySharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.tenantEntitySharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.remoteAlfrescoTicketService.ticketsCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.siteNodeRefSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="5000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.cloudHybridSyncEventCounterCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="150000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.cloudHybridSyncDenyCache">
+            <time-to-live-seconds>3600</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="150000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.solrFacetNodeRefSharedCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="5000"/>
+            <merge-policy>com.hazelcast.spi.merge.LatestUpdateMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.authorizationCache">
+            <time-to-live-seconds>300</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="LRU" max-size-policy="PER_NODE" size="10000"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.hbClusterUsageCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="NONE" max-size-policy="PER_NODE" size="10"/>
+            <merge-policy>com.hazelcast.spi.merge.PutIfAbsentMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.queryAcceleratorCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="NONE" max-size-policy="PER_NODE" size="1000"/>
+            <merge-policy>com.hazelcast.spi.merge.LatestUpdateMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+        <map name="cache.ldapInitialDirContextCache">
+            <time-to-live-seconds>0</time-to-live-seconds>
+            <max-idle-seconds>0</max-idle-seconds>
+            <backup-count>1</backup-count>
+            <eviction eviction-policy="NONE" max-size-policy="PER_NODE" size="100"/>
+            <merge-policy>com.hazelcast.spi.merge.LatestUpdateMergePolicy</merge-policy>
+            <read-backup-data>false</read-backup-data>
+            <per-entry-stats-enabled>true</per-entry-stats-enabled>
+        </map>
+    </hazelcast>

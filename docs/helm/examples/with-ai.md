@@ -7,7 +7,7 @@ feature is disabled, this example describes how to deploy ACS onto
 
 The diagram below shows the deployment produced by this example:
 
-![Helm with Intelligence Services](../diagrams/helm-eks-s3-rds-mq-ai.png)
+![Helm with Intelligence Services](../images/helm-eks-s3-rds-mq-ai.png)
 
 ## Prerequisites
 

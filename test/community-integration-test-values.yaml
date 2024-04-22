@@ -69,7 +69,7 @@ alfresco-transform-service:
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "1Gi"
   transformmisc:
     livenessProbe:
       initialDelaySeconds: 30
@@ -90,3 +90,5 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
+dtas:
+  enabled: true

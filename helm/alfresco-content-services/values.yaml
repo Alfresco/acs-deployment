@@ -16,6 +16,10 @@
 # for performance tuning.
 infrastructure:
   configMapName: &infrastructure_cmName alfresco-infrastructure
+config:
+  repository:
+    configMapName: &repository_cmName repository
+    additionalGlobalProperties: {}
 global:
   # -- list of trusted URLs.
   # URLs a re used to configure Cross-origin protections
@@ -49,8 +53,14 @@ global:
     securecomms: secret
     # -- Mandatory secret to provide when using Solr search with 'secret' security level
     sharedSecret: null
+    # -- Set username for authentication against the external elasticsearch service
+    username: null
+    # -- Set password for authentication against the external elasticsearch service
+    password: null
     # -- Name of the secret managed by this chart
     secretName: &acs_search_secretName alfresco-search-secret
+    # -- Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
+    existingSecretName: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -90,21 +100,27 @@ database:
     configMapName: *infrastructure_cmName
     # -- Name of the secret managed by this chart
     secretName: &sync_database_secretName alfresco-cs-sync
-# -- Activemq connection details (activemq.enabled must also be set to false)
+    # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys.
+    existingSecretName: null
 messageBroker:
+  # -- Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`.
   url: null
+  # -- External message broker user
   user: null
+  # -- External message broker password
   password: null
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  # -- Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys.
+  existingSecretName: null
 alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.2.0-M1
+    tag: 23.2.1
   configuration:
     repository:
-      existingConfigMap: repository
+      existingConfigMap: *repository_cmName
       existingSecrets:
         - name: repository-secrets
           key: license.lic
@@ -121,9 +137,9 @@ alfresco-repository:
       existingConfigMap:
         name: *infrastructure_cmName
       existingSecret:
-        name: *acs_database_secretName
+        name: *acs_messageBroker_secretName
     search:
-      flavor: solr6
+      flavor: elasticsearch
       existingConfigMap:
         name: *infrastructure_cmName
       existingSecret:
@@ -139,11 +155,11 @@ alfresco-repository:
     accessModes:
       - ReadWriteMany
 activemq:
+  image:
+    repository: quay.io/alfresco/alfresco-activemq
+    tag: 5.18.4-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
-  # -- Possibility to choose Node for pod, with a key-value pair label
-  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
-  nodeSelector: {}
   adminUser:
     # -- Default username for the embedded broker admin user
     user: admin
@@ -156,7 +172,7 @@ alfresco-connector-ms365:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 2.0.0
+    tag: 2.0.1
   repository:
     existingConfigMap:
       # -- Name of the configmap which hold the repository connection details
@@ -173,7 +189,7 @@ alfresco-connector-msteams:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 2.0.0
+    tag: 2.0.1
 alfresco-transform-service:
   enabled: true
   messageBroker:
@@ -189,42 +205,46 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.0.1
+      tag: 4.1.1
+    livenessProbe:
+      # -- Overrride liveness probe endpoint to work around
+      # https://alfresco.atlassian.net/browse/ACS-7269
+      path: /transform/config
   pdfrenderer:
     # -- Declares the alfresco-pdf-renderer service used by the content repository
     # to transform pdf files
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 5.0.1
+      tag: 5.1.1
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 5.0.1
+      tag: 5.1.1
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 5.0.1
+      tag: 5.1.1
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 5.0.1
+      tag: 5.1.1
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 5.0.1
+      tag: 5.1.1
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -232,7 +252,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.0.1
+      tag: 4.1.1
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -244,7 +264,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.2.0-M1
+    tag: 23.2.1
   nameOverride: share
   repository:
     existingConfigMap:
@@ -258,7 +278,7 @@ share:
         # service port
         port: repo_svc_port
 alfresco-search:
-  enabled: true
+  enabled: false
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
@@ -272,10 +292,10 @@ alfresco-search:
         sharedSecret: SOLR_SECRET
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.0.9
+    tag: 2.0.10
   insightEngineImage:
     repository: quay.io/alfresco/insight-engine
-    tag: 2.0.9
+    tag: 2.0.10
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -299,7 +319,7 @@ alfresco-search:
     #    hosts:
     #      - chart-example.local
 alfresco-search-enterprise:
-  enabled: false
+  enabled: true
   search:
     existingConfigMap:
       name: *infrastructure_cmName
@@ -315,16 +335,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
     content:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
     metadata:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
     path:
       image:
-        tag: 4.0.0.1
+        tag: 4.0.1
   reindexing:
     enabled: true
     repository:
@@ -336,84 +356,45 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 4.0.0.1
+      tag: 4.0.1
 alfresco-digital-workspace:
-  nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-dw"
-  service:
-    envType: frontend
   ingress:
-    path: /workspace
     annotations:
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    hosts:
+      - paths:
+          - path: /workspace
+            pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 4.3.0
+    tag: 4.4.1
     pullPolicy: IfNotPresent
-  registryPullSecrets:
-    - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//{hostname}{:port}"
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 101
-    capabilities:
-      drop:
-        - NET_RAW
-        - ALL
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "256Mi"
-    limits:
-      cpu: "1"
-      memory: "1024Mi"
+    BASE_PATH: /workspace
 alfresco-control-center:
-  nodeSelector: {}
   enabled: true
   nameOverride: "alfresco-cc"
-  service:
-    envType: frontend
   ingress:
-    path: /control-center
     annotations:
-      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    hosts:
+      - paths:
+          - path: /control-center
+            pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 8.3.0
+    tag: 8.4.1
     pullPolicy: IfNotPresent
-  registryPullSecrets:
-    - "{{ $.Values.global.alfrescoRegistryPullSecrets }}"
   env:
     APP_CONFIG_PROVIDER: "ECM"
     APP_CONFIG_AUTH_TYPE: "BASIC"
-    API_URL: "{protocol}//{hostname}{:port}"
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 101
-    capabilities:
-      drop:
-        - NET_RAW
-        - ALL
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "256Mi"
-    limits:
-      cpu: "1"
-      memory: "1024Mi"
+    BASE_PATH: /control-center
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository
   # Check [PostgreSQL Bitnami chart
@@ -421,7 +402,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: 14.4.0
+    tag: 15.5.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
@@ -459,8 +440,9 @@ alfresco-sync-service:
   # Check [Alfresco Sync Service
   # Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service)
   enabled: true
+  replicaCount: 1
   image:
-    tag: 5.0.0-M2
+    tag: 5.0.0
   database:
     existingSecret:
       name: *sync_database_secretName
@@ -484,7 +466,7 @@ postgresql-sync:
   enabled: true
   nameOverride: postgresql-sync
   image:
-    tag: 14.4.0
+    tag: 15.5.0
   auth:
     enablePostgresUser: false
     username: alfresco
@@ -514,7 +496,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.0.1
+    tag: 3.1.2
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
@@ -531,6 +513,34 @@ alfresco-ai-transformer:
       name: *acs_messageBroker_secretName
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
-  enabled: false
+  enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+dtas:
+  # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
+  enabled: false
+  image:
+    repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
+    tag: v1.5.1
+    pullPolicy: IfNotPresent
+  additionalArgs:
+    - --tb=short
+  config:
+    config:
+      host: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
+      username: admin
+      password: admin
+    assertions:
+      acs:
+        edition: Enterprise
+        version: 23.2.0
+        identity: false
+        modules:
+        - id: org.alfresco.integrations.google.docs
+          version: 4.1.0
+          installed: true
+        - id: alfresco-aos-module
+          version: 3.0.0
+          installed: true
+      adw:
+        base_path: "/workspace"

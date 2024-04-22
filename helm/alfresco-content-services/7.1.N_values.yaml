@@ -3,35 +3,43 @@
 alfresco-repository:
   image:
     tag: 7.1.1.10
+  configuration:
+    search:
+      flavor: solr6
+activemq:
+  image:
+    repository: quay.io/alfresco/alfresco-activemq
+    tag: 5.16.7-jre17-rockylinux8
 alfresco-ai-transformer:
   image:
     tag: 1.5.1
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 2.1.1
+      tag: 2.1.2
   pdfrenderer:
     image:
-      tag: 3.1.1
+      tag: 3.1.2
   imagemagick:
     image:
-      tag: 3.1.1
+      tag: 3.1.2
   libreoffice:
     image:
-      tag: 3.1.1
+      tag: 3.1.2
   tika:
     image:
-      tag: 3.1.1
+      tag: 3.1.2
   transformmisc:
     image:
-      tag: 3.1.1
+      tag: 3.1.2
   filestore:
     image:
-      tag: 2.1.1
+      tag: 2.1.2
 share:
   image:
     tag: 7.1.1.10
 alfresco-search:
+  enabled: true
   repository:
     securecomms: none
   searchServicesImage:
@@ -39,6 +47,7 @@ alfresco-search:
   insightEngineImage:
     tag: 2.0.2.2
 alfresco-search-enterprise:
+  enabled: false
   liveIndexing:
     mediation:
       image:
@@ -55,7 +64,12 @@ alfresco-search-enterprise:
   reindexing:
     image:
       tag: 3.1.1.1
+elasticsearch:
+  enabled: false
 postgresql:
+  image:
+    tag: 13.3.0
+postgresql-sync:
   image:
     tag: 13.3.0
 alfresco-digital-workspace:
@@ -63,11 +77,7 @@ alfresco-digital-workspace:
     tag: 2.6.2
 alfresco-sync-service:
   image:
-    tag: 3.11.1
-  postgresql:
-    primary:
-      image:
-        tag: 13.3.0
+    tag: 3.11.3
 alfresco-connector-msteams:
   image:
     tag: 1.1.0
@@ -79,3 +89,15 @@ alfresco-control-center:
 global:
   search:
     securecomms: none
+dtas:
+  config:
+    assertions:
+      acs:
+        version: 7.1.1
+        modules:
+        - id: org.alfresco.integrations.google.docs
+          version: 3.2.1.3
+          installed: true
+        - id: alfresco-aos-module
+          version: 1.4.0.1
+          installed: true

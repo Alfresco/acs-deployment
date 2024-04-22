@@ -17,13 +17,17 @@ on:
       - master
       - release/**
 
+concurrency:
+  group: compose-ent-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   build_vars:
     runs-on: ubuntu-latest
     outputs:
       matrix_json: ${{ steps.eval.outputs.matrix_json }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633  # v4.1.2
       - name: Evaluate Matrix
         id: eval
         run: >-
@@ -31,7 +35,8 @@ jobs:
             ls -1 docker-compose |
               grep -P '^\d+' |
               jq -Rn '{"compose_file": [inputs]}' |
-              jq -c '.compose_file += ["docker-compose.yml"]'
+              jq -c '.compose_file += ["docker-compose.yml"]' |
+              jq -c '.compose_file += ["pre-release-docker-compose.yml"]'
           )" >> $GITHUB_OUTPUT
 
   compose_enterprise:
@@ -48,8 +53,10 @@ jobs:
         && github.event.pull_request.head.user.login == 'Alfresco'
       )
     steps:
-      - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.12.0
+      - name: Verify docker-compose
+        uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v5.23.0
+        timeout-minutes: 10
         with:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}

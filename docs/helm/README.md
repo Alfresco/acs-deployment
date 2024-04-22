@@ -6,11 +6,11 @@ The Helm chart in this repository supports deploying the Enterprise or Community
 
 The Enterprise configuration will deploy the following system:
 
-![Helm Deployment Enterprise](./diagrams/helm-enterprise.png)
+![Helm Deployment Enterprise](./images/helm-enterprise.png)
 
 The Community configuration will deploy the following system:
 
-![Helm Deployment Community](./diagrams/helm-community.png)
+![Helm Deployment Community](./images/helm-community.png)
 
 ## Overview
 
@@ -63,7 +63,11 @@ the installation.
 
 ## Deploy
 
-For the best results we recommend [deploying ACS to AWS EKS](./eks-deployment.md). If you have a machine with at least 16GB of memory you can also [deploy using Docker for Desktop](./docker-desktop-deployment.md).
+For the best results we recommend [deploying ACS to AWS
+EKS](./eks-deployment.md). If you have a machine with at least 16GB of memory
+you can [deploy using Docker Desktop](./desktop-deployment.md) (or similar apps
+like Rancher and Podman Desktop) or via [KinD](kind-deployment.md) which just
+requires a working Docker install on any OS.
 
 The recommended cluster resources for the Enterprise version with the components enabled by default are:
 at least 3 nodes with 12 cpu cores and 32 GB of memory in total. You can install with lower
@@ -75,6 +79,8 @@ There are also several [examples](./examples) showing how to deploy with various
 * [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
 * [Deploy with Intelligence Services](./examples/with-ai.md)
 * [Deploy with Microsoft 365 Connector (Office Online Integration)](./examples/with-ooi.md)
+* [Deploy with external Keycloak SSO authentication](./examples/with-keycloak.md)
+* [Deploy with external infrastructure components](./examples/with-external-infrastructure.md) (e.g. elasticsearch, activemq, postgres)
 * [Enable access to Search Services](./examples/search-services.mdi#enable-alfresco-search-services-external-access)
 * [Enable Email Services](./examples/email-enabled.md)
 * [Use a custom metadata keystore](./examples/custom-metadata-keystore.md)
@@ -108,7 +114,7 @@ To customise the Helm deployment, for example applying AMPs, we recommend follow
 
 The easiest way to troubleshoot issues on a Kubernetes deployment is to use the [Lens](https://k8slens.dev) desktop application, which is available for Mac, Windows and Linux. Follow the [getting started guide](https://docs.k8slens.dev/v4.0.3/getting-started) to configure your environment.
 
-![Lens Application](./diagrams/k8s-lens.png)
+![Lens Application](./images/k8s-lens.png)
 
 ### Kubernetes Dashboard
 
@@ -132,7 +138,7 @@ Alternatively, the traditional Kubernetes dashboard can also be used. Presuming 
 
 5. Select "alfresco" from the "Namespace" drop-down menu, click the "Pods" link and click on a pod name. To view the logs press the Menu icon in the toolbar as highlighted in the screenshot below:
 
-    ![Kubernetes Dashboard](./diagrams/k8s-dashboard.png)
+    ![Kubernetes Dashboard](./images/k8s-dashboard.png)
 
 ### Port-Forwarding To A Pod
 
@@ -140,6 +146,37 @@ This approach allows to connect to a specific application in the cluster.
 See [kubernetes documentation](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster) for details.
 
 Any component of the deployment that is not exposed via ingress rules can be accessed in this way, for example Alfresco Search, DB or individual transformers.
+
+### Connecting to the JMX interface
+
+In order to connect to the JMX interface of the Alfresco Content Services
+repository, you can use the following values:
+
+```yaml
+alfresco-repository:
+  environment:
+    JAVA_OPTS: >-
+      -Dcom.sun.management.jmxremote
+      -Dalfresco.jmx.connector.enabled=true
+      -Dalfresco.rmi.services.port=9876
+      -Dcom.sun.management.jmxremote.rmi.port=9876
+      -Dcom.sun.management.jmxremote.port=9876
+      -Dcom.sun.management.jmxremote.ssl=false
+      -Dcom.sun.management.jmxremote.authenticate=false
+```
+
+Then use pod port orwarding as explained above:
+
+```bash
+kubectl port-forward acs-alfresco-cs-repository-69545958df-6wzl6 9876:9876 -n alfresco
+```
+
+> Where you need to use the right pod & namespace names that match your deployment
+
+You can now connect to the JMX interface using a JMX client like JConsole or
+VisualVM using the netwrok socker `localhost:9876`.
+
+![VisualVM connected to acs pod](./images/visualvm.png)
 
 ### Viewing Log Files Via Command Line
 
