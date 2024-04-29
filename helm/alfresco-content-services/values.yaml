@@ -442,7 +442,7 @@ alfresco-sync-service:
   enabled: true
   replicaCount: 1
   image:
-    tag: 5.0.0
+    tag: 4.0.1
   database:
     existingSecret:
       name: *sync_database_secretName
