@@ -49,27 +49,27 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 3.3.1.1
+        tag: 3.3.3
     content:
       image:
-        tag: 3.3.1.1
+        tag: 3.3.3
     metadata:
       image:
-        tag: 3.3.1.1
+        tag: 3.3.3
     path:
       image:
-        tag: 3.3.1.1
+        tag: 3.3.3
   reindexing:
     image:
-      tag: 3.3.1.1
+      tag: 3.3.3
 elasticsearch:
   enabled: false
 alfresco-digital-workspace:
   image:
-    tag: 4.2.0
+    tag: 4.4.1
 alfresco-control-center:
   image:
-    tag: 8.2.0
+    tag: 8.3.0
 postgresql:
   image:
     tag: 14.10.0

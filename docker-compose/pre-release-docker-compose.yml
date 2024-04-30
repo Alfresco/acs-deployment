@@ -107,7 +107,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:23.3.0-A10
+    image: quay.io/alfresco/alfresco-share:23.3.0-A12
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -187,7 +187,7 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:4.5.0-8753109671
+    image: quay.io/alfresco/alfresco-digital-workspace:4.5.0-8845542148
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -197,7 +197,7 @@ services:
       APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:8.5.0-8753109671
+    image: quay.io/alfresco/alfresco-control-center:8.5.0-8845542148
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -214,7 +214,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:5.0.0
+    image: quay.io/alfresco/service-sync:4.0.1.1-A1
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
