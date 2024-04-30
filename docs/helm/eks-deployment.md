@@ -263,6 +263,12 @@ Wait a few minutes before trying to access `http://acs.YOUR-DOMAIN-NAME` in your
 browser to let the new record to propagate. Once ready, you should get the
 default `404 Not Found` nginx error page.
 
+Set an environment variable with the hostname which will be useful later.
+
+```sh
+export ACS_HOSTNAME=acs.YOUR-DOMAIN-NAME
+```
+
 ### HTTPS
 
 The most simple way to access applications running on Kubernetes behind HTTPS is
@@ -293,18 +299,16 @@ cert-manager jetstack/cert-manager \
 
 Create a `ClusterIssuer` resource which will automatically register a new
 account on LetsEncrypt production directory, generate a private key and be ready
-to request certificates for any ingress that will contains a reference to it
-(provide your real email address):
+to request certificates for any ingress that will contains a reference to it.
 
 ```sh
-EMAIL_ADDRESS=user@example.com kubectl apply -n cert-manager -f - <<EOF
+kubectl apply -n cert-manager -f - <<EOF
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    email: ${EMAIL_ADDRESS}
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-key
@@ -315,14 +319,12 @@ spec:
 EOF
 ```
 
-Download the values file that you will provide on the following helm install/upgrade command via `--values letsencrypt_values.yaml`
+Download the values file and automatically replace the `${ACS_HOSTNAME}` variable.
+When running the `helm install` command later, you will provide it with `--values letsencrypt_values.yaml` argument:
 
 ```sh
-curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/letsencrypt_values.yaml
+curl https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/letsencrypt_values.yaml | envsubst > letsencrypt_values.yaml
 ```
-
-Replace every occurrence of `acs.YOUR-DOMAIN-NAME` with your actual hostname
-(without `https://` prefix).
 
 ### Setup namespace
 
@@ -368,6 +370,10 @@ Now you can run the next `helm` commands using `.` instead of
 Choose your desired ACS version (Enterprise or Community) - latest or previous -
 and proceed to the corresponding section below for installation instructions.
 
+Please note that we are using `helm upgrade --install` instead of the usual
+`helm install` so you can simply re-run the command as many time you want and
+upgrade an eventually existing deployment after tuning values.
+
 #### Latest Enterprise Version
 
 See the [registry authentication](registry-authentication.md) page to configure
@@ -377,12 +383,12 @@ Deploy the latest version of ACS by running the following command (replacing
 `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
 ```sh
-helm install acs alfresco/alfresco-content-services \
+helm upgrade --install acs alfresco/alfresco-content-services \
 --set alfresco-repository.persistence.enabled=true \
 --set alfresco-repository.persistence.storageClass="nfs-client" \
 --set alfresco-transform-service.filestore.persistence.enabled=true \
 --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
---set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
+--set global.known_urls=https://${ACS_HOSTNAME} \
 --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --values letsencrypt_values.yaml \
 --namespace=alfresco
@@ -390,16 +396,21 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Latest Community Version
 
-Download the [Community values file](../../helm/alfresco-content-services/community_values.yaml).
-
-Deploy ACS Community by running the following command (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
+Download the Community values file with:
 
 ```sh
-helm install acs alfresco/alfresco-content-services \
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/helm/alfresco-content-services/community_values.yaml
+```
+
+Deploy ACS Community by running the following command:
+
+```sh
+helm upgrade --install acs alfresco/alfresco-content-services \
 --values=community_values.yaml \
 --set alfresco-repository.persistence.enabled=true \
 --set alfresco-repository.persistence.storageClass="nfs-client" \
---set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
+--set global.known_urls=https://${ACS_HOSTNAME} \
+--set global.search.sharedSecret=$(openssl rand -hex 24) \
 --values letsencrypt_values.yaml \
 --namespace=alfresco
 ```
@@ -414,16 +425,41 @@ Deploy the specific version of ACS by running the following command (replacing
 `MINOR` with the appropriate values):
 
 ```sh
-helm install acs alfresco/alfresco-content-services \
+helm upgrade --install acs alfresco/alfresco-content-services \
 --values=MAJOR.MINOR.N_values.yaml \
---set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
 --set alfresco-repository.persistence.enabled=true \
 --set alfresco-repository.persistence.storageClass="nfs-client" \
 --set alfresco-transform-service.filestore.persistence.enabled=true \
 --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
+--set global.known_urls=https://${ACS_HOSTNAME} \
 --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
 --values letsencrypt_values.yaml \
 --namespace=alfresco
+```
+
+### Wait for successfull deployment
+
+You can monitor the progress of deployments with:
+
+```sh
+kubectl get pod -n alfresco
+```
+
+In a few minutes, each pod should be in `Running` in the `Status` column and
+showing `1/1` in the `Ready` column.
+
+If it doesn't happen, you can first describe the pod not in Running state yet
+and look for the events section at the end:
+
+```sh
+kubectl describe pod acs-alfresco-repository-???-??? -n alfresco
+```
+
+If the pod is in running state but can't achieve the `1/1` Ready before the
+liveness timeout kicks in, you should take a look at the logs with:
+
+```sh
+kubectl logs acs-alfresco-repository-???-??? -n alfresco
 ```
 
 ## Access
@@ -465,7 +501,7 @@ Security](https://aws.github.io/aws-eks-best-practices/).
 Remove the `acs` deployments by running the following command:
 
 ```sh
-helm uninstall -n alfresco acs
+helm uninstall acs -n alfresco
 ```
 
 Delete the Kubernetes namespace using the command below:
