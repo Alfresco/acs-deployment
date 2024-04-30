@@ -32,3 +32,12 @@ kubectl wait --namespace ingress-nginx \
   --selector=app.kubernetes.io/component=controller \
   --timeout=90s
 ```
+
+Verify the newly created pod under the ingress-nginx namespace:
+
+```sh
+kubectl get pods --namespace=ingress-nginx
+```
+
+More information can be found in the
+[ingress-nginx deploy docs](https://kubernetes.github.io/ingress-nginx/deploy/).
