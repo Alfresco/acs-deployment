@@ -34,7 +34,7 @@ To better troubleshoot any issue, you may want to install applications such as:
 * [lens](https://k8slens.dev/) (GUI)
 * [k9s](https://k9scli.io/) (CLI)
 
-## Setup An EKS Cluster
+## Create the EKS cluster
 
 There are multiple ways to setup an EKS cluster, but one of the most simple is
 by using `eksctl`. This section will guide you in creating a new EKS cluster
@@ -58,7 +58,7 @@ Create the cluster using the latest supported version, check the main [README](.
 Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
-eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.29 --instance-types t3.xlarge
+eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.29 --instance-types t3.xlarge --nodes 3
 ```
 
 Enable the OIDC provider that is necessary to install further EKS addons later:
@@ -71,10 +71,10 @@ For further information please refer to the [Getting started with Amazon EKS –
 eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
 guide.
 
-## Prepare The Cluster For ACS
+## Setup ACS infrastructure dependencies
 
 Now that we have an EKS cluster up and running, there are a few one time steps
-that we need to perform to prepare the cluster for ACS to be installed.
+that we need to perform before ACS could be successfully installed.
 
 ### Storage
 
@@ -90,7 +90,7 @@ you can alternatively:
   replicas > 1)
 * Use an EBS block-storage, enabling [EBS CSI driver](#ebs-csi-driver) (when
   repository replicas = 1)
-* Use a bucket on [S3](examples/with-aws-services.md#s3)
+* Use an [S3](examples/with-aws-services.md#s3) bucket
 
 For the
 [database](https://docs.alfresco.com/content-services/latest/config/databases/),
@@ -197,13 +197,13 @@ Create the IAM Service Account with access to EBS that will be used by the drive
 
 ```sh
 eksctl create iamserviceaccount \
-  --name ebs-csi-controller-sa \
-  --namespace kube-system \
-  --cluster $EKS_CLUSTER_NAME \
-  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
-  --approve \
-  --role-only \
-  --role-name AmazonEKS_EBS_CSI_DriverRole
+--name ebs-csi-controller-sa \
+--namespace kube-system \
+--cluster $EKS_CLUSTER_NAME \
+--attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+--approve \
+--role-only \
+--role-name AmazonEKS_EBS_CSI_DriverRole
 ```
 
 Enable the addon referencing the IAM role created previously:
@@ -231,13 +231,48 @@ top of it.
 
 See [ingress-nginx](ingress-nginx.md) section.
 
+### DNS
+
+In order to access Alfresco once installed, you need to setup a DNS record that
+resolve to the ELB hostname that has been provisioned by `ingress-nginx`.
+
+This is a typical architecture for which you can learn more at
+[Exposing Kubernetes Applications article](https://aws.amazon.com/blogs/containers/exposing-kubernetes-applications-part-3-nginx-ingress-controller/).
+
+To retrieve the automatically assigned hostname of the ELB you need to inspect
+the ingress resources:
+
+```sh
+kubectl get service -n ingress-nginx
+```
+
+which will return an output like the following:
+
+```sh
+NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                       PORT(S)                      AGE
+ingress-nginx-controller   LoadBalancer   10.100.132.184   ???.eu-west-1.elb.amazonaws.com   80:31780/TCP,443:32152/TCP   3m
+```
+
+Now you can proceed creating a new DNS record in `YOUR-DOMAIN-NAME` zone, like:
+
+* Record name: `acs`
+* Record type: `CNAME`
+* Value: `???.eu-west-1.elb.amazonaws.com`
+
+Wait a few minutes before trying to access `http://acs.YOUR-DOMAIN-NAME` in your
+browser to let the new record to propagate. Once ready, you should get the
+default `404 Not Found` nginx error page.
+
 ### HTTPS
 
 The most simple way to access applications running on Kubernetes behind HTTPS is
 using [cert-manager](https://cert-manager.io/) to request on-the-fly a
 [LetsEncrypt](https://letsencrypt.org/) certificate.
-
 This is an optional but recommended step.
+
+> In case you have a private PKI, you may want to take a look at providing a
+> [custom certificate without cert-manager](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls)
+> instead.
 
 Add the cert-manager helm repository:
 
@@ -286,7 +321,8 @@ Download the values file that you will provide on the following helm install/upg
 curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/letsencrypt_values.yaml
 ```
 
-Edit every occurrence of `acs.YOUR-DOMAIN-NAME` accordingly.
+Replace every occurrence of `acs.YOUR-DOMAIN-NAME` with your actual hostname
+(without `https://` prefix).
 
 ### Setup namespace
 
@@ -389,37 +425,6 @@ helm install acs alfresco/alfresco-content-services \
 --values letsencrypt_values.yaml \
 --namespace=alfresco
 ```
-
-### DNS
-
-In order to access Alfresco via the hostname that you provided before
-(`https://acs.YOUR-DOMAIN-NAME`), you need to manually create a DNS record which
-point to the ELB hostname.
-
-To retrieve the hostname of the ELB you need to inspect the ingress resources:
-
-```sh
-kubectl -n alfresco get ingress
-```
-
-which will return an output like the following:
-
-```sh
-NAME                      CLASS   HOSTS   ADDRESS                           PORTS   AGE
-acs-alfresco-cc           nginx   *       ???.eu-west-1.elb.amazonaws.com   80      16m
-acs-alfresco-dw           nginx   *       ???.eu-west-1.elb.amazonaws.com   80      16m
-acs-alfresco-repository   nginx   *       ???.eu-west-1.elb.amazonaws.com   80      16m
-acs-share                 nginx   *       ???.eu-west-1.elb.amazonaws.com   80      16m
-```
-
-Now you can proceed creating a new DNS record in `YOUR-DOMAIN-NAME`:
-
-* Record name: `acs`
-* Record type: `CNAME`
-* Value: `???.eu-west-1.elb.amazonaws.com`
-
-Wait a few minutes before trying to access the domain in your browser to let the
-new record to propagate.
 
 ## Access
 

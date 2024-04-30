@@ -6,50 +6,50 @@ alfresco-control-center:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-      - host: acs.YOUR-DOMAIN-NAME
+      - host: ${ACS_HOSTNAME}
         paths:
           - path: /control-center
             pathType: Prefix
     tls:
       - hosts:
-          - acs.YOUR-DOMAIN-NAME
+          - ${ACS_HOSTNAME}
         secretName: letsencrypt-key
 alfresco-digital-workspace:
   ingress:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-      - host: acs.YOUR-DOMAIN-NAME
+      - host: ${ACS_HOSTNAME}
         paths:
           - path: /workspace
             pathType: Prefix
     tls:
       - hosts:
-          - acs.YOUR-DOMAIN-NAME
+          - ${ACS_HOSTNAME}
         secretName: letsencrypt-key
 alfresco-repository:
   ingress:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-      - host: acs.YOUR-DOMAIN-NAME
+      - host: ${ACS_HOSTNAME}
         paths:
           - path: /
             pathType: Prefix
     tls:
       - hosts:
-          - acs.YOUR-DOMAIN-NAME
+          - ${ACS_HOSTNAME}
         secretName: letsencrypt-key
 share:
   ingress:
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
     hosts:
-      - host: acs.YOUR-DOMAIN-NAME
+      - host: ${ACS_HOSTNAME}
         paths:
           - path: /share
             pathType: ImplementationSpecific
     tls:
       - hosts:
-          - acs.YOUR-DOMAIN-NAME
+          - ${ACS_HOSTNAME}
         secretName: letsencrypt-key
