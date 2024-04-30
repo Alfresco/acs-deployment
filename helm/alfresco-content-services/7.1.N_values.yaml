@@ -74,7 +74,7 @@ postgresql-sync:
     tag: 13.3.0
 alfresco-digital-workspace:
   image:
-    tag: 2.6.2
+    tag: 4.4.1
 alfresco-sync-service:
   image:
     tag: 3.11.3
