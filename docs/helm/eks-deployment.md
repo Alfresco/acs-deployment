@@ -122,9 +122,9 @@ you can alternatively:
 
     ```sh
     aws eks describe-cluster \
-      --name $EKS_CLUSTER_NAME \
-      --query "cluster.resourcesVpcConfig.vpcId" \
-      --output text
+    --name $EKS_CLUSTER_NAME \
+    --query "cluster.resourcesVpcConfig.vpcId" \
+    --output text
     ```
 
 3. Find The CIDR range of VPC using the command below (replacing `VPC-ID` with
@@ -132,9 +132,9 @@ you can alternatively:
 
     ```sh
     aws ec2 describe-vpcs \
-      --vpc-ids VPC-ID \
-      --query "Vpcs[].CidrBlock" \
-      --output text
+    --vpc-ids VPC-ID \
+    --query "Vpcs[].CidrBlock" \
+    --output text
     ```
 
 4. Go to the [Security Groups section of the VPC
@@ -210,17 +210,17 @@ Enable the addon referencing the IAM role created previously:
 
 ```sh
 eksctl create addon \
-  --name aws-ebs-csi-driver \
-  --cluster $EKS_CLUSTER_NAME \
-  --service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole \
-  --force
+--name aws-ebs-csi-driver \
+--cluster $EKS_CLUSTER_NAME \
+--service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole \
+--force
 ```
 
 At this point the provisioning of EBS volumes using the default GP2
 storageClass will be handled by this driver.
 
-For further information please refer to the official [Amazon EBS CSI driver](
-ttps://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html) guide.
+For further information please refer to the official
+[Amazon EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html) guide.
 
 ## Deploy
 
@@ -299,7 +299,7 @@ cert-manager jetstack/cert-manager \
 
 Create a `ClusterIssuer` resource which will automatically register a new
 account on LetsEncrypt production directory, generate a private key and be ready
-to request certificates for any ingress that will contains a reference to it.
+to request certificates for any ingress that will contains a reference to it:
 
 ```sh
 kubectl apply -n cert-manager -f - <<EOF
