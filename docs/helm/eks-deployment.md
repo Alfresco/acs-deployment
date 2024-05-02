@@ -14,7 +14,66 @@ The Enterprise configuration will deploy the following system:
 
 The Community configuration will deploy the following system:
 
-![ACS Community on EKS](./images/helm-eks-community.png)
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+Client("👥 Clients")
+
+subgraph Helm community
+  PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
+  PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
+  PersistentVolumeClaim_solr-default-pvc(PersistentVolumeClaim: solr-default-pvc):::k8s
+  PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
+  Deployment_activemq(Deployment: activemq):::thrdP
+  Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
+  Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
+  Deployment_solr(Deployment: solr):::alf
+  Deployment_share(Deployment: share):::alf
+  StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
+  Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
+  Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
+  Ingress_share(Ingress: share):::k8s
+  subgraph "Alfresco Transform Service"
+    Deployment_imagemagick(Deployment: imagemagick):::alf
+    Deployment_libreoffice(Deployment: libreoffice):::alf
+    Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
+    Deployment_tika(Deployment: tika):::alf
+    Deployment_transform-misc(Deployment: transform-misc):::alf
+  end
+end
+
+subgraph AWS
+  EBS:::aws
+  EFS:::aws
+  S3:::aws
+end
+
+Client ----> Ingress_alfresco-cc --> Deployment_alfresco-cc
+Client --> Ingress_alfresco-repository --> Deployment_alfresco-repository
+Client --> Ingress_share --> Deployment_share
+
+Deployment_alfresco-cc --> Deployment_alfresco-repository
+Deployment_share --> Deployment_alfresco-repository
+
+Deployment_alfresco-repository --> Deployment_solr
+Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> EBS
+Deployment_alfresco-repository --> Deployment_activemq
+Deployment_alfresco-repository --> Deployment_imagemagick
+Deployment_alfresco-repository --> Deployment_libreoffice
+Deployment_alfresco-repository --> Deployment_pdfrenderer
+Deployment_alfresco-repository --> Deployment_tika
+Deployment_alfresco-repository --> Deployment_transform-misc
+
+Deployment_alfresco-repository ---> PersistentVolumeClaim_repository-default-pvc --> EFS
+PersistentVolumeClaim_repository-default-pvc --> S3
+Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS
+Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> EBS
+```
 
 ## Prerequisites
 
