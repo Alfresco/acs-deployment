@@ -55,6 +55,7 @@ aser --> es
 acs ---> es
 acs ---> psql
 acs ---> amq
+acs ---> trouter
 
 trouter --> tcore
 trouter --> sfs
@@ -62,6 +63,7 @@ trouter --> amq
 
 share --> acs
 
+sync --> acs
 ```
 
 Using the Community compose file will deploy the following system:
