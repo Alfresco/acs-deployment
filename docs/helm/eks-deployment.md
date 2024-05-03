@@ -271,7 +271,7 @@ export ACS_HOSTNAME=acs.YOUR-DOMAIN-NAME
 
 ### HTTPS
 
-The most simple way to access applications running on Kubernetes behind HTTPS is
+The simplest way to access applications running on Kubernetes behind HTTPS is
 using [cert-manager](https://cert-manager.io/) to request on-the-fly a
 [LetsEncrypt](https://letsencrypt.org/) certificate.
 This is an optional but recommended step.
@@ -456,7 +456,8 @@ kubectl describe pod acs-alfresco-repository-???-??? -n alfresco
 ```
 
 If the pod is in running state but can't achieve the `1/1` Ready before the
-liveness timeout kicks in, you should take a look at the logs with:
+readiness probe fails as many times the readiness threshold allows, you should
+take a look at the logs with:
 
 ```sh
 kubectl logs acs-alfresco-repository-???-??? -n alfresco
