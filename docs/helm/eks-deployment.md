@@ -8,7 +8,13 @@ manage, and scale containerized applications using Kubernetes on AWS. EKS runs
 the Kubernetes management infrastructure for you across multiple AWS
 availability zones to eliminate a single point of failure.
 
-The Enterprise configuration will deploy the following system:
+## Architectures
+
+### Enterprise diagrams
+
+The Enterprise configuration will deploy the following system (Alfresco
+Transform Service and Alfresco Search Enterprise are detailed in the next
+diagrams):
 
 ```mermaid
 graph LR
@@ -23,10 +29,9 @@ Client("👥 Clients")
 subgraph Helm enterprise
   direction LR
   PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
-  PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
-  PersistentVolumeClaim_filestore-default-pvc(PersistentVolumeClaim: filestore-default-pvc):::k8s
   PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
   PersistentVolumeClaim_data-sync-postgresql(PersistentVolumeClaim: data-sync-postgresql):::k8s
+  PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
 
   Deployment_activemq(Deployment: activemq):::thrdP
   Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
@@ -44,54 +49,77 @@ subgraph Helm enterprise
   Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
   Ingress_alfresco-sync-service(Ingress: alfresco-sync-service):::k8s
   Ingress_share(Ingress: share):::k8s
-
-  subgraph "Alfresco Transform Service"
-    Deployment_filestore(Deployment: filestore):::alf
-    Deployment_imagemagick(Deployment: imagemagick):::alf
-    Deployment_libreoffice(Deployment: libreoffice):::alf
-    Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
-    Deployment_tika(Deployment: tika):::alf
-    Deployment_transform-misc(Deployment: transform-misc):::alf
-    Deployment_transform-router(Deployment: transform-router):::alf
-  end
-
 end
 
   subgraph AWS
-    EBS:::aws
     EFS:::aws
     S3:::aws
+    EBS:::aws
   end
 
-  Client ----> Ingress_alfresco-cc --> Deployment_alfresco-cc
-  Client ----> Ingress_alfresco-dw --> Deployment_alfresco-dw
-  Client --> Ingress_alfresco-repository --> Deployment_alfresco-repository
-  Client --> Ingress_share --> Deployment_share
-  Client --> Ingress_alfresco-sync-service --> Deployment_alfresco-sync-service
+Client ---> Ingress_alfresco-cc --> Deployment_alfresco-cc
+Client ---> Ingress_alfresco-dw --> Deployment_alfresco-dw
+Client --> Ingress_alfresco-repository --> Deployment_alfresco-repository
+Client --> Ingress_share --> Deployment_share
+Client --> Ingress_alfresco-sync-service --> Deployment_alfresco-sync-service
 
-  Deployment_share --> Deployment_alfresco-repository
+Deployment_share --> Deployment_alfresco-repository
 
-  Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> EBS
-  Deployment_alfresco-repository --> Deployment_activemq
-  Deployment_alfresco-repository --> StatefulSet_elasticsearch-master
+Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> EBS
+Deployment_alfresco-repository --> Deployment_activemq
+Deployment_alfresco-repository --> StatefulSet_elasticsearch-master
 
-  Deployment_alfresco-sync-service --> StatefulSet_postgresql-sync --> PersistentVolumeClaim_data-sync-postgresql --> EBS
-  Deployment_alfresco-sync-service --> Deployment_activemq
-  Deployment_alfresco-sync-service --> Deployment_alfresco-repository
-  
-  Deployment_transform-router --> Deployment_activemq
-  Deployment_transform-router --> Deployment_imagemagick
-  Deployment_transform-router --> Deployment_libreoffice
-  Deployment_transform-router --> Deployment_pdfrenderer
-  Deployment_transform-router --> Deployment_tika
-  Deployment_transform-router --> Deployment_transform-misc
+Deployment_alfresco-sync-service --> StatefulSet_postgresql-sync --> PersistentVolumeClaim_data-sync-postgresql --> EBS
+Deployment_alfresco-sync-service --> Deployment_activemq
+Deployment_alfresco-sync-service --> Deployment_alfresco-repository
 
-  Deployment_alfresco-repository ---> PersistentVolumeClaim_repository-default-pvc --> EFS
-  Deployment_filestore --> PersistentVolumeClaim_filestore-default-pvc --> EBS
-  PersistentVolumeClaim_repository-default-pvc --> S3
-  Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS
-
+Deployment_alfresco-repository --> PersistentVolumeClaim_repository-default-pvc --> EFS
+PersistentVolumeClaim_repository-default-pvc -.-> EBS
+Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS
 ```
+
+#### Alfresco Transform Services
+
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+subgraph ats[Alfresco Transform Service]
+  Deployment_filestore(Deployment: filestore):::alf
+  Deployment_imagemagick(Deployment: imagemagick):::alf
+  Deployment_libreoffice(Deployment: libreoffice):::alf
+  Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
+  Deployment_tika(Deployment: tika):::alf
+  Deployment_transform-misc(Deployment: transform-misc):::alf
+  Deployment_transform-router(Deployment: transform-router):::alf
+end
+
+subgraph AWS
+  EBS:::aws
+  EFS:::aws
+end
+
+Deployment_activemq(Deployment: activemq):::thrdP
+PersistentVolumeClaim_filestore-default-pvc(PersistentVolumeClaim: filestore-default-pvc):::k8s
+
+
+Deployment_transform-router --> Deployment_activemq
+Deployment_transform-router --> Deployment_imagemagick
+Deployment_transform-router --> Deployment_libreoffice
+Deployment_transform-router --> Deployment_pdfrenderer
+Deployment_transform-router --> Deployment_tika
+Deployment_transform-router --> Deployment_transform-misc
+Deployment_transform-router --> Deployment_filestore
+
+Deployment_filestore --> PersistentVolumeClaim_filestore-default-pvc -.-> EBS
+PersistentVolumeClaim_filestore-default-pvc --> EFS
+```
+
+#### Search Enterprise
 
 ```mermaid
 graph TB
@@ -121,7 +149,9 @@ live --> Deployment_activemq
 live --> StatefulSet_elasticsearch-master
 ```
 
-The Community configuration will deploy the following system:
+### Community diagram
+
+The Community configuration will deploy the following architecture:
 
 ```mermaid
 graph LR
@@ -158,8 +188,8 @@ end
 
 subgraph AWS
   EBS:::aws
-  EFS:::aws
   S3:::aws
+  EFS:::aws
 end
 
 Client ----> Ingress_alfresco-cc --> Deployment_alfresco-cc
@@ -177,8 +207,8 @@ Deployment_alfresco-repository --> Deployment_pdfrenderer
 Deployment_alfresco-repository --> Deployment_tika
 Deployment_alfresco-repository --> Deployment_transform-misc
 
+PersistentVolumeClaim_repository-default-pvc -.-> EBS
 Deployment_alfresco-repository ---> PersistentVolumeClaim_repository-default-pvc --> EFS
-PersistentVolumeClaim_repository-default-pvc --> S3
 Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS
 Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> EBS
 ```
