@@ -85,11 +85,11 @@ For the main
 you can alternatively:
 
 * Use an Elastic File System, installing the ([EFS CSI driver](#efs-csi-driver))
-  (the default we suggest, see `storageClass="nfs-client"` values in [helm
-  install section](#latest-enterprise-version) and required when repository
-  replicas > 1)
+  (the default, as documented below, required when repository replicas are more
+  than 1)
 * Use an EBS block-storage, enabling [EBS CSI driver](#ebs-csi-driver) (when
-  repository replicas = 1)
+  repository replicas are just one and with node groups in the same availability
+  zone - not meant for production)
 * Use an [S3](examples/with-aws-services.md#s3) bucket
 
 For the
