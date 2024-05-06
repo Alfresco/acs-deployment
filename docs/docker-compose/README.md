@@ -33,7 +33,7 @@ subgraph "Docker Compose (enterprise)"
   end
 
   subgraph "Persistence"
-    psql[("PostgreSQL")]
+    pg[("PostgreSQL")]
     es[("Elasticsearch")]
     amq[("ActiveMQ")]
   end
@@ -44,16 +44,16 @@ Client --> proxy
 proxy --> acc
 proxy --> share
 proxy ---> adw
-proxy --> acs
-proxy --> sync
+proxy ---> acs
+proxy ----> sync
 
 ase --> es
 ase --> amq
-aser --> psql
+aser --> pg
 aser --> es
 
 acs ---> es
-acs ---> psql
+acs ---> pg
 acs ---> amq
 acs ---> trouter
 
@@ -64,6 +64,8 @@ trouter --> amq
 share --> acs
 
 sync --> acs
+sync --> pg
+sync --> amq
 ```
 
 Using the Community compose file will deploy the following system:
@@ -77,7 +79,7 @@ subgraph "Docker Compose (community)"
   proxy("nginx reverse proxy")
   acs("Alfresco Content Services")
   ass("Alfresco Search Services")
-  psql[("PostgreSQL")]
+  pg[("PostgreSQL")]
   amq[("ActiveMQ")]
   tcore("Transform Core (AIO)")
 
@@ -94,7 +96,7 @@ proxy --> aca
 proxy --> acs
 
 acs --> ass
-acs --> psql
+acs --> pg
 acs --> tcore
 acs --> amq
 share --> acs
