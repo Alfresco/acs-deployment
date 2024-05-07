@@ -36,7 +36,7 @@ To better troubleshoot any issue, you may want to install applications such as:
 
 ## Create the EKS cluster
 
-There are multiple ways to setup an EKS cluster, but one of the most simple is
+There are multiple ways to set up an EKS cluster, but one of the most simple is
 by using `eksctl`. This section will guide you in creating a new EKS cluster
 that satisfy the minimum requirements to have a basic ACS installation up and
 running.
@@ -54,7 +54,7 @@ Set the cluster name in an environment variable that can be reused later:
 EKS_CLUSTER_NAME=my-alfresco-eks
 ```
 
-Create the cluster using the latest supported version, check the main [README](../../README.md).
+Create the cluster using the latest supported version - check the main [README](../../README.md).
 Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
@@ -71,10 +71,10 @@ For further information please refer to the [Getting started with Amazon EKS –
 eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
 guide.
 
-## Setup ACS infrastructure dependencies
+## Set up ACS infrastructure dependencies
 
 Now that we have an EKS cluster up and running, there are a few one time steps
-that we need to perform before ACS could be successfully installed.
+that we need to perform before ACS can be successfully installed.
 
 ### Storage
 
@@ -224,7 +224,7 @@ For further information please refer to the official
 
 ## Deploy
 
-Now the EKS cluster is setup we can start to provision Kubernetes resources on
+Now the EKS cluster is set up, we can start to provision Kubernetes resources on
 top of it.
 
 ### Ingress
@@ -233,7 +233,7 @@ See [ingress-nginx](ingress-nginx.md) section.
 
 ### DNS
 
-In order to access Alfresco once installed, you need to setup a DNS record that
+In order to access Alfresco once installed, you need to set up a DNS record that
 resolve to the ELB hostname that has been provisioned by `ingress-nginx`.
 
 This is a typical architecture for which you can learn more at
@@ -253,14 +253,14 @@ NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP          
 ingress-nginx-controller   LoadBalancer   10.100.132.184   ???.eu-west-1.elb.amazonaws.com   80:31780/TCP,443:32152/TCP   3m
 ```
 
-Now you can proceed creating a new DNS record in `YOUR-DOMAIN-NAME` zone, like:
+Now you can proceed to creating a new DNS record in `YOUR-DOMAIN-NAME` zone, like:
 
 * Record name: `acs`
 * Record type: `CNAME`
 * Value: `???.eu-west-1.elb.amazonaws.com`
 
 Wait a few minutes before trying to access `http://acs.YOUR-DOMAIN-NAME` in your
-browser to let the new record to propagate. Once ready, you should get the
+browser to allow the new record to propagate. Once ready, you should get the
 default `404 Not Found` nginx error page.
 
 Set an environment variable with the hostname which will be useful later.
@@ -299,7 +299,7 @@ cert-manager jetstack/cert-manager \
 
 Create a `ClusterIssuer` resource which will automatically register a new
 account on LetsEncrypt production directory, generate a private key and be ready
-to request certificates for any ingress that will contains a reference to it:
+to request certificates for any ingress that will contain a reference to it:
 
 ```sh
 kubectl apply -n cert-manager -f - <<EOF
@@ -326,9 +326,9 @@ When running the `helm install` command later, you will provide it with `--value
 curl https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/letsencrypt_values.yaml | envsubst > letsencrypt_values.yaml
 ```
 
-### Setup namespace
+### Set up namespace
 
-Namespaces in Kubernetes logically groups resources, so it's a good practice to
+Namespaces in Kubernetes logically groups resources, so it's good practice to
 create a namespace dedicated to alfresco using the following command (we'll then
 use the `alfresco` namespace throughout the rest of the tutorial):
 
@@ -371,7 +371,7 @@ Choose your desired ACS version (Enterprise or Community) - latest or previous -
 and proceed to the corresponding section below for installation instructions.
 
 Please note that we are using `helm upgrade --install` instead of the usual
-`helm install` so you can simply re-run the command as many time you want and
+`helm install` so you can simply re-run the command as many times as you want and
 upgrade an eventually existing deployment after tuning values.
 
 #### Latest Enterprise Version
@@ -417,7 +417,7 @@ helm upgrade --install acs alfresco/alfresco-content-services \
 
 #### Previous Enterprise Versions
 
-Download the version specific values file you require from the
+Download the version-specific values file you require from the
 [chart folder](../../helm/alfresco-content-services).
 
 Deploy the specific version of ACS by running the following command (replacing
@@ -437,7 +437,7 @@ helm upgrade --install acs alfresco/alfresco-content-services \
 --namespace=alfresco
 ```
 
-### Wait for successfull deployment
+### Wait for successful deployment
 
 You can monitor the progress of deployments with:
 
@@ -448,14 +448,14 @@ kubectl get pod -n alfresco
 In a few minutes, each pod should be in `Running` in the `Status` column and
 showing `1/1` in the `Ready` column.
 
-If it doesn't happen, you can first describe the pod not in Running state yet
+If it doesn't happen, you can first describe the pod not in the Running state yet
 and look for the events section at the end:
 
 ```sh
 kubectl describe pod acs-alfresco-repository-???-??? -n alfresco
 ```
 
-If the pod is in running state but can't achieve the `1/1` Ready before the
+If the pod is in the running state but can't achieve the `1/1` Ready before the
 readiness probe fails as many times the readiness threshold allows, you should
 take a look at the logs with:
 
@@ -513,7 +513,7 @@ kubectl delete namespace alfresco
 
 If you created an EFS filesystem before, go to the [EFS
 Console](https://console.aws.amazon.com/efs), select the file system and press
-"Delete" button to remove the mount targets and file system.
+the "Delete" button to remove the mount targets and file system.
 
 Finally, delete the EKS cluster:
 
