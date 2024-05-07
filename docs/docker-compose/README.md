@@ -5,11 +5,103 @@ Docker Compose.
 
 Using one of the Enterprise compose files will deploy the following system:
 
-![Docker Compose Enterprise](./images/docker-compose-enterprise.png)
+```mermaid
+graph TB
+
+subgraph "Docker Compose (enterprise)"
+  direction TB
+  Client("👥 Clients")
+  proxy("nginx reverse proxy")
+  acs("Alfresco Content Services")
+  sync("Alfresco Sync Service")
+
+  subgraph "Alfresco Transform Service"
+    trouter("Transform Router")
+    sfs("Shared File Store")
+    tcore("Transform Core (AIO)")
+  end
+
+  subgraph "Alfresco Search Enterprise"
+    aser("Reindexing")
+    ase("Live Indexing")
+  end
+
+  subgraph "Webapps"
+    acc("Alfresco Control Center")
+    adw("Alfresco Digital Workspace")
+    share("Alfresco Share")
+  end
+
+  subgraph "Persistence"
+    pg[("PostgreSQL")]
+    es[("Elasticsearch")]
+    amq[("ActiveMQ")]
+  end
+end
+
+Client --> proxy
+
+proxy --> acc
+proxy --> share
+proxy ---> adw
+proxy ---> acs
+proxy ----> sync
+
+ase --> es
+ase --> amq
+aser --> pg
+aser --> es
+
+acs ---> es
+acs ---> pg
+acs ---> amq
+acs ---> trouter
+
+trouter --> tcore
+trouter --> sfs
+trouter --> amq
+
+share --> acs
+
+sync --> acs
+sync --> pg
+sync --> amq
+```
 
 Using the Community compose file will deploy the following system:
 
-![Docker Compose Community](./images/docker-compose-community.png)
+```mermaid
+graph TB
+
+subgraph "Docker Compose (community)"
+  direction TB
+  Client("👥 Users")
+  proxy("nginx reverse proxy")
+  acs("Alfresco Content Services")
+  ass("Alfresco Search Services")
+  pg[("PostgreSQL")]
+  amq[("ActiveMQ")]
+  tcore("Transform Core (AIO)")
+
+  acc("Alfresco Control Center")
+  share("Alfresco Share")
+  aca("Alfresco Content App")
+end
+
+Client --> proxy
+
+proxy --> acc
+proxy --> share
+proxy --> aca
+proxy --> acs
+
+acs --> ass
+acs --> pg
+acs --> tcore
+acs --> amq
+share --> acs
+
+```
 
 ## Considerations
 
