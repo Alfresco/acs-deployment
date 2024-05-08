@@ -51,11 +51,12 @@ subgraph Helm enterprise
   Ingress_share(Ingress: share):::k8s
 end
 
-  subgraph AWS
-    EFS:::aws
-    S3:::aws
-    EBS:::aws
-  end
+subgraph AWS
+  EFS[(EFS: Datastore)]:::aws
+  EBS-acs[(EBS: Alfresco)]:::aws
+  EBS-sync[(EBS: Sync)]:::aws
+  EBS-mq[(EBS: ActiveMQ)]:::aws
+end
 
 Client ---> Ingress_alfresco-cc --> Deployment_alfresco-cc
 Client ---> Ingress_alfresco-dw --> Deployment_alfresco-dw
@@ -65,17 +66,16 @@ Client --> Ingress_alfresco-sync-service --> Deployment_alfresco-sync-service
 
 Deployment_share --> Deployment_alfresco-repository
 
-Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> EBS
+Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> EBS-acs
 Deployment_alfresco-repository --> Deployment_activemq
 Deployment_alfresco-repository --> StatefulSet_elasticsearch-master
 
-Deployment_alfresco-sync-service --> StatefulSet_postgresql-sync --> PersistentVolumeClaim_data-sync-postgresql --> EBS
+Deployment_alfresco-sync-service --> StatefulSet_postgresql-sync --> PersistentVolumeClaim_data-sync-postgresql --> EBS-sync
 Deployment_alfresco-sync-service --> Deployment_activemq
 Deployment_alfresco-sync-service --> Deployment_alfresco-repository
 
 Deployment_alfresco-repository --> PersistentVolumeClaim_repository-default-pvc --> EFS
-PersistentVolumeClaim_repository-default-pvc -.-> EBS
-Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS
+Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS-mq
 ```
 
 #### Alfresco Transform Services
@@ -99,8 +99,7 @@ subgraph ats[Alfresco Transform Service]
 end
 
 subgraph AWS
-  EBS:::aws
-  EFS:::aws
+  EFS[(EFS: Datastore)]:::aws
 end
 
 Deployment_activemq(Deployment: activemq):::thrdP
@@ -115,8 +114,7 @@ Deployment_transform-router --> Deployment_tika
 Deployment_transform-router --> Deployment_transform-misc
 Deployment_transform-router --> Deployment_filestore
 
-Deployment_filestore --> PersistentVolumeClaim_filestore-default-pvc -.-> EBS
-PersistentVolumeClaim_filestore-default-pvc --> EFS
+Deployment_filestore --> PersistentVolumeClaim_filestore-default-pvc --> EFS
 ```
 
 #### Search Enterprise
@@ -187,9 +185,10 @@ subgraph Helm community
 end
 
 subgraph AWS
-  EBS:::aws
-  S3:::aws
-  EFS:::aws
+  EBS-acs[(EBS: Alfresco)]:::aws
+  EBS-mq[(EBS: ActiveMQ)]:::aws
+  EBS-solr[(EBS: Solr)]:::aws
+  EFS[(EFS: Datastore)]:::aws
 end
 
 Client ----> Ingress_alfresco-cc --> Deployment_alfresco-cc
@@ -199,7 +198,7 @@ Client --> Ingress_share --> Deployment_share
 Deployment_share --> Deployment_alfresco-repository
 
 Deployment_alfresco-repository --> Deployment_solr
-Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> EBS
+Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> EBS-acs
 Deployment_alfresco-repository --> Deployment_activemq
 Deployment_alfresco-repository --> Deployment_imagemagick
 Deployment_alfresco-repository --> Deployment_libreoffice
@@ -207,10 +206,9 @@ Deployment_alfresco-repository --> Deployment_pdfrenderer
 Deployment_alfresco-repository --> Deployment_tika
 Deployment_alfresco-repository --> Deployment_transform-misc
 
-PersistentVolumeClaim_repository-default-pvc -.-> EBS
 Deployment_alfresco-repository ---> PersistentVolumeClaim_repository-default-pvc --> EFS
-Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS
-Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> EBS
+Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> EBS-mq
+Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> EBS-solr
 ```
 
 ## Prerequisites
