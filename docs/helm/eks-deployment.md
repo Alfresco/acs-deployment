@@ -236,7 +236,7 @@ See [ingress-nginx](ingress-nginx.md) section.
 In order to access Alfresco once installed, you need to set up a DNS record that
 resolve to the ELB hostname that has been provisioned by `ingress-nginx`.
 
-This is a typical architecture for which you can learn more at
+This is a typical architecture, which you can learn more about at
 [Exposing Kubernetes Applications article](https://aws.amazon.com/blogs/containers/exposing-kubernetes-applications-part-3-nginx-ingress-controller/).
 
 To retrieve the automatically assigned hostname of the ELB you need to inspect
