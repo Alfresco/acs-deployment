@@ -13,7 +13,7 @@ Desktop](https://docs.docker.com/desktop/).
 
 ## Prerequisites
 
-- You've read the projects [main README](/README.md#prerequisites)
+- You've read the projects [main README](/index.html#prerequisites)
 prerequisites section
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes
@@ -83,7 +83,7 @@ helm repo update
 #### Community localhost deployment
 
 To install the latest version of Community we need to download the
-[community_values.yaml file](../../helm/alfresco-content-services). Once
+[community_values.yaml file](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/community_values.yaml). Once
 downloaded, execute the following to initiate the deployment.
 
 ```bash
@@ -99,10 +99,10 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Enterprise localhost deployment
 
-ACS enterprise version needs to pull container images from private image repositories.
-To configure credentials for accessing the Alfresco Enterprise registry, please
-review the information provided in the [registry
-authentication](registry-authentication.md)
+ACS enterprise version needs to pull container images from private image
+repositories. To configure credentials for accessing the Alfresco Enterprise
+registry, please review the information provided in the
+[registry-authentication](./registry-authentication.md)
 
 The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster
 and therefore requires a large amount of resources out-of-the-box. To reduce the
@@ -135,7 +135,7 @@ The `helm` command above installs the most current released version of ACS Enter
 
 To deploy a previous version of ACS Enterprise follow the steps below.
 
-1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
+1. Download the version specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services)
 2. Deploying the specific version of ACS can be achieved by executing the following:
 
    ```bash
@@ -157,7 +157,7 @@ To deploy ACS platform with the latest development version follow the steps belo
 
 1. Download the
    [pre-release_values.yaml
-   file](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/pre-release_values.yaml)
+   file](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/helm/alfresco-content-services/pre-release_values.yaml)
 2. Deploy ACS by executing the following command:
 
    ```bash
@@ -241,6 +241,6 @@ an increased timeout, eg. --timeout 15m0s. Alteratively run without following:
 --atomic --timeout 10m0s
 ```
 
-and then monitor the logs for any failing pods. Please also consult the [Helm
-Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes
+and then monitor the logs for any failing pods. Please also consult the
+[Helm Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes
 Dashboard and more generic troubleshooting tips and tricks.

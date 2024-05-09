@@ -118,12 +118,4 @@ file for a version with the latest charts or using the old charts.
 
 ## Getting Started
 
-To get started please refer to the [Docker Compose](./docs/docker-compose) and [Helm Chart](./docs/helm) documentation.
-
-## License
-
-The code in this repository is released under the Apache License, see the [LICENSE](./LICENSE) file for details.
-
-## Contribution Guide
-
-Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
+To get started please refer to the [Docker Compose](docker-compose/README.md) and [Helm Chart](helm/README.md) documentation.

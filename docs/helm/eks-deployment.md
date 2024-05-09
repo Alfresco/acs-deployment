@@ -24,7 +24,7 @@ The Community configuration will deploy the following system:
 
 ## Prerequisites
 
-* You've read the projects [main README](/README.md#prerequisites)
+* You've read the projects [main README](/index.html#prerequisites)
   prerequisites section
 * You've read the [main Helm README](./README.md) page
 * You are proficient in AWS and Kubernetes
@@ -484,7 +484,7 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Latest Community Version
 
-1. Download the Community values file from [here](../../helm/alfresco-content-services/community_values.yaml).
+1. Download the Community values file from [here](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/community_values.yaml).
 
 2. Deploy ACS Community by running the following command (replacing
    `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
@@ -504,7 +504,7 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Previous Enterprise Version
 
-1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services).
+1. Download the version specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services).
 
 2. Deploy the specific version of ACS by running the following command
    (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and
@@ -554,7 +554,7 @@ apply your license:
 
 By default, this tutorial installs an out-of-the-box setup, however there are
 many configurations options described [here](./README.md#configure). There are
-also several [examples](./examples) covering various use cases.
+also several [examples](../helm-examples.md) covering various use cases.
 
 This deployment is also not fully secured by default, to learn about and apply
 further restrictions including pod security, network policies etc. please refer

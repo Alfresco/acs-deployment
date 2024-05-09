@@ -116,7 +116,7 @@ suited for test or demo environment but certainly not for production use.
 ## Prerequisites
 
 As well as the prerequisites mentioned on the [main
-README](/README.md#prerequisites) you will need a machine with at least 13GB of
+README](/index.html#prerequisites) you will need a machine with at least 13GB of
 free memory and the following software installed:
 
 * [Docker](https://www.docker.com/products/docker-desktop)
@@ -136,7 +136,7 @@ Docker Daemon).
 ## Deploy
 
 1. Clone this repository or download one of the docker compose files from
-   [here](../../docker-compose)
+   [here](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose)
 2. Navigate to the folder where the docker compose file you want to use is
    located
 3. Log in to Quay.io with your credentials: `docker login quay.io` (only
@@ -145,14 +145,14 @@ Docker Daemon).
    `docker compose -f major.minor.N-docker-compose.yml up` to use a previous
    version of ACS, or `docker compose -f pre-release-docker-compose.yml up`
 5. Open the following URLs in your browser to check that everything starts up:
-   * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
-   * Control Center: [http://<machine_ip>:8080/admin](http://localhost:8080/admin)
-   * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
-   * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
-   * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
+   * Administration and REST APIs: [http://machineIP:8080/alfresco](http://localhost:8080/alfresco)
+   * Control Center: [http://machineIP:8080/admin](http://localhost:8080/admin)
+   * Alfresco Digital Workspace: [http://machineIP:8080/workspace](http://localhost:8080/workspace)
+   * Share: [http://machineIP:8080/share](http://localhost:8080/share)
+   * Search administration: [http://machineIP:8083/solr](http://localhost:8083/solr)
 6. If you requested an extended trial license navigate to the Admin Console and
    apply your license:
-   * [http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (`<machine_ip>` will usually just be `localhost`)
+   * [http://machineIP:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (`machineIP` will usually just be `localhost`)
    * Default username and password is `admin`
    * See [Uploading a new license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense) for more details
 

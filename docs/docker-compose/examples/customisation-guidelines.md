@@ -34,9 +34,9 @@ This process requires some familiarty with [Docker](https://www.docker.com/) and
 
 You will now need to install the AMP files into the Alfresco Content Repository image.
 
-1. The docker-compose folder contains a file for each main code line of ACS, examine the relevant docker compose file for the version of ACS you want to apply the AMPs to. For example, to apply to the latest version of 7.3 take a look at the [7.3.N-docker-compose file](../../../docker-compose/7.3.N-docker-compose.yml)
+1. The docker-compose folder contains a file for each main code line of ACS, examine the relevant docker compose file for the version of ACS you want to apply the AMPs to. For example, to apply to the latest version of 7.3 take a look at the [7.3.N-docker-compose file](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-docker-compose.yml)
 
-2. Take note of the image and tag being used for the **alfresco** service in the docker compose file you chose in the previous step. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 15](https://github.com/Alfresco/acs-deployment/blob/229fe58d077414c5d91bab9f5cec91adc902453c/docker-compose/7.3.N-docker-compose.yml#L15) as follows:
+2. Take note of the image and tag being used for the **alfresco** service in the docker compose file you chose in the previous step. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 21](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-docker-compose.yml#L15) as follows:
 
     ```bash
     alfresco/alfresco-content-repository:7.3.0.1
@@ -95,7 +95,7 @@ You will now need to install the AMP files into the Alfresco Content Repository 
 
 We will now repeat the process for the Alfresco Share image.
 
-1. Take note of the image and tag being used for the **share** service in the docker compose file you chose in the previous section. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 89](https://github.com/Alfresco/acs-deployment/blob/229fe58d077414c5d91bab9f5cec91adc902453c/docker-compose/7.3.N-docker-compose.yml#L89) as follows:
+1. Take note of the image and tag being used for the **share** service in the docker compose file you chose in the previous section. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 102](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-docker-compose.yml#L102) as follows:
 
     ```bash
     alfresco/alfresco-share:7.3.0

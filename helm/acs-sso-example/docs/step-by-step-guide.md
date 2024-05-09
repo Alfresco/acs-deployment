@@ -1,3 +1,9 @@
+---
+title: Step by step
+parent: Guides
+grand_parent: Helm
+---
+
 # Anatomy of the example chart (and how you can build your own)
 
 This document explains the mechanisms used in this chart to build a Alfresco

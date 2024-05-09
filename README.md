@@ -1,5 +1,15 @@
 # Alfresco Content Services Containerized Deployment
 
+User docs available at: [https://alfresco.github.io/acs-deployment/](https://alfresco.github.io/acs-deployment/)
+
+## License
+
+The code in this repository is released under the Apache License, see the [LICENSE](./LICENSE) file for details.
+
+## Contribution Guide
+
+Please use [this guide](CONTRIBUTING.md) to make a contribution to the project and information to report any issues.
+
 ## Release
 
 ### Helm charts release

@@ -1,3 +1,9 @@
+---
+title: SSO
+parent: Examples
+grand_parent: Helm
+---
+
 # SSO integration with Keycloak (vanilla)
 
 This is an extension of the base setup presented in the [step by step

@@ -15,9 +15,9 @@ if you're familiar with [Helm](ttps://helm.sh) &
 be enough but the principals are also documented in two differents steps:
 
 * Composing your ACS from individual component charts we provide.
-  Check the [step by step documentation](./docs/step-by-step-guide.md)
+  Check the [step by step documentation](docs/step-by-step-guide.md)
 * SSO integration, to add keycloak and configure Alfresco applications
-  accordingly: [SSO guide](./docs/step-by-step-guide.md)
+  accordingly: [SSO guide](docs/sso-guide.md)
 
 > Note: this chart is just an example that can run on a localhost only.
 > It ships ACS repo, the repository database, the message broker, the
