@@ -1,3 +1,9 @@
+---
+title: AWS Services
+parent: Examples
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment with AWS Services
 
 - [Alfresco Content Services Helm Deployment with AWS Services](#alfresco-content-services-helm-deployment-with-aws-services)

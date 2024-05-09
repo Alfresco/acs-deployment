@@ -1,3 +1,9 @@
+---
+title: Search Services
+parent: Examples
+grand_parent: Helm
+---
+
 # Dealing with Search service deployment
 
 Solr has some internal behavior that make it a not so great fit for orchestrated

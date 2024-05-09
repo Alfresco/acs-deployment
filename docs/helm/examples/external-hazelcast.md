@@ -1,3 +1,9 @@
+---
+title: Hazelcast
+parent: Examples
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment with external Hazelcast cluster
 
 - [Alfresco Content Services Helm Deployment with external Hazelcast

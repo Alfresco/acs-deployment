@@ -1,6 +1,6 @@
 ---
-title: Kind Deployment
-parent: Guides
+title: Kind
+parent: Deployment
 grand_parent: Helm
 ---
 

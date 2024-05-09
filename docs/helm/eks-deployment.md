@@ -1,6 +1,6 @@
 ---
-title: EKS Deployment
-parent: Guides
+title: EKS
+parent: Deployment
 grand_parent: Helm
 ---
 

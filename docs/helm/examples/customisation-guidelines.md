@@ -1,3 +1,9 @@
+---
+title: Customisation Guidelines
+parent: Examples
+grand_parent: Helm
+---
+
 # Customisation Guidelines
 
 Any customisations (including major configuration changes) should be done

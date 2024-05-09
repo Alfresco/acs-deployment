@@ -1,6 +1,6 @@
 ---
-title: Desktop Deployment
-parent: Guides
+title: Desktop
+parent: Deployment
 grand_parent: Helm
 ---
 

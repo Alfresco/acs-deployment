@@ -1,3 +1,9 @@
+---
+title: Intelligence Services
+parent: Examples
+grand_parent: Helm
+---
+
 # ACS Helm Deployment with Intelligence Services
 
 By default, [Alfresco Intelligence

@@ -1,3 +1,9 @@
+---
+title: Microsoft Teams Connector
+parent: Examples
+grand_parent: Helm
+---
+
 # ACS Helm Deployment with Microsoft Teams Connector
 
 The [Alfresco Microsoft Teams Connector](https://docs.alfresco.com/) enables

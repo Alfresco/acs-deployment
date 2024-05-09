@@ -1,19 +1,19 @@
-title: Alfresco Jekyll Build tools
-description: Documentation generator
+title: ACS Deployment Documentation
+description: User documentation for deploying Alfresco Content Services
 theme: just-the-docs
 color_scheme: alfresco
 
-url: https://alfresco.github.io/jekyll-build-tools
+url: https://alfresco.github.io/acs-deployment
 
 aux_links:
   Docs: https://docs.alfresco.com/
-  GitHub Repository: https://github.com/Alfresco/jekyll-build-tools
+  GitHub Repository: https://github.com/Alfresco/acs-deployment
 
 aux_links_new_tab: true
 
 gh_edit_link: true
 gh_edit_link_text: "Improve this page on GitHub"
-gh_edit_repository: https://github.com/Alfresco/jekyll-build-tools
+gh_edit_repository: https://github.com/Alfresco/acs-deployment
 gh_edit_branch: master
 gh_edit_source: .
 gh_edit_view_mode: edit
@@ -37,8 +37,9 @@ exclude:
   - '*.yaml'
   - '*/Chart.lock'
   - '*.tgz'
-  - scripts
   - '*/NOTES.txt'
   - README.md
-  - CODE_OF_CONDUCT.md
   - LICENSE
+
+plugins:
+  - jekyll-relative-links
