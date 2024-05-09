@@ -4,12 +4,15 @@ layout: home
 nav_order: 1
 permalink: /index.html
 ---
-
 # Alfresco Content Services Containerized Deployment
 
 [![release](https://img.shields.io/github/v/release/Alfresco/acs-deployment?display_name=release)](https://github.com/Alfresco/acs-deployment/releases/latest)
+![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.29-blue)
+[![Helm release](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-release.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-release.yml)
+
 [![helm charts (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml)
 [![helm charts (community)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-community.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-community.yml)
+
 [![docker-compose (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml)
 [![docker-compose (community)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml)
 
@@ -18,7 +21,7 @@ This project contains the code for running Alfresco Content Services (ACS) with
 Compose](https://docs.docker.com/compose) or on
 [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
-Automated tests for helm charts are running on KinD cluster v1.25 and EKS v1.27.
+> Automated tests for helm charts are running on KinD cluster v1.29 and EKS v1.28.
 
 ## Important changes for helm charts
 
@@ -118,4 +121,4 @@ file for a version with the latest charts or using the old charts.
 
 ## Getting Started
 
-To get started please refer to the [Docker Compose](docker-compose/README.md) and [Helm Chart](helm/README.md) documentation.
+To get started please refer to the [Docker Compose](compose.md) and [Helm Chart](helm.md) documentation.

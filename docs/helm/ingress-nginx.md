@@ -17,8 +17,8 @@ Install the ingress-nginx controller namespace:
 
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
-  --repo https://kubernetes.github.io/ingress-nginx \
-  --namespace ingress-nginx --create-namespace
+--repo https://kubernetes.github.io/ingress-nginx \
+--namespace ingress-nginx --create-namespace
 ```
 
 Enable snippet annotations which is disabled by default for security reasons, but
@@ -27,14 +27,23 @@ the ones we strictly need.
 
 ```bash
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"allow-snippet-annotations":"true"}}'
+-p '{"data": {"allow-snippet-annotations":"true"}}'
 ```
 
 Wait for the ingress-nginx controller to be up again after the configuration change:
 
 ```sh
 kubectl wait --namespace ingress-nginx \
-  --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=90s
+--for=condition=ready pod \
+--selector=app.kubernetes.io/component=controller \
+--timeout=90s
 ```
+
+Verify the newly created pod under the ingress-nginx namespace:
+
+```sh
+kubectl get pods --namespace=ingress-nginx
+```
+
+More information can be found in the
+[ingress-nginx deploy docs](https://kubernetes.github.io/ingress-nginx/deploy/).

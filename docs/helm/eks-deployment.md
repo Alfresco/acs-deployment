@@ -40,9 +40,9 @@ To better troubleshoot any issue, you may want to install applications such as:
 * [lens](https://k8slens.dev/) (GUI)
 * [k9s](https://k9scli.io/) (CLI)
 
-## Setup An EKS Cluster
+## Create the EKS cluster
 
-There are multiple ways to setup an EKS cluster, but one of the most simple is
+There are multiple ways to set up an EKS cluster, but one of the most simple is
 by using `eksctl`. This section will guide you in creating a new EKS cluster
 that satisfy the minimum requirements to have a basic ACS installation up and
 running.
@@ -60,138 +60,27 @@ Set the cluster name in an environment variable that can be reused later:
 EKS_CLUSTER_NAME=my-alfresco-eks
 ```
 
-Create the cluster using a supported version (we are currently testing against
-1.24). Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
+Create the cluster using the latest supported version - check the main [README](../../README.md).
+Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
-eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.24 --instance-types t3.xlarge
+eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.29 --instance-types t3.xlarge --nodes 3
 ```
 
 Enable the OIDC provider that is necessary to install further EKS addons later:
 
 ```sh
-eksctl utils associate-iam-oidc-provider --cluster=$EKS_CLUSTER_NAME —approve
+eksctl utils associate-iam-oidc-provider --cluster=$EKS_CLUSTER_NAME --approve
 ```
 
 For further information please refer to the [Getting started with Amazon EKS –
 eksctl](https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html)
 guide.
 
-## Prepare The Cluster For ACS
+## Set up ACS infrastructure dependencies
 
 Now that we have an EKS cluster up and running, there are a few one time steps
-that we need to perform to prepare the cluster for ACS to be installed.
-
-### DNS
-
-1. Create a hosted zone in Route53 using [these
-   steps](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html)
-   if you don't already have one available.
-
-2. Create a public certificate for the hosted zone created in step 1 in
-   Certificate Manager using [these
-   steps](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html)
-   if you don't have one already available and make a note of the certificate
-   ARN for use later.
-
-3. Create a file called `external-dns.yaml` with the text below (replacing
-   `YOUR-DOMAIN-NAME` with the domain name you created in step 1). This manifest
-   defines a service account and a cluster role for managing DNS.
-
-    ```yaml
-    apiVersion: v1
-    kind: ServiceAccount
-    metadata:
-      name: external-dns
-    ---
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRole
-    metadata:
-      name: external-dns
-    rules:
-    - apiGroups: [""]
-      resources: ["services","endpoints","pods"]
-      verbs: ["get","watch","list"]
-    - apiGroups: ["extensions"]
-      resources: ["ingresses"]
-      verbs: ["get","watch","list"]
-    - apiGroups: [""]
-      resources: ["nodes"]
-      verbs: ["list","watch"]
-    ---
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRoleBinding
-    metadata:
-      name: external-dns-viewer
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: ClusterRole
-      name: external-dns
-    subjects:
-    - kind: ServiceAccount
-      name: external-dns
-      namespace: kube-system
-    ---
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: external-dns
-    spec:
-      strategy:
-        type: Recreate
-      selector:
-        matchLabels:
-          app: external-dns
-      template:
-        metadata:
-          labels:
-            app: external-dns
-        spec:
-          serviceAccountName: external-dns
-          containers:
-          - name: external-dns
-            image: registry.opensource.zalan.do/teapot/external-dns:latest
-            args:
-            - --source=service
-            - --domain-filter=YOUR-DOMAIN-NAME
-            - --provider=aws
-            - --policy=sync
-            - --aws-zone-type=public
-            - --registry=txt
-            - --txt-owner-id=acs-deployment
-            - --log-level=debug
-    ```
-
-4. Use the kubectl command to deploy the external-dns service.
-
-   ```bash
-   kubectl apply -f external-dns.yaml -n kube-system
-   ```
-
-5. Find the name of the nodegroup created by running the following command
-   (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
-
-    ```bash
-    eksctl get nodegroup --cluster=`YOUR-CLUSTER-NAME`
-    ```
-
-6. Find the name of the role used by the nodes by running the following command
-   (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster, and
-   `YOUR-NODE-GROUP` with the nodegroup from the step above):
-
-    ```bash
-    aws eks describe-nodegroup \
-      --cluster-name YOUR-CLUSTER-NAME \
-      --nodegroup-name YOUR-NODE-GROUP \
-      --query "nodegroup.nodeRole" \
-      --output text
-    ```
-
-7. In the [IAM console](https://console.aws.amazon.com/iam/home) find the role
-   discovered in the previous step and attach the "AmazonRoute53FullAccess"
-   managed policy as shown in the screenshot below:
-
-    ![Attach Policy](./images/eks-attach-policy.png)
+that we need to perform before ACS can be successfully installed.
 
 ### Storage
 
@@ -202,11 +91,12 @@ For the main
 you can alternatively:
 
 * Use an Elastic File System, installing the ([EFS CSI driver](#efs-csi-driver))
-  (the default we suggest, see `storageClass="nfs-client"` values in [helm
-  install section](#latest-enterprise-version))
-* Use an EBS block-storage, enabling [EBS CSI driver](#ebs-csi-driver) (not
-  possible with Enterprise in clustered mode)
-* Use a bucket on [S3](examples/with-aws-services.md#s3)
+  (the default, as documented below, required when repository replicas are more
+  than 1)
+* Use an EBS block-storage, enabling [EBS CSI driver](#ebs-csi-driver) (when
+  repository replicas are just one and with node groups in the same availability
+  zone - not meant for production)
+* Use an [S3](examples/with-aws-services.md#s3) bucket
 
 For the
 [database](https://docs.alfresco.com/content-services/latest/config/databases/),
@@ -236,21 +126,21 @@ you can alternatively:
 2. Find The ID of VPC created when your cluster was built using the command
    below (replacing `YOUR-CLUSTER-NAME` with the name you gave your cluster):
 
-    ```bash
+    ```sh
     aws eks describe-cluster \
-      --name YOUR-CLUSTER-NAME \
-      --query "cluster.resourcesVpcConfig.vpcId" \
-      --output text
+    --name $EKS_CLUSTER_NAME \
+    --query "cluster.resourcesVpcConfig.vpcId" \
+    --output text
     ```
 
 3. Find The CIDR range of VPC using the command below (replacing `VPC-ID` with
    the ID retrieved in the previous step):
 
-    ```bash
+    ```sh
     aws ec2 describe-vpcs \
-      --vpc-ids VPC-ID \
-      --query "Vpcs[].CidrBlock" \
-      --output text
+    --vpc-ids VPC-ID \
+    --query "Vpcs[].CidrBlock" \
+    --output text
     ```
 
 4. Go to the [Security Groups section of the VPC
@@ -272,7 +162,7 @@ you can alternatively:
    you're using e.g. "fs-72f5e4f1" (this step replace previous deployment of
    the now obsolete nfs-client-provisioner):
 
-    ```bash
+    ```sh
     cat > aws-efs-values.yml <<EOT
     storageClasses:
       - mountOptions:
@@ -299,7 +189,7 @@ you can alternatively:
 
 #### EBS CSI Driver
 
-> Since EKS 1.24 it is mandatory to install EBS CSI Driver for the dynamic
+> Since EKS 1.24 it is **mandatory** to install EBS CSI Driver for the dynamic
 > provisioning via the default `gp2` storage class. Upgrading from 1.23 without
 > it will break any existing PVC.
 
@@ -313,128 +203,146 @@ Create the IAM Service Account with access to EBS that will be used by the drive
 
 ```sh
 eksctl create iamserviceaccount \
-  --name ebs-csi-controller-sa \
-  --namespace kube-system \
-  --cluster $EKS_CLUSTER_NAME \
-  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
-  --approve \
-  --role-only \
-  --role-name AmazonEKS_EBS_CSI_DriverRole
+--name ebs-csi-controller-sa \
+--namespace kube-system \
+--cluster $EKS_CLUSTER_NAME \
+--attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+--approve \
+--role-only \
+--role-name AmazonEKS_EBS_CSI_DriverRole
 ```
 
 Enable the addon referencing the IAM role created previously:
 
 ```sh
 eksctl create addon \
-  --name aws-ebs-csi-driver \
-  --cluster $EKS_CLUSTER_NAME \
-  --service-account-role-arn arn:aws:iam::$AWS_ACCOUNT_ID:role/AmazonEKS_EBS_CSI_DriverRole \
-  --force
+--name aws-ebs-csi-driver \
+--cluster $EKS_CLUSTER_NAME \
+--service-account-role-arn arn:aws:iam::${AWS_ACCOUNT_ID}:role/AmazonEKS_EBS_CSI_DriverRole \
+--force
 ```
 
 At this point the provisioning of EBS volumes using the default GP2
 storageClass will be handled by this driver.
 
-For further information please refer to the official [Amazon EBS CSI driver](
-ttps://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html) guide.
+For further information please refer to the official
+[Amazon EBS CSI driver](https://docs.aws.amazon.com/eks/latest/userguide/ebs-csi.html) guide.
 
 ## Deploy
 
-Now the EKS cluster is setup we can deploy ACS.
-
-### Namespace
-
-Namespaces in Kubernetes isolate workloads from each other, create a namespace
-to host ACS inside the cluster using the following command (we'll then use the
-`alfresco` namespace throughout the rest of the tutorial):
-
-```bash
-kubectl create namespace alfresco
-```
+Now the EKS cluster is set up, we can start to provision Kubernetes resources on
+top of it.
 
 ### Ingress
 
-1. Create a file called `ingress-rbac.yaml` with the text below:
+See [ingress-nginx](ingress-nginx.md) section.
 
-    ```yaml
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: Role
-    metadata:
-      name: acs:psp
-      namespace: alfresco
-    rules:
-    - apiGroups:
-      - policy
-      resourceNames:
-      - kube-system
-      resources:
-      - podsecuritypolicies
-      verbs:
-      - use
-    ---
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: RoleBinding
-    metadata:
-      name: acs:psp:default
-      namespace: alfresco
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: Role
-      name: acs:psp
-    subjects:
-    - kind: ServiceAccount
-      name: default
-      namespace: alfresco
-    ---
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: RoleBinding
-    metadata:
-      name: acs:psp:acs-ingress
-      namespace: alfresco
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: Role
-      name: acs:psp
-    subjects:
-    - kind: ServiceAccount
-      name: acs-ingress
-      namespace: alfresco
-    ```
+### DNS
 
-2. Use the kubectl command to create the cluster roles required by the ingress service.
+In order to access Alfresco once installed, you need to set up a DNS record that
+resolve to the ELB hostname that has been provisioned by `ingress-nginx`.
 
-    ```bash
-    kubectl apply -f ingress-rbac.yaml -n alfresco
-    ```
+This is a typical architecture, which you can learn more about at
+[Exposing Kubernetes Applications article](https://aws.amazon.com/blogs/containers/exposing-kubernetes-applications-part-3-nginx-ingress-controller/).
 
-3. Deploy the ingress using the following commands (replacing
-   `ACM_CERTIFICATE_ARN` and `YOUR-DOMAIN-NAME` with the ARN of the certificate
-   and hosted zone created earlier in the DNS section):
+To retrieve the automatically assigned hostname of the ELB you need to inspect
+the ingress resources:
 
-    ```bash
-    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-    helm repo update
+```sh
+kubectl get service -n ingress-nginx
+```
 
-    helm install acs-ingress ingress-nginx/ingress-nginx --version=4.0.18 \
-    --set controller.scope.enabled=true \
-    --set controller.scope.namespace=alfresco \
-    --set rbac.create=true \
-    --set controller.config."proxy-body-size"="100m" \
-    --set controller.service.targetPorts.https=80 \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol"="http" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-ports"="https" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-cert"="ACM_CERTIFICATE_ARN" \
-    --set controller.service.annotations."external-dns\.alpha\.kubernetes\.io/hostname"="acs.YOUR-DOMAIN-NAME" \
-    --set controller.service.annotations."service\.beta\.kubernetes\.io/aws-load-balancer-ssl-negotiation-policy"="ELBSecurityPolicy-TLS-1-2-2017-01" \
-    --set controller.publishService.enabled=true \
-    --set controller.admissionWebhooks.enabled=false \
-    --atomic \
-    --namespace alfresco
-    ```
+which will return an output like the following:
 
-    > NOTE: The command will wait until the deployment is ready so please be patient.
+```sh
+NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                       PORT(S)                      AGE
+ingress-nginx-controller   LoadBalancer   10.100.132.184   ???.eu-west-1.elb.amazonaws.com   80:31780/TCP,443:32152/TCP   3m
+```
 
-### ACS
+Now you can proceed to creating a new DNS record in `YOUR-DOMAIN-NAME` zone, like:
+
+* Record name: `acs`
+* Record type: `CNAME`
+* Value: `???.eu-west-1.elb.amazonaws.com`
+
+Wait a few minutes before trying to access `http://acs.YOUR-DOMAIN-NAME` in your
+browser to allow the new record to propagate. Once ready, you should get the
+default `404 Not Found` nginx error page.
+
+Set an environment variable with the hostname which will be useful later.
+
+```sh
+export ACS_HOSTNAME=acs.YOUR-DOMAIN-NAME
+```
+
+### HTTPS
+
+The simplest way to access applications running on Kubernetes behind HTTPS is
+using [cert-manager](https://cert-manager.io/) to request on-the-fly a
+[LetsEncrypt](https://letsencrypt.org/) certificate.
+This is an optional but recommended step.
+
+> In case you have a private PKI, you may want to take a look at providing a
+> [custom certificate without cert-manager](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls)
+> instead.
+
+Add the cert-manager helm repository:
+
+```sh
+helm repo add jetstack https://charts.jetstack.io --force-update
+helm repo update
+```
+
+Install it:
+
+```sh
+helm install \
+cert-manager jetstack/cert-manager \
+--namespace cert-manager \
+--create-namespace \
+--set installCRDs=true
+```
+
+Create a `ClusterIssuer` resource which will automatically register a new
+account on LetsEncrypt production directory, generate a private key and be ready
+to request certificates for any ingress that will contain a reference to it:
+
+```sh
+kubectl apply -n cert-manager -f - <<EOF
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-key
+    solvers:
+    - http01:
+        ingress:
+          ingressClassName: nginx
+EOF
+```
+
+Download the values file and automatically replace the `${ACS_HOSTNAME}` variable.
+When running the `helm install` command later, you will provide it with `--values letsencrypt_values.yaml` argument:
+
+```sh
+curl https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/letsencrypt_values.yaml | envsubst > letsencrypt_values.yaml
+```
+
+### Set up namespace
+
+Namespaces in Kubernetes logically groups resources, so it's good practice to
+create a namespace dedicated to alfresco using the following command (we'll then
+use the `alfresco` namespace throughout the rest of the tutorial):
+
+```sh
+kubectl create namespace alfresco
+```
+
+### Get charts
 
 This repository allows you to either deploy a system using released stable
 artefacts or the latest in-progress development artefacts.
@@ -442,21 +350,35 @@ artefacts or the latest in-progress development artefacts.
 To use a released version of the Helm chart add the stable repository using the
 following command:
 
-```bash
+```sh
 helm repo add alfresco https://kubernetes-charts.alfresco.com/stable
 helm repo update
 ```
 
-Alternatively, to use the latest in-progress development version of the Helm
-chart add the incubator repository using the following command:
+#### Development version of charts
 
-```bash
-helm repo add alfresco https://kubernetes-charts.alfresco.com/incubator
-helm repo update
+Alternatively, to use the latest in-progress development version of the Helm
+charts, you can clone the git repository or grab the master zip directly from
+[GitHub](https://github.com/Alfresco/acs-deployment).
+
+Enter the `helm/alfresco-content-services` folder and fetch dependencies with:
+
+```sh
+cd acs-deployment/helm/alfresco-content-services
+helm dep build
 ```
 
-Now decide whether you want to install the latest version of ACS (Enterprise or
-Community) or a previous version and follow the steps in the relevant section below.
+Now you can run the next `helm` commands using `.` instead of
+`alfresco/alfresco-content-services`.
+
+### Install charts
+
+Choose your desired ACS version (Enterprise or Community) - latest or previous -
+and proceed to the corresponding section below for installation instructions.
+
+Please note that we are using `helm upgrade --install` instead of the usual
+`helm install` so you can simply re-run the command as many times as you want and
+upgrade an eventually existing deployment after tuning values.
 
 #### Latest Enterprise Version
 
@@ -466,66 +388,85 @@ credentials to access the Alfresco Enterprise registry.
 Deploy the latest version of ACS by running the following command (replacing
 `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
 
-```bash
-helm install acs alfresco/alfresco-content-services \
-  --set alfresco-repository.persistence.enabled=true \
-  --set alfresco-repository.persistence.storageClass="nfs-client" \
-  --set alfresco-transform-service.filestore.persistence.enabled=true \
-  --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
-  --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
-  --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-  --set global.search.sharedSecret=$(openssl rand -hex 24) \
-  --atomic \
-  --timeout 10m0s \
-  --namespace=alfresco
+```sh
+helm upgrade --install acs alfresco/alfresco-content-services \
+--set alfresco-repository.persistence.enabled=true \
+--set alfresco-repository.persistence.storageClass="nfs-client" \
+--set alfresco-transform-service.filestore.persistence.enabled=true \
+--set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
+--set global.known_urls=https://${ACS_HOSTNAME} \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+--values letsencrypt_values.yaml \
+--namespace=alfresco
 ```
-
-> NOTE: The command will wait until the deployment is ready so please be patient.
 
 #### Latest Community Version
 
-1. Download the Community values file from [here](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/community_values.yaml).
+Download the Community values file with:
 
-2. Deploy ACS Community by running the following command (replacing
-   `YOUR-DOMAIN-NAME` with the hosted zone you created earlier):
+```sh
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/helm/alfresco-content-services/community_values.yaml
+```
 
-    ```bash
-    helm install acs alfresco/alfresco-content-services \
-    --values=community_values.yaml \
-    --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
-    --set alfresco-repository.persistence.enabled=true \
-    --set alfresco-repository.persistence.storageClass="nfs-client" \
-    --atomic \
-    --timeout 10m0s \
-    --namespace=alfresco
-    ```
+Deploy ACS Community by running the following command:
 
-    > NOTE: The command will wait until the deployment is ready so please be patient.
+```sh
+helm upgrade --install acs alfresco/alfresco-content-services \
+--values=community_values.yaml \
+--set alfresco-repository.persistence.enabled=true \
+--set alfresco-repository.persistence.storageClass="nfs-client" \
+--set global.known_urls=https://${ACS_HOSTNAME} \
+--set global.search.sharedSecret=$(openssl rand -hex 24) \
+--values letsencrypt_values.yaml \
+--namespace=alfresco
+```
 
-#### Previous Enterprise Version
+#### Previous Enterprise Versions
 
-1. Download the version specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services).
+1. Download the version-specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services).
 
-2. Deploy the specific version of ACS by running the following command
-   (replacing `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and
-   `MAJOR` & `MINOR` with the appropriate values):
+Deploy the specific version of ACS by running the following command (replacing
+`YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` &
+`MINOR` with the appropriate values):
 
-    ```bash
-    helm install acs alfresco/alfresco-content-services \
-    --values=MAJOR.MINOR.N_values.yaml \
-    --set global.known_urls=https://acs.YOUR-DOMAIN-NAME \
-    --set alfresco-repository.persistence.enabled=true \
-    --set alfresco-repository.persistence.storageClass="nfs-client" \
-    --set alfresco-transform-service.filestore.persistence.enabled=true \
-    --set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
-    --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-    --set global.search.sharedSecret=$(openssl rand -hex 24) \
-    --atomic \
-    --timeout 10m0s \
-    --namespace=alfresco
-    ```
+```sh
+helm upgrade --install acs alfresco/alfresco-content-services \
+--values=MAJOR.MINOR.N_values.yaml \
+--set alfresco-repository.persistence.enabled=true \
+--set alfresco-repository.persistence.storageClass="nfs-client" \
+--set alfresco-transform-service.filestore.persistence.enabled=true \
+--set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
+--set global.known_urls=https://${ACS_HOSTNAME} \
+--set global.alfrescoRegistryPullSecrets=quay-registry-secret \
+--values letsencrypt_values.yaml \
+--namespace=alfresco
+```
 
-    > NOTE: The command will wait until the deployment is ready so please be patient.
+### Wait for successful deployment
+
+You can monitor the progress of deployments with:
+
+```sh
+kubectl get pod -n alfresco
+```
+
+In a few minutes, each pod should be in `Running` in the `Status` column and
+showing `1/1` in the `Ready` column.
+
+If it doesn't happen, you can first describe the pod not in the Running state yet
+and look for the events section at the end:
+
+```sh
+kubectl describe pod acs-alfresco-repository-???-??? -n alfresco
+```
+
+If the pod is in the running state but can't achieve the `1/1` Ready before the
+readiness probe fails as many times the readiness threshold allows, you should
+take a look at the logs with:
+
+```sh
+kubectl logs acs-alfresco-repository-???-??? -n alfresco
+```
 
 ## Access
 
@@ -561,32 +502,26 @@ further restrictions including pod security, network policies etc. please refer
 to the [EKS Best Practices for
 Security](https://aws.github.io/aws-eks-best-practices/).
 
-## Cleanup
+## Uninstall
 
-1. Remove the `acs` and `acs-ingress` deployments by running the following command:
+Remove the `acs` deployments by running the following command:
 
-     ```bash
-     helm uninstall -n alfresco acs acs-ingress
-     ```
+```sh
+helm uninstall acs -n alfresco
+```
 
-2. Delete the Kubernetes namespace using the command below:
+Delete the Kubernetes namespace using the command below:
 
-    ```bash
-    kubectl delete namespace alfresco
-    ```
+```sh
+kubectl delete namespace alfresco
+```
 
-3. Go to the [EFS Console](https://console.aws.amazon.com/efs), select the file
-   system we created earlier and press the "Delete" button to remove the mount
-   targets and file system.
+If you created an EFS filesystem before, go to the [EFS
+Console](https://console.aws.amazon.com/efs), select the file system and press
+the "Delete" button to remove the mount targets and file system.
 
-4. Go to the [IAM console](https://console.aws.amazon.com/iam/home) and remove
-   the AmazonRoute53FullAccess managed policy we added to the NodeInstanceRole
-   in the File System section otherwise the cluster will fail to delete in the
-   next step.
+Finally, delete the EKS cluster:
 
-5. Finally, delete the EKS cluster using the command below (replacing
-   `YOUR-CLUSTER-NAME` with the name you gave your cluster):
-
-    ```bash
-    eksctl delete cluster --name YOUR-CLUSTER-NAME
-    ```
+```sh
+eksctl delete cluster --name $EKS_CLUSTER_NAME
+```

@@ -1,0 +1,55 @@
+# Configure all ingresses with the annotation that enables LetsEncrypt
+# certificate generation
+# see eks-deployment.md#https
+alfresco-control-center:
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: ${ACS_HOSTNAME}
+        paths:
+          - path: /control-center
+            pathType: Prefix
+    tls:
+      - hosts:
+          - ${ACS_HOSTNAME}
+        secretName: letsencrypt-key
+alfresco-digital-workspace:
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: ${ACS_HOSTNAME}
+        paths:
+          - path: /workspace
+            pathType: Prefix
+    tls:
+      - hosts:
+          - ${ACS_HOSTNAME}
+        secretName: letsencrypt-key
+alfresco-repository:
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: ${ACS_HOSTNAME}
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - hosts:
+          - ${ACS_HOSTNAME}
+        secretName: letsencrypt-key
+share:
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    hosts:
+      - host: ${ACS_HOSTNAME}
+        paths:
+          - path: /share
+            pathType: ImplementationSpecific
+    tls:
+      - hosts:
+          - ${ACS_HOSTNAME}
+        secretName: letsencrypt-key
