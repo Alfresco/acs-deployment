@@ -20,8 +20,7 @@ values files.
 
 ## Creating Custom Docker Images
 
-The [docker compose Customisation
-Guide](../../docker-compose/examples/customisation-guidelines.md) provides a
+The [docker compose Customisation Guide](../../docker-compose/examples/customisation-guidelines.md) provides a
 detailed example of how to apply an AMP in a custom image and a more advanced
 example of building a custom image with configuration can be found
 [here](https://github.com/Alfresco/acs-packaging/blob/master/docs/create-custom-image-using-existing-docker-image.md#applying-amps-that-require-additional-configuration-advanced).
@@ -30,7 +29,7 @@ example of building a custom image with configuration can be found
 
 Once you have created your custom image you can either change the default
 values in the appropriate values file in [this
-folder](../../../helm/alfresco-content-services) or you can override the values
+folder](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services) or you can override the values
 via the `--set` command line option during install as shown below:
 
 ```bash

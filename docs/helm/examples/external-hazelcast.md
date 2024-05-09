@@ -32,8 +32,7 @@ grand_parent: Helm
 
 ## Step by step guide
 
-1. Deploy alfresco-content-services. See [desktop
-   deployment](../desktop-deployment.md) section. Remember to stick to one
+1. Deploy alfresco-content-services. See [desktop deployment](../desktop-deployment.md) section. Remember to stick to one
    namespace in next steps.
 
 2. Prepare a valid Hazelcast xml configuration, which also must include
@@ -98,13 +97,13 @@ grand_parent: Helm
     Now copy generated xml configuration into manifest file. (Remember to
     correctly indent copied text)
 
-7. Deploy created [manifest](external-hazelcast_files/configmap-hazelcast.yaml)
+7. Deploy created [manifest](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/external-hazelcast_files/configmap-hazelcast.yaml)
 
     ```bash
     kubectl apply -f configmap-hazelcast.yaml
     ```
 
-8. Deploy hazelcast with [values](external-hazelcast_files/hazelcast.yaml)
+8. Deploy hazelcast with [values](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/external-hazelcast_files/hazelcast.yaml)
    presented below
 
     ```yaml
@@ -125,7 +124,7 @@ grand_parent: Helm
     ```
 
 9. Now change the config of alfresco-repository by adding another [values
-   file](external-hazelcast_files/acs-hazelcast.yaml). In below file specify
+   file](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/external-hazelcast_files/acs-hazelcast.yaml). In below file specify
    properties that will make repository use external hazelcast cluster deployed
    in previous step. Remember to accordingly change the values if needed.
 

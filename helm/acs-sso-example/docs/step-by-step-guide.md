@@ -11,7 +11,7 @@ platform to deploy on [Kubernetes](https://kubernetes.io/).
 
 ## Why an example charts when there is already the alfresco-content-services?
 
-With [alfresco-content-services chart](../../alfrescocontent-services/) we
+With [alfresco-content-services chart](../../alfresco-content-services/README.md) we
 tried to provide something that can deploy most of our software components -
 still not all of them are included - but also serves as a basis for
 customization for real world scenarios. These two paradigms have actually
@@ -24,7 +24,7 @@ including third party ones (database, message broker, Identity provider, ...).
 
 For that reason we have started creating individual charts for Alfresco
 components in the [alfresco-helm-charts
-repository](https://github.com/Alfresco/alfreso-helm-charts/charts/) (more to
+repository](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts) (more to
 come and PR are welcome).
 
 ## High overview of the example chart
@@ -317,7 +317,7 @@ approach we prefer using to configure Alfresco component charts.
 #### Configuring the repository subchart
 
 The [Alfresco repository chart
-documentation](ihttps://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-repository)
+documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-repository)
 shows how to configure the repo db and message broker using configmaps and secrets:
 
 ```yaml

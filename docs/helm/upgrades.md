@@ -19,8 +19,7 @@ version in which they have been released.
 ## 8.0.0
 
 * Search Enterprise is now the default search engine when installing Enterprise
-  version. For production it's suggested to use an [external elaticsearch
-  index](examples/with-external-infrastructure.md#elasticsearch-index).
+  version. For production it's suggested to use an [external elaticsearch index](examples/with-external-infrastructure.md#elasticsearch-index).
 
 ## 8.0.0-M.1
 
