@@ -23,5 +23,5 @@ jobs:
   publish:
     uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@main
     with:
-      working-directory: docs
-      publish: ${{ github.event_name == 'push' && github.ref_name == 'main'}}
+      working-directory: .
+      publish: ${{ github.event_name == 'push' && github.ref_name == 'master'}}
