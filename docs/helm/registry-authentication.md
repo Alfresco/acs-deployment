@@ -1,3 +1,9 @@
+---
+title: Registry authentication
+parent: Guides
+grand_parent: Helm
+---
+
 # Private registry authentication
 
 For pulling images served by a registry that requires authentication, you have

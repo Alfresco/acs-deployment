@@ -1,3 +1,8 @@
+---
+title: Customisation Guidelines
+parent: Docker Compose
+---
+
 # Customisation Guidelines
 
 Although it's possible to change and mount files/folders into existing Docker images the recommended approach is to create new custom Docker images.

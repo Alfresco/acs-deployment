@@ -1,3 +1,9 @@
+---
+title: EKS Deployment
+parent: Guides
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment with AWS EKS
 
 This page describes how to deploy Alfresco Content Services (ACS) Enterprise or

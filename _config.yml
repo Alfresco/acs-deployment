@@ -1,0 +1,44 @@
+title: Alfresco Jekyll Build tools
+description: Documentation generator
+theme: just-the-docs
+color_scheme: alfresco
+
+url: https://alfresco.github.io/jekyll-build-tools
+
+aux_links:
+  Docs: https://docs.alfresco.com/
+  GitHub Repository: https://github.com/Alfresco/jekyll-build-tools
+
+aux_links_new_tab: true
+
+gh_edit_link: true
+gh_edit_link_text: "Improve this page on GitHub"
+gh_edit_repository: https://github.com/Alfresco/jekyll-build-tools
+gh_edit_branch: master
+gh_edit_source: .
+gh_edit_view_mode: edit
+
+logo: "docs/images/hyland-alfresco-logos.png"
+favicon_ico: "docs/images/favicon.ico"
+
+defaults:
+  # apply the default layout to all markdown pages
+  - scope:
+      path: "*"
+    values:
+      layout: default
+      render_with_liquid: false
+
+exclude:
+  - Brewfile
+  - '*/ci/*'
+  - Gemfile
+  - Gemfile.lock
+  - '*.yaml'
+  - '*/Chart.lock'
+  - '*.tgz'
+  - scripts
+  - '*/NOTES.txt'
+  - README.md
+  - CODE_OF_CONDUCT.md
+  - LICENSE

@@ -1,3 +1,9 @@
+---
+title: Desktop Deployment
+parent: Guides
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment on local machines
 
 This page describes how to deploy Alfresco Content Services (ACS) Enterprise or

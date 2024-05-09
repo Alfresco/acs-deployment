@@ -1,3 +1,9 @@
+---
+title: Ingress guide
+parent: Guides
+grand_parent: Helm
+---
+
 # Install ingress-nginx
 
 We currently support and test only

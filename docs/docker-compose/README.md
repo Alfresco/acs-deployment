@@ -1,3 +1,8 @@
+---
+title: Deployment
+parent: Docker Compose
+---
+
 # Alfresco Content Services Docker Compose Deployment
 
 This page describes how to quickly deploy Alfresco Content Services (ACS) using

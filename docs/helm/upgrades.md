@@ -1,3 +1,9 @@
+---
+title: Upgrades
+parent: Guides
+grand_parent: Helm
+---
+
 # Upgrading the helm charts
 
 Our helm charts are continuously improved and sometimes arise the need to

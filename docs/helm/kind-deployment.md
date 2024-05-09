@@ -1,3 +1,9 @@
+---
+title: Kind Deployment
+parent: Guides
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment on KinD cluster
 
 This page describe how to get ACS up and running on a [Kubernetes In
