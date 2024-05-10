@@ -26,4 +26,4 @@ jobs:
       working-directory: .
       publish: ${{ github.event_name == 'push' && github.ref_name == 'master'}}
       validate-html: true
-      validate-html-args: --ignore-urls "/github.com/"
+      validate-html-args: --ignore-urls "/github.com/,/alfresco.github.io/acs-deployment/"
