@@ -3,7 +3,7 @@ description: User documentation for deploying Alfresco Content Services
 theme: just-the-docs
 color_scheme: alfresco
 
-url: https://alfresco.github.io/acs-deployment
+url: https://alfresco.github.io/
 
 aux_links:
   Docs: https://docs.alfresco.com/
