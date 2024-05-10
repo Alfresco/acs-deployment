@@ -21,8 +21,9 @@ on:
 
 jobs:
   publish:
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@OPSEXP-2662-validate-html
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@main
     with:
       working-directory: .
       publish: ${{ github.event_name == 'push' && github.ref_name == 'master'}}
       validate-html: true
+      validate-html-args: --ignore-urls "/github.com/"
