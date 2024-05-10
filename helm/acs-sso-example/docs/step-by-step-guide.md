@@ -461,7 +461,7 @@ helm dep build # pull dependencies
 helm install --generate-name --atomic .
 ```
 
-You can now open your browser on [http://localhost/alfresco](http://localhost/alfresco)
+You can now open your browser on `http://localhost/alfresco`
 
 ## Next steps
 

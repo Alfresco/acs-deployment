@@ -485,7 +485,7 @@ If you deployed Enterprise you'll also have access to:
 If you requested an extended trial license navigate to the Admin Console and
 apply your license:
 
-* [https://acs.YOUR-DOMAIN-NAME/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license)
+* `https://acs.YOUR-DOMAIN-NAME/alfresco/service/enterprise/admin/admin-license`
 * Default username and password is ```admin```
 * See [Uploading a new
   license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense)

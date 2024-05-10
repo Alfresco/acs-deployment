@@ -175,8 +175,8 @@ grand_parent: Helm
 
     You should get empty response.
 
-4. Login into [Alfresco
-   UI](http://localhost/alfresco/s/enterprise/admin/admin-clustering) and after
+4. Login into Alfresco UI on
+   `http://localhost/alfresco/s/enterprise/admin/admin-clustering` and after
    that repeat commands from previous step. You should see response from all
    nodes similar to this:
 
