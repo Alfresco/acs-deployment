@@ -1,7 +1,7 @@
 name: Publish docs
 
 permissions:
-  contents: read
+  contents: write # FIXME: remove this line when the permissions issue is resolved
   pages: write
   id-token: write
 
