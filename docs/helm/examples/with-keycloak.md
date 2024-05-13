@@ -1,3 +1,9 @@
+---
+title: Keycloak server
+parent: Examples
+grand_parent: Helm
+---
+
 # ACS Helm Deployment with an external Keycloak server
 
 In this section we are going to describe how to install Alfresco with Helm on

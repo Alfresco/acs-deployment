@@ -1,3 +1,9 @@
+---
+title: Autoscaling
+parent: Guides
+grand_parent: Helm
+---
+
 # Alfresco components auto-scaling
 
 `alfresco-content-services` can leverage Kubernetes HorinzontalPodAutoscaling

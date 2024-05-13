@@ -1,3 +1,9 @@
+---
+title: Step by step
+parent: Guides
+grand_parent: Helm
+---
+
 # Anatomy of the example chart (and how you can build your own)
 
 This document explains the mechanisms used in this chart to build a Alfresco
@@ -5,7 +11,7 @@ platform to deploy on [Kubernetes](https://kubernetes.io/).
 
 ## Why an example charts when there is already the alfresco-content-services?
 
-With [alfresco-content-services chart](../../alfrescocontent-services/) we
+With [alfresco-content-services chart](../../alfresco-content-services/README.md) we
 tried to provide something that can deploy most of our software components -
 still not all of them are included - but also serves as a basis for
 customization for real world scenarios. These two paradigms have actually
@@ -18,7 +24,7 @@ including third party ones (database, message broker, Identity provider, ...).
 
 For that reason we have started creating individual charts for Alfresco
 components in the [alfresco-helm-charts
-repository](https://github.com/Alfresco/alfreso-helm-charts/charts/) (more to
+repository](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts) (more to
 come and PR are welcome).
 
 ## High overview of the example chart
@@ -311,7 +317,7 @@ approach we prefer using to configure Alfresco component charts.
 #### Configuring the repository subchart
 
 The [Alfresco repository chart
-documentation](ihttps://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-repository)
+documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-repository)
 shows how to configure the repo db and message broker using configmaps and secrets:
 
 ```yaml
@@ -407,7 +413,7 @@ Now we can create configmaps to compute the services URL:
 The URL is built dynamically using string concatenation and the very same [named
 template](https://helm.sh/docs/chart_template_guide/named_templates/) that's
 used in the postgresql subchart to define the postgresql service name: see the
-[code](https://github.com/bitnami/charts/blob/fc36e80c9ae42fd6a423a567c7fa1f6dab44ffd3/bitnami/postgresql/templates/primary/svc.yaml#L9).
+[code](https://github.com/bitnami/charts/blob/fc36e80c9ae42fd6a423a567c7fa1f6dab44ffd3/bitnami/postgresql/templates/primary/svc.yaml).
 
 > Note we are building a `$dbCtx` to mimic the context the subchart uses when
 > evaluating `postgresql.v1.primary.fullname`. This is where it's important to
@@ -455,7 +461,7 @@ helm dep build # pull dependencies
 helm install --generate-name --atomic .
 ```
 
-You can now open your browser on [http://localhost/alfresco](http://localhost/alfresco)
+You can now open your browser on `http://localhost/alfresco`
 
 ## Next steps
 

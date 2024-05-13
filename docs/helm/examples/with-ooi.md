@@ -1,3 +1,9 @@
+---
+title: Microsoft 365 Connector
+parent: Examples
+grand_parent: Helm
+---
+
 # ACS Helm Deployment with Microsoft 365 Connector
 
 The [Alfresco Microsoft 365

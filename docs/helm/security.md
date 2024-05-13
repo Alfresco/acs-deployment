@@ -1,3 +1,9 @@
+---
+title: Security
+parent: Guides
+grand_parent: Helm
+---
+
 # Security
 
 This pages focuses on providing information on making a secure ACS installation

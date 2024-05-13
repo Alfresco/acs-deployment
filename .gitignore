@@ -35,3 +35,5 @@ hs_err_pid*
 # updatecli workflow
 alfresco-updatecli
 merged.yaml
+
+_site

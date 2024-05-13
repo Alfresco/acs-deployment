@@ -1,3 +1,9 @@
+---
+title: Upgrades
+parent: Guides
+grand_parent: Helm
+---
+
 # Upgrading the helm charts
 
 Our helm charts are continuously improved and sometimes arise the need to
@@ -13,8 +19,7 @@ version in which they have been released.
 ## 8.0.0
 
 * Search Enterprise is now the default search engine when installing Enterprise
-  version. For production it's suggested to use an [external elaticsearch
-  index](examples/with-external-infrastructure.md#elasticsearch-index).
+  version. For production it's suggested to use an [external elaticsearch index](examples/with-external-infrastructure.md#elasticsearch-index).
 
 ## 8.0.0-M.1
 
@@ -123,12 +128,12 @@ that using this values has always required and still requires using a custom
 image embedding the Alfresco S3 connector.
 
 Please refer to the [alfresco-repository chart
-documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/properties.md)
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/repository-properties.md)
 
 ### Chart modularization: Alfresco repository
 
 Repository is now deployed as part of an independent subchart. Checkout
-[alfresco-repository](https://github.com/Alfresco/alfresco-helm-charts/charts/alfresco-repository/README.md)
+[alfresco-repository](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/README.md)
 for details on how to use that new chart.
 
 This `alfresco-content-services` chart is now essentially a wrapper of subcharts
@@ -398,7 +403,7 @@ according to the standard [kubernetes resources
 management](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes).
 
 For example, in the [alfresco-content-services values
-file](../../helm/alfresco-content-services/values.yaml) you can find:
+file](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) you can find:
 
 ```yaml
 repository:
