@@ -469,6 +469,6 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [share](https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile)
 * [content-app](https://github.com/Alfresco/alfresco-content-app/blob/master/Dockerfile)
 * [solr6](https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile)
-* [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile)
+* [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
 * [proxy](https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile)

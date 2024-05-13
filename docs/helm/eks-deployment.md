@@ -60,7 +60,7 @@ Set the cluster name in an environment variable that can be reused later:
 EKS_CLUSTER_NAME=my-alfresco-eks
 ```
 
-Create the cluster using the latest supported version - check the main [README](README.md).
+Create the cluster using the latest supported version - check the main [README](https://github.com/Alfresco/acs-deployment/blob/master/README.md).
 Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
