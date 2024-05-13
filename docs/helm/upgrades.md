@@ -403,7 +403,7 @@ according to the standard [kubernetes resources
 management](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes).
 
 For example, in the [alfresco-content-services values
-file](../../helm/alfresco-content-services/values.yaml) you can find:
+file](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) you can find:
 
 ```yaml
 repository:

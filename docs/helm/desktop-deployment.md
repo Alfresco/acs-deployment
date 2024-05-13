@@ -34,7 +34,7 @@ Then proceed to the [deployment](#deployment) section to install ingress-nginx.
 ### Docker Desktop specific configuration
 
 On top of the Docker desktop
-[Prerequisites](./desktop-deployment.md#Prerequisites), it is essential to
+[Prerequisites](./desktop-deployment.md#prerequisites), it is essential to
 install the latest version of
 [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) &
 [Helm](https://helm.sh/docs/intro/install).
@@ -205,7 +205,7 @@ If you deployed Enterprise you'll also have access to:
 In the event of a deployment failure, it is important to recognize that
 resource constraints are a common underlying cause. For further insights and
 guidance. Additionally, you can find more comprehensive troubleshooting advice
-in the [Helm Troubleshooting section](./README.md#Troubleshooting)
+in the [Helm Troubleshooting section](./README.md#troubleshooting)
 
 ### Lack Of Resources
 
@@ -242,5 +242,5 @@ an increased timeout, eg. --timeout 15m0s. Alteratively run without following:
 ```
 
 and then monitor the logs for any failing pods. Please also consult the
-[Helm Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes
+[Helm Troubleshooting section](./README.md#troubleshooting) for deploying Kubernetes
 Dashboard and more generic troubleshooting tips and tricks.

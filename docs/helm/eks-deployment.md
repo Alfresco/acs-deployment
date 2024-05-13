@@ -60,7 +60,7 @@ Set the cluster name in an environment variable that can be reused later:
 EKS_CLUSTER_NAME=my-alfresco-eks
 ```
 
-Create the cluster using the latest supported version - check the main [README](../../README.md).
+Create the cluster using the latest supported version - check the main [README](README.md).
 Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
@@ -144,7 +144,7 @@ you can alternatively:
     ```
 
 4. Go to the [Security Groups section of the VPC
-   Console](https://console.aws.amazon.com/vpc/home#SecurityGroups) and search
+   Console](https://console.aws.amazon.com/vpc/home) and search
    for the VPC using the ID retrieved in step 2, as shown in the screenshot
    below:
 

@@ -35,7 +35,7 @@ database via [Bitnami charts][bitnami-repo] and an ActiveMQ message broker with
 a simple [activemq subchart][activemq-readme], both with basic authentication
 and without any kind of redundancy.
 
-[activemq-readme]: ../../helm/alfresco-content-services/charts/activemq/README.md
+[activemq-readme]: https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/activemq/README.md
 [bitnami-repo]: https://github.com/bitnami/charts
 
 You typically want to disable the embedded postgres and activemq broker and
@@ -69,8 +69,7 @@ the installation.
 
 ## Deploy
 
-For the best results we recommend [deploying ACS to AWS
-EKS](./eks-deployment.md). If you have a machine with at least 16GB of memory
+For the best results we recommend [deploying ACS to AWS EKS](./eks-deployment.md). If you have a machine with at least 16GB of memory
 you can [deploy using Docker Desktop](./desktop-deployment.md) (or similar apps
 like Rancher and Podman Desktop) or via [KinD](kind-deployment.md) which just
 requires a working Docker install on any OS.
@@ -80,7 +79,7 @@ at least 3 nodes with 12 cpu cores and 32 GB of memory in total. You can install
 requirements by fine tuning the [resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
 available in the [values](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) for each component.
 
-There are also several [examples](./examples) showing how to deploy with various configurations:
+There are also several [examples](../helm-examples.md) showing how to deploy with various configurations:
 
 * [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
 * [Deploy with Intelligence Services](./examples/with-ai.md)
