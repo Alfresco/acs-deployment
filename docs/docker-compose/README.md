@@ -116,7 +116,7 @@ suited for test or demo environment but certainly not for production use.
 ## Prerequisites
 
 As well as the prerequisites mentioned on the [main
-README](/index.html#prerequisites) you will need a machine with at least 13GB of
+README](/index.md#prerequisites) you will need a machine with at least 13GB of
 free memory and the following software installed:
 
 * [Docker](https://www.docker.com/products/docker-desktop)
