@@ -43,3 +43,6 @@ exclude:
 
 plugins:
   - jekyll-relative-links
+
+mermaid:
+  version: "10.9.0"
