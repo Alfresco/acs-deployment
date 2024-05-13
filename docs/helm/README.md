@@ -87,9 +87,9 @@ There are also several [examples](../helm-examples.md) showing how to deploy wit
 * [Deploy with external Keycloak SSO authentication](./examples/with-keycloak.md)
 * [Deploy with external infrastructure components](./examples/with-external-infrastructure.md) (e.g. elasticsearch, activemq, postgres)
 * [Enable access to Search Services](./examples/search-services.md#enable-alfresco-search-services-external-access)
-* [Enable Email Services](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/email.md)
-* [Use a custom metadata keystore](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/keystores.md)
-* [Install ACS license as part of the deployment](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/enterprise-license.md)
+* [Enable Email Services](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/email.html)
+* [Use a custom metadata keystore](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html)
+* [Install ACS license as part of the deployment](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html)
 
 ## Upgrade
 

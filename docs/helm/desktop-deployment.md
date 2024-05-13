@@ -13,7 +13,7 @@ Desktop](https://docs.docker.com/desktop/).
 
 ## Prerequisites
 
-- You've read the projects [main README](/index.html#prerequisites)
+- You've read the projects [main README](/index.md#prerequisites)
 prerequisites section
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes

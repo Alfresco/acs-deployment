@@ -1,7 +1,7 @@
 name: Publish docs
 
 permissions:
-  contents: write # FIXME: remove this line when the permissions issue is resolved
+  contents: write
   pages: write
   id-token: write
 
@@ -21,7 +21,7 @@ on:
 
 jobs:
   publish:
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@OPSEXP-2620-workaround-validation-issues
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@main
     with:
       working-directory: .
       publish: ${{ github.event_name == 'push' && github.ref_name == 'master'}}

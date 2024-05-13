@@ -1,5 +1,20 @@
 # Alfresco Content Services Containerized Deployment
 
+[![release](https://img.shields.io/github/v/release/Alfresco/acs-deployment?display_name=release)](https://github.com/Alfresco/acs-deployment/releases/latest)
+![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.29-blue)
+[![Helm release](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-release.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-release.yml)
+
+[![helm charts (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml)
+[![helm charts (community)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-community.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-community.yml)
+
+[![docker-compose (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-enterprise.yml)
+[![docker-compose (community)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/docker-compose-community.yml)
+
+This project contains the code for running Alfresco Content Services (ACS) with
+[Docker](https://docs.docker.com/get-started) using [Docker
+Compose](https://docs.docker.com/compose) or on
+[Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
+
 User docs available at: [https://alfresco.github.io/acs-deployment/](https://alfresco.github.io/acs-deployment/)
 
 ## License

@@ -24,7 +24,7 @@ The Community configuration will deploy the following system:
 
 ## Prerequisites
 
-* You've read the projects [main README](/index.html#prerequisites)
+* You've read the projects [main README](/index.md#prerequisites)
   prerequisites section
 * You've read the [main Helm README](./README.md) page
 * You are proficient in AWS and Kubernetes
