@@ -31,7 +31,7 @@ deployment is destroyed or rolled back!
 
 ## Source Code
 
-* <https://github.com/Alfresco/acs-deployment/helm/acs-sso-example>
+* <https://github.com/Alfresco/acs-deployment>
 
 ## Requirements
 

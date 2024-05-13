@@ -413,7 +413,7 @@ Now we can create configmaps to compute the services URL:
 The URL is built dynamically using string concatenation and the very same [named
 template](https://helm.sh/docs/chart_template_guide/named_templates/) that's
 used in the postgresql subchart to define the postgresql service name: see the
-[code](https://github.com/bitnami/charts/blob/fc36e80c9ae42fd6a423a567c7fa1f6dab44ffd3/bitnami/postgresql/templates/primary/svc.yaml#L9).
+[code](https://github.com/bitnami/charts/blob/fc36e80c9ae42fd6a423a567c7fa1f6dab44ffd3/bitnami/postgresql/templates/primary/svc.yaml).
 
 > Note we are building a `$dbCtx` to mimic the context the subchart uses when
 > evaluating `postgresql.v1.primary.fullname`. This is where it's important to

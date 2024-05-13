@@ -25,7 +25,7 @@ version: 0.1.0
 appVersion: 23.2.0-A12
 home: https://www.alfresco.com
 sources:
-  - https://github.com/Alfresco/acs-deployment/helm/acs-sso-example
+  - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: postgresql
     repository: oci://registry-1.docker.io/bitnamicharts

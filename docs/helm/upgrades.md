@@ -128,12 +128,12 @@ that using this values has always required and still requires using a custom
 image embedding the Alfresco S3 connector.
 
 Please refer to the [alfresco-repository chart
-documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/properties.md)
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/repository-properties.md)
 
 ### Chart modularization: Alfresco repository
 
 Repository is now deployed as part of an independent subchart. Checkout
-[alfresco-repository](https://github.com/Alfresco/alfresco-helm-charts/charts/alfresco-repository/README.md)
+[alfresco-repository](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/README.md)
 for details on how to use that new chart.
 
 This `alfresco-content-services` chart is now essentially a wrapper of subcharts
