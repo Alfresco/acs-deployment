@@ -2,6 +2,7 @@
 title: ACS Deployment
 layout: home
 nav_order: 1
+permalink: /index.html
 ---
 # Alfresco Content Services Containerized Deployment
 
