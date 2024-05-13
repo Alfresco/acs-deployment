@@ -1,3 +1,9 @@
+---
+title: EKS
+parent: Deployment
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment with AWS EKS
 
 This page describes how to deploy Alfresco Content Services (ACS) Enterprise or
@@ -213,7 +219,7 @@ Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> EBS-solr
 
 ## Prerequisites
 
-* You've read the projects [main README](/README.md#prerequisites)
+* You've read the projects [main README](../index.md#prerequisites)
   prerequisites section
 * You've read the [main Helm README](./README.md) page
 * You are proficient in AWS and Kubernetes
@@ -249,7 +255,7 @@ Set the cluster name in an environment variable that can be reused later:
 EKS_CLUSTER_NAME=my-alfresco-eks
 ```
 
-Create the cluster using the latest supported version - check the main [README](../../README.md).
+Create the cluster using the latest supported version - check the main [README](https://github.com/Alfresco/acs-deployment/blob/master/README.md).
 Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
@@ -333,7 +339,7 @@ you can alternatively:
     ```
 
 4. Go to the [Security Groups section of the VPC
-   Console](https://console.aws.amazon.com/vpc/home#SecurityGroups) and search
+   Console](https://console.aws.amazon.com/vpc/home) and search
    for the VPC using the ID retrieved in step 2, as shown in the screenshot
    below:
 
@@ -612,8 +618,7 @@ helm upgrade --install acs alfresco/alfresco-content-services \
 
 #### Previous Enterprise Versions
 
-Download the version-specific values file you require from the
-[chart folder](../../helm/alfresco-content-services).
+1. Download the version-specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services).
 
 Deploy the specific version of ACS by running the following command (replacing
 `YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` &
@@ -675,7 +680,7 @@ If you deployed Enterprise you'll also have access to:
 If you requested an extended trial license navigate to the Admin Console and
 apply your license:
 
-* [https://acs.YOUR-DOMAIN-NAME/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license)
+* `https://acs.YOUR-DOMAIN-NAME/alfresco/service/enterprise/admin/admin-license`
 * Default username and password is ```admin```
 * See [Uploading a new
   license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense)
@@ -685,7 +690,7 @@ apply your license:
 
 By default, this tutorial installs an out-of-the-box setup, however there are
 many configurations options described [here](./README.md#configure). There are
-also several [examples](./examples) covering various use cases.
+also several [examples](../helm-examples.md) covering various use cases.
 
 This deployment is also not fully secured by default, to learn about and apply
 further restrictions including pod security, network policies etc. please refer

@@ -1,3 +1,9 @@
+---
+title: Storage
+parent: Guides
+grand_parent: Helm
+---
+
 # ACS Storage persistence in kubernetes
 
 ACS platform in order to serve users' requests, needs to persist several type

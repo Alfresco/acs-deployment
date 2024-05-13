@@ -1,3 +1,9 @@
+---
+title: alfresco-content-services
+parent: Charts
+grand_parent: Helm
+---
+
 # alfresco-content-services
 
 ![Version: 8.1.1](https://img.shields.io/badge/Version-8.1.1-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)

@@ -1,3 +1,9 @@
+---
+title: AWS Services
+parent: Examples
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment with AWS Services
 
 - [Alfresco Content Services Helm Deployment with AWS Services](#alfresco-content-services-helm-deployment-with-aws-services)
@@ -21,7 +27,7 @@ The diagram below shows the deployment produced by this example:
 ## Prerequisites
 
 Follow the [EKS deployment](../eks-deployment.md) guide up until the
-[ACS](../eks-deployment.md#acs) section, once the docker registry secret is
+[ACS](../eks-deployment.md#development-version-of-charts) section, once the docker registry secret is
 installed return to this page.
 
 :information_source: In the EKS installation documentation mentioned above, the

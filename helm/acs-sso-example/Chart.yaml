@@ -10,7 +10,7 @@ description: |
   * Composing your ACS from individual component charts we provide.
     Check the [step by step documentation](./docs/step-by-step-guide.md)
   * SSO integration, to add keycloak and configure Alfresco applications
-    accordingly: [SSO guide](./docs/step-by-step-guide.md)
+    accordingly: [SSO guide](./docs/sso-guide.md)
 
   > Note: this chart is just an example that can run on a localhost only.
   > It ships ACS repo, the repository database, the message broker, the
@@ -25,7 +25,7 @@ version: 0.1.0
 appVersion: 23.2.0-A12
 home: https://www.alfresco.com
 sources:
-  - https://github.com/Alfresco/acs-deployment/helm/acs-sso-example
+  - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: postgresql
     repository: oci://registry-1.docker.io/bitnamicharts

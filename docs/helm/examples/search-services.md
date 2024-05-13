@@ -1,3 +1,9 @@
+---
+title: Search Services
+parent: Examples
+grand_parent: Helm
+---
+
 # Dealing with Search service deployment
 
 Solr has some internal behavior that make it a not so great fit for orchestrated
@@ -73,7 +79,7 @@ api, so it doesn't make much sense to use external access.
 ### Install ACS Helm Chart With Search External Access
 
 Follow the [EKS deployment](../eks-deployment.md) guide up until the
-[ACS](../eks-deployment.md#acs) section, once the docker registry secret is
+[ACS](../eks-deployment.md#development-version-of-charts) section, once the docker registry secret is
 installed come back here.
 
 Deploy the latest version of ACS Enterprise by running the command below

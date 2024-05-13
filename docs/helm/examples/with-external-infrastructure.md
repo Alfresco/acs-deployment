@@ -1,3 +1,10 @@
+---
+title: External infrastructure
+parent: Examples
+grand_parent: Helm
+---
+
+
 # Alfresco Content Services Helm Deployment with external infrastructure
 
 - [Alfresco Content Services Helm Deployment with external infrastructure](#alfresco-content-services-helm-deployment-with-external-infrastructure)

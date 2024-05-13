@@ -1,3 +1,8 @@
+---
+title: Deployment
+parent: Docker Compose
+---
+
 # Alfresco Content Services Docker Compose Deployment
 
 This page describes how to quickly deploy Alfresco Content Services (ACS) using
@@ -110,8 +115,7 @@ suited for test or demo environment but certainly not for production use.
 
 ## Prerequisites
 
-As well as the prerequisites mentioned on the [main
-README](/README.md#prerequisites) you will need a machine with at least 13GB of
+As well as the prerequisites mentioned on the [main README](../index.md#prerequisites) you will need a machine with at least 13GB of
 free memory and the following software installed:
 
 * [Docker](https://www.docker.com/products/docker-desktop)
@@ -131,7 +135,7 @@ Docker Daemon).
 ## Deploy
 
 1. Clone this repository or download one of the docker compose files from
-   [here](../../docker-compose)
+   [here](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose)
 2. Navigate to the folder where the docker compose file you want to use is
    located
 3. Log in to Quay.io with your credentials: `docker login quay.io` (only
@@ -140,14 +144,14 @@ Docker Daemon).
    `docker compose -f major.minor.N-docker-compose.yml up` to use a previous
    version of ACS, or `docker compose -f pre-release-docker-compose.yml up`
 5. Open the following URLs in your browser to check that everything starts up:
-   * Administration and REST APIs: [http://<machine_ip>:8080/alfresco](http://localhost:8080/alfresco)
-   * Control Center: [http://<machine_ip>:8080/admin](http://localhost:8080/admin)
-   * Alfresco Digital Workspace: [http://<machine_ip>:8080/workspace](http://localhost:8080/workspace)
-   * Share: [http://<machine_ip>:8080/share](http://localhost:8080/share)
-   * Search administration: [http://<machine_ip>:8083/solr](http://localhost:8083/solr)
+   * Administration and REST APIs: `http://<machine_ip>:8080/alfresco`
+   * Control Center: `http://<machine_ip>:8080/admin`
+   * Alfresco Digital Workspace: `http://<machine_ip>:8080/workspace`
+   * Share: `http://<machine_ip>:8080/share`
+   * Search administration: `http://<machine_ip>:8083/solr`
 6. If you requested an extended trial license navigate to the Admin Console and
    apply your license:
-   * [http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license](http://localhost:8080/alfresco/service/enterprise/admin/admin-license) (`<machine_ip>` will usually just be `localhost`)
+   * `http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license` (`<machine_ip>` will usually just be `localhost`)
    * Default username and password is `admin`
    * See [Uploading a new license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense) for more details
 
@@ -314,15 +318,15 @@ share:
 | SEARCH_LOG_LEVEL              | The root logger level (`ERROR`, `WARN`, `INFO`, `DEBUG` or `TRACE`).                                                                                                                                                                         | INFO             |
 | ENABLE_SPELLCHECK             | Whether spellchecking is enabled or not (`true` or `false`).                                                                                                                                                                                 |                  |
 | DISABLE_CASCADE_TRACKING      | Whether cascade tracking is enabled or not (`true` or `false`). Disabling cascade tracking will improve performance, but result in some feature loss (e.g. path queries).                                                                    |                  |
-| ALFRESCO_SECURE_COMMS         | Whether communication with the repository is secured (`https` or `none`). See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md) for more details.                                                 | none             |
-| SOLR_SSL_KEY_STORE            | Path to SSL key store. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details.                                      |                  |
-| SOLR_SSL_KEY_STORE_PASSWORD   | Password for key store. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details.                                     |                  |
-| SOLR_SSL_KEY_STORE_TYPE       | Key store type. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details.                                             | JCEKS            |
-| SOLR_SSL_TRUST_STORE          | Path to SSL trust store. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details.                                    |                  |
-| SOLR_SSL_TRUST_STORE_PASSWORD | Password for trust store. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details.                                   |                  |
-| SOLR_SSL_TRUST_STORE_TYPE     | Trust store type. See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details.                                           | JCEKS            |
-| SOLR_SSL_NEED_CLIENT_AUTH     | This variable is used to configure SSL (`true` or `false`). See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |                  |
-| SOLR_SSL_WANT_CLIENT_AUTH     | This variable is used to configure SSL (`true` or `false`). See this [page](https://github.com/Alfresco/InsightEngine/blob/master/search-services/README.md#use-alfresco-search-services-docker-image-with-docker-compose) for more details. |                  |
+| ALFRESCO_SECURE_COMMS         | Whether communication with the repository is secured (`https` or `none`). See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details.                                                 | none             |
+| SOLR_SSL_KEY_STORE            | Path to SSL key store. See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details.                                      |                  |
+| SOLR_SSL_KEY_STORE_PASSWORD   | Password for key store. See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details.                                     |                  |
+| SOLR_SSL_KEY_STORE_TYPE       | Key store type. See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details.                                             | JCEKS            |
+| SOLR_SSL_TRUST_STORE          | Path to SSL trust store. See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details.                                    |                  |
+| SOLR_SSL_TRUST_STORE_PASSWORD | Password for trust store. See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details.                                   |                  |
+| SOLR_SSL_TRUST_STORE_TYPE     | Trust store type. See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details.                                           | JCEKS            |
+| SOLR_SSL_NEED_CLIENT_AUTH     | This variable is used to configure SSL (`true` or `false`). See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details. |                  |
+| SOLR_SSL_WANT_CLIENT_AUTH     | This variable is used to configure SSL (`true` or `false`). See this [page](https://github.com/Alfresco/SearchServices/blob/master/search-services/README.md) for more details. |                  |
 
 ### Alfresco Transform Router (transform-router)
 
@@ -464,6 +468,6 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [share](https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile)
 * [content-app](https://github.com/Alfresco/alfresco-content-app/blob/master/Dockerfile)
 * [solr6](https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile)
-* [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/alfresco-transform-core-aio/alfresco-transform-core-aio-boot/Dockerfile)
+* [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
 * [proxy](https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile)

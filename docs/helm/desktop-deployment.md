@@ -1,3 +1,9 @@
+---
+title: Desktop
+parent: Deployment
+grand_parent: Helm
+---
+
 # Alfresco Content Services Helm Deployment on local machines
 
 This page describes how to deploy Alfresco Content Services (ACS) Enterprise or
@@ -7,7 +13,7 @@ Desktop](https://docs.docker.com/desktop/).
 
 ## Prerequisites
 
-- You've read the projects [main README](/README.md#prerequisites)
+- You've read the projects [main README](../index.md#prerequisites)
 prerequisites section
 - You've read the [main Helm README](./README.md) page
 - You are proficient in Kubernetes
@@ -28,7 +34,7 @@ Then proceed to the [deployment](#deployment) section to install ingress-nginx.
 ### Docker Desktop specific configuration
 
 On top of the Docker desktop
-[Prerequisites](./desktop-deployment.md#Prerequisites), it is essential to
+[Prerequisites](./desktop-deployment.md#prerequisites), it is essential to
 install the latest version of
 [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl) &
 [Helm](https://helm.sh/docs/intro/install).
@@ -77,7 +83,7 @@ helm repo update
 #### Community localhost deployment
 
 To install the latest version of Community we need to download the
-[community_values.yaml file](../../helm/alfresco-content-services). Once
+[community_values.yaml file](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/community_values.yaml). Once
 downloaded, execute the following to initiate the deployment.
 
 ```bash
@@ -93,10 +99,10 @@ helm install acs alfresco/alfresco-content-services \
 
 #### Enterprise localhost deployment
 
-ACS enterprise version needs to pull container images from private image repositories.
-To configure credentials for accessing the Alfresco Enterprise registry, please
-review the information provided in the [registry
-authentication](registry-authentication.md)
+ACS enterprise version needs to pull container images from private image
+repositories. To configure credentials for accessing the Alfresco Enterprise
+registry, please review the information provided in the
+[registry-authentication](./registry-authentication.md)
 
 The Enterprise Helm deployment is intended for a Cloud based Kubernetes cluster
 and therefore requires a large amount of resources out-of-the-box. To reduce the
@@ -129,7 +135,7 @@ The `helm` command above installs the most current released version of ACS Enter
 
 To deploy a previous version of ACS Enterprise follow the steps below.
 
-1. Download the version specific values file you require from [this folder](../../helm/alfresco-content-services)
+1. Download the version specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services)
 2. Deploying the specific version of ACS can be achieved by executing the following:
 
    ```bash
@@ -151,7 +157,7 @@ To deploy ACS platform with the latest development version follow the steps belo
 
 1. Download the
    [pre-release_values.yaml
-   file](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/pre-release_values.yaml)
+   file](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/helm/alfresco-content-services/pre-release_values.yaml)
 2. Deploy ACS by executing the following command:
 
    ```bash
@@ -199,7 +205,7 @@ If you deployed Enterprise you'll also have access to:
 In the event of a deployment failure, it is important to recognize that
 resource constraints are a common underlying cause. For further insights and
 guidance. Additionally, you can find more comprehensive troubleshooting advice
-in the [Helm Troubleshooting section](./README.md#Troubleshooting)
+in the [Helm Troubleshooting section](./README.md#troubleshooting)
 
 ### Lack Of Resources
 
@@ -235,6 +241,6 @@ an increased timeout, eg. --timeout 15m0s. Alteratively run without following:
 --atomic --timeout 10m0s
 ```
 
-and then monitor the logs for any failing pods. Please also consult the [Helm
-Troubleshooting section](./README.md#Troubleshooting) for deploying Kubernetes
+and then monitor the logs for any failing pods. Please also consult the
+[Helm Troubleshooting section](./README.md#troubleshooting) for deploying Kubernetes
 Dashboard and more generic troubleshooting tips and tricks.
