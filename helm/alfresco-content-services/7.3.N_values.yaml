@@ -78,13 +78,13 @@ postgresql-sync:
     tag: 14.10.0
 alfresco-sync-service:
   image:
-    tag: 3.11.3
+    tag: 3.11.4-A1
 alfresco-connector-ms365:
   image:
     tag: 1.1.3.2
 alfresco-connector-msteams:
   image:
-    tag: 1.1.0
+    tag: 1.1.1-A1
 dtas:
   config:
     assertions:

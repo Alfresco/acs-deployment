@@ -21,7 +21,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.2.1.15
+    image: quay.io/alfresco/alfresco-content-repository:7.2.2-A1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -106,7 +106,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.2.1.15
+    image: quay.io/alfresco/alfresco-share:7.2.2-A1
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -185,7 +185,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:3.11.3
+    image: quay.io/alfresco/service-sync:3.11.4-A1
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-

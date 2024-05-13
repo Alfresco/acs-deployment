@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 7.2.1.15
+    tag: 7.2.2-A1
   configuration:
     search:
       flavor: solr6
@@ -37,7 +37,7 @@ alfresco-transform-service:
       tag: 2.1.2
 share:
   image:
-    tag: 7.2.1.15
+    tag: 7.2.2-A1
 alfresco-search:
   enabled: true
   searchServicesImage:
@@ -78,13 +78,13 @@ postgresql-sync:
     tag: 13.3.0
 alfresco-sync-service:
   image:
-    tag: 3.11.3
+    tag: 3.11.4-A1
 alfresco-connector-ms365:
   image:
     tag: 1.1.3.2
 alfresco-connector-msteams:
   image:
-    tag: 1.1.0
+    tag: 1.1.1-A1
 dtas:
   config:
     assertions:
