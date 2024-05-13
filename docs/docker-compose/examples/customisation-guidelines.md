@@ -144,4 +144,7 @@ You can start your custom docker-compose.yml using the following command:
 docker-compose -f <your-modified-docker-compose.yml> up
 ```
 
-Further information on starting up or troubleshooting can be found [here](../README.md) and a more advanced example of building a custom image with configuration can be found [here](https://github.com/Alfresco/acs-packaging/blob/master/docs/create-custom-image-using-existing-docker-image.md#applying-amps-that-require-additional-configuration-advanced).
+Further information on starting up or troubleshooting can be found
+[here](../README.md) and a more advanced example of building a custom image with
+configuration can be found
+[here](https://github.com/Alfresco/acs-packaging/blob/master/docs/create-custom-image-using-existing-docker-image.md#applying-amps-that-require-additional-configuration-advanced).
