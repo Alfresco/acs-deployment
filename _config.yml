@@ -18,8 +18,8 @@ gh_edit_branch: master
 gh_edit_source: .
 gh_edit_view_mode: edit
 
-logo: "docs/images/hyland-alfresco-logos.png"
-favicon_ico: "docs/images/favicon.ico"
+logo: "/docs/images/hyland-alfresco-logos.png"
+favicon_ico: "/docs/images/favicon.ico"
 
 defaults:
   # apply the default layout to all markdown pages
