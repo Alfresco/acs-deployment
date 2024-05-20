@@ -51,6 +51,8 @@ alfresco-digital-workspace:
   enabled: false
 alfresco-sync-service:
   enabled: false
+postgresql-sync:
+  enabled: false
 alfresco-ai-transformer:
   enabled: false
 alfresco-connector-ms365:
