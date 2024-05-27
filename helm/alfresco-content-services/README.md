@@ -245,7 +245,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.enabled | bool | `false` | Toggle deployment of Keda Operator for ATS autoscaling |
-| keda.operator | object | `{}` |  |
+| keda.nameOverride | string | `"acs-keda-operator"` |  |
+| keda.operator.name | string | `"acs-keda-operator"` |  |
 | messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. |
 | messageBroker.password | string | `nil` | External message broker password |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |

@@ -1,0 +1,18 @@
+{{- if .Values.keda.enabled -}}
+{{- $ctx := (dict "Values" .Values.keda "Chart" .Chart "Release" .Release) -}}
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  labels:
+    {{- include "keda.labels" $ctx | nindent 4 }}
+  name: {{ printf "%s-activemq" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
+spec:
+  secretTargetRef:
+  - parameter: username
+    name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+    key: BROKER_USERNAME
+  - parameter: password
+    name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+    key: BROKER_PASSWORD
+{{- end -}}

@@ -548,4 +548,6 @@ dtas:
 keda:
   # -- Toggle deployment of Keda Operator for ATS autoscaling
   enabled: false
-  operator: {}
+  nameOverride: acs-keda-operator
+  operator:
+    name: acs-keda-operator
