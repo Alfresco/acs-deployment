@@ -54,7 +54,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| alfresco-ai-transformer.image.tag | string | `"3.1.2"` |  |
+| alfresco-ai-transformer.image.tag | string | `"3.1.3"` |  |
 | alfresco-ai-transformer.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
@@ -161,31 +161,31 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.enabled | bool | `true` |  |
 | alfresco-transform-service.filestore.enabled | bool | `true` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | alfresco-transform-service.filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
-| alfresco-transform-service.filestore.image.tag | string | `"4.1.1"` |  |
+| alfresco-transform-service.filestore.image.tag | string | `"4.1.2"` |  |
 | alfresco-transform-service.filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | alfresco-transform-service.filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
 | alfresco-transform-service.filestore.persistence.enabled | bool | `true` | Persist filestore data |
 | alfresco-transform-service.filestore.replicaCount | int | `1` |  |
 | alfresco-transform-service.imagemagick.enabled | bool | `true` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | alfresco-transform-service.imagemagick.image.repository | string | `"alfresco/alfresco-imagemagick"` |  |
-| alfresco-transform-service.imagemagick.image.tag | string | `"5.1.1"` |  |
+| alfresco-transform-service.imagemagick.image.tag | string | `"5.1.2"` |  |
 | alfresco-transform-service.libreoffice.enabled | bool | `true` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | alfresco-transform-service.libreoffice.image.repository | string | `"alfresco/alfresco-libreoffice"` |  |
-| alfresco-transform-service.libreoffice.image.tag | string | `"5.1.1"` |  |
+| alfresco-transform-service.libreoffice.image.tag | string | `"5.1.2"` |  |
 | alfresco-transform-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-transform-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-transform-service.pdfrenderer.enabled | bool | `true` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | alfresco-transform-service.pdfrenderer.image.repository | string | `"alfresco/alfresco-pdf-renderer"` |  |
-| alfresco-transform-service.pdfrenderer.image.tag | string | `"5.1.1"` |  |
+| alfresco-transform-service.pdfrenderer.image.tag | string | `"5.1.2"` |  |
 | alfresco-transform-service.tika.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
 | alfresco-transform-service.tika.image.repository | string | `"alfresco/alfresco-tika"` |  |
-| alfresco-transform-service.tika.image.tag | string | `"5.1.1"` |  |
+| alfresco-transform-service.tika.image.tag | string | `"5.1.2"` |  |
 | alfresco-transform-service.transformmisc.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
 | alfresco-transform-service.transformmisc.image.repository | string | `"alfresco/alfresco-transform-misc"` |  |
-| alfresco-transform-service.transformmisc.image.tag | string | `"5.1.1"` |  |
+| alfresco-transform-service.transformmisc.image.tag | string | `"5.1.2"` |  |
 | alfresco-transform-service.transformrouter.enabled | bool | `true` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
 | alfresco-transform-service.transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
-| alfresco-transform-service.transformrouter.image.tag | string | `"4.1.1"` |  |
+| alfresco-transform-service.transformrouter.image.tag | string | `"4.1.2"` |  |
 | alfresco-transform-service.transformrouter.livenessProbe.path | string | `"/transform/config"` | Overrride liveness probe endpoint to work around https://alfresco.atlassian.net/browse/ACS-7269 |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | config.repository.additionalGlobalProperties | object | `{}` |  |
