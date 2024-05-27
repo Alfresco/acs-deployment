@@ -3,6 +3,7 @@
 {{- $mqCtx := dict "Values" .Values.activemq "Chart" .Chart "Release" .Release }}
 {{- $mqName := include "alfresco-transform-service.imagemagick.name" $mqCtx }}
 {{- $mqAdminPort := default "8161" (.Values.activemq.services.webConsole.ports).external.webConsole }}
+{{- $atsCtx := (dict "Values" (index .Values "alfresco-transform-service") "Chart" .Chart "Release" .Release) }}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -12,7 +13,7 @@ metadata:
   name: {{ printf "%s-tengine-im" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
 spec:
   scaleTargetRef:
-    name: {{ $mqName }}
+    name: {{ template "alfresco-transform-service.imagemagick.name" $atsCtx }}
   triggers:
   - type: activemq
     metadata:
