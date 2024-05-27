@@ -59,7 +59,8 @@ global:
     password: null
     # -- Name of the secret managed by this chart
     secretName: &acs_search_secretName alfresco-search-secret
-    # -- Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
+    # -- Name of an existing secret that contains SOLR_SECRET key when flavour
+    # is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
     existingSecretName: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
@@ -544,3 +545,7 @@ dtas:
           installed: true
       adw:
         base_path: "/workspace"
+keda:
+  # -- Toggle deployment of Keda Operator for ATS autoscaling
+  enabled: false
+  operator: {}

@@ -36,6 +36,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.2.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.3.2 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
+| https://kedacore.github.io/charts | keda | 2.14.2 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
@@ -243,6 +244,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
+| keda.enabled | bool | `false` | Toggle deployment of Keda Operator for ATS autoscaling |
+| keda.operator | object | `{}` |  |
 | messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. |
 | messageBroker.password | string | `nil` | External message broker password |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |

@@ -47,5 +47,8 @@ dependencies:
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
-digest: sha256:4eacdf946479b47b7276bfdf86ebb6b513266f0e293ed10eae66c495abbf9b78
-generated: "2024-05-29T18:01:29.438117+02:00"
+- name: keda
+  repository: https://kedacore.github.io/charts
+  version: 2.14.2
+digest: sha256:7ce1344ddf81a7364c23b2a0eb2b8f38ac9232112efbf6b3f5b7ff5dce9d7956
+generated: "2024-06-03T17:39:31.807334+02:00"
