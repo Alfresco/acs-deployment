@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:23.3.0-A16
+    image: quay.io/alfresco/alfresco-content-repository:23.3.0-A9
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -214,7 +214,7 @@ services:
       - share
       - control-center
   sync-service:
-    image: quay.io/alfresco/service-sync:5.1.0-M1
+    image: quay.io/alfresco/service-sync:4.0.1.1-A1
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
