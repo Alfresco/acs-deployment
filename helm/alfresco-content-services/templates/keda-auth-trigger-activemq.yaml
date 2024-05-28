@@ -6,7 +6,7 @@ kind: TriggerAuthentication
 metadata:
   labels:
     {{- include "keda.labels" $ctx | nindent 4 }}
-  name: {{ printf "%s-activemq" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
+  name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
 spec:
   secretTargetRef:
   - parameter: username

@@ -22,7 +22,7 @@ spec:
       brokerName: {{ $mqName }}
       targetQueueSize: "10"
     authenticationRef:
-      name: trigger-auth-activemq
+      name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
   initialCooldownPeriod:  120
   pollingInterval: 10
   idleReplicaCount: 0
