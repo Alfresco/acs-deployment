@@ -95,5 +95,5 @@ dtas:
           version: 3.4.2
           installed: true
         - id: alfresco-aos-module
-          version: 1.6.3
+          version: 1.6.2
           installed: true

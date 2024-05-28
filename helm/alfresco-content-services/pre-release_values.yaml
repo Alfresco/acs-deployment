@@ -71,7 +71,7 @@ postgresql-syncservice:
     tag: 14.4.0
 alfresco-sync-service:
   image:
-    tag: 4.0.1.1-A1
+    tag: 5.1.0-M1
 alfresco-connector-ms365:
   image:
     tag: 2.0.1
