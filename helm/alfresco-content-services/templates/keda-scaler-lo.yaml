@@ -17,7 +17,7 @@ spec:
   triggers:
   - type: activemq
     metadata:
-      managementEndpoint: {{ printf "%s-broker:%v" (include "activemq.fullname" $mqCtx) $mqAdminPort }}
+      managementEndpoint: {{ printf "%s-web-console:%v" (include "activemq.fullname" $mqCtx) $mqAdminPort }}
       destinationName: org.alfresco.transform.engine.libreoffice.acs
       brokerName: {{ $mqName }}
       targetQueueSize: "10"
