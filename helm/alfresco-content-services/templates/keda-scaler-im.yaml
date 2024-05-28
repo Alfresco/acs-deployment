@@ -1,7 +1,7 @@
 {{- if and .Values.keda.enabled (index .Values "alfresco-transform-service" "enabled") -}}
 {{- $ctx := (dict "Values" .Values.keda "Chart" .Chart "Release" .Release) -}}
 {{- $mqCtx := dict "Values" .Values.activemq "Chart" .Chart "Release" .Release }}
-{{- $mqName := include "alfresco-transform-service.imagemagick.name" $mqCtx }}
+
 {{- $mqAdminPort := default "8161" (.Values.activemq.services.webConsole.ports).external.webConsole }}
 {{- $atsCtx := (dict "Values" (index .Values "alfresco-transform-service") "Chart" .Chart "Release" .Release) }}
 ---
@@ -19,7 +19,7 @@ spec:
     metadata:
       managementEndpoint: {{ printf "%s-web-console:%v" (include "activemq.fullname" $mqCtx) $mqAdminPort }}
       destinationName: org.alfresco.transform.engine.imagemagick.acs
-      brokerName: {{ $mqName }}
+      brokerName: {{ template "activemq.fullname" $mqCtx }}
       targetQueueSize: "10"
     authenticationRef:
       name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
