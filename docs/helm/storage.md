@@ -23,13 +23,11 @@ This mechanism can be reused by different charts or sub-charts in the same way.
 
 > Note: direct usage of kubernetes volumes (without PVC) is not supported)
 
-The logic used in the template is depicted b the diagram below:
-
-![persistence of storage in acs chart](images/charts-storage-persistence.png)
+The logic used in the template is depicted in the diagram below:
 
 ```mermaid
 flowchart TD
-pers(.Values.$componentName.persistence) --> enabled(.enabled?)
+persistence(.Values.$componentName.persistence) --> enabled(.enabled?)
 enabled --true--> existingClaim(.existingClaim?)
 enabled --false--> emptyDir[Render Deployment with\nEphemeral Volume]
 
