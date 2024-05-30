@@ -16,7 +16,7 @@ availability zones to eliminate a single point of failure.
 
 ## Architectures
 
-### Enterprise diagrams
+### Enterprise edition
 
 The Enterprise configuration will deploy the following system (Alfresco
 Transform Service and Alfresco Search Enterprise are detailed in the next
@@ -153,7 +153,7 @@ live --> Deployment_activemq
 live --> StatefulSet_elasticsearch-master
 ```
 
-### Community diagram
+### Community edition
 
 The Community configuration will deploy the following architecture:
 

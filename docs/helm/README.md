@@ -11,13 +11,195 @@ Alfresco Content Services (ACS) is an Enterprise Content Management (ECM) system
 
 The Helm chart in this repository supports deploying the Enterprise or Community Edition of ACS.
 
-The Enterprise configuration will deploy the following system:
+## Architectures
 
-![Helm Deployment Enterprise](./images/helm-enterprise.png)
+### Enterprise edition
 
-The Community configuration will deploy the following system:
+The Enterprise configuration will deploy the following system (Alfresco
+Transform Service and Alfresco Search Enterprise are detailed in the next
+diagrams):
 
-![Helm Deployment Community](./images/helm-community.png)
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+Client("👥 Clients")
+
+subgraph Helm enterprise
+  direction LR
+  PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
+  PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
+  PersistentVolumeClaim_data-sync-postgresql(PersistentVolumeClaim: data-sync-postgresql):::k8s
+  PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
+  pv1[(Data Volume)]:::k8s
+  pv2[(Data Volume)]:::k8s
+  pv3[(Data Volume)]:::k8s
+  pv4[(Data Volume)]:::k8s
+
+  Deployment_activemq(Deployment: activemq):::thrdP
+  Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
+  Deployment_alfresco-dw(Deployment: alfresco-dw):::alf
+  Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
+  Deployment_alfresco-sync-service(Deployment: alfresco-sync-service):::alf
+  Deployment_share(Deployment: share):::alf
+
+  StatefulSet_elasticsearch-master(StatefulSet: elasticsearch-master):::thrdP
+  StatefulSet_postgresql-sync(StatefulSet: postgresql-sync):::thrdP
+  StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
+
+  Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
+  Ingress_alfresco-dw(Ingress: alfresco-dw):::k8s
+  Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
+  Ingress_alfresco-sync-service(Ingress: alfresco-sync-service):::k8s
+  Ingress_share(Ingress: share):::k8s
+end
+
+Client ---> Ingress_alfresco-cc --> Deployment_alfresco-cc
+Client ---> Ingress_alfresco-dw --> Deployment_alfresco-dw
+Client --> Ingress_alfresco-repository --> Deployment_alfresco-repository
+Client --> Ingress_share --> Deployment_share
+Client --> Ingress_alfresco-sync-service --> Deployment_alfresco-sync-service
+
+Deployment_share --> Deployment_alfresco-repository
+
+Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> pv1
+Deployment_alfresco-repository --> Deployment_activemq
+Deployment_alfresco-repository --> StatefulSet_elasticsearch-master
+
+Deployment_alfresco-sync-service --> StatefulSet_postgresql-sync --> PersistentVolumeClaim_data-sync-postgresql --> pv2
+Deployment_alfresco-sync-service --> Deployment_activemq
+Deployment_alfresco-sync-service --> Deployment_alfresco-repository
+
+Deployment_alfresco-repository --> PersistentVolumeClaim_repository-default-pvc --> pv3
+Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> pv4
+```
+
+#### Alfresco Transform Services
+
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+subgraph ats[Alfresco Transform Service]
+  Deployment_filestore(Deployment: filestore):::alf
+  Deployment_imagemagick(Deployment: imagemagick):::alf
+  Deployment_libreoffice(Deployment: libreoffice):::alf
+  Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
+  Deployment_tika(Deployment: tika):::alf
+  Deployment_transform-misc(Deployment: transform-misc):::alf
+  Deployment_transform-router(Deployment: transform-router):::alf
+end
+
+Deployment_activemq(Deployment: activemq):::thrdP
+PersistentVolumeClaim_filestore-default-pvc(PersistentVolumeClaim: filestore-default-pvc):::k8s
+pv1[(Data Volume)]:::k8s
+
+Deployment_transform-router --> Deployment_activemq
+Deployment_transform-router --> Deployment_imagemagick
+Deployment_transform-router --> Deployment_libreoffice
+Deployment_transform-router --> Deployment_pdfrenderer
+Deployment_transform-router --> Deployment_tika
+Deployment_transform-router --> Deployment_transform-misc
+Deployment_transform-router --> Deployment_filestore
+
+Deployment_filestore --> PersistentVolumeClaim_filestore-default-pvc --> pv1
+```
+
+#### Search Enterprise
+
+```mermaid
+graph TB
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+subgraph live[Live Indexing]
+  Deployment_alfresco-search-enterprise-content(Deployment: alfresco-search-enterprise-content):::alf
+  Deployment_alfresco-search-enterprise-metadata(Deployment: alfresco-search-enterprise-metadata):::alf
+  Deployment_alfresco-search-enterprise-path(Deployment: alfresco-search-enterprise-path):::alf
+  StatefulSet_alfresco-search-enterprise-mediation(StatefulSet: alfresco-search-enterprise-mediation):::alf
+end
+
+Job_alfresco-search-enterprise-reindexing(Job: alfresco-search-enterprise-reindexing):::alf
+
+StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
+Deployment_activemq(Deployment: activemq):::thrdP
+StatefulSet_elasticsearch-master(StatefulSet: elasticsearch-master):::thrdP
+
+Job_alfresco-search-enterprise-reindexing --> StatefulSet_elasticsearch-master
+Job_alfresco-search-enterprise-reindexing --> StatefulSet_postgresql-acs
+
+live --> Deployment_activemq
+live --> StatefulSet_elasticsearch-master
+```
+
+### Community edition
+
+The Community configuration will deploy the following architecture:
+
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+Client("👥 Clients")
+
+subgraph Helm community
+  PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
+  PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
+  PersistentVolumeClaim_solr-default-pvc(PersistentVolumeClaim: solr-default-pvc):::k8s
+  PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
+  Deployment_activemq(Deployment: activemq):::thrdP
+  Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
+  Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
+  Deployment_solr(Deployment: solr):::alf
+  Deployment_share(Deployment: share):::alf
+  StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
+  Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
+  Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
+  Ingress_share(Ingress: share):::k8s
+  subgraph "Alfresco Transform Service"
+    Deployment_imagemagick(Deployment: imagemagick):::alf
+    Deployment_libreoffice(Deployment: libreoffice):::alf
+    Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
+    Deployment_tika(Deployment: tika):::alf
+    Deployment_transform-misc(Deployment: transform-misc):::alf
+  end
+  pv1[(Data Volume)]:::k8s
+  pv2[(Data Volume)]:::k8s
+  pv3[(Data Volume)]:::k8s
+  pv4[(Data Volume)]:::k8s
+end
+
+Client ----> Ingress_alfresco-cc --> Deployment_alfresco-cc
+Client --> Ingress_alfresco-repository --> Deployment_alfresco-repository
+Client --> Ingress_share --> Deployment_share
+
+Deployment_share --> Deployment_alfresco-repository
+
+Deployment_alfresco-repository --> Deployment_solr
+Deployment_alfresco-repository --> StatefulSet_postgresql-acs --> PersistentVolumeClaim_data-acs-postgresql --> pv1
+Deployment_alfresco-repository --> Deployment_activemq
+Deployment_alfresco-repository --> Deployment_imagemagick
+Deployment_alfresco-repository --> Deployment_libreoffice
+Deployment_alfresco-repository --> Deployment_pdfrenderer
+Deployment_alfresco-repository --> Deployment_tika
+Deployment_alfresco-repository --> Deployment_transform-misc
+
+Deployment_alfresco-repository ---> PersistentVolumeClaim_repository-default-pvc --> pv2
+Deployment_activemq --> PersistentVolumeClaim_activemq-default-pvc --> pv3
+Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> pv4
+```
 
 ## Overview
 
