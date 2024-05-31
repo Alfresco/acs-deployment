@@ -60,7 +60,7 @@ keycloakx:
           - clientId: alfresco
             enabled: true
             standardFlowEnabled: true
-            implicitFlowEnabled: true
+            implicitFlowEnabled: false
             publicClient: true
             redirectUris: >-
               {{- $redirectUris := list }}
