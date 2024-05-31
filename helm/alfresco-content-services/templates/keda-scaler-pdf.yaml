@@ -22,7 +22,8 @@ spec:
       targetQueueSize: "10"
     authenticationRef:
       name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
-  initialCooldownPeriod:  120
+  initialCooldownPeriod:  300
+  cooldownPeriod:  900
   pollingInterval: 10
   idleReplicaCount: 0
   minReplicaCount:  1
