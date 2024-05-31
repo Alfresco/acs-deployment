@@ -66,7 +66,7 @@ services:
       start_period: 1m
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.1.1
+    image: quay.io/alfresco/alfresco-transform-router:4.1.2
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -80,7 +80,7 @@ services:
     depends_on:
       - activemq
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.1
+    image: alfresco/alfresco-transform-core-aio:5.1.2
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -94,7 +94,7 @@ services:
     depends_on:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.1.1
+    image: quay.io/alfresco/alfresco-shared-file-store:4.1.2
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -107,7 +107,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:23.3.0-A12
+    image: quay.io/alfresco/alfresco-share:23.3.0-A16
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -187,7 +187,7 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:4.5.0-8845542148
+    image: quay.io/alfresco/alfresco-digital-workspace:4.5.0-9269023247
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -197,7 +197,7 @@ services:
       APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:8.5.0-8845542148
+    image: quay.io/alfresco/alfresco-control-center:8.5.0-9269023247
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
