@@ -320,6 +320,7 @@ alfresco-search:
     #    hosts:
     #      - chart-example.local
 alfresco-search-enterprise:
+  nameOverride: alfresco-search-enterprise
   enabled: true
   search:
     existingConfigMap:

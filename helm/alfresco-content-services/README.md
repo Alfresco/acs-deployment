@@ -123,6 +123,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.0.1"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-search-enterprise.nameOverride | string | `"alfresco-search-enterprise"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
