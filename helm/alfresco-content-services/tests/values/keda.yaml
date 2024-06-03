@@ -1,0 +1,18 @@
+keda:
+  enabled: true
+alfresco-transform-service:
+  imagemagick:
+    autoscaling:
+      kedaPollingInterval: 90
+  libreoffice:
+    autoscaling:
+      kedaInitialCooldownPeriod: 600
+  transformmisc:
+    autoscaling:
+      kedaCooldownPeriod: 3600
+  pdfrenderer:
+    autoscaling:
+      minReplicas: 3
+  tika:
+    autoscaling:
+      maxReplicas: 9
