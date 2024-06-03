@@ -7,6 +7,9 @@ grand_parent: Helm
 # Alfresco Content Services Helm Deployment with AWS Services
 
 - [Alfresco Content Services Helm Deployment with AWS Services](#alfresco-content-services-helm-deployment-with-aws-services)
+  - [Architecture diagrams](#architecture-diagrams)
+    - [Alfresco Transform Services](#alfresco-transform-services)
+    - [Search Enterprise](#search-enterprise)
   - [Prerequisites](#prerequisites)
   - [Setup Services](#setup-services)
     - [S3](#s3)
@@ -20,9 +23,136 @@ and use [S3](https://aws.amazon.com/s3) for content storage,
 [RDS](https://aws.amazon.com/rds) as an external database and
 [Amazon MQ](https://aws.amazon.com/amazon-mq) as an external message broker.
 
+## Architecture diagrams
+
 The diagram below shows the deployment produced by this example:
 
-![Helm with AWS Services](../images/helm-eks-aws-services.png)
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+Client("👥 Clients")
+
+subgraph Helm enterprise
+  direction LR
+
+  subgraph workloads
+    Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
+    Deployment_alfresco-dw(Deployment: alfresco-dw):::alf
+    Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
+    Deployment_alfresco-sync-service(Deployment: alfresco-sync-service):::alf
+    Deployment_share(Deployment: share):::alf
+  end
+
+  subgraph ingress
+    Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
+    Ingress_alfresco-dw(Ingress: alfresco-dw):::k8s
+    Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
+    Ingress_alfresco-sync-service(Ingress: alfresco-sync-service):::k8s
+    Ingress_share(Ingress: share):::k8s
+  end
+end
+
+subgraph AWS
+  EFS[(EFS: Datastore)]:::aws
+  mq[Amazon MQ]:::aws
+  opensearch[OpenSearch]:::aws
+  rds[Aurora RDS]:::aws
+  s3[S3 Bucket]:::aws
+end
+
+Client ---> Ingress_alfresco-cc --> Deployment_alfresco-cc
+Client ---> Ingress_alfresco-dw --> Deployment_alfresco-dw
+Client --> Ingress_alfresco-repository --> Deployment_alfresco-repository
+Client --> Ingress_share --> Deployment_share
+Client --> Ingress_alfresco-sync-service --> Deployment_alfresco-sync-service
+
+Deployment_share --> Deployment_alfresco-repository
+
+Deployment_alfresco-repository --> rds
+Deployment_alfresco-repository --> mq
+Deployment_alfresco-repository --> opensearch
+
+Deployment_alfresco-sync-service --> rds
+Deployment_alfresco-sync-service --> mq
+Deployment_alfresco-sync-service --> Deployment_alfresco-repository
+
+Deployment_alfresco-repository --> s3
+```
+
+### Alfresco Transform Services
+
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+subgraph ats[Alfresco Transform Service]
+  Deployment_filestore(Deployment: filestore):::alf
+  Deployment_imagemagick(Deployment: imagemagick):::alf
+  Deployment_libreoffice(Deployment: libreoffice):::alf
+  Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
+  Deployment_tika(Deployment: tika):::alf
+  Deployment_transform-misc(Deployment: transform-misc):::alf
+  Deployment_transform-router(Deployment: transform-router):::alf
+end
+
+subgraph AWS
+  EFS[(EFS: Datastore)]:::aws
+  mq[Amazon MQ]:::aws
+end
+
+PersistentVolumeClaim_filestore-default-pvc(PersistentVolumeClaim: filestore-default-pvc):::k8s
+
+Deployment_transform-router --> mq
+Deployment_transform-router --> Deployment_imagemagick
+Deployment_transform-router --> Deployment_libreoffice
+Deployment_transform-router --> Deployment_pdfrenderer
+Deployment_transform-router --> Deployment_tika
+Deployment_transform-router --> Deployment_transform-misc
+Deployment_transform-router --> Deployment_filestore
+
+Deployment_filestore --> PersistentVolumeClaim_filestore-default-pvc --> EFS
+```
+
+### Search Enterprise
+
+```mermaid
+graph TB
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+subgraph live[Live Indexing]
+  Deployment_alfresco-search-enterprise-content(Deployment: alfresco-search-enterprise-content):::alf
+  Deployment_alfresco-search-enterprise-metadata(Deployment: alfresco-search-enterprise-metadata):::alf
+  Deployment_alfresco-search-enterprise-path(Deployment: alfresco-search-enterprise-path):::alf
+  StatefulSet_alfresco-search-enterprise-mediation(StatefulSet: alfresco-search-enterprise-mediation):::alf
+end
+
+subgraph AWS
+  mq[Amazon MQ]:::aws
+  opensearch[OpenSearch]:::aws
+  rds[Aurora RDS]:::aws
+end
+
+Job_alfresco-search-enterprise-reindexing(Job: alfresco-search-enterprise-reindexing):::alf
+
+Job_alfresco-search-enterprise-reindexing --> opensearch
+Job_alfresco-search-enterprise-reindexing --> rds
+
+live --> mq
+live --> opensearch
+```
 
 ## Prerequisites
 
