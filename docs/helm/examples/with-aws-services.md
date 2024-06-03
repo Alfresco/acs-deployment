@@ -58,7 +58,6 @@ subgraph Helm enterprise
 end
 
 subgraph AWS
-  EFS[(EFS: Datastore)]:::aws
   mq[Amazon MQ]:::aws
   opensearch[OpenSearch]:::aws
   rds[Aurora RDS]:::aws

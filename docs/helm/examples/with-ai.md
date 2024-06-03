@@ -13,7 +13,35 @@ feature is disabled, this example describes how to deploy ACS onto
 
 The diagram below shows the deployment produced by this example:
 
-![Helm with Intelligence Services](../images/helm-eks-s3-rds-mq-ai.png)
+## Architecture
+
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+subgraph ats[Alfresco Transform Service]
+  Deployment_transform-router(Deployment: transform-router):::alf
+  Deployment_ai[Deployment: AI t-engine]:::alf
+end
+
+subgraph AWS
+  comprehend:::aws
+  rekognition:::aws
+  textract:::aws
+  s3:::aws
+end
+
+Deployment_transform-router --> Deployment_ai
+
+Deployment_ai --> comprehend
+Deployment_ai --> rekognition
+Deployment_ai --> textract
+Deployment_ai --> s3
+```
 
 ## Prerequisites
 
