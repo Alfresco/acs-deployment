@@ -3,6 +3,7 @@
 {{- $mqCtx := dict "Values" .Values.activemq "Chart" .Chart "Release" .Release }}
 {{- $mqAdminPort := default "8161" (.Values.activemq.services.webConsole.ports).external.webConsole }}
 {{- $atsCtx := (dict "Values" (index .Values "alfresco-transform-service") "Chart" .Chart "Release" .Release) }}
+{{- if $atsCtx.Values.transformmisc.enabled | default true }}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -29,5 +30,5 @@ spec:
     horizontalPodAutoscalerConfig:
       behavior: {{ toYaml .transformmisc.autoscaling.behavior | nindent 8 }}
   {{- end }}
-
+{{- end }}
 {{- end -}}
