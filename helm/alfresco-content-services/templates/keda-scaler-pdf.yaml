@@ -14,14 +14,10 @@ spec:
   scaleTargetRef:
     name: {{ template "alfresco-transform-service.pdfrenderer.name" $atsCtx }}
   triggers:
-  - type: activemq
-    metadata:
-      managementEndpoint: {{ printf "%s-web-console:%v" (include "activemq.fullname" $mqCtx) $mqAdminPort }}
-      destinationName: org.alfresco.transform.engine.alfresco-pdf-renderer.acs
-      brokerName: {{ template "activemq.fullname" $mqCtx }}
-      targetQueueSize: "10"
-    authenticationRef:
-      name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
+  {{- $destQ := dict "metadata" (dict "destinationName" "org.alfresco.transform.engine.alfresco-pdf-renderer.acs") }}
+    {{- range (include "alfresco-content-services.mq.keda.scaler.trigger" . | fromYamlArray) }}
+    {{- . | mustMerge $destQ | list | toYaml | nindent 4 }}
+    {{- end }}
   initialCooldownPeriod:  300
   cooldownPeriod:  900
   pollingInterval: 10
