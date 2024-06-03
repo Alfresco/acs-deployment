@@ -30,31 +30,36 @@ Client("👥 Clients")
 
 subgraph Helm enterprise
   direction LR
-  PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
-  PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
-  PersistentVolumeClaim_data-sync-postgresql(PersistentVolumeClaim: data-sync-postgresql):::k8s
-  PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
-  pv1[(Data Volume)]:::k8s
-  pv2[(Data Volume)]:::k8s
-  pv3[(Data Volume)]:::k8s
-  pv4[(Data Volume)]:::k8s
+  subgraph storage
+    PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
+    PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
+    PersistentVolumeClaim_data-sync-postgresql(PersistentVolumeClaim: data-sync-postgresql):::k8s
+    PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
+    pv1[(Data Volume)]:::k8s
+    pv2[(Data Volume)]:::k8s
+    pv3[(Data Volume)]:::k8s
+    pv4[(Data Volume)]:::k8s
+  end
+  subgraph workloads
+    Deployment_activemq(Deployment: activemq):::thrdP
+    Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
+    Deployment_alfresco-dw(Deployment: alfresco-dw):::alf
+    Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
+    Deployment_alfresco-sync-service(Deployment: alfresco-sync-service):::alf
+    Deployment_share(Deployment: share):::alf
 
-  Deployment_activemq(Deployment: activemq):::thrdP
-  Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
-  Deployment_alfresco-dw(Deployment: alfresco-dw):::alf
-  Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
-  Deployment_alfresco-sync-service(Deployment: alfresco-sync-service):::alf
-  Deployment_share(Deployment: share):::alf
+    StatefulSet_elasticsearch-master(StatefulSet: elasticsearch-master):::thrdP
+    StatefulSet_postgresql-sync(StatefulSet: postgresql-sync):::thrdP
+    StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
+  end
 
-  StatefulSet_elasticsearch-master(StatefulSet: elasticsearch-master):::thrdP
-  StatefulSet_postgresql-sync(StatefulSet: postgresql-sync):::thrdP
-  StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
-
-  Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
-  Ingress_alfresco-dw(Ingress: alfresco-dw):::k8s
-  Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
-  Ingress_alfresco-sync-service(Ingress: alfresco-sync-service):::k8s
-  Ingress_share(Ingress: share):::k8s
+  subgraph ingress
+    Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
+    Ingress_alfresco-dw(Ingress: alfresco-dw):::k8s
+    Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
+    Ingress_alfresco-sync-service(Ingress: alfresco-sync-service):::k8s
+    Ingress_share(Ingress: share):::k8s
+  end
 end
 
 Client ---> Ingress_alfresco-cc --> Deployment_alfresco-cc
@@ -155,30 +160,36 @@ classDef thrdP fill:#e098a6,color:#000
 Client("👥 Clients")
 
 subgraph Helm community
-  PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
-  PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
-  PersistentVolumeClaim_solr-default-pvc(PersistentVolumeClaim: solr-default-pvc):::k8s
-  PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
-  Deployment_activemq(Deployment: activemq):::thrdP
-  Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
-  Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
-  Deployment_solr(Deployment: solr):::alf
-  Deployment_share(Deployment: share):::alf
-  StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
-  Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
-  Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
-  Ingress_share(Ingress: share):::k8s
-  subgraph "Alfresco Transform Service"
-    Deployment_imagemagick(Deployment: imagemagick):::alf
-    Deployment_libreoffice(Deployment: libreoffice):::alf
-    Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
-    Deployment_tika(Deployment: tika):::alf
-    Deployment_transform-misc(Deployment: transform-misc):::alf
+  subgraph storage
+    PersistentVolumeClaim_activemq-default-pvc(PersistentVolumeClaim: activemq-default-pvc):::k8s
+    PersistentVolumeClaim_repository-default-pvc(PersistentVolumeClaim: repository-default-pvc):::k8s
+    PersistentVolumeClaim_solr-default-pvc(PersistentVolumeClaim: solr-default-pvc):::k8s
+    PersistentVolumeClaim_data-acs-postgresql(PersistentVolumeClaim: data-acs-postgresql):::k8s
+    pv1[(Data Volume)]:::k8s
+    pv2[(Data Volume)]:::k8s
+    pv3[(Data Volume)]:::k8s
+    pv4[(Data Volume)]:::k8s
   end
-  pv1[(Data Volume)]:::k8s
-  pv2[(Data Volume)]:::k8s
-  pv3[(Data Volume)]:::k8s
-  pv4[(Data Volume)]:::k8s
+  subgraph workloads
+    Deployment_activemq(Deployment: activemq):::thrdP
+    Deployment_alfresco-cc(Deployment: alfresco-cc):::alf
+    Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
+    Deployment_solr(Deployment: solr):::alf
+    Deployment_share(Deployment: share):::alf
+    subgraph "Alfresco Transform Service"
+      Deployment_imagemagick(Deployment: imagemagick):::alf
+      Deployment_libreoffice(Deployment: libreoffice):::alf
+      Deployment_pdfrenderer(Deployment: pdfrenderer):::alf
+      Deployment_tika(Deployment: tika):::alf
+      Deployment_transform-misc(Deployment: transform-misc):::alf
+    end
+    StatefulSet_postgresql-acs(StatefulSet: postgresql-acs):::thrdP
+  end
+  subgraph ingress
+    Ingress_alfresco-cc(Ingress: alfresco-cc):::k8s
+    Ingress_alfresco-repository(Ingress: alfresco-repository):::k8s
+    Ingress_share(Ingress: share):::k8s
+  end
 end
 
 Client ----> Ingress_alfresco-cc --> Deployment_alfresco-cc
