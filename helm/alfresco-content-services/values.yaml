@@ -106,6 +106,12 @@ database:
 messageBroker:
   # -- Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`.
   url: null
+  # -- URL of the web console interface for the external message broker
+  # Your broker we console interface should respond to URl built using the `restAPITemplate` below
+  # where `.ManagementEndpoint` evaluates to the `webConsole`value below.
+  webConsole: null
+  restAPITemplate: >
+    http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize
   # -- External message broker user
   user: null
   # -- External message broker password
@@ -113,6 +119,7 @@ messageBroker:
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
   # -- Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys.
+  # and optionally the credentials to the web console (can be the same as broker access).
   existingSecretName: null
 alfresco-repository:
   nameOverride: alfresco-repository

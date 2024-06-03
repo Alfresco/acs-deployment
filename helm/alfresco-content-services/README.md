@@ -249,11 +249,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | keda.enabled | bool | `false` | Toggle deployment of Keda Operator for ATS autoscaling |
 | keda.nameOverride | string | `"acs-keda"` |  |
 | keda.operator.name | string | `"acs-keda-operator"` |  |
-| messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. |
+| messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. and optionally the credentials to the web console (can be the same as broker access). |
 | messageBroker.password | string | `nil` | External message broker password |
+| messageBroker.restAPITemplate | string | `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize\n"` |  |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | messageBroker.url | string | `nil` | Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`. |
 | messageBroker.user | string | `nil` | External message broker user |
+| messageBroker.webConsole | string | `nil` | URL of the web console interface for the external message broker Your broker we console interface should respond to URl built using the `restAPITemplate` below where `.ManagementEndpoint` evaluates to the `webConsole`value below. |
 | postgresql-sync.auth.database | string | `"syncservice-postgresql"` |  |
 | postgresql-sync.auth.enablePostgresUser | bool | `false` |  |
 | postgresql-sync.auth.password | string | `"admin"` |  |
