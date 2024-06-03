@@ -19,16 +19,16 @@ spec:
     {{- range (include "alfresco-content-services.mq.keda.scaler.trigger" . | fromYamlArray) }}
     {{- . | mustMerge $destQ | list | toYaml | nindent 4 }}
     {{- end }}
-  initialCooldownPeriod:  300
-  cooldownPeriod:  900
-  pollingInterval: 10
-  idleReplicaCount: 0
-  minReplicaCount:  1
-  maxReplicaCount:  5
-  {{- with index .Values "alfresco-transform-service" }}
+  {{- with index .Values "alfresco-transform-service" "imagemagick" }}
+  pollingInterval: {{ .autoscaling.kedaPollingInterval | default 15 }}
+  initialCooldownPeriod: {{ .autoscaling.kedaInitialCooldownPeriod | default 300 }}
+  cooldownPeriod: {{ .autoscaling.kedaCooldownPeriod | default 900 }}
+  idleReplicaCount: {{ .autoscaling.kedaIdleReplicas | default 0 }}
+  minReplicaCount:  {{ .autoscaling.minReplicas }}
+  maxReplicaCount:  {{ .autoscaling.maxReplicas }}
   advanced:
     horizontalPodAutoscalerConfig:
-      behavior: {{ toYaml .imagemagick.autoscaling.behavior | nindent 8 }}
+      behavior: {{- toYaml .autoscaling.behavior | nindent 8 }}
   {{- end }}
 {{- end }}
 {{- end -}}
