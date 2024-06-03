@@ -20,3 +20,21 @@ Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
   authenticationRef:
     name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
 {{- end -}}
+
+{{/*
+Render KEDA trigger for the ActiveMQ autoscaler
+
+Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
+
+*/}}
+{{- define "alfresco-content-services.keda.scaler.options" -}}
+pollingInterval: {{ .autoscaling.kedaPollingInterval | default 15 }}
+initialCooldownPeriod: {{ .autoscaling.kedaInitialCooldownPeriod | default 300 }}
+cooldownPeriod: {{ .autoscaling.kedaCooldownPeriod | default 900 }}
+idleReplicaCount: {{ .autoscaling.kedaIdleReplicas | default 0 }}
+minReplicaCount:  {{ .autoscaling.minReplicas }}
+maxReplicaCount:  {{ .autoscaling.maxReplicas }}
+advanced:
+  horizontalPodAutoscalerConfig:
+    behavior: {{- toYaml .autoscaling.behavior }}
+{{- end -}}
