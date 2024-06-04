@@ -1,12 +1,9 @@
-{{- if .Values.keda.enabled -}}
-{{- $ctx := (dict "Values" .Values.keda "Chart" .Chart "Release" .Release) -}}
+{{- if has "alfresco-transform-service" .Values.keda.components -}}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  labels:
-    {{- include "keda.labels" $ctx | nindent 4 }}
-  name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
+  name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" .) | trunc 63 | trimSuffix "-" }}
 spec:
   secretTargetRef:
   - parameter: username
