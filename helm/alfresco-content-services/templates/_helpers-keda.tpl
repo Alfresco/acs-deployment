@@ -1,5 +1,5 @@
 {{/*
-Render KEDA trigger for the ActiveMQ autoscaler
+Render KEDA trigger for the ActiveMQ scaler
 
 Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
 
@@ -23,9 +23,9 @@ Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
 {{- end -}}
 
 {{/*
-Render KEDA trigger for the ActiveMQ autoscaler
+Render KEDA scaler options for the ActiveMQ scaler
 
-Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
+Usage: include "alfresco-content-services.keda.scaler.options" $
 
 */}}
 {{- define "alfresco-content-services.keda.scaler.options" -}}
