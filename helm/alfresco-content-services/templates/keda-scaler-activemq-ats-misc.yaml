@@ -13,9 +13,11 @@ spec:
   scaleTargetRef:
     name: {{ template "alfresco-transform-service.transform-misc.name" $atsCtx }}
   triggers:
-  {{- $destQ := dict "metadata" (dict "destinationName" "org.alfresco.transform.engine.misc.acs") }}
+  {{- $destQ := "org.alfresco.transform.engine.misc.acs" }}
+  {{- $targetQSize := $atsCtx.Values.transformmisc.autoscaling.kedaTargetValue | default 10 }}
+  {{- $triggerOpts:= dict "metadata" (dict "targetQueueSize" $targetQSize "destinationName" $destQ ) }}
     {{- range (include "alfresco-content-services.mq.keda.scaler.trigger" . | fromYamlArray) }}
-    {{- . | mustMerge $destQ | list | toYaml | nindent 4 }}
+    {{- . | mustMerge $triggerOpts | list | toYaml | nindent 4 }}
     {{- end }}
   {{- include "alfresco-content-services.keda.scaler.options" (index .Values "alfresco-transform-service" "transformmisc") | nindent 2 }}
 {{- end }}

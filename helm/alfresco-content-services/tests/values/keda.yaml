@@ -16,4 +16,5 @@ alfresco-transform-service:
       minReplicas: 3
   tika:
     autoscaling:
+      kedaTargetValue: 50
       maxReplicas: 9
