@@ -111,8 +111,9 @@ messageBroker:
   # where `.ManagementEndpoint` evaluates to the `webConsole`value below.
   webConsole: null
   # -- the template used internally by KEDA ActiveMQ scaler to query the broker queue size
-  restAPITemplate: >
-    http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize
+  # the KEDA internal default is:
+  # http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize
+  restAPITemplate: null
   # -- External message broker user
   user: null
   # -- External message broker password

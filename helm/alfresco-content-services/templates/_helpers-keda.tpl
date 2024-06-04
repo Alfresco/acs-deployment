@@ -15,8 +15,9 @@ Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
   metadata:
     managementEndpoint: {{ .Values.messageBroker.webConsole | default (printf "%s-web-console.%s.svc:%v" (include "activemq.fullname" $mqCtx) .Release.Namespace $mqAdminPort) }}
     brokerName: {{ template "activemq.fullname" $mqCtx }}
-    restAPITemplate: >
-      {{ .Values.messageBroker.restAPITemplate }}
+    {{- with .Values.messageBroker }}
+    restAPITemplate: {{ .restAPITemplate }}
+    {{- end }}
   authenticationRef:
     name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
 {{- end -}}
