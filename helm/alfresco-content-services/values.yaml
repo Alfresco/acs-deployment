@@ -128,6 +128,10 @@ alfresco-repository:
   image:
     repository: quay.io/alfresco/alfresco-content-repository
     tag: 23.2.1
+  autoscaling:
+    # -- Set the number of replicas to use when service is idle.
+    # We don't want to set it to zero.
+    kedaIdleReplicas: 1
   configuration:
     repository:
       existingConfigMap: *repository_cmName
@@ -559,3 +563,7 @@ dtas:
 keda:
   # -- The list of components that will be scaled by KEDA (chart names)
   components: []
+
+prometheus:
+  # -- URL of the prometheus server (must be reachable by KEDA pods)
+  url: null

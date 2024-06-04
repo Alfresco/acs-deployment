@@ -92,6 +92,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
+| alfresco-repository.autoscaling.kedaIdleReplicas | int | `1` | Set the number of replicas to use when service is idle. We don't want to set it to zero. |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-repository.configuration.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
@@ -282,6 +283,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
+| prometheus.url | string | `nil` | URL of the prometheus server (must be reachable by KEDA pods) |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | share.image.tag | string | `"23.2.1"` |  |
