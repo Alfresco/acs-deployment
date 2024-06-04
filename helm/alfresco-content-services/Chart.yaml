@@ -85,8 +85,4 @@ dependencies:
     repository: https://helm.elastic.co
     version: 7.17.3
     condition: elasticsearch.enabled
-  - name: keda
-    repository: https://kedacore.github.io/charts
-    version: 2.14.2
-    condition: keda.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

@@ -110,6 +110,7 @@ messageBroker:
   # Your broker we console interface should respond to URl built using the `restAPITemplate` below
   # where `.ManagementEndpoint` evaluates to the `webConsole`value below.
   webConsole: null
+  # -- the template used internally by KEDA ActiveMQ scaler to query the broker queue size
   restAPITemplate: >
     http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize
   # -- External message broker user
@@ -199,6 +200,7 @@ alfresco-connector-msteams:
     repository: quay.io/alfresco/alfresco-ms-teams-service
     tag: 2.0.1
 alfresco-transform-service:
+  nameOverride: alfresco-transform-service
   enabled: true
   messageBroker:
     existingConfigMap:
@@ -554,10 +556,5 @@ dtas:
       adw:
         base_path: "/workspace"
 keda:
-  # -- Toggle deployment of Keda Operator for ATS autoscaling
-  enabled: false
-  nameOverride: acs-keda
-  crds:
-    install: false
-  operator:
-    name: acs-keda-operator
+  # -- The list of components that will be scaled by KEDA (chart names)
+  components: []

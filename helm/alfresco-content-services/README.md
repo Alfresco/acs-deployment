@@ -36,7 +36,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.2.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.3.2 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
-| https://kedacore.github.io/charts | keda | 2.14.2 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
@@ -176,6 +175,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.libreoffice.image.tag | string | `"5.1.2"` |  |
 | alfresco-transform-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-transform-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-transform-service.nameOverride | string | `"alfresco-transform-service"` |  |
 | alfresco-transform-service.pdfrenderer.enabled | bool | `true` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | alfresco-transform-service.pdfrenderer.image.repository | string | `"alfresco/alfresco-pdf-renderer"` |  |
 | alfresco-transform-service.pdfrenderer.image.tag | string | `"5.1.2"` |  |
@@ -245,13 +245,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
-| keda.crds.install | bool | `false` |  |
-| keda.enabled | bool | `false` | Toggle deployment of Keda Operator for ATS autoscaling |
-| keda.nameOverride | string | `"acs-keda"` |  |
-| keda.operator.name | string | `"acs-keda-operator"` |  |
+| keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
 | messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. and optionally the credentials to the web console (can be the same as broker access). |
 | messageBroker.password | string | `nil` | External message broker password |
-| messageBroker.restAPITemplate | string | `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize\n"` |  |
+| messageBroker.restAPITemplate | string | `"http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize\n"` | the template used internally by KEDA ActiveMQ scaler to query the broker queue size |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | messageBroker.url | string | `nil` | Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`. |
 | messageBroker.user | string | `nil` | External message broker user |
