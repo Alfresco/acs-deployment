@@ -114,6 +114,8 @@ messageBroker:
   # the KEDA internal default is:
   # http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize
   restAPITemplate: null
+  # -- name of the message broker as set in the Broker configuration
+  brokerName: null
   # -- External message broker user
   user: null
   # -- External message broker password

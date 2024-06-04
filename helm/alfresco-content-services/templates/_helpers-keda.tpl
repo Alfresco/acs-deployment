@@ -8,13 +8,17 @@ Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
 {{ $ctx := dict "Values" .Values.keda "Chart" .Chart "Release" .Release -}}
 {{ $mqCtx := dict "Values" .Values.activemq "Chart" .Chart "Release" .Release -}}
 {{ $mqAdminPort := default "8161" (.Values.activemq.services.webConsole.ports).external.webConsole -}}
-{{- if and (not .Values.messageBroker.webConsole) (not .Values.activemq.enabled) }}
-{{- fail "Enabling queue based autoscaling requires to provide the address of the we console of your external broker or enable embeded ActiveMQ" }}
+{{ $hasAllBrokerProps := false }}
+{{- with .Values.messageBroker }}
+{{ $hasAllBrokerProps = and .webConsole .brokerName }}
+{{- end }}
+{{- if and (not $hasAllBrokerProps) (not .Values.activemq.enabled) }}
+{{- fail "Enabling queue based autoscaling requires to provide the address of the web console and the broker name of your external broker or enable embeded ActiveMQ" }}
 {{- end }}
 - type: activemq
   metadata:
     managementEndpoint: {{ .Values.messageBroker.webConsole | default (printf "%s-web-console.%s.svc:%v" (include "activemq.fullname" $mqCtx) .Release.Namespace $mqAdminPort) }}
-    brokerName: {{ template "activemq.fullname" $mqCtx }}
+    brokerName: {{ .Values.messageBroker.brokerName | default (include "activemq.fullname" $mqCtx) }}
     {{- with .Values.messageBroker }}
     restAPITemplate: {{ .restAPITemplate }}
     {{- end }}

@@ -247,6 +247,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
+| messageBroker.brokerName | string | `nil` | name of the message broker as set in the Broker configuration |
 | messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. and optionally the credentials to the web console (can be the same as broker access). |
 | messageBroker.password | string | `nil` | External message broker password |
 | messageBroker.restAPITemplate | string | `nil` | the template used internally by KEDA ActiveMQ scaler to query the broker queue size the KEDA internal default is: http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize |
