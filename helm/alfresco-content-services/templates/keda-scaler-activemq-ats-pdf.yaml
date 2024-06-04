@@ -1,16 +1,14 @@
 {{- if (index .Values "alfresco-transform-service" "enabled") -}}
 {{- $atsCtx := (dict "Values" (index .Values "alfresco-transform-service") "Chart" .Chart "Release" .Release) }}
 {{- if and $atsCtx.Values.imagemagick.enabled (has (include "alfresco-transform-service.name" $atsCtx) .Values.keda.components) }}
-{{- $ctx := (dict "Values" .Values.keda "Chart" .Chart "Release" .Release) -}}
 {{- $mqCtx := dict "Values" .Values.activemq "Chart" .Chart "Release" .Release }}
 {{- $mqAdminPort := default "8161" (.Values.activemq.services.webConsole.ports).external.webConsole }}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  labels:
-    {{- include "keda.labels" $ctx | nindent 4 }}
-  name: {{ printf "%s-tengine-pdfrenderer" (include "alfresco-content-services.fullname" $ctx) | trunc 63 | trimSuffix "-" }}
+  labels: {{- include "alfresco-content-services.labels" $atsCtx | nindent 4 }}
+  name: {{ printf "%s-tengine-pdfrenderer" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
 spec:
   scaleTargetRef:
     name: {{ template "alfresco-transform-service.pdfrenderer.name" $atsCtx }}
