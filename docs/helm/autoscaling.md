@@ -4,20 +4,135 @@ parent: Guides
 grand_parent: Helm
 ---
 
-# Alfresco components auto-scaling
+# Automatically scaling Alfresco Content Services
 
 `alfresco-content-services` can leverage Kubernetes HorinzontalPodAutoscaling
 provided by individual Alfresco components. This means that you can add more
 instances of the same service to handle more load. This is a common pattern in
-cloud environments, where you can add more instances of a service to handle
-more load, and remove instances when the load decreases.
-This document aims at providing a details on configuring each of the components
-which support HPA.
+cloud environments, and also allows to remove instances when the load decreases.
 
-## Alfresco Repository
+`alfresco-content-services` can also leverage the [KEDA](https://keda.sh/)
+framework to scale based on custom, more application centric metrics. To use
+this more advanced scaling mechanism, you of course need to have KEDA installed.
+
+This document aims at providing a details on configuring each of the components
+which support HPA, either using plain kKubernetes HPA or a [KEDA
+scaler](https://keda.sh/docs/latest/scalers/).
+
+Which type of auto scaling is best?
+Well that depends of course. We can see the basic HPA based on CPU as a reactive
+auto scaling strategy where the system spins up more pods because existing pods
+are already quite loaded. Also the threshold which triggers scaling is
+calculated based on resource reservation and hence result in different behavior
+based on the resource allocation strategy you have chosen. For example, if you
+prefer to rely on the cluster ability to over-commit resources, you might want
+to set the threshold to a higher value, otherwise scaling will be triggered
+sooner than expected. In this way, the CPU based autoscaling is a bit more
+difficult to tune.
+On the other hand, the KEDA based scaling is more proactive, as it can be
+triggered by custom metrics from any other system. For example in the Alfresco
+content platform, you could scale specific services based on the number of
+messages in the message broker (This is what we document here for ATS pods), or
+the number of active users (or a metric which is a representation of this).
+
+## Prerequisites
+
+In order to use the autoscaling features, you need to have a Kubernetes cluster
+with a metrics server installed.
+If you're planning on using basic HPA, you need to have the Kubernetes "vanilla"
+[metrics-server`](https://github.com/kubernetes-sigs/metrics-server).
+
+Check the [official metric-server
+documentation](https://github.com/kubernetes-sigs/metrics-server) for more
+information on how to install the metrics server and which version is compatible
+with your cluster.
+
+If you prefer to use KEDA, you need to have KEDA installed in your cluster. You
+can find the installation instructions in the [KEDA official
+documentation](https://keda.sh/docs/latest/deploy/). Make sure to install the
+appropriate Custom Resource Definitions (CRDs) for the scalers you want to use.
+
+e.g:
+
+```bash
+helm install \
+  --repo https://kedacore.github.io/charts alfresco-keda keda \
+  --namespace keda \
+  --version 2.14.2
+```
+
+## Alfresco components auto-scaling
+
+### Alfresco Repository
+
+#### Basic (CPU based) scaling for alfresco repository
 
 Refer to the
 [alfresco-repository auto-scaling
 documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/autoscaling.md)
 for a detailed guide on Alfresco repository auto-scaling configuration and
 implications.
+
+### Alfresco Transform Service
+
+#### Basic (CPU based) scaling for ATS
+
+Refer to the
+[alfresco-repository auto-scaling
+documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-transform-service/docs/autoscaling.md)
+for a detailed guide on Alfresco repository auto-scaling configuration and
+implications.
+
+#### KEDA based scaling for ATS
+
+To start with make sure your Kubernetes cluster has KEDA installed
+
+##### Activemq scaler
+
+Regular ActiveMQ instances exposes a rest API which can be used to get the
+number of messages in a queue. This can be used to scale individual ATS T-engine
+pods. This scaling mechanism is implemented directly in the
+`alfresco-content-services` chart. To enable it you need to set the following:
+
+```yaml
+keda:
+  components:
+    - alfresco-transform-service
+```
+
+This will install the KEDA activemq scaler and configure it to scale all the
+T-engine workloads (`imagemagick`, `libreoffice`, `transformmisc`, `pdfrenderer`
+& `tika`) as described below:
+
+* `kedaTargetValue`: new pods will be started when the corresponding message
+  queue has more than 10 messages.
+* `behavior.scaleUp.stabilizationWindowSeconds`: The number of messages in the
+  queue must remain above target on average for 30 seconds before a scale up can
+  happen.
+* `kedaPollingInterval`: Queues are checked every 15 seconds.
+* `kedaInitialCoolDownPeriod`: KEDA will wait for 5 minutes before activating
+  the scaling object (before no scaling can happen).
+* `kedaCooldownPeriod`: After KEDA has found there is no activity in the
+  monitored queue, it will wait for 15 minutes before scaling down the pods to
+  0.
+* `kedaIdleReplicas`: The default idle replica count is 0 (tears down the
+  service).
+* `minReplicas`: The default minimum number of replica count is 1.
+* `maxReplicas`: The default maximum number of replica count is 3.
+
+> Values mentioned above must be set for each tengine
+> `alfresco-transform-service._TENGINE_NAME_.autoscaling` where `_TENGINE_NAME_`
+> is one of the following: `imagemagick`, `libreoffice`, `transformmisc`,
+> `pdfrenderer` & `tika`.
+
+Scaling replicas down to zero is great when you have workload that is consistent
+enough with long period of inactivity (e.g. overnigh). But it can trigger a
+delay for the first requests when the workload starts again (e.g. the morning
+after). If you want to avoid scaling down you ATS deployments down to zero and always have at least one pod up to deal with "lonely" requests just apply the yaml below for the appropriate scaler object (here for pdf convertion):
+
+```yaml
+alfresco-transform-service:
+  pdfrenderer:
+    autoscaling:
+      kedaIdleReplicas: 1
+```
