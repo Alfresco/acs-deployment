@@ -14,7 +14,7 @@ spec:
     name: {{ template "alfresco-transform-service.imagemagick.name" $atsCtx }}
   triggers:
   {{- $destQ := "org.alfresco.transform.engine.imagemagick.acs" }}
-  {{- $targetQSize := $atsCtx.Values.imagemagick.autoscaling.kedaTargetValue | default 10 }}
+  {{- $targetQSize := $atsCtx.Values.imagemagick.autoscaling.kedaTargetValue | default 10 | quote }}
   {{- $triggerOpts:= dict "metadata" (dict "targetQueueSize" $targetQSize "destinationName" $destQ ) }}
     {{- range (include "alfresco-content-services.mq.keda.scaler.trigger" . | fromYamlArray) }}
     {{- . | mustMerge $triggerOpts | list | toYaml | nindent 4 }}

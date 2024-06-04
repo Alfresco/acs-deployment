@@ -36,5 +36,5 @@ minReplicaCount:  {{ .autoscaling.minReplicas }}
 maxReplicaCount:  {{ .autoscaling.maxReplicas }}
 advanced:
   horizontalPodAutoscalerConfig:
-    behavior: {{- toYaml .autoscaling.behavior }}
+    behavior: {{- toYaml .autoscaling.behavior | nindent 6 }}
 {{- end -}}

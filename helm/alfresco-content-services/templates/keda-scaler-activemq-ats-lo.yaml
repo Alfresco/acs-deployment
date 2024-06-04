@@ -14,7 +14,7 @@ spec:
     name: {{ template "alfresco-transform-service.libreoffice.name" $atsCtx }}
   triggers:
   {{- $destQ := "org.alfresco.transform.engine.libreoffice.acs" }}
-  {{- $targetQSize := $atsCtx.Values.libreoffice.autoscaling.kedaTargetValue | default 10 }}
+  {{- $targetQSize := $atsCtx.Values.libreoffice.autoscaling.kedaTargetValue | default 10 | quote }}
   {{- $triggerOpts:= dict "metadata" (dict "targetQueueSize" $targetQSize "destinationName" $destQ ) }}
     {{- range (include "alfresco-content-services.mq.keda.scaler.trigger" . | fromYamlArray) }}
     {{- . | mustMerge $triggerOpts | list | toYaml | nindent 4 }}
