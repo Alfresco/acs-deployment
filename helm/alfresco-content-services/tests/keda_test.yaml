@@ -1,11 +1,11 @@
 ---
 suite: test KEDA scalers
 templates:
-  - keda-scaler-im.yaml
-  - keda-scaler-lo.yaml
-  - keda-scaler-misc.yaml
-  - keda-scaler-pdf.yaml
-  - keda-scaler-tika.yaml
+  - keda-scaler-activemq-ats-im.yaml
+  - keda-scaler-activemq-ats-lo.yaml
+  - keda-scaler-activemq-ats-misc.yaml
+  - keda-scaler-activemq-ats-pdf.yaml
+  - keda-scaler-activemq-ats-tika.yaml
 tests:
   - it: should render individual scalers all based on embded ActiveMQ and apssed values
     values:
@@ -14,86 +14,86 @@ tests:
       - equal:
           path: spec.scaleTargetRef.name
           value: RELEASE-NAME-imagemagick
-        template: keda-scaler-im.yaml
+        template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.scaleTargetRef.name
           value: RELEASE-NAME-libreoffice
-        template: keda-scaler-lo.yaml
+        template: keda-scaler-activemq-ats-lo.yaml
       - equal:
           path: spec.scaleTargetRef.name
           value: RELEASE-NAME-transform-misc
-        template: keda-scaler-misc.yaml
+        template: keda-scaler-activemq-ats-misc.yaml
       - equal:
           path: spec.scaleTargetRef.name
           value: RELEASE-NAME-pdfrenderer
-        template: keda-scaler-pdf.yaml
+        template: keda-scaler-activemq-ats-pdf.yaml
       - equal:
           path: spec.scaleTargetRef.name
           value: RELEASE-NAME-tika
-        template: keda-scaler-tika.yaml
+        template: keda-scaler-activemq-ats-tika.yaml
       - equal:
           path: spec.triggers[0].metadata.destinationName
           value: org.alfresco.transform.engine.imagemagick.acs
-        template: keda-scaler-im.yaml
+        template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.triggers[0].metadata.destinationName
           value: org.alfresco.transform.engine.libreoffice.acs
-        template: keda-scaler-lo.yaml
+        template: keda-scaler-activemq-ats-lo.yaml
       - equal:
           path: spec.triggers[0].metadata.destinationName
           value: org.alfresco.transform.engine.misc.acs
-        template: keda-scaler-misc.yaml
+        template: keda-scaler-activemq-ats-misc.yaml
       - equal:
           path: spec.triggers[0].metadata.destinationName
           value: org.alfresco.transform.engine.alfresco-pdf-renderer.acs
-        template: keda-scaler-pdf.yaml
+        template: keda-scaler-activemq-ats-pdf.yaml
       - equal:
           path: spec.triggers[0].metadata.destinationName
           value: org.alfresco.transform.engine.tika.acs
-        template: keda-scaler-tika.yaml
+        template: keda-scaler-activemq-ats-tika.yaml
       - equal:
           path: spec.triggers[0].metadata.managementEndpoint
-          value: RELEASE-NAME-activemq-web-console:8161
+          value: RELEASE-NAME-activemq-web-console.NAMESPACE.svc:8161
       - equal:
           path: spec.triggers[0].metadata.managementEndpoint
-          value: RELEASE-NAME-activemq-web-console:8161
+          value: RELEASE-NAME-activemq-web-console.NAMESPACE.svc:8161
       - equal:
           path: spec.pollingInterval
           value: 90
-        template: keda-scaler-im.yaml
+        template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.pollingInterval
           value: 15
-        template: keda-scaler-lo.yaml
+        template: keda-scaler-activemq-ats-lo.yaml
       - equal:
           path: spec.initialCooldownPeriod
           value: 600
-        template: keda-scaler-lo.yaml
+        template: keda-scaler-activemq-ats-lo.yaml
       - equal:
           path: spec.initialCooldownPeriod
           value: 300
-        template: keda-scaler-im.yaml
+        template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.cooldownPeriod
           value: 900
-        template: keda-scaler-im.yaml
+        template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.cooldownPeriod
           value: 3600
-        template: keda-scaler-misc.yaml
+        template: keda-scaler-activemq-ats-misc.yaml
       - equal:
           path: spec.minReplicaCount
           value: 1
-        template: keda-scaler-im.yaml
+        template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.minReplicaCount
           value: 3
-        template: keda-scaler-pdf.yaml
+        template: keda-scaler-activemq-ats-pdf.yaml
       - equal:
           path: spec.maxReplicaCount
           value: 3
-        template: keda-scaler-im.yaml
+        template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.maxReplicaCount
           value: 9
-        template: keda-scaler-tika.yaml
+        template: keda-scaler-activemq-ats-tika.yaml

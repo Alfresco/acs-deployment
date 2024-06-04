@@ -1,5 +1,6 @@
 keda:
-  enabled: true
+  components:
+    - alfresco-transform-service
 alfresco-transform-service:
   imagemagick:
     autoscaling:
