@@ -130,10 +130,6 @@ alfresco-repository:
   image:
     repository: quay.io/alfresco/alfresco-content-repository
     tag: 23.2.1
-  autoscaling:
-    # -- Set the number of replicas to use when service is idle.
-    # We don't want to set it to zero.
-    kedaIdleReplicas: 1
   configuration:
     repository:
       existingConfigMap: *repository_cmName

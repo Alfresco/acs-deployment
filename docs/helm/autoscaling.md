@@ -37,6 +37,7 @@ the number of active users (or a metric which is a representation of this).
 
 ## Prerequisites
 
+All scaling capabilities requires Alfresco Enterprise Edition.
 In order to use the autoscaling features, you need to have a Kubernetes cluster
 with a metrics server installed.
 If you're planning on using basic HPA, you need to have the Kubernetes "vanilla"
@@ -65,13 +66,52 @@ helm install \
 
 ### Alfresco Repository
 
-#### Basic (CPU based) scaling for alfresco repository
+#### Basic (CPU based) scaling for Alfresco repository
 
 Refer to the
 [alfresco-repository auto-scaling
 documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/docs/autoscaling.md)
 for a detailed guide on Alfresco repository auto-scaling configuration and
 implications.
+
+#### KEDA based scaling for Alfrsco repository
+
+To start with, make sure your Kubernetes cluster has KEDA & prometheus installed.
+You must also make sure Alfresco repository is setup to expose prometheus
+metrics and prometheus has the appropriate scrape configuration.
+
+Refer to the [acs-packaging
+doc](https://github.com/Alfresco/acs-packaging/tree/master/docs/micrometer)
+
+The minimum configuration for the Alfresco repository to expose prometheus
+metrics should be:
+
+```yaml
+alfresco-repository:
+  environment:
+    CATALINA_OPTS: >-
+      -Dmetrics.enabled=true
+      -Dmetrics.jvmMetricsReporter.enabled=true
+      ...
+```
+
+##### Prometheus scaler
+
+The KEDA based auto scaler relies on the number of Tomcat thread used. By
+default the Alfresco repository image uses up to 200 threads. When the system
+consistently uses more than 170 threads, the KEDA scaler will start to scale up
+the number of pods. This can be tuned using the
+`alfresco-repository.autoscaling.kedaTargetValue` if your image has a
+configuration with more or less `maxThreads`.
+In the same maner the parameters below can be set:
+
+* `behavior.scaleUp.stabilizationWindowSeconds`: The number of threads used must
+  remain above target on average for 30 seconds before a scale up can happen.
+* `kedaPollingInterval`: threads are checked every 15 seconds.
+* `kedaInitialCoolDownPeriod`: KEDA will wait for 5 minutes before activating
+  the scaling object (before no scaling can happen).
+* `minReplicas`: The default minimum number of replica count is 1.
+* `maxReplicas`: The default maximum number of replica count is 3.
 
 ### Alfresco Transform Service
 
@@ -85,7 +125,7 @@ implications.
 
 #### KEDA based scaling for ATS
 
-To start with make sure your Kubernetes cluster has KEDA installed
+To start with, make sure your Kubernetes cluster has KEDA installed
 
 ##### Activemq scaler
 
@@ -128,11 +168,27 @@ T-engine workloads (`imagemagick`, `libreoffice`, `transformmisc`, `pdfrenderer`
 Scaling replicas down to zero is great when you have workload that is consistent
 enough with long period of inactivity (e.g. overnigh). But it can trigger a
 delay for the first requests when the workload starts again (e.g. the morning
-after). If you want to avoid scaling down you ATS deployments down to zero and always have at least one pod up to deal with "lonely" requests just apply the yaml below for the appropriate scaler object (here for pdf convertion):
+after). If you want to avoid scaling down you ATS deployments down to zero and
+always have at least one pod up to deal with "lonely" requests just apply the
+yaml below for the appropriate scaler object (here for pdf convertion):
 
 ```yaml
 alfresco-transform-service:
   pdfrenderer:
     autoscaling:
-      kedaIdleReplicas: 1
+      kedaIdleReplicas: null
 ```
+
+If you want to use an external ActiveMQ broker instead of the embeded one
+(recommended), you can set the following values:
+
+```yaml
+messageBroker:
+  url: failover:(tcp://mybroker.domain.tld:61616)
+  webConsole: mybroker.domain.tld:8161
+  brokerName: mybroker
+  restAPITemplate: https://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize
+```
+
+To set the authentication you must ensure the broker user has web console access
+too.
