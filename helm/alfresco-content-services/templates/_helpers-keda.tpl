@@ -13,7 +13,7 @@ Usage: include "alfresco-content-services.mq.keda.scaler.trigger" $
 {{- end }}
 - type: activemq
   metadata:
-    managementEndpoint: {{ .Values.messageBroker.webConsole | default (printf "%s-web-console:%v" (include "activemq.fullname" $mqCtx) $mqAdminPort) }}
+    managementEndpoint: {{ .Values.messageBroker.webConsole | default (printf "%s-web-console.%s.svc:%v" (include "activemq.fullname" $mqCtx) .Release.Namespace $mqAdminPort) }}
     brokerName: {{ template "activemq.fullname" $mqCtx }}
     targetQueueSize: "10"
     restAPITemplate: {{ .Values.messageBroker.restAPITemplate }}
