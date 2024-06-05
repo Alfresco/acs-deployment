@@ -8,7 +8,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   labels: {{- include "alfresco-content-services.labels" $atsCtx | nindent 4 }}
-  name: {{ printf "%s-tengine-" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
+  name: {{ printf "%s-tengine-tika" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
 spec:
   scaleTargetRef:
     name: {{ template "alfresco-transform-service.tika.name" $atsCtx }}
