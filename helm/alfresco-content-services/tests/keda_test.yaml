@@ -59,16 +59,15 @@ tests:
           value: RELEASE-NAME-activemq-web-console.NAMESPACE.svc:8161
       - equal:
           path: spec.idleReplicaCount
-          value: null
-        template: keda-scaler-activemq-ats-lo.yaml
-      - equal:
-          path: spec.idleReplicaCount
           value: 0
+        template: keda-scaler-activemq-ats-lo.yaml
+      - notExists:
+          path: spec.idleReplicaCount
         template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.pollingInterval
           value: 90
-        template: keda-scaler-activemq-ats-im.yaml
+        template: keda-scaler-activemq-ats-misc.yaml
       - equal:
           path: spec.pollingInterval
           value: 15
@@ -83,7 +82,10 @@ tests:
         template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.cooldownPeriod
-          value: null
+          value: 900
+        template: keda-scaler-activemq-ats-lo.yaml
+      - notExists:
+          path: spec.cooldownPeriod
         template: keda-scaler-activemq-ats-im.yaml
       - equal:
           path: spec.cooldownPeriod

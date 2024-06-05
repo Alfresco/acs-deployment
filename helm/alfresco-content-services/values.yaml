@@ -130,6 +130,8 @@ alfresco-repository:
   image:
     repository: quay.io/alfresco/alfresco-content-repository
     tag: 23.2.1
+  autoscaling:
+    kedaDisableIdle: true
   configuration:
     repository:
       existingConfigMap: *repository_cmName

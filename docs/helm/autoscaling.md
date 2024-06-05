@@ -180,6 +180,10 @@ alfresco-transform-service:
       kedaIdleReplicas: null
 ```
 
+**Important**: If you're using a version of the ATS T-router prior to 5.1.3, you
+need to set the `kedaIdleReplicas` to `0` for all tengines, otherwise the
+T-router will eventually crash.
+
 If you want to use an external ActiveMQ broker instead of the embeded one
 (recommended), you can set the following values:
 

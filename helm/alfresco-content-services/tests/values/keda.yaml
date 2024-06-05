@@ -4,13 +4,13 @@ keda:
 alfresco-transform-service:
   imagemagick:
     autoscaling:
-      kedaPollingInterval: 90
-      kedaIdleReplicas: "0"
+      kedaIdleDisabled: true
   libreoffice:
     autoscaling:
       kedaInitialCooldownPeriod: 600
   transformmisc:
     autoscaling:
+      kedaPollingInterval: 90
       kedaCooldownPeriod: 3600
   pdfrenderer:
     autoscaling:
