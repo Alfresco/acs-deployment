@@ -15,9 +15,41 @@ Microsoft 365. By default, this feature is disabled.
 This example describes how to deploy ACS onto [EKS](https://aws.amazon.com/eks)
 with OOI enabled.
 
-The diagram below shows the deployment produced by this example:
+## Architecture
 
-![Helm with Office Online Integration](../images/helm-eks-s3-rds-mq-ooi.png)
+```mermaid
+graph LR
+
+classDef alf fill:#0b0,color:#fff
+classDef aws fill:#fa0,color:#fff
+classDef k8s fill:#326ce5,stroke:#326ce5,stroke-width:2px,color:#fff
+classDef thrdP fill:#e098a6,color:#000
+
+Client("👥 Clients")
+
+subgraph Helm enterprise
+  direction LR
+
+  subgraph workloads
+    Deployment_alfresco-repository(Deployment: alfresco-repository):::alf
+    Deployment_connector_ms365(Deployment: connector-ms365):::alf
+  end
+  subgraph ingress
+    Ingress_connector_ms365(Ingress: connector-ms365):::k8s
+  end
+end
+
+subgraph ms365
+  onedrive(Onedrive Graph API)
+  onedrive-auth(Auth API)
+end
+
+Client --> Ingress_connector_ms365 --> Deployment_connector_ms365
+
+Deployment_connector_ms365 --> onedrive
+Deployment_connector_ms365 --> onedrive-auth
+Deployment_connector_ms365 --> Deployment_alfresco-repository
+```
 
 ## Prerequisites
 

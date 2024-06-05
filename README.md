@@ -78,14 +78,3 @@ removing dependabot entries and other not-really useful changelog entries.
 Publish the release (remove draft status).
 
 Once the tagged workflow is successful, the release process is completed.
-
-## How to update workflow diagrams of Alfresco latest version
-
-* Go to the `docs/docker-compose/images` and/or `docs/helm/images` folders of the repository and there you will find 2 plantuml source files and their PNG diagram files.
-* Update the plantuml(.puml) files for enterprise/community edition with latest changes as required.
-* Once you are done with the changes, you can generate the diagrams with 2 ways.
-
-1. You can update the diagrams with cli method by running the below command. You need to have Java and Plantuml installed on your machine.
- `java -jar plantuml.jar filename`
-2. The other way to generate the diagrams is via official plantuml website. Go to the below url and paste your puml code and click on submit.
- `http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000`
