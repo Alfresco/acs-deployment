@@ -141,7 +141,7 @@ implications.
 
 To start with, make sure your Kubernetes cluster has KEDA installed
 
-The Alfresco Transform Service[KEDA
+The Alfresco Transform Service [KEDA
 scaledobject](https://keda.sh/docs/latest/concepts/scaling-deployments/#scaledobject-spec)
 forbids scaling tengines replicaset down to zero, as the T-router would
 eventually stop working if it losses all instances of a specific tengine.
@@ -192,3 +192,17 @@ messageBroker:
 
 To set the authentication you must ensure the broker user has web console access
 too.
+
+#### Using AWS AmazonMQ (ActiveMQ)
+
+If you're running Alfresco on AWS you may be using AmazonMQ as your message
+broker the jolokia restAPI which ActiveMQ normally provides is not available.
+In order to use the KEDA and scale based on message queues size you will need to
+use the [Cloudwatch scaler](https://keda.sh/docs/latest/scalers/aws-cloudwatch/)
+, create your own
+[scaledobject](https://keda.sh/docs/latest/concepts/scaling-deployments/#scaledobject-spec)
+using [Cloudwatch scaler](https://keda.sh/docs/latest/scalers/aws-cloudwatch/)
+as a `trigger` leveraging one of the [AWS authentication
+provider](https://keda.sh/docs/2.14/authentication-providers/) and disable the
+KEDA integration for ATS in this chart (which essentially creates the KEDA CRDs
+for you).
