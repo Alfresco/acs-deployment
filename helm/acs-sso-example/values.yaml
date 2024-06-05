@@ -41,6 +41,8 @@ repository-database:
 # @default -- check values.yaml
 keycloakx:
   nameOverride: keycloak
+  image:
+    tag: 24.0.5
   admin:
     # -- Keycloak admin username
     username: admin
