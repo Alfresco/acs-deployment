@@ -95,6 +95,12 @@ alfresco-repository:
       ...
 ```
 
+The Alfresco repository [KEDA
+scaledobject](https://keda.sh/docs/latest/concepts/scaling-deployments/#scaledobject-spec)
+forbids scaling repository replicaset down to zero, mainly because it is a
+service which requires some time to startup (incompatible with on-demand spin
+up) and it is the main service of the Alfresco platform.
+
 ##### Prometheus scaler
 
 The KEDA based auto scaler relies on the number of Tomcat thread used. By
@@ -113,6 +119,14 @@ In the same maner the parameters below can be set:
 * `minReplicas`: The default minimum number of replica count is 1.
 * `maxReplicas`: The default maximum number of replica count is 3.
 
+To enable repository scaling through KEDA, you need to set the following values:
+
+```yaml
+keda:
+  components:
+    - alfresco-repository
+```
+
 ### Alfresco Transform Service
 
 #### Basic (CPU based) scaling for ATS
@@ -126,6 +140,11 @@ implications.
 #### KEDA based scaling for ATS
 
 To start with, make sure your Kubernetes cluster has KEDA installed
+
+The Alfresco Transform Service[KEDA
+scaledobject](https://keda.sh/docs/latest/concepts/scaling-deployments/#scaledobject-spec)
+forbids scaling tengines replicaset down to zero, as the T-router would
+eventually stop working if it losses all instances of a specific tengine.
 
 ##### Activemq scaler
 
@@ -152,11 +171,6 @@ T-engine workloads (`imagemagick`, `libreoffice`, `transformmisc`, `pdfrenderer`
 * `kedaPollingInterval`: Queues are checked every 15 seconds.
 * `kedaInitialCoolDownPeriod`: KEDA will wait for 5 minutes before activating
   the scaling object (before no scaling can happen).
-* `kedaCooldownPeriod`: After KEDA has found there is no activity in the
-  monitored queue, it will wait for 15 minutes before scaling down the pods to
-  0.
-* `kedaIdleReplicas`: The default idle replica count is 0 (tears down the
-  service).
 * `minReplicas`: The default minimum number of replica count is 1.
 * `maxReplicas`: The default maximum number of replica count is 3.
 
@@ -164,20 +178,6 @@ T-engine workloads (`imagemagick`, `libreoffice`, `transformmisc`, `pdfrenderer`
 > `alfresco-transform-service._TENGINE_NAME_.autoscaling` where `_TENGINE_NAME_`
 > is one of the following: `imagemagick`, `libreoffice`, `transformmisc`,
 > `pdfrenderer` & `tika`.
-
-Scaling replicas down to zero is great when you have workload that is consistent
-enough with long period of inactivity (e.g. overnigh). But it can trigger a
-delay for the first requests when the workload starts again (e.g. the morning
-after). If you want to avoid scaling down you ATS deployments down to zero and
-always have at least one pod up to deal with "lonely" requests just apply the
-yaml below for the appropriate scaler object (here for pdf convertion):
-
-```yaml
-alfresco-transform-service:
-  pdfrenderer:
-    autoscaling:
-      kedaIdleReplicas: null
-```
 
 If you want to use an external ActiveMQ broker instead of the embeded one
 (recommended), you can set the following values:

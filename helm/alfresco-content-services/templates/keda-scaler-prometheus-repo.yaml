@@ -17,6 +17,5 @@ spec:
         serverAddress: {{ required $reqMsg .Values.prometheus.url }}
         threshold: {{ $repoCtx.Values.autoscaling.kedaTargetValue | default 170 | quote }}
         query: avg(jvm_threads_live_threads-jvm_threads_daemon_threads)
-  {{- $scaleOpts := omit (include "alfresco-content-services.keda.scaler.options" $repoCtx.Values | fromYaml) "idleReplicaCount" }}
-  {{- toYaml $scaleOpts | nindent 2 }}
+  {{- include "alfresco-content-services.keda.scaler.options" $repoCtx.Values | nindent 2 }}
 {{- end }}

@@ -35,8 +35,8 @@ Usage: include "alfresco-content-services.keda.scaler.options" $
 {{- define "alfresco-content-services.keda.scaler.options" -}}
 pollingInterval: {{ .autoscaling.kedaPollingInterval | default 15 }}
 initialCooldownPeriod: {{ .autoscaling.kedaInitialCooldownPeriod | default 300 }}
-cooldownPeriod: {{ .autoscaling.kedaCooldownPeriod | default 900 }}
-idleReplicaCount: {{ .autoscaling.kedaIdleReplicas | default 0 }}
+cooldownPeriod: {{ .autoscaling.kedaCooldownPeriod | default "null" }}
+idleReplicaCount: {{ .autoscaling.kedaIdleReplicas | default "null" }}
 minReplicaCount:  {{ .autoscaling.minReplicas }}
 maxReplicaCount:  {{ .autoscaling.maxReplicas }}
 advanced:
