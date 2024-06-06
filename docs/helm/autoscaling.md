@@ -97,7 +97,7 @@ alfresco-repository:
 
 ##### Prometheus scaler
 
-The KEDA based auto scaler relies on the number of Tomcat thread used. By
+The KEDA based auto scaler relies on the number of Tomcat threads used. By
 default the Alfresco repository image uses up to 200 threads. When the system
 consistently uses more than 170 threads, the KEDA scaler will start to scale up
 the number of pods. This can be tuned using the
@@ -166,7 +166,7 @@ T-engine workloads (`imagemagick`, `libreoffice`, `transformmisc`, `pdfrenderer`
 > `pdfrenderer` & `tika`.
 
 Scaling replicas down to zero is great when you have workload that is consistent
-enough with long period of inactivity (e.g. overnigh). But it can trigger a
+enough with long period of inactivity (e.g. during the night). But it can trigger a
 delay for the first requests when the workload starts again (e.g. the morning
 after). If you want to avoid scaling down you ATS deployments down to zero and
 always have at least one pod up to deal quickly with "sparse" requests just
@@ -184,7 +184,7 @@ alfresco-transform-service:
 need to set the `kedaIdleReplicas` to `0` for all tengines, otherwise the
 T-router will eventually crash.
 
-If you want to use an external ActiveMQ broker instead of the embeded one
+If you want to use an external ActiveMQ broker instead of the embedded one
 (recommended), you can set the following values:
 
 ```yaml
