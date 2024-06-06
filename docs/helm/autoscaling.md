@@ -119,7 +119,7 @@ In the same maner the parameters below can be set:
 
 Refer to the
 [alfresco-repository auto-scaling
-documentation](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-transform-service/docs/autoscaling.md)
+documentation](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-transform-service/docs/autoscaling.html)
 for a detailed guide on Alfresco repository auto-scaling configuration and
 implications.
 
