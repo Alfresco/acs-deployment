@@ -7,7 +7,7 @@ templates:
   - keda/scaler-activemq-ats-pdf.yaml
   - keda/scaler-activemq-ats-tika.yaml
 tests:
-  - it: should render individual scalers all based on embded ActiveMQ and apssed values
+  - it: should render individual scalers all based on embedded ActiveMQ and passed values
     values:
       - values/keda.yaml
     asserts:
