@@ -153,7 +153,7 @@ services:
       elasticsearch:
         condition: service_started
       search-reindexing:
-          condition: service_completed_successfully
+        condition: service_completed_successfully
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
