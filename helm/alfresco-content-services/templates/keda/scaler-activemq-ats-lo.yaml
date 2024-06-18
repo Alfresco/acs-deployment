@@ -11,7 +11,7 @@ metadata:
   name: {{ printf "%s-tengine-lo" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
 spec:
   scaleTargetRef:
-    name: {{ template "alfresco-transform-service.libreoffice.name" $atsCtx }}
+    name: {{ template "alfresco-transform-service.libreoffice.fullname" $atsCtx }}
   triggers:
   {{- $destQ := "org.alfresco.transform.engine.libreoffice.acs" }}
   {{- $targetQSize := $atsCtx.Values.libreoffice.autoscaling.kedaTargetValue | default 10 | toString }}
