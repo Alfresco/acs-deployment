@@ -1,0 +1,15 @@
+{{- if has "alfresco-transform-service" .Values.keda.components -}}
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: {{ printf "%s-activemq-auth-trigger" (include "alfresco-content-services.fullname" .) | trunc 63 | trimSuffix "-" }}
+spec:
+  secretTargetRef:
+  - parameter: username
+    name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+    key: BROKER_USERNAME
+  - parameter: password
+    name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+    key: BROKER_PASSWORD
+{{- end -}}

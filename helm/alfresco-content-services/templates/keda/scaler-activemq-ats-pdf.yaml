@@ -1,0 +1,24 @@
+{{- if (index .Values "alfresco-transform-service" "enabled") -}}
+{{- $atsCtx := (dict "Values" (index .Values "alfresco-transform-service") "Chart" .Chart "Release" .Release) }}
+{{- if and $atsCtx.Values.imagemagick.enabled (has (include "alfresco-transform-service.name" $atsCtx) .Values.keda.components) }}
+{{- $mqCtx := dict "Values" .Values.activemq "Chart" .Chart "Release" .Release }}
+{{- $mqAdminPort := default "8161" (.Values.activemq.services.webConsole.ports).external.webConsole }}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  labels: {{- include "alfresco-content-services.labels" $atsCtx | nindent 4 }}
+  name: {{ printf "%s-tengine-pdfrenderer" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
+spec:
+  scaleTargetRef:
+    name: {{ template "alfresco-transform-service.pdfrenderer.name" $atsCtx }}
+  triggers:
+  {{- $destQ := "org.alfresco.transform.engine.alfresco-pdf-renderer.acs" }}
+  {{- $targetQSize := $atsCtx.Values.pdfrenderer.autoscaling.kedaTargetValue | default 10 | toString }}
+  {{- $triggerOpts:= dict "metadata" (dict "targetQueueSize" $targetQSize "destinationName" $destQ ) }}
+    {{- range (include "alfresco-content-services.mq.keda.scaler.trigger" . | fromYamlArray) }}
+    {{- . | mustMerge $triggerOpts | list | toYaml | nindent 4 }}
+    {{- end }}
+  {{- include "alfresco-content-services.keda.scaler.options" (index .Values "alfresco-transform-service" "pdfrenderer") | nindent 2 }}
+{{- end }}
+{{- end -}}

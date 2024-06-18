@@ -59,7 +59,8 @@ global:
     password: null
     # -- Name of the secret managed by this chart
     secretName: &acs_search_secretName alfresco-search-secret
-    # -- Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
+    # -- Name of an existing secret that contains SOLR_SECRET key when flavour
+    # is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
     existingSecretName: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
@@ -105,6 +106,16 @@ database:
 messageBroker:
   # -- Enable using an external message broker for Alfresco Content Services. Must disable `activemq.enabled`.
   url: null
+  # -- URL of the web console interface for the external message broker
+  # Your broker we console interface should respond to URl built using the `restAPITemplate` below
+  # where `.ManagementEndpoint` evaluates to the `webConsole`value below.
+  webConsole: null
+  # -- the template used internally by KEDA ActiveMQ scaler to query the broker queue size
+  # the KEDA internal default is:
+  # http://{{.ManagementEndpoint}}/api/jolokia/read/org.apache.activemq:type=Broker,brokerName={{.BrokerName}},destinationType=Queue,destinationName={{.DestinationName}}/QueueSize
+  restAPITemplate: null
+  # -- name of the message broker as set in the Broker configuration
+  brokerName: null
   # -- External message broker user
   user: null
   # -- External message broker password
@@ -112,12 +123,15 @@ messageBroker:
   # -- Name of the secret managed by this chart
   secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
   # -- Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys.
+  # and optionally the credentials to the web console (can be the same as broker access).
   existingSecretName: null
 alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
     tag: 23.2.1
+  autoscaling:
+    kedaDisableIdle: true
   configuration:
     repository:
       existingConfigMap: *repository_cmName
@@ -191,6 +205,7 @@ alfresco-connector-msteams:
     repository: quay.io/alfresco/alfresco-ms-teams-service
     tag: 2.0.1
 alfresco-transform-service:
+  nameOverride: alfresco-transform-service
   enabled: true
   messageBroker:
     existingConfigMap:
@@ -319,6 +334,7 @@ alfresco-search:
     #    hosts:
     #      - chart-example.local
 alfresco-search-enterprise:
+  nameOverride: alfresco-search-enterprise
   enabled: true
   search:
     existingConfigMap:
@@ -544,3 +560,10 @@ dtas:
           installed: true
       adw:
         base_path: "/workspace"
+keda:
+  # -- The list of components that will be scaled by KEDA (chart names)
+  components: []
+
+prometheus:
+  # -- URL of the prometheus server (must be reachable by KEDA pods)
+  url: null

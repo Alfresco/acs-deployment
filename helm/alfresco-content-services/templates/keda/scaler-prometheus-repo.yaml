@@ -1,0 +1,21 @@
+{{- $repoCtx := (dict "Values" (index .Values "alfresco-repository") "Chart" .Chart "Release" .Release) }}
+{{- if has (include "alfresco-repository.name" $repoCtx) .Values.keda.components }}
+{{- $reqMsg := "KEDA autsocaling for repository is enabled but no prometheus.url is set" }}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  labels: {{- include "alfresco-content-services.labels" $repoCtx | nindent 4 }}
+  name: {{ template "alfresco-content-services.fullname" $repoCtx }}
+spec:
+  scaleTargetRef:
+    name: {{ template "alfresco-repository.fullname" $repoCtx }}
+  triggers:
+    - type: prometheus
+      name: alfresco-http-threads
+      metadata:
+        serverAddress: {{ required $reqMsg .Values.prometheus.url }}
+        threshold: {{ $repoCtx.Values.autoscaling.kedaTargetValue | default 170 | quote }}
+        query: avg(jvm_threads_live_threads-jvm_threads_daemon_threads)
+  {{- include "alfresco-content-services.keda.scaler.options" $repoCtx.Values | nindent 2 }}
+{{- end }}
