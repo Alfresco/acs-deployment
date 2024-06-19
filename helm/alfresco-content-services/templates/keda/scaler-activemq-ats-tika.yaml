@@ -11,7 +11,7 @@ metadata:
   name: {{ printf "%s-tengine-tika" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
 spec:
   scaleTargetRef:
-    name: {{ template "alfresco-transform-service.tika.name" $atsCtx }}
+    name: {{ template "alfresco-transform-service.tika.fullname" $atsCtx }}
   triggers:
   {{- $destQ := "org.alfresco.transform.engine.tika.acs" }}
   {{- $targetQSize := $atsCtx.Values.tika.autoscaling.kedaTargetValue | default 10 | toString }}

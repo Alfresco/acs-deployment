@@ -11,7 +11,7 @@ metadata:
   name: {{ printf "%s-tengine-pdfrenderer" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
 spec:
   scaleTargetRef:
-    name: {{ template "alfresco-transform-service.pdfrenderer.name" $atsCtx }}
+    name: {{ template "alfresco-transform-service.pdfrenderer.fullname" $atsCtx }}
   triggers:
   {{- $destQ := "org.alfresco.transform.engine.alfresco-pdf-renderer.acs" }}
   {{- $targetQSize := $atsCtx.Values.pdfrenderer.autoscaling.kedaTargetValue | default 10 | toString }}

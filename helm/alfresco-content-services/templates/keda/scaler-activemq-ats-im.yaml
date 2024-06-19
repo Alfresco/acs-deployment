@@ -11,7 +11,7 @@ metadata:
   name: {{ printf "%s-tengine-im" (include "alfresco-content-services.fullname" $atsCtx) | trunc 63 | trimSuffix "-" }}
 spec:
   scaleTargetRef:
-    name: {{ template "alfresco-transform-service.imagemagick.name" $atsCtx }}
+    name: {{ template "alfresco-transform-service.imagemagick.fullname" $atsCtx }}
   triggers:
   {{- $destQ := "org.alfresco.transform.engine.imagemagick.acs" }}
   {{- $targetQSize := $atsCtx.Values.imagemagick.autoscaling.kedaTargetValue | default 10 | toString }}
