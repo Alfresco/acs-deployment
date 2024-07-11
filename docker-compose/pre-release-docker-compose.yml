@@ -18,7 +18,7 @@
 version: "2"
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:23.3.0-M1
+    image: quay.io/alfresco/alfresco-content-repository:23.3.0-A9
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
