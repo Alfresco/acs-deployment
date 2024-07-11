@@ -22,19 +22,19 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 1.2.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 2.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 0.7.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.5.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.5.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 1.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.6.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.6 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.3.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 0.6.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 5.2.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 1.3.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.3.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 6.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.0.0 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
