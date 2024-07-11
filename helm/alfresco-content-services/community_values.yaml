@@ -24,12 +24,12 @@ elasticsearch:
 share:
   image:
     repository: alfresco/alfresco-share
-    tag: 23.2.1
+    tag: 23.2.2
 alfresco-search:
   enabled: true
   searchServicesImage:
     repository: alfresco/alfresco-search-services
-    tag: 2.0.10
+    tag: 2.0.11
 # Disable Enterprise only features
 alfresco-transform-service:
   enabled: true
