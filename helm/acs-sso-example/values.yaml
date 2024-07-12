@@ -107,6 +107,29 @@ keycloakx:
     - --import-realm
   http:
     relativePath: /auth
+
+  livenessProbe: |
+    httpGet:
+      path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health/live'
+      port: http
+    initialDelaySeconds: 0
+    timeoutSeconds: 5
+
+  readinessProbe: |
+    httpGet:
+      path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health/ready'
+      port: http
+    initialDelaySeconds: 10
+    timeoutSeconds: 1
+
+  startupProbe: |
+    httpGet:
+      path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health'
+      port: http
+    initialDelaySeconds: 15
+    timeoutSeconds: 1
+    failureThreshold: 60
+    periodSeconds: 5
   ingress:
     enabled: true
     tls: []
@@ -169,7 +192,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.2.0-A12
+    tag: 23.2.1
   configuration:
     repository:
       existingConfigMap: repository-properties
@@ -199,7 +222,7 @@ alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
-    tag: 23.2.0-A13
+    tag: 23.2.1
   repository:
     existingConfigMap:
       name: share-repository
@@ -233,7 +256,7 @@ alfresco-content-app:
     tls: []
   image:
     repository: alfresco/alfresco-content-app
-    tag: 4.3.0
+    tag: 4.4.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: ECM
