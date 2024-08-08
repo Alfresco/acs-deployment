@@ -149,6 +149,10 @@ alfresco-sync-service:
     limits:
       cpu: "2"
       memory: "1Gi"
+  readinessProbe:
+    initialDelaySeconds: 60
+  livenessProbe:
+    initialDelaySeconds: 60
   postgresql: *postgresql-sync
 activemq:
   resources:
