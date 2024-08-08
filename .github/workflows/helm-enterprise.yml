@@ -11,6 +11,7 @@ on:
       - test/postman/helm/**
       - .github/workflows/helm*
       - .github/actions/charts-as-json/**
+      - test/enterprise-integration-test-values.yaml
   push:
     branches:
       - master
