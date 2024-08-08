@@ -150,9 +150,9 @@ alfresco-sync-service:
       cpu: "2"
       memory: "1Gi"
   readinessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 90
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 90
   postgresql: *postgresql-sync
 activemq:
   resources:
@@ -181,8 +181,8 @@ alfresco-ai-transformer:
       cpu: "0.01"
       memory: "512Mi"
   readinessProbe:
-    initialDelaySeconds: 100
+    initialDelaySeconds: 120
   livenessProbe:
-    initialDelaySeconds: 100
+    initialDelaySeconds: 120
 dtas:
   enabled: true
