@@ -85,7 +85,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v5.27.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v6.1.0
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
