@@ -56,7 +56,7 @@ alfresco-search-enterprise:
 alfresco-transform-service:
   pdfrenderer:
     livenessProbe:
-      initialDelaySeconds: 30
+      initialDelaySeconds: 90
     resources:
       requests:
         cpu: "0.01"
@@ -67,7 +67,7 @@ alfresco-transform-service:
     replicaCount: 1
   imagemagick:
     livenessProbe:
-      initialDelaySeconds: 30
+      initialDelaySeconds: 90
     resources:
       requests:
         cpu: "0.01"
@@ -78,7 +78,7 @@ alfresco-transform-service:
     replicaCount: 1
   libreoffice:
     livenessProbe:
-      initialDelaySeconds: 30
+      initialDelaySeconds: 90
     resources:
       requests:
         cpu: "0.01"
@@ -176,5 +176,7 @@ alfresco-ai-transformer:
     requests:
       cpu: "0.01"
       memory: "512Mi"
+  livenessProbe:
+    initialDelaySeconds: 120
 dtas:
   enabled: true
