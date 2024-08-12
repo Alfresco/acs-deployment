@@ -176,8 +176,6 @@ alfresco-ai-transformer:
     requests:
       cpu: "0.01"
       memory: "512Mi"
-  readinessProbe:
-    initialDelaySeconds: 120
   livenessProbe:
     initialDelaySeconds: 120
 dtas:
