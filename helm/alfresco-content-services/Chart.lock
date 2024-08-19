@@ -34,18 +34,18 @@ dependencies:
   version: 3.2.6
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.6.0
+  version: 1.0.0-alpha.0
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 1.0.0
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.0.0
+  version: 2.0.0-alpha.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 2.0.0
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
-digest: sha256:d9754bd0e3f1767bea63bc90ab40af1b0bd569b675d41132be7f4d097e169cdf
-generated: "2024-07-11T11:06:57.938547748Z"
+digest: sha256:ce13bd7254aac9bc4b8c26c26e14a152ac7b647196ce6a5bb883962d8e2714d9
+generated: "2024-08-19T15:55:19.402757+02:00"

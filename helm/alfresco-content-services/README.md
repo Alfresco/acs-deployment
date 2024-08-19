@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 8.3.0](https://img.shields.io/badge/Version-8.3.0-informational?style=flat-square) ![AppVersion: 23.2.2](https://img.shields.io/badge/AppVersion-23.2.2-informational?style=flat-square)
+![Version: 8.4.0-alpha.0](https://img.shields.io/badge/Version-8.4.0--alpha.0-informational?style=flat-square) ![AppVersion: 23.2.2](https://img.shields.io/badge/AppVersion-23.2.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -27,8 +27,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.1.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 2.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 1.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 0.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 2.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 1.0.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.6.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 3.2.6 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.3.2 |
