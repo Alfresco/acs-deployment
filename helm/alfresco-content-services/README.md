@@ -167,8 +167,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | alfresco-transform-service.filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
 | alfresco-transform-service.filestore.persistence.enabled | bool | `true` | Persist filestore data |
-| alfresco-transform-service.filestore.replicaCount | int | `1` | Cannot use more than 1 replica when persistence is enabled |
-| alfresco-transform-service.filestore.strategy.type | string | `"Recreate"` | Strategy must be set to Recreate when persistence is enabled |
+| alfresco-transform-service.filestore.replicaCount | int | `1` | Cannot use more than 1 replica when persistence is enabled and storageClass is `ReadWriteOnce` |
+| alfresco-transform-service.filestore.strategy.type | string | `"Recreate"` | Strategy must be set to Recreate when persistence use a `ReadWriteOnce` storageClass |
 | alfresco-transform-service.imagemagick.enabled | bool | `true` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | alfresco-transform-service.imagemagick.image.repository | string | `"alfresco/alfresco-imagemagick"` |  |
 | alfresco-transform-service.imagemagick.image.tag | string | `"5.1.3"` |  |
