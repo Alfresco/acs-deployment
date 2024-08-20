@@ -34,7 +34,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 3.3.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 6.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.0-alpha.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
@@ -167,7 +167,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | alfresco-transform-service.filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
 | alfresco-transform-service.filestore.persistence.enabled | bool | `true` | Persist filestore data |
-| alfresco-transform-service.filestore.replicaCount | int | `1` |  |
+| alfresco-transform-service.filestore.replicaCount | int | `1` | To have more than 1 replica persistence should support `ReadWriteMany` access mode |
+| alfresco-transform-service.filestore.strategy.type | string | `"Recreate"` | Strategy must be set to Recreate when persistence supports only `ReadWriteOnce` access mode. If `ReadWriteMany` is supported, then it can be set to RollingUpdate. |
 | alfresco-transform-service.imagemagick.enabled | bool | `true` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | alfresco-transform-service.imagemagick.image.repository | string | `"alfresco/alfresco-imagemagick"` |  |
 | alfresco-transform-service.imagemagick.image.tag | string | `"5.1.3"` |  |
