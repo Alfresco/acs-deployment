@@ -264,6 +264,7 @@ alfresco-transform-service:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
     enabled: true
+    # -- Cannot use more than 1 replica when persistence is enabled
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
@@ -274,6 +275,9 @@ alfresco-transform-service:
       data:
         mountPath: "/tmp/Alfresco"
         subPath: "alfresco-content-services/filestore-data"
+    strategy:
+      # -- Strategy must be set to Recreate when persistence is enabled
+      type: Recreate
 share:
   # -- toggle deploying Alfresco Share UI
   enabled: true
