@@ -6,7 +6,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.2.1
+    tag: 23.3.0
   persistence:
     accessModes:
       - ReadWriteOnce
@@ -16,7 +16,7 @@ alfresco-repository:
 activemq:
   image:
     repository: docker.io/alfresco/alfresco-activemq
-    tag: 5.18.4-jre17-rockylinux8
+    tag: 5.18.5-jre17-rockylinux8
 alfresco-search-enterprise:
   enabled: false
 elasticsearch:
@@ -24,7 +24,7 @@ elasticsearch:
 share:
   image:
     repository: alfresco/alfresco-share
-    tag: 23.2.2
+    tag: 23.3.0
 alfresco-search:
   enabled: true
   searchServicesImage:

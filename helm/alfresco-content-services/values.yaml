@@ -129,7 +129,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.2.2
+    tag: 23.3.0
   autoscaling:
     kedaDisableIdle: true
   configuration:
@@ -171,7 +171,7 @@ alfresco-repository:
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.18.4-jre17-rockylinux8
+    tag: 5.18.5-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
   adminUser:
@@ -186,7 +186,7 @@ alfresco-connector-ms365:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 2.0.2
+    tag: 2.0.3
   repository:
     existingConfigMap:
       # -- Name of the configmap which hold the repository connection details
@@ -203,7 +203,7 @@ alfresco-connector-msteams:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 2.0.2
+    tag: 2.0.3
 alfresco-transform-service:
   nameOverride: alfresco-transform-service
   enabled: true
@@ -220,7 +220,7 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.1.3
+      tag: 4.1.4
     livenessProbe:
       # -- Overrride liveness probe endpoint to work around
       # https://alfresco.atlassian.net/browse/ACS-7269
@@ -231,35 +231,35 @@ alfresco-transform-service:
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 5.1.3
+      tag: 5.1.4
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 5.1.3
+      tag: 5.1.4
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 5.1.3
+      tag: 5.1.4
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 5.1.3
+      tag: 5.1.4
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 5.1.3
+      tag: 5.1.4
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -268,7 +268,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.1.3
+      tag: 4.1.4
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -285,7 +285,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.2.2
+    tag: 23.3.0
   nameOverride: share
   repository:
     existingConfigMap:
@@ -357,16 +357,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.0.1
+        tag: 4.1.0
     content:
       image:
-        tag: 4.0.1
+        tag: 4.1.0
     metadata:
       image:
-        tag: 4.0.1
+        tag: 4.1.0
     path:
       image:
-        tag: 4.0.1
+        tag: 4.1.0
   reindexing:
     enabled: true
     repository:
@@ -378,7 +378,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 4.0.1
+      tag: 4.1.0
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
@@ -518,7 +518,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.1.4
+    tag: 3.1.6
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
