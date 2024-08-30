@@ -82,7 +82,7 @@ dtas:
   config:
     assertions:
       acs:
-        version: 23.3.0
+        version: 23.4.0
         modules:
         - id: org.alfresco.integrations.google.docs
           version: 4.1.0
