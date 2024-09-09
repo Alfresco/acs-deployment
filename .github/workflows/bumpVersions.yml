@@ -44,7 +44,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@a0c478c868a71d3e239a65714de69450aa1ee2c6  # v2.65.0
+        uses: updatecli/updatecli-action@6b8881a17fc8038e884ec94ff72a49e8e8a4069f  # v2.67.0
         with:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
@@ -81,7 +81,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@a0c478c868a71d3e239a65714de69450aa1ee2c6  # v2.65.0
+        uses: updatecli/updatecli-action@6b8881a17fc8038e884ec94ff72a49e8e8a4069f  # v2.67.0
         with:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
