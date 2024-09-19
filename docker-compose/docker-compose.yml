@@ -206,15 +206,18 @@ services:
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.4.2
+    image: traefik:v3.1.3
     mem_limit: 128m
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:8080"
+      - "--entryPoints.traefik.address=:8888"
+      - "--accesslog=true"
     ports:
       - "8080:8080"
-    depends_on:
-      - digital-workspace
-      - alfresco
-      - share
-      - control-center
+      - "8888:8888"
+    privileged: true
   sync-service:
     image: quay.io/alfresco/service-sync:4.0.1
     mem_limit: 1g
