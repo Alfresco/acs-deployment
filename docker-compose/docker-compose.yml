@@ -64,6 +64,11 @@ services:
       timeout: 3s
       retries: 3
       start_period: 1m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.alfresco.rule=PathPrefix(`/alfresco`)"
+      - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
+
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.1.4
