@@ -115,6 +115,8 @@ services:
     image: quay.io/alfresco/alfresco-share:23.3.0
     mem_limit: 1g
     environment:
+      CSRF_FILTER_ORIGIN: http://localhost:8080
+      CSRF_FILTER_REFERER: http://localhost:8080/share/.*
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
       JAVA_OPTS: >-
