@@ -223,7 +223,7 @@ services:
       BASE_PATH: ./
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.acc.rule=PathPrefix(`/workspace`)"
+      - "traefik.http.routers.acc.rule=PathPrefix(`/admin`)"
       - "traefik.http.routers.acc.middlewares=adfroot@docker"
   proxy:
     image: traefik:v3.1.3
