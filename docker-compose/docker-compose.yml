@@ -210,6 +210,10 @@ services:
       APP_CONFIG_PLUGIN_PROCESS_SERVICE: "false"
       APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
+      - "traefik.http.routers.adw.middlewares=adfroot@docker"
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.0.0
     mem_limit: 128m
@@ -217,6 +221,10 @@ services:
       APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.acc.rule=PathPrefix(`/workspace`)"
+      - "traefik.http.routers.acc.middlewares=adfroot@docker"
   proxy:
     image: traefik:v3.1.3
     mem_limit: 128m
@@ -230,6 +238,8 @@ services:
       - "8080:8080"
       - "8888:8888"
     privileged: true
+    labels:
+      - "traefik.http.middlewares.adfroot.stripprefix.prefixes=/workspace,/admin"
   sync-service:
     image: quay.io/alfresco/service-sync:4.0.1
     mem_limit: 1g
