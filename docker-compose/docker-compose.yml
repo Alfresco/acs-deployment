@@ -67,8 +67,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/alfresco`)"
+      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
-
+      - "traefik.http.routers.solrapideny.middlewares=fakeauth@docker"
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.1.4
@@ -130,7 +131,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
       - "traefik.http.services.share.loadbalancer.server.port=8080"
-
+      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
+      - "traefik.http.routers.proxiedsolrapideny.middlewares=fakeauth@docker"
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -240,6 +242,7 @@ services:
     privileged: true
     labels:
       - "traefik.http.middlewares.adfroot.stripprefix.prefixes=/workspace,/admin"
+      - "traefik.http.middlewares.fakeauth.basicauth.users=test:"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   sync-service:
