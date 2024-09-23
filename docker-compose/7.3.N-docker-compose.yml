@@ -58,11 +58,11 @@ services:
         -XX:MaxRAMPercentage=80
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.alfresco.rule=PathPrefix(`/alfresco`)"
+      - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
-      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
+      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/`)"
       - "traefik.http.routers.solrapideny.middlewares=fakeauth@docker"
-      - "traefik.http.routers.alfrescomicrometer.rule=PathRegex(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
+      - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
     mem_limit: 512m
@@ -125,7 +125,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
       - "traefik.http.services.share.loadbalancer.server.port=8080"
-      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
+      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
       - "traefik.http.routers.proxiedsolrapideny.middlewares=fakeauth@docker"
   postgres:
     image: postgres:14.4
