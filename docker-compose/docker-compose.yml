@@ -70,7 +70,7 @@ services:
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.routers.solrapideny.middlewares=fakeauth@docker"
-      - "traefik.http.routers.alfrescomicrometer.rule=PathRegex(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
+      - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
     mem_limit: 512m
