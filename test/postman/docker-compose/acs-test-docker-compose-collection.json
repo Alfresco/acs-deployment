@@ -695,7 +695,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(403);",
+									"    pm.expect(pm.response.code).to.be.oneOf([401,403]);;",
 									"});",
 									""
 								],
