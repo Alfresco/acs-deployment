@@ -61,7 +61,9 @@ services:
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/`)"
+      - "traefik.http.middlewares.fakeauth.basicauth.users=test:"
       - "traefik.http.routers.solrapideny.middlewares=fakeauth@docker"
+      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
       - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
@@ -175,6 +177,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
+      - "traefik.http.middlewares.adfroot.stripprefix.prefixes=/workspace,/admin"
       - "traefik.http.routers.adw.middlewares=adfroot@docker"
   control-center:
     image: quay.io/alfresco/alfresco-control-center:8.3.0
@@ -196,16 +199,11 @@ services:
       - "--entrypoints.web.address=:8080"
       - "--entryPoints.traefik.address=:8888"
       - "--accesslog=true"
+      - "--providers.docker.exposedByDefault=false"
     ports:
       - "8080:8080"
       - "8888:8888"
     privileged: true
-    labels:
-      - "traefik.http.middlewares.adfroot.stripprefix.prefixes=/workspace,/admin"
-      - "traefik.http.middlewares.fakeauth.basicauth.users=test:"
-      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
-      - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
-      - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   sync-service:
@@ -229,6 +227,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
       - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
+      - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
+      - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
       - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
 volumes:
   shared-file-store-volume:
