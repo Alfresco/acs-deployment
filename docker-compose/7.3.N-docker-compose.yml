@@ -77,7 +77,7 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8095:8095"
-    links:
+    depends_on:
       - activemq
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:3.1.2
@@ -91,7 +91,7 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8090:8090"
-    links:
+    depends_on:
       - activemq
   shared-file-store:
     image: quay.io/alfresco/alfresco-shared-file-store:2.1.2
@@ -203,6 +203,8 @@ services:
       - "traefik.http.middlewares.adfroot.stripprefix.prefixes=/workspace,/admin"
       - "traefik.http.middlewares.fakeauth.basicauth.users=test:"
       - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
+      - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
+      - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   sync-service:
@@ -222,6 +224,11 @@ services:
         -XX:MaxRAMPercentage=80
     ports:
       - "9090:9090"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
+      - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
+      - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
 volumes:
   shared-file-store-volume:
     driver_opts:
