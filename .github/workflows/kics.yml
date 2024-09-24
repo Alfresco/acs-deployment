@@ -15,10 +15,10 @@ jobs:
       - name: run kics Scan
         uses: checkmarx/kics-github-action@530ac1f8efe6202b0f12c9a6e952597ae707b755 # v2.1.2
         with:
-          path: 'docker-compose, helm'
+          path: 'docker-compose,helm'
           ignore_on_exit: results
           output_path: report-dir/
-          output_formats: 'json,sarif'
+          output_formats: 'sarif'
           token: ${{ secrets.GITHUB_TOKEN }}
           enable_comments: true
       - name: Upload SARIF file
