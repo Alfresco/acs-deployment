@@ -18,7 +18,7 @@ jobs:
           path: 'docker-compose, helm'
           ignore_on_exit: results
           output_path: report-dir/
-          output_formats: 'sarif'
+          output_formats: 'json,sarif'
           token: ${{ secrets.GITHUB_TOKEN }}
           enable_comments: true
       - name: Upload SARIF file
