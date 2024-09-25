@@ -466,7 +466,7 @@ alfresco-content-app:
 We can now build and deploy the chart:
 
 ```bash
-helm dep up # pull dependencies
+helm dep build # pull dependencies
 helm install --generate-name --atomic .
 ```
 

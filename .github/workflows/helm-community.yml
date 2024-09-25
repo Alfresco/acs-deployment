@@ -84,9 +84,15 @@ jobs:
           --from-file=.dockerconfigjson=$HOME/.docker/config.json \
           --type=kubernetes.io/dockerconfigjson
 
+      - name: Add dependency chart repos
+        run: |
+          helm repo add self https://alfresco.github.io/alfresco-helm-charts/
+          helm repo add codecentric https://codecentric.github.io/helm-charts/
+          helm repo add elastic https://helm.elastic.co/
+
       - name: Helm install
         run: |
-          helm dep up .
+          helm dep build .
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \

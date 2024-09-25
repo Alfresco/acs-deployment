@@ -125,9 +125,14 @@ jobs:
             echo "helm_install_params=--set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Add dependency chart repos
+        run: |
+          helm repo add self https://alfresco.github.io/alfresco-helm-charts/
+          helm repo add elastic https://helm.elastic.co/
+
       - name: Helm install
         run: >-
-          helm dep up ./helm/alfresco-content-services &&
+          helm dep build ./helm/alfresco-content-services &&
           helm install acs ./helm/alfresco-content-services
           --set global.search.sharedSecret="$(openssl rand -hex 24)"
           --set global.known_urls=http://localhost
