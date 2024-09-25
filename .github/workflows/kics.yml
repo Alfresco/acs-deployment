@@ -15,7 +15,7 @@ on:
       - '.github/workflows/kics.yml'
 
 permissions:
-  contents: write
+  security-events: write
 
 jobs:
   kics:
@@ -31,7 +31,7 @@ jobs:
           output_formats: 'sarif'
           token: ${{ secrets.GITHUB_TOKEN }}
           enable_jobs_summary: true
-          platform_type: helm,dockercompose,common
+          platform_type: DockerCompose
           disable_secrets: true
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@323f5ef653b88011bf10e9a0a56d70d742463c9a # v3.26.8
