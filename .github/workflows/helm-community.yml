@@ -86,7 +86,7 @@ jobs:
 
       - name: Helm install
         run: |
-          helm dep up .
+          helm dep build .
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
