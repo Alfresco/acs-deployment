@@ -171,7 +171,7 @@ alfresco-repository:
 activemq:
   image:
     repository: apache/activemq-classic
-    tag: 6.1.2
+    tag: 5.18.4
   nameOverride: activemq
   enabled: true
   adminUser:
