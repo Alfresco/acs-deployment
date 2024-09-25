@@ -3,9 +3,19 @@ name: kics
 on:
   pull_request:
     branches: [master]
+    paths:
+      - 'docker-compose/**'
+      - 'helm/**'
+      - '.github/workflows/kics.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'docker-compose/**'
+      - 'helm/**'
+      - '.github/workflows/kics.yml'
 
 permissions:
-  pull-requests: write
+  contents: write
 
 jobs:
   kics:
@@ -20,7 +30,9 @@ jobs:
           output_path: report-dir/
           output_formats: 'sarif'
           token: ${{ secrets.GITHUB_TOKEN }}
-          enable_comments: true
+          enable_jobs_summary: true
+          platform_type: helm,dockercompose,common
+          disable_secrets: true
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@323f5ef653b88011bf10e9a0a56d70d742463c9a # v3.26.8
         with:
