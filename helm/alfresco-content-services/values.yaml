@@ -170,8 +170,8 @@ alfresco-repository:
       - ReadWriteMany
 activemq:
   image:
-    repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.18.5-jre17-rockylinux8
+    repository: apache/activemq-classic
+    tag: 6.1.2
   nameOverride: activemq
   enabled: true
   adminUser:
