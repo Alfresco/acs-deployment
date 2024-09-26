@@ -160,6 +160,10 @@ jobs:
           helm ls --all-namespaces --all
           helm status acs --show-resources
           kubectl describe pod
+          mkdir -p logs
+          for pod in $(kubectl get pods -n default -o jsonpath='{.items[*].metadata.name}'); do
+            kubectl logs $pod -n default > logs/${pod}.log
+          done
 
       - name: Run Newman tests
         uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v3.0.0
@@ -212,3 +216,10 @@ jobs:
             kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
             echo "Scale down completed"
           fi
+
+      - name: Upload logs as artifact
+        if: always()
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 #v4.4.0
+        with:
+          name: k8s-logs-${{ matrix.arch }}
+          path: logs
