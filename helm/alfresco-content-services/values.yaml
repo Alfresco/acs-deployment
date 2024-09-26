@@ -181,6 +181,9 @@ activemq:
     password: admin
     existingSecretName: *acs_messageBroker_secretName
   existingSecretName: null
+  persistence:
+    data:
+      mountPath: "/opt/apache-activemq//data"
 alfresco-connector-ms365:
   # -- Enable/Disable Alfresco Content Connector for Microsoft 365
   enabled: false
