@@ -170,8 +170,8 @@ alfresco-repository:
       - ReadWriteMany
 activemq:
   image:
-    repository: apache/activemq-classic
-    tag: 5.18.4
+    repository: quay.io/alfresco/alfresco-activemq
+    tag: 5.18.5-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
   adminUser:
@@ -181,9 +181,6 @@ activemq:
     password: admin
     existingSecretName: *acs_messageBroker_secretName
   existingSecretName: null
-  persistence:
-    data:
-      mountPath: "/opt/apache-activemq/data"
 alfresco-connector-ms365:
   # -- Enable/Disable Alfresco Content Connector for Microsoft 365
   enabled: false

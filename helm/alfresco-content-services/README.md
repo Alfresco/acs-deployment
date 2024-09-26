@@ -48,10 +48,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
 | activemq.enabled | bool | `true` |  |
 | activemq.existingSecretName | string | `nil` |  |
-| activemq.image.repository | string | `"apache/activemq-classic"` |  |
-| activemq.image.tag | string | `"5.18.4"` |  |
+| activemq.image.repository | string | `"quay.io/alfresco/alfresco-activemq"` |  |
+| activemq.image.tag | string | `"5.18.5-jre17-rockylinux8"` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
-| activemq.persistence.data.mountPath | string | `"/opt/apache-activemq/data"` |  |
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
