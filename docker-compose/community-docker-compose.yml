@@ -52,8 +52,8 @@ services:
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
-      - "traefik.http.middlewares.fakeauth.basicauth.users=test:"
-      - "traefik.http.routers.solrapideny.middlewares=fakeauth@docker"
+      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
 
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.4
@@ -84,7 +84,8 @@ services:
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
       - "traefik.http.services.share.loadbalancer.server.port=8080"
       - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
-      - "traefik.http.routers.proxiedsolrapideny.middlewares=fakeauth@docker"
+      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
 
   postgres:
     image: postgres:14.4
@@ -130,9 +131,12 @@ services:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.adw.rule=PathPrefix(`/content-app`)"
-      - "traefik.http.middlewares.adfroot.stripprefix.prefixes=/content-app,/admin"
-      - "traefik.http.routers.adw.middlewares=adfroot@docker"
+      - "traefik.http.routers.aca.rule=PathPrefix(`/content-app`)"
+      - "traefik.http.middlewares.acaroot.stripprefix.prefixes=/content-app"
+      - "traefik.http.middlewares.acaforceslash.redirectregex.regex=^(.*/content-app)$$"
+      - "traefik.http.middlewares.acaforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.acachain.chain.middlewares=acaforceslash,acaroot"
+      - "traefik.http.routers.aca.middlewares=acachain@docker"
 
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.0.0
@@ -144,7 +148,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.acc.rule=PathPrefix(`/admin`)"
-      - "traefik.http.routers.acc.middlewares=adfroot@docker"
+      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin"
+      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/admin)$$"
+      - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
+      - "traefik.http.routers.acc.middlewares=accchain@docker"
 
   proxy:
     image: traefik:v3.1.3

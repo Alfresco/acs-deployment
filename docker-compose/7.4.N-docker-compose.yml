@@ -61,8 +61,8 @@ services:
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/`)"
-      - "traefik.http.middlewares.fakeauth.basicauth.users=test:"
-      - "traefik.http.routers.solrapideny.middlewares=fakeauth@docker"
+      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
       - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
       - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
@@ -128,7 +128,8 @@ services:
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
       - "traefik.http.services.share.loadbalancer.server.port=8080"
       - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
-      - "traefik.http.routers.proxiedsolrapideny.middlewares=fakeauth@docker"
+      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -177,8 +178,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
-      - "traefik.http.middlewares.adfroot.stripprefix.prefixes=/workspace,/admin"
-      - "traefik.http.routers.adw.middlewares=adfroot@docker"
+      - "traefik.http.middlewares.adwforceslash.redirectregex.regex=^(.*/workspace)$$"
+      - "traefik.http.middlewares.adwforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
+      - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
+      - "traefik.http.routers.adw.middlewares=adwchain@docker"
   control-center:
     image: quay.io/alfresco/alfresco-control-center:8.3.0
     mem_limit: 128m
@@ -189,7 +193,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.acc.rule=PathPrefix(`/admin`)"
-      - "traefik.http.routers.acc.middlewares=adfroot@docker"
+      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin"
+      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/admin)$$"
+      - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
+      - "traefik.http.routers.acc.middlewares=accchain@docker"
   proxy:
     image: traefik:v3.1.3
     mem_limit: 128m
