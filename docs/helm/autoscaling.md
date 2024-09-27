@@ -205,7 +205,7 @@ broker the jolokia restAPI which ActiveMQ normally provides is not available.
 In order to use the KEDA and scale based on message queues size you will need to
 use the [Cloudwatch scaler](https://keda.sh/docs/latest/scalers/aws-cloudwatch/)
 , create your own
-[scaledobject](https://keda.sh/docs/latest/concepts/scaling-deployments/#scaledobject-spec)
+[scaledobject](https://keda.sh/docs/2.14/concepts/scaling-deployments/#scaledobject-spec)
 using [Cloudwatch scaler](https://keda.sh/docs/latest/scalers/aws-cloudwatch/)
 as a `trigger` leveraging one of the [AWS authentication
 provider](https://keda.sh/docs/2.14/authentication-providers/) and disable the
