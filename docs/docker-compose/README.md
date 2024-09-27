@@ -178,14 +178,6 @@ others.
 If Docker is running on your local machine, the IP address will be just
 _localhost_.
 
-If you're using the [Docker
-Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows), run the
-following command to find the IP address:
-
-```bash
-docker-machine ip
-```
-
 ## Configure
 
 The provided Docker compose file provides some default configuration, the
