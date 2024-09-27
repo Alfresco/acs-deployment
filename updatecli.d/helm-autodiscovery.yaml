@@ -7,6 +7,9 @@ autodiscovery:
       versionincrement: none
       # Tags in values are handled separately via uber-manifest.tpl
       ignorecontainer: true
+      versionfilter:
+        kind: semver
+        pattern: '>= 0.0.0-0'
 
       ignore:
         # Skip dependencies we are not interested to bump automatically (testing dependencies)
