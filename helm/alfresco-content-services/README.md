@@ -218,7 +218,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.assertions.acs.modules[1].id | string | `"alfresco-aos-module"` |  |
 | dtas.config.assertions.acs.modules[1].installed | bool | `true` |  |
 | dtas.config.assertions.acs.modules[1].version | string | `"3.1.0"` |  |
-| dtas.config.assertions.acs.version | string | `"23.3.0"` |  |
+| dtas.config.assertions.acs.version | string | `"23.3.1"` |  |
 | dtas.config.assertions.adw.base_path | string | `"/workspace"` |  |
 | dtas.config.config.host | string | `"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"` |  |
 | dtas.config.config.password | string | `"admin"` |  |
