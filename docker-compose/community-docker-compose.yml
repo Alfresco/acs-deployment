@@ -57,7 +57,7 @@ services:
     ports:
       - "8090:8090"
   share:
-    image: docker.io/alfresco/alfresco-share:23.3.0
+    image: docker.io/alfresco/alfresco-share:23.3.2
     mem_limit: 1g
     environment:
       REPO_HOST: "alfresco"
@@ -107,12 +107,12 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   content-app:
-    image: alfresco/alfresco-content-app:5.0.1
+    image: alfresco/alfresco-content-app:5.1.1
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:9.0.0
+    image: quay.io/alfresco/alfresco-control-center:9.1.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

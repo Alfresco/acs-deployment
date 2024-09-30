@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 7.2.2.4
+    tag: 7.2.2.5
   configuration:
     search:
       flavor: solr6
@@ -37,7 +37,7 @@ alfresco-transform-service:
       tag: 2.1.2
 share:
   image:
-    tag: 7.2.2.4
+    tag: 7.2.2.5
 alfresco-search:
   enabled: true
   searchServicesImage:

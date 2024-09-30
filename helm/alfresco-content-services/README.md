@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 8.4.0](https://img.shields.io/badge/Version-8.4.0-informational?style=flat-square) ![AppVersion: 23.3.0](https://img.shields.io/badge/AppVersion-23.3.0-informational?style=flat-square)
+![Version: 8.4.0](https://img.shields.io/badge/Version-8.4.0-informational?style=flat-square) ![AppVersion: 23.3.2](https://img.shields.io/badge/AppVersion-23.3.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -74,7 +74,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.env.BASE_PATH | string | `"/control-center"` |  |
 | alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
-| alfresco-control-center.image.tag | string | `"9.0.0"` |  |
+| alfresco-control-center.image.tag | string | `"9.1.0"` |  |
 | alfresco-control-center.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].path | string | `"/control-center"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
@@ -86,7 +86,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.env.BASE_PATH | string | `"/workspace"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
-| alfresco-digital-workspace.image.tag | string | `"5.0.0"` |  |
+| alfresco-digital-workspace.image.tag | string | `"5.1.0"` |  |
 | alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
@@ -110,7 +110,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| alfresco-repository.image.tag | string | `"23.3.0"` |  |
+| alfresco-repository.image.tag | string | `"23.3.2"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
@@ -288,7 +288,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | prometheus.url | string | `nil` | URL of the prometheus server (must be reachable by KEDA pods) |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"23.3.0"` |  |
+| share.image.tag | string | `"23.3.2"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
