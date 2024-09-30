@@ -34,6 +34,6 @@ jobs:
           platform_type: 'dockercompose,kubernetes'
           disable_secrets: true
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@323f5ef653b88011bf10e9a0a56d70d742463c9a # v3.26.8
+        uses: github/codeql-action/upload-sarif@2617ff2d3f2bf8dd95abadcd289352a4023a4758 # v3.26.8
         with:
           sarif_file: report-dir/results.sarif
