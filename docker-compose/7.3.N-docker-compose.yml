@@ -56,6 +56,16 @@ services:
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
+      - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
+      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/`)"
+      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
+      - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
+      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
+      - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:2.1.2
@@ -69,7 +79,7 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8095:8095"
-    links:
+    depends_on:
       - activemq
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:3.1.2
@@ -83,7 +93,7 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8090:8090"
-    links:
+    depends_on:
       - activemq
   shared-file-store:
     image: quay.io/alfresco/alfresco-shared-file-store:2.1.2
@@ -102,6 +112,8 @@ services:
     image: quay.io/alfresco/alfresco-share:7.3.2.1
     mem_limit: 1g
     environment:
+      CSRF_FILTER_ORIGIN: http://localhost:8080
+      CSRF_FILTER_REFERER: http://localhost:8080/share/.*
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
       JAVA_OPTS: >-
@@ -111,6 +123,13 @@ services:
         -Dalfresco.port=8080
         -Dalfresco.context=alfresco
         -Dalfresco.protocol=http
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
+      - "traefik.http.services.share.loadbalancer.server.port=8080"
+      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
+      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -155,6 +174,14 @@ services:
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
+      - "traefik.http.middlewares.adwforceslash.redirectregex.regex=^(.*/workspace)$$"
+      - "traefik.http.middlewares.adwforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
+      - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
+      - "traefik.http.routers.adw.middlewares=adwchain@docker"
   control-center:
     image: quay.io/alfresco/alfresco-control-center:7.9.0
     mem_limit: 128m
@@ -162,20 +189,30 @@ services:
       APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.acc.rule=PathPrefix(`/admin`)"
+      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin"
+      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/admin)$$"
+      - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
+      - "traefik.http.routers.acc.middlewares=accchain@docker"
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.4.2
+    image: traefik:v3.1.3
     mem_limit: 128m
-    depends_on:
-      - alfresco
-      - digital-workspace
-      - control-center
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:8080"
+      - "--entryPoints.traefik.address=:8888"
+      - "--accesslog=true"
+      - "--providers.docker.exposedByDefault=false"
     ports:
       - "8080:8080"
-    links:
-      - digital-workspace
-      - alfresco
-      - share
-      - control-center
+      - "8888:8888"
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   sync-service:
     image: quay.io/alfresco/service-sync:3.11.3
     mem_limit: 1g
@@ -193,6 +230,13 @@ services:
         -XX:MaxRAMPercentage=80
     ports:
       - "9090:9090"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
+      - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
+      - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
+      - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
+      - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
 volumes:
   shared-file-store-volume:
     driver_opts:

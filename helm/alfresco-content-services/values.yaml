@@ -129,7 +129,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.3.0
+    tag: 23.3.2
   autoscaling:
     kedaDisableIdle: true
   configuration:
@@ -285,7 +285,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.3.0
+    tag: 23.3.2
   nameOverride: share
   repository:
     existingConfigMap:
@@ -392,7 +392,7 @@ alfresco-digital-workspace:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 5.0.0
+    tag: 5.1.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -411,7 +411,7 @@ alfresco-control-center:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 9.0.0
+    tag: 9.1.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -555,7 +555,7 @@ dtas:
     assertions:
       acs:
         edition: Enterprise
-        version: 23.3.0
+        version: 23.3.1
         identity: false
         modules:
         - id: org.alfresco.integrations.google.docs

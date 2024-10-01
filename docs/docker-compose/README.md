@@ -16,7 +16,7 @@ graph TB
 subgraph "Docker Compose (enterprise)"
   direction TB
   Client("👥 Clients")
-  proxy("nginx reverse proxy")
+  proxy("Traefik reverse proxy")
   acs("Alfresco Content Services")
   sync("Alfresco Sync Service")
 
@@ -81,7 +81,7 @@ graph TB
 subgraph "Docker Compose (community)"
   direction TB
   Client("👥 Users")
-  proxy("nginx reverse proxy")
+  proxy("Traefik reverse proxy")
   acs("Alfresco Content Services")
   ass("Alfresco Search Services")
   pg[("PostgreSQL")]
@@ -177,14 +177,6 @@ others.
 
 If Docker is running on your local machine, the IP address will be just
 _localhost_.
-
-If you're using the [Docker
-Toolbox](https://docs.docker.com/toolbox/toolbox_install_windows), run the
-following command to find the IP address:
-
-```bash
-docker-machine ip
-```
 
 ## Configure
 
@@ -395,38 +387,20 @@ share:
 
 ### Alfresco Proxy (proxy)
 
-| Property           | Description                                                      | Default value                      |
-|--------------------|------------------------------------------------------------------|------------------------------------|
-| ADW_URL            | Digital Workspace URL inside network.                            | `http://digital-workspace`         |
-| CONTROL_CENTER_URL | Control Center URL inside network.                               | `http://control-center`            |
-| REPO_URL           | Repository URL inside network.                                   | `http://alfresco:8080`             |
-| SHARE_URL          | Share URL inside network.                                        | `http://share:8080`                |
-| SYNCSERVICE_URL    | Sync service URL inside network.                                 | `http://sync-service:9090`         |
-| ACCESS_LOG         | Sets the `access_log` value. Set to `off` to switch off logging. |                                    |
-| USE_SSL            | `false`                                                          | Enables ssl use if set to `"true"` |
-| DOMAIN             | Set domain value for ssl certificate                             | n/a                                |
+We used to maintain and ship a ustom nginx image for Alfresco docker compose
+deployments. This image is now deprecated and replaced by Traefik. Traefik is a
+modern HTTP reverse proxy and load balancer that makes deploying microservices
+easy. In particular it makes dynamic configuration easy and integrates with
+docker compose using
+[labels](https://docs.docker.com/reference/compose-file/deploy/#labels).
 
-If USE_SSL set to true provide ssl cert in ssl/cert.crt and ssl/cert.key
+Please refer to Traefik documentation for more information on how to configure
+it:
 
-```yml
-alfresco-proxy:
-   image: alfresco/alfresco-acs-nginx:3.2.0
-   depends_on:
-      - alfresco
-      - digital-workspace
-   ports:
-      - "443:443" # when USE_SSL="true"
-#     - "8080:8080" # default
-   links:
-      - digital-workspace
-      - alfresco
-      - share
-   volumes:
-      - ${PWD}/ssl/:/etc/nginx/ssl/ # when USE_SSL="true"
-   environment:
-      USE_SSL: "true"
-      DOMAIN: "domain.com" # when USE_SSL="true"
-```
+* [Traefik routers](https://doc.traefik.io/traefik/routing/routers/)
+* [Traefik services](https://doc.traefik.io/traefik/routing/services/)
+* [Traefik middlewares](https://doc.traefik.io/traefik/middlewares/overview/)
+* [Traefik TLS](https://doc.traefik.io/traefik/https/tls/)
 
 ## Customise
 
@@ -470,4 +444,3 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [solr6](https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile)
 * [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
-* [proxy](https://github.com/Alfresco/acs-ingress/blob/master/Dockerfile)
