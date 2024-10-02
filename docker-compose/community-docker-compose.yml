@@ -54,7 +54,6 @@ services:
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
-
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.4
     mem_limit: 1536m
@@ -86,7 +85,6 @@ services:
       - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
       - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
       - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
-
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -98,7 +96,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.11
+    image: docker.io/alfresco/alfresco-search-services:2.0.12
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -137,7 +135,6 @@ services:
       - "traefik.http.middlewares.acaforceslash.redirectregex.replacement=$${1}/"
       - "traefik.http.middlewares.acachain.chain.middlewares=acaforceslash,acaroot"
       - "traefik.http.routers.aca.middlewares=acachain@docker"
-
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.1.0
     mem_limit: 128m
@@ -153,7 +150,6 @@ services:
       - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
       - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
       - "traefik.http.routers.acc.middlewares=accchain@docker"
-
   proxy:
     image: traefik:v3.1.3
     mem_limit: 128m

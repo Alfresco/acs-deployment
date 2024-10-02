@@ -41,9 +41,9 @@ alfresco-transform-service:
 alfresco-search:
   enabled: true
   searchServicesImage:
-    tag: 2.0.5.2
+    tag: 2.0.12
   insightEngineImage:
-    tag: 2.0.5.2
+    tag: 2.0.12
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
