@@ -5,4 +5,4 @@ alfresco-repository:
     maxReplicas: 2
     behavior:
       scaleUp:
-        stabilizationWindowSeconds: 10
+        stabilizationWindowSeconds: 0
