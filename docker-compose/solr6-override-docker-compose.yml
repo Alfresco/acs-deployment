@@ -19,7 +19,6 @@ services:
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
-        -Drepo.event2.topic.endpoint=amqp:topic:VirtualTopic.alfresco.repo.event2
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
@@ -55,8 +54,5 @@ services:
     image: busybox:musl
     command: "true"
   search-reindexing:
-    image: busybox:musl
-    command: "true"
-  elasticsearch:
     image: busybox:musl
     command: "true"

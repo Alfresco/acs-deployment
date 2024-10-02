@@ -43,7 +43,6 @@ services:
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
-        -Drepo.event2.topic.endpoint=amqp:topic:VirtualTopic.alfresco.repo.event2
         -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
@@ -150,7 +149,7 @@ services:
     ports:
       - "5432:5432"
   elasticsearch:
-    image: elasticsearch:7.10.1
+    image: elasticsearch:7.17.3
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -166,34 +165,14 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
-  elasticsearch-audit-storage:
-    image: elasticsearch:7.17.3
-    mem_limit: 1700m
-    environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
-      - node.name=es01
-      - cluster.name=elastic
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    cap_add:
-      - IPC_LOCK
-    ports:
-      - 9400:9200
-      - 9500:9300
   kibana:
     image: kibana:7.17.3
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch-audit-storage:9200
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
       - 5601:5601
     depends_on:
-      - elasticsearch-audit-storage
+      - elasticsearch
   search:
     image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0
     mem_limit: 1g
@@ -237,16 +216,17 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
   audit-storage:
-    image: alfresco/alfresco-audit-storage:latest
+    image: quay.io/alfresco/alfresco-audit-storage:0.0.1-A7
     mem_limit: 1g
     environment:
       SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
-      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch-audit-storage:9200
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
+      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
     depends_on:
       - activemq
-      - elasticsearch-audit-storage
+      - elasticsearch
   digital-workspace:
     image: quay.io/alfresco/alfresco-digital-workspace:5.1.0
     mem_limit: 128m
