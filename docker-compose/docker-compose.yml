@@ -167,10 +167,11 @@ services:
       - 9300:9300
   kibana:
     image: kibana:7.17.3
+    mem_limit: 1g
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
-      - 5601:5601
+      - "5601:5601"
     depends_on:
       - elasticsearch
   search:
