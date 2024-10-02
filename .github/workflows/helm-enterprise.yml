@@ -119,10 +119,6 @@ jobs:
             echo "Enabling clustered tests via auto-scaling: 2 replicas max, 10s stabilization window"
             echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml" >> "$GITHUB_OUTPUT"
           fi
-          if [ "${{ matrix.values }}" = "7.0.N_values.yaml" ]; then
-            echo "Skipping renditions tests on ACS 7.0.N"
-            echo "helm_install_params=--set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
-          fi
 
       - name: Add dependency chart repos
         run: |
