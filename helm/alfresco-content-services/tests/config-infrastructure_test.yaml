@@ -143,3 +143,13 @@ tests:
       - failedTemplate:
           errorMEssage: >-
             Alfresco Intelligence service has been enabled but Transformation service is not available
+
+  - it: should permit disabling embedded postgresql
+    values: *testvalues
+    set:
+      postgresql.enabled: false
+      database.url: jdbc:postgresql://alfresco:QA6fMXtdr%3EK%2F8aDFft,MJ%40p%3E@postgres-ha-primary.postgres-operator.svc:5432/alfresco
+    asserts:
+      - equal:
+          path: data.DATABASE_URL
+          value: jdbc:postgresql://alfresco:QA6fMXtdr%3EK%2F8aDFft,MJ%40p%3E@postgres-ha-primary.postgres-operator.svc:5432/alfresco
