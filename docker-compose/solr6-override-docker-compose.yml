@@ -1,6 +1,5 @@
 # Check documentation below if need help using this file:
 # https://github.com/Alfresco/acs-deployment/tree/master/docs/docker-compose#choosing-a-search-engine
-version: "2"
 services:
   alfresco:
     environment:

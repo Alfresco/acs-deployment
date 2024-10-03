@@ -7,9 +7,6 @@
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
-# Using version 2 as 3 does not support resource constraint options
-# (cpu_*, mem_* limits) for non swarm mode in Compose
-version: "2"
 services:
   alfresco:
     image: docker.io/alfresco/alfresco-content-repository-community:23.3.0

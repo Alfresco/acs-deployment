@@ -13,12 +13,9 @@
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
-# Using version 2 as 3 does not support resource constraint options
-# (cpu_*, mem_* limits) for non swarm mode in Compose
-#
 # Java processes requires setting -XX:MaxRAM= due to cgroupv2 changes in recent Linux kernels
 # https://hub.alfresco.com/t5/alfresco-content-services-blog/acs-containers-and-cgroup-v2-in-acs-up-to-7-2/ba-p/318039
-version: "2"
+#
 services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:7.2.2.5

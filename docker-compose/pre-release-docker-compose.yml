@@ -13,9 +13,6 @@
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
-# Using version 2 as 3 does not support resource constraint options
-# (cpu_*, mem_* limits) for non swarm mode in Compose
-version: "2"
 services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:23.4.0-M1
