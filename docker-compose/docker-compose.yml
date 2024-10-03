@@ -13,9 +13,6 @@
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
-# Using version 2 as 3 does not support resource constraint options
-# (cpu_*, mem_* limits) for non swarm mode in Compose
-version: "2"
 services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:23.3.2
@@ -183,7 +180,7 @@ services:
   search-reindexing:
     image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.1.0
     mem_limit: 1g
-    restart: on-failure:10
+    restart: on-failure:5
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
@@ -241,7 +238,7 @@ services:
       - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
       - "traefik.http.routers.acc.middlewares=accchain@docker"
   proxy:
-    image: traefik:v3.1.3
+    image: traefik:3.1
     mem_limit: 128m
     command:
       - "--api.insecure=true"
@@ -253,9 +250,10 @@ services:
     ports:
       - "8080:8080"
       - "8888:8888"
-    privileged: true
+    security_opt:
+      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   sync-service:
     image: quay.io/alfresco/service-sync:4.0.1
     mem_limit: 1g

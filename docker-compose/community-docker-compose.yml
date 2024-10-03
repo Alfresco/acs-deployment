@@ -7,9 +7,6 @@
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
-# Using version 2 as 3 does not support resource constraint options
-# (cpu_*, mem_* limits) for non swarm mode in Compose
-version: "2"
 services:
   alfresco:
     image: docker.io/alfresco/alfresco-content-repository-community:23.3.0
@@ -151,7 +148,7 @@ services:
       - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
       - "traefik.http.routers.acc.middlewares=accchain@docker"
   proxy:
-    image: traefik:v3.1.3
+    image: traefik:3.1
     mem_limit: 128m
     command:
       - "--api.insecure=true"
@@ -163,6 +160,7 @@ services:
     ports:
       - "8080:8080"
       - "8888:8888"
-    privileged: true
+    security_opt:
+      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
