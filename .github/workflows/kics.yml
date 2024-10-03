@@ -35,6 +35,6 @@ jobs:
           disable_secrets: true
           config_path: .github/kics.yml
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@8aba5f2c426ba0d5c3bb6b4b8fae38035772b3d3 # v3.26.8
+        uses: github/codeql-action/upload-sarif@e2b3eafc8d227b0241d48be5f425d47c2d750a13 # v3.26.10
         with:
           sarif_file: report-dir/results.sarif
