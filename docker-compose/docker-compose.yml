@@ -180,7 +180,7 @@ services:
   search-reindexing:
     image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.1.0
     mem_limit: 1g
-    restart: on-failure:10
+    restart: on-failure:5
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
