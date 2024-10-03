@@ -146,7 +146,7 @@ services:
     ports:
       - "5432:5432"
   elasticsearch:
-    image: elasticsearch:7.10.1
+    image: elasticsearch:7.17.3
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
