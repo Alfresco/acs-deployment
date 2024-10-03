@@ -204,15 +204,22 @@ services:
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
   proxy:
-    image: alfresco/alfresco-acs-nginx:3.4.2
+    image: traefik:v3
     mem_limit: 128m
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:8080"
+      - "--entryPoints.traefik.address=:8888"
+      - "--accesslog=true"
+      - "--providers.docker.exposedByDefault=false"
     ports:
       - "8080:8080"
-    depends_on:
-      - digital-workspace
-      - alfresco
-      - share
-      - control-center
+      - "8888:8888"
+    security_opt:
+      - label=disable
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   sync-service:
     image: quay.io/alfresco/service-sync:5.1.0-M2
     mem_limit: 1g
