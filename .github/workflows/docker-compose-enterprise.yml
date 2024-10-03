@@ -43,7 +43,7 @@ jobs:
     name: docker-compose enterprise
     needs: build_vars
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix: ${{ fromJSON(needs.build_vars.outputs.matrix_json) }}
     runs-on: ubuntu-latest
     if: >-
