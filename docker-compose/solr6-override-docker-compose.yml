@@ -1,6 +1,5 @@
 # Check documentation below if need help using this file:
 # https://github.com/Alfresco/acs-deployment/tree/master/docs/docker-compose#choosing-a-search-engine
-version: "2"
 services:
   alfresco:
     environment:
@@ -31,7 +30,7 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
   solr6:
-    image: quay.io/alfresco/search-services:2.0.11
+    image: quay.io/alfresco/search-services:2.0.12
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
