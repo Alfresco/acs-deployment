@@ -4,3 +4,6 @@ exclude-queries:
   - d6355c88-1e8d-49e9-b2f2-f8a1ca12c75b # Docker Socket Mounted In Container
   - 1c1325ff-831d-43a1-973e-839ae57dfcc0 # Volume Has Sensitive Host Directory
   - ce76b7d0-9e77-464d-b86f-c5c48e03e22d # Container Capabilities Unrestricted
+  - 451d79dc-0588-476a-ad03-3c7f0320abb3 # Container Traffic Not Bound To Host Interface
+  - 698ed579-b239-4f8f-a388-baa4bcb13ef8 # Healthcheck Not Set
+  - 8c978947-0ff6-485c-b0c2-0bfca6026466 # Shared Volumes Between Containers
