@@ -141,7 +141,7 @@ services:
     ports:
       - "5432:5432"
   solr6:
-    image: quay.io/alfresco/search-services:2.0.5.2
+    image: quay.io/alfresco/search-services:2.0.12
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco

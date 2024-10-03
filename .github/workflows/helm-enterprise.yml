@@ -192,6 +192,7 @@ jobs:
           kubectl events --for deployment/acs-alfresco-repository
 
       - name: Check HPA behavior during tests
+        id: hpa_check
         if: always() && (matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml') && steps.helm_test.outcome != 'skipped'
         run: |
           echo "Checking current repo hpa status"
@@ -210,3 +211,10 @@ jobs:
             kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
             echo "Scale down completed"
           fi
+
+      - name: Spit cluster status after HPA check
+        if: always() && steps.hpa_check.outcome != 'skipped'
+        run: |
+          kubectl get all --all-namespaces
+          kubectl describe pod
+          kubectl events --for deployment/acs-alfresco-repository
