@@ -217,7 +217,7 @@ services:
       - "8080:8080"
       - "8888:8888"
     security_opt:
-      - label=disable
+      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
   sync-service:
