@@ -6,6 +6,9 @@ permissions:
   id-token: write
 
 on:
+  release:
+    types:
+      - released
   push:
     branches:
       - master
@@ -24,5 +27,5 @@ jobs:
     uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@main
     with:
       working-directory: .
-      publish: ${{ github.event_name == 'push' && github.ref_name == 'master'}}
+      publish: ${{ github.event_name != 'pull_request' }}
       validate-html: true
