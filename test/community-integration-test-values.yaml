@@ -49,7 +49,7 @@ alfresco-transform-service:
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "1Gi"
   libreoffice:
     livenessProbe:
       initialDelaySeconds: 30
