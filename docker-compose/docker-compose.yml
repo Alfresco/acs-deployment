@@ -146,7 +146,7 @@ services:
     ports:
       - "5432:5432"
   elasticsearch:
-    image: elasticsearch:7.10.1
+    image: elasticsearch:7.17.3
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -162,6 +162,15 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+  kibana:
+    image: kibana:7.17.3
+    mem_limit: 1g
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
   search:
     image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0
     mem_limit: 1g
@@ -204,6 +213,18 @@ services:
       - "5672:5672" # AMQP
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
+  audit-storage:
+    image: quay.io/alfresco/alfresco-audit-storage:0.0.1-A8
+    mem_limit: 512m
+    environment:
+      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
+      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
+    depends_on:
+      - activemq
+      - elasticsearch
   digital-workspace:
     image: quay.io/alfresco/alfresco-digital-workspace:5.1.0
     mem_limit: 128m

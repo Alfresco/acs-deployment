@@ -55,6 +55,3 @@ services:
   search-reindexing:
     image: busybox:musl
     command: "true"
-  elasticsearch:
-    image: busybox:musl
-    command: "true"
