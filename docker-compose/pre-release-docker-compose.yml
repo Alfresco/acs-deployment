@@ -231,9 +231,9 @@ services:
       BASE_PATH: ./
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.acc.rule=PathPrefix(`/admin`)"
-      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin"
-      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/admin)$$"
+      - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
+      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin,/control-center"
+      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/(admin|control-center))$$"
       - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
       - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
       - "traefik.http.routers.acc.middlewares=accchain@docker"
