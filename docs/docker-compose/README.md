@@ -145,7 +145,7 @@ Docker Daemon).
    version of ACS, or `docker compose -f pre-release-docker-compose.yml up`
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: `http://<machine_ip>:8080/alfresco`
-   * Control Center: `http://<machine_ip>:8080/admin`
+   * Control Center: `http://<machine_ip>:8080/control-center` (`http://<machine_ip>:8080/admin` still works but is deprecated)
    * Alfresco Digital Workspace: `http://<machine_ip>:8080/workspace`
    * Share: `http://<machine_ip>:8080/share`
    * Search administration: `http://<machine_ip>:8083/solr`
