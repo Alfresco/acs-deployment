@@ -178,11 +178,16 @@ alfresco-ai-transformer:
       memory: "512Mi"
   livenessProbe:
     initialDelaySeconds: 120
+alfresco-audit-storage:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
 kibana:
   resources:
     requests:
-      cpu: "512m"
-      memory: "1Gi"
+      cpu: "0.01"
+      memory: "512Mi"
     limits::
       cpu: "1000m"
       memory: "2Gi"
