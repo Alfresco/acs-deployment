@@ -178,5 +178,13 @@ alfresco-ai-transformer:
       memory: "512Mi"
   livenessProbe:
     initialDelaySeconds: 120
+kibana:
+  resources:
+    requests:
+      cpu: "512m"
+      memory: "1Gi"
+    limits::
+      cpu: "1000m"
+      memory: "2Gi"
 dtas:
   enabled: true

@@ -26,6 +26,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 2.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 1.2.0-alpha.0 |
@@ -36,6 +37,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 6.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
+| https://helm.elastic.co | kibana | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
@@ -58,6 +60,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
 | alfresco-ai-transformer.sfs.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
+| alfresco-audit-storage.enabled | bool | `true` |  |
+| alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
+| alfresco-audit-storage.image.tag | string | `"0.0.1-A8"` |  |
+| alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-audit-storage.index.existingSecret.name | string | `"alfresco-search-secret"` |  |
+| alfresco-audit-storage.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
+| alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
 | alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | alfresco-connector-ms365.image.tag | string | `"2.0.3"` |  |
@@ -228,6 +237,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.tag | string | `"v1.5.5"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
+| elasticsearch.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| elasticsearch.ingress.enabled | bool | `true` |  |
+| elasticsearch.ingress.hosts[0].paths[0].path | string | `"/elasticsearch(/|$)(.*)"` |  |
+| elasticsearch.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | elasticsearch.replicas | int | `1` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
@@ -247,6 +260,18 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
+| kibana.elasticsearchHosts | string | `"http://elasticsearch-master:9200"` |  |
+| kibana.enabled | bool | `true` |  |
+| kibana.extraEnvs[0].name | string | `"NODE_OPTIONS"` |  |
+| kibana.extraEnvs[0].value | string | `"--max-old-space-size=1800"` |  |
+| kibana.extraEnvs[1].name | string | `"SERVER_BASEPATH"` |  |
+| kibana.extraEnvs[1].value | string | `"/kibana"` |  |
+| kibana.extraEnvs[2].name | string | `"SERVER_REWRITEBASEPATH"` |  |
+| kibana.extraEnvs[2].value | string | `"true"` |  |
+| kibana.healthCheckPath | string | `"/kibana/app/kibana"` |  |
+| kibana.ingress.enabled | bool | `true` |  |
+| kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
+| kibana.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | messageBroker.brokerName | string | `nil` | name of the message broker as set in the Broker configuration |
 | messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. and optionally the credentials to the web console (can be the same as broker access). |
 | messageBroker.password | string | `nil` | External message broker password |

@@ -533,11 +533,53 @@ alfresco-ai-transformer:
     existingSecret:
       # -- Name of the configmap which holds the message broker credentials
       name: *acs_messageBroker_secretName
+alfresco-audit-storage:
+  enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-audit-storage
+    tag: 0.0.1-A8
+  messageBroker:
+    existingConfigMap:
+      # -- Name of the configmap which holds the message broker URL
+      name: *infrastructure_cmName
+    existingSecret:
+      # -- Name of the configmap which holds the message broker credentials
+      name: *acs_messageBroker_secretName
+  index:
+    existingConfigMap:
+      name: *infrastructure_cmName
+    existingSecret:
+      name: *acs_search_secretName
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+  ingress:
+    enabled: true
+    annotations: 
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - paths:
+          - path: /elasticsearch(/|$)(.*)
+            pathType: Prefix
+kibana:
+  enabled: true
+  elasticsearchHosts: "http://elasticsearch-master:9200"
+  healthCheckPath: "/kibana/app/kibana"
+  extraEnvs:
+    - name: "NODE_OPTIONS"
+      value: "--max-old-space-size=1800"
+    - name: SERVER_BASEPATH
+      value: "/kibana"
+    - name: SERVER_REWRITEBASEPATH
+      value: "true"
+  ingress:
+    enabled: true
+    hosts:
+      - paths:
+          - path: /kibana
+            pathType: Prefix
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false
