@@ -62,9 +62,7 @@ global:
     # -- Name of an existing secret that contains SOLR_SECRET key when flavour
     # is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
     existingSecretName: null
-  aasElasticsearch:
-    # -- set the security level used with the external search service (secret, none or https)
-    securecomms: secret
+  auditIndex:
     # -- Elasticsearch URL
     url: null
     # -- Elasticsearch username
@@ -73,9 +71,9 @@ global:
     password: null
     # -- Name of the secret managed by this chart
     secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
-    # -- Name of an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys.
+    # -- Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys.
     existingSecretName: null
-    # -- Base url for kibana environment variable
+    # -- Base url for kibana environment variable `SERVER_PUBLICBASEURL` 
     publicBaseUrl: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
@@ -553,10 +551,10 @@ elasticsearch:
   enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-elasticsearchAas:
+elasticsearchAudit:
   # -- Enables the embedded elasticsearch cluster for alfresco-audit-storage
-  nameOverride: elasticsearch-aas
   enabled: true
+  nameOverride: elasticsearch-aas
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
   clusterName: elasticsearch-aas
@@ -584,16 +582,18 @@ alfresco-audit-storage:
     existingConfigMap:
       name: *infrastructure_cmName
       keys:
-        url: AAS_ELASTICSEARCH_URL
+        url: AUDIT_ELASTICSEARCH_URL
     existingSecret:
       name: *aas_elasticsearch_secretName
       keys:
-        username: AAS_ELASTICSEARCH_USERNAME
-        password: AAS_ELASTICSEARCH_PASSWORD
+        username: AUDIT_ELASTICSEARCH_USERNAME
+        password: AUDIT_ELASTICSEARCH_PASSWORD
 kibana:
   enabled: true
   healthCheckPath: "/kibana/app/kibana"
+  # -- Makes sure there is no default elasticsearch hosts defined
   elasticsearchHosts: ""
+  # -- All of the values has to be set there to escape the issue with overriding the values
   extraEnvs:
     - name: SERVER_BASEPATH
       value: "/kibana"
@@ -603,12 +603,12 @@ kibana:
       valueFrom:
         configMapKeyRef: 
           name: *infrastructure_cmName
-          key: AAS_ELASTICSEARCH_URL
+          key: AUDIT_ELASTICSEARCH_URL
     - name: SERVER_PUBLICBASEURL
       valueFrom:
         configMapKeyRef: 
           name: *infrastructure_cmName
-          key: AAS_SERVER_PUBLICBASEURL    
+          key: AUDIT_SERVER_PUBLICBASEURL
   ingress:
     enabled: true
     hosts:

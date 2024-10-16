@@ -37,7 +37,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 6.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
-| https://helm.elastic.co | elasticsearchAas(elasticsearch) | 7.17.3 |
+| https://helm.elastic.co | elasticsearchAudit(elasticsearch) | 7.17.3 |
 | https://helm.elastic.co | kibana | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
@@ -64,10 +64,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-audit-storage.enabled | bool | `true` |  |
 | alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
 | alfresco-audit-storage.image.tag | string | `"0.0.1-A8"` |  |
-| alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AAS_ELASTICSEARCH_URL"` |  |
+| alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
 | alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-audit-storage.index.existingSecret.keys.password | string | `"AAS_ELASTICSEARCH_PASSWORD"` |  |
-| alfresco-audit-storage.index.existingSecret.keys.username | string | `"AAS_ELASTICSEARCH_USERNAME"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.username | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
 | alfresco-audit-storage.index.existingSecret.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | alfresco-audit-storage.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
@@ -242,23 +242,22 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |
-| elasticsearchAas.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
-| elasticsearchAas.clusterName | string | `"elasticsearch-aas"` |  |
-| elasticsearchAas.enabled | bool | `true` |  |
-| elasticsearchAas.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
-| elasticsearchAas.ingress.enabled | bool | `true` |  |
-| elasticsearchAas.ingress.hosts[0].paths[0].path | string | `"/elasticsearch(/|$)(.*)"` |  |
-| elasticsearchAas.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| elasticsearchAas.nameOverride | string | `"elasticsearch-aas"` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
-| elasticsearchAas.replicas | int | `1` |  |
-| global.aasElasticsearch.existingSecretName | string | `nil` | Name of an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys. |
-| global.aasElasticsearch.password | string | `nil` | Elasticsearch password |
-| global.aasElasticsearch.publicBaseUrl | string | `nil` | Base url for kibana environment variable |
-| global.aasElasticsearch.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
-| global.aasElasticsearch.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
-| global.aasElasticsearch.url | string | `nil` | Elasticsearch URL |
-| global.aasElasticsearch.username | string | `nil` | Elasticsearch username |
+| elasticsearchAudit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
+| elasticsearchAudit.clusterName | string | `"elasticsearch-aas"` |  |
+| elasticsearchAudit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
+| elasticsearchAudit.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| elasticsearchAudit.ingress.enabled | bool | `true` |  |
+| elasticsearchAudit.ingress.hosts[0].paths[0].path | string | `"/elasticsearch(/|$)(.*)"` |  |
+| elasticsearchAudit.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| elasticsearchAudit.nameOverride | string | `"elasticsearch-aas"` |  |
+| elasticsearchAudit.replicas | int | `1` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
+| global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
+| global.auditIndex.password | string | `nil` | Elasticsearch password |
+| global.auditIndex.publicBaseUrl | string | `nil` | Base url for kibana environment variable `SERVER_PUBLICBASEURL`  |
+| global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
+| global.auditIndex.url | string | `nil` | Elasticsearch URL |
+| global.auditIndex.username | string | `nil` | Elasticsearch username |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
@@ -276,18 +275,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
-| kibana.elasticsearchHosts | string | `""` |  |
+| kibana.elasticsearchHosts | string | `""` | Makes sure there is no default elasticsearch hosts defined |
 | kibana.enabled | bool | `true` |  |
-| kibana.extraEnvs[0].name | string | `"SERVER_BASEPATH"` |  |
-| kibana.extraEnvs[0].value | string | `"/kibana"` |  |
-| kibana.extraEnvs[1].name | string | `"SERVER_REWRITEBASEPATH"` |  |
-| kibana.extraEnvs[1].value | string | `"true"` |  |
-| kibana.extraEnvs[2].name | string | `"ELASTICSEARCH_HOSTS"` |  |
-| kibana.extraEnvs[2].valueFrom.configMapKeyRef.key | string | `"AAS_ELASTICSEARCH_URL"` |  |
-| kibana.extraEnvs[2].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
-| kibana.extraEnvs[3].name | string | `"SERVER_PUBLICBASEURL"` |  |
-| kibana.extraEnvs[3].valueFrom.configMapKeyRef.key | string | `"AAS_SERVER_PUBLICBASEURL"` |  |
-| kibana.extraEnvs[3].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
+| kibana.extraEnvs | list | `[{"name":"SERVER_BASEPATH","value":"/kibana"},{"name":"SERVER_REWRITEBASEPATH","value":"true"},{"name":"ELASTICSEARCH_HOSTS","valueFrom":{"configMapKeyRef":{"key":"AUDIT_ELASTICSEARCH_URL","name":"alfresco-infrastructure"}}},{"name":"SERVER_PUBLICBASEURL","valueFrom":{"configMapKeyRef":{"key":"AUDIT_SERVER_PUBLICBASEURL","name":"alfresco-infrastructure"}}}]` | All of the values has to be set there to escape the issue with overriding the values |
 | kibana.healthCheckPath | string | `"/kibana/app/kibana"` |  |
 | kibana.ingress.enabled | bool | `true` |  |
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
