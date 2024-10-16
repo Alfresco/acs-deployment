@@ -15,7 +15,7 @@ This project contains the code for running Alfresco Content Services (ACS) with
 Compose](https://docs.docker.com/compose) or on
 [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
-:warning: The [Docker Compose](./docker-compose/docker-compose.yml) deployment
+:warning: The [Docker Compose](./docker-compose/compose.yaml) deployment
 has moved from a custom NGINX based proxy to Traefik based proxy.
 Please read the [documentation](./docs/docker-compose#alfresco-proxy-proxy) for
 more details.

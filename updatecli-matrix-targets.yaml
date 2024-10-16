@@ -9,7 +9,7 @@ matrix:
       pattern:
       image:
       compose_target: &composeNext >-
-        docker-compose/pre-release-docker-compose.yml
+        docker-compose/pre-release-compose.yaml
       compose_key: $.services.alfresco.image
       helm_target: &helmvaluesNext >-
         helm/alfresco-content-services/pre-release_values.yaml
@@ -134,7 +134,7 @@ matrix:
       pattern:
       image:
       compose_target: &composeCurrent >-
-        docker-compose/docker-compose.yml
+        docker-compose/compose.yaml
       compose_key: $.services.alfresco.image
       helm_target: &helmvaluesCurrent >-
         helm/alfresco-content-services/values.yaml
@@ -157,7 +157,7 @@ matrix:
       helm_key: $.share.image.tag
     search:
       version:
-      compose_target: docker-compose/solr6-override-docker-compose.yml
+      compose_target: docker-compose/solr6-override-compose.yaml
       compose_key: $.services.solr6.image
       helm_target: *helmvaluesCurrent
       helm_keys: *search_helm_keys
@@ -259,7 +259,7 @@ matrix:
     acs:
       version:
       compose_target: &compose74 >-
-        docker-compose/7.4.N-docker-compose.yml
+        docker-compose/7.4.N-compose.yaml
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues74 >-
         helm/alfresco-content-services/7.4.N_values.yaml
@@ -379,7 +379,7 @@ matrix:
     acs:
       version:
       compose_target: &compose73 >-
-        docker-compose/7.3.N-docker-compose.yml
+        docker-compose/7.3.N-compose.yaml
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues73 >-
         helm/alfresco-content-services/7.3.N_values.yaml
@@ -499,7 +499,7 @@ matrix:
     acs:
       version:
       compose_target: &compose72 >-
-        docker-compose/7.2.N-docker-compose.yml
+        docker-compose/7.2.N-compose.yaml
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues72 >-
         helm/alfresco-content-services/7.2.N_values.yaml
@@ -619,7 +619,7 @@ matrix:
     acs:
       version:
       compose_target: &compose71 >-
-        docker-compose/7.1.N-docker-compose.yml
+        docker-compose/7.1.N-compose.yaml
       compose_key: $.services.alfresco.image
       helm_target: &helmvalues71 >-
         helm/alfresco-content-services/7.1.N_values.yaml
@@ -732,7 +732,7 @@ matrix:
     acs:
       version:
       compose_target: &composeOss >-
-        docker-compose/community-docker-compose.yml
+        docker-compose/community-compose.yaml
       compose_key: $.services.alfresco.image
       helm_target: &helmvaluesOss >-
         helm/alfresco-content-services/community_values.yaml

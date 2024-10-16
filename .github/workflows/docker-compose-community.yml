@@ -8,7 +8,7 @@ on:
       - release/**
       - next/**
     paths:
-      - docker-compose/community-docker-compose.yml
+      - docker-compose/community-compose.yaml
       - test/postman/docker-compose/**
       - .github/workflows/docker-compose-community.yml
   push:
@@ -24,4 +24,4 @@ jobs:
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v7.0.0
         with:
-          compose_file_path: docker-compose/community-docker-compose.yml
+          compose_file_path: docker-compose/community-compose.yaml

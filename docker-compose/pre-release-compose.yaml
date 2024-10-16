@@ -8,7 +8,7 @@
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
 # Note: The Docker Compose file from github.com is a limited trial that goes
-# into read-only mode after 2 days. Get the latest docker-compose.yml file with
+# into read-only mode after 2 days. Get the latest compose.yaml file with
 # a 30-day trial license by accessing the Alfresco Content Services trial
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download

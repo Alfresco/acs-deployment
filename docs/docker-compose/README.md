@@ -141,8 +141,8 @@ Docker Daemon).
 3. Log in to Quay.io with your credentials: `docker login quay.io` (only
    required if you're running an Enterprise version)
 4. Run `docker compose up` to use the latest version of ACS Enterprise,
-   `docker compose -f major.minor.N-docker-compose.yml up` to use a previous
-   version of ACS, or `docker compose -f pre-release-docker-compose.yml up`
+   `docker compose -f major.minor.N-compose.yaml up` to use a previous
+   version of ACS, or `docker compose -f pre-release-compose.yaml up`
 5. Open the following URLs in your browser to check that everything starts up:
    * Administration and REST APIs: `http://<machine_ip>:8080/alfresco`
    * Control Center: `http://<machine_ip>:8080/control-center` (`http://<machine_ip>:8080/admin` still works but is deprecated)
@@ -165,13 +165,13 @@ It is of course possible to keep on using Solr on the latest Enterprise
 versions. To do so just use the extra argument shown bellow:
 
 ```bash
-docker compose -f docker-compose.yml -f solr6-override-docker-compose.yml up -d
+docker compose -f compose.yaml -f solr6-override-docker-compose.yml up -d
 ```
 
 ### Troubleshooting Search Enterprise
 
 Make sure that exposed ports are open on your host. Check the
-_docker-compose.yml_ file to determine the exposed ports - refer to the
+_compose.yaml_ file to determine the exposed ports - refer to the
 `host:container` port definitions. You'll see they include 5432, 8080, 8083 and
 others.
 
