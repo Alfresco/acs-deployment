@@ -62,6 +62,19 @@ global:
     # -- Name of an existing secret that contains SOLR_SECRET key when flavour
     # is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
     existingSecretName: null
+  aasElasticsearch:
+    # -- set the security level used with the external search service (secret, none or https)
+    securecomms: secret
+    # -- Elasticsearch URL
+    url: null
+    # -- Elasticsearch username
+    username: null
+    # -- Elasticsearch password
+    password: null
+    # -- Name of the secret managed by this chart
+    secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
+    # -- Name of an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys.
+    existingSecretName: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -533,6 +546,26 @@ alfresco-ai-transformer:
     existingSecret:
       # -- Name of the configmap which holds the message broker credentials
       name: *acs_messageBroker_secretName
+elasticsearch:
+  # -- Enables the embedded elasticsearch cluster
+  enabled: true
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+elasticsearchAas:
+  # -- Enables the embedded elasticsearch cluster for alfresco-audit-storage
+  nameOverride: elasticsearch-aas
+  enabled: true
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+  clusterName: elasticsearch-aas
+  ingress:
+    enabled: true
+    annotations: 
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+      - paths:
+          - path: /elasticsearch(/|$)(.*)
+            pathType: Prefix
 alfresco-audit-storage:
   enabled: true
   image:
@@ -548,24 +581,15 @@ alfresco-audit-storage:
   index:
     existingConfigMap:
       name: *infrastructure_cmName
+      keys:
+        url: AAS_ELASTICSEARCH_URL
     existingSecret:
-      name: *acs_search_secretName
-elasticsearch:
-  # -- Enables the embedded elasticsearch cluster
-  enabled: true
-  replicas: 1
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-  ingress:
-    enabled: true
-    annotations: 
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    hosts:
-      - paths:
-          - path: /elasticsearch(/|$)(.*)
-            pathType: Prefix
+      name: *aas_elasticsearch_secretName
+      keys:
+        username: AAS_ELASTICSEARCH_USERNAME
+        password: AAS_ELASTICSEARCH_PASSWORD
 kibana:
   enabled: true
-  elasticsearchHosts: "http://elasticsearch-master:9200"
   healthCheckPath: "/kibana/app/kibana"
   extraEnvs:
     - name: "NODE_OPTIONS"
@@ -574,6 +598,11 @@ kibana:
       value: "/kibana"
     - name: SERVER_REWRITEBASEPATH
       value: "true"
+    - name: ELASTICSEARCH_URL
+      valueFrom:
+        configMapKeyRef: 
+          name: *infrastructure_cmName
+          key: AAS_ELASTICSEARCH_URL
   ingress:
     enabled: true
     hosts:

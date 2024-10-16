@@ -69,3 +69,29 @@ data:
       {{- fail "Alfresco Intelligence service has been enabled but Transformation service is not available" }}
   {{- end }}
   {{- end }}
+  {{- $aas_search_url := "" }}
+    {{- if .Values.global.aasElasticsearch.url }}
+      {{- $aas_search_url = .Values.global.aasElasticsearch.url }}
+    {{- else }}
+      {{- with .Values.elasticsearchAas }}
+        {{- if .enabled }}
+          {{- $aasEsProto := .protocol | default "http" }}
+          {{- $aasEsHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
+          {{- $aasEsPort := .port | default 9200 }}
+          {{- $aas_search_url = coalesce $.Values.global.aasElasticsearch.url (printf "%s://%s:%v" $aasEsProto $aasEsHost $aasEsPort) }}
+        {{- else }}
+          {{- fail "Chart is configured to use Alfresco Audit Storage but no index backend has been provided. Set one using either global.aasElasticsearch.url or elasticsearchAas.enabled" }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+      {{- $aas_search_comms := "" }}
+      {{- if hasPrefix "https://" $aas_search_url }}
+        {{- $aas_search_comms = "https" }}
+      {{- else }}
+        {{- $aas_search_comms = "none" }}
+      {{- end }}
+      {{- $_ := set .Values.global.aasElasticsearch "securecomms" $aas_search_comms }}
+    {{- printf "AAS_ELASTICSEARCH_SECURECOMMS: %s" .Values.global.aasElasticsearch.securecomms | nindent 2}}
+    {{- printf "AAS_ELASTICSEARCH_URL: %s" $aas_search_url | nindent 2 }}
+    {{- printf "AAS_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $aas_search_url) | nindent 2 }}
+    {{- printf "AAS_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $aas_search_url | quote) | nindent 2 }}
