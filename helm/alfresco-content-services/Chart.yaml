@@ -85,6 +85,11 @@ dependencies:
     repository: https://helm.elastic.co
     version: 7.17.3
     condition: elasticsearch.enabled
+  - name: elasticsearch
+    alias: elasticsearchAas
+    repository: https://helm.elastic.co
+    version: 7.17.3
+    condition: elasticsearchAas.enabled
   - name: kibana
     repository: https://helm.elastic.co
     version: 7.17.3
