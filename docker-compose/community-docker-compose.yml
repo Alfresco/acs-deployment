@@ -1,4 +1,4 @@
-# This docker-compose file will spin up an ACS community installation on a local host.
+# This Docker Compose file will spin up an ACS community installation on a local host.
 # It requires at least 6GB of memory available to distribute among containers.
 #
 # For performance tuning, increase each container mem_limit and give a percentage of

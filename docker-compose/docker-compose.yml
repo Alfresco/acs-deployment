@@ -1,4 +1,4 @@
-# This docker-compose file will spin up an ACS cluster on a local host.
+# This Docker Compose file will spin up an ACS cluster on a local host.
 # It requires a minimum of 13GB Memory to distribute among containers.
 #
 # For performance tuning, assign the container memory and give a percentage of
@@ -7,7 +7,7 @@
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
-# Note: The docker-compose file from github.com is a limited trial that goes
+# Note: The Docker Compose file from github.com is a limited trial that goes
 # into read-only mode after 2 days. Get the latest docker-compose.yml file with
 # a 30-day trial license by accessing the Alfresco Content Services trial
 # download page at:
