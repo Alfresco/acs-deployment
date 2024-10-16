@@ -40,7 +40,7 @@ jobs:
           )" >> $GITHUB_OUTPUT
 
   compose_enterprise:
-    name: docker-compose enterprise
+    name: Docker Compose enterprise
     needs: build_vars
     strategy:
       fail-fast: false

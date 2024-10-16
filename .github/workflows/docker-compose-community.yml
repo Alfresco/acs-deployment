@@ -18,7 +18,7 @@ on:
 
 jobs:
   compose_community:
-    name: docker-compose community
+    name: Docker Compose community
     runs-on: ubuntu-latest
     steps:
       - uses: >-
