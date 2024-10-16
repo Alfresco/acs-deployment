@@ -69,30 +69,22 @@ data:
       {{- fail "Alfresco Intelligence service has been enabled but Transformation service is not available" }}
   {{- end }}
   {{- end }}
-  {{- $aas_search_url := "" }}
-    {{- if .Values.global.aasElasticsearch.url }}
-      {{- $aas_search_url = .Values.global.aasElasticsearch.url }}
+  {{- $elasticsearch_audit_url := "" }}
+    {{- if .Values.global.auditIndex.url }}
+      {{- $elasticsearch_audit_url = .Values.global.auditIndex.url }}
     {{- else }}
-      {{- with .Values.elasticsearchAas }}
+      {{- with .Values.elasticsearchAudit }}
         {{- if .enabled }}
-          {{- $aasEsProto := .protocol | default "http" }}
-          {{- $aasEsHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
-          {{- $aasEsPort := .port | default 9200 }}
-          {{- $aas_search_url = coalesce $.Values.global.aasElasticsearch.url (printf "%s://%s:%v" $aasEsProto $aasEsHost $aasEsPort) }}
+          {{- $auditEsProto := .protocol | default "http" }}
+          {{- $auditEsHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
+          {{- $auditEsPort := .port | default 9200 }}
+          {{- $elasticsearch_audit_url = coalesce $.Values.global.auditIndex.url (printf "%s://%s:%v" $auditEsProto $auditEsHost $auditEsPort) }}
         {{- else if index $.Values "alfresco-audit-storage" "enabled" }}
-          {{- fail "Chart is configured to use Alfresco Audit Storage but no index backend has been provided. Set one using either global.aasElasticsearch.url or elasticsearchAas.enabled" }}
+          {{- fail "Chart is configured to use Alfresco Audit Storage but no index backend has been provided. Set one using either global.auditIndex.url or elasticsearchAudit.enabled" }}
         {{- end }}
       {{- end }}
     {{- end }}
-      {{- $aas_search_comms := "" }}
-      {{- if hasPrefix "https://" $aas_search_url }}
-        {{- $aas_search_comms = "https" }}
-      {{- else }}
-        {{- $aas_search_comms = "none" }}
-      {{- end }}
-      {{- $_ := set .Values.global.aasElasticsearch "securecomms" $aas_search_comms }}
-    {{- printf "AAS_ELASTICSEARCH_SECURECOMMS: %s" .Values.global.aasElasticsearch.securecomms | nindent 2}}
-    {{- printf "AAS_ELASTICSEARCH_URL: %s" $aas_search_url | nindent 2 }}
-    {{- printf "AAS_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $aas_search_url) | nindent 2 }}
-    {{- printf "AAS_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $aas_search_url | quote) | nindent 2 }}
-  AAS_SERVER_PUBLICBASEURL: {{ .Values.global.aasElasticsearch.publicBaseUrl | default "" }}
+    {{- printf "AUDIT_ELASTICSEARCH_URL: %s" $elasticsearch_audit_url | nindent 2 }}
+    {{- printf "AUDIT_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $elasticsearch_audit_url) | nindent 2 }}
+    {{- printf "AUDIT_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $elasticsearch_audit_url | quote) | nindent 2 }}
+  AUDIT_SERVER_PUBLICBASEURL: {{ .Values.global.auditIndex.publicBaseUrl | default "http://localhost/kibana" }}

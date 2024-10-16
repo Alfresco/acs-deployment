@@ -178,7 +178,7 @@ alfresco-ai-transformer:
       memory: "512Mi"
   livenessProbe:
     initialDelaySeconds: 120
-elasticsearchAas:
+elasticsearchAudit:
   resources:
     requests:
       cpu: "0.01"
