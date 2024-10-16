@@ -591,14 +591,13 @@ alfresco-audit-storage:
 kibana:
   enabled: true
   healthCheckPath: "/kibana/app/kibana"
+  elasticsearchHosts: ""
   extraEnvs:
-    - name: "NODE_OPTIONS"
-      value: "--max-old-space-size=1800"
     - name: SERVER_BASEPATH
       value: "/kibana"
     - name: SERVER_REWRITEBASEPATH
       value: "true"
-    - name: ELASTICSEARCH_URL
+    - name: ELASTICSEARCH_HOSTS
       valueFrom:
         configMapKeyRef: 
           name: *infrastructure_cmName
