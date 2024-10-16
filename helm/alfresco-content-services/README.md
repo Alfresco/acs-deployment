@@ -275,16 +275,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
+| kibana.elasticsearchHosts | string | `""` |  |
 | kibana.enabled | bool | `true` |  |
-| kibana.extraEnvs[0].name | string | `"NODE_OPTIONS"` |  |
-| kibana.extraEnvs[0].value | string | `"--max-old-space-size=1800"` |  |
-| kibana.extraEnvs[1].name | string | `"SERVER_BASEPATH"` |  |
-| kibana.extraEnvs[1].value | string | `"/kibana"` |  |
-| kibana.extraEnvs[2].name | string | `"SERVER_REWRITEBASEPATH"` |  |
-| kibana.extraEnvs[2].value | string | `"true"` |  |
-| kibana.extraEnvs[3].name | string | `"ELASTICSEARCH_URL"` |  |
-| kibana.extraEnvs[3].valueFrom.configMapKeyRef.key | string | `"AAS_ELASTICSEARCH_URL"` |  |
-| kibana.extraEnvs[3].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
+| kibana.extraEnvs[0].name | string | `"SERVER_BASEPATH"` |  |
+| kibana.extraEnvs[0].value | string | `"/kibana"` |  |
+| kibana.extraEnvs[1].name | string | `"SERVER_REWRITEBASEPATH"` |  |
+| kibana.extraEnvs[1].value | string | `"true"` |  |
+| kibana.extraEnvs[2].name | string | `"ELASTICSEARCH_HOSTS"` |  |
+| kibana.extraEnvs[2].valueFrom.configMapKeyRef.key | string | `"AAS_ELASTICSEARCH_URL"` |  |
+| kibana.extraEnvs[2].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
 | kibana.healthCheckPath | string | `"/kibana/app/kibana"` |  |
 | kibana.ingress.enabled | bool | `true` |  |
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
