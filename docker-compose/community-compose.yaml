@@ -1,16 +1,20 @@
-# This Docker Compose file will spin up an ACS community installation on a local host.
-# It requires at least 6GB of memory available to distribute among containers.
+# This Docker Compose file will spin up an ACS community installation on a local
+# host. It requires at least 6GB of memory available to distribute among
+# containers.
 #
-# For performance tuning, increase each container mem_limit and give a percentage of
-# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
-# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
+# For performance tuning, increase each container
+# `services.*.deploy.resources.limits.memory` and give a percentage of it to the
+# JVM. Use either the -Xms,-Xmx flags or the newly added flags in java 10+:
+# -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
-#
 services:
   alfresco:
     image: docker.io/alfresco/alfresco-content-repository-community:23.3.0
-    mem_limit: 1900m
+    deploy:
+      resources:
+        limits:
+          memory: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
         -Dencryption.keystore.type=JCEKS
@@ -53,7 +57,10 @@ services:
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.4
-    mem_limit: 1536m
+    deploy:
+      resources:
+        limits:
+          memory: 1536m
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -62,7 +69,10 @@ services:
       - "8090:8090"
   share:
     image: docker.io/alfresco/alfresco-share:23.3.2
-    mem_limit: 1g
+    deploy:
+      resources:
+        limits:
+          memory: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
       CSRF_FILTER_REFERER: http://localhost:8080/share/.*
@@ -84,7 +94,10 @@ services:
       - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
   postgres:
     image: postgres:14.4
-    mem_limit: 512m
+    deploy:
+      resources:
+        limits:
+          memory: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
       - POSTGRES_USER=alfresco
@@ -94,7 +107,10 @@ services:
       - "5432:5432"
   solr6:
     image: docker.io/alfresco/alfresco-search-services:2.0.12
-    mem_limit: 2g
+    deploy:
+      resources:
+        limits:
+          memory: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
       SOLR_ALFRESCO_HOST: "alfresco"
@@ -113,7 +129,10 @@ services:
       - "8083:8983" # Browser port
   activemq:
     image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
-    mem_limit: 1g
+    deploy:
+      resources:
+        limits:
+          memory: 1g
     ports:
       - "8161:8161" # Web Console
       - "5672:5672" # AMQP
@@ -121,7 +140,10 @@ services:
       - "61613:61613" # STOMP
   content-app:
     image: alfresco/alfresco-content-app:5.1.1
-    mem_limit: 128m
+    deploy:
+      resources:
+        limits:
+          memory: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
     labels:
@@ -134,7 +156,10 @@ services:
       - "traefik.http.routers.aca.middlewares=acachain@docker"
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.1.0
-    mem_limit: 128m
+    deploy:
+      resources:
+        limits:
+          memory: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -149,7 +174,10 @@ services:
       - "traefik.http.routers.acc.middlewares=accchain@docker"
   proxy:
     image: traefik:3.1
-    mem_limit: 128m
+    deploy:
+      resources:
+        limits:
+          memory: 128m
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
