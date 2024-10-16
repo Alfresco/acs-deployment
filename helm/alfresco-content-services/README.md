@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 8.5.1](https://img.shields.io/badge/Version-8.5.1-informational?style=flat-square) ![AppVersion: 23.3.2](https://img.shields.io/badge/AppVersion-23.3.2-informational?style=flat-square)
+![Version: 8.5.2](https://img.shields.io/badge/Version-8.5.2-informational?style=flat-square) ![AppVersion: 23.3.2](https://img.shields.io/badge/AppVersion-23.3.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -47,7 +47,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.adminUser.password | string | `"admin"` | Default password for the embedded broker admin user |
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
 | activemq.enabled | bool | `true` |  |
-| activemq.existingSecretName | string | `nil` |  |
 | activemq.image.repository | string | `"quay.io/alfresco/alfresco-activemq"` |  |
 | activemq.image.tag | string | `"5.18.5-jre17-rockylinux8"` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
@@ -122,7 +121,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"4.1.0"` |  |
 | alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"4.1.0"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-search-enterprise.messageBroker.existingSecretName | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-search-enterprise.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.nameOverride | string | `"alfresco-search-enterprise"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
