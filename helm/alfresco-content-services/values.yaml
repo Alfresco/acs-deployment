@@ -180,7 +180,6 @@ activemq:
     # -- Default password for the embedded broker admin user
     password: admin
     existingSecretName: *acs_messageBroker_secretName
-  existingSecretName: null
 alfresco-connector-ms365:
   # -- Enable/Disable Alfresco Content Connector for Microsoft 365
   enabled: false
@@ -353,7 +352,8 @@ alfresco-search-enterprise:
   messageBroker:
     existingConfigMap:
       name: *infrastructure_cmName
-    existingSecretName: *acs_messageBroker_secretName
+    existingSecret:
+      name: *acs_messageBroker_secretName
   liveIndexing:
     mediation:
       image:
