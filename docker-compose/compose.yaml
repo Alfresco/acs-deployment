@@ -16,10 +16,7 @@
 services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:23.3.2
-    deploy:
-      resources:
-        limits:
-          memory: 1900m
+    mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
         -Dencryption.keystore.type=JCEKS
@@ -75,10 +72,7 @@ services:
       - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
-    deploy:
-      resources:
-        limits:
-          memory: 512m
+    mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.1.4
     environment:
       JAVA_OPTS: >-
@@ -94,10 +88,7 @@ services:
       - activemq
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.4
-    deploy:
-      resources:
-        limits:
-          memory: 1536m
+    mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -111,10 +102,7 @@ services:
       - activemq
   shared-file-store:
     image: quay.io/alfresco/alfresco-shared-file-store:4.1.4
-    deploy:
-      resources:
-        limits:
-          memory: 512m
+    mem_limit: 512m
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -127,10 +115,7 @@ services:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
     image: quay.io/alfresco/alfresco-share:23.3.2
-    deploy:
-      resources:
-        limits:
-          memory: 1g
+    mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
       CSRF_FILTER_REFERER: http://localhost:8080/share/.*
@@ -152,10 +137,7 @@ services:
       - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
   postgres:
     image: postgres:14.4
-    deploy:
-      resources:
-        limits:
-          memory: 512m
+    mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
       - POSTGRES_USER=alfresco
@@ -182,10 +164,7 @@ services:
       - 9300:9300
   kibana:
     image: kibana:7.17.3
-    deploy:
-      resources:
-        limits:
-          memory: 1g
+    mem_limit: 1g
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
@@ -194,10 +173,7 @@ services:
       - elasticsearch
   search:
     image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0
-    deploy:
-      resources:
-        limits:
-          memory: 1g
+    mem_limit: 1g
     depends_on:
       elasticsearch:
         condition: service_started
@@ -212,10 +188,7 @@ services:
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
   search-reindexing:
     image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.1.0
-    deploy:
-      resources:
-        limits:
-          memory: 1g
+    mem_limit: 1g
     restart: on-failure:5
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -234,10 +207,7 @@ services:
         condition: service_healthy
   activemq:
     image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
-    deploy:
-      resources:
-        limits:
-          memory: 1g
+    mem_limit: 1g
     ports:
       - "8161:8161" # Web Console
       - "5672:5672" # AMQP
@@ -245,10 +215,7 @@ services:
       - "61613:61613" # STOMP
   audit-storage:
     image: quay.io/alfresco/alfresco-audit-storage:0.0.1-A8
-    deploy:
-      resources:
-        limits:
-          memory: 512m
+    mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
@@ -260,10 +227,7 @@ services:
       - elasticsearch
   digital-workspace:
     image: quay.io/alfresco/alfresco-digital-workspace:5.1.0
-    deploy:
-      resources:
-        limits:
-          memory: 128m
+    mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -281,10 +245,7 @@ services:
       - "traefik.http.routers.adw.middlewares=adwchain@docker"
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.1.0
-    deploy:
-      resources:
-        limits:
-          memory: 128m
+    mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
@@ -299,10 +260,7 @@ services:
       - "traefik.http.routers.acc.middlewares=accchain@docker"
   proxy:
     image: traefik:3.1
-    deploy:
-      resources:
-        limits:
-          memory: 128m
+    mem_limit: 128m
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
@@ -319,10 +277,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
   sync-service:
     image: quay.io/alfresco/service-sync:4.0.1
-    deploy:
-      resources:
-        limits:
-          memory: 1g
+    mem_limit: 1g
     environment:
       JAVA_OPTS: >-
         -Dsql.db.driver=org.postgresql.Driver
