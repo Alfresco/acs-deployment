@@ -95,4 +95,4 @@ data:
     {{- printf "AAS_ELASTICSEARCH_URL: %s" $aas_search_url | nindent 2 }}
     {{- printf "AAS_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $aas_search_url) | nindent 2 }}
     {{- printf "AAS_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $aas_search_url | quote) | nindent 2 }}
-  AAS_SERVER_PUBLICBASEURL: {{ .Values.global.aasElasticsearch.publicBaseUrl | default "" | quote }}
+  AAS_SERVER_PUBLICBASEURL: {{ .Values.global.aasElasticsearch.publicBaseUrl | default "" }}
