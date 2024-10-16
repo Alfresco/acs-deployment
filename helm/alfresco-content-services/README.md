@@ -253,6 +253,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearchAas.replicas | int | `1` |  |
 | global.aasElasticsearch.existingSecretName | string | `nil` | Name of an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys. |
 | global.aasElasticsearch.password | string | `nil` | Elasticsearch password |
+| global.aasElasticsearch.publicBaseUrl | string | `nil` | Base url for kibana environment variable |
 | global.aasElasticsearch.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.aasElasticsearch.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
 | global.aasElasticsearch.url | string | `nil` | Elasticsearch URL |
@@ -284,6 +285,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | kibana.extraEnvs[2].name | string | `"ELASTICSEARCH_HOSTS"` |  |
 | kibana.extraEnvs[2].valueFrom.configMapKeyRef.key | string | `"AAS_ELASTICSEARCH_URL"` |  |
 | kibana.extraEnvs[2].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
+| kibana.extraEnvs[3].name | string | `"SERVER_PUBLICBASEURL"` |  |
+| kibana.extraEnvs[3].valueFrom.configMapKeyRef.key | string | `"AAS_SERVER_PUBLICBASEURL"` |  |
+| kibana.extraEnvs[3].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
 | kibana.healthCheckPath | string | `"/kibana/app/kibana"` |  |
 | kibana.ingress.enabled | bool | `true` |  |
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
