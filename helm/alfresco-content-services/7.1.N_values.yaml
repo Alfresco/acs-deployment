@@ -86,6 +86,12 @@ alfresco-connector-ms365:
     tag: 1.1.1
 alfresco-control-center:
   enabled: false
+elasticsearchAudit:
+  enabled: false
+kibana-audit:
+  enabled: false
+alfresco-audit-storage:
+  enabled: false
 global:
   search:
     securecomms: none

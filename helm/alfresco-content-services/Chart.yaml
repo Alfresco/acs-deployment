@@ -91,10 +91,10 @@ dependencies:
     version: 7.17.3
     condition: elasticsearchAudit.enabled
   - name: kibana
-    alias: kibanaAudit
+    alias: kibana-audit
     repository: https://helm.elastic.co
     version: 7.17.3
-    condition: kibanaAudit.enabled
+    condition: kibana-audit.enabled
   - name: alfresco-audit-storage
     version: 0.1.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
