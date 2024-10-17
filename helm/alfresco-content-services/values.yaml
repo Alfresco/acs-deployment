@@ -569,13 +569,8 @@ elasticsearchAudit:
         secretKeyRef: 
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_PASSWORD
-  esConfig:
-    elasticsearch.yml: |
-      xpack.security.enabled: true
-      discovery.type: single-node
-      cluster.initial_master_nodes: ""
   ingress:
-    enabled: true
+    enabled: false
     annotations: 
       nginx.ingress.kubernetes.io/rewrite-target: /$2
     hosts:
@@ -636,7 +631,7 @@ kibana:
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_PASSWORD
   ingress:
-    enabled: true
+    enabled: false
     hosts:
       - paths:
           - path: /kibana

@@ -245,7 +245,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearchAudit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearchAudit.clusterName | string | `"elasticsearch-aas"` |  |
 | elasticsearchAudit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
-| elasticsearchAudit.esConfig."elasticsearch.yml" | string | `"xpack.security.enabled: true\ndiscovery.type: single-node\ncluster.initial_master_nodes: \"\"\n"` |  |
 | elasticsearchAudit.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
 | elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
 | elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
@@ -253,7 +252,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearchAudit.extraEnvs[1].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
 | elasticsearchAudit.extraEnvs[1].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | elasticsearchAudit.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
-| elasticsearchAudit.ingress.enabled | bool | `true` |  |
+| elasticsearchAudit.ingress.enabled | bool | `false` |  |
 | elasticsearchAudit.ingress.hosts[0].paths[0].path | string | `"/elasticsearch(/|$)(.*)"` |  |
 | elasticsearchAudit.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | elasticsearchAudit.nameOverride | string | `"elasticsearch-aas"` |  |
@@ -286,7 +285,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | kibana.enabled | bool | `true` |  |
 | kibana.extraEnvs | list | `[{"name":"SERVER_BASEPATH","value":"/kibana"},{"name":"SERVER_REWRITEBASEPATH","value":"true"},{"name":"ELASTICSEARCH_HOSTS","valueFrom":{"configMapKeyRef":{"key":"AUDIT_ELASTICSEARCH_URL","name":"alfresco-infrastructure"}}},{"name":"SERVER_PUBLICBASEURL","valueFrom":{"configMapKeyRef":{"key":"AUDIT_SERVER_PUBLICBASEURL","name":"alfresco-infrastructure"}}},{"name":"ELASTICSEARCH_USERNAME","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_USERNAME","name":"alfresco-aas-elasticsearch-secret"}}},{"name":"ELASTICSEARCH_PASSWORD","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_PASSWORD","name":"alfresco-aas-elasticsearch-secret"}}}]` | All of the values has to be set there to escape the issue with overriding the values |
 | kibana.healthCheckPath | string | `"/kibana/app/kibana"` |  |
-| kibana.ingress.enabled | bool | `true` |  |
+| kibana.ingress.enabled | bool | `false` |  |
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | kibana.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | messageBroker.brokerName | string | `nil` | name of the message broker as set in the Broker configuration |
