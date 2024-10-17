@@ -245,6 +245,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearchAudit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearchAudit.clusterName | string | `"elasticsearch-aas"` |  |
 | elasticsearchAudit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
+| elasticsearchAudit.esConfig."elasticsearch.yml" | string | `"xpack.security.enabled: true\ndiscovery.type: single-node\ncluster.initial_master_nodes: \"\"\n"` |  |
 | elasticsearchAudit.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
 | elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
 | elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
