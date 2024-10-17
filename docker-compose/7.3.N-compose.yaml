@@ -1,4 +1,4 @@
-# This docker-compose file will spin up an ACS cluster on a local host.
+# This Docker Compose file will spin up an ACS cluster on a local host.
 # It requires a minimum of 13GB Memory to distribute among containers.
 #
 # For performance tuning, assign the container memory and give a percentage of
@@ -7,15 +7,15 @@
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
-# Note: The docker-compose file from github.com is a limited trial that goes
-# into read-only mode after 2 days. Get the latest docker-compose.yml file with
+# Note: The Docker Compose file from github.com is a limited trial that goes
+# into read-only mode after 2 days. Get the latest compose.yaml file with
 # a 30-day trial license by accessing the Alfresco Content Services trial
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.4.2.1
+    image: quay.io/alfresco/alfresco-content-repository:7.3.2.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -60,12 +60,12 @@ services:
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/`)"
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
-      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
       - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
+      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.1.4
+    image: quay.io/alfresco/alfresco-transform-router:2.1.2
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -76,10 +76,10 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8095:8095"
-    links:
+    depends_on:
       - activemq
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.4
+    image: alfresco/alfresco-transform-core-aio:3.1.2
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -90,10 +90,10 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8090:8090"
-    links:
+    depends_on:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.1.4
+    image: quay.io/alfresco/alfresco-shared-file-store:2.1.2
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -106,7 +106,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.4.2.1
+    image: quay.io/alfresco/alfresco-share:7.3.2.1
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -168,7 +168,6 @@ services:
     image: quay.io/alfresco/alfresco-digital-workspace:4.4.1
     mem_limit: 128m
     environment:
-      APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
@@ -181,7 +180,7 @@ services:
       - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
       - "traefik.http.routers.adw.middlewares=adwchain@docker"
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:8.3.0
+    image: quay.io/alfresco/alfresco-control-center:7.9.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

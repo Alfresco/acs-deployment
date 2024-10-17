@@ -35,12 +35,12 @@ jobs:
             ls -1 docker-compose |
               grep -P '^\d+' |
               jq -Rn '{"compose_file": [inputs]}' |
-              jq -c '.compose_file += ["docker-compose.yml"]' |
-              jq -c '.compose_file += ["pre-release-docker-compose.yml"]'
+              jq -c '.compose_file += ["compose.yaml"]' |
+              jq -c '.compose_file += ["pre-release-compose.yaml"]'
           )" >> $GITHUB_OUTPUT
 
   compose_enterprise:
-    name: docker-compose enterprise
+    name: Docker Compose enterprise
     needs: build_vars
     strategy:
       fail-fast: false

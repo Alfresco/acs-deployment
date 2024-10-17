@@ -1,4 +1,4 @@
-# This docker-compose file will spin up an ACS cluster on a local host.
+# This Docker Compose file will spin up an ACS cluster on a local host.
 # It requires a minimum of 13GB Memory to distribute among containers.
 #
 # For performance tuning, assign the container memory and give a percentage of
@@ -7,15 +7,15 @@
 # More details here:
 # https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
-# Note: The docker-compose file from github.com is a limited trial that goes
-# into read-only mode after 2 days. Get the latest docker-compose.yml file with
+# Note: The Docker Compose file from github.com is a limited trial that goes
+# into read-only mode after 2 days. Get the latest compose.yaml file with
 # a 30-day trial license by accessing the Alfresco Content Services trial
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:23.4.0-M1
+    image: quay.io/alfresco/alfresco-content-repository:23.3.2
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -73,7 +73,7 @@ services:
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.1.5-A1
+    image: quay.io/alfresco/alfresco-transform-router:4.1.4
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -87,7 +87,7 @@ services:
     depends_on:
       - activemq
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.5-A1
+    image: alfresco/alfresco-transform-core-aio:5.1.4
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -101,7 +101,7 @@ services:
     depends_on:
       - activemq
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.1.5-A1
+    image: quay.io/alfresco/alfresco-shared-file-store:4.1.4
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -114,7 +114,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:23.4.0-M1
+    image: quay.io/alfresco/alfresco-share:23.3.2
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -162,6 +162,15 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+  kibana:
+    image: kibana:7.17.3
+    mem_limit: 1g
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
   search:
     image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0
     mem_limit: 1g
@@ -204,8 +213,20 @@ services:
       - "5672:5672" # AMQP
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
+  audit-storage:
+    image: quay.io/alfresco/alfresco-audit-storage:0.0.1-A8
+    mem_limit: 512m
+    environment:
+      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
+      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
+    depends_on:
+      - activemq
+      - elasticsearch
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:5.1.0-11106981658
+    image: quay.io/alfresco/alfresco-digital-workspace:5.1.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -223,7 +244,7 @@ services:
       - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
       - "traefik.http.routers.adw.middlewares=adwchain@docker"
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:9.1.0-11106981658
+    image: quay.io/alfresco/alfresco-control-center:9.1.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -255,7 +276,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
   sync-service:
-    image: quay.io/alfresco/service-sync:5.1.0-M2
+    image: quay.io/alfresco/service-sync:4.0.1
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-

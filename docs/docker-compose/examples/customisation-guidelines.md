@@ -7,7 +7,7 @@ parent: Docker Compose
 
 Although it's possible to change and mount files/folders into existing Docker images the recommended approach is to create new custom Docker images.
 
-Installling AMPs also requires the creation of a custom image, this guide describes the steps required to install AMP files into Alfresco Content Repository and Alfresco Share images. These custom images can then be deployed using docker-compose.
+Installling AMPs also requires the creation of a custom image, this guide describes the steps required to install AMP files into Alfresco Content Repository and Alfresco Share images. These custom images can then be deployed using Docker Compose.
 
 This process requires some familiarty with [Docker](https://www.docker.com/) and specifically [Dockerfile commands](https://docs.docker.com/engine/reference/builder/).
 
@@ -20,7 +20,7 @@ This process requires some familiarty with [Docker](https://www.docker.com/) and
     cd acs-deployment
     ```
 
-2. Switch to the docker-compose directory, then create directories to hold AMP files and Dockerfiles
+2. Switch to the `docker-compose` directory, then create directories to hold AMP files and Dockerfiles
 
     ```bash
     cd docker-compose && \
@@ -34,9 +34,9 @@ This process requires some familiarty with [Docker](https://www.docker.com/) and
 
 You will now need to install the AMP files into the Alfresco Content Repository image.
 
-1. The docker-compose folder contains a file for each main code line of ACS, examine the relevant docker compose file for the version of ACS you want to apply the AMPs to. For example, to apply to the latest version of 7.3 take a look at the [7.3.N-docker-compose file](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-docker-compose.yml)
+1. The `docker-compose` folder contains a file for each main code line of ACS, examine the relevant docker compose file for the version of ACS you want to apply the AMPs to. For example, to apply to the latest version of 7.3 take a look at the [7.3.N-docker-compose file](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-compose.yaml)
 
-2. Take note of the image and tag being used for the **alfresco** service in the docker compose file you chose in the previous step. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 21](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-docker-compose.yml) as follows:
+2. Take note of the image and tag being used for the **alfresco** service in the docker compose file you chose in the previous step. For example, if you are using 7.3.N-compose.yaml, you will find this on [line 21](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-compose.yaml) as follows:
 
     ```bash
     alfresco/alfresco-content-repository:7.3.0.1
@@ -87,15 +87,15 @@ You will now need to install the AMP files into the Alfresco Content Repository 
     Successfully tagged myregistrydomain/my-custom-alfresco-content-repository:latest
     ```
 
-5. Replace the image used by the **alfresco** service in the docker-compose file you chose to use in step 1, for example, **replace** `image: alfresco/alfresco-content-repository:7.3.0.1` **with** `image: myregistrydomain/my-custom-alfresco-content-repository:7.3.0.1`
+5. Replace the image used by the **alfresco** service in the compose file you chose to use in step 1, for example, **replace** `image: alfresco/alfresco-content-repository:7.3.0.1` **with** `image: myregistrydomain/my-custom-alfresco-content-repository:7.3.0.1`
 
-6. Save the docker-compose file
+6. Save the compose file
 
 ## Create Custom Alfresco Share Image
 
 We will now repeat the process for the Alfresco Share image.
 
-1. Take note of the image and tag being used for the **share** service in the docker compose file you chose in the previous section. For example, if you are using 7.3.N-docker-compose.yml, you will find this on [line 102](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-docker-compose.yml) as follows:
+1. Take note of the image and tag being used for the **share** service in the docker compose file you chose in the previous section. For example, if you are using 7.3.N-compose.yaml, you will find this on [line 102](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/7.3.N-compose.yaml) as follows:
 
     ```bash
     alfresco/alfresco-share:7.3.0
@@ -130,18 +130,18 @@ We will now repeat the process for the Alfresco Share image.
     Successfully tagged myregistrydomain/my-custom-alfresco-share:latest
     ```
 
-4. Replace the image used by the **share** service in the docker-compose file you chose to use in the previous section, for example, **replace** `image: alfresco/alfresco-share:7.3.0` **with** `image: myregistrydomain/my-custom-alfresco-share:7.3.0`
+4. Replace the image used by the **share** service in the compose file you chose to use in the previous section, for example, **replace** `image: alfresco/alfresco-share:7.3.0` **with** `image: myregistrydomain/my-custom-alfresco-share:7.3.0`
 
-5. Save the docker-compose file
+5. Save the compose file
 
 ## Start The System
 
-You have now built two custom images (one for Alfresco Content Repository and one for Alfreso Share). These have been added to your docker-compose.yml services.
+You have now built two custom images (one for Alfresco Content Repository and one for Alfreso Share). These have been added to your compose.yml services.
 
-You can start your custom docker-compose.yml using the following command:
+You can start your custom compose.yml using the following command:
 
 ```bash
-docker-compose -f <your-modified-docker-compose.yml> up
+docker compose -f <your-modified-compose.yml> up
 ```
 
 Further information on starting up or troubleshooting can be found
