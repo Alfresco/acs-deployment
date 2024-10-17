@@ -92,7 +92,7 @@ postgresql:
         memory: "1Gi"
 elasticsearchAudit:
   enabled: false
-kibana:
+kibanaAudit:
   enabled: false
 alfresco-audit-storage:
   enabled: false
