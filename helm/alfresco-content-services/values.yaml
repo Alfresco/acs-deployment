@@ -569,6 +569,11 @@ elasticsearchAudit:
         secretKeyRef: 
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_PASSWORD
+  esConfig:
+    elasticsearch.yml: |
+      xpack.security.enabled: true
+      discovery.type: single-node
+      cluster.initial_master_nodes: ""
   ingress:
     enabled: true
     annotations: 
