@@ -119,8 +119,7 @@ jobs:
             echo "Enabling clustered tests via auto-scaling: 2 replicas max"
             echo "Renditions tests will be skipped because particularly flaky on clustered runs"
 
-            echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml \
-              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+            echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Add dependency chart repos
@@ -129,6 +128,7 @@ jobs:
           helm repo add elastic https://helm.elastic.co/
 
       - name: Helm install
+        id: helm_install
         run: >-
           helm dep build ./helm/alfresco-content-services &&
           helm install acs ./helm/alfresco-content-services
@@ -204,10 +204,10 @@ jobs:
             exit 1
           else
             echo "Got $SETSIZE"
-            echo -n "Now waiting for scale down"
+            echo "Now waiting for scale down"
             kubectl patch hpa acs-alfresco-repository \
               -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
-            echo -n "(speeding scale down up)... "
+            echo "(speeding scale down up)... "
             kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
             echo "Scale down completed"
           fi
@@ -218,3 +218,18 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
+
+      - name: Collect logs from all containers
+        if: always() && steps.helm_install.outcome != 'skipped'
+        run: |
+          mkdir -p logs
+          for pod in $(kubectl get pods -n default -o jsonpath='{.items[*].metadata.name}'); do
+            kubectl logs $pod -n default > logs/${pod}.log
+          done
+
+      - name: Upload logs as artifact
+        if: always() && steps.helm_install.outcome != 'skipped'
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 #v4.4.0
+        with:
+          name: k8s-logs-${{ matrix.name }}-${{ matrix.values }}
+          path: logs

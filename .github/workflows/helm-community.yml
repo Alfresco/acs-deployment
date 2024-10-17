@@ -91,6 +91,7 @@ jobs:
           helm repo add elastic https://helm.elastic.co/
 
       - name: Helm install
+        id: helm_install
         run: |
           helm dep build .
           helm install ${{ matrix.name }} . \
@@ -128,3 +129,18 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+
+      - name: Collect logs from all containers
+        if: always() && steps.helm_install.outcome != 'skipped'
+        run: |
+          mkdir -p logs
+          for pod in $(kubectl get pods -n default -o jsonpath='{.items[*].metadata.name}'); do
+            kubectl logs $pod -n default > logs/${pod}.log
+          done
+
+      - name: Upload logs as artifact
+        if: always() && steps.helm_install.outcome != 'skipped'
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 #v4.4.0
+        with:
+          name: k8s-logs-${{ matrix.name }}-${{ matrix.values }}
+          path: logs
