@@ -119,8 +119,7 @@ jobs:
             echo "Enabling clustered tests via auto-scaling: 2 replicas max"
             echo "Renditions tests will be skipped because particularly flaky on clustered runs"
 
-            echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml \
-              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+            echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Add dependency chart repos
