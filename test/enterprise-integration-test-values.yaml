@@ -178,5 +178,23 @@ alfresco-ai-transformer:
       memory: "512Mi"
   livenessProbe:
     initialDelaySeconds: 120
+elasticsearchAudit:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+alfresco-audit-storage:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+kibana-audit:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+    limits::
+      cpu: "1000m"
+      memory: "2Gi"
 dtas:
   enabled: true

@@ -26,6 +26,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 2.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 1.2.0-alpha.0 |
@@ -36,6 +37,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 6.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
+| https://helm.elastic.co | elasticsearchAudit(elasticsearch) | 7.17.3 |
+| https://helm.elastic.co | kibana-audit(kibana) | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
@@ -58,6 +61,16 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
 | alfresco-ai-transformer.sfs.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
+| alfresco-audit-storage.enabled | bool | `true` |  |
+| alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
+| alfresco-audit-storage.image.tag | string | `"0.0.1-A8"` |  |
+| alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
+| alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.username | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
+| alfresco-audit-storage.index.existingSecret.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| alfresco-audit-storage.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
+| alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
 | alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | alfresco-connector-ms365.image.tag | string | `"2.0.3"` |  |
@@ -229,7 +242,28 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |
+| elasticsearchAudit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
+| elasticsearchAudit.clusterName | string | `"elasticsearch-aas"` |  |
+| elasticsearchAudit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
+| elasticsearchAudit.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
+| elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
+| elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| elasticsearchAudit.extraEnvs[1].name | string | `"ELASTIC_PASSWORD"` |  |
+| elasticsearchAudit.extraEnvs[1].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
+| elasticsearchAudit.extraEnvs[1].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| elasticsearchAudit.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| elasticsearchAudit.ingress.enabled | bool | `false` |  |
+| elasticsearchAudit.ingress.hosts[0].paths[0].path | string | `"/elasticsearch(/|$)(.*)"` |  |
+| elasticsearchAudit.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| elasticsearchAudit.nameOverride | string | `"elasticsearch-aas"` |  |
+| elasticsearchAudit.replicas | int | `1` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
+| global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
+| global.auditIndex.password | string | `nil` | Elasticsearch password |
+| global.auditIndex.publicBaseUrl | string | `nil` | Base url for kibana environment variable `SERVER_PUBLICBASEURL`  |
+| global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
+| global.auditIndex.url | string | `nil` | Elasticsearch URL |
+| global.auditIndex.username | string | `nil` | Elasticsearch username |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
@@ -247,6 +281,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
+| kibana-audit.elasticsearchHosts | string | `""` | Makes sure there is no default elasticsearch hosts defined |
+| kibana-audit.enabled | bool | `true` |  |
+| kibana-audit.extraEnvs | list | `[{"name":"SERVER_BASEPATH","value":"/kibana"},{"name":"SERVER_REWRITEBASEPATH","value":"true"},{"name":"ELASTICSEARCH_HOSTS","valueFrom":{"configMapKeyRef":{"key":"AUDIT_ELASTICSEARCH_URL","name":"alfresco-infrastructure"}}},{"name":"SERVER_PUBLICBASEURL","valueFrom":{"configMapKeyRef":{"key":"AUDIT_SERVER_PUBLICBASEURL","name":"alfresco-infrastructure"}}},{"name":"ELASTICSEARCH_USERNAME","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_USERNAME","name":"alfresco-aas-elasticsearch-secret"}}},{"name":"ELASTICSEARCH_PASSWORD","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_PASSWORD","name":"alfresco-aas-elasticsearch-secret"}}}]` | All of the values has to be set there to escape the issue with overriding the values |
+| kibana-audit.healthCheckPath | string | `"/kibana/app/kibana"` |  |
+| kibana-audit.ingress.enabled | bool | `false` |  |
+| kibana-audit.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
+| kibana-audit.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | messageBroker.brokerName | string | `nil` | name of the message broker as set in the Broker configuration |
 | messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. and optionally the credentials to the web console (can be the same as broker access). |
 | messageBroker.password | string | `nil` | External message broker password |

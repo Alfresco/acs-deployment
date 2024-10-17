@@ -59,3 +59,9 @@ alfresco-connector-ms365:
   enabled: false
 alfresco-connector-msteams:
   enabled: false
+elasticsearchAudit:
+  enabled: false
+kibana-audit:
+  enabled: false
+alfresco-audit-storage:
+  enabled: false
