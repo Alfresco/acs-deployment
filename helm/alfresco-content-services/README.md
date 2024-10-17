@@ -38,7 +38,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | https://helm.elastic.co | elasticsearchAudit(elasticsearch) | 7.17.3 |
-| https://helm.elastic.co | kibana | 7.17.3 |
+| https://helm.elastic.co | kibanaAudit(kibana) | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
@@ -281,13 +281,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
-| kibana.elasticsearchHosts | string | `""` | Makes sure there is no default elasticsearch hosts defined |
-| kibana.enabled | bool | `true` |  |
-| kibana.extraEnvs | list | `[{"name":"SERVER_BASEPATH","value":"/kibana"},{"name":"SERVER_REWRITEBASEPATH","value":"true"},{"name":"ELASTICSEARCH_HOSTS","valueFrom":{"configMapKeyRef":{"key":"AUDIT_ELASTICSEARCH_URL","name":"alfresco-infrastructure"}}},{"name":"SERVER_PUBLICBASEURL","valueFrom":{"configMapKeyRef":{"key":"AUDIT_SERVER_PUBLICBASEURL","name":"alfresco-infrastructure"}}},{"name":"ELASTICSEARCH_USERNAME","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_USERNAME","name":"alfresco-aas-elasticsearch-secret"}}},{"name":"ELASTICSEARCH_PASSWORD","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_PASSWORD","name":"alfresco-aas-elasticsearch-secret"}}}]` | All of the values has to be set there to escape the issue with overriding the values |
-| kibana.healthCheckPath | string | `"/kibana/app/kibana"` |  |
-| kibana.ingress.enabled | bool | `false` |  |
-| kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
-| kibana.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| kibanaAudit.elasticsearchHosts | string | `""` | Makes sure there is no default elasticsearch hosts defined |
+| kibanaAudit.enabled | bool | `true` |  |
+| kibanaAudit.extraEnvs | list | `[{"name":"SERVER_BASEPATH","value":"/kibana"},{"name":"SERVER_REWRITEBASEPATH","value":"true"},{"name":"ELASTICSEARCH_HOSTS","valueFrom":{"configMapKeyRef":{"key":"AUDIT_ELASTICSEARCH_URL","name":"alfresco-infrastructure"}}},{"name":"SERVER_PUBLICBASEURL","valueFrom":{"configMapKeyRef":{"key":"AUDIT_SERVER_PUBLICBASEURL","name":"alfresco-infrastructure"}}},{"name":"ELASTICSEARCH_USERNAME","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_USERNAME","name":"alfresco-aas-elasticsearch-secret"}}},{"name":"ELASTICSEARCH_PASSWORD","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_PASSWORD","name":"alfresco-aas-elasticsearch-secret"}}}]` | All of the values has to be set there to escape the issue with overriding the values |
+| kibanaAudit.healthCheckPath | string | `"/kibana/app/kibana"` |  |
+| kibanaAudit.ingress.enabled | bool | `false` |  |
+| kibanaAudit.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
+| kibanaAudit.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | messageBroker.brokerName | string | `nil` | name of the message broker as set in the Broker configuration |
 | messageBroker.existingSecretName | string | `nil` | Name of an existing secret that contains BROKER_USERNAME and BROKER_PASSWORD keys. and optionally the credentials to the web console (can be the same as broker access). |
 | messageBroker.password | string | `nil` | External message broker password |

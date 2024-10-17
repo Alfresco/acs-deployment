@@ -599,7 +599,7 @@ alfresco-audit-storage:
       keys:
         username: AUDIT_ELASTICSEARCH_USERNAME
         password: AUDIT_ELASTICSEARCH_PASSWORD
-kibana:
+kibanaAudit:
   enabled: true
   healthCheckPath: "/kibana/app/kibana"
   # -- Makes sure there is no default elasticsearch hosts defined
