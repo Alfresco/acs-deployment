@@ -600,7 +600,7 @@ kibana-audit:
   healthCheckPath: "/kibana/app/kibana"
   # -- Makes sure there is no default elasticsearch hosts defined
   elasticsearchHosts: ""
-  # -- All of the values has to be set there to escape the issue with overriding the values
+  # All of the values has to be set there to escape the issue with overriding the values
   extraEnvs:
     - name: SERVER_BASEPATH
       value: "/kibana"
