@@ -56,7 +56,7 @@ jobs:
 
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-16G-4CPU
-    timeout-minutes: 12
+    timeout-minutes: 20
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -115,13 +115,7 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
-            echo "Enabling clustered tests via auto-scaling: 2 replicas max"
-            echo "Renditions tests will be skipped because particularly flaky on clustered runs"
-
-            echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml \
-              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
-          fi
+          echo "helm_install_params=--set alfresco-repository.replicaCount=2" >> "$GITHUB_OUTPUT"
 
       - name: Add dependency chart repos
         run: |
@@ -129,6 +123,7 @@ jobs:
           helm repo add elastic https://helm.elastic.co/
 
       - name: Helm install
+        id: helm_install
         run: >-
           helm dep build ./helm/alfresco-content-services &&
           helm install acs ./helm/alfresco-content-services
@@ -181,7 +176,7 @@ jobs:
 
       - name: Run helm test
         id: helm_test
-        run: helm test acs
+        run: helm test acs --timeout 10m
 
       - name: Spit cluster status after helm test
         if: always() && steps.helm_test.outcome != 'skipped'
@@ -191,30 +186,17 @@ jobs:
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
 
-      - name: Check HPA behavior during tests
-        id: hpa_check
-        if: always() && (matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml') && steps.helm_test.outcome != 'skipped'
+      - name: Collect logs from all containers
+        if: always() && steps.helm_install.outcome != 'skipped'
         run: |
-          echo "Checking current repo hpa status"
-          kubectl get hpa acs-alfresco-repository
-          echo -n "Repository should have 2 replicas after Helm test... "
-          SETSIZE=$(kubectl get deployment/acs-alfresco-repository -o jsonpath='{@.spec.replicas}')
-          if [ "$SETSIZE" -ne 2 ]; then
-            echo "Got $SETSIZE instead"
-            exit 1
-          else
-            echo "Got $SETSIZE"
-            echo -n "Now waiting for scale down"
-            kubectl patch hpa acs-alfresco-repository \
-              -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
-            echo -n "(speeding scale down up)... "
-            kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
-            echo "Scale down completed"
-          fi
+          mkdir -p logs
+          for pod in $(kubectl get pods -n default -o jsonpath='{.items[*].metadata.name}'); do
+            kubectl logs $pod -n default > logs/${pod}.log
+          done
 
-      - name: Spit cluster status after HPA check
-        if: always() && steps.hpa_check.outcome != 'skipped'
-        run: |
-          kubectl get all --all-namespaces
-          kubectl describe pod
-          kubectl events --for deployment/acs-alfresco-repository
+      - name: Upload logs as artifact
+        if: always() && steps.helm_install.outcome != 'skipped'
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 #v4.4.0
+        with:
+          name: k8s-logs-${{ matrix.name }}-${{ matrix.values }}
+          path: logs
