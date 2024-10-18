@@ -37,7 +37,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 6.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
-| https://helm.elastic.co | elasticsearchAudit(elasticsearch) | 7.17.3 |
+| https://helm.elastic.co | elasticsearch-audit(elasticsearch) | 7.17.3 |
 | https://helm.elastic.co | kibana-audit(kibana) | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
@@ -239,24 +239,21 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
 | dtas.image.tag | string | `"v1.5.5"` |  |
+| elasticsearch-audit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
+| elasticsearch-audit.clusterName | string | `"elasticsearch-aas"` |  |
+| elasticsearch-audit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
+| elasticsearch-audit.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
+| elasticsearch-audit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
+| elasticsearch-audit.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| elasticsearch-audit.extraEnvs[1].name | string | `"ELASTIC_PASSWORD"` |  |
+| elasticsearch-audit.extraEnvs[1].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
+| elasticsearch-audit.extraEnvs[1].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| elasticsearch-audit.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255 |
+| elasticsearch-audit.nameOverride | string | `"elasticsearch-aas"` |  |
+| elasticsearch-audit.replicas | int | `1` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.replicas | int | `1` |  |
-| elasticsearchAudit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
-| elasticsearchAudit.clusterName | string | `"elasticsearch-aas"` |  |
-| elasticsearchAudit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
-| elasticsearchAudit.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
-| elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
-| elasticsearchAudit.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
-| elasticsearchAudit.extraEnvs[1].name | string | `"ELASTIC_PASSWORD"` |  |
-| elasticsearchAudit.extraEnvs[1].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
-| elasticsearchAudit.extraEnvs[1].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
-| elasticsearchAudit.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
-| elasticsearchAudit.ingress.enabled | bool | `false` |  |
-| elasticsearchAudit.ingress.hosts[0].paths[0].path | string | `"/elasticsearch(/|$)(.*)"` |  |
-| elasticsearchAudit.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| elasticsearchAudit.nameOverride | string | `"elasticsearch-aas"` |  |
-| elasticsearchAudit.replicas | int | `1` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
 | global.auditIndex.password | string | `nil` | Elasticsearch password |
@@ -285,7 +282,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | kibana-audit.enabled | bool | `true` |  |
 | kibana-audit.extraEnvs | list | `[{"name":"SERVER_BASEPATH","value":"/kibana"},{"name":"SERVER_REWRITEBASEPATH","value":"true"},{"name":"ELASTICSEARCH_HOSTS","valueFrom":{"configMapKeyRef":{"key":"AUDIT_ELASTICSEARCH_URL","name":"alfresco-infrastructure"}}},{"name":"SERVER_PUBLICBASEURL","valueFrom":{"configMapKeyRef":{"key":"AUDIT_SERVER_PUBLICBASEURL","name":"alfresco-infrastructure"}}},{"name":"ELASTICSEARCH_USERNAME","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_USERNAME","name":"alfresco-aas-elasticsearch-secret"}}},{"name":"ELASTICSEARCH_PASSWORD","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_PASSWORD","name":"alfresco-aas-elasticsearch-secret"}}}]` | All of the values has to be set there to escape the issue with overriding the values |
 | kibana-audit.healthCheckPath | string | `"/kibana/app/kibana"` |  |
-| kibana-audit.ingress.enabled | bool | `false` |  |
+| kibana-audit.ingress.enabled | bool | `true` |  |
 | kibana-audit.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | kibana-audit.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | messageBroker.brokerName | string | `nil` | name of the message broker as set in the Broker configuration |

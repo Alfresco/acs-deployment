@@ -90,7 +90,7 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
-elasticsearchAudit:
+elasticsearch-audit:
   enabled: false
 kibana-audit:
   enabled: false

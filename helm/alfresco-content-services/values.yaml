@@ -551,7 +551,7 @@ elasticsearch:
   enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-elasticsearchAudit:
+elasticsearch-audit:
   # -- Enables the embedded elasticsearch cluster for alfresco-audit-storage
   enabled: true
   nameOverride: elasticsearch-aas
@@ -570,13 +570,9 @@ elasticsearchAudit:
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_PASSWORD
   ingress:
+    # -- toggle deploying elasticsearch-audit ingress for more details about configuration check
+    # https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255
     enabled: false
-    annotations: 
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    hosts:
-      - paths:
-          - path: /elasticsearch(/|$)(.*)
-            pathType: Prefix
 alfresco-audit-storage:
   enabled: true
   image:
@@ -631,7 +627,7 @@ kibana-audit:
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_PASSWORD
   ingress:
-    enabled: false
+    enabled: true
     hosts:
       - paths:
           - path: /kibana
