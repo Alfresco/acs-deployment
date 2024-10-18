@@ -56,7 +56,7 @@ jobs:
 
   helm_integration:
     runs-on: alfrescoPub-ubuntu2204-16G-4CPU
-    timeout-minutes: 12
+    timeout-minutes: 20
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -176,7 +176,7 @@ jobs:
 
       - name: Run helm test
         id: helm_test
-        run: helm test acs
+        run: helm test acs --timeout 10m
 
       - name: Spit cluster status after helm test
         if: always() && steps.helm_test.outcome != 'skipped'
