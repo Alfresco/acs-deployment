@@ -280,7 +280,22 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
 | kibana-audit.elasticsearchHosts | string | `""` | Makes sure there is no default elasticsearch hosts defined |
 | kibana-audit.enabled | bool | `true` |  |
-| kibana-audit.extraEnvs | list | `[{"name":"SERVER_BASEPATH","value":"/kibana"},{"name":"SERVER_REWRITEBASEPATH","value":"true"},{"name":"ELASTICSEARCH_HOSTS","valueFrom":{"configMapKeyRef":{"key":"AUDIT_ELASTICSEARCH_URL","name":"alfresco-infrastructure"}}},{"name":"SERVER_PUBLICBASEURL","valueFrom":{"configMapKeyRef":{"key":"AUDIT_SERVER_PUBLICBASEURL","name":"alfresco-infrastructure"}}},{"name":"ELASTICSEARCH_USERNAME","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_USERNAME","name":"alfresco-aas-elasticsearch-secret"}}},{"name":"ELASTICSEARCH_PASSWORD","valueFrom":{"secretKeyRef":{"key":"AUDIT_ELASTICSEARCH_PASSWORD","name":"alfresco-aas-elasticsearch-secret"}}}]` | All of the values has to be set there to escape the issue with overriding the values |
+| kibana-audit.extraEnvs[0].name | string | `"SERVER_BASEPATH"` |  |
+| kibana-audit.extraEnvs[0].value | string | `"/kibana"` |  |
+| kibana-audit.extraEnvs[1].name | string | `"SERVER_REWRITEBASEPATH"` |  |
+| kibana-audit.extraEnvs[1].value | string | `"true"` |  |
+| kibana-audit.extraEnvs[2].name | string | `"ELASTICSEARCH_HOSTS"` |  |
+| kibana-audit.extraEnvs[2].valueFrom.configMapKeyRef.key | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
+| kibana-audit.extraEnvs[2].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
+| kibana-audit.extraEnvs[3].name | string | `"SERVER_PUBLICBASEURL"` |  |
+| kibana-audit.extraEnvs[3].valueFrom.configMapKeyRef.key | string | `"AUDIT_SERVER_PUBLICBASEURL"` |  |
+| kibana-audit.extraEnvs[3].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
+| kibana-audit.extraEnvs[4].name | string | `"ELASTICSEARCH_USERNAME"` |  |
+| kibana-audit.extraEnvs[4].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
+| kibana-audit.extraEnvs[4].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| kibana-audit.extraEnvs[5].name | string | `"ELASTICSEARCH_PASSWORD"` |  |
+| kibana-audit.extraEnvs[5].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
+| kibana-audit.extraEnvs[5].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | kibana-audit.healthCheckPath | string | `"/kibana/app/kibana"` |  |
 | kibana-audit.ingress.enabled | bool | `true` |  |
 | kibana-audit.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
