@@ -62,6 +62,19 @@ global:
     # -- Name of an existing secret that contains SOLR_SECRET key when flavour
     # is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
     existingSecretName: null
+  auditIndex:
+    # -- Elasticsearch URL
+    url: null
+    # -- Elasticsearch username
+    username: null
+    # -- Elasticsearch password
+    password: null
+    # -- Name of the secret managed by this chart
+    secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
+    # -- Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys.
+    existingSecretName: null
+    # -- Base url for kibana environment variable `SERVER_PUBLICBASEURL` 
+    publicBaseUrl: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -538,6 +551,87 @@ elasticsearch:
   enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+elasticsearch-audit:
+  # -- Enables the embedded elasticsearch cluster for alfresco-audit-storage
+  enabled: false
+  nameOverride: elasticsearch-aas
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+  clusterName: elasticsearch-aas
+  extraEnvs:
+    - name: ELASTIC_USERNAME
+      valueFrom:
+        secretKeyRef: 
+          name: *aas_elasticsearch_secretName
+          key: AUDIT_ELASTICSEARCH_USERNAME
+    - name: ELASTIC_PASSWORD
+      valueFrom:
+        secretKeyRef: 
+          name: *aas_elasticsearch_secretName
+          key: AUDIT_ELASTICSEARCH_PASSWORD
+  ingress:
+    # -- toggle deploying elasticsearch-audit ingress for more details about configuration check
+    # https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255
+    enabled: false
+alfresco-audit-storage:
+  enabled: false
+  image:
+    repository: quay.io/alfresco/alfresco-audit-storage
+    tag: 0.0.1-A8
+  messageBroker:
+    existingConfigMap:
+      # -- Name of the configmap which holds the message broker URL
+      name: *infrastructure_cmName
+    existingSecret:
+      # -- Name of the configmap which holds the message broker credentials
+      name: *acs_messageBroker_secretName
+  index:
+    existingConfigMap:
+      name: *infrastructure_cmName
+      keys:
+        url: AUDIT_ELASTICSEARCH_URL
+    existingSecret:
+      name: *aas_elasticsearch_secretName
+      keys:
+        username: AUDIT_ELASTICSEARCH_USERNAME
+        password: AUDIT_ELASTICSEARCH_PASSWORD
+kibana-audit:
+  enabled: false
+  healthCheckPath: "/kibana/app/kibana"
+  # -- Makes sure there is no default elasticsearch hosts defined
+  elasticsearchHosts: ""
+  # All of the values has to be set there to escape the issue with overriding the values
+  extraEnvs:
+    - name: SERVER_BASEPATH
+      value: "/kibana"
+    - name: SERVER_REWRITEBASEPATH
+      value: "true"
+    - name: ELASTICSEARCH_HOSTS
+      valueFrom:
+        configMapKeyRef: 
+          name: *infrastructure_cmName
+          key: AUDIT_ELASTICSEARCH_URL
+    - name: SERVER_PUBLICBASEURL
+      valueFrom:
+        configMapKeyRef: 
+          name: *infrastructure_cmName
+          key: AUDIT_SERVER_PUBLICBASEURL
+    - name: ELASTICSEARCH_USERNAME
+      valueFrom:
+        secretKeyRef: 
+          name: *aas_elasticsearch_secretName
+          key: AUDIT_ELASTICSEARCH_USERNAME
+    - name: ELASTICSEARCH_PASSWORD
+      valueFrom:
+        secretKeyRef: 
+          name: *aas_elasticsearch_secretName
+          key: AUDIT_ELASTICSEARCH_PASSWORD
+  ingress:
+    enabled: true
+    hosts:
+      - paths:
+          - path: /kibana
+            pathType: Prefix
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false
