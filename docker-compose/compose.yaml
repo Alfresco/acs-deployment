@@ -87,7 +87,8 @@ services:
       retries: 3
       start_period: 20s
     depends_on:
-      - activemq
+      activemq:
+        condition: service_healthy
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.4
     mem_limit: 1536m
@@ -107,7 +108,8 @@ services:
       retries: 3
       start_period: 10s
     depends_on:
-      - activemq
+      activemq:
+        condition: service_healthy
   shared-file-store:
     image: quay.io/alfresco/alfresco-shared-file-store:4.1.4
     mem_limit: 512m
@@ -166,7 +168,7 @@ services:
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
       interval: 10s
       timeout: 3s
       retries: 3
@@ -187,6 +189,12 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
   kibana:
     image: kibana:7.17.3
     mem_limit: 1g
@@ -195,13 +203,20 @@ services:
     ports:
       - "5601:5601"
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -o /dev/null -w '%{http_code}' http://localhost:5601/status | grep -q '200'"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
   search:
     image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0
     mem_limit: 1g
     depends_on:
       elasticsearch:
-        condition: service_started
+        condition: service_healthy
       search-reindexing:
         condition: service_completed_successfully
     environment:
@@ -231,9 +246,9 @@ services:
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
     depends_on:
       postgres:
-        condition: service_started
+        condition: service_healthy
       elasticsearch:
-        condition: service_started
+        condition: service_healthy
       alfresco:
         condition: service_healthy
   activemq:
@@ -259,14 +274,16 @@ services:
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
       AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health/readiness"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
       interval: 60s
       timeout: 10s
       retries: 3
       start_period: 15s
     depends_on:
-      - activemq
-      - elasticsearch
+      activemq:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
   digital-workspace:
     image: quay.io/alfresco/alfresco-digital-workspace:5.1.0
     mem_limit: 128m
@@ -322,11 +339,13 @@ services:
       - "--entryPoints.traefik.address=:8888"
       - "--accesslog=true"
       - "--providers.docker.exposedByDefault=false"
+      - "--ping.entrypoint=web"
+      - "--ping=true"
     ports:
       - "8080:8080"
       - "8888:8888"
     healthcheck:
-      test: ["CMD", "traefik", "healthcheck"]
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
       interval: 20s
       timeout: 10s
       retries: 3
