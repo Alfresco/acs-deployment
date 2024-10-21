@@ -61,7 +61,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
 | alfresco-ai-transformer.sfs.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
-| alfresco-audit-storage.enabled | bool | `true` |  |
+| alfresco-audit-storage.enabled | bool | `false` |  |
 | alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
 | alfresco-audit-storage.image.tag | string | `"0.0.1-A8"` |  |
 | alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
@@ -241,7 +241,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.tag | string | `"v1.5.5"` |  |
 | elasticsearch-audit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch-audit.clusterName | string | `"elasticsearch-aas"` |  |
-| elasticsearch-audit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
+| elasticsearch-audit.enabled | bool | `false` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
 | elasticsearch-audit.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
 | elasticsearch-audit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
 | elasticsearch-audit.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
@@ -279,7 +279,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
 | kibana-audit.elasticsearchHosts | string | `""` | Makes sure there is no default elasticsearch hosts defined |
-| kibana-audit.enabled | bool | `true` |  |
+| kibana-audit.enabled | bool | `false` |  |
 | kibana-audit.extraEnvs[0].name | string | `"SERVER_BASEPATH"` |  |
 | kibana-audit.extraEnvs[0].value | string | `"/kibana"` |  |
 | kibana-audit.extraEnvs[1].name | string | `"SERVER_REWRITEBASEPATH"` |  |
