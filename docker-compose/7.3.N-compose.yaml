@@ -297,7 +297,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 20s
+      start_period: 40s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
