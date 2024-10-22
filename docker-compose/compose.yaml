@@ -172,6 +172,7 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+      start_period: 5s
   elasticsearch:
     image: elasticsearch:7.17.3
     environment:
@@ -264,6 +265,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 5s
   audit-storage:
     image: quay.io/alfresco/alfresco-audit-storage:0.0.1-A8
     mem_limit: 512m
@@ -299,7 +301,7 @@ services:
       interval: 10s
       timeout: 1s
       retries: 3
-      start_period: 0s
+      start_period: 1s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
@@ -320,7 +322,7 @@ services:
       interval: 10s
       timeout: 1s
       retries: 3
-      start_period: 0s
+      start_period: 1s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
