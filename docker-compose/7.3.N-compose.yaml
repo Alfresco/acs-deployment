@@ -53,6 +53,12 @@ services:
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 1m
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
@@ -76,8 +82,15 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8095:8095"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8095/actuator/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
     depends_on:
-      - activemq
+      activemq:
+        condition: service_healthy
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:3.1.2
     mem_limit: 1536m
@@ -90,8 +103,15 @@ services:
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
       - "8090:8090"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/ready"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     depends_on:
-      - activemq
+      activemq:
+        condition: service_healthy
   shared-file-store:
     image: quay.io/alfresco/alfresco-shared-file-store:2.1.2
     mem_limit: 512m
@@ -103,6 +123,12 @@ services:
       scheduler.cleanup.interval: 86400000
     ports:
       - "8099:8099"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8099/ready"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
@@ -120,6 +146,12 @@ services:
         -Dalfresco.port=8080
         -Dalfresco.context=alfresco
         -Dalfresco.protocol=http
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/share"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
@@ -137,6 +169,12 @@ services:
     command: postgres -c max_connections=300 -c log_min_messages=LOG
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
   solr6:
     image: quay.io/alfresco/search-services:2.0.12
     mem_limit: 2g
@@ -164,6 +202,12 @@ services:
       - "5672:5672" # AMQP
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
+    healthcheck:
+      test: ["CMD", "/opt/activemq/bin/activemq", "query", "--objname", "type=Broker,brokerName=*,service=Health", "|", "grep", "Good"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
   digital-workspace:
     image: quay.io/alfresco/alfresco-digital-workspace:4.4.1
     mem_limit: 128m
@@ -171,6 +215,12 @@ services:
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 10s
+      timeout: 1s
+      retries: 3
+      start_period: 1s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
@@ -186,6 +236,12 @@ services:
       APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 10s
+      timeout: 1s
+      retries: 3
+      start_period: 1s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
@@ -204,9 +260,17 @@ services:
       - "--entryPoints.traefik.address=:8888"
       - "--accesslog=true"
       - "--providers.docker.exposedByDefault=false"
+      - "--ping.entrypoint=web"
+      - "--ping=true"
     ports:
       - "8080:8080"
       - "8888:8888"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     security_opt:
       - label=disable # Required for accessing the Docker socket on Selinux enabled systems
     volumes:
@@ -228,6 +292,12 @@ services:
         -XX:MaxRAMPercentage=80
     ports:
       - "9090:9090"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
