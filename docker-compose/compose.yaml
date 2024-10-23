@@ -218,8 +218,8 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
-      search-reindexing:
-        condition: service_completed_successfully
+      transform-core-aio:
+        condition: service_healthy
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
