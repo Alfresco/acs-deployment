@@ -379,6 +379,13 @@ services:
       timeout: 10s
       retries: 3
       start_period: 20s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      activemq:
+        condition: service_healthy
+      alfresco:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
