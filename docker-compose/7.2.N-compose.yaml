@@ -311,8 +311,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      activemq:
-        condition: service_healthy
       alfresco:
         condition: service_healthy
     labels:
