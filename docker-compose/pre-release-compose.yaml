@@ -202,8 +202,8 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
-      search-reindexing:
-        condition: service_completed_successfully
+      transform-core-aio:
+        condition: service_healthy
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
@@ -343,6 +343,13 @@ services:
       timeout: 10s
       retries: 3
       start_period: 20s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      activemq:
+        condition: service_healthy
+      alfresco:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
