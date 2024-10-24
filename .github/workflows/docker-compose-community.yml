@@ -21,7 +21,10 @@ jobs:
     name: Docker Compose community
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938  # v4.2.0
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v7.0.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v8.1.0
         with:
           compose_file_path: docker-compose/community-compose.yaml
+          postman_path: test/postman/docker-compose
+          postman_json: acs-test-docker-compose-collection.json
