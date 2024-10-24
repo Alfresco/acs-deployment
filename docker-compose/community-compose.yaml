@@ -69,7 +69,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090/ready"]
       interval: 20s
-      timeout: 10s
+      timeout: 2s
       retries: 3
       start_period: 10s
     depends_on:
@@ -93,9 +93,12 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/share"]
       interval: 20s
-      timeout: 5s
+      timeout: 2s
       retries: 3
       start_period: 15s
+    depends_on:
+      alfresco:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"

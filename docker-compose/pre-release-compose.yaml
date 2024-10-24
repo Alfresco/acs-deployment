@@ -82,12 +82,14 @@ services:
       - "8095:8095"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8095/actuator/health"]
-      interval: 60s
-      timeout: 10s
+      interval: 10s
+      timeout: 2s
       retries: 3
       start_period: 20s
     depends_on:
       activemq:
+        condition: service_healthy
+      shared-file-store:
         condition: service_healthy
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.5-A1
@@ -104,11 +106,13 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090/ready"]
       interval: 20s
-      timeout: 10s
+      timeout: 2s
       retries: 3
       start_period: 10s
     depends_on:
       activemq:
+        condition: service_healthy
+      shared-file-store:
         condition: service_healthy
   shared-file-store:
     image: quay.io/alfresco/alfresco-shared-file-store:4.1.5-A1
@@ -124,7 +128,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8099/ready"]
       interval: 20s
-      timeout: 10s
+      timeout: 2s
       retries: 3
       start_period: 10s
     volumes:
@@ -147,9 +151,12 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/share"]
       interval: 20s
-      timeout: 5s
+      timeout: 2s
       retries: 3
       start_period: 15s
+    depends_on:
+      alfresco:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
@@ -199,11 +206,6 @@ services:
   search:
     image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0
     mem_limit: 1g
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-      transform-core-aio:
-        condition: service_healthy
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
@@ -214,9 +216,16 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
       interval: 20s
-      timeout: 20s
+      timeout: 2s
       retries: 3
       start_period: 20s
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      transform-core-aio:
+        condition: service_healthy
+      shared-file-store:
+        condition: service_healthy
   search-reindexing:
     image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.1.0
     mem_limit: 1g
@@ -340,7 +349,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
       interval: 30s
-      timeout: 10s
+      timeout: 2s
       retries: 3
       start_period: 20s
     depends_on:

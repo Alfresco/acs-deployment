@@ -55,9 +55,11 @@ jobs:
     steps:
       - name: Verify docker-compose
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v8.0.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v8.1.0
         timeout-minutes: 10
         with:
+          postman_path: test/postman/docker-compose
+          postman_json: acs-test-docker-compose-collection.json
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
