@@ -577,7 +577,7 @@ alfresco-audit-storage:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-audit-storage
-    tag: 0.0.1-A8
+    tag: 0.0.1-A9
   messageBroker:
     existingConfigMap:
       # -- Name of the configmap which holds the message broker URL
