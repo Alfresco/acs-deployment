@@ -214,7 +214,7 @@ services:
       elasticsearch:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5601/status"]
+      test: ["CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status"]
       interval: 10s
       timeout: 2s
       retries: 5
