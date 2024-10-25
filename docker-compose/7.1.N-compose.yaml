@@ -66,7 +66,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
-      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/`)"
+      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
       - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
@@ -113,7 +113,7 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090/ready"]
       interval: 20s
-      timeout: 10s
+      timeout: 2s
       retries: 3
       start_period: 10s
     depends_on:
@@ -170,7 +170,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
       - "traefik.http.services.share.loadbalancer.server.port=8080"
-      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/.*$`)"
+      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
       - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
       - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
   postgres:
@@ -223,15 +223,18 @@ services:
     image: quay.io/alfresco/alfresco-digital-workspace:4.4.1
     mem_limit: 128m
     environment:
+      APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
+      APP_CONFIG_PLUGIN_PROCESS_SERVICE: "false"
+      APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
-      - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
       - "traefik.http.middlewares.adwforceslash.redirectregex.regex=^(.*/workspace)$$"
       - "traefik.http.middlewares.adwforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
       - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
       - "traefik.http.routers.adw.middlewares=adwchain@docker"
     healthcheck:
@@ -287,8 +290,8 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
       interval: 30s
       timeout: 2s
-      retries: 5
-      start_period: 40s
+      retries: 3
+      start_period: 20s
     depends_on:
       postgres:
         condition: service_healthy

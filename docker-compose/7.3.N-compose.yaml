@@ -63,7 +63,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
-      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/`)"
+      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
       - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
@@ -219,8 +219,11 @@ services:
     image: quay.io/alfresco/alfresco-digital-workspace:4.4.1
     mem_limit: 128m
     environment:
+      APP_CONFIG_PROVIDER: "ECM"
       APP_CONFIG_AUTH_TYPE: "BASIC"
       BASE_PATH: ./
+      APP_CONFIG_PLUGIN_PROCESS_SERVICE: "false"
+      APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
       APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/"]
@@ -303,8 +306,8 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
       interval: 30s
       timeout: 2s
-      retries: 5
-      start_period: 40s
+      retries: 3
+      start_period: 20s
     depends_on:
       postgres:
         condition: service_healthy
