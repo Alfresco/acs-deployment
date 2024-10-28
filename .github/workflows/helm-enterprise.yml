@@ -122,6 +122,10 @@ jobs:
             echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml \
               --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
           fi
+          if [ "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
+            echo "Enabling clustered tests with 2 replicas"
+            echo "helm_install_params=--set alfresco-repository.replicaCount=2" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Add dependency chart repos
         run: |
