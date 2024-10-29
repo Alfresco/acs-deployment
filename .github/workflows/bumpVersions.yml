@@ -32,7 +32,7 @@ jobs:
     name: Helm charts dependencies
     if: inputs.update-type == 'charts'
     steps:
-      - uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938  # v4.2.0
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
@@ -52,9 +52,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v7.0.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v8.1.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v7.0.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v8.1.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -76,7 +76,7 @@ jobs:
     if: inputs.update-type == 'values'
     steps:
       - name: Checkout
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938  # v4.2.0
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
@@ -86,7 +86,7 @@ jobs:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
       - name: Checkout updatecli configs
-        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938  # v4.2.0
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
         with:
           repository: alfresco/alfresco-updatecli
           ref: ${{ inputs.alfresco-updatecli-ref || env.DEFAULT_BRANCH_NAME }}
@@ -107,9 +107,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v7.0.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v8.1.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v7.0.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v8.1.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
