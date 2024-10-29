@@ -115,12 +115,16 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [ "${{ matrix.values }}" = "values.yaml" -o "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
+          if [ "${{ matrix.values }}" = "values.yaml" ]; then
             echo "Enabling clustered tests via auto-scaling: 2 replicas max"
             echo "Renditions tests will be skipped because particularly flaky on clustered runs"
 
             echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml \
               --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
+          fi
+          if [ "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
+            echo "Enabling clustered tests with 2 replicas"
+            echo "helm_install_params=--set alfresco-repository.replicaCount=2" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Add dependency chart repos
@@ -193,7 +197,7 @@ jobs:
 
       - name: Check HPA behavior during tests
         id: hpa_check
-        if: always() && (matrix.values == 'values.yaml' || matrix.values == 'pre-release_values.yaml') && steps.helm_test.outcome != 'skipped'
+        if: always() && (matrix.values == 'values.yaml') && steps.helm_test.outcome != 'skipped'
         run: |
           echo "Checking current repo hpa status"
           kubectl get hpa acs-alfresco-repository
