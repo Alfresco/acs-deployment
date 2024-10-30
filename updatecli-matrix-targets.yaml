@@ -157,7 +157,7 @@ matrix:
       helm_key: $.share.image.tag
     search:
       version:
-      compose_target: docker-compose/solr6-override-compose.yaml
+      compose_target: docker-compose/solr6-overrides.yaml
       compose_key: $.services.solr6.image
       helm_target: *helmvaluesCurrent
       helm_keys: *search_helm_keys
