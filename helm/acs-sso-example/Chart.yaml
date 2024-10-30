@@ -19,7 +19,6 @@ description: |
 
   :warning: All components have persistence disabled so all data is lost after a
   deployment is destroyed or rolled back!
-
 type: application
 version: 1.0.0
 appVersion: 23.2.2
@@ -33,18 +32,18 @@ dependencies:
     alias: repository-database
   - name: keycloakx
     repository: https://codecentric.github.io/helm-charts
-    version: 2.4.3
+    version: 2.5.1
   - name: alfresco-repository
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.6.0
+    version: 0.7.2
   - name: activemq
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 3.5.4
+    version: 3.6.0-alpha.0
   - name: alfresco-share
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 1.0.0
+    version: 1.2.0-alpha.0
   - name: alfresco-adf-app
     alias: alfresco-content-app
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.1.1
+    version: 0.2.0-alpha.0
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

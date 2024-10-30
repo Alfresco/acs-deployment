@@ -37,11 +37,11 @@ deployment is destroyed or rolled back!
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.4 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-content-app(alfresco-adf-app) | 0.1.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 1.0.0 |
-| https://codecentric.github.io/helm-charts | keycloakx | 2.4.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-content-app(alfresco-adf-app) | 0.2.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.7.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 1.2.0-alpha.0 |
+| https://codecentric.github.io/helm-charts | keycloakx | 2.5.1 |
 | oci://registry-1.docker.io/bitnamicharts | repository-database(postgresql) | 13.4.0 |
 
 ## Values

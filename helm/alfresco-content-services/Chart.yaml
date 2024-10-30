@@ -61,7 +61,7 @@ dependencies:
     version: 6.1.0-alpha.0
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 4.2.0-alpha.1
+    version: 4.2.0-alpha.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
@@ -93,7 +93,7 @@ dependencies:
   - name: kibana
     alias: kibana-audit
     repository: https://helm.elastic.co
-    version: 7.17.3
+    version: 8.5.1
     condition: kibana-audit.enabled
   - name: alfresco-audit-storage
     version: 0.1.0-alpha.0
