@@ -18,7 +18,7 @@
 # 
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.1.1.10
+    image: quay.io/alfresco/alfresco-content-repository:7.1.1.9
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -142,7 +142,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:7.1.1.10
+    image: quay.io/alfresco/alfresco-share:7.1.1.9
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -190,7 +190,7 @@ services:
       retries: 3
       start_period: 5s
   solr6:
-    image: quay.io/alfresco/search-services:2.0.2.2
+    image: quay.io/alfresco/search-services:2.0.12
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco

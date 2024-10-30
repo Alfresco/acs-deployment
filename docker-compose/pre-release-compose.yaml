@@ -69,7 +69,7 @@ services:
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.1.5-A1
+    image: quay.io/alfresco/alfresco-transform-router:4.1.5-A2
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -92,7 +92,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.5-A1
+    image: alfresco/alfresco-transform-core-aio:5.1.5-A2
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -115,7 +115,7 @@ services:
       shared-file-store:
         condition: service_healthy
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.1.5-A1
+    image: quay.io/alfresco/alfresco-shared-file-store:4.1.5-A2
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -204,7 +204,7 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.1.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.2.0-A3
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -227,7 +227,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.1.0
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.2.0-A3
     mem_limit: 1g
     restart: on-failure:5
     environment:
