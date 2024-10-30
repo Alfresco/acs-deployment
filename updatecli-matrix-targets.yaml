@@ -727,7 +727,7 @@ matrix:
       version:
       helm_target: *helmvalues71
       helm_key: $.alfresco-transform-service.tika.image.tag
-  community:
+  community: &community
     id: com
     acs:
       version:
@@ -775,3 +775,39 @@ matrix:
       pattern:
       compose_target: *composeOss
       compose_key: $.services.content-app.image
+  sso-example:
+    <<: *community
+    id: ssoExample
+    search: null
+    tengine-aio:
+    adminApp:
+    acs:
+      version:
+      compose_target:
+      compose_key:
+      helm_target: &helmvaluesSso >-
+        helm/acs-sso-example/values.yaml
+      helm_key: $.alfresco-repository.image.tag
+      pattern:
+      image:
+    activemq:
+      version:
+      helm_target: *helmvaluesSso
+      helm_key: $.activemq.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      compose_target:
+      compose_key:
+      helm_target: *helmvaluesSso
+      helm_key: $.alfresco-share.image.tag
+      pattern:
+      image:
+    aca:
+      version:
+      pattern:
+      compose_target:
+      compose_key:
+      helm_target: *helmvaluesSso
+      helm_key: $.alfresco-content-app.image.tag
