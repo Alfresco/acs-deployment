@@ -17,5 +17,6 @@ autodiscovery:
           dependencies:
             postgresql: ">0.0.1"
             elasticsearch: ">0.0.1"
-        # Skip example charts we want to update manually
         - path: helm/acs-sso-example
+          dependencies:
+            postgresql: ">0.0.1"
