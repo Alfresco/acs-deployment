@@ -275,26 +275,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
-  audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:0.0.1-A8
-    mem_limit: 512m
-    environment:
-      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
-      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
-      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
-      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
-      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
-      interval: 60s
-      timeout: 2s
-      retries: 3
-      start_period: 15s
-    depends_on:
-      activemq:
-        condition: service_healthy
-      elasticsearch:
-        condition: service_healthy
   digital-workspace:
     image: quay.io/alfresco/alfresco-digital-workspace:5.1.0
     mem_limit: 128m
