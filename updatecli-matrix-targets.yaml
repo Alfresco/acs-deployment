@@ -778,7 +778,8 @@ matrix:
   sso-example:
     <<: *community
     id: ssoExample
-    search: null
+    activemq:
+    search:
     tengine-aio:
     adminApp:
     acs:
@@ -788,12 +789,6 @@ matrix:
       helm_target: &helmvaluesSso >-
         helm/acs-sso-example/values.yaml
       helm_key: $.alfresco-repository.image.tag
-      pattern:
-      image:
-    activemq:
-      version:
-      helm_target: *helmvaluesSso
-      helm_key: $.activemq.image.tag
       pattern:
       image:
     share:
