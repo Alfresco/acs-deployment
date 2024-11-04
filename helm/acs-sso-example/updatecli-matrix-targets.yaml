@@ -11,12 +11,6 @@ matrix:
       helm_key: $.alfresco-repository.image.tag
       pattern:
       image:
-    activemq:
-      version:
-      helm_target: *helmvaluesSso
-      helm_key: $.activemq.image.tag
-      pattern:
-      image:
     share:
       version:
       helm_target: *helmvaluesSso
