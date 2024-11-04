@@ -1,0 +1,31 @@
+---
+# This file is meant to be used with updatecli uber-manifest pipeline
+# https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
+matrix:
+  community:
+    id: ssoExample
+    acs:
+      version:
+      helm_target: &helmvaluesSso >-
+        helm/acs-sso-example/values.yaml
+      helm_key: $.alfresco-repository.image.tag
+      pattern:
+      image:
+    activemq:
+      version:
+      helm_target: *helmvaluesSso
+      helm_key: $.activemq.image.tag
+      pattern:
+      image:
+    share:
+      version:
+      helm_target: *helmvaluesSso
+      helm_key: $.alfresco-share.image.tag
+      pattern:
+      image:
+    aca:
+      helm_target: *helmvaluesSso
+      helm_key: $.alfresco-content-app.image.tag
+      version:
+      pattern:
+      image:
