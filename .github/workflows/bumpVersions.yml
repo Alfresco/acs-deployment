@@ -96,7 +96,7 @@ jobs:
         shell: bash
         run: |
           for i in helm/*/updatecli-matrix-targets.yaml; do CHART=$(basename $(dirname $i))
-             echo "Building UpdateCli manifest for chart $CHART"
+             echo -e "\n###### Building UpdateCli manifest for chart ${CHART}\n"
              yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' ${i} | tee ./${CHART}_merged.yaml
              updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./${CHART}_merged.yaml
           done
