@@ -185,7 +185,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.2.1
+    tag: 23.3.0
   configuration:
     repository:
       existingConfigMap: repository-properties
@@ -214,7 +214,7 @@ alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
-    tag: 23.2.1
+    tag: 23.3.2
   repository:
     existingConfigMap:
       name: share-repository
