@@ -190,7 +190,7 @@ services:
       retries: 3
       start_period: 5s
   solr6:
-    image: quay.io/alfresco/search-services:2.0.12
+    image: quay.io/alfresco/search-services:2.0.2.2
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
