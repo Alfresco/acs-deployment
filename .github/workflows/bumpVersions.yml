@@ -95,10 +95,10 @@ jobs:
       - name: Build manifest and run UpdateCli pipelines
         shell: bash
         run: |
-          for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do CHART=$(basename $(dirname $i))
-             echo -e "\n###### Building UpdateCli manifest for chart ${CHART}\n"
-             yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' ${i} | tee ./${CHART}_merged.yaml
-             updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./${CHART}_merged.yaml
+          for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do TARGET=$(basename $(dirname $i))
+             echo -e "\n###### Building UpdateCli manifest for ${TARGET}\n"
+             yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' ${i} | tee ./${TARGET}_merged.yaml
+             updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./${TARGET}_merged.yaml
           done
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
