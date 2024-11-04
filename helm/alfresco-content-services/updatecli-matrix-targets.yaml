@@ -83,8 +83,6 @@ matrix:
       version:
       helm_target: *helmvaluesNext
       helm_key: $.alfresco-transform-service.filestore.image.tag
-    tengine-aio:
-      version:
     tengine-misc:
       version:
       helm_target: *helmvaluesNext
@@ -187,8 +185,6 @@ matrix:
       version:
       helm_target: *helmvaluesCurrent
       helm_key: $.alfresco-transform-service.filestore.image.tag
-    tengine-aio:
-      version:
     tengine-misc:
       version:
       helm_target: *helmvaluesCurrent
@@ -289,8 +285,6 @@ matrix:
       version:
       helm_target: *helmvalues74
       helm_key: $.alfresco-transform-service.filestore.image.tag
-    tengine-aio:
-      version:
     tengine-misc:
       version:
       helm_target: *helmvalues74
@@ -390,8 +384,6 @@ matrix:
       version:
       helm_target: *helmvalues73
       helm_key: $.alfresco-transform-service.filestore.image.tag
-    tengine-aio:
-      version:
     tengine-misc:
       version:
       helm_target: *helmvalues73
@@ -491,8 +483,6 @@ matrix:
       version:
       helm_target: *helmvalues72
       helm_key: $.alfresco-transform-service.filestore.image.tag
-    tengine-aio:
-      version:
     tengine-misc:
       version:
       helm_target: *helmvalues72
@@ -587,8 +577,6 @@ matrix:
       version:
       helm_target: *helmvalues71
       helm_key: $.alfresco-transform-service.filestore.image.tag
-    tengine-aio:
-      version:
     tengine-misc:
       version:
       helm_target: *helmvalues71
@@ -636,8 +624,6 @@ matrix:
       helm_key: $.alfresco-search.searchServicesImage.tag
       pattern:
       image:
-    tengine-aio:
-      version:
     adminApp:
       version:
       pattern:
