@@ -16,10 +16,10 @@ alfresco-transform-service:
       tag: 5.1.5-A2
   imagemagick:
     image:
-      tag: 5.1.5-A2
+      tag: 5.1.5-A3
   libreoffice:
     image:
-      tag: 5.1.5-A2
+      tag: 5.1.5-A3
   tika:
     image:
       tag: 5.1.5-A2
@@ -74,7 +74,7 @@ alfresco-sync-service:
     tag: 5.1.0-M2
 alfresco-connector-ms365:
   image:
-    tag: 2.0.4-A3
+    tag: 2.0.4-A4
 alfresco-connector-msteams:
   image:
     tag: 2.0.4-A2
