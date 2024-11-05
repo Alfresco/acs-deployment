@@ -19,7 +19,7 @@ alfresco-transform-service:
       tag: 5.1.5-A2
   libreoffice:
     image:
-      tag: 5.1.5-A2
+      tag: 5.1.5-A1
   tika:
     image:
       tag: 5.1.5-A2
