@@ -10,25 +10,25 @@ activemq:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.1.5-A2
+      tag: 4.1.5-A1
   pdfrenderer:
     image:
-      tag: 5.1.5-A2
+      tag: 5.1.5-A1
   imagemagick:
     image:
-      tag: 5.1.5-A3
+      tag: 5.1.5-A1
   libreoffice:
     image:
-      tag: 5.1.5-A3
+      tag: 5.1.5-A1
   tika:
     image:
-      tag: 5.1.5-A2
+      tag: 5.1.5-A1
   transformmisc:
     image:
-      tag: 5.1.5-A2
+      tag: 5.1.5-A1
   filestore:
     image:
-      tag: 4.1.5-A2
+      tag: 4.1.5-A1
 alfresco-ai-transformer:
   image:
     tag: 3.1.7-A3
