@@ -341,19 +341,19 @@ matrix:
       version:
       compose_target: *composeOss
       compose_key: $.services.solr6.image
-    pattern:
-    image:
-  tengine-aio:
-    version:
-    compose_target: *composeOss
-    compose_key: $.services.transform-core-aio.image
-  adminApp:
-    version:
-    pattern:
-    compose_target: *composeOss
-    compose_key: $.services.control-center.image
-  aca:
-    version:
-    pattern:
-    compose_target: *composeOss
-    compose_key: $.services.content-app.image
+      pattern:
+      image:
+    tengine-aio:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.transform-core-aio.image
+    adminApp:
+      version:
+      pattern:
+      compose_target: *composeOss
+      compose_key: $.services.control-center.image
+    aca:
+      version:
+      pattern:
+      compose_target: *composeOss
+      compose_key: $.services.content-app.image
