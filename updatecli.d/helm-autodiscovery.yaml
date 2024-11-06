@@ -15,8 +15,9 @@ autodiscovery:
         # Skip dependencies we are not interested to bump automatically (testing dependencies)
         - path: helm/alfresco-content-services
           dependencies:
-            postgresql: ">0.0.1"
-            elasticsearch: ">0.0.1"
+            postgresql: ">=13.0.0"
+            elasticsearch: ">=8.0.0"
+            kibana: ">=8.0.0"
         - path: helm/acs-sso-example
           dependencies:
-            postgresql: ">0.0.1"
+            postgresql: ">=14.0.0"
