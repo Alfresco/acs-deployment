@@ -71,8 +71,8 @@ keycloakx:
             webOrigins: >-
               {{ index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls" }}
         users:
-          # -- default Alfresco admin user
-          - username: admin
+          - # -- default Alfresco admin user
+            username: admin
             enabled: true
             credentials:
               - type: password

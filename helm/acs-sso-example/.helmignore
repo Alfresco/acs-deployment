@@ -21,5 +21,5 @@
 .idea/
 *.tmproj
 .vscode/
-# Do not include UpdateCli target matrix
+# Do not include Updatecli target matrix
 updatecli-matrix-targets.yaml
