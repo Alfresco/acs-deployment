@@ -20,8 +20,8 @@ description: |
   :warning: All components have persistence disabled so all data is lost after a
   deployment is destroyed or rolled back!
 type: application
-version: 1.0.0
-appVersion: 23.2.2
+version: 1.1.0-alpha.0
+appVersion: 23.3.0
 home: https://www.alfresco.com
 sources:
   - https://github.com/Alfresco/acs-deployment
