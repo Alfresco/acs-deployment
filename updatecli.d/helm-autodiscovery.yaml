@@ -21,3 +21,4 @@ autodiscovery:
         - path: helm/acs-sso-example
           dependencies:
             postgresql: ">=14.0.0"
+            keycloakx: ">=3.0.0"
