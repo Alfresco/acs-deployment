@@ -92,10 +92,11 @@ jobs:
           ref: ${{ inputs.alfresco-updatecli-ref || env.DEFAULT_BRANCH_NAME }}
           path: alfresco-updatecli
 
-      - name: Build manifest and run UpdateCli pipelines
+      - name: Build manifest and run Updatecli pipelines
         shell: bash
         run: |
-          for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do TARGET=$(basename $(dirname $i))
+          for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do
+             TARGET=$(basename $(dirname $i))
              echo -e "\n###### Building UpdateCli manifest for ${TARGET}\n"
              yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' ${i} | tee ./${TARGET}_merged.yaml
              updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./${TARGET}_merged.yaml
