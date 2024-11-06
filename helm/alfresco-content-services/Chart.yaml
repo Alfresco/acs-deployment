@@ -93,7 +93,7 @@ dependencies:
   - name: kibana
     alias: kibana-audit
     repository: https://helm.elastic.co
-    version: 8.5.1
+    version: 7.17.3
     condition: kibana-audit.enabled
   - name: alfresco-audit-storage
     version: 0.1.0-alpha.0
