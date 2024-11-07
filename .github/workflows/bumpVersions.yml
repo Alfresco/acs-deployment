@@ -92,16 +92,15 @@ jobs:
           ref: ${{ inputs.alfresco-updatecli-ref || env.DEFAULT_BRANCH_NAME }}
           path: alfresco-updatecli
 
-      - name: Preprocess values file appending existing keys only
+      - name: Build manifest and run Updatecli pipelines
         shell: bash
         run: |
-          yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") |
-          explode(.)' updatecli-matrix-targets.yaml |
-          tee ./merged.yaml
-
-      - name: updatecli apply
-        # path to values file must be relative https://github.com/updatecli/updatecli/issues/1253
-        run: updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./merged.yaml
+          for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do
+             TARGET=$(basename $(dirname $i))
+             echo -e "\n###### Building UpdateCli manifest for ${TARGET}\n"
+             yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' ${i} | tee ./${TARGET}_merged.yaml
+             updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./${TARGET}_merged.yaml
+          done
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}

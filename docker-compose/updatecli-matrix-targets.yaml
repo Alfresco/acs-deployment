@@ -1,0 +1,359 @@
+---
+# This file is meant to be used with updatecli uber-manifest pipeline
+# https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
+matrix:
+  next:
+    id: next
+    acs:
+      version:
+      pattern:
+      image:
+      compose_target: &composeNext >-
+        docker-compose/pre-release-compose.yaml
+      compose_key: $.services.alfresco.image
+    activemq:
+      version:
+      pattern:
+      image:
+    share:
+      version:
+      pattern:
+      image:
+      compose_target: *composeNext
+      compose_key: $.services.share.image
+    search-enterprise:
+      version:
+      pattern:
+      compose_target: *composeNext
+      compose_keys:
+        live-indexing: $.services.search.image
+        reindexing: $.services.search-reindexing.image
+    sync:
+      version:
+      compose_target: *composeNext
+      compose_key: $.services.sync-service.image
+      pattern:
+    adw:
+      version:
+      compose_target: *composeNext
+      compose_key: $.services.digital-workspace.image
+      pattern:
+    adminApp:
+      version:
+      compose_target: *composeNext
+      compose_key: $.services.control-center.image
+      pattern:
+    trouter:
+      version:
+      compose_target: *composeNext
+      compose_key: $.services.transform-router.image
+    sfs:
+      version:
+      compose_target: *composeNext
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      version:
+      compose_target: *composeNext
+      compose_key: $.services.transform-core-aio.image
+
+  current:
+    id: current
+    acs:
+      version:
+      pattern:
+      image:
+      compose_target: &composeCurrent >-
+        docker-compose/compose.yaml
+      compose_key: $.services.alfresco.image
+      # keep the unused anchor to detect multiple usages when copying blocks for new versions
+    activemq:
+      version:
+      pattern:
+      image:
+    share:
+      version:
+      pattern:
+      image:
+      compose_target: *composeCurrent
+      compose_key: $.services.share.image
+    search:
+      version:
+      compose_target: docker-compose/solr6-overrides.yaml
+      compose_key: $.services.solr6.image
+      image:
+      pattern:
+    search-enterprise:
+      version:
+      pattern:
+      compose_target: *composeCurrent
+      compose_keys:
+        live-indexing: $.services.search.image
+        reindexing: $.services.search-reindexing.image
+    sync:
+      version:
+      compose_target: *composeCurrent
+      compose_key: $.services.sync-service.image
+      pattern:
+    adw:
+      version:
+      compose_target: *composeCurrent
+      compose_key: $.services.digital-workspace.image
+      pattern:
+    adminApp:
+      version:
+      compose_target: *composeCurrent
+      compose_key: $.services.control-center.image
+      pattern:
+    trouter:
+      version:
+      compose_target: *composeCurrent
+      compose_key: $.services.transform-router.image
+    sfs:
+      version:
+      compose_target: *composeCurrent
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      version:
+      compose_target: *composeCurrent
+      compose_key: $.services.transform-core-aio.image
+
+  7.4.N:
+    id: 74n
+    acs:
+      version:
+      compose_target: &compose74 >-
+        docker-compose/7.4.N-compose.yaml
+      compose_key: $.services.alfresco.image
+      pattern:
+      image:
+    activemq:
+      version:
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.share.image
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.solr6.image
+      image:
+      pattern:
+    sync:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.sync-service.image
+      pattern:
+    adw:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.digital-workspace.image
+      pattern:
+    adminApp:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.control-center.image
+      pattern:
+    trouter:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.transform-router.image
+    sfs:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      version:
+      compose_target: *compose74
+      compose_key: $.services.transform-core-aio.image
+
+  7.3.N:
+    id: 73n
+    acs:
+      version:
+      compose_target: &compose73 >-
+        docker-compose/7.3.N-compose.yaml
+      compose_key: $.services.alfresco.image
+      pattern:
+      image:
+    activemq:
+      version:
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.share.image
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.solr6.image
+      pattern:
+      image:
+    sync:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.sync-service.image
+      pattern:
+    adw:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.digital-workspace.image
+      pattern:
+    adminApp:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.control-center.image
+      pattern:
+    trouter:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.transform-router.image
+    sfs:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      version:
+      compose_target: *compose73
+      compose_key: $.services.transform-core-aio.image
+
+  7.2.N:
+    id: 72n
+    acs:
+      version:
+      compose_target: &compose72 >-
+        docker-compose/7.2.N-compose.yaml
+      compose_key: $.services.alfresco.image
+      pattern:
+      image:
+    activemq:
+      version:
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.share.image
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.solr6.image
+      pattern:
+      image:
+    sync:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.sync-service.image
+      pattern:
+    adw:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.digital-workspace.image
+      pattern:
+    adminApp:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.control-center.image
+      pattern:
+    trouter:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.transform-router.image
+    sfs:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      version:
+      compose_target: *compose72
+      compose_key: $.services.transform-core-aio.image
+
+  7.1.N:
+    id: 71n
+    acs:
+      version:
+      compose_target: &compose71 >-
+        docker-compose/7.1.N-compose.yaml
+      compose_key: $.services.alfresco.image
+      pattern:
+      image:
+    activemq:
+      version:
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.share.image
+      pattern:
+      image:
+    sync:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.sync-service.image
+      pattern:
+    adw:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.digital-workspace.image
+      pattern:
+    trouter:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.transform-router.image
+    sfs:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      version:
+      compose_target: *compose71
+      compose_key: $.services.transform-core-aio.image
+
+  community: &community
+    id: com
+    acs:
+      version:
+      compose_target: &composeOss >-
+        docker-compose/community-compose.yaml
+      compose_key: $.services.alfresco.image
+      pattern:
+      image:
+    activemq:
+      version:
+      pattern:
+      image:
+    share:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.share.image
+      pattern:
+      image:
+    search:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.solr6.image
+      pattern:
+      image:
+    tengine-aio:
+      version:
+      compose_target: *composeOss
+      compose_key: $.services.transform-core-aio.image
+    adminApp:
+      version:
+      pattern:
+      compose_target: *composeOss
+      compose_key: $.services.control-center.image
+    aca:
+      version:
+      pattern:
+      compose_target: *composeOss
+      compose_key: $.services.content-app.image

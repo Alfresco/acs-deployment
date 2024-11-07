@@ -1,7 +1,6 @@
 # Default values for acs-sso-example.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 global:
   # -- list of trusted URLs.
   # URLs a re used to configure Cross-origin protections
@@ -35,7 +34,6 @@ repository-database:
       limits:
         cpu: "4"
         memory: 4Gi
-
 # -- Configure the ACS Keycloak Identity provider as per
 # https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0
 # @default -- check values.yaml
@@ -52,7 +50,7 @@ keycloakx:
     # @default -- random ascii string
     password: null
     realm:
-        # -- Alfresco Realm definition
+      # -- Alfresco Realm definition
       - id: alfresco
         realm: alfresco
         enabled: true
@@ -73,7 +71,7 @@ keycloakx:
             webOrigins: >-
               {{ index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls" }}
         users:
-          -  # -- default Alfresco admin user
+          - # -- default Alfresco admin user
             username: admin
             enabled: true
             credentials:
@@ -107,21 +105,18 @@ keycloakx:
     - --import-realm
   http:
     relativePath: /auth
-
   livenessProbe: |
     httpGet:
       path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health/live'
       port: http
     initialDelaySeconds: 0
     timeoutSeconds: 5
-
   readinessProbe: |
     httpGet:
       path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health/ready'
       port: http
     initialDelaySeconds: 10
     timeoutSeconds: 1
-
   startupProbe: |
     httpGet:
       path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health'
@@ -172,7 +167,6 @@ keycloakx:
       volumeMounts:
         - name: theme
           mountPath: /themes
-
 # -- Configure the ACS ActiveMQ message broker as per
 # https://github.com/Alfresco/alfresco-helm-charts/tree/activemq-3.4.1/charts/activemq
 # @default -- check values.yaml
@@ -183,7 +177,6 @@ activemq:
   adminUser:
     user: alfresco
     password: alfresco
-
 # -- Configure the ACS repository as per
 # https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-repository-0.1.3/charts/alfresco-repository
 # @default -- check values.yaml
@@ -192,7 +185,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.2.1
+    tag: 23.3.0
   configuration:
     repository:
       existingConfigMap: repository-properties
@@ -214,7 +207,6 @@ alfresco-repository:
             pathType: Prefix
           - path: /api-explorer
             pathType: Prefix
-
 # -- Configure the Alfresco Share as per
 # https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-share-0.3.0/charts/alfresco-share
 # @default -- check values.yaml
@@ -222,7 +214,7 @@ alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
-    tag: 23.2.1
+    tag: 23.3.2
   repository:
     existingConfigMap:
       name: share-repository
@@ -241,7 +233,6 @@ alfresco-share:
         paths:
           - path: /share
             pathType: Prefix
-
 # -- Configure the Alfresco Conent-app as per
 # https://github.com/Activiti/activiti-cloud-common-chart/tree/8.2.0/charts/common
 # @default -- check values.yaml
@@ -256,7 +247,7 @@ alfresco-content-app:
     tls: []
   image:
     repository: alfresco/alfresco-content-app
-    tag: 4.4.0
+    tag: 5.1.1
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: ECM

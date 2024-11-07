@@ -15,7 +15,10 @@ autodiscovery:
         # Skip dependencies we are not interested to bump automatically (testing dependencies)
         - path: helm/alfresco-content-services
           dependencies:
-            postgresql: ">0.0.1"
-            elasticsearch: ">0.0.1"
-        # Skip example charts we want to update manually
+            postgresql: ">=0.0.1"
+            elasticsearch: ">=0.0.1"
+            kibana: ">=0.0.1"
         - path: helm/acs-sso-example
+          dependencies:
+            postgresql: ">=0.0.1"
+            keycloakx: ">=0.0.1"

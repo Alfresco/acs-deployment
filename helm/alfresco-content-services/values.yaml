@@ -184,7 +184,7 @@ alfresco-repository:
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.18.5-jre17-rockylinux8
+    tag: 5.18.6-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
   adminUser:
@@ -561,12 +561,12 @@ elasticsearch-audit:
   extraEnvs:
     - name: ELASTIC_USERNAME
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_USERNAME
     - name: ELASTIC_PASSWORD
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_PASSWORD
   ingress:
@@ -608,22 +608,22 @@ kibana-audit:
       value: "true"
     - name: ELASTICSEARCH_HOSTS
       valueFrom:
-        configMapKeyRef: 
+        configMapKeyRef:
           name: *infrastructure_cmName
           key: AUDIT_ELASTICSEARCH_URL
     - name: SERVER_PUBLICBASEURL
       valueFrom:
-        configMapKeyRef: 
+        configMapKeyRef:
           name: *infrastructure_cmName
           key: AUDIT_SERVER_PUBLICBASEURL
     - name: ELASTICSEARCH_USERNAME
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_USERNAME
     - name: ELASTICSEARCH_PASSWORD
       valueFrom:
-        secretKeyRef: 
+        secretKeyRef:
           name: *aas_elasticsearch_secretName
           key: AUDIT_ELASTICSEARCH_PASSWORD
   ingress:
