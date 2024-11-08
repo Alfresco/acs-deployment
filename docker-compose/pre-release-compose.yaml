@@ -203,6 +203,22 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+  kibana:
+    image: kibana:7.17.3
+    mem_limit: 1g
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status" ]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+      start_period: 30s
   search:
     image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.2.0-A4
     mem_limit: 1g
@@ -283,6 +299,26 @@ services:
       - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
       - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
       - "traefik.http.routers.adw.middlewares=adwchain@docker"
+  audit-storage:
+    image: quay.io/alfresco/alfresco-audit-storage:1.0.0-A1
+    mem_limit: 512m
+    environment:
+      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
+      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness" ]
+      interval: 60s
+      timeout: 2s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      activemq:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.1.0-11106981658
     mem_limit: 128m
