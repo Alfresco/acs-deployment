@@ -276,7 +276,7 @@ services:
       retries: 5
       start_period: 5s
   audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:0.0.1-A8
+    image: quay.io/alfresco/alfresco-audit-storage:1.0.0-A1
     mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
