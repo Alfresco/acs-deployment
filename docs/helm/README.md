@@ -273,6 +273,20 @@ at least 3 nodes with 12 cpu cores and 32 GB of memory in total. You can install
 requirements by fine tuning the [resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
 available in the [values](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) for each component.
 
+There are also several [examples](../helm-examples.md) showing how to deploy with various configurations:
+
+* [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
+* [Deploy with Intelligence Services](./examples/with-ai.md)
+* [Deploy with Microsoft 365 Connector (Office Online Integration)](./examples/with-ooi.md)
+* [Deploy with external Keycloak SSO authentication](./examples/with-keycloak.md)
+* [Deploy with external infrastructure components](./examples/with-external-infrastructure.md) (e.g. elasticsearch, activemq, postgres)
+* [Enable access to Search Services](./examples/search-services.md#enable-alfresco-search-services-external-access)
+* [Enable Email Services](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/email.html)
+* [Use a custom metadata keystore](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html)
+* [Install ACS license as part of the deployment](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html)
+
+### Previous versions
+
 To install older versions get the specific values from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services).
 Each of files have image tags which override default ones to the specific
 version. Deploying the specific version of ACS can be achieved by executing the
@@ -285,18 +299,6 @@ following:
      --timeout 10m0s \
      --namespace alfresco
    ```
-
-There are also several [examples](../helm-examples.md) showing how to deploy with various configurations:
-
-* [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
-* [Deploy with Intelligence Services](./examples/with-ai.md)
-* [Deploy with Microsoft 365 Connector (Office Online Integration)](./examples/with-ooi.md)
-* [Deploy with external Keycloak SSO authentication](./examples/with-keycloak.md)
-* [Deploy with external infrastructure components](./examples/with-external-infrastructure.md) (e.g. elasticsearch, activemq, postgres)
-* [Enable access to Search Services](./examples/search-services.md#enable-alfresco-search-services-external-access)
-* [Enable Email Services](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/email.html)
-* [Use a custom metadata keystore](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html)
-* [Install ACS license as part of the deployment](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html)
 
 ## Upgrade
 
