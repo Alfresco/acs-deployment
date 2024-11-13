@@ -288,9 +288,9 @@ There are also several [examples](../helm-examples.md) showing how to deploy wit
 ### Previous versions
 
 To install older versions of Alfresco, download the relevant values file from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services).
-Each of files have image tags which override default ones to the specific
-version. Deploying the specific version of ACS can be achieved by executing the
-following:
+Each file includes image tags that override the default tags, allowing you to
+deploy a specified ACS version. To deploy a particular ACS version, pass such
+file as an additional argument to the install command like the following:
 
    ```bash
    helm install acs alfresco/alfresco-content-services \
