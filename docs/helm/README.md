@@ -273,6 +273,17 @@ at least 3 nodes with 12 cpu cores and 32 GB of memory in total. You can install
 requirements by fine tuning the [resource requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)
 available in the [values](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml) for each component.
 
+To install older versions get the specific values from file [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services). Each of files have image tags which override default ones to the specific version. Deploying the specific version of ACS can be achieved by executing the following:
+
+   ```bash
+   helm install acs alfresco/alfresco-content-services \
+     --values MAJOR.MINOR.N_values.yaml \
+     --values local-dev_values.yaml \
+     --atomic \
+     --timeout 10m0s \
+     --namespace alfresco
+   ```
+
 There are also several [examples](../helm-examples.md) showing how to deploy with various configurations:
 
 * [Deploy with AWS Services (S3, RDS and MQ)](./examples/with-aws-services.md)
