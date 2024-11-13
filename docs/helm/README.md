@@ -281,7 +281,6 @@ following:
    ```bash
    helm install acs alfresco/alfresco-content-services \
      --values MAJOR.MINOR.N_values.yaml \
-     --values local-dev_values.yaml \
      --atomic \
      --timeout 10m0s \
      --namespace alfresco
