@@ -133,23 +133,7 @@ The `helm` command above installs the most current released version of ACS Enter
 
 #### Enterprise deployment for previous versions
 
-To deploy a previous version of ACS Enterprise follow the steps below.
-
-1. Download the version specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services)
-2. Deploying the specific version of ACS can be achieved by executing the following:
-
-   ```bash
-   helm install acs alfresco/alfresco-content-services \
-     --values MAJOR.MINOR.N_values.yaml \
-     --values local-dev_values.yaml \
-     --atomic \
-     --timeout 10m0s \
-     --namespace alfresco
-   ```
-
-> NOTE: The command will wait until the deployment is ready so please be
-patient. See below for
-[troubleshooting](#troubleshooting) tips.
+Keep the configuration for helm adding the override file described in this [section](./README.md#previous-versions).
 
 #### Development versions deployment
 
