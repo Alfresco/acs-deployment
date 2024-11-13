@@ -133,7 +133,7 @@ The `helm` command above installs the most current released version of ACS Enter
 
 #### Enterprise deployment for previous versions
 
-Keep the configuration for helm adding the override file described in this [section](./README.md#previous-versions).
+Keep the configuration for helm adding the additional override file described in this [section](./README.md#previous-versions).
 
 #### Development versions deployment
 

@@ -630,7 +630,7 @@ helm upgrade --install acs alfresco/alfresco-content-services \
 
 #### Previous Enterprise Versions
 
-Keep the configuration for helm adding the override file described in this [section](./README.md#previous-versions).
+Keep the configuration for helm adding the additional override file described in this [section](./README.md#previous-versions).
 
 ### Wait for successful deployment
 

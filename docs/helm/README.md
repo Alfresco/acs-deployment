@@ -287,7 +287,7 @@ There are also several [examples](../helm-examples.md) showing how to deploy wit
 
 ### Previous versions
 
-To install older versions get the specific values from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services).
+To install older versions of Alfresco, download the relevant values file from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services).
 Each of files have image tags which override default ones to the specific
 version. Deploying the specific version of ACS can be achieved by executing the
 following:
