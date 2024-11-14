@@ -300,6 +300,14 @@ file as an additional argument to the install command like the following:
      --namespace alfresco
    ```
 
+**NOTE:** Each values file is pre-configured with the latest supported component versions
+for the specified ACS major version. For example, the 7.4.N values file will
+deploy ACS version 7.4.2.3 alongside Alfresco Digital Workspace (ADW) version
+4.4.1. These configurations are recommended to ensure compatibility and
+stability across components. However, if a specific version of any component is
+needed, you can either edit the values file directly or override the version by
+adding the --set component.image.tag=x.y.z option to the Helm command.
+
 ## Upgrade
 
 You can use the standard `helm upgrade acs ./alfresco/alfresco-content-services
