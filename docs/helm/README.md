@@ -285,6 +285,29 @@ There are also several [examples](../helm-examples.md) showing how to deploy wit
 * [Use a custom metadata keystore](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html)
 * [Install ACS license as part of the deployment](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html)
 
+### Previous versions
+
+To install older versions of Alfresco, download the relevant values file from [this folder](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services).
+Each file includes image tags that override the default tags, allowing you to
+deploy a specified ACS version. To deploy a particular ACS version, pass such
+file as an additional argument to the install command like the following:
+
+   ```bash
+   helm install acs alfresco/alfresco-content-services \
+     --values MAJOR.MINOR.N_values.yaml \
+     --atomic \
+     --timeout 10m0s \
+     --namespace alfresco
+   ```
+
+**NOTE:** Each values file is pre-configured with the latest supported component versions
+for the specified ACS major version. For example, the 7.4.N values file will
+deploy ACS version 7.4.2.3 alongside Alfresco Digital Workspace (ADW) version
+4.4.1. These configurations are recommended to ensure compatibility and
+stability across components. However, if a specific version of any component is
+needed, you can either edit the values file directly or override the version by
+adding the --set component.image.tag=x.y.z option to the Helm command.
+
 ## Upgrade
 
 You can use the standard `helm upgrade acs ./alfresco/alfresco-content-services

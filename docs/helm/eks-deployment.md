@@ -630,24 +630,7 @@ helm upgrade --install acs alfresco/alfresco-content-services \
 
 #### Previous Enterprise Versions
 
-1. Download the version-specific values file you require from [this folder](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services).
-
-Deploy the specific version of ACS by running the following command (replacing
-`YOUR-DOMAIN-NAME` with the hosted zone you created earlier and `MAJOR` &
-`MINOR` with the appropriate values):
-
-```sh
-helm upgrade --install acs alfresco/alfresco-content-services \
---values=MAJOR.MINOR.N_values.yaml \
---set alfresco-repository.persistence.enabled=true \
---set alfresco-repository.persistence.storageClass="nfs-client" \
---set alfresco-transform-service.filestore.persistence.enabled=true \
---set alfresco-transform-service.filestore.persistence.storageClass="nfs-client" \
---set global.known_urls=https://${ACS_HOSTNAME} \
---set global.alfrescoRegistryPullSecrets=quay-registry-secret \
---values letsencrypt_values.yaml \
---namespace=alfresco
-```
+Use the above helm commands and pass an additional argument as described in this [section](./README.md#previous-versions).
 
 ### Wait for successful deployment
 
