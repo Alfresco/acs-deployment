@@ -1,6 +1,7 @@
 ---
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
+name: Updatecli manifest for Alfresco Umbrella Helm Chart
 matrix:
   next:
     id: next
