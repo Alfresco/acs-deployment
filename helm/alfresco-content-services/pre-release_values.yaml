@@ -78,6 +78,9 @@ alfresco-connector-ms365:
 alfresco-connector-msteams:
   image:
     tag: 2.0.4-A4
+alfresco-audit-storage:
+  image:
+    tag: 1.0.0-A1
 dtas:
   config:
     assertions:
