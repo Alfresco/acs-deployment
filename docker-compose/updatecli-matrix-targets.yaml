@@ -1,6 +1,7 @@
 ---
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
+name: Alfresco Docker Compose files - Updatecli manifest
 matrix:
   next:
     id: next
@@ -55,6 +56,10 @@ matrix:
       version:
       compose_target: *composeNext
       compose_key: $.services.transform-core-aio.image
+    audit-storage:
+      version:
+      compose_target: *composeNext
+      compose_key: $.services.audit-storage.image
 
   current:
     id: current
@@ -116,6 +121,10 @@ matrix:
       version:
       compose_target: *composeCurrent
       compose_key: $.services.transform-core-aio.image
+    audit-storage:
+      version:
+      compose_target: *composeCurrent
+      compose_key: $.services.audit-storage.image
 
   7.4.N:
     id: 74n
