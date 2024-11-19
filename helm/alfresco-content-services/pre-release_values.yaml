@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 23.4.0-A9
+    tag: 23.4.0-A15
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
@@ -10,31 +10,31 @@ activemq:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.1.5
+      tag: 4.1.5-A3
   pdfrenderer:
     image:
-      tag: 5.1.5
+      tag: 5.1.5-A3
   imagemagick:
     image:
-      tag: 5.1.5
+      tag: 5.1.5-A3
   libreoffice:
     image:
-      tag: 5.1.5
+      tag: 5.1.5-A3
   tika:
     image:
-      tag: 5.1.5
+      tag: 5.1.5-A3
   transformmisc:
     image:
-      tag: 5.1.5
+      tag: 5.1.5-A3
   filestore:
     image:
-      tag: 4.1.5
+      tag: 4.1.5-A3
 alfresco-ai-transformer:
   image:
-    tag: 3.1.7
+    tag: 3.1.7-A4
 share:
   image:
-    tag: 23.4.0-A9
+    tag: 23.4.0-A15
 alfresco-search:
   searchServicesImage:
     tag: 2.1.0-A9
@@ -44,19 +44,19 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.2.0
+        tag: 4.2.0-A4
     content:
       image:
-        tag: 4.2.0
+        tag: 4.2.0-A4
     metadata:
       image:
-        tag: 4.2.0
+        tag: 4.2.0-A4
     path:
       image:
-        tag: 4.2.0
+        tag: 4.2.0-A4
   reindexing:
     image:
-      tag: 4.2.0
+      tag: 4.2.0-A4
 alfresco-digital-workspace:
   image:
     tag: 5.1.0-11106981658
@@ -80,7 +80,7 @@ alfresco-connector-msteams:
     tag: 2.0.4-A4
 alfresco-audit-storage:
   image:
-    tag: 1.0.0
+    tag: 1.0.0-A1
 dtas:
   config:
     assertions:

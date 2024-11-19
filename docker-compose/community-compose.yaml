@@ -58,7 +58,7 @@ services:
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.5
+    image: alfresco/alfresco-transform-core-aio:5.1.4
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
