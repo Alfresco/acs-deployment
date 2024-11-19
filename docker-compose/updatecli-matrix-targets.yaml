@@ -56,7 +56,7 @@ matrix:
       version:
       compose_target: *composeNext
       compose_key: $.services.transform-core-aio.image
-    audit-storage:
+    acs-audit:
       version:
       compose_target: *composeNext
       compose_key: $.services.audit-storage.image
@@ -121,7 +121,7 @@ matrix:
       version:
       compose_target: *composeCurrent
       compose_key: $.services.transform-core-aio.image
-    audit-storage:
+    acs-audit:
       version:
       compose_target: *composeCurrent
       compose_key: $.services.audit-storage.image
