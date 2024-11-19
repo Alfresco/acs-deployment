@@ -553,7 +553,7 @@ elasticsearch:
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 elasticsearch-audit:
   # -- Enables the embedded elasticsearch cluster for alfresco-audit-storage
-  enabled: false
+  enabled: true
   nameOverride: elasticsearch-aas
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
@@ -574,7 +574,7 @@ elasticsearch-audit:
     # https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255
     enabled: false
 alfresco-audit-storage:
-  enabled: false
+  enabled: true
   image:
     repository: quay.io/alfresco/alfresco-audit-storage
     tag: 1.0.0-A1
@@ -596,7 +596,7 @@ alfresco-audit-storage:
         username: AUDIT_ELASTICSEARCH_USERNAME
         password: AUDIT_ELASTICSEARCH_PASSWORD
 kibana-audit:
-  enabled: false
+  enabled: true
   healthCheckPath: "/kibana/app/kibana"
   # -- Makes sure there is no default elasticsearch hosts defined
   elasticsearchHosts: ""
