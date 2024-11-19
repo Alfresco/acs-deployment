@@ -1,6 +1,7 @@
 ---
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
+name: Alfresco SSO example Chart - Updatecli manifest
 matrix:
   community:
     id: ssoExample
