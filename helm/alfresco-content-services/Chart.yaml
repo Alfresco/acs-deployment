@@ -31,17 +31,17 @@ dependencies:
   - name: alfresco-adf-app
     alias: alfresco-control-center
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.2.0-alpha.0
+    version: 0.2.0-alpha.1
     condition: >-
       alfresco-control-center.enabled
   - name: alfresco-adf-app
     alias: alfresco-digital-workspace
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.2.0-alpha.0
+    version: 0.2.0-alpha.1
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository
-    version: 0.7.2
+    version: 0.8.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
     version: 3.6.0-alpha.0
@@ -61,7 +61,7 @@ dependencies:
     version: 6.1.0-alpha.0
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 4.2.0-alpha.2
+    version: 4.2.0-alpha.3
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
