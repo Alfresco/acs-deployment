@@ -36,7 +36,7 @@ services:
         -Delasticsearch.createIndexIfNotExists=true
         -Delasticsearch.host=elasticsearch
         -Delasticsearch.port=9200
-        -Dshare.host=127.0.0.1
+        -Dshare.host=localhost
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080

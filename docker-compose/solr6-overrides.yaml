@@ -14,7 +14,7 @@ services:
         -Dsolr.sharedSecret=secret
         -Dsolr.base.url=/solr
         -Dindex.subsystem.name=solr6
-        -Dshare.host=127.0.0.1
+        -Dshare.host=localhost
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
