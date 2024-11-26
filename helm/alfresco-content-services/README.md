@@ -222,6 +222,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | dtas.additionalArgs[0] | string | `"--tb=short"` |  |
+| dtas.config.assertions.aas.audit_host | string | `"http://acs-alfresco-audit-storage:8081"` |  |
+| dtas.config.assertions.aas.search_audit_host | string | `"http://elasticsearch-aas-master:9200"` |  |
 | dtas.config.assertions.acs.edition | string | `"Enterprise"` |  |
 | dtas.config.assertions.acs.identity | bool | `false` |  |
 | dtas.config.assertions.acs.modules[0].id | string | `"org.alfresco.integrations.google.docs"` |  |
@@ -238,7 +240,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.enabled | bool | `false` | Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only) |
 | dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
-| dtas.image.tag | string | `"v1.5.5"` |  |
+| dtas.image.tag | string | `"pr-163"` |  |
 | elasticsearch-audit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch-audit.clusterName | string | `"elasticsearch-aas"` |  |
 | elasticsearch-audit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
