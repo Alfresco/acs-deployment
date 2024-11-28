@@ -662,7 +662,7 @@ dtas:
         base_path: "/workspace"
       aas:
         audit_host: http://acs-alfresco-audit-storage:8081 
-        search_audit_host: http://elasticsearch-aas-master:9200
+        elasticsearch_host: http://elasticsearch-aas-master:9200
 keda:
   # -- The list of components that will be scaled by KEDA (chart names)
   components: []

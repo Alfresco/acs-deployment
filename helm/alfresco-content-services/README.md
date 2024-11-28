@@ -223,7 +223,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.user | string | `nil` | External Postgresql database user |
 | dtas.additionalArgs[0] | string | `"--tb=short"` |  |
 | dtas.config.assertions.aas.audit_host | string | `"http://acs-alfresco-audit-storage:8081"` |  |
-| dtas.config.assertions.aas.search_audit_host | string | `"http://elasticsearch-aas-master:9200"` |  |
+| dtas.config.assertions.aas.elasticsearch_host | string | `"http://elasticsearch-aas-master:9200"` |  |
 | dtas.config.assertions.acs.edition | string | `"Enterprise"` |  |
 | dtas.config.assertions.acs.identity | bool | `false` |  |
 | dtas.config.assertions.acs.modules[0].id | string | `"org.alfresco.integrations.google.docs"` |  |
