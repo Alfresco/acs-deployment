@@ -46,7 +46,6 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | del(. | select(.values=="community_values.yaml"))
-            | del(. | select(.values=="7.1.N_values.yaml"))
             | del(. | select(.values=="7.2.N_values.yaml"))
             | select(.name=="alfresco-content-services")]
         run: |
