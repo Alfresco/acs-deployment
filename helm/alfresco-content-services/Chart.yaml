@@ -31,54 +31,54 @@ dependencies:
   - name: alfresco-adf-app
     alias: alfresco-control-center
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.2.0-alpha.1
+    version: 0.2.0
     condition: >-
       alfresco-control-center.enabled
   - name: alfresco-adf-app
     alias: alfresco-digital-workspace
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.2.0-alpha.1
+    version: 0.2.0
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository
-    version: 0.8.0-alpha.0
+    version: 0.8.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
-    version: 3.6.0-alpha.0
+    version: 3.6.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
   - name: alfresco-transform-service
-    version: 2.1.1
+    version: 2.1.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-transform-service.enabled
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 4.0.0-alpha.1
+    version: 4.0.0
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 6.1.0-alpha.0
+    version: 6.1.0
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 4.2.0-alpha.3
+    version: 4.2.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
-    version: 1.2.0-alpha.0
+    version: 1.2.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-msteams.enabled
   - name: alfresco-share
     alias: share
-    version: 1.2.0-alpha.0
+    version: 1.2.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: share.enabled
   - name: alfresco-connector-ms365
-    version: 2.2.0-alpha.0
+    version: 2.2.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-ms365.enabled
   - name: alfresco-ai-transformer
-    version: 3.0.0-alpha.0
+    version: 3.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
   - name: elasticsearch
@@ -96,7 +96,7 @@ dependencies:
     version: 7.17.3
     condition: kibana-audit.enabled
   - name: alfresco-audit-storage
-    version: 0.1.0-alpha.0
+    version: 0.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-audit-storage.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

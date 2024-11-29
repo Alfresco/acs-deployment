@@ -10,40 +10,40 @@ dependencies:
   version: 12.8.5
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0-alpha.1
+  version: 0.2.0
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0-alpha.1
+  version: 0.2.0
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.8.0-alpha.0
+  version: 0.8.0
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.6.0-alpha.0
+  version: 3.6.0
 - name: alfresco-transform-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.1.1
+  version: 2.1.2
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.0.0-alpha.1
+  version: 4.0.0
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 6.1.0-alpha.0
+  version: 6.1.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.2.0-alpha.3
+  version: 4.2.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.2.0-alpha.0
+  version: 1.2.0
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.2.0-alpha.0
+  version: 1.2.0
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.2.0-alpha.0
+  version: 2.2.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.0.0-alpha.0
+  version: 3.0.0
 - name: elasticsearch
   repository: https://helm.elastic.co
   version: 7.17.3
@@ -55,6 +55,6 @@ dependencies:
   version: 7.17.3
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0-alpha.0
-digest: sha256:03792150545ee87306a545317541cc4ec832ec53009bb89f70012719b8498e78
-generated: "2024-11-22T09:23:20.646695267Z"
+  version: 0.1.0
+digest: sha256:50a1e25c116694192ff6f36c308044aa95e86ee3c32fe1d5086a5deb16c6f1fa
+generated: "2024-11-29T14:10:39.976018126Z"
