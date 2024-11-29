@@ -142,7 +142,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.3.2
+    tag: 23.4.0
   autoscaling:
     kedaDisableIdle: true
   configuration:
@@ -198,7 +198,7 @@ alfresco-connector-ms365:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ooi-service
-    tag: 2.0.3
+    tag: 2.0.4
   repository:
     existingConfigMap:
       # -- Name of the configmap which hold the repository connection details
@@ -215,7 +215,7 @@ alfresco-connector-msteams:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-ms-teams-service
-    tag: 2.0.3
+    tag: 2.0.4
 alfresco-transform-service:
   nameOverride: alfresco-transform-service
   enabled: true
@@ -232,7 +232,7 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.1.4
+      tag: 4.1.5
     livenessProbe:
       # -- Overrride liveness probe endpoint to work around
       # https://alfresco.atlassian.net/browse/ACS-7269
@@ -243,35 +243,35 @@ alfresco-transform-service:
     enabled: true
     image:
       repository: alfresco/alfresco-pdf-renderer
-      tag: 5.1.4
+      tag: 5.1.5
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: alfresco/alfresco-imagemagick
-      tag: 5.1.4
+      tag: 5.1.5
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-libreoffice
-      tag: 5.1.4
+      tag: 5.1.5
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-tika
-      tag: 5.1.4
+      tag: 5.1.5
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: alfresco/alfresco-transform-misc
-      tag: 5.1.4
+      tag: 5.1.5
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -280,7 +280,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.1.4
+      tag: 4.1.5
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -297,7 +297,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.3.2
+    tag: 23.4.0
   nameOverride: share
   repository:
     existingConfigMap:
@@ -325,10 +325,10 @@ alfresco-search:
         sharedSecret: SOLR_SECRET
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: 2.0.12
+    tag: 2.0.13
   insightEngineImage:
     repository: quay.io/alfresco/insight-engine
-    tag: 2.0.12
+    tag: 2.0.13
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
@@ -370,16 +370,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.1.0
+        tag: 4.2.0
     content:
       image:
-        tag: 4.1.0
+        tag: 4.2.0
     metadata:
       image:
-        tag: 4.1.0
+        tag: 4.2.0
     path:
       image:
-        tag: 4.1.0
+        tag: 4.2.0
   reindexing:
     enabled: true
     repository:
@@ -391,7 +391,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 4.1.0
+      tag: 4.2.0
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
@@ -405,7 +405,7 @@ alfresco-digital-workspace:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 5.1.0
+    tag: 5.2.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -424,7 +424,7 @@ alfresco-control-center:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 9.1.0
+    tag: 9.2.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -477,7 +477,7 @@ alfresco-sync-service:
   enabled: true
   replicaCount: 1
   image:
-    tag: 4.0.1
+    tag: 5.1.0
   database:
     existingSecret:
       name: *sync_database_secretName
@@ -531,7 +531,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.1.6
+    tag: 3.1.7
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
@@ -577,7 +577,7 @@ alfresco-audit-storage:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-audit-storage
-    tag: 1.0.0-A1
+    tag: 1.0.0
   messageBroker:
     existingConfigMap:
       # -- Name of the configmap which holds the message broker URL
@@ -661,7 +661,7 @@ dtas:
       adw:
         base_path: "/workspace"
       aas:
-        audit_host: http://acs-alfresco-audit-storage:8081 
+        audit_host: http://acs-alfresco-audit-storage:8081
         elasticsearch_host: http://elasticsearch-aas-master:9200
 keda:
   # -- The list of components that will be scaled by KEDA (chart names)

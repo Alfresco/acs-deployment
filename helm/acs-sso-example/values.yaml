@@ -71,8 +71,8 @@ keycloakx:
             webOrigins: >-
               {{ index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls" }}
         users:
-          - # -- default Alfresco admin user
-            username: admin
+          # -- default Alfresco admin user
+          - username: admin
             enabled: true
             credentials:
               - type: password
@@ -185,7 +185,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.3.0
+    tag: 23.4.0
   configuration:
     repository:
       existingConfigMap: repository-properties
@@ -214,7 +214,7 @@ alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
-    tag: 23.3.2
+    tag: 23.4.0
   repository:
     existingConfigMap:
       name: share-repository
@@ -247,7 +247,7 @@ alfresco-content-app:
     tls: []
   image:
     repository: alfresco/alfresco-content-app
-    tag: 5.1.1
+    tag: 5.2.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: ECM
