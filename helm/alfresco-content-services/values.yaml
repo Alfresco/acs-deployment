@@ -637,7 +637,7 @@ dtas:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
-    tag: v1.5.5
+    tag: v1.6.0
     pullPolicy: IfNotPresent
   additionalArgs:
     - --tb=short
@@ -660,6 +660,9 @@ dtas:
           installed: true
       adw:
         base_path: "/workspace"
+      aas:
+        audit_host: http://acs-alfresco-audit-storage:8081 
+        elasticsearch_host: http://elasticsearch-aas-master:9200
 keda:
   # -- The list of components that will be scaled by KEDA (chart names)
   components: []
