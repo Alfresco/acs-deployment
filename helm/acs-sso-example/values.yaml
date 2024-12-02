@@ -247,6 +247,11 @@ alfresco-content-app:
       nginx.ingress.kubernetes.io/proxy-body-size: 5g
       nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
     tls: []
+    hosts:
+      - host: localhost
+        paths:
+          - path: /aca
+            pathType: Prefix
   image:
     repository: alfresco/alfresco-content-app
     tag: 5.2.0
@@ -257,4 +262,4 @@ alfresco-content-app:
     APP_CONFIG_OAUTH2_HOST: "{protocol}//{hostname}{:port}/auth/realms/alfresco"
     APP_CONFIG_OAUTH2_CLIENTID: alfresco
     APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/assets/silent-refresh.html"
-    BASE_PATH: /
+    BASE_PATH: /aca
