@@ -47,20 +47,22 @@ First ensure that:
   necessary before proceeding.
 * the [components charts](https://github.com/Alfresco/alfresco-helm-charts) have
   been released in stable versions (no pre-release version should be present in
-  Chart.yaml).
+  Chart.yaml at the time of tagging).
 
 Start the release by opening a PR against the appropriate branch that will:
 
 * Update the [EOL table](docs/index.md#acs-end-of-lifed-versions) in case a version is deprecated
-* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml),
-  bump chart version to the version you want to release
+* In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
+  [acs-sso-example](helm/acs-sso-example/Chart.yaml) charts:bump chart version
+  to the version you want to release.
 * Run `pre-commit run --all-files helm-docs` to update helm docs
 * Edit [upgrades docs](docs/helm/upgrades.md) renaming the `To be released`
   section to the current version and create a new `To be released` section for
   the future.
 * Run [Bump versions][1] workflow against the same newly created branch, the
   first time with `charts` option. Inspect the changes pushed on the branch,
-  revert unwanted changes if necessary.
+  revert unwanted changes if necessary - all charts dependencies should not be
+  using any `-alpha.` version.
 * Run [Bump versions][1] workflow against the same branch with option `values`.
   This will update both docker compose tags and helm charts values.
   Inspect the changes pushed on the branch, looking for any missing update.
