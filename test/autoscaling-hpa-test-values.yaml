@@ -1,8 +1,0 @@
----
-alfresco-repository:
-  autoscaling:
-    enabled: true
-    maxReplicas: 2
-    behavior:
-      scaleUp:
-        stabilizationWindowSeconds: 0

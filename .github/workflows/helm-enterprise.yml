@@ -114,14 +114,7 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [ "${{ matrix.values }}" = "values.yaml" ]; then
-            echo "Enabling clustered tests via auto-scaling: 2 replicas max"
-            echo "Renditions tests will be skipped because particularly flaky on clustered runs"
-
-            echo "helm_install_params=--values test/autoscaling-hpa-test-values.yaml \
-              --set dtas.additionalArgs[0]='-k not test_renditions'" >> "$GITHUB_OUTPUT"
-          fi
-          if [ "${{ matrix.values }}" = "pre-release_values.yaml" ]; then
+          if [ "${{ matrix.values }}" = "pre-release_values.yaml" ] || [ "${{ matrix.values }}" = "values.yaml" ]; then
             echo "Enabling clustered tests with 2 replicas"
             echo "helm_install_params=--set alfresco-repository.replicaCount=2" >> "$GITHUB_OUTPUT"
           fi
@@ -190,34 +183,6 @@ jobs:
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
           kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
-          kubectl get all --all-namespaces
-          kubectl describe pod
-          kubectl events --for deployment/acs-alfresco-repository
-
-      - name: Check HPA behavior during tests
-        id: hpa_check
-        if: always() && (matrix.values == 'values.yaml') && steps.helm_test.outcome != 'skipped'
-        run: |
-          echo "Checking current repo hpa status"
-          kubectl get hpa acs-alfresco-repository
-          echo -n "Repository should have 2 replicas after Helm test... "
-          SETSIZE=$(kubectl get deployment/acs-alfresco-repository -o jsonpath='{@.spec.replicas}')
-          if [ "$SETSIZE" -ne 2 ]; then
-            echo "Got $SETSIZE instead"
-            exit 1
-          else
-            echo "Got $SETSIZE"
-            echo -n "Now waiting for scale down"
-            kubectl patch hpa acs-alfresco-repository \
-              -p '{"spec": {"behavior": {"scaleDown": {"stabilizationWindowSeconds": 20}}}}'
-            echo -n "(speeding scale down up)... "
-            kubectl wait --timeout=2m --for=jsonpath='spec.replicas'=1 deployment/acs-alfresco-repository
-            echo "Scale down completed"
-          fi
-
-      - name: Spit cluster status after HPA check
-        if: always() && steps.hpa_check.outcome != 'skipped'
-        run: |
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
