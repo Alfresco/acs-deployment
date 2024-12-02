@@ -40,7 +40,7 @@ repository-database:
 keycloakx:
   nameOverride: keycloak
   image:
-    tag: 24.0.5
+    tag: 25.0.6
   admin:
     # -- Keycloak admin username
     username: admin
