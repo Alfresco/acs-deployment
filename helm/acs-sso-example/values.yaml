@@ -101,6 +101,7 @@ keycloakx:
   command:
     - /opt/keycloak/bin/kc.sh
     - start
+    - --hostname=http://localhost/auth
     - --health-enabled=true
     - --http-enabled=true
     - --http-port=8080
