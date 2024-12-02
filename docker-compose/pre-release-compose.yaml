@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:23.4.0-A15
+    image: quay.io/alfresco/alfresco-content-repository:25.1.0-A.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -69,7 +69,7 @@ services:
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.1.5-A3
+    image: quay.io/alfresco/alfresco-transform-router:4.1.5
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -92,7 +92,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.5-A3
+    image: alfresco/alfresco-transform-core-aio:5.1.5
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -115,7 +115,7 @@ services:
       shared-file-store:
         condition: service_healthy
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.1.5-A3
+    image: quay.io/alfresco/alfresco-shared-file-store:4.1.5
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -134,7 +134,7 @@ services:
     volumes:
       - shared-file-store-volume:/tmp/Alfresco/sfs
   share:
-    image: quay.io/alfresco/alfresco-share:23.4.0-A15
+    image: quay.io/alfresco/alfresco-share:25.1.0-A.1
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -214,13 +214,13 @@ services:
       elasticsearch:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status" ]
+      test: ["CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status"]
       interval: 10s
       timeout: 2s
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.2.0-A5
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.3.0-A.1
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -243,7 +243,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.2.0-A5
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.3.0-A.1
     mem_limit: 1g
     restart: on-failure:5
     environment:
@@ -276,7 +276,7 @@ services:
       retries: 5
       start_period: 5s
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:5.1.0-11106981658
+    image: quay.io/alfresco/alfresco-digital-workspace:5.3.0-12081248559
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -300,7 +300,7 @@ services:
       - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
       - "traefik.http.routers.adw.middlewares=adwchain@docker"
   audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:1.0.0-A1
+    image: quay.io/alfresco/alfresco-audit-storage:1.0.0
     mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
@@ -309,7 +309,7 @@ services:
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
       AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness" ]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
       interval: 60s
       timeout: 2s
       retries: 3
@@ -320,7 +320,7 @@ services:
       elasticsearch:
         condition: service_healthy
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:9.1.0-11106981658
+    image: quay.io/alfresco/alfresco-control-center:9.3.0-12081248559
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -366,7 +366,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
   sync-service:
-    image: quay.io/alfresco/service-sync:5.1.0-M2
+    image: quay.io/alfresco/service-sync:5.1.0-A9
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
