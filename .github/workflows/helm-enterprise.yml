@@ -114,7 +114,7 @@ jobs:
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
-          if [[ "${{ matrix.values }}" == @(pre-release_values.yaml|values.yaml) ]]; then
+          if [ "${{ matrix.values }}" = "pre-release_values.yaml" ] || [ "${{ matrix.values }}" = "values.yaml" ]; then
             echo "Enabling clustered tests with 2 replicas"
             echo "helm_install_params=--set alfresco-repository.replicaCount=2" >> "$GITHUB_OUTPUT"
           fi
