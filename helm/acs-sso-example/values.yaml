@@ -264,5 +264,7 @@ alfresco-content-app:
     APP_CONFIG_AUTH_TYPE: OAUTH
     APP_CONFIG_OAUTH2_HOST: "{protocol}//{hostname}{:port}/auth/realms/alfresco"
     APP_CONFIG_OAUTH2_CLIENTID: alfresco
-    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/assets/silent-refresh.html"
+    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/aca/assets/silent-refresh.html"
     BASE_PATH: /aca
+    APP_CONFIG_OAUTH2_REDIRECT_LOGIN: /aca
+    APP_CONFIG_OAUTH2_REDIRECT_LOGOUT: /aca
