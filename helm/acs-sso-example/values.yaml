@@ -74,6 +74,9 @@ keycloakx:
           # -- default Alfresco admin user
           - username: admin
             enabled: true
+            firstName: admin
+            lastName: admin
+            email: admin@example.org
             credentials:
               - type: password
                 # -- default Alfresco admin password
