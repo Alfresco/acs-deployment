@@ -20,7 +20,7 @@ on:
 
 env:
   # https://pre-commit.com/#temporarily-disabling-hooks
-  SKIP: docker-compose-check
+  SKIP: docker-compose-check,check-docker-compose-solr6-overrides
 
 jobs:
   pre_commit:

@@ -42,12 +42,20 @@ repos:
     rev: v2.1.1
     hooks:
       - id: docker-compose-check
-        exclude: solr6-overrides.yaml
-      - id: docker-compose-check
-        args: [
-          "-f", "docker-compose/compose.yaml",
-          "-f", "docker-compose/solr6-overrides.yaml"
-        ]
+        files : docker-compose/.*yaml
+        exclude: docker-compose/solr6-overrides.yaml
+
+  - repo: local
+    hooks:
+      - id: check-docker-compose-solr6-overrides
+        name: Check Docker Compose Solr6 Overrides
+        entry: |
+          bash -c "
+          docker compose -f docker-compose/compose.yaml -f docker-compose/solr6-overrides.yaml config |
+          yamllint --config-data '{extends: default, rules: {line-length: disable, document-start: {present: false}}}' -
+          "
+        language: system
+        files: docker-compose/solr6-overrides.yaml
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.37.0
