@@ -42,7 +42,13 @@ repos:
     rev: v2.1.1
     hooks:
       - id: docker-compose-check
-        files: docker-compose/.*yaml
+        exclude: solr6-overrides.yaml
+      - id: docker-compose-check
+        args: [
+          "-f", "docker-compose/compose.yaml",
+          "-f", "docker-compose/solr6-overrides.yaml"
+        ]
+
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.37.0
     hooks:
