@@ -50,4 +50,4 @@ services:
       - "8083:8983" # Browser port
   # Disable the default elastcisearch service
   search: !reset []
-  search-reindexing: 
+  search-reindexing: !reset []
