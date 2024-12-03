@@ -49,9 +49,5 @@ services:
     ports:
       - "8083:8983" # Browser port
   # Disable the default elastcisearch service
-  search:
-    image: busybox:musl
-    command: "true"
-  search-reindexing:
-    image: busybox:musl
-    command: "true"
+  search: !reset []
+  search-reindexing: !reset []
