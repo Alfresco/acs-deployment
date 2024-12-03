@@ -189,7 +189,7 @@ the containers in the deployment.
 | Property          | Description                                                                                                                                                                                                                                                                                                                                                                         | Default value |
 |-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
 | JAVA_TOOL_OPTIONS | Adding this environment variable, allows to set sensitive values (like passwords) that are not passed as arguments to the Java Process.                                                                                                                                                                                                                                           |               |
-| JAVA_OPTS         | A set of properties that are picked up by the JVM inside the container. Any ACS property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Ddb.driver=org.postgresql.Driver`). |
+| JAVA_OPTS         | A set of properties that are picked up by the JVM inside the container. Any ACS property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Ddb.driver=org.postgresql.Driver`). | |
 
 ### Alfresco Share (share)
 
