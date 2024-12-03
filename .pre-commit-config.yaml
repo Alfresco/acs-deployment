@@ -2,11 +2,11 @@
 repos:
   # General hooks section
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
         args: [--allow-multiple-documents]
-        exclude: (helm/.*/templates)|(updatecli.d/.*-manifest.ya?ml)
+        exclude: (helm/.*/templates)|(updatecli.d/.*-manifest.ya?ml)|(docker-compose/solr6-overrides.yaml)
       - id: check-json
       - id: check-merge-conflict
       - id: fix-byte-order-marker
@@ -42,7 +42,6 @@ repos:
     rev: v2.1.1
     hooks:
       - id: docker-compose-check
-        exclude: solr6-overrides.yaml
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.37.0
     hooks:
