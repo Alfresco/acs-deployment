@@ -16,11 +16,11 @@ repos:
         exclude: README.md
   # Helm hooks section (excluded in pre-commit-compose workflow)
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.0
+    rev: v1.14.2
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v2.1.0
+    rev: v8.4.0
     hooks:
       - id: helm-deps-build
   - repo: https://github.com/gruntwork-io/pre-commit
@@ -28,7 +28,7 @@ repos:
     hooks:
       - id: helmlint
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 2.3.288
+    rev: 3.2.326
     hooks:
       - id: checkov
         types: [yaml]
@@ -39,7 +39,7 @@ repos:
           - .checkov.yaml
   # Docker Compose hooks section (excluded in pre-commit-helm workflow)
   - repo: https://github.com/IamTheFij/docker-pre-commit
-    rev: v2.1.1
+    rev: v3.0.1
     hooks:
       - id: docker-compose-check
         files : docker-compose/.*compose.yaml
@@ -57,7 +57,7 @@ repos:
         files: docker-compose/solr6-overrides.yaml
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.37.0
+    rev: v0.43.0
     hooks:
       - id: markdownlint
         args: ["--ignore", "helm/**/README.md"]
