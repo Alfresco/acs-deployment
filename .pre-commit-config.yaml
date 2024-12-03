@@ -42,8 +42,7 @@ repos:
     rev: v2.1.1
     hooks:
       - id: docker-compose-check
-        files : docker-compose/.*yaml
-        exclude: docker-compose/solr6-overrides.yaml
+        files : docker-compose/.*compose.yaml
 
   - repo: local
     hooks:
