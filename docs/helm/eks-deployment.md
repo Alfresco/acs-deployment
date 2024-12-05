@@ -294,7 +294,7 @@ that we need to perform before ACS can be successfully installed.
 There are multiple storage options available when deploying on AWS.
 
 For the main
-[content-store](https://docs.alfresco.com/content-services/latest/admin/content-stores/),
+[content-store](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Content-stores),
 you can alternatively:
 
 * Use an Elastic File System, installing the ([EFS CSI driver](#efs-csi-driver))
@@ -306,15 +306,14 @@ you can alternatively:
 * Use an [S3](examples/with-aws-services.md#s3) bucket
 
 For the
-[database](https://docs.alfresco.com/content-services/latest/config/databases/),
+[database](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Databases),
 you can alternatively:
 
 * Use the embedded postgres instance provided by the helm chart by default,
   enabling [EBS CSI driver](#ebs-csi-driver)
 * Use [RDS](examples/with-aws-services.md#rds)
 
-For the [messaging
-broker](https://docs.alfresco.com/content-services/latest/config/activemq/),
+For the [messaging broker](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Configure-ActiveMQ),
 you can alternatively:
 
 * Use the embedded activemq provided by the helm chart by default, enabling
@@ -677,8 +676,7 @@ apply your license:
 
 * `https://acs.YOUR-DOMAIN-NAME/alfresco/service/enterprise/admin/admin-license`
 * Default username and password is ```admin```
-* See [Uploading a new
-  license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense)
+* See [Uploading a new license](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license)
   for more details
 
 ## Configure
