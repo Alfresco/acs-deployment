@@ -6,6 +6,7 @@ color_scheme: alfresco
 url: https://alfresco.github.io
 
 aux_links:
+  Hyland Support: https://support.hyland.com/p/alfresco
   Docs: https://docs.alfresco.com/
   GitHub Repository: https://github.com/Alfresco/acs-deployment
 

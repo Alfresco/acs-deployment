@@ -153,7 +153,8 @@ Docker Daemon).
    apply your license:
    * `http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license` (`<machine_ip>` will usually just be `localhost`)
    * Default username and password is `admin`
-   * See [Uploading a new license](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense) for more details
+   * See [Uploading a new license][upload-new-license]
+     for more details
 
 ### Choosing a search engine
 
@@ -383,7 +384,7 @@ share:
 
 | Property  | Description                                                                                                                                                                                                                                                                                                                                                                                                                    | Default value |
 |-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| JAVA_OPTS | A set of properties that are picked up by the JVM inside the container. Any Sync Service property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Dsql.db.username=alfresco`) . For a complete list of properties that can be passed through JAVA_OPTS enviroment variable, please check the [documentation](https://docs.alfresco.com/syncservice/concepts/syncservice-configure.html) |               |
+| JAVA_OPTS | A set of properties that are picked up by the JVM inside the container. Any Sync Service property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Dsql.db.username=alfresco`) . For a complete list of properties that can be passed through JAVA_OPTS enviroment variable, please check the [documentation][sync-service-configure] |               |
 
 ### Alfresco Proxy (proxy)
 
@@ -444,3 +445,6 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [solr6](https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile)
 * [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
+
+[upload-new-license]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license
+[sync-service-configure]: https://support.hyland.com/r/Alfresco/Alfresco-Sync-Service/5.1/Alfresco-Sync-Service/Configure

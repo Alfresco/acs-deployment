@@ -96,5 +96,6 @@ alfresco-control-center:
     APP_CONFIG_OAUTH2_CLIENTID: YOUR-CLIENT-ID
 ```
 
-See [Identity Service tutorial](https://docs.alfresco.com/identity-service/latest/tutorial/sso/saml/#step-7-configure-alfresco-digital-workspace)
-for more configuration options.
+See [Identity Service tutorial][configure-adw] for more configuration options.
+
+[configure-adw]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Tutorials/Configure-Single-Sign-On/SAML/Configure-Alfresco-Digital-Workspace

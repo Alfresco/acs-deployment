@@ -28,7 +28,7 @@ global:
     - https://localhost
     - http://localhost
   # -- For a full information of configuring the outbound email system, see
-  # https://docs.alfresco.com/content-services/latest/config/email/#manage-outbound-emails
+  # https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Email/Configure-Inbound-and-Outbound-Email/Manage-Outbound-Emails
   mail:
     # -- SMTP server to use for the system to send outgoing email
     host: null
