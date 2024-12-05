@@ -293,9 +293,7 @@ that we need to perform before ACS can be successfully installed.
 
 There are multiple storage options available when deploying on AWS.
 
-For the main
-[content-store](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Content-stores),
-you can alternatively:
+For the main [content-store][administer-content-stores], you can alternatively:
 
 * Use an Elastic File System, installing the ([EFS CSI driver](#efs-csi-driver))
   (the default, as documented below, required when repository replicas are more
@@ -305,15 +303,13 @@ you can alternatively:
   zone - not meant for production)
 * Use an [S3](examples/with-aws-services.md#s3) bucket
 
-For the
-[database](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Databases),
-you can alternatively:
+For the [database][configure-databases], you can alternatively:
 
 * Use the embedded postgres instance provided by the helm chart by default,
   enabling [EBS CSI driver](#ebs-csi-driver)
 * Use [RDS](examples/with-aws-services.md#rds)
 
-For the [messaging broker](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Configure-ActiveMQ),
+For the [messaging broker][configure-activemq],
 you can alternatively:
 
 * Use the embedded activemq provided by the helm chart by default, enabling
@@ -676,8 +672,7 @@ apply your license:
 
 * `https://acs.YOUR-DOMAIN-NAME/alfresco/service/enterprise/admin/admin-license`
 * Default username and password is ```admin```
-* See [Uploading a new license](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license)
-  for more details
+* See [Uploading a new license][upload-new-license] for more details
 
 ## Configure
 
@@ -713,3 +708,8 @@ Finally, delete the EKS cluster:
 ```sh
 eksctl delete cluster --name $EKS_CLUSTER_NAME
 ```
+
+[administer-content-stores]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Content-stores)
+[configure-databases]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Databases)
+[configure-activemq]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Configure-ActiveMQ)
+[upload-new-license]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license)
