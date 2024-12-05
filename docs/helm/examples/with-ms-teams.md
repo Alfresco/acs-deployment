@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # ACS Helm Deployment with Microsoft Teams Connector
 
-The [Alfresco Microsoft Teams Connector](https://support.hyland.com/r/Alfresco/Alfresco-Process-Automation/7.17/Alfresco-Process-Automation/Model/Connectors/Microsoft-Teams-Connector) enables
+The [Alfresco Microsoft Teams Connector](https://support.hyland.com/p/alfresco) enables
 Microsoft Teams clients to be used to search content within ACS and send
 messages to Teams Chat / Channels with preview links to Alfresco Digital
 Workspace. By default, this feature is disabled.

@@ -52,6 +52,9 @@ First ensure that:
 Start the release by opening a PR against the appropriate branch that will:
 
 * Update the [EOL table](docs/index.md#acs-end-of-lifed-versions) in case a version is deprecated
+* For minor releases, ensure to update the links beginning with
+  `https://support.hyland.com/r/Alfresco` to reflect the latest version or
+  corresponding minor update documentation.
 * In [alfresco-content-services](helm/alfresco-content-services/Chart.yaml) and
   [acs-sso-example](helm/acs-sso-example/Chart.yaml) charts:bump chart version
   to the version you want to release.
