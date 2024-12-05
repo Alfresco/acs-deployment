@@ -98,4 +98,4 @@ alfresco-control-center:
 
 See [Identity Service tutorial][configure-adw] for more configuration options.
 
-[configure-adw]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Tutorials/Configure-Single-Sign-On/SAML/Configure-Alfresco-Digital-Workspace)
+[configure-adw]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Tutorials/Configure-Single-Sign-On/SAML/Configure-Alfresco-Digital-Workspace

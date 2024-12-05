@@ -709,7 +709,7 @@ Finally, delete the EKS cluster:
 eksctl delete cluster --name $EKS_CLUSTER_NAME
 ```
 
-[administer-content-stores]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Content-stores)
-[configure-databases]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Databases)
-[configure-activemq]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Configure-ActiveMQ)
-[upload-new-license]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license)
+[administer-content-stores]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Content-stores
+[configure-databases]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Databases
+[configure-activemq]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Configure-ActiveMQ
+[upload-new-license]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license

@@ -183,4 +183,4 @@ grand_parent: Helm
     ????????admin????(92023d8ea10294a2e32b238963e67d8013342e30
     ```
 
-[external-hazelcast]: (https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/High-availability-features/Clustering/Set-up-repository-server-cluster/Set-up-repository-clustering-via-external-Hazelcast)
+[external-hazelcast]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/High-availability-features/Clustering/Set-up-repository-server-cluster/Set-up-repository-clustering-via-external-Hazelcast
