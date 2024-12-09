@@ -81,6 +81,12 @@ alfresco-connector-msteams:
 alfresco-audit-storage:
   image:
     tag: 1.0.0
+elasticsearch:
+  imageTag: 8.5.1
+kibana-audit:
+  imageTag: 8.5.1
+elasticsearch-audit:
+  imageTag: 8.5.1
 dtas:
   config:
     assertions:
