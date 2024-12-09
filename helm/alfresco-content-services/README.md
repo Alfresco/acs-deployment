@@ -252,9 +252,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch-audit.extraEnvs[1].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | elasticsearch-audit.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255 |
 | elasticsearch-audit.nameOverride | string | `"elasticsearch-aas"` |  |
+| elasticsearch-audit.protocol | string | `"http"` |  |
 | elasticsearch-audit.replicas | int | `1` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
+| elasticsearch.protocol | string | `"http"` |  |
 | elasticsearch.replicas | int | `1` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
