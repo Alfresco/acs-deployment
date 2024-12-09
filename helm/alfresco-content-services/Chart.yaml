@@ -83,12 +83,12 @@ dependencies:
     condition: alfresco-ai-transformer.enabled
   - name: elasticsearch
     repository: https://helm.elastic.co
-    version: 7.17.3
+    version: 8.5.1
     condition: elasticsearch.enabled
   - name: elasticsearch
     alias: elasticsearch-audit
     repository: https://helm.elastic.co
-    version: 7.17.3
+    version: 8.5.1
     condition: elasticsearch-audit.enabled
   - name: kibana
     alias: kibana-audit
