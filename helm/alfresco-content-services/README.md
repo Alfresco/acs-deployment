@@ -36,8 +36,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.0.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.2 |
-| https://helm.elastic.co | elasticsearch | 7.17.3 |
-| https://helm.elastic.co | elasticsearch-audit(elasticsearch) | 7.17.3 |
+| https://helm.elastic.co | elasticsearch | 8.5.1 |
+| https://helm.elastic.co | elasticsearch-audit(elasticsearch) | 8.5.1 |
 | https://helm.elastic.co | kibana-audit(kibana) | 7.17.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
