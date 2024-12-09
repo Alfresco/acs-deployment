@@ -46,15 +46,15 @@ dependencies:
   version: 3.0.0
 - name: elasticsearch
   repository: https://helm.elastic.co
-  version: 7.17.3
+  version: 8.5.1
 - name: elasticsearch
   repository: https://helm.elastic.co
-  version: 7.17.3
+  version: 8.5.1
 - name: kibana
   repository: https://helm.elastic.co
   version: 7.17.3
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.1.0
-digest: sha256:50a1e25c116694192ff6f36c308044aa95e86ee3c32fe1d5086a5deb16c6f1fa
-generated: "2024-11-29T14:10:39.976018126Z"
+digest: sha256:3f0d090df685ebce075e7d84e36406cbcc0d84ff435e2dd506be1484b8bec447
+generated: "2024-12-09T17:31:36.026451+01:00"
