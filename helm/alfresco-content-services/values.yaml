@@ -551,9 +551,6 @@ elasticsearch:
   enabled: true
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-  secret:
-    enabled: false
-  protocol: http
 elasticsearch-audit:
   # -- Enables the embedded elasticsearch cluster for alfresco-audit-storage
   enabled: true
@@ -561,9 +558,6 @@ elasticsearch-audit:
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
   clusterName: elasticsearch-aas
-  secret:
-    enabled: false
-  protocol: http
   extraEnvs:
     - name: ELASTIC_USERNAME
       valueFrom:
@@ -604,11 +598,8 @@ alfresco-audit-storage:
 kibana-audit:
   enabled: true
   healthCheckPath: "/kibana/app/kibana"
-  # -- Makes sure there is no default elasticsearch hosts, certs and secrets defined
+  # -- Makes sure there is no default elasticsearch hosts defined
   elasticsearchHosts: ""
-  elasticsearchCertificateSecret: ""
-  elasticsearchCertificateAuthoritiesFile: ""
-  elasticsearchCredentialSecret: ""
   # All of the values has to be set there to escape the issue with overriding the values
   extraEnvs:
     - name: SERVER_BASEPATH
