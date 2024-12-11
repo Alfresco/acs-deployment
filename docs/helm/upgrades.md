@@ -16,6 +16,11 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## 9.0.0
+
+* External dependencies on bitnami/common chart have been completely removed
+  from alfresco charts.
+
 ## 8.0.0
 
 * Search Enterprise is now the default search engine when installing Enterprise
