@@ -98,7 +98,7 @@ jobs:
           for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do
              TARGET=$(basename $(dirname $i))
              echo -e "\n###### Building UpdateCli manifest for ${TARGET}\n"
-             yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' ${i} | tee ./${TARGET}_merged.yaml
+             yq 'explode(.) *? (load("alfresco-updatecli/deployments/values/supported-matrix.yaml")|explode(.))' ${i} | tee ./${TARGET}_merged.yaml
              updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./${TARGET}_merged.yaml
           done
         env:

@@ -7,6 +7,7 @@ matrix:
     id: next
     acs:
       version:
+      versionFilterKind:
       pattern:
       image:
       helm_target: &helmvaluesNext >-
@@ -20,6 +21,7 @@ matrix:
       helm_key: $.activemq.image.tag
     share:
       version:
+      versionFilterKind:
       pattern:
       image:
       helm_target: *helmvaluesNext
@@ -511,100 +513,6 @@ matrix:
     tengine-tika:
       version:
       helm_target: *helmvalues72
-      helm_key: $.alfresco-transform-service.tika.image.tag
-  7.1.N:
-    id: 71n
-    acs:
-      version:
-      helm_target: &helmvalues71 >-
-        helm/alfresco-content-services/7.1.N_values.yaml
-      helm_key: $.alfresco-repository.image.tag
-      pattern:
-      image:
-    activemq:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.activemq.image.tag
-      pattern:
-      image:
-    share:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.share.image.tag
-      pattern:
-      image:
-    search:
-      version:
-      helm_target: *helmvalues71
-      helm_keys: *search_helm_keys
-      pattern:
-      image:
-    search-enterprise:
-      version:
-      helm_target: *helmvalues71
-      helm_keys:
-        Reindexing: $.alfresco-search-enterprise.reindexing.image.tag
-        Liveindexing:
-          Mediation: >-
-            $.alfresco-search-enterprise.liveIndexing.mediation.image.tag
-          Content: >-
-            $.alfresco-search-enterprise.liveIndexing.content.image.tag
-          Metadata: >-
-            $.alfresco-search-enterprise.liveIndexing.metadata.image.tag
-          Path: >-
-            $.alfresco-search-enterprise.liveIndexing.path.image.tag
-      pattern:
-    sync:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-sync-service.image.tag
-      pattern:
-    adw:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-digital-workspace.image.tag
-      pattern:
-    onedrive:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-connector-ms365.image.tag
-      pattern:
-    msteams:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-connector-msteams.image.tag
-      pattern:
-    intelligence:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-ai-transformer.image.tag
-    trouter:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-transform-service.transformrouter.image.tag
-    sfs:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-transform-service.filestore.image.tag
-    tengine-misc:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-transform-service.transformmisc.image.tag
-    tengine-im:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-transform-service.imagemagick.image.tag
-    tengine-lo:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-transform-service.libreoffice.image.tag
-    tengine-pdf:
-      version:
-      helm_target: *helmvalues71
-      helm_key: $.alfresco-transform-service.pdfrenderer.image.tag
-    tengine-tika:
-      version:
-      helm_target: *helmvalues71
       helm_key: $.alfresco-transform-service.tika.image.tag
   community: &community
     id: com
