@@ -61,13 +61,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
 | alfresco-ai-transformer.sfs.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
-| alfresco-audit-storage.enabled | bool | `false` |  |
+| alfresco-audit-storage.enabled | bool | `true` |  |
 | alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
-| alfresco-audit-storage.image.tag | string | `"1.0.0"` |  |
+| alfresco-audit-storage.image.tag | string | `"latest"` |  |
 | alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
 | alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
-| alfresco-audit-storage.index.existingSecret.keys.username | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.password | string | `"password"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.username | string | `"username"` |  |
 | alfresco-audit-storage.index.existingSecret.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | alfresco-audit-storage.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
@@ -222,6 +222,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | dtas.additionalArgs[0] | string | `"--tb=short"` |  |
+| dtas.config.assertions.aas.audit_host | string | `"http://acs-alfresco-audit-storage:8081"` |  |
+| dtas.config.assertions.aas.elasticsearch_host | string | `"http://elasticsearch-aas-master:9200"` |  |
 | dtas.config.assertions.acs.edition | string | `"Enterprise"` |  |
 | dtas.config.assertions.acs.identity | bool | `false` |  |
 | dtas.config.assertions.acs.modules[0].id | string | `"org.alfresco.integrations.google.docs"` |  |
@@ -241,17 +243,20 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.tag | string | `"v1.6.0"` |  |
 | elasticsearch-audit.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch-audit.clusterName | string | `"elasticsearch-aas"` |  |
-| elasticsearch-audit.enabled | bool | `false` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
+| elasticsearch-audit.enabled | bool | `true` | Enables the embedded elasticsearch cluster for alfresco-audit-storage |
 | elasticsearch-audit.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
-| elasticsearch-audit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
+| elasticsearch-audit.extraEnvs[0].valueFrom.secretKeyRef.key | string | `"username"` |  |
 | elasticsearch-audit.extraEnvs[0].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | elasticsearch-audit.extraEnvs[1].name | string | `"ELASTIC_PASSWORD"` |  |
-| elasticsearch-audit.extraEnvs[1].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
+| elasticsearch-audit.extraEnvs[1].valueFrom.secretKeyRef.key | string | `"password"` |  |
 | elasticsearch-audit.extraEnvs[1].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| elasticsearch-audit.httpTls.enabled | bool | `false` |  |
 | elasticsearch-audit.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255 |
+| elasticsearch-audit.minimumMasterNodes | int | `1` |  |
 | elasticsearch-audit.nameOverride | string | `"elasticsearch-aas"` |  |
 | elasticsearch-audit.protocol | string | `"http"` |  |
 | elasticsearch-audit.replicas | int | `1` |  |
+| elasticsearch-audit.secret | object | `{"enabled":false}` | Disabled to use the password produced by the umbrella chart |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
@@ -264,7 +269,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.minimumMasterNodes | int | `1` |  |
 | elasticsearch.protocol | string | `"http"` |  |
 | elasticsearch.replicas | int | `1` |  |
-| elasticsearch.secret | object | `{"enabled":false}` | Disabled to usel the password produced by the chart |
+| elasticsearch.secret | object | `{"enabled":false}` | Disabled to use the password produced by the umbrella chart |
 | elasticsearch.tests.enabled | bool | `false` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
@@ -290,7 +295,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
 | keda.components | list | `[]` | The list of components that will be scaled by KEDA (chart names) |
-| kibana-audit.elasticsearchHosts | string | `""` | Makes sure there is no default elasticsearch hosts defined |
+| kibana-audit.elasticsearchCertificateSecret | string | `"elasticsearch-aas-master-certs"` |  |
+| kibana-audit.elasticsearchCredentialSecret | string | `"alfresco-aas-elasticsearch-secret"` |  |
+| kibana-audit.elasticsearchHosts | string | `"${ELASTICSEARCH_HOSTS}"` | Makes sure there is no default elasticsearch hosts defined |
 | kibana-audit.enabled | bool | `false` |  |
 | kibana-audit.extraEnvs[0].name | string | `"SERVER_BASEPATH"` |  |
 | kibana-audit.extraEnvs[0].value | string | `"/kibana"` |  |
@@ -302,12 +309,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | kibana-audit.extraEnvs[3].name | string | `"SERVER_PUBLICBASEURL"` |  |
 | kibana-audit.extraEnvs[3].valueFrom.configMapKeyRef.key | string | `"AUDIT_SERVER_PUBLICBASEURL"` |  |
 | kibana-audit.extraEnvs[3].valueFrom.configMapKeyRef.name | string | `"alfresco-infrastructure"` |  |
-| kibana-audit.extraEnvs[4].name | string | `"ELASTICSEARCH_USERNAME"` |  |
-| kibana-audit.extraEnvs[4].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
-| kibana-audit.extraEnvs[4].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
-| kibana-audit.extraEnvs[5].name | string | `"ELASTICSEARCH_PASSWORD"` |  |
-| kibana-audit.extraEnvs[5].valueFrom.secretKeyRef.key | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
-| kibana-audit.extraEnvs[5].valueFrom.secretKeyRef.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | kibana-audit.healthCheckPath | string | `"/kibana/app/kibana"` |  |
 | kibana-audit.ingress.enabled | bool | `true` |  |
 | kibana-audit.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |

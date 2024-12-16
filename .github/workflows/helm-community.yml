@@ -89,6 +89,7 @@ jobs:
           helm repo add self https://alfresco.github.io/alfresco-helm-charts/
           helm repo add codecentric https://codecentric.github.io/helm-charts/
           helm repo add elastic https://helm.elastic.co/
+          helm repo add wiremind https://wiremind.github.io/wiremind-helm-charts
 
       - name: Helm install
         run: |
