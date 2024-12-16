@@ -596,6 +596,8 @@ elasticsearch-audit:
         secretKeyRef:
           name: *aas_elasticsearch_secretName
           key: password
+  tests:
+    enabled: false
   ingress:
     # -- toggle deploying elasticsearch-audit ingress for more details about configuration check
     # https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255

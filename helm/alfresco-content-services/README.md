@@ -257,6 +257,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch-audit.protocol | string | `"http"` |  |
 | elasticsearch-audit.replicas | int | `1` |  |
 | elasticsearch-audit.secret | object | `{"enabled":false}` | Disabled to use the password produced by the umbrella chart |
+| elasticsearch-audit.tests.enabled | bool | `false` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.extraEnvs[0].name | string | `"ELASTIC_USERNAME"` |  |
