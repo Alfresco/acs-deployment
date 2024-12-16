@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 8.6.1](https://img.shields.io/badge/Version-8.6.1-informational?style=flat-square) ![AppVersion: 23.4.0](https://img.shields.io/badge/AppVersion-23.4.0-informational?style=flat-square)
+![Version: 9.0.0-alpha.0](https://img.shields.io/badge/Version-9.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 23.4.0](https://img.shields.io/badge/AppVersion-23.4.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -27,14 +27,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 2.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 1.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.0.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.0.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 6.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.0.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.2 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 | https://helm.elastic.co | elasticsearch-audit(elasticsearch) | 7.17.3 |
