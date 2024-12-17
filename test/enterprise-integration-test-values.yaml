@@ -38,13 +38,22 @@ alfresco-search:
       memory: "1280Mi"
 elasticsearch:
   esJavaOpts: "-Xmx512m -Xms512m"
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "512Mi"
-    limits:
-      cpu: "1"
-      memory: "1Gi"
+  master:
+    resources:
+      requests:
+        cpu: "0.25"
+        memory: "512Mi"
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+  kibana:
+    resources:
+      requests:
+        cpu: "0.25"
+        memory: "512Mi"
+      limits:
+        cpu: "1"
+        memory: "1Gi"
 alfresco-search-enterprise:
   reindexing:
     hookExecution: false
@@ -180,17 +189,7 @@ alfresco-ai-transformer:
       memory: "512Mi"
   livenessProbe:
     initialDelaySeconds: 120
-elasticsearch-audit:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
 alfresco-audit-storage:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "256Mi"
-kibana-audit:
   resources:
     requests:
       cpu: "0.01"
