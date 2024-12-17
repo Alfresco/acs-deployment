@@ -45,16 +45,10 @@ dependencies:
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.0.0
 - name: elasticsearch
-  repository: https://wiremind.github.io/wiremind-helm-charts
-  version: 8.15.3
-- name: elasticsearch
-  repository: https://wiremind.github.io/wiremind-helm-charts
-  version: 8.15.3
-- name: kibana
-  repository: https://wiremind.github.io/wiremind-helm-charts
-  version: 8.5.16
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 21.4.1
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.1.0
-digest: sha256:c134925ea5322314a2614c0de5299f5629b63caa4925ed6a03dae3d9329f06bb
-generated: "2024-12-16T14:49:31.930629+01:00"
+digest: sha256:5433041eaf19fe64506a8b2942ce90901d9f102eb2d773b796a9c4e64bb70d3f
+generated: "2024-12-17T14:44:48.423722+01:00"
