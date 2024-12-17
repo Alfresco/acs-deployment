@@ -85,10 +85,6 @@ alfresco-connector-ms365:
 alfresco-connector-msteams:
   image:
     tag: 2.0.4
-elasticsearch-audit:
-  enabled: false
-kibana-audit:
-  enabled: false
 alfresco-audit-storage:
   enabled: false
 dtas:

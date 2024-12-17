@@ -90,10 +90,6 @@ postgresql:
       limits:
         cpu: "2"
         memory: "1Gi"
-elasticsearch-audit:
-  enabled: false
-kibana-audit:
-  enabled: false
 alfresco-audit-storage:
   enabled: false
 dtas:

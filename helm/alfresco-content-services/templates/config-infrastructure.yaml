@@ -28,11 +28,11 @@ data:
     {{- else if eq "solr6" $search_flavor }}
       {{- $search_url = printf "http://%s/solr" (include "alfresco-search-service.deployment.name" .) }}
     {{- else if eq "elasticsearch" $search_flavor }}
+      {{- $esHost := printf "%s-%s" (.Release.Name | default "acs") (.Values.global.elasticsearch.service.name | default "elasticsearch") }}
+      {{- $esPort := .Values.global.elasticsearch.service.ports.restApi | default 9200 }}
       {{- with .Values.elasticsearch }}
         {{- if .enabled }}
           {{- $esProto := .protocol | default "http" }}
-          {{- $esHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
-          {{- $esPort := .port | default 9200 }}
           {{- $search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
         {{- else }}
           {{- fail "Chart is configured to use Alfresco Search Enterprise but no index backend has been provided. Set one using either global.search.url or elasticsearch.enabled" }}
@@ -69,22 +69,3 @@ data:
       {{- fail "Alfresco Intelligence service has been enabled but Transformation service is not available" }}
   {{- end }}
   {{- end }}
-  {{- $elasticsearch_audit_url := "" }}
-    {{- if .Values.global.auditIndex.url }}
-      {{- $elasticsearch_audit_url = .Values.global.auditIndex.url }}
-    {{- else }}
-      {{- with (index .Values "elasticsearch-audit") }}
-        {{- if .enabled }}
-          {{- $auditEsProto := .protocol | default "http" }}
-          {{- $auditEsHost := printf "%s-%s" (.clusterName | default "elasticsearch") (.nodeGroup | default "master") }}
-          {{- $auditEsPort := .port | default 9200 }}
-          {{- $elasticsearch_audit_url = coalesce $.Values.global.auditIndex.url (printf "%s://%s:%v" $auditEsProto $auditEsHost $auditEsPort) }}
-        {{- else if index $.Values "alfresco-audit-storage" "enabled" }}
-          {{- fail "Chart is configured to use Alfresco Audit Storage but no index backend has been provided. Set one using either global.auditIndex.url or elasticsearch-audit.enabled" }}
-        {{- end }}
-      {{- end }}
-    {{- end }}
-    {{- printf "AUDIT_ELASTICSEARCH_URL: %s" $elasticsearch_audit_url | nindent 2 }}
-    {{- printf "AUDIT_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $elasticsearch_audit_url) | nindent 2 }}
-    {{- printf "AUDIT_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $elasticsearch_audit_url | quote) | nindent 2 }}
-  AUDIT_SERVER_PUBLICBASEURL: {{ .Values.global.auditIndex.publicBaseUrl | default "http://localhost/kibana" }}
