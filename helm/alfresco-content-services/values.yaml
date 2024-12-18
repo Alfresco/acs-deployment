@@ -62,6 +62,20 @@ global:
     # -- Name of an existing secret that contains SOLR_SECRET key when flavour
     # is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
     existingSecretName: null
+    auditIndex:
+      external:
+        # -- set this to true if you want to use external search service for audit indexing
+        enabled: false
+        # -- url to external search service for audit indexing (set to global.search.url if not provided)
+        url: null
+        # -- usernamame for authentication against the external search service for audit indexing (set to global.search.username if not provided)
+        username: null
+        # -- password for authentication against the external search service for audit indexing (set to global.search.password if not provided)
+        password: null
+      # -- set this to enable credentials for internal elastisearch cluster for audit indexing
+      internal:
+        username: null
+        password: null
   elasticsearch:
     service:
       name: elasticsearch
@@ -589,12 +603,12 @@ alfresco-audit-storage:
     existingConfigMap:
       name: *infrastructure_cmName
       keys:
-        url: SEARCH_URL
+        url: AUDIT_SEARCH_URL
     existingSecret:
       name: *acs_search_secretName
       keys:
-        username: SEARCH_USERNAME
-        password: SEARCH_PASSWORD
+        username: AUDIT_SEARCH_USERNAME
+        password: AUDIT_SEARCH_PASSWORD
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false
