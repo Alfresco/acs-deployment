@@ -1,4 +1,6 @@
 ---
+global:
+  kibanaEnabled: false
 alfresco-repository:
   resources:
     requests:
