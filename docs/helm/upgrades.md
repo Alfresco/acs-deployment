@@ -20,9 +20,6 @@ version in which they have been released.
 
 * External dependencies on bitnami/common chart have been completely removed
   from alfresco charts.
-* When using Elasticsearch, the username and password are now configured with
-  default values. It is strongly recommended to update these credentials to more
-  secure values to enhance security and prevent unauthorized access.
 
 ## 8.0.0
 
