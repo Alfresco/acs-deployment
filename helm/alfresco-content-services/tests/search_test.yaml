@@ -175,3 +175,54 @@ tests:
           path: data.SEARCH_FLAVOR
           value: solr6
         template: config-infrastructure.yaml
+
+  - it: Should set correct credentials for elastisearch
+    values: *testvalues
+    template: secret-search.yaml
+    asserts:
+      - equal:
+          path: data.SEARCH_USERNAME
+          value: ""
+      - equal:
+          path: data.SEARCH_PASSWORD
+          value: ""
+      - equal:
+          path: data.AUDIT_SEARCH_USERNAME
+          value: ""
+      - equal:
+          path: data.AUDIT_SEARCH_PASSWORD
+          value: ""
+      - equal:
+          path: data.elasticsearch-password
+          value: ""
+      - equal:
+          path: data.kibana-password
+          value: ""
+
+  - it: Should set correct credentials with local audit and external elastisearch
+    values: *testvalues
+    set:
+      global:
+        search:
+          username: elastic
+          password: changeme
+    template: secret-search.yaml
+    asserts:
+      - equal:
+          path: data.SEARCH_USERNAME
+          value: ZWxhc3RpYw==
+      - equal:
+          path: data.SEARCH_PASSWORD
+          value: Y2hhbmdlbWU=
+      - equal:
+          path: data.AUDIT_SEARCH_USERNAME
+          value: ""
+      - equal:
+          path: data.AUDIT_SEARCH_PASSWORD
+          value: ""
+      - equal:
+          path: data.elasticsearch-password
+          value: ""
+      - equal:
+          path: data.kibana-password
+          value: ""
