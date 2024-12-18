@@ -226,3 +226,28 @@ tests:
       - equal:
           path: data.kibana-password
           value: ""
+
+  - it: Should set correct credentials with external audit and external elastisearch as the same cluster
+    values: *testvalues
+    set:
+      global:
+        search:
+          username: elastic
+          password: changeme
+          auditIndex:
+            external:
+              enabled: true
+    template: secret-search.yaml
+    asserts:
+      - equal:
+          path: data.SEARCH_USERNAME
+          value: ZWxhc3RpYw==
+      - equal:
+          path: data.SEARCH_PASSWORD
+          value: Y2hhbmdlbWU=
+      - equal:
+          path: data.AUDIT_SEARCH_USERNAME
+          value: ZWxhc3RpYw==
+      - equal:
+          path: data.AUDIT_SEARCH_PASSWORD
+          value: Y2hhbmdlbWU=
