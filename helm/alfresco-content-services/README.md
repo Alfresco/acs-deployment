@@ -242,6 +242,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.coordinating.replicaCount | int | `0` |  |
 | elasticsearch.data.replicaCount | int | `0` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
+| elasticsearch.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.ingest.replicaCount | int | `0` |  |
 | elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255 |
 | elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
