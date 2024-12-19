@@ -66,7 +66,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
 | alfresco-audit-storage.index.existingSecret.keys.username | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
-| alfresco-audit-storage.index.existingSecret.name | string | `"alfresco-search-secret"` |  |
+| alfresco-audit-storage.index.existingSecret.name | string | `"alfresco-aas-elasticsearch-secret"` |  |
 | alfresco-audit-storage.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
@@ -247,17 +247,16 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
 | elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` |  |
 | elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
-| elasticsearch.kibana.elasticsearch.security.auth.elasticsearchPasswordSecret | string | `"alfresco-search-secret"` |  |
-| elasticsearch.kibana.elasticsearch.security.auth.existingSecret | string | `"alfresco-search-secret"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
 | elasticsearch.kibana.ingress.hostname | string | `"*"` |  |
 | elasticsearch.kibana.ingress.ingressClassName | string | `"nginx"` |  |
 | elasticsearch.kibana.ingress.path | string | `"/kibana"` |  |
 | elasticsearch.master.masterOnly | bool | `false` |  |
 | elasticsearch.master.replicaCount | int | `1` |  |
-| elasticsearch.security.elasticSecret | string | `"alfresco-search-secret"` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
+| global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
 | global.auditIndex.password | string | `nil` | set password for authentication against the external elasticsearch service for audit indexing |
+| global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.auditIndex.url | string | `nil` | set this URL if you have an external search service for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
 | global.elasticsearch.service.name | string | `"elasticsearch"` |  |

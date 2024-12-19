@@ -69,6 +69,10 @@ global:
     username: null
     # -- set password for authentication against the external elasticsearch service for audit indexing
     password: null
+    # -- Name of the secret managed by this chart
+    secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
+    # -- Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys.
+    existingSecretName: null
   elasticsearch:
     service:
       name: elasticsearch
@@ -558,19 +562,12 @@ elasticsearch:
     replicaCount: 0
   ingest:
     replicaCount: 0
-  security:
-    elasticSecret: *acs_search_secretName
   kibana:
     configuration:
       server:
         basePath: "/kibana"
         publicBaseUrl: "http://localhost/kibana"
         rewriteBasePath: true
-    elasticsearch:
-      security:
-        auth:
-          elasticsearchPasswordSecret: *acs_search_secretName
-          existingSecret: *acs_search_secretName
     ingress:
       enabled: true
       ingressClassName: nginx
@@ -598,7 +595,7 @@ alfresco-audit-storage:
       keys:
         url: AUDIT_ELASTICSEARCH_URL
     existingSecret:
-      name: *acs_search_secretName
+      name: *aas_elasticsearch_secretName
       keys:
         username: AUDIT_ELASTICSEARCH_USERNAME
         password: AUDIT_ELASTICSEARCH_PASSWORD
