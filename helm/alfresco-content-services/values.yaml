@@ -553,6 +553,8 @@ alfresco-ai-transformer:
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: true
+  image:
+    tag: 7.17.26
   master:
     masterOnly: false
     replicaCount: 1
