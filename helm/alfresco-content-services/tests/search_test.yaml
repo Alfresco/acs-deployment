@@ -3,6 +3,7 @@ suite: test repository properties in a secret
 templates:
   - config-infrastructure.yaml
   - secret-search.yaml
+  - secret-audit-elasticsearch.yaml
 tests:
   - it: should render solr6 with secret
     values: &testvalues
@@ -176,7 +177,7 @@ tests:
           value: solr6
         template: config-infrastructure.yaml
 
-  - it: Should set correct credentials for elastisearch
+  - it: Should set deafult correct credentials for elastisearch
     values: *testvalues
     template: secret-search.yaml
     asserts:
@@ -185,18 +186,6 @@ tests:
           value: ""
       - equal:
           path: data.SEARCH_PASSWORD
-          value: ""
-      - equal:
-          path: data.AUDIT_ELASTICSEARCH_USERNAME
-          value: ""
-      - equal:
-          path: data.AUDIT_ELASTICSEARCH_PASSWORD
-          value: ""
-      - equal:
-          path: data.elasticsearch-password
-          value: ""
-      - equal:
-          path: data.kibana-password
           value: ""
 
   - it: Should set correct credentials with local audit and external elastisearch
@@ -206,26 +195,23 @@ tests:
         search:
           username: elastic
           password: changeme
-    template: secret-search.yaml
     asserts:
       - equal:
           path: data.SEARCH_USERNAME
           value: ZWxhc3RpYw==
+        template: secret-search.yaml
       - equal:
           path: data.SEARCH_PASSWORD
           value: Y2hhbmdlbWU=
+        template: secret-search.yaml
       - equal:
           path: data.AUDIT_ELASTICSEARCH_USERNAME
           value: ""
+        template: secret-audit-elasticsearch.yaml
       - equal:
           path: data.AUDIT_ELASTICSEARCH_PASSWORD
           value: ""
-      - equal:
-          path: data.elasticsearch-password
-          value: ""
-      - equal:
-          path: data.kibana-password
-          value: ""
+        template: secret-audit-elasticsearch.yaml
 
   - it: Should set correct credentials with external audit and external elastisearch as the same cluster
     values: *testvalues
@@ -237,17 +223,20 @@ tests:
         auditIndex:
           username: elastic
           password: changeme
-    template: secret-search.yaml
     asserts:
       - equal:
           path: data.SEARCH_USERNAME
           value: ZWxhc3RpYw==
+        template: secret-search.yaml
       - equal:
           path: data.SEARCH_PASSWORD
           value: Y2hhbmdlbWU=
+        template: secret-search.yaml
       - equal:
           path: data.AUDIT_ELASTICSEARCH_USERNAME
           value: ZWxhc3RpYw==
+        template: secret-audit-elasticsearch.yaml
       - equal:
           path: data.AUDIT_ELASTICSEARCH_PASSWORD
           value: Y2hhbmdlbWU=
+        template: secret-audit-elasticsearch.yaml
