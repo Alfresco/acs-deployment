@@ -76,9 +76,8 @@ tests:
       alfresco-search.enabled: false
       alfresco-search-enterprise.enabled: true
       elasticsearch.enabled: false
-      global.search.auditIndex.external.enabled: true
       global.search.url: https://mydomain.opensearch.domain.tld
-      global.search.auditIndex.external.url: https://mydomain.opensearch.audit.domain.tld
+      global.auditIndex.url: https://mydomain.opensearch.audit.domain.tld
       global.search.flavor: elasticsearch
       global.search.securecomms: none
       # commented to test url has precedence
@@ -111,7 +110,7 @@ tests:
           path: data.SEARCH_URL
           value: https://mydomain.opensearch.domain.tld
       - equal:
-          path: data.AUDIT_SEARCH_URL
+          path: data.AUDIT_ELASTICSEARCH_URL
           value: https://mydomain.opensearch.audit.domain.tld
       - notExists:
           path: data.SOLR_BASE_URL
@@ -163,26 +162,25 @@ tests:
     values: *testvalues
     set:
       global.search.url: https://my.external.elasticsearch.com
-      global.search.username: externaluser
     asserts:
       - equal:
           path: data.SEARCH_URL
           value: https://my.external.elasticsearch.com
       - equal:
-          path: data.AUDIT_SEARCH_URL
+          path: data.AUDIT_ELASTICSEARCH_URL
           value: http://RELEASE-NAME-elasticsearch:9200
 
-  - it: should render same external url when specific audit url is not set
+  - it: should render correct values when external elasticsearch and external elasticsearch for audit
     values: *testvalues
     set:
       global.search.url: https://my.external.elasticsearch.com
-      global.search.auditIndex.external.enabled: true
+      global.auditIndex.url: https://my.external.elasticsearch.com
     asserts:
       - equal:
           path: data.SEARCH_URL
           value: https://my.external.elasticsearch.com
       - equal:
-          path: data.AUDIT_SEARCH_URL
+          path: data.AUDIT_ELASTICSEARCH_URL
           value: https://my.external.elasticsearch.com
 
   - it: should render same url for elasticsearch by default
@@ -192,5 +190,5 @@ tests:
           path: data.SEARCH_URL
           value: http://RELEASE-NAME-elasticsearch:9200
       - equal:
-          path: data.AUDIT_SEARCH_URL
+          path: data.AUDIT_ELASTICSEARCH_URL
           value: http://RELEASE-NAME-elasticsearch:9200
