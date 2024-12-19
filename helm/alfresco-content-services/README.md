@@ -248,6 +248,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
 | elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` |  |
 | elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
+| elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
 | elasticsearch.kibana.ingress.hostname | string | `"*"` |  |
 | elasticsearch.kibana.ingress.ingressClassName | string | `"nginx"` |  |

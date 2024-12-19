@@ -565,6 +565,8 @@ elasticsearch:
   ingest:
     replicaCount: 0
   kibana:
+    image:
+      tag: 7.17.26
     configuration:
       server:
         basePath: "/kibana"
