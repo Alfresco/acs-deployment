@@ -77,6 +77,7 @@ tests:
       alfresco-search-enterprise.enabled: true
       elasticsearch.enabled: false
       global.search.url: https://mydomain.opensearch.domain.tld
+      global.auditIndex.url: https://mydomain.opensearch.audit.domain.tld
       global.search.flavor: elasticsearch
       global.search.securecomms: none
       # commented to test url has precedence
@@ -108,6 +109,9 @@ tests:
       - equal:
           path: data.SEARCH_URL
           value: https://mydomain.opensearch.domain.tld
+      - equal:
+          path: data.AUDIT_ELASTICSEARCH_URL
+          value: https://mydomain.opensearch.audit.domain.tld
       - notExists:
           path: data.SOLR_BASE_URL
       - equal:
@@ -153,3 +157,38 @@ tests:
       - equal:
           path: data.DATABASE_URL
           value: jdbc:postgresql://alfresco:QA6fMXtdr%3EK%2F8aDFft,MJ%40p%3E@postgres-ha-primary.postgres-operator.svc:5432/alfresco
+
+  - it: should render correct values when external elasticsearch and local elasticsearch for audit
+    values: *testvalues
+    set:
+      global.search.url: https://my.external.elasticsearch.com
+    asserts:
+      - equal:
+          path: data.SEARCH_URL
+          value: https://my.external.elasticsearch.com
+      - equal:
+          path: data.AUDIT_ELASTICSEARCH_URL
+          value: http://RELEASE-NAME-elasticsearch:9200
+
+  - it: should render correct values when external elasticsearch and external elasticsearch for audit
+    values: *testvalues
+    set:
+      global.search.url: https://my.external.elasticsearch.com
+      global.auditIndex.url: https://my.external.elasticsearch.com
+    asserts:
+      - equal:
+          path: data.SEARCH_URL
+          value: https://my.external.elasticsearch.com
+      - equal:
+          path: data.AUDIT_ELASTICSEARCH_URL
+          value: https://my.external.elasticsearch.com
+
+  - it: should render same url for elasticsearch by default
+    values: *testvalues
+    asserts:
+      - equal:
+          path: data.SEARCH_URL
+          value: http://RELEASE-NAME-elasticsearch:9200
+      - equal:
+          path: data.AUDIT_ELASTICSEARCH_URL
+          value: http://RELEASE-NAME-elasticsearch:9200
