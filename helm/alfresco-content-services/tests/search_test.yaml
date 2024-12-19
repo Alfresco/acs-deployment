@@ -187,10 +187,10 @@ tests:
           path: data.SEARCH_PASSWORD
           value: ""
       - equal:
-          path: data.AUDIT_SEARCH_USERNAME
+          path: data.AUDIT_ELASTICSEARCH_USERNAME
           value: ""
       - equal:
-          path: data.AUDIT_SEARCH_PASSWORD
+          path: data.AUDIT_ELASTICSEARCH_PASSWORD
           value: ""
       - equal:
           path: data.elasticsearch-password
@@ -215,10 +215,10 @@ tests:
           path: data.SEARCH_PASSWORD
           value: Y2hhbmdlbWU=
       - equal:
-          path: data.AUDIT_SEARCH_USERNAME
+          path: data.AUDIT_ELASTICSEARCH_USERNAME
           value: ""
       - equal:
-          path: data.AUDIT_SEARCH_PASSWORD
+          path: data.AUDIT_ELASTICSEARCH_PASSWORD
           value: ""
       - equal:
           path: data.elasticsearch-password
@@ -234,9 +234,9 @@ tests:
         search:
           username: elastic
           password: changeme
-          auditIndex:
-            external:
-              enabled: true
+        auditIndex:
+          username: elastic
+          password: changeme
     template: secret-search.yaml
     asserts:
       - equal:
@@ -246,8 +246,8 @@ tests:
           path: data.SEARCH_PASSWORD
           value: Y2hhbmdlbWU=
       - equal:
-          path: data.AUDIT_SEARCH_USERNAME
+          path: data.AUDIT_ELASTICSEARCH_USERNAME
           value: ZWxhc3RpYw==
       - equal:
-          path: data.AUDIT_SEARCH_PASSWORD
+          path: data.AUDIT_ELASTICSEARCH_PASSWORD
           value: Y2hhbmdlbWU=

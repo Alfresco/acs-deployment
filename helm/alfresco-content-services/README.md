@@ -62,10 +62,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-audit-storage.enabled | bool | `true` |  |
 | alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
 | alfresco-audit-storage.image.tag | string | `"1.0.0"` |  |
-| alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_SEARCH_URL"` |  |
+| alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
 | alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_SEARCH_PASSWORD"` |  |
-| alfresco-audit-storage.index.existingSecret.keys.username | string | `"AUDIT_SEARCH_USERNAME"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
+| alfresco-audit-storage.index.existingSecret.keys.username | string | `"AUDIT_ELASTICSEARCH_USERNAME"` |  |
 | alfresco-audit-storage.index.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-audit-storage.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
@@ -257,6 +257,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.master.replicaCount | int | `1` |  |
 | elasticsearch.security.elasticSecret | string | `"alfresco-search-secret"` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
+| global.auditIndex.password | string | `nil` | set password for authentication against the external elasticsearch service for audit indexing |
+| global.auditIndex.url | string | `nil` | set this URL if you have an external search service for audit indexing |
+| global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
 | global.elasticsearch.service.name | string | `"elasticsearch"` |  |
 | global.elasticsearch.service.ports.restAPI | int | `9200` |  |
 | global.kibanaEnabled | bool | `true` |  |
@@ -265,11 +268,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
 | global.mail.port | int | `587` | SMTP server port |
 | global.mail.protocol | string | `"smtp"` | SMTP protocol to use. Either smtp or smtps |
-| global.search.auditIndex.external.enabled | bool | `false` | set this to true if you want to use external search service for audit indexing |
-| global.search.auditIndex.external.password | string | `nil` | password for authentication against the external search service for audit indexing (set to global.search.password if not provided) |
-| global.search.auditIndex.external.url | string | `nil` | url to external search service for audit indexing (set to global.search.url if not provided) |
-| global.search.auditIndex.external.username | string | `nil` | usernamame for authentication against the external search service for audit indexing (set to global.search.username if not provided) |
-| global.search.auditIndex.internal | object | `{"password":null,"username":null}` | set this to enable credentials for internal elastisearch cluster for audit indexing |
 | global.search.existingSecretName | string | `nil` | Name of an existing secret that contains SOLR_SECRET key when flavour is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys. |
 | global.search.flavor | string | `nil` | set the type of search service used externally (solr6 or elasticsearch) |
 | global.search.password | string | `nil` | Set password for authentication against the external elasticsearch service |

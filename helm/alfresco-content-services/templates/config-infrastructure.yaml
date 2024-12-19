@@ -21,25 +21,10 @@ data:
   {{- end }}
   {{ template "alfresco-common.activemq.cm" (include "alfresco-content-services.mq.url" .) }}
   {{- $search_url := "" }}
-  {{- $audit_search_url := "" }}
   {{- $search_flavor := include "alfresco-content-services.search.flavor" . }}
   {{- if ne "noindex" $search_flavor }}
     {{- if .Values.global.search.url }}
       {{- $search_url = .Values.global.search.url }}
-      {{- if .Values.global.search.auditIndex.external.enabled }}
-        {{- $audit_search_url = coalesce .Values.global.search.auditIndex.external.url .Values.global.search.url }}
-      {{- else }}
-        {{- $esAuditHost := printf "%s-%s" (.Release.Name | default "acs") (.Values.global.elasticsearch.service.name | default "elasticsearch") }}
-        {{- $esAuditPort := .Values.global.elasticsearch.service.ports.restApi | default 9200 }}
-        {{- with .Values.elasticsearch }}
-          {{- if .enabled }}
-            {{- $esAuditProto := .protocol | default "http" }}
-            {{- $audit_search_url = printf "%s://%s:%v" $esAuditProto $esAuditHost $esAuditPort }}
-          {{- else }}
-            {{- fail "Chart is configured to use local elasticsearch cluster for audit indexing but elasticsearch is disabled. Set elasticsearch.enabled to true or use external elasticsearch cluster for audit indexing" }}
-          {{- end }}
-        {{- end }}
-      {{- end }}
     {{- else if eq "solr6" $search_flavor }}
       {{- $search_url = printf "http://%s/solr" (include "alfresco-search-service.deployment.name" .) }}
     {{- else if eq "elasticsearch" $search_flavor }}
@@ -49,7 +34,6 @@ data:
         {{- if .enabled }}
           {{- $esProto := .protocol | default "http" }}
           {{- $search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
-          {{- $audit_search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
         {{- else }}
           {{- fail "Chart is configured to use Alfresco Search Enterprise but no index backend has been provided. Set one using either global.search.url or elasticsearch.enabled" }}
         {{- end }}
@@ -66,9 +50,6 @@ data:
     {{- printf "SEARCH_URL: %s" $search_url | nindent 2 }}
     {{- printf "SEARCH_HOST: %s" (include "alfresco-common.url.host" $search_url) | nindent 2 }}
     {{- printf "SEARCH_PORT: %s" (include "alfresco-common.url.port" $search_url | quote) | nindent 2 }}
-    {{- printf "AUDIT_SEARCH_URL: %s" $audit_search_url | nindent 2 }}
-    {{- printf "AUDIT_SEARCH_HOST: %s" (include "alfresco-common.url.host" $audit_search_url) | nindent 2 }}
-    {{- printf "AUDIT_SEARCH_PORT: %s" (include "alfresco-common.url.port" $audit_search_url | quote) | nindent 2 }}
     {{- if eq "solr6" $search_flavor }}
       {{- printf "SOLR_BASE_URL: %s" (include "alfresco-common.url.path" $search_url | default "/solr") | nindent 2 }}
     {{- end }}
@@ -88,3 +69,21 @@ data:
       {{- fail "Alfresco Intelligence service has been enabled but Transformation service is not available" }}
   {{- end }}
   {{- end }}
+  {{- $elasticsearch_audit_url := "" }}
+    {{- if .Values.global.auditIndex.url }}
+      {{- $elasticsearch_audit_url = .Values.global.auditIndex.url }}
+    {{- else }}
+      {{- $auditEsHost := printf "%s-%s" (.Release.Name | default "acs") (.Values.global.elasticsearch.service.name | default "elasticsearch") }}
+      {{- $auditEsPort := .Values.global.elasticsearch.service.ports.restApi | default 9200 }}
+      {{- with (index .Values "elasticsearch") }}
+        {{- if .enabled }}
+          {{- $auditEsProto := .protocol | default "http" }}
+          {{- $elasticsearch_audit_url = coalesce $.Values.global.auditIndex.url (printf "%s://%s:%v" $auditEsProto $auditEsHost $auditEsPort) }}
+        {{- else if index $.Values "alfresco-audit-storage" "enabled" }}
+          {{- fail "Chart is configured to use Alfresco Audit Storage but no index backend has been provided. Set one using either global.auditIndex.url or elasticsearch.enabled" }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+    {{- printf "AUDIT_ELASTICSEARCH_URL: %s" $elasticsearch_audit_url | nindent 2 }}
+    {{- printf "AUDIT_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $elasticsearch_audit_url) | nindent 2 }}
+    {{- printf "AUDIT_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $elasticsearch_audit_url | quote) | nindent 2 }}
