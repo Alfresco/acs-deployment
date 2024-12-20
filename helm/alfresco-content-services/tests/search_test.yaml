@@ -221,8 +221,8 @@ tests:
           username: elastic
           password: changeme
         auditIndex:
-          username: elastic
-          password: changeme
+          username: auditelastic
+          password: auditchangeme
     asserts:
       - equal:
           path: data.SEARCH_USERNAME
@@ -234,9 +234,9 @@ tests:
         template: secret-search.yaml
       - equal:
           path: data.AUDIT_ELASTICSEARCH_USERNAME
-          value: ZWxhc3RpYw==
+          value: YXVkaXRlbGFzdGlj
         template: secret-audit-elasticsearch.yaml
       - equal:
           path: data.AUDIT_ELASTICSEARCH_PASSWORD
-          value: Y2hhbmdlbWU=
+          value: YXVkaXRjaGFuZ2VtZQ==
         template: secret-audit-elasticsearch.yaml
