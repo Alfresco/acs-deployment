@@ -28,10 +28,10 @@ data:
     {{- else if eq "solr6" $search_flavor }}
       {{- $search_url = printf "http://%s/solr" (include "alfresco-search-service.deployment.name" .) }}
     {{- else if eq "elasticsearch" $search_flavor }}
-      {{- $esHost := printf "%s-%s" (.Release.Name | default "acs") (.Values.global.elasticsearch.service.name | default "elasticsearch") }}
-      {{- $esPort := .Values.global.elasticsearch.service.ports.restApi | default 9200 }}
       {{- with .Values.elasticsearch }}
         {{- if .enabled }}
+          {{- $esHost := printf "%s-%s" $.Release.Name (($.Values.global.elasticsearch).service.name | default "elasticsearch") }}
+          {{- $esPort := ($.Values.global.elasticsearch).service.ports.restApi | default 9200 }}
           {{- $esProto := .protocol | default "http" }}
           {{- $search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
         {{- else }}
@@ -73,10 +73,10 @@ data:
     {{- if .Values.global.auditIndex.url }}
       {{- $elasticsearch_audit_url = .Values.global.auditIndex.url }}
     {{- else }}
-      {{- $auditEsHost := printf "%s-%s" (.Release.Name | default "acs") (.Values.global.elasticsearch.service.name | default "elasticsearch") }}
-      {{- $auditEsPort := .Values.global.elasticsearch.service.ports.restApi | default 9200 }}
       {{- with (index .Values "elasticsearch") }}
         {{- if .enabled }}
+          {{- $auditEsHost := printf "%s-%s" $.Release.Name (($.Values.global.elasticsearch).service.name | default "elasticsearch") }}
+          {{- $auditEsPort := ($.Values.global.elasticsearch).service.ports.restApi | default 9200 }}
           {{- $auditEsProto := .protocol | default "http" }}
           {{- $elasticsearch_audit_url = coalesce $.Values.global.auditIndex.url (printf "%s://%s:%v" $auditEsProto $auditEsHost $auditEsPort) }}
         {{- else if index $.Values "alfresco-audit-storage" "enabled" }}

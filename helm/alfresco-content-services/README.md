@@ -244,7 +244,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.ingest.replicaCount | int | `0` |  |
-| elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255 |
+| elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366 |
 | elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
 | elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` |  |
 | elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
@@ -261,8 +261,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.auditIndex.url | string | `nil` | set this URL if you have an external search service for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
-| global.elasticsearch.service.name | string | `"elasticsearch"` |  |
-| global.elasticsearch.service.ports.restAPI | int | `9200` |  |
 | global.kibanaEnabled | bool | `true` |  |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, see https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Email/Configure-Inbound-and-Outbound-Email/Manage-Outbound-Emails |

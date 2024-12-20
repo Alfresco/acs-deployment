@@ -73,11 +73,6 @@ global:
     secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
     # -- Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys.
     existingSecretName: null
-  elasticsearch:
-    service:
-      name: elasticsearch
-      ports:
-        restAPI: 9200
   kibanaEnabled: true
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
@@ -579,7 +574,7 @@ elasticsearch:
       path: /kibana
   ingress:
     # -- toggle deploying elasticsearch-audit ingress for more details about configuration check
-    # https://github.com/elastic/helm-charts/blob/main/elasticsearch/values.yaml#L255
+    # https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366
     enabled: false
 alfresco-audit-storage:
   enabled: true
