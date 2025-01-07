@@ -220,8 +220,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | dtas.additionalArgs[0] | string | `"--tb=short"` |  |
-| dtas.config.assertions.aas.audit_host | string | `"http://acs-alfresco-audit-storage:8081"` |  |
-| dtas.config.assertions.aas.elasticsearch_host | string | `"http://acs-elasticsearch:9200"` |  |
+| dtas.config.assertions.aas.audit_host | string | `"http://{{ .Release.Name }}-alfresco-audit-storage:8081"` |  |
+| dtas.config.assertions.aas.elasticsearch_host | string | `"{{ include \"alfresco-content-services.audit.elasticsearchUrl\" $ }}"` |  |
 | dtas.config.assertions.acs.edition | string | `"Enterprise"` |  |
 | dtas.config.assertions.acs.identity | bool | `false` |  |
 | dtas.config.assertions.acs.modules[0].id | string | `"org.alfresco.integrations.google.docs"` |  |
@@ -246,7 +246,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.ingest.replicaCount | int | `0` |  |
 | elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366 |
 | elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
-| elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` |  |
+| elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` | This setting defines the base URL for accessing Kibana in your deployment.    - For **local deployments**: Use "http://localhost/kibana" (default).    - For **production or remote deployments**: Replace `localhost` with the fully qualified domain name (FQDN) or IP address      where Kibana is accessible. Example: "http://kibana.mycompany.com" or "http://192.168.1.100/kibana".    - Ensure this URL is accessible by users or other services that need to interact with Kibana. |
 | elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
 | elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
@@ -259,7 +259,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
 | global.auditIndex.password | string | `nil` | set password for authentication against the external elasticsearch service for audit indexing |
 | global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
-| global.auditIndex.url | string | `nil` | set this URL if you have an external search service for audit indexing |
+| global.auditIndex.url | string | `nil` | set this URL if you have an external elasticsearch for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
 | global.kibanaEnabled | bool | `true` |  |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |

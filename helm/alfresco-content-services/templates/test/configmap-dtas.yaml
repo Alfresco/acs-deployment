@@ -4,5 +4,6 @@ kind: ConfigMap
 metadata:
   name: dtas-config
 data:
-  config.json: {{ .Values.dtas.config | toJson | quote }}
+  config.json: |
+  {{- tpl (toYaml .Values.dtas.config) $ | fromYaml | toJson | nindent 4 -}}
 {{- end -}}

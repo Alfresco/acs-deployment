@@ -63,7 +63,7 @@ global:
     # is solr6 or SEARCH_USERNAME and SEARCH_PASSWORD keys.
     existingSecretName: null
   auditIndex:
-    # -- set this URL if you have an external search service for audit indexing
+    # -- set this URL if you have an external elasticsearch for audit indexing
     url: null
     # -- set usernname for authentication against the external elasticsearch service for audit indexing
     username: null
@@ -565,6 +565,11 @@ elasticsearch:
     configuration:
       server:
         basePath: "/kibana"
+        # -- This setting defines the base URL for accessing Kibana in your deployment.
+        #    - For **local deployments**: Use "http://localhost/kibana" (default).
+        #    - For **production or remote deployments**: Replace `localhost` with the fully qualified domain name (FQDN) or IP address
+        #      where Kibana is accessible. Example: "http://kibana.mycompany.com" or "http://192.168.1.100/kibana".
+        #    - Ensure this URL is accessible by users or other services that need to interact with Kibana.
         publicBaseUrl: "http://localhost/kibana"
         rewriteBasePath: true
     ingress:
@@ -627,8 +632,8 @@ dtas:
       adw:
         base_path: "/workspace"
       aas:
-        audit_host: http://acs-alfresco-audit-storage:8081
-        elasticsearch_host: http://acs-elasticsearch:9200
+        audit_host: "http://{{ .Release.Name }}-alfresco-audit-storage:8081"
+        elasticsearch_host: '{{ include "alfresco-content-services.audit.elasticsearchUrl" $ }}'
 keda:
   # -- The list of components that will be scaled by KEDA (chart names)
   components: []

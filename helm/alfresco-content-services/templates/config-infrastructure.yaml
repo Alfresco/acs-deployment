@@ -69,21 +69,7 @@ data:
       {{- fail "Alfresco Intelligence service has been enabled but Transformation service is not available" }}
   {{- end }}
   {{- end }}
-  {{- $elasticsearch_audit_url := "" }}
-    {{- if .Values.global.auditIndex.url }}
-      {{- $elasticsearch_audit_url = .Values.global.auditIndex.url }}
-    {{- else }}
-      {{- with (index .Values "elasticsearch") }}
-        {{- if .enabled }}
-          {{- $auditEsHost := printf "%s-%s" $.Release.Name (($.Values.global.elasticsearch).service.name | default "elasticsearch") }}
-          {{- $auditEsPort := ($.Values.global.elasticsearch).service.ports.restApi | default 9200 }}
-          {{- $auditEsProto := .protocol | default "http" }}
-          {{- $elasticsearch_audit_url = coalesce $.Values.global.auditIndex.url (printf "%s://%s:%v" $auditEsProto $auditEsHost $auditEsPort) }}
-        {{- else if index $.Values "alfresco-audit-storage" "enabled" }}
-          {{- fail "Chart is configured to use Alfresco Audit Storage but no index backend has been provided. Set one using either global.auditIndex.url or elasticsearch.enabled" }}
-        {{- end }}
-      {{- end }}
-    {{- end }}
+  {{- $elasticsearch_audit_url := include "alfresco-content-services.audit.elasticsearchUrl" $ }}
     {{- printf "AUDIT_ELASTICSEARCH_URL: %s" $elasticsearch_audit_url | nindent 2 }}
     {{- printf "AUDIT_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $elasticsearch_audit_url) | nindent 2 }}
     {{- printf "AUDIT_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $elasticsearch_audit_url | quote) | nindent 2 }}
