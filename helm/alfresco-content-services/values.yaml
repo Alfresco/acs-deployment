@@ -583,6 +583,7 @@ elasticsearch:
     enabled: false
 alfresco-audit-storage:
   enabled: true
+  nameOverride: alfresco-audit-storage
   image:
     repository: quay.io/alfresco/alfresco-audit-storage
     tag: 1.0.0
@@ -605,7 +606,7 @@ alfresco-audit-storage:
         password: AUDIT_ELASTICSEARCH_PASSWORD
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
-  enabled: false
+  enabled: true
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
     tag: v1.6.0
@@ -632,7 +633,7 @@ dtas:
       adw:
         base_path: "/workspace"
       aas:
-        audit_host: "http://{{ .Release.Name }}-alfresco-audit-storage:8081"
+        audit_host: '{{ include "alfresco-content-services.aasService" $ }}'
         elasticsearch_host: '{{ include "alfresco-content-services.audit.elasticsearchUrl" $ }}'
 keda:
   # -- The list of components that will be scaled by KEDA (chart names)
