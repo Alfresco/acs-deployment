@@ -1,7 +1,7 @@
 {{/*
 Get Alfresco Audit Storage URL for testing
 */}}
-{{- define "alfresco-content-services.aasService" -}}
+{{- define "alfresco-content-services.audit.serviceName" -}}
 {{- with (index .Values "alfresco-audit-storage") }}
     {{- if .enabled}}
         {{- $aasCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}

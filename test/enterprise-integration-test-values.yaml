@@ -39,7 +39,6 @@ alfresco-search:
       cpu: "2"
       memory: "1280Mi"
 elasticsearch:
-  esJavaOpts: "-Xmx512m -Xms512m"
   master:
     resources:
       requests:
@@ -198,3 +197,4 @@ alfresco-audit-storage:
       memory: "256Mi"
 dtas:
   enabled: true
+# In case of any changes, please ensure that the values are also updated in `docs/helm/values/local-dev_values.yaml`

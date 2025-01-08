@@ -73,7 +73,8 @@ global:
     secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
     # -- Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys.
     existingSecretName: null
-  kibanaEnabled: true
+  # -- Enable/Disable Kibana for the embedded elasticsearch cluster
+  kibanaEnabled: false
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -606,7 +607,7 @@ alfresco-audit-storage:
         password: AUDIT_ELASTICSEARCH_PASSWORD
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
     tag: v1.6.0
@@ -633,7 +634,7 @@ dtas:
       adw:
         base_path: "/workspace"
       aas:
-        audit_host: '{{ include "alfresco-content-services.aasService" $ }}'
+        audit_host: '{{ include "alfresco-content-services.audit.serviceName" $ }}'
         elasticsearch_host: '{{ include "alfresco-content-services.audit.elasticsearchUrl" $ }}'
 keda:
   # -- The list of components that will be scaled by KEDA (chart names)

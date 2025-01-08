@@ -221,7 +221,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | dtas.additionalArgs[0] | string | `"--tb=short"` |  |
-| dtas.config.assertions.aas.audit_host | string | `"{{ include \"alfresco-content-services.aasService\" $ }}"` |  |
+| dtas.config.assertions.aas.audit_host | string | `"{{ include \"alfresco-content-services.audit.serviceName\" $ }}"` |  |
 | dtas.config.assertions.aas.elasticsearch_host | string | `"{{ include \"alfresco-content-services.audit.elasticsearchUrl\" $ }}"` |  |
 | dtas.config.assertions.acs.edition | string | `"Enterprise"` |  |
 | dtas.config.assertions.acs.identity | bool | `false` |  |
@@ -236,7 +236,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.config.host | string | `"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"` |  |
 | dtas.config.config.password | string | `"admin"` |  |
 | dtas.config.config.username | string | `"admin"` |  |
-| dtas.enabled | bool | `true` | Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only) |
+| dtas.enabled | bool | `false` | Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only) |
 | dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
 | dtas.image.tag | string | `"v1.6.0"` |  |
@@ -262,7 +262,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.auditIndex.url | string | `nil` | set this URL if you have an external elasticsearch for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
-| global.kibanaEnabled | bool | `true` |  |
+| global.kibanaEnabled | bool | `false` | Enable/Disable Kibana for the embedded elasticsearch cluster |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, see https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Email/Configure-Inbound-and-Outbound-Email/Manage-Outbound-Emails |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
