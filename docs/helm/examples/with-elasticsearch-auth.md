@@ -37,7 +37,7 @@ kubectl create secret generic elastic-search-secret \
 
 ### 2. Understand the Patch File
 
-Patch [file](../values/elasticsearch_auth_values.yaml) defines the configuration
+Patch file `docs/helm/values/elasticsearch_auth_values.yaml` defines the configuration
 for enabling authentication and integrating Elasticsearch and Kibana with the
 Alfresco deployment. Update the patch file to match your requirements if
 necessary.
