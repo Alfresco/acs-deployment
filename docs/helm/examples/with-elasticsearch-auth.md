@@ -24,15 +24,16 @@ First, create a Kubernetes secret containing the credentials for Elasticsearch
 and Kibana. Customize the values as needed for your setup.
 
 ```bash
+ELASTIC_USERNAME="elastic" ELASTIC_PASSWORD="alfresco" KIBANA_PASSWORD="alfrescokibana" && \
 kubectl create secret generic elastic-search-secret \
     --namespace=default \
-    --from-literal=elastic-user=elastic \
-    --from-literal=elasticsearch-password=alfresco \
-    --from-literal=kibana-password=alfrescokibana \
-    --from-literal=AUDIT_ELASTICSEARCH_USERNAME=elastic \
-    --from-literal=AUDIT_ELASTICSEARCH_PASSWORD=alfresco \
-    --from-literal=SEARCH_USERNAME=elastic \
-    --from-literal=SEARCH_PASSWORD=alfresco
+    --from-literal=elastic-user=$ELASTIC_USERNAME \
+    --from-literal=elasticsearch-password=$ELASTIC_PASSWORD \
+    --from-literal=kibana-password=$KIBANA_PASSWORD \
+    --from-literal=AUDIT_ELASTICSEARCH_USERNAME=$ELASTIC_USERNAME \
+    --from-literal=AUDIT_ELASTICSEARCH_PASSWORD=$ELASTIC_PASSWORD \
+    --from-literal=SEARCH_USERNAME=$ELASTIC_USERNAME \
+    --from-literal=SEARCH_PASSWORD=$ELASTIC_PASSWORD
 ```
 
 ### 2. Understand the Patch File
