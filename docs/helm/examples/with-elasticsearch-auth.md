@@ -9,6 +9,13 @@ grand_parent: Helm
 This guide demonstrates how to deploy Elasticsearch with Kibana and
 authentication enabled using the Alfresco ACS Deployment repository.  
 
+> :warning: This example demonstrates how to use an embedded Elasticsearch cluster
+> with authentication enabled. However, it is intended for demonstration purposes
+> only and is **not recommended for production use**. We strongly advise against using
+> an embedded Elasticsearch cluster in production environments. This example is
+> provided solely for cases where the embedded setup is specifically needed, such
+> as for testing or development scenarios.
+
 ## Prerequisites
 
 Ensure you have the following:
