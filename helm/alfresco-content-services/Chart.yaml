@@ -4,7 +4,7 @@
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 9.0.0-alpha.1
+version: 9.0.0-alpha.2
 appVersion: 23.4.0
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
@@ -61,7 +61,7 @@ dependencies:
     version: 7.0.0-alpha.1
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 4.2.0
+    version: 4.3.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
@@ -82,21 +82,11 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
   - name: elasticsearch
-    repository: https://helm.elastic.co
-    version: 7.17.3
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 21.4.1
     condition: elasticsearch.enabled
-  - name: elasticsearch
-    alias: elasticsearch-audit
-    repository: https://helm.elastic.co
-    version: 7.17.3
-    condition: elasticsearch-audit.enabled
-  - name: kibana
-    alias: kibana-audit
-    repository: https://helm.elastic.co
-    version: 7.17.3
-    condition: kibana-audit.enabled
   - name: alfresco-audit-storage
-    version: 0.1.0
+    version: 0.2.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-audit-storage.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

@@ -31,7 +31,7 @@ dependencies:
   version: 7.0.0-alpha.1
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.2.0
+  version: 4.3.0-alpha.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 2.0.0-alpha.0
@@ -45,16 +45,10 @@ dependencies:
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.0.0
 - name: elasticsearch
-  repository: https://helm.elastic.co
-  version: 7.17.3
-- name: elasticsearch
-  repository: https://helm.elastic.co
-  version: 7.17.3
-- name: kibana
-  repository: https://helm.elastic.co
-  version: 7.17.3
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 21.4.1
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0
-digest: sha256:9b60ca4130395f0fe990f3fbd5a766b65b08f4a8f245a75d03505301951bcc2e
-generated: "2025-01-09T11:11:07.378365+01:00"
+  version: 0.2.0-alpha.0
+digest: sha256:bc36c1f7e431c2dd879008f1ba886d8653794a891b8d34916a297bf36cba35f7
+generated: "2025-01-13T12:16:52.228599+01:00"

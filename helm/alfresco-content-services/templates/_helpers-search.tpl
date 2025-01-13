@@ -27,3 +27,28 @@ Usage: include "alfresco-content-services.search.flavor" $
   {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Compute the url for elasticsearch for audit
+
+Usage: include "alfresco-content-services.audit.elasticsearchUrl" $
+
+*/}}
+{{- define "alfresco-content-services.audit.elasticsearchUrl" -}}
+{{- $elasticsearch_audit_url := "" }}
+  {{- if .Values.global.auditIndex.url }}
+    {{- $elasticsearch_audit_url = .Values.global.auditIndex.url }}
+  {{- else }}
+    {{- with (index .Values "elasticsearch") }}
+      {{- if .enabled }}
+        {{- $auditEsHost := printf "%s-%s" $.Release.Name (($.Values.global.elasticsearch).service.name | default "elasticsearch") }}
+        {{- $auditEsPort := ($.Values.global.elasticsearch).service.ports.restApi | default 9200 }}
+        {{- $auditEsProto := .protocol | default "http" }}
+        {{- $elasticsearch_audit_url = coalesce $.Values.global.auditIndex.url (printf "%s://%s:%v" $auditEsProto $auditEsHost $auditEsPort) }}
+      {{- else if index $.Values "alfresco-audit-storage" "enabled" }}
+        {{- fail "Chart is configured to use Alfresco Audit Storage but no index backend has been provided. Set one using either global.auditIndex.url or elasticsearch.enabled" }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- print $elasticsearch_audit_url }}
+{{- end -}}
