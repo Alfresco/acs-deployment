@@ -40,13 +40,15 @@ repository-database:
 keycloakx:
   nameOverride: keycloak
   image:
-    tag: 25.0.6
+    tag: 26.0.7
+  proxy:
+    mode: xforwarded
   admin:
     # -- Keycloak admin username
     username: admin
     # -- Keycloak admin password.
     # By default generated on first deployment, to get its value use:<br>
-    # <code>kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d</code>
+    # <code>kubectl get secrets keycloak -o jsonpath='{@.data.KC_BOOTSTRAP_ADMIN_PASSWORD}' | base64 -d</code>
     # @default -- random ascii string
     password: null
     realm:

@@ -146,8 +146,8 @@ metadata:
     "helm.sh/resource-policy": keep
 data:
   {{- with .Values.keycloakx }}
-  KEYCLOAK_ADMIN: {{ .admin.username | default "admin" | b64enc | quote }}
-  KEYCLOAK_ADMIN_PASSWORD: >-
+  KC_BOOTSTRAP_ADMIN_USERNAME: {{ .admin.username | default "admin" | b64enc | quote }}
+  KC_BOOTSTRAP_ADMIN_PASSWORD: >-
     {{ (.admin.password | default (randAscii 16)) | b64enc }}
   {{- end }}
 {{- end }}
