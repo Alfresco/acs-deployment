@@ -20,7 +20,7 @@ description: |
   :warning: All components have persistence disabled so all data is lost after a
   deployment is destroyed or rolled back!
 type: application
-version: 1.1.0
+version: 1.1.1
 appVersion: 23.4.0
 home: https://www.alfresco.com
 sources:
@@ -32,7 +32,7 @@ dependencies:
     alias: repository-database
   - name: keycloakx
     repository: https://codecentric.github.io/helm-charts
-    version: 2.5.1
+    version: 6.0.0
   - name: alfresco-repository
     repository: https://alfresco.github.io/alfresco-helm-charts/
     version: 0.8.0

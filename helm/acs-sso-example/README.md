@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # acs-sso-example
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.0](https://img.shields.io/badge/AppVersion-23.4.0-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.0](https://img.shields.io/badge/AppVersion-23.4.0-informational?style=flat-square)
 
 An example Chart to demonstrate how to compose your own Alfresco platform
 with SSO on kubernetes using a nthrid party Keycloak.
@@ -41,7 +41,7 @@ deployment is destroyed or rolled back!
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-content-app(alfresco-adf-app) | 0.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 1.2.0 |
-| https://codecentric.github.io/helm-charts | keycloakx | 2.5.1 |
+| https://codecentric.github.io/helm-charts | keycloakx | 6.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | repository-database(postgresql) | 13.4.0 |
 
 ## Values
@@ -54,9 +54,9 @@ deployment is destroyed or rolled back!
 | alfresco-share | object | check values.yaml | Configure the Alfresco Share as per https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-share-0.3.0/charts/alfresco-share |
 | global.known_urls | list | `["http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | keycloakx | object | check values.yaml | Configure the ACS Keycloak Identity provider as per https://github.com/codecentric/helm-charts/tree/keycloakx-2.3.0 |
-| keycloakx.admin.password | string | random ascii string | Keycloak admin password. By default generated on first deployment, to get its value use:<br> <code>kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d</code> |
-| keycloakx.admin.realm[0] | object | `{"clients":[{"clientId":"alfresco","enabled":true,"implicitFlowEnabled":true,"publicClient":true,"redirectUris":"{{- $redirectUris := list }} {{- range (index (include \"alfresco-common.known.urls\" $ | mustFromJson) \"known_urls\") }} {{- $redirectUris = append $redirectUris (printf \"%s/*\" .) }} {{- end }} {{- $redirectUris }}","standardFlowEnabled":true,"webOrigins":"{{ index (include \"alfresco-common.known.urls\" $ | mustFromJson) \"known_urls\" }}"}],"defaultLocale":"en","enabled":true,"id":"alfresco","internationalizationEnabled":true,"loginTheme":"alfresco","realm":"alfresco","sslRequired":"none","supportedLocales":["ca","de","en","es","fr","it","ja","lt","nl","no","pt-BR","ru","sv","zh-CN"],"users":[{"credentials":[{"type":"password","value":"secret"}],"enabled":true,"username":"admin"}]}` | Alfresco Realm definition |
-| keycloakx.admin.realm[0].users[0] | object | `{"credentials":[{"type":"password","value":"secret"}],"enabled":true,"username":"admin"}` | default Alfresco admin user |
+| keycloakx.admin.password | string | random ascii string | Keycloak admin password. By default generated on first deployment, to get its value use:<br> <code>kubectl get secrets keycloak -o jsonpath='{@.data.KC_BOOTSTRAP_ADMIN_PASSWORD}' | base64 -d</code> |
+| keycloakx.admin.realm[0] | object | `{"clients":[{"clientId":"alfresco","enabled":true,"implicitFlowEnabled":true,"publicClient":true,"redirectUris":"{{- $redirectUris := list }} {{- range (index (include \"alfresco-common.known.urls\" $ | mustFromJson) \"known_urls\") }} {{- $redirectUris = append $redirectUris (printf \"%s/*\" .) }} {{- end }} {{- $redirectUris }}","standardFlowEnabled":true,"webOrigins":"{{ index (include \"alfresco-common.known.urls\" $ | mustFromJson) \"known_urls\" }}"}],"defaultLocale":"en","enabled":true,"id":"alfresco","internationalizationEnabled":true,"loginTheme":"alfresco","realm":"alfresco","sslRequired":"none","supportedLocales":["ca","de","en","es","fr","it","ja","lt","nl","no","pt-BR","ru","sv","zh-CN"],"users":[{"credentials":[{"type":"password","value":"secret"}],"email":"admin@example.org","enabled":true,"firstName":"admin","lastName":"admin","username":"admin"}]}` | Alfresco Realm definition |
+| keycloakx.admin.realm[0].users[0] | object | `{"credentials":[{"type":"password","value":"secret"}],"email":"admin@example.org","enabled":true,"firstName":"admin","lastName":"admin","username":"admin"}` | default Alfresco admin user |
 | keycloakx.admin.realm[0].users[0].credentials[0].value | string | `"secret"` | default Alfresco admin password |
 | keycloakx.admin.username | string | `"admin"` | Keycloak admin username |
 | repository-database | object | check values.yaml | Configure the ACS repository Postgres database as per https://github.com/bitnami/charts/tree/002c752f871c8fa068a770dc80fec4cf798798ab/bitnami/postgresql |

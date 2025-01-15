@@ -40,13 +40,15 @@ repository-database:
 keycloakx:
   nameOverride: keycloak
   image:
-    tag: 24.0.5
+    tag: 26.0.7
+  proxy:
+    mode: xforwarded
   admin:
     # -- Keycloak admin username
     username: admin
     # -- Keycloak admin password.
     # By default generated on first deployment, to get its value use:<br>
-    # <code>kubectl get secrets keycloak -o jsonpath='{@.data.KEYCLOAK_ADMIN_PASSWORD}' | base64 -d</code>
+    # <code>kubectl get secrets keycloak -o jsonpath='{@.data.KC_BOOTSTRAP_ADMIN_PASSWORD}' | base64 -d</code>
     # @default -- random ascii string
     password: null
     realm:
@@ -74,6 +76,9 @@ keycloakx:
           # -- default Alfresco admin user
           - username: admin
             enabled: true
+            firstName: admin
+            lastName: admin
+            email: admin@example.org
             credentials:
               - type: password
                 # -- default Alfresco admin password
@@ -98,35 +103,38 @@ keycloakx:
   command:
     - /opt/keycloak/bin/kc.sh
     - start
+    - --hostname=http://localhost/auth
+    - --health-enabled=true
     - --http-enabled=true
     - --http-port=8080
-    - --hostname-strict=false
-    - --hostname-strict-https=false
     - --import-realm
   http:
     relativePath: /auth
   livenessProbe: |
     httpGet:
       path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health/live'
-      port: http
+      port: http-internal
     initialDelaySeconds: 0
     timeoutSeconds: 5
   readinessProbe: |
     httpGet:
       path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health/ready'
-      port: http
+      port: http-internal
     initialDelaySeconds: 10
     timeoutSeconds: 1
   startupProbe: |
     httpGet:
       path: '{{ tpl .Values.http.relativePath $ | trimSuffix "/" }}/health'
-      port: http
+      port: http-internal
     initialDelaySeconds: 15
     timeoutSeconds: 1
     failureThreshold: 60
     periodSeconds: 5
   ingress:
     enabled: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
     tls: []
     rules:
       - host: >-
@@ -245,6 +253,11 @@ alfresco-content-app:
       nginx.ingress.kubernetes.io/proxy-body-size: 5g
       nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
     tls: []
+    hosts:
+      - host: localhost
+        paths:
+          - path: /aca
+            pathType: Prefix
   image:
     repository: alfresco/alfresco-content-app
     tag: 5.2.0
@@ -254,5 +267,7 @@ alfresco-content-app:
     APP_CONFIG_AUTH_TYPE: OAUTH
     APP_CONFIG_OAUTH2_HOST: "{protocol}//{hostname}{:port}/auth/realms/alfresco"
     APP_CONFIG_OAUTH2_CLIENTID: alfresco
-    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/assets/silent-refresh.html"
-    BASE_PATH: /
+    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: "{protocol}//{hostname}{:port}/aca/assets/silent-refresh.html"
+    BASE_PATH: /aca
+    APP_CONFIG_OAUTH2_REDIRECT_LOGIN: /aca
+    APP_CONFIG_OAUTH2_REDIRECT_LOGOUT: /aca
