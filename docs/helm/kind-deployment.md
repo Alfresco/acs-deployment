@@ -64,7 +64,7 @@ when using our search services chart:
 
 ```sh
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"allow-snippet-annotations":"true"}}'
+  -p '{"data": {"annotations-risk-level":"Critical"}}'
 ```
 
 Wait for the ingress-nginx controller to be up again after the configuration change:
