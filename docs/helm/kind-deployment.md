@@ -72,7 +72,7 @@ kubectl -n ingress-nginx patch cm ingress-nginx-controller \
   -p '{"data": {"annotations-risk-level":"Critical", "allow-snippet-annotations":"true"}}'
 ```
 
-:warning: For latests versions of nginx it is required to use
+:warning: For latest versions of nginx it is required to use
 `"annotations-risk-level":"Critical"`, see this
 [issue](https://github.com/kubernetes/ingress-nginx/issues/12618)
 
