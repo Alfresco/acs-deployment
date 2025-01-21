@@ -84,21 +84,16 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3005
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
+          ingress-configmap-patch: '"allow-snippet-annotations":"true", "annotations-risk-level":"Critical"'
+          registry-secret: "true"
 
-      - name: Set nginx ingress config
+      - name: Debug cm ingress-nginx-controller
         run: >-
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller
-          -p '{"data": {"allow-snippet-annotations":"true"}}'
-
-      - name: Create registries auth secret
-        run: >-
-          kubectl create secret generic regcred
-          --from-file=.dockerconfigjson=$HOME/.docker/config.json
-          --type=kubernetes.io/dockerconfigjson
+          kubectl -n ingress-nginx get cm ingress-nginx-controller -o yaml
 
       - name: Check if cgroup v2 workaround is needed
         if: startsWith(matrix.values, '7.')
