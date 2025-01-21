@@ -31,7 +31,7 @@ kubectl -n ingress-nginx patch cm ingress-nginx-controller \
 ```
 
 :warning: For latests versions of nginx it is required to use
-`"annotations-risk-level":"Critical"`, see: this
+`"annotations-risk-level":"Critical"`, see this
 [issue](https://github.com/kubernetes/ingress-nginx/issues/12618)
 
 Wait for the ingress-nginx controller to be up again after the configuration change:
