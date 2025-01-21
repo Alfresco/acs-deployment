@@ -88,12 +88,7 @@ jobs:
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
-          ingress-configmap-patch: '"allow-snippet-annotations":"true", "annotations-risk-level":"Critical"'
           registry-secret: "true"
-
-      - name: Debug cm ingress-nginx-controller
-        run: >-
-          kubectl -n ingress-nginx get cm ingress-nginx-controller -o yaml
 
       - name: Check if cgroup v2 workaround is needed
         if: startsWith(matrix.values, '7.')

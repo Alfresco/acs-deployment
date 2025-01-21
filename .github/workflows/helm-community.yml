@@ -68,21 +68,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3005
         with:
           ingress-nginx-ref: controller-v1.8.2
-
-      - name: Set nginx ingress config
-        run: |
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-            -p '{"data": {"allow-snippet-annotations":"true"}}'
-
-      - name: Create registries auth secret
-        if: ${{ ! github.event.repository.fork }}
-        run: |
-          kubectl create secret generic regcred \
-          --from-file=.dockerconfigjson=$HOME/.docker/config.json \
-          --type=kubernetes.io/dockerconfigjson
+          metrics: "true"
+          registry-secret: "${{ ! github.event.repository.fork }}"
 
       - name: Add dependency chart repos
         run: |
