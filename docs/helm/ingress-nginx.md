@@ -24,9 +24,12 @@ helm upgrade --install ingress-nginx ingress-nginx \
 
 ### Ingress configmap patch
 
-Enable snippet annotations which is disabled by default for security reasons, but
-we still requires it for `alfresco-search-services` while still filtering only
-the ones we strictly need.
+:warning: With ingress chart version 4.7.2 snippet annotations are enabled by default. You
+can skip patching.
+
+Enable snippet annotations which are disabled by default in newer versions of
+ingress chart for security reasons, but we still require it for
+`alfresco-search-services` while still filtering only the ones we strictly need.
 
 ```bash
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
