@@ -62,8 +62,14 @@ Install the ingress-nginx controller namespace:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/kind/deploy.yaml
 ```
 
-Check [optional patching](./ingress-nginx.md#optional-patching) when applying
-controller with version v1.12 or newer.
+Wait for the ingress-nginx controller:
+
+```sh
+kubectl wait --namespace ingress-nginx \
+--for=condition=ready pod \
+--selector=app.kubernetes.io/component=controller \
+--timeout=90s
+```
 
 ## Install metrics server
 

@@ -19,7 +19,8 @@ Install the ingress-nginx controller namespace:
 helm upgrade --install ingress-nginx ingress-nginx \
 --repo https://kubernetes.github.io/ingress-nginx \
 --namespace ingress-nginx --create-namespace \
---version 4.7.2
+--version 4.7.2 \
+--set controller.allowSnippetAnnotations=true
 ```
 
 Wait for the ingress-nginx controller:
@@ -35,16 +36,6 @@ Verify the newly created pod under the ingress-nginx namespace:
 
 ```sh
 kubectl get pods --namespace=ingress-nginx
-```
-
-### Optional patching
-
-Since nginx controller v1.12 or ingress-nginx helm chart v4.12.0 use
-`"annotations-risk-level":"Critical"`.
-
-```bash
-kubectl -n ingress-nginx patch cm ingress-nginx-controller \
--p '{"data": {"annotations-risk-level":"Critical"}}'
 ```
 
 More information can be found in the
