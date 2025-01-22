@@ -67,8 +67,8 @@ annotations are allowed by default. You can skip below steps. Verify if ingress
 configmap has those settings when running different versions.
 
 Reconfigure ingress-nginx to allow snippet annotations that are still required
-when using our search services chart. Follow steps from [ingress-nginx
-docs](./ingress-nginx.md#ingress-configmap-patch)
+when using our search services chart. Follow steps from
+[ingress-nginx docs](./ingress-nginx.md#ingress-configmap-patch)
 
 ## Install metrics server
 
