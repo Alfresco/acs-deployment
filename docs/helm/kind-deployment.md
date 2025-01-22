@@ -59,9 +59,7 @@ Wait for the Kind cluster to be created. This may take a few minutes.
 Install the ingress-nginx controller namespace:
 
 ```bash
-helm upgrade --install ingress-nginx ingress-nginx \
---repo https://kubernetes.github.io/ingress-nginx \
---namespace ingress-nginx --create-namespace
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/kind/deploy.yaml
 ```
 
 Reconfigure ingress-nginx to allow snippet annotations that are still required
@@ -69,12 +67,12 @@ when using our search services chart:
 
 ```sh
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"annotations-risk-level":"Critical", "allow-snippet-annotations":"true"}}'
+  -p '{"data": {"allow-snippet-annotations":"true"}}'
 ```
 
-:warning: For latest versions of nginx it is required to use
-`"annotations-risk-level":"Critical"`, see this
-[issue](https://github.com/kubernetes/ingress-nginx/issues/12618)
+:warning: Since nginx controller v1.12 use
+`"annotations-risk-level":"Critical"`. For versions prior to that use
+`"allow-snippet-annotations":"true"`
 
 Wait for the ingress-nginx controller to be up again after the configuration change:
 

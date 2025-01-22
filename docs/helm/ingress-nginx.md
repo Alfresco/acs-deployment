@@ -30,9 +30,9 @@ kubectl -n ingress-nginx patch cm ingress-nginx-controller \
 -p '{"data": {"annotations-risk-level":"Critical", "allow-snippet-annotations":"true"}}'
 ```
 
-:warning: For latest versions of nginx it is required to use
-`"annotations-risk-level":"Critical"`, see this
-[issue](https://github.com/kubernetes/ingress-nginx/issues/12618)
+:warning: Since nginx controller v1.12 or ingress-nginx helm chart v4.12 use
+`"annotations-risk-level":"Critical"`. For versions prior to that use
+`"allow-snippet-annotations":"true"`
 
 Wait for the ingress-nginx controller to be up again after the configuration change:
 
