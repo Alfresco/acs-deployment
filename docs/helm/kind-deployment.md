@@ -54,7 +54,7 @@ EOF
 
 Wait for the Kind cluster to be created. This may take a few minutes.
 
-## Step 3: Install patched ingress-nginx
+## Step 3: Install ingress-nginx
 
 Install the ingress-nginx controller namespace:
 
@@ -62,13 +62,8 @@ Install the ingress-nginx controller namespace:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/kind/deploy.yaml
 ```
 
-:warning: When running above command with version controller-v1.8.2 snippet
-annotations are allowed by default. You can skip below steps. Verify if ingress
-configmap has those settings when running different versions.
-
-Reconfigure ingress-nginx to allow snippet annotations that are still required
-when using our search services chart. Follow steps from
-[ingress-nginx docs](./ingress-nginx.md#ingress-configmap-patch)
+Check [optional patching](./ingress-nginx.md#optional-patching) when applying
+controller with version v1.12 or newer.
 
 ## Install metrics server
 

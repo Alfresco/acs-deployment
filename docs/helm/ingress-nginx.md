@@ -22,25 +22,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 --version 4.7.2
 ```
 
-### Ingress configmap patch
-
-:warning: With ingress chart version 4.7.2 snippet annotations are enabled by default. You
-can skip patching.
-
-Enable snippet annotations which are disabled by default in newer versions of
-ingress chart for security reasons, but we still require it for
-`alfresco-search-services` while still filtering only the ones we strictly need.
-
-```bash
-kubectl -n ingress-nginx patch cm ingress-nginx-controller \
--p '{"data": {"allow-snippet-annotations":"true"}}'
-```
-
-:warning: Since nginx controller v1.12 or ingress-nginx helm chart v4.12.0 use
-`"annotations-risk-level":"Critical"`. For versions prior to that use
-`"allow-snippet-annotations":"true"`
-
-Wait for the ingress-nginx controller to be up again after the configuration change:
+Wait for the ingress-nginx controller:
 
 ```sh
 kubectl wait --namespace ingress-nginx \
@@ -53,6 +35,16 @@ Verify the newly created pod under the ingress-nginx namespace:
 
 ```sh
 kubectl get pods --namespace=ingress-nginx
+```
+
+### Optional patching
+
+Since nginx controller v1.12 or ingress-nginx helm chart v4.12.0 use
+`"annotations-risk-level":"Critical"`.
+
+```bash
+kubectl -n ingress-nginx patch cm ingress-nginx-controller \
+-p '{"data": {"annotations-risk-level":"Critical"}}'
 ```
 
 More information can be found in the
