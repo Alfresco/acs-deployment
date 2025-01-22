@@ -54,26 +54,21 @@ EOF
 
 Wait for the Kind cluster to be created. This may take a few minutes.
 
-## Step 3: Install patched ingress-nginx
+## Step 3: Install ingress-nginx
 
-Follow the instructions for
-[deploying nginx ingress on KinD](https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx).
+Install the ingress-nginx controller namespace:
 
-Reconfigure ingress-nginx to allow snippet annotations that are still required
-when using our search services chart:
-
-```sh
-kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"allow-snippet-annotations":"true"}}'
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/kind/deploy.yaml
 ```
 
-Wait for the ingress-nginx controller to be up again after the configuration change:
+Wait for the ingress-nginx controller:
 
 ```sh
 kubectl wait --namespace ingress-nginx \
-  --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=90s
+--for=condition=ready pod \
+--selector=app.kubernetes.io/component=controller \
+--timeout=90s
 ```
 
 ## Install metrics server

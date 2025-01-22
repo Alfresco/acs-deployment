@@ -18,19 +18,12 @@ Install the ingress-nginx controller namespace:
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
 --repo https://kubernetes.github.io/ingress-nginx \
---namespace ingress-nginx --create-namespace
+--namespace ingress-nginx --create-namespace \
+--version 4.7.2 \
+--set controller.allowSnippetAnnotations=true
 ```
 
-Enable snippet annotations which is disabled by default for security reasons, but
-we still requires it for `alfresco-search-services` while still filtering only
-the ones we strictly need.
-
-```bash
-kubectl -n ingress-nginx patch cm ingress-nginx-controller \
--p '{"data": {"allow-snippet-annotations":"true"}}'
-```
-
-Wait for the ingress-nginx controller to be up again after the configuration change:
+Wait for the ingress-nginx controller:
 
 ```sh
 kubectl wait --namespace ingress-nginx \
