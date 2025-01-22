@@ -72,7 +72,7 @@ jobs:
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
-          registry-secret: "${{ ! github.event.repository.fork }}"
+          import-docker-registry-secret: "${{ ! github.event.repository.fork }}"
 
       - name: Add dependency chart repos
         run: |

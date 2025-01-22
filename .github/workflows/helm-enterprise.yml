@@ -88,9 +88,7 @@ jobs:
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
-      
-      - name: Debug cm ingress-nginx-controller
-        run: kubectl -n ingress-nginx get cm ingress-nginx-controller -o yaml
+          import-docker-registry-secret: true
 
       - name: Check if cgroup v2 workaround is needed
         if: startsWith(matrix.values, '7.')
