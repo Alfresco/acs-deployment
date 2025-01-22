@@ -89,7 +89,7 @@ jobs:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
           import-registry-secret: "true"
-          ingress-configmap-patch: annotations-risk-level-critical
+          ingress-configmap-patch: allow-snippet-annotations
       
       - name: Debug cm ingress-nginx-controller
         run: kubectl -n ingress-nginx get cm ingress-nginx-controller -o yaml
