@@ -18,8 +18,11 @@ Install the ingress-nginx controller namespace:
 ```bash
 helm upgrade --install ingress-nginx ingress-nginx \
 --repo https://kubernetes.github.io/ingress-nginx \
---namespace ingress-nginx --create-namespace
+--namespace ingress-nginx --create-namespace \
+--version 4.7.2
 ```
+
+### Ingress configmap patch
 
 Enable snippet annotations which is disabled by default for security reasons, but
 we still requires it for `alfresco-search-services` while still filtering only
@@ -27,10 +30,10 @@ the ones we strictly need.
 
 ```bash
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
--p '{"data": {"annotations-risk-level":"Critical", "allow-snippet-annotations":"true"}}'
+-p '{"data": {"allow-snippet-annotations":"true"}}'
 ```
 
-:warning: Since nginx controller v1.12 or ingress-nginx helm chart v4.12 use
+:warning: Since nginx controller v1.12 or ingress-nginx helm chart v4.12.0 use
 `"annotations-risk-level":"Critical"`. For versions prior to that use
 `"allow-snippet-annotations":"true"`
 

@@ -62,26 +62,13 @@ Install the ingress-nginx controller namespace:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/kind/deploy.yaml
 ```
 
+:warning: When running above command with version controller-v1.8.2 snippet
+annotations are allowed by default. You can skip below steps. Verify if ingress
+configmap has those settings when running different versions.
+
 Reconfigure ingress-nginx to allow snippet annotations that are still required
-when using our search services chart:
-
-```sh
-kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"allow-snippet-annotations":"true"}}'
-```
-
-:warning: Since nginx controller v1.12 use
-`"annotations-risk-level":"Critical"`. For versions prior to that use
-`"allow-snippet-annotations":"true"`
-
-Wait for the ingress-nginx controller to be up again after the configuration change:
-
-```sh
-kubectl wait --namespace ingress-nginx \
-  --for=condition=ready pod \
-  --selector=app.kubernetes.io/component=controller \
-  --timeout=90s
-```
+when using our search services chart. Follow steps from [ingress-nginx
+docs](./ingress-nginx.md#ingress-configmap-patch)
 
 ## Install metrics server
 
