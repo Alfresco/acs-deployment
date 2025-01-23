@@ -49,6 +49,8 @@ jobs:
     timeout-minutes: 10
     needs:
       - build_vars
+    env:
+      REGISTRY_SECRET_NAME: ${{ ! github.event.repository.fork && 'regcred' || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -68,21 +70,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.11.0
         with:
           ingress-nginx-ref: controller-v1.8.2
-
-      - name: Set nginx ingress config
-        run: |
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-            -p '{"data": {"allow-snippet-annotations":"true"}}'
-
-      - name: Create registries auth secret
-        if: ${{ ! github.event.repository.fork }}
-        run: |
-          kubectl create secret generic regcred \
-          --from-file=.dockerconfigjson=$HOME/.docker/config.json \
-          --type=kubernetes.io/dockerconfigjson
+          import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Add dependency chart repos
         run: |
@@ -96,7 +87,7 @@ jobs:
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
-            --set global.alfrescoRegistryPullSecrets=regcred \
+            --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout 6m0s \
             --values ${{ matrix.values }} \
             --values ../../test/community-integration-test-values.yaml

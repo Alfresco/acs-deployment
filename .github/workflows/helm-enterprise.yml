@@ -59,6 +59,8 @@ jobs:
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
+    env:
+      REGISTRY_SECRET_NAME: regcred
     strategy:
       fail-fast: false
       matrix:
@@ -84,21 +86,11 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.11.0
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
-
-      - name: Set nginx ingress config
-        run: >-
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller
-          -p '{"data": {"allow-snippet-annotations":"true"}}'
-
-      - name: Create registries auth secret
-        run: >-
-          kubectl create secret generic regcred
-          --from-file=.dockerconfigjson=$HOME/.docker/config.json
-          --type=kubernetes.io/dockerconfigjson
+          import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Check if cgroup v2 workaround is needed
         if: startsWith(matrix.values, '7.')
@@ -130,7 +122,7 @@ jobs:
           helm install acs ./helm/alfresco-content-services
           --set global.search.sharedSecret="$(openssl rand -hex 24)"
           --set global.known_urls=http://localhost
-          --set global.alfrescoRegistryPullSecrets=regcred
+          --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }}
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
