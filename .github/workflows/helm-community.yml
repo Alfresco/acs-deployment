@@ -74,7 +74,7 @@ jobs:
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
-          import-docker-credentials-secret-name: ${{ github.event.repository.fork == 'false' && env.REGISTRY_SECRET_NAME }}
+          import-docker-credentials-secret-name: ${{ ! github.event.repository.fork && env.REGISTRY_SECRET_NAME }}
 
       - name: Add dependency chart repos
         run: |
