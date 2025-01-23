@@ -50,7 +50,7 @@ jobs:
     needs:
       - build_vars
     env:
-      REGISTRY_SECRET_NAME: regcred
+      REGISTRY_SECRET_NAME: ${{ ! github.event.repository.fork && 'regcred' || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -73,7 +73,7 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.11.0
         with:
           ingress-nginx-ref: controller-v1.8.2
-          import-docker-credentials-secret-name: ${{ ! github.event.repository.fork && env.REGISTRY_SECRET_NAME || '' }}
+          import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Add dependency chart repos
         run: |
