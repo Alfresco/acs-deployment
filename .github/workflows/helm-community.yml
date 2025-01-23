@@ -73,8 +73,7 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.11.0
         with:
           ingress-nginx-ref: controller-v1.8.2
-          metrics: "true"
-          import-docker-credentials-secret-name: ${{ ! github.event.repository.fork && env.REGISTRY_SECRET_NAME }}
+          import-docker-credentials-secret-name: ${{ ! github.event.repository.fork && env.REGISTRY_SECRET_NAME || '' }}
 
       - name: Add dependency chart repos
         run: |
