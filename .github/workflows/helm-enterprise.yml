@@ -59,6 +59,8 @@ jobs:
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
+    env:
+      REGISTRY_SECRET_NAME: regcred
     strategy:
       fail-fast: false
       matrix:
@@ -88,7 +90,7 @@ jobs:
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
-          import-docker-registry-secret: true
+          import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Check if cgroup v2 workaround is needed
         if: startsWith(matrix.values, '7.')
@@ -120,7 +122,7 @@ jobs:
           helm install acs ./helm/alfresco-content-services
           --set global.search.sharedSecret="$(openssl rand -hex 24)"
           --set global.known_urls=http://localhost
-          --set global.alfrescoRegistryPullSecrets=regcred
+          --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }}
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}

@@ -49,6 +49,8 @@ jobs:
     timeout-minutes: 10
     needs:
       - build_vars
+    env:
+      REGISTRY_SECRET_NAME: regcred
     strategy:
       fail-fast: false
       matrix:
@@ -72,7 +74,7 @@ jobs:
         with:
           ingress-nginx-ref: controller-v1.8.2
           metrics: "true"
-          import-docker-registry-secret: "${{ ! github.event.repository.fork }}"
+          import-docker-credentials-secret-name: ${{ github.event.repository.fork == 'false' && env.REGISTRY_SECRET_NAME }}
 
       - name: Add dependency chart repos
         run: |
@@ -86,7 +88,7 @@ jobs:
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://localhost \
-            --set global.alfrescoRegistryPullSecrets=regcred \
+            --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout 6m0s \
             --values ${{ matrix.values }} \
             --values ../../test/community-integration-test-values.yaml
