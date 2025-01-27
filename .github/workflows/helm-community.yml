@@ -76,9 +76,9 @@ jobs:
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Set nginx ingress config
-        run: >-
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller
-          -p '{"data": {"annotations-risk-level":"Critical"}}'
+        run: |
+          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
+            -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
 
       - name: Add dependency chart repos
         run: |

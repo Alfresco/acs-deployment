@@ -97,6 +97,7 @@ installed and configured to handle local traffic on port 80.
 
 Make sure the nginx ingress controller have the following settings enabled:
 
+- `allow-snippet-annotations` set to `true`
 - `annotations-risk-level` set to `Critical`
 - `proxy-buffer-size` set to `12k`
 
@@ -106,7 +107,7 @@ or after the installation of the ingress, using the command below (e.g. for KinD
 
 ```bash
 kubectl -n ingress-nginx patch cm ingress-nginx-controller -p \
-  '{"data": {"annotations-risk-level":"Critical","proxy-buffer-size":"12k"}}'
+  '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true","proxy-buffer-size":"12k"}}'
 ```
 
 ### Helm

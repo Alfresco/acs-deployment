@@ -66,7 +66,7 @@ Reconfigure ingress-nginx to allow unsecure snippet-annotations:
 
 ```sh
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"annotations-risk-level":"Critical"}}'
+  -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
 ```
 
 Wait for the ingress-nginx controller:

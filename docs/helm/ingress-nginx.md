@@ -20,6 +20,7 @@ helm upgrade --install ingress-nginx ingress-nginx \
 --repo https://kubernetes.github.io/ingress-nginx \
 --namespace ingress-nginx --create-namespace \
 --version 4.12.0 \
+--set controller.config.allow-snippet-annotations=true \
 --set controller.config.annotations-risk-level=Critical
 ```
 
