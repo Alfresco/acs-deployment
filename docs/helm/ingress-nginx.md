@@ -19,8 +19,8 @@ Install the ingress-nginx controller namespace:
 helm upgrade --install ingress-nginx ingress-nginx \
 --repo https://kubernetes.github.io/ingress-nginx \
 --namespace ingress-nginx --create-namespace \
---version 4.7.2 \
---set controller.allowSnippetAnnotations=true
+--version 4.12.0 \
+--set controller.config.annotations-risk-level=Critical
 ```
 
 Wait for the ingress-nginx controller:

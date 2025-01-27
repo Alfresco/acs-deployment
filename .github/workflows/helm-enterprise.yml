@@ -88,9 +88,14 @@ jobs:
       - name: Setup cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.12.0
         with:
-          ingress-nginx-ref: controller-v1.8.2
+          ingress-nginx-ref: controller-v1.12.0
           metrics: "true"
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
+
+      - name: Set nginx ingress config
+        run: >-
+          kubectl -n ingress-nginx patch cm ingress-nginx-controller
+          -p '{"data": {"annotations-risk-level":"Critical"}}'
 
       - name: Check if cgroup v2 workaround is needed
         if: startsWith(matrix.values, '7.')
