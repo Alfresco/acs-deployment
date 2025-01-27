@@ -147,6 +147,14 @@ jobs:
           helm status acs --show-resources
           kubectl describe pod
 
+      - name: Install trivy
+        if: matrix.values == 'values.yaml'
+        run: curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.57.1
+
+      - name: Run trivy
+        if: matrix.values == 'values.yaml'
+        run: trivy k8s --include-namespaces default --report=all --scanners=misconfig --severity=HIGH
+
       - name: Run Newman tests
         uses: nick-fields/retry@7152eba30c6575329ac0576536151aca5a72780e # v3.0.0
         id: newman
