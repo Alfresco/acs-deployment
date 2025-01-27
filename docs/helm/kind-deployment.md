@@ -62,7 +62,7 @@ Install the ingress-nginx controller namespace:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/kind/deploy.yaml
 ```
 
-Reconfigure ingress-nginx to allow unsecure snippet-annotations:
+Reconfigure ingress-nginx to allow snippet-annotations:
 
 ```sh
 kubectl -n ingress-nginx patch cm ingress-nginx-controller \
