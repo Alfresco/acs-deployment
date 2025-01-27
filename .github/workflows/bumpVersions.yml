@@ -23,7 +23,6 @@ on:
         default: master
 
 env:
-  UPDATE_CLI_VERSION: v0.84.1
   DEFAULT_BRANCH_NAME: master
 
 jobs:
@@ -44,9 +43,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@79983ec58a76fe0c87fc76f5a5c7ef8df0bb36c4  # v2.77.0
-        with:
-          version: ${{ env.UPDATE_CLI_VERSION }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.12.0
 
       - run: updatecli apply
         env:
@@ -81,9 +78,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@79983ec58a76fe0c87fc76f5a5c7ef8df0bb36c4  # v2.77.0
-        with:
-          version: ${{ env.UPDATE_CLI_VERSION }}
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.12.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
