@@ -120,7 +120,6 @@ Once downloaded, execute the following to initiate the deployment.
 ```bash
 helm install acs alfresco/alfresco-content-services \
   --values local-dev_values.yaml \
-  --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
   --namespace alfresco

@@ -61,7 +61,6 @@ Deploy the ACS stack with the appropriate values files.
 
 ```bash
 helm install acs ./helm/alfresco-content-services \
-    --set global.search.sharedSecret="$(openssl rand -hex 24)" \
     --set global.known_urls=http://localhost \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --values docs/helm/values/local-dev_values.yaml \
