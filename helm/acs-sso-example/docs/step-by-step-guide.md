@@ -89,7 +89,7 @@ installed and configured to handle local traffic on port 80.
 
 > :warning: If you use KinD, you need to install a patched version of the NGINX
 > ingress as described
-> [here](https://kind.sigs.k8s.io/docs/user/ingress/#ingress-nginx)
+> [here](../../../docs/helm/kind-deployment.md#step-3-install-ingress-nginx)
 > If using another kubernetes distribution check it doesn't come with a default
 > ingress controller different from NGINX and if so, disable it. Once done
 > install the [NGINX ingress
@@ -98,6 +98,7 @@ installed and configured to handle local traffic on port 80.
 Make sure the nginx ingress controller have the following settings enabled:
 
 - `allow-snippet-annotations` set to `true`
+- `annotations-risk-level` set to `Critical`
 - `proxy-buffer-size` set to `12k`
 
 You can do that at installation time using [nginx-ingress
@@ -106,7 +107,7 @@ or after the installation of the ingress, using the command below (e.g. for KinD
 
 ```bash
 kubectl -n ingress-nginx patch cm ingress-nginx-controller -p \
-  '{"data": {"allow-snippet-annotations":"true","proxy-buffer-size":"12k"}}'
+  '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true","proxy-buffer-size":"12k"}}'
 ```
 
 ### Helm

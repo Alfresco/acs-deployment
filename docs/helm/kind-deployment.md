@@ -59,7 +59,14 @@ Wait for the Kind cluster to be created. This may take a few minutes.
 Install the ingress-nginx controller namespace:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/kind/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/kind/deploy.yaml
+```
+
+Reconfigure ingress-nginx to allow snippet-annotations:
+
+```sh
+kubectl -n ingress-nginx patch cm ingress-nginx-controller \
+  -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
 ```
 
 Wait for the ingress-nginx controller:
