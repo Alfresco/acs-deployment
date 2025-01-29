@@ -141,7 +141,6 @@ grand_parent: Helm
     ```bash
     helm upgrade acs helm/alfresco-content-services \
     --values local-dev_values.yaml \
-    --set global.search.sharedSecret=$(openssl rand -hex 24) \
     --atomic \
     --timeout 10m0s \
     --values acs-hazelcast.yaml

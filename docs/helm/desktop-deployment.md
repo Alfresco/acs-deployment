@@ -120,7 +120,6 @@ Once downloaded, execute the following to initiate the deployment.
 ```bash
 helm install acs alfresco/alfresco-content-services \
   --values local-dev_values.yaml \
-  --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --atomic \
   --timeout 10m0s \
   --namespace alfresco
@@ -130,6 +129,24 @@ helm install acs alfresco/alfresco-content-services \
 > patient. See below for [troubleshooting](#troubleshooting) tips.
 
 The `helm` command above installs the most current released version of ACS Enterprise.
+
+#### Enterprise with solr6
+
+Use the above helm command with additional arguments that enable solr6 search engine on enterprise.
+
+```bash
+helm install acs alfresco/alfresco-content-services \
+  --values local-dev_values.yaml \
+  --set alfresco-repository.configuration.search.flavor=solr6 \
+  --set global.search.sharedSecret=$(openssl rand -hex 24) \
+  --set alfresco-search-enterprise.enabled=false \
+  --set alfresco-search.enabled=true \
+  --set elasticsearch.enabled=false \
+  --set alfresco-audit-storage.enabled=false \
+  --atomic \
+  --timeout 10m0s \
+  --namespace alfresco
+```
 
 #### Enterprise deployment for previous versions
 
