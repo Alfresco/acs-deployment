@@ -25,7 +25,7 @@ Ensure you have the following:
 
 ## Steps to Deploy
 
-### 1. Create a Secret
+### Create a Secret
 
 Create env file with passwords. Customize the values as needed for your setup.
 
@@ -48,23 +48,41 @@ kubectl create secret generic elastic-search-secret \
     --from-env-file=elastic.env
 ```
 
-### 2. Understand the Patch File
+### Ingress
 
-Patch file `docs/helm/values/elasticsearch_auth_values.yaml` defines the configuration
-for enabling authentication and integrating Elasticsearch and Kibana with the
+See [ingress-nginx](../ingress-nginx.md) section.
+
+### ACS Chart
+
+See [desktop-deployment](../desktop-deployment.md#acs) section.
+
+### Enterprise local values
+
+Download `local-dev_values.yaml` file as described in
+[desktop-deployment](../desktop-deployment.md#enterprise-localhost-deployment)
+section.
+
+### Understand the Patch File
+
+Patch file `elasticsearch_auth_values.yaml` defines the configuration for
+enabling authentication and integrating Elasticsearch and Kibana with the
 Alfresco deployment. Update the patch file to match your requirements if
 necessary.
 
-### 3. Deploy the Infrastructure
+```bash
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/elasticsearch_auth_values.yaml
+```
+
+### Deploy the Infrastructure
 
 Deploy the ACS stack with the appropriate values files.
 
 ```bash
-helm install acs ./helm/alfresco-content-services \
+helm install acs alfresco/alfresco-content-services \
     --set global.known_urls=http://localhost \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
-    --values docs/helm/values/local-dev_values.yaml \
-    --values docs/helm/values/elasticsearch_auth_values.yaml
+    --values local-dev_values.yaml \
+    --values elasticsearch_auth_values.yaml
 ```
 
 ## Accessing Kibana
