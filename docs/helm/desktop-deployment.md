@@ -135,8 +135,8 @@ The `helm` command above installs the most current released version of ACS Enter
 Use the above helm command with additional arguments that enable solr6 search engine on enterprise.
 
 ```bash
-helm upgrade acs helm/alfresco-content-services \
-  --values docs/helm/values/local-dev_values.yaml \
+helm install acs alfresco/alfresco-content-services \
+  --values local-dev_values.yaml \
   --set alfresco-repository.configuration.search.flavor=solr6 \
   --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --set alfresco-search-enterprise.enabled=false \
