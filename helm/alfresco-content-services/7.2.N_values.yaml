@@ -16,34 +16,34 @@ alfresco-ai-transformer:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.1.5
+      tag: 4.1.6
   pdfrenderer:
     image:
-      tag: 5.1.5
+      tag: 5.1.6
   imagemagick:
     image:
-      tag: 5.1.5
+      tag: 5.1.6
   libreoffice:
     image:
-      tag: 5.1.5
+      tag: 5.1.6
   tika:
     image:
-      tag: 5.1.5
+      tag: 5.1.6
   transformmisc:
     image:
-      tag: 5.1.5
+      tag: 5.1.6
   filestore:
     image:
-      tag: 4.1.5
+      tag: 4.1.6
 share:
   image:
     tag: 7.2.2.5
 alfresco-search:
   enabled: true
   searchServicesImage:
-    tag: 2.0.13
+    tag: 2.0.14
   insightEngineImage:
-    tag: 2.0.13
+    tag: 2.0.14
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
@@ -81,10 +81,10 @@ alfresco-sync-service:
     tag: 3.11.3
 alfresco-connector-ms365:
   image:
-    tag: 2.0.4
+    tag: 2.0.5
 alfresco-connector-msteams:
   image:
-    tag: 2.0.4
+    tag: 2.0.5
 alfresco-audit-storage:
   enabled: false
 dtas:
