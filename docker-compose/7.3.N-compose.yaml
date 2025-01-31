@@ -63,6 +63,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
+      - "traefik.http.routers.alfresco.middlewares=limit@docker"
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
@@ -163,6 +165,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
       - "traefik.http.services.share.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
+      - "traefik.http.routers.share.middlewares=limit@docker"
       - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
       - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
       - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
@@ -268,6 +272,7 @@ services:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:8080"
       - "--entryPoints.traefik.address=:8888"
+      - "--entrypoints.web.transport.respondingTimeouts.readTimeout=20m"
       - "--accesslog=true"
       - "--providers.docker.exposedByDefault=false"
       - "--ping.entrypoint=web"
@@ -319,7 +324,9 @@ services:
       - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
       - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
       - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
-      - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
+      - "traefik.http.middlewares.syncchain.chain.middlewares=limit,syncservice"
+      - "traefik.http.routers.syncservice.middlewares=syncchain@docker"
 volumes:
   shared-file-store-volume:
     driver_opts:
