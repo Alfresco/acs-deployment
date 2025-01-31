@@ -333,9 +333,7 @@ services:
       - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
       - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
       - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
-      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.middlewares.syncchain.chain.middlewares=limit,syncservice"
-      - "traefik.http.routers.syncservice.middlewares=syncchain@docker"
+      - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
 volumes:
   shared-file-store-volume:
     driver_opts:
