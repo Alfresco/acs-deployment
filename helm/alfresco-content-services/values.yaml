@@ -396,8 +396,6 @@ alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
   ingress:
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
     hosts:
       - paths:
@@ -415,8 +413,6 @@ alfresco-control-center:
   enabled: true
   nameOverride: "alfresco-cc"
   ingress:
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-body-size: "5g"
     tls: []
     hosts:
       - paths:

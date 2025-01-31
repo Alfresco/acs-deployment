@@ -86,7 +86,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
 | alfresco-control-center.image.tag | string | `"9.3.0"` |  |
-| alfresco-control-center.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].path | string | `"/control-center"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-control-center.ingress.tls | list | `[]` |  |
@@ -98,7 +97,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
 | alfresco-digital-workspace.image.tag | string | `"5.3.0"` |  |
-| alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
