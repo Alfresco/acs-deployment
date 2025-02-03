@@ -91,6 +91,8 @@ jobs:
           ingress-nginx-ref: controller-v1.12.0
           metrics: "true"
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
+          kind-version: v0.26.0
+          kind-node-image: kindest/node:v1.31.4@sha256:2cb39f7295fe7eafee0842b1052a599a4fb0f8bcf3f83d96c7f4864c357c6c30
 
       - name: Set nginx ingress config
         run: |
