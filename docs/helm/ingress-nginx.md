@@ -41,3 +41,27 @@ kubectl get pods --namespace=ingress-nginx
 
 More information can be found in the
 [ingress-nginx deploy docs](https://kubernetes.github.io/ingress-nginx/deploy/).
+
+## Configure file uploads limitations
+
+The alfresco-repository & alfresco-share Helm charts this chart depends on, come
+with settings to limit the maximum size of file uploads and the maximum duration
+of a request. These settings are configured using default ingress annotations.
+They can be overriden from the umbrella chart (alfresco-content-services) by
+setting the following values:
+
+```yaml
+alfresco-repository::
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 100m
+      nginx.ingress.kubernetes.io/proxy-read-timeout: 600
+share:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 100m
+      nginx.ingress.kubernetes.io/proxy-read-timeout: 600
+```
+
+> Above values would limit the uploads to 100 MB files or 10 minutes long
+uploads in bith Alfresco repository API & Share UI.
