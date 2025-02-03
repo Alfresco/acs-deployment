@@ -45,11 +45,7 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
     healthcheck:
-      test:
-        - CMD
-        - curl
-        - "-f"
-        - http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+      test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
       interval: 30s
       timeout: 3s
       retries: 5
@@ -158,15 +154,7 @@ services:
       - "61616:61616" # OpenWire
       - "61613:61613" # STOMP
     healthcheck:
-      test:
-        -  CMD
-        - /opt/activemq/bin/activemq
-        - query
-        - "--objname"
-        - type=Broker,brokerName=*,service=Health
-        - "|"
-        - grep
-        - Good
+      test: ["CMD", "/opt/activemq/bin/activemq", "query", "--objname", "type=Broker,brokerName=*,service=Health", "|", "grep", "Good"]
       interval: 10s
       timeout: 5s
       retries: 5
