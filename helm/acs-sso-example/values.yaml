@@ -222,7 +222,7 @@ alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
-    tag: 23.4.0
+    tag: 23.4.1
   repository:
     existingConfigMap:
       name: share-repository
@@ -260,7 +260,7 @@ alfresco-content-app:
             pathType: Prefix
   image:
     repository: alfresco/alfresco-content-app
-    tag: 5.2.0
+    tag: 5.3.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: ECM
