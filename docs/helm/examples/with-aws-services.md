@@ -332,7 +332,7 @@ the information required to deploy ACS.
    - Hit the "Create domain" button
    - In "Deployment type", choose between "Production" or "Development and
      testing" depending on your use case
-   - In "Version", select "Elasticsearch 7.10"
+   - In "Version", select "Elasticsearch 8.17"
    - Adjust "Data nodes" settings as you prefer, T3 instance types are the most
      affordable options for small clusters.
    - In "Network", select the EKS VPC or "Public access" if Alfresco will run
