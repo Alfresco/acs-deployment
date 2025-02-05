@@ -181,7 +181,7 @@ services:
       retries: 3
       start_period: 5s
   elasticsearch:
-    image: elasticsearch:7.17.26
+    image: elasticsearch:8.17.1
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -204,7 +204,7 @@ services:
       retries: 5
       start_period: 30s
   kibana:
-    image: kibana:7.17.26
+    image: kibana:8.17.1
     mem_limit: 1g
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
