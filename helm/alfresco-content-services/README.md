@@ -30,10 +30,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.8.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.2.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.3.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.3 |
 | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
@@ -86,7 +86,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
 | alfresco-control-center.image.tag | string | `"9.3.0"` |  |
-| alfresco-control-center.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].path | string | `"/control-center"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-control-center.ingress.tls | list | `[]` |  |
@@ -98,7 +97,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
 | alfresco-digital-workspace.image.tag | string | `"5.3.0"` |  |
-| alfresco-digital-workspace.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |

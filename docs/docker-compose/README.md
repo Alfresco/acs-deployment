@@ -185,6 +185,26 @@ The provided Docker compose file provides some default configuration, the
 sections below show the full set of environment variables exposed by each of
 the containers in the deployment.
 
+### Set max upload size
+
+The default maximum upload size is 5GB provided the upload do not last more than
+20 minutes. This restriction applies to the Alfresco repository APIs, Share and
+Alfresco Sync Service. Trying to upload files which do not conform to these
+limits will result in errors such as HTTP 413 (Request Entity Too Large) or HTTP
+504 (Gateway Timeout).
+
+To change this behavior, you need to set to different values for:
+
+* `entrypoints.web.transport.respondingTimeouts.readTimeout` in the
+  as a command argument in `.services.proxy.command`. Check the
+  [Traefik documentation](https://doc.traefik.io/traefik/routing/entrypoints/#respondingtimeouts)
+  for more information.
+* each `traefik.http.middlewares.limit.buffering.maxRequestBodyBytes` label
+  of each service where the restriction applies: `.services.alfresco`,
+  `.services.share` & `.services.sync-service`.
+
+> Setting these values to 0 to disable limits is not a good idea.
+
 ### Alfresco Content Repository (alfresco)
 
 | Property          | Description                                                                                                                                                                                                                                                                                                                                                                         | Default value |
