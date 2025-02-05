@@ -80,10 +80,10 @@ alfresco-connector-msteams:
     tag: 2.0.5-A.3
 elastisearch:
   image:
-    tag: 7.17.26
+    tag: 8.17.1
   kibana:
     image:
-      tag: 7.17.26
+      tag: 8.17.1
 alfresco-audit-storage:
   image:
     tag: 1.1.0-M.1
