@@ -271,7 +271,7 @@ Create the cluster using the latest supported version - check the main [README](
 Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
-eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.29 --instance-types t3.xlarge --nodes 3
+eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.31 --instance-types t3.xlarge --nodes 3
 ```
 
 Enable the OIDC provider that is necessary to install further EKS addons later:
@@ -394,6 +394,9 @@ you can alternatively:
 > Since EKS 1.24 it is **mandatory** to install EBS CSI Driver for the dynamic
 > provisioning via the default `gp2` storage class. Upgrading from 1.23 without
 > it will break any existing PVC.
+> Since 1.30 EKS no longer includes the `default` annotation on the `gp2`
+> StorageClass resource applied to newly created clusters. After installing
+> aws-ebs-csi-driver addon you have to create default StorageClass.
 
 Set the aws account id in an environment variable that can be reused later:
 
@@ -424,7 +427,23 @@ eksctl create addon \
 --force
 ```
 
-At this point the provisioning of EBS volumes using the default GP2
+Create default storage class:
+
+```sh
+kubectl apply -f - <<EOF
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-csi-default-sc
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+EOF
+```
+
+At this point the provisioning of EBS volumes using the default GP3
 storageClass will be handled by this driver.
 
 For further information please refer to the official
