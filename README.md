@@ -1,7 +1,7 @@
 # Alfresco Content Services Containerized Deployment
 
 [![release](https://img.shields.io/github/v/release/Alfresco/acs-deployment?display_name=release)](https://github.com/Alfresco/acs-deployment/releases/latest)
-![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.29-blue)
+![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.31-blue)
 [![Helm release](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-release.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-release.yml)
 
 [![helm charts (enterprise)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml/badge.svg)](https://github.com/Alfresco/acs-deployment/actions/workflows/helm-enterprise.yml)

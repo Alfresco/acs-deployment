@@ -7,7 +7,7 @@ permalink: /index.html
 # Alfresco Content Services Containerized Deployment
 
 [![release](https://img.shields.io/github/v/release/Alfresco/acs-deployment?display_name=release)](https://github.com/Alfresco/acs-deployment/releases/latest)
-![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.29-blue)
+![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.31-blue)
 
 This project contains the code for running Alfresco Content Services (ACS) with
 [Docker](https://docs.docker.com/get-started) using [Docker
