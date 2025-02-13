@@ -224,7 +224,7 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.3.0-A.5
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:4.3.0-A.6
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -247,7 +247,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.3.0-A.5
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:4.3.0-A.6
     mem_limit: 1g
     restart: on-failure:5
     environment:
@@ -280,7 +280,7 @@ services:
       retries: 5
       start_period: 5s
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:5.4.0-13053532841
+    image: quay.io/alfresco/alfresco-digital-workspace:5.4.0-13307467745
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -324,7 +324,7 @@ services:
       elasticsearch:
         condition: service_healthy
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:9.4.0-13053532841
+    image: quay.io/alfresco/alfresco-control-center:9.4.0-13307467745
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

@@ -193,7 +193,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.4.0
+    tag: 23.4.1
   configuration:
     repository:
       existingConfigMap: repository-properties

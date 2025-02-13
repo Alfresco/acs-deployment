@@ -9,7 +9,7 @@
 #
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:23.4.0
+    image: docker.io/alfresco/alfresco-content-repository-community:23.4.1
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
