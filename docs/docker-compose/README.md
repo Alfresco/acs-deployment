@@ -408,11 +408,9 @@ share:
 
 ### Alfresco Proxy (proxy)
 
-We used to maintain and ship a ustom nginx image for Alfresco docker compose
-deployments. This image is now deprecated and replaced by Traefik. Traefik is a
-modern HTTP reverse proxy and load balancer that makes deploying microservices
-easy. In particular it makes dynamic configuration easy and integrates with
-docker compose using
+Traefik is a modern HTTP reverse proxy and load balancer that makes deploying
+microservices easy. In particular it makes dynamic configuration easy and
+integrates with docker compose using
 [labels](https://docs.docker.com/reference/compose-file/deploy/#labels).
 
 Please refer to Traefik documentation for more information on how to configure
@@ -422,6 +420,13 @@ it:
 * [Traefik services](https://doc.traefik.io/traefik/routing/services/)
 * [Traefik middlewares](https://doc.traefik.io/traefik/middlewares/overview/)
 * [Traefik TLS](https://doc.traefik.io/traefik/https/tls/)
+
+In particular you may want to tweak the max file upload settings. This is
+handled by the Traefik routing & buffering middleware. Check out
+[maxRequestBodyBytes](https://doc.traefik.io/traefik/middlewares/http/buffering/#maxrequestbodybytes)
+and [readTimeouts](https://doc.traefik.io/traefik/routing/entrypoints/#respondingtimeouts)
+for details and amend compose services labels accordingly to your needs (these
+labels are used in alfresco & share services).
 
 ## Customise
 
