@@ -242,35 +242,35 @@ alfresco-transform-service:
     # to transform pdf files
     enabled: true
     image:
-      repository: alfresco/alfresco-pdf-renderer
+      repository: quay.io/alfresco/alfresco-pdf-renderer
       tag: 5.1.6
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
-      repository: alfresco/alfresco-imagemagick
+      repository: quay.io/alfresco/alfresco-imagemagick
       tag: 5.1.6
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
-      repository: alfresco/alfresco-libreoffice
+      repository: quay.io/alfresco/alfresco-libreoffice
       tag: 5.1.6
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
-      repository: alfresco/alfresco-tika
+      repository: quay.io/alfresco/alfresco-tika
       tag: 5.1.6
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
-      repository: alfresco/alfresco-transform-misc
+      repository: quay.io/alfresco/alfresco-transform-misc
       tag: 5.1.6
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
