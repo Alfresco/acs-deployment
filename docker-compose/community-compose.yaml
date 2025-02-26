@@ -59,6 +59,8 @@ services:
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
+    volumes:
+      - /usr/local/tomcat/alf_data
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.6
     mem_limit: 1536m
