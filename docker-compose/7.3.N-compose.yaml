@@ -96,7 +96,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.6
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.1.6
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -206,7 +206,7 @@ services:
     ports:
       - "8083:8983" # Browser port
   activemq:
-    image: alfresco/alfresco-activemq:5.17-jre17-rockylinux8
+    image: quay.io/alfresco/alfresco-activemq:5.17-jre17-rockylinux8
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console

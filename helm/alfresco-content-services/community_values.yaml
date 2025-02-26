@@ -37,14 +37,24 @@ alfresco-transform-service:
     enabled: false
   pdfrenderer:
     replicaCount: 1
+    image:
+      repository: alfresco/alfresco-pdf-renderer
   imagemagick:
     replicaCount: 1
+    image:
+      repository: alfresco/alfresco-imagemagick
   libreoffice:
     replicaCount: 1
+    image:
+      repository: alfresco/alfresco-libreoffice
   tika:
     replicaCount: 1
+    image:
+      repository: alfresco/alfresco-tika
   transformmisc:
     replicaCount: 1
+    image:
+      repository: alfresco/alfresco-transform-misc
   filestore:
     enabled: false
 alfresco-digital-workspace:
