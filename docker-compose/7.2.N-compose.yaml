@@ -75,6 +75,8 @@ services:
       - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
       - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
       - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
+    volumes:
+      - /usr/local/tomcat/alf_data
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.1.6
@@ -143,7 +145,7 @@ services:
       retries: 3
       start_period: 10s
     volumes:
-      - shared-file-store-volume:/tmp/Alfresco
+      - /tmp/Alfresco
   share:
     image: quay.io/alfresco/alfresco-share:7.2.2.5
     mem_limit: 1g
