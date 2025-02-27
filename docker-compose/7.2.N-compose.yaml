@@ -143,7 +143,7 @@ services:
       retries: 3
       start_period: 10s
     volumes:
-      - shared-file-store-volume:/tmp/Alfresco/sfs
+      - shared-file-store-volume:/tmp/Alfresco
   share:
     image: quay.io/alfresco/alfresco-share:7.2.2.5
     mem_limit: 1g
