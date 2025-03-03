@@ -302,14 +302,9 @@ services:
       timeout: 1s
       retries: 3
       start_period: 1s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
-      - "traefik.http.middlewares.adwforceslash.redirectregex.regex=^(.*/workspace)$$"
-      - "traefik.http.middlewares.adwforceslash.redirectregex.replacement=$${1}/"
-      - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
-      - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
-      - "traefik.http.routers.adw.middlewares=adwchain@docker"
+    extends:
+      file: commons/base.yaml
+      service: digital-workspace
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.3.0
     mem_limit: 128m
