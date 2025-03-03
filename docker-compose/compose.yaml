@@ -338,31 +338,9 @@ services:
       - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
       - "traefik.http.routers.acc.middlewares=accchain@docker"
   proxy:
-    image: traefik:3.1
-    mem_limit: 128m
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:8080"
-      - "--entryPoints.traefik.address=:8888"
-      - "--entrypoints.web.transport.respondingTimeouts.readTimeout=20m"
-      - "--accesslog=true"
-      - "--providers.docker.exposedByDefault=false"
-      - "--ping.entrypoint=web"
-      - "--ping=true"
-    ports:
-      - "8080:8080"
-      - "8888:8888"
-    healthcheck:
-      test: ["CMD", "traefik", "healthcheck", "--ping"]
-      interval: 20s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    security_opt:
-      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+    extends:
+      file: commons/base.yaml
+      service: proxy
   sync-service:
     image: quay.io/alfresco/service-sync:5.1.0
     mem_limit: 1g
