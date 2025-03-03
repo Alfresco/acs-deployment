@@ -356,8 +356,3 @@ services:
     extends:
       file: commons/base.yaml
       service: sync-service
-volumes:
-  shared-file-store-volume:
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
