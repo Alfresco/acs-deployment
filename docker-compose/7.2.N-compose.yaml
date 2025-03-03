@@ -63,20 +63,11 @@ services:
       timeout: 3s
       retries: 5
       start_period: 1m
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
-      - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
-      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.routers.alfresco.middlewares=limit@docker"
-      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
-      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
-      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
-      - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
-      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
-      - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
     volumes:
       - /usr/local/tomcat/alf_data
+    extends:
+      file: commons/base.yaml
+      service: alfresco
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.1.6

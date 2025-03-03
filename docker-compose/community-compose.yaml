@@ -50,11 +50,11 @@ services:
       timeout: 3s
       retries: 5
       start_period: 1m
+    volumes:
+      - /usr/local/tomcat/alf_data
     extends:
       file: commons/base.yaml
       service: alfresco
-    volumes:
-      - /usr/local/tomcat/alf_data
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.6
     mem_limit: 1536m
