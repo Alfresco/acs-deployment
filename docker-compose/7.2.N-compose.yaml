@@ -162,15 +162,9 @@ services:
     depends_on:
       alfresco:
         condition: service_healthy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
-      - "traefik.http.services.share.loadbalancer.server.port=8080"
-      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.routers.share.middlewares=limit@docker"
-      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
-      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
-      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
+    extends:
+      file: commons/base.yaml
+      service: share
   postgres:
     image: postgres:13.3
     mem_limit: 512m
