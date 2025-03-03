@@ -53,6 +53,8 @@ services:
     extends:
       file: commons/base.yaml
       service: alfresco
+    volumes:
+      - /usr/local/tomcat/alf_data
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.6
     mem_limit: 1536m
