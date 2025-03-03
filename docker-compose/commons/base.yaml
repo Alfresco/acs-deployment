@@ -1,0 +1,72 @@
+# For now just traefik labels and traefik service
+services:
+  alfresco:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
+      - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
+      - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.regex=/alfresco$"
+      - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.replacement=/alfresco/"
+      - "traefik.http.middlewares.alfresco-chain.chain.middlewares=alfresco-root-redirect@docker,limit@docker"
+      - "traefik.http.routers.alfresco.middlewares=alfresco-chain@docker"
+      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
+      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
+  share:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
+      - "traefik.http.services.share.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
+      - "traefik.http.middlewares.share-root-redirect.redirectregex.regex=/share$"
+      - "traefik.http.middlewares.share-root-redirect.redirectregex.replacement=/share/"
+      - "traefik.http.middlewares.share-chain.chain.middlewares=share-root-redirect@docker,limit@docker"
+      - "traefik.http.routers.share.middlewares=share-chain@docker"
+      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
+      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
+  content-app:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.aca.rule=PathPrefix(`/content-app`)"
+      - "traefik.http.middlewares.acaroot.stripprefix.prefixes=/content-app"
+      - "traefik.http.middlewares.acaforceslash.redirectregex.regex=^(.*/content-app)$$"
+      - "traefik.http.middlewares.acaforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.acachain.chain.middlewares=acaforceslash,acaroot"
+      - "traefik.http.routers.aca.middlewares=acachain@docker"
+  control-center:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
+      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin,/control-center"
+      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/(admin|control-center))$$"
+      - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
+      - "traefik.http.routers.acc.middlewares=accchain@docker"
+  proxy:
+    image: traefik:3.1
+    mem_limit: 128m
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:8080"
+      - "--entrypoints.web.transport.respondingTimeouts.readTimeout=20m"
+      - "--entryPoints.traefik.address=:8888"
+      - "--accesslog=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--ping.entrypoint=web"
+      - "--ping=true"
+    ports:
+      - "8080:8080"
+      - "8888:8888"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    security_opt:
+      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
