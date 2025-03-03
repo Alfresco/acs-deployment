@@ -79,3 +79,11 @@ services:
       - label=disable # Required for accessing the Docker socket on Selinux enabled systems
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+  sync-service:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
+      - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
+      - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
+      - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
+      - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
