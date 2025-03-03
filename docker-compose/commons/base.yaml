@@ -13,6 +13,9 @@ services:
       - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
       - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
       - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
+      - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
+      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
+      - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
   share:
     labels:
       - "traefik.enable=true"
