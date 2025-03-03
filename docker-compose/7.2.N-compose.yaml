@@ -336,8 +336,3 @@ services:
       - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
       - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
       - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
-volumes:
-  shared-file-store-volume:
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
