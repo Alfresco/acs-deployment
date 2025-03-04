@@ -8,6 +8,10 @@ parent: Docker Compose
 This page describes how to quickly deploy Alfresco Content Services (ACS) using
 Docker Compose.
 
+## Architectures
+
+### Enterprise edition
+
 Using one of the Enterprise compose files will deploy the following system:
 
 ```mermaid
@@ -15,10 +19,12 @@ graph TB
 
 subgraph "Docker Compose (enterprise)"
   direction TB
-  Client("👥 Clients")
+  Client("👥 Users")
   proxy("Traefik reverse proxy")
   acs("Alfresco Content Services")
   sync("Alfresco Sync Service")
+  aas("Alfresco Audit Storage")
+  kib("Kibana")
 
   subgraph "Alfresco Transform Service"
     trouter("Transform Router")
@@ -52,6 +58,10 @@ proxy ---> adw
 proxy ---> acs
 proxy ----> sync
 
+aas --> es
+aas --> amq
+kib --> es
+
 ase --> es
 ase --> amq
 aser --> pg
@@ -72,6 +82,8 @@ sync --> acs
 sync --> pg
 sync --> amq
 ```
+
+### Community edition
 
 Using the Community compose file will deploy the following system:
 
@@ -111,7 +123,7 @@ share --> acs
 ## Considerations
 
 The Docker Compose files are provided to easy spin up ACS environments. It is
-suited for test or demo environment but certainly not for production use.
+suited for test or demo environment but certainly not ready for production use.
 
 ## Prerequisites
 
