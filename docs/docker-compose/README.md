@@ -146,36 +146,93 @@ Docker Daemon).
 
 ## Deploy
 
-1. Clone this repository or download one of the docker compose files from
-   [here](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose)
-2. Navigate to the folder where the docker compose file you want to use is
-   located
-3. Log in to Quay.io with your credentials: `docker login quay.io` (only
-   required if you're running an Enterprise version)
-4. Run `docker compose up` to use the latest version of ACS Enterprise,
-   `docker compose -f major.minor.N-compose.yaml up` to use a previous
-   version of ACS, or `docker compose -f pre-release-compose.yaml up`
-5. Open the following URLs in your browser to check that everything starts up:
-   * Administration and REST APIs: `http://<machine_ip>:8080/alfresco`
-   * Control Center: `http://<machine_ip>:8080/control-center` (`http://<machine_ip>:8080/admin` still works but is deprecated)
-   * Alfresco Digital Workspace: `http://<machine_ip>:8080/workspace`
-   * Share: `http://<machine_ip>:8080/share`
-   * Search administration: `http://<machine_ip>:8083/solr`
+1. Clone this repository or download the repository zip archive from
+   [here](https://github.com/Alfresco/acs-deployment)
+
+2. Enter the `docker-compose` directory:
+  
+   ```bash
+   cd docker-compose
+   ```
+
+3. If you want to run one of the Enteprise editions, log in to Quay.io with your credentials:
+  
+   ```bash
+   docker login quay.io
+   ```
+  
+4. Run `docker compose up` to spin up latest Enterprise edition
+  
+   ```bash
+   docker compose up -d
+   ```
+  
+   or provide an alternate compose config, e.g. to spin up the Community edition:
+  
+   ```bash
+   docker compose -f community-compose.yaml up -d
+   ```
+
+   or to spin up a specific version of the Enterprise edition:
+  
+   ```bash
+    docker compose -f 7.4.N-compose.yaml up -d
+    ```
+
+    or to spin up the pre-release version of the Enterprise edition:
+
+    ```bash
+    docker compose -f pre-release-compose.yaml up -d
+    ```
+  
+   This will download the required Docker images and start the containers. The
+   first time you run this command it will take a while to download the images.
+
+5. Once the containers are up and running you can access the following services:
+   * Administration and REST APIs: `http://localhost:8080/alfresco`
+   * Control Center: `http://localhost:8080/control-center` (`http://localhost:8080/admin` still works but is deprecated)
+   * Alfresco Digital Workspace: `http://localhost:8080/workspace`
+   * Share: `http://localhost:8080/share`
+   * Search administration: `http://localhost:8083/solr` (for community and older enterprise versions)
+
 6. If you requested an extended trial license navigate to the Admin Console and
    apply your license:
-   * `http://<machine_ip>:8080/alfresco/service/enterprise/admin/admin-license` (`<machine_ip>` will usually just be `localhost`)
+   * `http://localhost:8080/alfresco/service/enterprise/admin/admin-license`
    * Default username and password is `admin`
    * See [Uploading a new license][upload-new-license]
      for more details
 
-### Choosing a search engine
+## Stop and cleanup
+
+To bring the system down and cleanup the containers run the following command:
+
+```bash
+docker compose -f compose.yaml down
+```
+
+This will stop, remove containers and lose any data. If you want to just stop
+the containers without removing them, you can use the `stop`/`start` command:
+
+```bash
+docker compose -f compose.yaml stop
+```
+
+If you want to recover some space from previously run containers, you can use:
+
+```sh
+docker volume prune
+```
+
+## Additional deployment options
+
+### Switching to previous solr search engine
 
 Alfresco comes either with Solr or Elasticsearch as a Full Text Search engine.
 By default ACS enterprise flavor 23 and above are shipped with Elasticsearch.
 Versions 7.x enterprise and all Community versions are shipped with Solr.
 
-It is of course possible to keep on using Solr on the latest Enterprise
-versions. To do so just use the extra argument shown bellow:
+It is still possible to use Solr on the latest Enterprise
+versions by using the `solr6-overrides.yaml` file:
 
 ```bash
 docker compose -f compose.yaml -f solr6-override-docker-compose.yml up -d
@@ -443,14 +500,6 @@ labels are used in alfresco & share services).
 ## Customise
 
 To customise the Docker Compose deployment, for example applying AMPs, we recommend following the best practice of creating your own custom Docker image(s). The [Customisation Guide](./examples/customisation-guidelines.md) walks you through this process.
-
-## Cleanup
-
-To bring the system down and cleanup the containers run the following command:
-
-```bash
-docker compose down
-```
 
 ## Troubleshooting
 
