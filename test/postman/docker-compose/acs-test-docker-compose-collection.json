@@ -920,13 +920,6 @@
 									"    pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
 									"        pm.response.to.have.status(403);",
 									"    });",
-									"}",
-									"else",
-									"{",
-									"    pm.test(\"testResponseStatusIs404ForCommunity\", function ()",
-									"{",
-									"        pm.response.to.have.status(404);",
-									"    });",
 									"}"
 								],
 								"type": "text/javascript"

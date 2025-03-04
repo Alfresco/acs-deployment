@@ -59,20 +59,11 @@ services:
       timeout: 3s
       retries: 5
       start_period: 1m
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
-      - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
-      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.routers.alfresco.middlewares=limit@docker"
-      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
-      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
-      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
-      - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
-      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
-      - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
     volumes:
       - /usr/local/tomcat/alf_data
+    extends:
+      file: commons/base.yaml
+      service: alfresco
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.1.6
@@ -163,15 +154,9 @@ services:
     depends_on:
       alfresco:
         condition: service_healthy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
-      - "traefik.http.services.share.loadbalancer.server.port=8080"
-      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.routers.share.middlewares=limit@docker"
-      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
-      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
-      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
+    extends:
+      file: commons/base.yaml
+      service: share
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -237,14 +222,9 @@ services:
       timeout: 1s
       retries: 3
       start_period: 1s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
-      - "traefik.http.middlewares.adwforceslash.redirectregex.regex=^(.*/workspace)$$"
-      - "traefik.http.middlewares.adwforceslash.redirectregex.replacement=$${1}/"
-      - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
-      - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
-      - "traefik.http.routers.adw.middlewares=adwchain@docker"
+    extends:
+      file: commons/base.yaml
+      service: digital-workspace
   control-center:
     image: quay.io/alfresco/alfresco-control-center:7.9.0
     mem_limit: 128m
@@ -258,40 +238,13 @@ services:
       timeout: 1s
       retries: 3
       start_period: 1s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
-      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin,/control-center"
-      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/(admin|control-center))$$"
-      - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
-      - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
-      - "traefik.http.routers.acc.middlewares=accchain@docker"
+    extends:
+      file: commons/base.yaml
+      service: control-center
   proxy:
-    image: traefik:3.1
-    mem_limit: 128m
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:8080"
-      - "--entryPoints.traefik.address=:8888"
-      - "--entrypoints.web.transport.respondingTimeouts.readTimeout=20m"
-      - "--accesslog=true"
-      - "--providers.docker.exposedByDefault=false"
-      - "--ping.entrypoint=web"
-      - "--ping=true"
-    ports:
-      - "8080:8080"
-      - "8888:8888"
-    healthcheck:
-      test: ["CMD", "traefik", "healthcheck", "--ping"]
-      interval: 20s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    security_opt:
-      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+    extends:
+      file: commons/base.yaml
+      service: proxy
   sync-service:
     image: quay.io/alfresco/service-sync:3.11.3
     mem_limit: 1g
@@ -320,10 +273,6 @@ services:
         condition: service_healthy
       alfresco:
         condition: service_healthy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
-      - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
-      - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
-      - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
-      - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
+    extends:
+      file: commons/base.yaml
+      service: sync-service

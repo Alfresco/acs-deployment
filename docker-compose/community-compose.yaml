@@ -50,17 +50,11 @@ services:
       timeout: 3s
       retries: 5
       start_period: 1m
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
-      - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
-      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.routers.alfresco.middlewares=limit@docker"
-      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$`)"
-      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
-      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
     volumes:
       - /usr/local/tomcat/alf_data
+    extends:
+      file: commons/base.yaml
+      service: alfresco
   transform-core-aio:
     image: alfresco/alfresco-transform-core-aio:5.1.6
     mem_limit: 1536m
@@ -103,15 +97,9 @@ services:
     depends_on:
       alfresco:
         condition: service_healthy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.share.rule=PathPrefix(`/share`)"
-      - "traefik.http.services.share.loadbalancer.server.port=8080"
-      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.routers.share.middlewares=limit@docker"
-      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
-      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
-      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
+    extends:
+      file: commons/base.yaml
+      service: share
   postgres:
     image: postgres:14.4
     mem_limit: 512m
@@ -172,14 +160,9 @@ services:
       timeout: 1s
       retries: 3
       start_period: 1s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.aca.rule=PathPrefix(`/content-app`)"
-      - "traefik.http.middlewares.acaroot.stripprefix.prefixes=/content-app"
-      - "traefik.http.middlewares.acaforceslash.redirectregex.regex=^(.*/content-app)$$"
-      - "traefik.http.middlewares.acaforceslash.redirectregex.replacement=$${1}/"
-      - "traefik.http.middlewares.acachain.chain.middlewares=acaforceslash,acaroot"
-      - "traefik.http.routers.aca.middlewares=acachain@docker"
+    extends:
+      file: commons/base.yaml
+      service: content-app
   control-center:
     image: quay.io/alfresco/alfresco-control-center:9.3.0
     mem_limit: 128m
@@ -193,37 +176,10 @@ services:
       timeout: 1s
       retries: 3
       start_period: 1s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
-      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin,/control-center"
-      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/(admin|control-center))$$"
-      - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
-      - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
-      - "traefik.http.routers.acc.middlewares=accchain@docker"
+    extends:
+      file: commons/base.yaml
+      service: control-center
   proxy:
-    image: traefik:3.1
-    mem_limit: 128m
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:8080"
-      - "--entrypoints.web.transport.respondingTimeouts.readTimeout=20m"
-      - "--entryPoints.traefik.address=:8888"
-      - "--accesslog=true"
-      - "--providers.docker.exposedByDefault=false"
-      - "--ping.entrypoint=web"
-      - "--ping=true"
-    ports:
-      - "8080:8080"
-      - "8888:8888"
-    healthcheck:
-      test: ["CMD", "traefik", "healthcheck", "--ping"]
-      interval: 20s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    security_opt:
-      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+    extends:
+      file: commons/base.yaml
+      service: proxy
