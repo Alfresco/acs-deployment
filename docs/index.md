@@ -18,6 +18,15 @@ Compose](https://docs.docker.com/compose) or on
 
 ## Important changes for Docker Compose
 
+### Repository content store persistence
+
+We've introduced an anonymous volume for the alfresco service to ensure content
+store data remains intact across container restarts. This enhancement improves
+the user experience when fine-tuning Compose files and allows for repeated use
+of `docker compose up -d` without data loss.
+
+### Compose extends feature
+
 We have started to leverage
 [extends](https://docs.docker.com/compose/how-tos/multiple-compose-files/extends/)
 feature of docker compose to improve maintainability of the compose files we
