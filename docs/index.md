@@ -16,6 +16,18 @@ Compose](https://docs.docker.com/compose) or on
 
 > Automated tests for helm charts are running on KinD cluster v1.31 and EKS v1.31.
 
+## Important changes for Docker Compose
+
+We have started to leverage
+[extends](https://docs.docker.com/compose/how-tos/multiple-compose-files/extends/)
+feature of docker compose to improve maintainability of the compose files we
+provide. This means that any compose file in [docker-compose](docker-compose)
+folder cannot be used anymore as a standalone file but must be invoked within
+that folder.
+
+If you want to further customize the compose files, make sure to understand and use
+the definitions included in the [common](docker-compose/common) folder.
+
 ## Important changes for helm charts
 
 The v7.0.0 release is the first release of the acs helm charts which completely
