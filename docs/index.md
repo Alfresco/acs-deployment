@@ -16,50 +16,6 @@ Compose](https://docs.docker.com/compose) or on
 
 > Automated tests for helm charts are running on KinD cluster v1.31 and EKS v1.31.
 
-## Important changes for Docker Compose
-
-### Repository content store persistence
-
-We've introduced an anonymous volume for the alfresco service to ensure content
-store data remains intact across container restarts. This enhancement improves
-the user experience when fine-tuning Compose files and allows for repeated use
-of `docker compose up -d` without data loss.
-
-### Compose extends feature
-
-We have started to leverage
-[extends](https://docs.docker.com/compose/how-tos/multiple-compose-files/extends/)
-feature of docker compose to improve maintainability of the compose files we
-provide. This means that any compose file in
-[docker-compose](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose)
-folder cannot be used anymore as a standalone file but must be invoked within
-that folder.
-
-If you want to further customize the compose files, make sure to understand and
-use the definitions included in the
-[commons](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose/commons)
-folder.
-
-## Important changes for helm charts
-
-The v7.0.0 release is the first release of the acs helm charts which completely
-leverage the new individual subcharts we started releasing since March 2023 in a
-dedicated repo:
-[alfresco-helm-charts](https://github.com/Alfresco/alfresco-helm-charts).
-
-This change will make life easier to whoever want to customize or extend the
-helm deployments and simplify the future maintenance, at the cost of breaking
-the compatibility with the values structure which remained almost stable since
-the v6 release.
-
-Please review the new [values](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/values.yaml)
-carefully and adapt any custom configuration you may have. You can read the
-[upgrades guide](helm/upgrades.md) for more details on the changes.
-
-> Deploying to new namespace is always the preferred way of upgrading ACS as we
-> do not test charts for upgrade scenarios (even with previous versions)
-> neither do we provide roll-back facilities.
-
 ## Prerequisites
 
 The ACS Enterprise version is installed by default, using Docker images from

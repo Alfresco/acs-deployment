@@ -15,12 +15,31 @@ This project contains the code for running Alfresco Content Services (ACS) with
 Compose](https://docs.docker.com/compose) or on
 [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
-:warning: The [Docker Compose](./docker-compose/compose.yaml) deployment
-has moved from a custom NGINX based proxy to Traefik based proxy.
-Please read the [documentation](./docs/docker-compose#alfresco-proxy-proxy) for
-more details.
-
 User docs available at: [https://alfresco.github.io/acs-deployment/](https://alfresco.github.io/acs-deployment/)
+
+## Important changes for Docker Compose
+
+### Repository content store persistence
+
+We've introduced an anonymous volume for the alfresco service to ensure content
+store data remains intact across container restarts. This enhancement improves
+the user experience when fine-tuning Compose files and allows for repeated use
+of `docker compose up -d` without data loss.
+
+### Compose extends feature
+
+We have started to leverage
+[extends](https://docs.docker.com/compose/how-tos/multiple-compose-files/extends/)
+feature of docker compose to improve maintainability of the compose files we
+provide. This means that any compose file in
+[docker-compose](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose)
+folder cannot be used anymore as a standalone file but must be invoked within
+that folder.
+
+If you want to further customize the compose files, make sure to understand and
+use the definitions included in the
+[commons](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose/commons)
+folder.
 
 ## License
 
