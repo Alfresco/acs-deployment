@@ -30,12 +30,15 @@ of `docker compose up -d` without data loss.
 We have started to leverage
 [extends](https://docs.docker.com/compose/how-tos/multiple-compose-files/extends/)
 feature of docker compose to improve maintainability of the compose files we
-provide. This means that any compose file in [docker-compose](docker-compose)
+provide. This means that any compose file in
+[docker-compose](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose)
 folder cannot be used anymore as a standalone file but must be invoked within
 that folder.
 
-If you want to further customize the compose files, make sure to understand and use
-the definitions included in the [common](docker-compose/common) folder.
+If you want to further customize the compose files, make sure to understand and
+use the definitions included in the
+[commons](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose/commons)
+folder.
 
 ## Important changes for helm charts
 
