@@ -136,14 +136,13 @@ jobs:
       - name: Wait for pods to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@OPSEXP-3069-kubectl-wait
 
-      - name: Wait for reindexing job to complete
-        env:
-          VALUES_FILE: ${{ matrix.values }}
-          WAIT_TIMEOUT_REINDEXING: 5m
-        run: |
-          if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo -n "Waiting for ESC Reindexing job to complete... "
-            kubectl wait --timeout=${{ env.WAIT_TIMEOUT_REINDEXING }} --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
-          fi
+      - name: Wait for reindex job
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@OPSEXP-3069-kubectl-wait
+        if: ! startsWith(matrix.values, '7.')
+        with:
+          wait-condition: complete
+          wait-resource: job/acs-alfresco-search-enterprise-reindexing
+          wait-timeout: 5m
 
       - name: Spit cluster status after install
         if: always()
