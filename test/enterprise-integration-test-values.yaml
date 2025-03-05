@@ -121,7 +121,7 @@ alfresco-transform-service:
     replicaCount: 1
   transformrouter:
     livenessProbe:
-      initialDelaySeconds: 60
+      initialDelaySeconds: 120
     resources:
       requests:
         cpu: "0.01"
@@ -150,7 +150,7 @@ postgresql-sync: &postgresql-sync
         memory: "1Gi"
 alfresco-sync-service:
   livenessProbe:
-    initialDelaySeconds: 90
+    initialDelaySeconds: 120
   resources:
     requests:
       cpu: "0.01"
@@ -188,6 +188,8 @@ alfresco-ai-transformer:
   livenessProbe:
     initialDelaySeconds: 120
 alfresco-audit-storage:
+  livenessProbe:
+    initialDelaySeconds: 120
   resources:
     requests:
       cpu: "0.01"
