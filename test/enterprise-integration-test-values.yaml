@@ -2,7 +2,7 @@
 alfresco-repository:
   resources:
     requests:
-      cpu: "0.5"
+      cpu: "0.01"
       memory: "1024Mi"
     limits:
       cpu: "2"
@@ -31,7 +31,7 @@ share:
 alfresco-search:
   resources:
     requests:
-      cpu: "0.25"
+      cpu: "0.01"
       memory: "512Mi"
     limits:
       cpu: "2"
@@ -40,7 +40,7 @@ elasticsearch:
   master:
     resources:
       requests:
-        cpu: "0.25"
+        cpu: "0.01"
         memory: "512Mi"
       limits:
         cpu: "1"
@@ -48,7 +48,7 @@ elasticsearch:
   kibana:
     resources:
       requests:
-        cpu: "0.25"
+        cpu: "0.01"
         memory: "512Mi"
       limits:
         cpu: "1"
@@ -58,7 +58,7 @@ alfresco-search-enterprise:
     hookExecution: false
   resources:
     requests:
-      cpu: "0.1"
+      cpu: "0.01"
       memory: "128Mi"
     limits:
       cpu: "1"
@@ -102,7 +102,7 @@ alfresco-transform-service:
       initialDelaySeconds: 30
     resources:
       requests:
-        cpu: "0.25"
+        cpu: "0.01"
         memory: "256Mi"
       limits:
         cpu: "2"
@@ -124,6 +124,9 @@ alfresco-transform-service:
   transformrouter:
     replicaCount: 1
     resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
       limits:
         cpu: "2"
         memory: "800Mi"
@@ -137,7 +140,7 @@ postgresql:
   primary:
     resources:
       requests:
-        cpu: "0.5"
+        cpu: "0.01"
         memory: "1Gi"
       limits:
         cpu: "2"
@@ -163,7 +166,7 @@ alfresco-sync-service:
 activemq:
   resources:
     requests:
-      cpu: "0.1"
+      cpu: "0.01"
       memory: "512Mi"
 alfresco-digital-workspace:
   resources:
