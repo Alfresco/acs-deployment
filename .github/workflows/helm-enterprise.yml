@@ -136,14 +136,6 @@ jobs:
       - name: Wait for pods to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@OPSEXP-3069-kubectl-wait
 
-      - name: Wait for reindex job
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@OPSEXP-3069-kubectl-wait
-        if: ! startsWith(matrix.values, '7.')
-        with:
-          wait-condition: complete
-          wait-resource: job/acs-alfresco-search-enterprise-reindexing
-          wait-timeout: 5m
-
       - name: Spit cluster status after install
         if: always()
         run: |
