@@ -136,15 +136,15 @@ jobs:
       - name: Watch Helm deployment
         env:
           VALUES_FILE: ${{ matrix.values }}
-          WAIT_TIMEOUT: 7m
+          WAIT_TIMEOUT: 10m
           WAIT_TIMEOUT_REINDEXING: 7m
         run: |
           kubectl get pods --watch &
           KWPID=$!
-          kubectl wait --timeout=${{ env.WAIT_TIMEOUT }} --all=true --for=condition=Available deploy && kill $KWPID
+          kubectl wait --timeout=${{ env.WAIT_TIMEOUT }} --all=true --for=condition=Ready pods
+          kill $KWPID
           if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo -n "Waiting for ESC Reindexing job to complete... "
             kubectl wait --timeout=${{ env.WAIT_TIMEOUT_REINDEXING }} --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
-            echo "Completed."
           fi
 
       - name: Spit cluster status after install
