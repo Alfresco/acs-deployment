@@ -2,7 +2,7 @@
 alfresco-repository:
   resources:
     requests:
-      cpu: "0.5"
+      cpu: "0.01"
       memory: "1024Mi"
     limits:
       cpu: "2"
@@ -31,7 +31,7 @@ share:
 alfresco-search:
   resources:
     requests:
-      cpu: "0.25"
+      cpu: "0.01"
       memory: "512Mi"
     limits:
       cpu: "2"
@@ -40,7 +40,7 @@ elasticsearch:
   master:
     resources:
       requests:
-        cpu: "0.25"
+        cpu: "0.01"
         memory: "512Mi"
       limits:
         cpu: "1"
@@ -48,7 +48,7 @@ elasticsearch:
   kibana:
     resources:
       requests:
-        cpu: "0.25"
+        cpu: "0.01"
         memory: "512Mi"
       limits:
         cpu: "1"
@@ -58,7 +58,7 @@ alfresco-search-enterprise:
     hookExecution: false
   resources:
     requests:
-      cpu: "0.1"
+      cpu: "0.01"
       memory: "128Mi"
     limits:
       cpu: "1"
@@ -66,7 +66,7 @@ alfresco-search-enterprise:
 alfresco-transform-service:
   pdfrenderer:
     livenessProbe:
-      initialDelaySeconds: 90
+      initialDelaySeconds: 120
     resources:
       requests:
         cpu: "0.01"
@@ -77,7 +77,7 @@ alfresco-transform-service:
     replicaCount: 1
   imagemagick:
     livenessProbe:
-      initialDelaySeconds: 90
+      initialDelaySeconds: 120
     resources:
       requests:
         cpu: "0.01"
@@ -88,7 +88,7 @@ alfresco-transform-service:
     replicaCount: 1
   libreoffice:
     livenessProbe:
-      initialDelaySeconds: 90
+      initialDelaySeconds: 120
     resources:
       requests:
         cpu: "0.01"
@@ -99,10 +99,10 @@ alfresco-transform-service:
     replicaCount: 1
   tika:
     livenessProbe:
-      initialDelaySeconds: 30
+      initialDelaySeconds: 120
     resources:
       requests:
-        cpu: "0.25"
+        cpu: "0.01"
         memory: "256Mi"
       limits:
         cpu: "2"
@@ -110,9 +110,7 @@ alfresco-transform-service:
     replicaCount: 1
   transformmisc:
     livenessProbe:
-      initialDelaySeconds: 30
-      periodSeconds: 60
-      timeoutSeconds: 15
+      initialDelaySeconds: 120
     resources:
       requests:
         cpu: "0.01"
@@ -122,22 +120,21 @@ alfresco-transform-service:
         memory: "512Mi"
     replicaCount: 1
   transformrouter:
-    replicaCount: 1
+    livenessProbe:
+      initialDelaySeconds: 120
     resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
       limits:
         cpu: "2"
         memory: "800Mi"
-    readinessProbe:
-      initialDelaySeconds: 40
-      timeoutSeconds: 20
-    livenessProbe:
-      initialDelaySeconds: 40
-      timeoutSeconds: 20
+    replicaCount: 1
 postgresql:
   primary:
     resources:
       requests:
-        cpu: "0.5"
+        cpu: "0.01"
         memory: "1Gi"
       limits:
         cpu: "2"
@@ -152,6 +149,8 @@ postgresql-sync: &postgresql-sync
         cpu: "2"
         memory: "1Gi"
 alfresco-sync-service:
+  livenessProbe:
+    initialDelaySeconds: 120
   resources:
     requests:
       cpu: "0.01"
@@ -163,7 +162,7 @@ alfresco-sync-service:
 activemq:
   resources:
     requests:
-      cpu: "0.1"
+      cpu: "0.01"
       memory: "512Mi"
 alfresco-digital-workspace:
   resources:
@@ -189,6 +188,8 @@ alfresco-ai-transformer:
   livenessProbe:
     initialDelaySeconds: 120
 alfresco-audit-storage:
+  livenessProbe:
+    initialDelaySeconds: 120
   resources:
     requests:
       cpu: "0.01"
