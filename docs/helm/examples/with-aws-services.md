@@ -389,7 +389,7 @@ alfresco-repository:
   persistence:
     enabled: false
   environement:
-    CATALIAN_OPTS: >-
+    CATALINA_OPTS: >-
       -Ds3.bucketName=YOUR-BUCKET-NAME
       -Ds3.bucketLocation=YOUS_AWS_REGION
 alfresco-transform-service:
