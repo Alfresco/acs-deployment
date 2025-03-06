@@ -54,8 +54,8 @@ jobs:
           echo "json=$VERS" >> $GITHUB_OUTPUT
 
   helm_integration:
-    runs-on: alfrescoPub-ubuntu2204-16G-4CPU
-    timeout-minutes: 12
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -133,24 +133,14 @@ jobs:
           ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
-      - name: Watch Helm deployment
-        env:
-          VALUES_FILE: ${{ matrix.values }}
-        run: |
-          kubectl get pods --watch &
-          KWPID=$!
-          kubectl wait --timeout=7m --all=true --for=condition=Available deploy && kill $KWPID
-          if [ "${VALUES_FILE:0:2}" != "7." ] ; then echo -n "Waiting for ESC Reindexing job to complete... "
-            kubectl wait --timeout=5m --for=condition=complete job/acs-alfresco-search-enterprise-reindexing
-            echo "Completed."
-          fi
+      - name: Wait for pods to be ready
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.15.0
 
       - name: Spit cluster status after install
         if: always()
         run: |
           helm ls --all-namespaces --all
           helm status acs --show-resources
-          kubectl describe pod
 
       - name: Run Newman tests
         uses: nick-fields/retry@c97818ca39074beaea45180dba704f92496a0082 # v3.0.1
