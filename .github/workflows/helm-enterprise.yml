@@ -86,7 +86,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.14.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.15.0
         with:
           ingress-nginx-ref: controller-v1.12.0
           metrics: "true"
@@ -143,7 +143,7 @@ jobs:
           helm status acs --show-resources
 
       - name: Run Newman tests
-        uses: nick-fields/retry@c97818ca39074beaea45180dba704f92496a0082 # v3.0.1
+        uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
         id: newman
         with:
           timeout_minutes: 1
