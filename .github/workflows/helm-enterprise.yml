@@ -134,7 +134,7 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for pods to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@OPSEXP-3069-kubectl-wait
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.15.0
 
       - name: Spit cluster status after install
         if: always()
