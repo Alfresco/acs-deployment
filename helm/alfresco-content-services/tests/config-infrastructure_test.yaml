@@ -10,6 +10,7 @@ tests:
       alfresco-search.enabled: false
       alfresco-search-enterprise.enabled: false
       alfresco-transform-service.enabled: false
+      alfresco-audit-storage.enabled: false
     asserts:
       - notExists:
           path: data.SEARCH_SECURECOMMS
@@ -28,6 +29,12 @@ tests:
           path: data.SFS_URL
       - notExists:
           path: data.ATS_URL
+      - notExists:
+          path: data.AUDIT_ELASTICSEARCH_URL
+      - notExists:
+          path: data.AUDIT_ELASTICSEARCH_HOST
+      - notExists:
+          path: data.AUDIT_ELASTICSEARCH_PORT
 
   - it: should render the default infra (solr)
     values: *testvalues
