@@ -54,8 +54,8 @@ jobs:
           echo "json=$VERS" >> $GITHUB_OUTPUT
 
   helm_integration:
-    runs-on: alfrescoPub-ubuntu2204-16G-4CPU
-    timeout-minutes: 12
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
