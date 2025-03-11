@@ -70,6 +70,8 @@ data:
   {{- end }}
   {{- end }}
   {{- $elasticsearch_audit_url := include "alfresco-content-services.audit.elasticsearchUrl" $ }}
+  {{- if index $.Values "alfresco-audit-storage" "enabled" }}
     {{- printf "AUDIT_ELASTICSEARCH_URL: %s" $elasticsearch_audit_url | nindent 2 }}
     {{- printf "AUDIT_ELASTICSEARCH_HOST: %s" (include "alfresco-common.url.host" $elasticsearch_audit_url) | nindent 2 }}
     {{- printf "AUDIT_ELASTICSEARCH_PORT: %s" (include "alfresco-common.url.port" $elasticsearch_audit_url | quote) | nindent 2 }}
+  {{- end }}
