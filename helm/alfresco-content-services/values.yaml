@@ -73,7 +73,7 @@ global:
     secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
     # -- Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys.
     existingSecretName: null
-    # -- Base url for kibana environment variable `SERVER_PUBLICBASEURL` 
+    # -- Base url for kibana environment variable `SERVER_PUBLICBASEURL`
     publicBaseUrl: null
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
@@ -142,7 +142,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 23.4.0
+    tag: 23.4.1
   autoscaling:
     kedaDisableIdle: true
   configuration:
@@ -297,7 +297,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 23.4.0
+    tag: 23.4.1
   nameOverride: share
   repository:
     existingConfigMap:
@@ -649,7 +649,7 @@ dtas:
     assertions:
       acs:
         edition: Enterprise
-        version: 23.4.0
+        version: 23.4.1
         identity: false
         modules:
         - id: org.alfresco.integrations.google.docs
