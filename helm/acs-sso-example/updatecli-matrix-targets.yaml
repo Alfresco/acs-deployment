@@ -6,22 +6,13 @@ matrix:
   community:
     id: ssoExample
     acs:
-      version:
       helm_target: &helmvaluesSso >-
         helm/acs-sso-example/values.yaml
       helm_key: $.alfresco-repository.image.tag
-      pattern:
-      image:
       helm_update_appVersion: true
     share:
-      version:
       helm_target: *helmvaluesSso
       helm_key: $.alfresco-share.image.tag
-      pattern:
-      image:
     aca:
       helm_target: *helmvaluesSso
       helm_key: $.alfresco-content-app.image.tag
-      version:
-      pattern:
-      image:
