@@ -16,6 +16,6 @@ dependencies:
   version: 1.3.0-alpha.0
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.1
-digest: sha256:1dccc143c287ee81c263a32b78d3d8c54e6a3226f8befdd6ec54bc4e22643bec
-generated: "2025-02-05T14:18:19.859037+01:00"
+  version: 0.2.2
+digest: sha256:c14c28215309f5414fcf2bc51b6b856858e4b60acc9653d507c1be83f3d39312
+generated: "2025-03-11T16:24:55.350662713Z"
