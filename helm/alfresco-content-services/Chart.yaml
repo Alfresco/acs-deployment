@@ -31,13 +31,13 @@ dependencies:
   - name: alfresco-adf-app
     alias: alfresco-control-center
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.2.1
+    version: 0.2.2
     condition: >-
       alfresco-control-center.enabled
   - name: alfresco-adf-app
     alias: alfresco-digital-workspace
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.2.1
+    version: 0.2.2
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository

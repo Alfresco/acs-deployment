@@ -10,10 +10,10 @@ dependencies:
   version: 12.8.5
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.1
+  version: 0.2.2
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.1
+  version: 0.2.2
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.9.0-alpha.0
@@ -50,5 +50,5 @@ dependencies:
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.2.0
-digest: sha256:003f3c462222792347a2cc8546ac4b5501896cb8df5c76d9bd8931e7dbdad84e
-generated: "2025-02-05T14:16:46.275757+01:00"
+digest: sha256:08ca56608665fc6c4157f25e2972584ade78d651001789b1d060e0d3d15d6c83
+generated: "2025-03-11T16:25:04.69188432Z"
