@@ -2,69 +2,69 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 7.4.2.4
+    tag: 23.4.1
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.17.6-jre17-rockylinux8
+    tag: 5.18.6-jre17-rockylinux8
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.1.6
+      tag: 4.1.7
   pdfrenderer:
     image:
-      tag: 5.1.6
+      tag: 5.1.7
   imagemagick:
     image:
-      tag: 5.1.6
+      tag: 5.1.7
   libreoffice:
     image:
-      tag: 5.1.6
+      tag: 5.1.7
   tika:
     image:
-      tag: 5.1.6
+      tag: 5.1.7
   transformmisc:
     image:
-      tag: 5.1.6
+      tag: 5.1.7
   filestore:
     image:
-      tag: 4.1.6
+      tag: 4.1.7
 alfresco-ai-transformer:
   image:
-    tag: 3.1.8
+    tag: 3.1.9
 share:
   image:
-    tag: 7.4.2.4
+    tag: 23.4.1
 alfresco-search:
   enabled: true
   searchServicesImage:
-    tag: 2.0.14
+    tag: 2.0.15
   insightEngineImage:
-    tag: 2.0.14
+    tag: 2.0.15
 alfresco-search-enterprise:
   enabled: false
   liveIndexing:
     mediation:
       image:
-        tag: 3.3.3
+        tag: 4.2.0
     content:
       image:
-        tag: 3.3.3
+        tag: 4.2.0
     metadata:
       image:
-        tag: 3.3.3
+        tag: 4.2.0
     path:
       image:
-        tag: 3.3.3
+        tag: 4.2.0
   reindexing:
     image:
-      tag: 3.3.3
+      tag: 4.2.0
 alfresco-digital-workspace:
   image:
-    tag: 5.0.0
+    tag: 5.3.0
 alfresco-control-center:
   image:
-    tag: 8.3.0
+    tag: 9.3.0
 postgresql:
   image:
     tag: 14.10.0
@@ -73,13 +73,13 @@ postgresql-sync:
     tag: 14.10.0
 alfresco-sync-service:
   image:
-    tag: 3.11.3
+    tag: 5.1.0
 alfresco-connector-ms365:
   image:
-    tag: 2.0.5
+    tag: 2.0.6
 alfresco-connector-msteams:
   image:
-    tag: 2.0.5
+    tag: 2.0.6
 alfresco-audit-storage:
   image:
     tag: 1.1.0
