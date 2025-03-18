@@ -78,6 +78,46 @@ matrix:
       compose_target: *composeCurrent
       compose_key: $.services.audit-storage.image
 
+  23.N:
+    id: 23n
+    acs:
+      compose_target: &compose23 >-
+        docker-compose/23.N-compose.yaml
+      compose_key: $.services.alfresco.image
+      # keep the unused anchor to detect multiple usages when copying blocks for new versions
+    share:
+      compose_target: *compose23
+      compose_key: $.services.share.image
+    search:
+      compose_target: docker-compose/solr6-overrides.yaml
+      compose_key: $.services.solr6.image
+    search-enterprise:
+      compose_target: *compose23
+      compose_keys:
+        live-indexing: $.services.search.image
+        reindexing: $.services.search-reindexing.image
+    sync:
+      compose_target: *compose23
+      compose_key: $.services.sync-service.image
+    adw:
+      compose_target: *compose23
+      compose_key: $.services.digital-workspace.image
+    adminApp:
+      compose_target: *compose23
+      compose_key: $.services.control-center.image
+    trouter:
+      compose_target: *compose23
+      compose_key: $.services.transform-router.image
+    sfs:
+      compose_target: *compose23
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      compose_target: *compose23
+      compose_key: $.services.transform-core-aio.image
+    audit-storage:
+      compose_target: *compose23
+      compose_key: $.services.audit-storage.image
+
   7.4.N:
     id: 74n
     acs:
