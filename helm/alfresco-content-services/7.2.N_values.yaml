@@ -8,7 +8,6 @@ alfresco-repository:
       flavor: solr6
 activemq:
   image:
-    repository: quay.io/alfresco/alfresco-activemq
     tag: 5.16.7-jre17-rockylinux8
 alfresco-ai-transformer:
   image:

@@ -5,7 +5,6 @@ alfresco-repository:
     tag: 23.4.1
 activemq:
   image:
-    repository: quay.io/alfresco/alfresco-activemq
     tag: 5.18.6-jre17-rockylinux8
 alfresco-transform-service:
   transformrouter:
@@ -35,14 +34,7 @@ alfresco-ai-transformer:
 share:
   image:
     tag: 23.4.1
-alfresco-search:
-  enabled: true
-  searchServicesImage:
-    tag: 2.0.15
-  insightEngineImage:
-    tag: 2.0.15
 alfresco-search-enterprise:
-  enabled: false
   liveIndexing:
     mediation:
       image:
