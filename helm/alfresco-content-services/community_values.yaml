@@ -6,7 +6,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 23.4.1
+    tag: 25.1.0
   persistence:
     accessModes:
       - ReadWriteOnce
@@ -24,7 +24,7 @@ elasticsearch:
 share:
   image:
     repository: alfresco/alfresco-share
-    tag: 23.4.1
+    tag: 25.1.0
 alfresco-search:
   enabled: true
   searchServicesImage:

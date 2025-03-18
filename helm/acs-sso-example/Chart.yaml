@@ -21,7 +21,7 @@ description: |
   deployment is destroyed or rolled back!
 type: application
 version: 1.2.0
-appVersion: 23.4.1
+appVersion: 25.1.0
 home: https://www.alfresco.com
 sources:
   - https://github.com/Alfresco/acs-deployment
