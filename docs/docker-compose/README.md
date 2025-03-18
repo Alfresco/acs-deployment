@@ -199,7 +199,7 @@ Docker Daemon).
    apply your license:
    * `http://localhost:8080/alfresco/service/enterprise/admin/admin-license`
    * Default username and password is `admin`
-   * See [Uploading a new license][upload-new-license]
+   * See [Alfresco Products Official Documentation][alfresco-docs-site]
      for more details
 
 ## Stop and cleanup
@@ -473,7 +473,7 @@ share:
 
 | Property  | Description                                                                                                                                                                                                                                                                                                                                                                                                                    | Default value |
 |-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
-| JAVA_OPTS | A set of properties that are picked up by the JVM inside the container. Any Sync Service property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Dsql.db.username=alfresco`) . For a complete list of properties that can be passed through JAVA_OPTS enviroment variable, please check the [documentation][sync-service-configure] |               |
+| JAVA_OPTS | A set of properties that are picked up by the JVM inside the container. Any Sync Service property can be passed to the container using the following format `"-Dproperty=value"` (e.g. `-Dsql.db.username=alfresco`) . For a complete list of properties that can be passed through JAVA_OPTS enviroment variable, please check the [documentation][alfresco-docs-site] |               |
 
 ### Alfresco Proxy (proxy)
 
@@ -532,5 +532,4 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
 
-[upload-new-license]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license
-[sync-service-configure]: https://support.hyland.com/r/Alfresco/Alfresco-Sync-Service/5.1/Alfresco-Sync-Service/Configure
+[alfresco-docs-site]: https://support.hyland.com/r/alfresco
