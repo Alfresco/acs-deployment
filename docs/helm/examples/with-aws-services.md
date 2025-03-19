@@ -381,7 +381,7 @@ global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 alfresco-repository:
   image:
-    repository: alfresco-content-repository-aws
+    repository: quay.io/alfresco-content-repository-aws
   configuration:
     search:
       flavor: elasticsearch
