@@ -94,7 +94,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.7
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.1.7
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
