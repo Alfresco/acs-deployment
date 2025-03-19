@@ -51,6 +51,12 @@ alfresco-search-enterprise:
   reindexing:
     image:
       tag: 4.2.0
+alfresco-search:
+  enabled: false
+  searchServicesImage:
+    tag: 2.0.15
+  insightEngineImage:
+    tag: 2.0.15
 alfresco-digital-workspace:
   image:
     tag: 5.3.0
