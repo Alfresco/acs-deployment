@@ -432,4 +432,5 @@ matrix:
       helm_key: $.share.image.tag
     search:
       helm_target: *helmvaluesOss
-      helm_key: $.alfresco-search.searchServicesImage.tag
+      helm_keys:
+        search: $.alfresco-search.searchServicesImage.tag
