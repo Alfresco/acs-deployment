@@ -433,7 +433,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
-    tag: 15.5.0
+    tag: 16.6.0
     pullPolicy: IfNotPresent
   commonAnnotations:
     application: alfresco-content-services
