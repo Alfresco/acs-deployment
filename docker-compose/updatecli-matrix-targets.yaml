@@ -84,7 +84,6 @@ matrix:
       compose_target: &compose23 >-
         docker-compose/23.N-compose.yaml
       compose_key: $.services.alfresco.image
-      # keep the unused anchor to detect multiple usages when copying blocks for new versions
     share:
       compose_target: *compose23
       compose_key: $.services.share.image
