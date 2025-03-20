@@ -98,4 +98,11 @@ dtas:
     assertions:
       acs:
         edition: Community
+        modules:
+        - id: org.alfresco.integrations.google.docs
+          version: 4.1.0
+          installed: true
+        - id: alfresco-aos-module
+          version: 3.2.0
+          installed: true
       adw: null

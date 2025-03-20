@@ -16,39 +16,39 @@ dependencies:
   version: 0.2.2
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.9.0-alpha.0
+  version: 0.9.0
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.6.1
 - name: alfresco-transform-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.1.3
+  version: 2.1.4
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 5.0.0
+  version: 5.0.1
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 7.0.0
+  version: 7.1.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.3.0
+  version: 4.4.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.0.0
+  version: 2.0.1
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.3.0-alpha.0
+  version: 1.3.0
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.0.0
+  version: 3.0.1
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.0.1
+  version: 3.0.2
 - name: elasticsearch
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 21.4.1
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0
-digest: sha256:08ca56608665fc6c4157f25e2972584ade78d651001789b1d060e0d3d15d6c83
-generated: "2025-03-11T16:25:04.69188432Z"
+  version: 0.3.0
+digest: sha256:69eb78b2b216d38ae53e29df6c53573d46bf985f1d06341a664a8aa4ad4f18fd
+generated: "2025-03-18T16:55:20.912771027Z"

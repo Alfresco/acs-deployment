@@ -1,20 +1,11 @@
-# This values file can be used to install ACS 7.3.x using the latest version of
+# This values file can be used to install ACS 7.4.x using the latest version of
 # the chart
 alfresco-repository:
   image:
-    tag: 7.3.2.3
-  configuration:
-    search:
-      flavor: solr6
+    tag: 23.4.1
 activemq:
   image:
-    tag: 5.17.6-jre17-rockylinux8
-alfresco-ai-transformer:
-  image:
-    tag: 1.5.1
-share:
-  image:
-    tag: 7.3.2.3
+    tag: 5.18.6-jre17-rockylinux8
 alfresco-transform-service:
   transformrouter:
     image:
@@ -37,47 +28,50 @@ alfresco-transform-service:
   filestore:
     image:
       tag: 4.1.7
+alfresco-ai-transformer:
+  image:
+    tag: 3.1.9
+share:
+  image:
+    tag: 23.4.1
+alfresco-search-enterprise:
+  liveIndexing:
+    mediation:
+      image:
+        tag: 4.2.0
+    content:
+      image:
+        tag: 4.2.0
+    metadata:
+      image:
+        tag: 4.2.0
+    path:
+      image:
+        tag: 4.2.0
+  reindexing:
+    image:
+      tag: 4.2.0
 alfresco-search:
-  enabled: true
+  enabled: false
   searchServicesImage:
     tag: 2.0.15
   insightEngineImage:
     tag: 2.0.15
-alfresco-search-enterprise:
-  enabled: false
-  liveIndexing:
-    mediation:
-      image:
-        tag: 3.2.1
-    content:
-      image:
-        tag: 3.2.1
-    metadata:
-      image:
-        tag: 3.2.1
-    path:
-      image:
-        tag: 3.2.1
-  reindexing:
-    image:
-      tag: 3.2.1
-elasticsearch:
-  enabled: false
 alfresco-digital-workspace:
   image:
-    tag: 4.4.1
+    tag: 5.3.0
 alfresco-control-center:
   image:
-    tag: 7.9.0
+    tag: 9.3.0
 postgresql:
   image:
-    tag: 14.10.0
+    tag: 15.10.0
 postgresql-sync:
   image:
     tag: 14.10.0
 alfresco-sync-service:
   image:
-    tag: 3.11.3
+    tag: 5.1.0
 alfresco-connector-ms365:
   image:
     tag: 2.0.6
@@ -85,19 +79,20 @@ alfresco-connector-msteams:
   image:
     tag: 2.0.6
 alfresco-audit-storage:
-  enabled: false
+  image:
+    tag: 1.1.0
 dtas:
   config:
     assertions:
       acs:
-        version: 7.3.2
+        version: 23.4.1
         modules:
         - id: org_alfresco_device_sync_repo
-          version: 3.11.3
+          version: 5.1.0
           installed: true
         - id: org.alfresco.integrations.google.docs
-          version: 3.4.2
+          version: 4.1.0
           installed: true
         - id: alfresco-aos-module
-          version: 1.5.0
+          version: 3.2.0
           installed: true
