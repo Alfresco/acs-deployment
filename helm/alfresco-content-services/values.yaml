@@ -621,6 +621,9 @@ dtas:
         version: 25.1.0
         identity: false
         modules:
+        - id: org_alfresco_device_sync_repo
+          version: 5.2.0
+          installed: true
         - id: org.alfresco.integrations.google.docs
           version: 4.1.0
           installed: true

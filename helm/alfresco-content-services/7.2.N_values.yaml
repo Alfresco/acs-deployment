@@ -98,3 +98,6 @@ dtas:
         - id: alfresco-aos-module
           version: 1.4.1
           installed: true
+        - id: org_alfresco_device_sync_repo
+          version: 3.11.3
+          installed: true
