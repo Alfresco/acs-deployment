@@ -330,6 +330,7 @@ services:
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
+        -Dsync.cluster.enabled=false
         -Dsql.db.driver=org.postgresql.Driver
         -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
         -Dsql.db.username=alfresco
