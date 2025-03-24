@@ -546,7 +546,7 @@ elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: true
   image:
-    tag: 7.17.26
+    tag: 8.17.3
   master:
     masterOnly: false
     replicaCount: 1

@@ -172,7 +172,7 @@ services:
       retries: 3
       start_period: 5s
   elasticsearch:
-    image: elasticsearch:7.17.26
+    image: elasticsearch:8.17.3
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
