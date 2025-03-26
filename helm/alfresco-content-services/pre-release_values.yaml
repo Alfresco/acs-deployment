@@ -80,7 +80,7 @@ alfresco-connector-msteams:
     tag: 2.0.6-A.2
 elastisearch:
   image:
-    tag: 8.17.1
+    tag: 8.17.3
   kibana:
     image:
       tag: 8.17.1
