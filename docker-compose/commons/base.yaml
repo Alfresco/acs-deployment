@@ -6,7 +6,7 @@ services:
       - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
       - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
       - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
-      - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.regex=^https?://[^/]+/([^/]+)$"
+      - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.regex=^https?://[^/]+/([^/.]+)$"
       - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.replacement=$$0/"
       - "traefik.http.middlewares.alfresco-chain.chain.middlewares=alfresco-root-redirect@docker,limit@docker"
       - "traefik.http.routers.alfresco.middlewares=alfresco-chain@docker"
