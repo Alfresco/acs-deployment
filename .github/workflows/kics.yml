@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: run kics Scan
-        uses: checkmarx/kics-github-action@3246fb456a46d1ea8848ae18793c036718b19fe0 # v2.1.5
+        uses: checkmarx/kics-github-action@09100f0152c975eb238c67030f9fd1418acb3666 # v2.1.6
         with:
           path: 'docker-compose,helm'
           ignore_on_exit: results
@@ -35,6 +35,6 @@ jobs:
           disable_secrets: true
           config_path: .github/kics.yml
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@6bb031afdd8eb862ea3fc1848194185e076637e5 # v3.28.11
+        uses: github/codeql-action/upload-sarif@1b549b9259bda1cb5ddde3b41741a82a2d15a841 # v3.28.13
         with:
           sarif_file: report-dir/results.sarif
