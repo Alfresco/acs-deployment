@@ -39,7 +39,7 @@ deployment is destroyed or rolled back!
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-content-app(alfresco-adf-app) | 0.2.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 1.3.0 |
 | https://codecentric.github.io/helm-charts | keycloakx | 6.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | repository-database(postgresql) | 13.4.0 |
