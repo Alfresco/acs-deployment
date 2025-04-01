@@ -22,11 +22,10 @@ jobs:
       - name: Generate Download trial compose files
         working-directory: docker-compose
         run: |
-          git restore --source ${{ env.DEFAULT_BRANCH_NAME }} --staged docker-compose/compose.yaml docker-compose/community-compose.yaml commons/
-          docker compose -f compose.yaml config -o docker-compose.yml \
-          && rm compose.yaml
-          docker compose -f community-compose.yaml config -o community-docker-compose.yml \
-          && rm community-compose.yaml
+          git fetch --no-tags --depth=1 origin ${{ env.DEFAULT_BRANCH_NAME }}:${{ env.DEFAULT_BRANCH_NAME }}
+          git restore --source ${{ env.DEFAULT_BRANCH_NAME }} compose.yaml community-compose.yaml commons/
+          docker compose -f compose.yaml config -o docker-compose.yml && rm compose.yaml
+          docker compose -f community-compose.yaml config -o community-docker-compose.yml && rm community-compose.yaml
 
       - name: Commit updated compose files
         uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79  # v5.1.0
