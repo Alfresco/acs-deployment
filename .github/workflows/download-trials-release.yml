@@ -24,8 +24,8 @@ jobs:
         run: |
           git fetch --no-tags --depth=1 origin ${{ env.DEFAULT_BRANCH_NAME }}:${{ env.DEFAULT_BRANCH_NAME }}
           git restore --source ${{ env.DEFAULT_BRANCH_NAME }} compose.yaml community-compose.yaml commons/
-          docker compose -f compose.yaml config -o docker-compose.yml && rm compose.yaml
-          docker compose -f community-compose.yaml config -o community-docker-compose.yml && rm community-compose.yaml
+          docker compose -f compose.yaml config -o docker-compose.yml
+          docker compose -f community-compose.yaml config -o community-docker-compose.yml
 
       - name: Set Commit Branch Name
         id: set_commit_branch_name
