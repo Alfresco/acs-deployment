@@ -2,14 +2,11 @@
 name: Release Download trials
 
 on:
-  push:
-    branches:
-      - OPSEXP-3189
   workflow_dispatch:
 
 env:
   DEFAULT_BRANCH_NAME: master
-  TRIALS_BRANCH_NAME: download-trials
+  TRIALS_BRANCH_NAME: download-trial
 
 jobs:
   createPR:
