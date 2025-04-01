@@ -104,3 +104,15 @@ removing dependabot entries and other not-really useful changelog entries.
 Publish the release (remove draft status).
 
 Once the tagged workflow is successful, the release process is completed.
+
+### Download trials (compose files)
+
+* Ensure the master branch has the latest versions of the Alfresco components
+  set in the [compose files](docker-compose/) (specifically `compose.yaml` and
+  `community-compose.yaml).
+* Run the [Release Download
+  trials](https://github.com/Alfresco/acs-deployment/actions/workflows/download-trials-release.yml)
+  workflow.
+* Review the [automatically created
+  PR](https://github.com/Alfresco/acs-deployment/pulls) and merge it to
+  `download-trial` branch if everything looks good.
