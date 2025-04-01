@@ -52,5 +52,5 @@ jobs:
           gh pr create --title "🛠 Update download trial compose files"
           --body "This PR updates the download trial compose files"
           --base ${{ env.TRIALS_BRANCH_NAME }}
-          --head ${{ github.repository }}:${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
+          --head ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
           --reviewer Alfresco/alfresco-ops-readiness
