@@ -34,8 +34,18 @@ jobs:
             🛠 Update download trial compose files
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: download-trials-${{ github.run_id }}-${{ hashFiles('docker-compose.yml', 'community-docker-compose.yml') }}
+          branch: download-trial-release-${{ github.run_id }}
           create_branch: true
           file_pattern: >-
             docker-compose/docker-compose.yml
             docker-compose/community-docker-compose.yml
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+        run: >-
+          gh pr create --title "🛠 Update download trial compose files"
+          --body "This PR updates the download trial compose files"
+          --base ${{ env.TRIALS_BRANCH_NAME }}
+          --head ${{ github.repository }}:download-trial--release-${{ github.run_id }}
+          --reviewer Alfresco/alfresco-ops-readiness
