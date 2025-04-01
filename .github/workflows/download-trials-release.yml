@@ -27,6 +27,11 @@ jobs:
           docker compose -f compose.yaml config -o docker-compose.yml && rm compose.yaml
           docker compose -f community-compose.yaml config -o community-docker-compose.yml && rm community-compose.yaml
 
+      - name: Set Commit Branch Name
+        id: set_commit_branch_name
+        run:
+          echo COMMIT_BRANCH_NAME=download-trial-release-${{ github.run_id }} >> $GITHUB_OUTPUT
+
       - name: Commit updated compose files
         uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79  # v5.1.0
         with:
@@ -34,7 +39,7 @@ jobs:
             🛠 Update download trial compose files
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: download-trial-release-${{ github.run_id }}
+          branch: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
           create_branch: true
           file_pattern: >-
             docker-compose/docker-compose.yml
@@ -47,5 +52,5 @@ jobs:
           gh pr create --title "🛠 Update download trial compose files"
           --body "This PR updates the download trial compose files"
           --base ${{ env.TRIALS_BRANCH_NAME }}
-          --head ${{ github.repository }}:download-trial--release-${{ github.run_id }}
+          --head ${{ github.repository }}:${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
           --reviewer Alfresco/alfresco-ops-readiness
