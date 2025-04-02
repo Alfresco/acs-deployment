@@ -1,139 +1,282 @@
-# This docker-compose file will spin up an ACS community installation on a local host.
-# It requires at least 6GB of memory available to distribute among containers.
-#
-# For performance tuning, increase each container mem_limit and give a percentage of
-# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
-# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
-# More details here:
-# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
-#
-# Using version 2 as 3 does not support resource constraint options
-# (cpu_*, mem_* limits) for non swarm mode in Compose
-version: "2"
+name: docker-compose
 services:
-  alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:23.2.1
-    mem_limit: 1900m
-    environment:
-      JAVA_TOOL_OPTIONS: >-
-        -Dencryption.keystore.type=JCEKS
-        -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
-        -Dencryption.keyAlgorithm=DESede
-        -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
-        -Dmetadata-keystore.password=mp6yc0UD9e
-        -Dmetadata-keystore.aliases=metadata
-        -Dmetadata-keystore.metadata.password=oKIWzVdEdA
-        -Dmetadata-keystore.metadata.algorithm=DESede
-      JAVA_OPTS: >-
-        -Ddb.driver=org.postgresql.Driver
-        -Ddb.username=alfresco
-        -Ddb.password=alfresco
-        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsolr.host=solr6
-        -Dsolr.port=8983
-        -Dsolr.http.connection.timeout=1000
-        -Dsolr.secureComms=secret
-        -Dsolr.sharedSecret=secret
-        -Dsolr.base.url=/solr
-        -Dindex.subsystem.name=solr6
-        -Dshare.host=127.0.0.1
-        -Dshare.port=8080
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
-        -Dcsrf.filter.enabled=false
-        -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
-        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Ddeployment.method=DOCKER_COMPOSE
-        -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-        -XX:MinRAMPercentage=50
-        -XX:MaxRAMPercentage=80
-  transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.1.2
-    mem_limit: 1536m
-    environment:
-      JAVA_OPTS: >-
-        -XX:MinRAMPercentage=50
-        -XX:MaxRAMPercentage=80
-    ports:
-      - "8090:8090"
-  share:
-    image: docker.io/alfresco/alfresco-share:23.2.1
-    mem_limit: 1g
-    environment:
-      REPO_HOST: "alfresco"
-      REPO_PORT: "8080"
-      JAVA_OPTS: >-
-        -XX:MinRAMPercentage=50
-        -XX:MaxRAMPercentage=80
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
-        -Dalfresco.context=alfresco
-        -Dalfresco.protocol=http
-  postgres:
-    image: postgres:14.4
-    mem_limit: 512m
-    environment:
-      - POSTGRES_PASSWORD=alfresco
-      - POSTGRES_USER=alfresco
-      - POSTGRES_DB=alfresco
-    command: postgres -c max_connections=300 -c log_min_messages=LOG
-    ports:
-      - "5432:5432"
-  solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.10
-    mem_limit: 2g
-    environment:
-      # Solr needs to know how to register itself with Alfresco
-      SOLR_ALFRESCO_HOST: "alfresco"
-      SOLR_ALFRESCO_PORT: "8080"
-      # Alfresco needs to know how to call solr
-      SOLR_SOLR_HOST: "solr6"
-      SOLR_SOLR_PORT: "8983"
-      # Create the default alfresco and archive cores
-      SOLR_CREATE_ALFRESCO_DEFAULTS: "alfresco,archive"
-      # HTTPS or SECRET
-      ALFRESCO_SECURE_COMMS: "secret"
-      # SHARED SECRET VALUE
-      JAVA_TOOL_OPTIONS: >-
-        -Dalfresco.secureComms.secret=secret
-    ports:
-      - "8083:8983" # Browser port
   activemq:
+    healthcheck:
+      test:
+        - CMD
+        - /opt/activemq/bin/activemq
+        - query
+        - --objname
+        - type=Broker,brokerName=*,service=Health
+        - '|'
+        - grep
+        - Good
+      timeout: 5s
+      interval: 10s
+      retries: 5
+      start_period: 5s
     image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
-    mem_limit: 1g
+    mem_limit: "1073741824"
+    networks:
+      default: null
     ports:
-      - "8161:8161" # Web Console
-      - "5672:5672" # AMQP
-      - "61616:61616" # OpenWire
-      - "61613:61613" # STOMP
+      - mode: ingress
+        target: 8161
+        published: "8161"
+        protocol: tcp
+      - mode: ingress
+        target: 5672
+        published: "5672"
+        protocol: tcp
+      - mode: ingress
+        target: 61616
+        published: "61616"
+        protocol: tcp
+      - mode: ingress
+        target: 61613
+        published: "61613"
+        protocol: tcp
+  alfresco:
+    environment:
+      JAVA_OPTS: -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco -Dsolr.host=solr6 -Dsolr.port=8983 -Dsolr.http.connection.timeout=1000 -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6 -Dshare.host=localhost -Dshare.port=8080 -Dalfresco.host=localhost -Dalfresco.port=8080 -Dcsrf.filter.enabled=false -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true" -Ddeployment.method=DOCKER_COMPOSE -DlocalTransform.core-aio.url=http://transform-core-aio:8090/ -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+      JAVA_TOOL_OPTIONS: -Dencryption.keystore.type=JCEKS -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding -Dencryption.keyAlgorithm=DESede -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore -Dmetadata-keystore.password=mp6yc0UD9e -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.password=oKIWzVdEdA -Dmetadata-keystore.metadata.algorithm=DESede
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+      timeout: 3s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: docker.io/alfresco/alfresco-content-repository-community:25.1.0
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.acsfakeauth.basicauth.users: 'fake:'
+      traefik.http.middlewares.alfresco-chain.chain.middlewares: alfresco-root-redirect@docker,limit@docker
+      traefik.http.middlewares.alfresco-root-redirect.redirectregex.regex: ^https?://[^/]+/([^/.]+)$$
+      traefik.http.middlewares.alfresco-root-redirect.redirectregex.replacement: $$0/
+      traefik.http.middlewares.limit.buffering.maxRequestBodyBytes: "5368709120"
+      traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange: 127.0.0.0/8
+      traefik.http.routers.alfresco.middlewares: alfresco-chain@docker
+      traefik.http.routers.alfresco.rule: PathPrefix(`/`)
+      traefik.http.routers.alfrescomicrometer.middlewares: prometheusipfilter@docker
+      traefik.http.routers.alfrescomicrometer.rule: PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)
+      traefik.http.routers.solrapideny.middlewares: acsfakeauth@docker
+      traefik.http.routers.solrapideny.rule: PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$$`)
+      traefik.http.services.alfresco.loadbalancer.server.port: "8080"
+    mem_limit: "1992294400"
+    networks:
+      default: null
+    volumes:
+      - type: volume
+        target: /usr/local/tomcat/alf_data
+        volume: {}
   content-app:
-    image: alfresco/alfresco-content-app:4.4.1
-    mem_limit: 128m
     environment:
-      APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
+      APP_BASE_SHARE_URL: http://localhost:8080/aca/#/preview/s
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/
+      timeout: 1s
+      interval: 10s
+      retries: 3
+      start_period: 1s
+    image: alfresco/alfresco-content-app:6.0.0
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.acachain.chain.middlewares: acaforceslash,acaroot
+      traefik.http.middlewares.acaforceslash.redirectregex.regex: ^(.*/content-app)$$
+      traefik.http.middlewares.acaforceslash.redirectregex.replacement: $${1}/
+      traefik.http.middlewares.acaroot.stripprefix.prefixes: /content-app
+      traefik.http.routers.aca.middlewares: acachain@docker
+      traefik.http.routers.aca.rule: PathPrefix(`/content-app`)
+    mem_limit: "134217728"
+    networks:
+      default: null
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:8.4.1
-    mem_limit: 128m
     environment:
-      APP_CONFIG_PROVIDER: "ECM"
-      APP_CONFIG_AUTH_TYPE: "BASIC"
+      APP_CONFIG_AUTH_TYPE: BASIC
+      APP_CONFIG_PROVIDER: ECM
       BASE_PATH: ./
-  proxy:
-    image: alfresco/alfresco-acs-nginx:3.4.2
-    mem_limit: 128m
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/
+      timeout: 1s
+      interval: 10s
+      retries: 3
+      start_period: 1s
+    image: quay.io/alfresco/alfresco-control-center:9.4.0
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.accchain.chain.middlewares: accforceslash,accroot
+      traefik.http.middlewares.accforceslash.redirectregex.regex: ^(.*/(admin|control-center))$$
+      traefik.http.middlewares.accforceslash.redirectregex.replacement: $${1}/
+      traefik.http.middlewares.accroot.stripprefix.prefixes: /admin,/control-center
+      traefik.http.routers.acc.middlewares: accchain@docker
+      traefik.http.routers.acc.rule: PathPrefix(`/control-center`) || PathPrefix(`/admin`)
+    mem_limit: "134217728"
+    networks:
+      default: null
+  postgres:
+    command:
+      - postgres
+      - -c
+      - max_connections=300
+      - -c
+      - log_min_messages=LOG
     environment:
-      DISABLE_PROMETHEUS: "true"
-      DISABLE_SYNCSERVICE: "true"
-      DISABLE_ADW: "true"
-      ENABLE_CONTENT_APP: "true"
-    depends_on:
-      - alfresco
-      - content-app
-      - control-center
+      POSTGRES_DB: alfresco
+      POSTGRES_PASSWORD: alfresco
+      POSTGRES_USER: alfresco
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 3s
+      interval: 10s
+      retries: 3
+      start_period: 5s
+    image: postgres:16.5
+    mem_limit: "536870912"
+    networks:
+      default: null
     ports:
-      - "8080:8080"
-    links:
-      - content-app
-      - alfresco
-      - share
-      - control-center
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
+  proxy:
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --entrypoints.web.address=:8080
+      - --entrypoints.web.transport.respondingTimeouts.readTimeout=20m
+      - --entryPoints.traefik.address=:8888
+      - --accesslog=true
+      - --providers.docker.exposedByDefault=false
+      - --ping.entrypoint=web
+      - --ping=true
+    healthcheck:
+      test:
+        - CMD
+        - traefik
+        - healthcheck
+        - --ping
+      timeout: 10s
+      interval: 20s
+      retries: 3
+      start_period: 10s
+    image: traefik:3.1
+    mem_limit: "134217728"
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8888
+        published: "8888"
+        protocol: tcp
+    security_opt:
+      - label=disable
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+        bind:
+          create_host_path: true
+  share:
+    depends_on:
+      alfresco:
+        condition: service_healthy
+        required: true
+    environment:
+      CSRF_FILTER_ORIGIN: http://localhost:8080
+      CSRF_FILTER_REFERER: http://localhost:8080/share/.*
+      JAVA_OPTS: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 -Dalfresco.host=localhost -Dalfresco.port=8080 -Dalfresco.context=alfresco -Dalfresco.protocol=http
+      REPO_HOST: alfresco
+      REPO_PORT: "8080"
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/share
+      timeout: 2s
+      interval: 20s
+      retries: 3
+      start_period: 15s
+    image: docker.io/alfresco/alfresco-share:25.1.0
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.limit.buffering.maxRequestBodyBytes: "5368709120"
+      traefik.http.middlewares.share-chain.chain.middlewares: share-root-redirect@docker,limit@docker
+      traefik.http.middlewares.share-root-redirect.redirectregex.regex: /share$$
+      traefik.http.middlewares.share-root-redirect.redirectregex.replacement: /share/
+      traefik.http.middlewares.sharefakeauth.basicauth.users: 'fake:'
+      traefik.http.routers.proxiedsolrapideny.middlewares: sharefakeauth@docker
+      traefik.http.routers.proxiedsolrapideny.rule: PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)
+      traefik.http.routers.share.middlewares: share-chain@docker
+      traefik.http.routers.share.rule: PathPrefix(`/share`)
+      traefik.http.services.share.loadbalancer.server.port: "8080"
+    mem_limit: "1073741824"
+    networks:
+      default: null
+  solr6:
+    environment:
+      ALFRESCO_SECURE_COMMS: secret
+      JAVA_TOOL_OPTIONS: -Dalfresco.secureComms.secret=secret
+      SOLR_ALFRESCO_HOST: alfresco
+      SOLR_ALFRESCO_PORT: "8080"
+      SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
+      SOLR_SOLR_HOST: solr6
+      SOLR_SOLR_PORT: "8983"
+    image: docker.io/alfresco/alfresco-search-services:2.0.15
+    mem_limit: "2147483648"
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8983
+        published: "8083"
+        protocol: tcp
+  transform-core-aio:
+    depends_on:
+      activemq:
+        condition: service_healthy
+        required: true
+    environment:
+      JAVA_OPTS: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8090/ready
+      timeout: 2s
+      interval: 20s
+      retries: 3
+      start_period: 10s
+    image: alfresco/alfresco-transform-core-aio:5.1.7
+    mem_limit: "1610612736"
+    networks:
+      default: null
+    ports:
+      - mode: ingress
+        target: 8090
+        published: "8090"
+        protocol: tcp
+networks:
+  default:
+    name: docker-compose_default
