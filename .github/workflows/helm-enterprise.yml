@@ -46,7 +46,6 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | del(. | select(.values=="community_values.yaml"))
-            | del(. | select(.values=="7.2.N_values.yaml"))
             | select(.name=="alfresco-content-services")]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
@@ -97,17 +96,6 @@ jobs:
           kubectl -n ingress-nginx patch cm ingress-nginx-controller \
             -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
 
-      - name: Check if cgroup v2 workaround is needed
-        if: startsWith(matrix.values, '7.')
-        env:
-          VALUES_FILE: ${{ matrix.values }}
-        id: cgroupv2-workaround-extra-values
-        run: |
-          if [ ${VALUES_FILE:2:1} -le 2 ]; then
-            echo "Enabling cgroupv v2 workaround"
-            echo "helm_install_params=--values test/cgroup-v2-workaround-values.yaml" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
@@ -130,7 +118,6 @@ jobs:
           --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }}
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
-          ${{ steps.cgroupv2-workaround-extra-values.outputs.helm_install_params }}
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for pods to be ready

@@ -179,37 +179,6 @@ matrix:
       compose_target: *compose73
       compose_key: $.services.transform-core-aio.image
 
-  7.2.N:
-    id: 72n
-    acs:
-      compose_target: &compose72 >-
-        docker-compose/7.2.N-compose.yaml
-      compose_key: $.services.alfresco.image
-    share:
-      compose_target: *compose72
-      compose_key: $.services.share.image
-    search:
-      compose_target: *compose72
-      compose_key: $.services.solr6.image
-    sync:
-      compose_target: *compose72
-      compose_key: $.services.sync-service.image
-    adw:
-      compose_target: *compose72
-      compose_key: $.services.digital-workspace.image
-    adminApp:
-      compose_target: *compose72
-      compose_key: $.services.control-center.image
-    trouter:
-      compose_target: *compose72
-      compose_key: $.services.transform-router.image
-    sfs:
-      compose_target: *compose72
-      compose_key: $.services.shared-file-store.image
-    tengine-aio:
-      compose_target: *compose72
-      compose_key: $.services.transform-core-aio.image
-
   community: &community
     id: com
     acs:

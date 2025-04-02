@@ -59,10 +59,9 @@ internal.
 ## Enable Alfresco Search Services External Access
 
 This example demonstrates how to enable Alfresco Search Services (`/solr`) for
-external access which is disabled by default. This is mostly useful for ACS
-versions prior to 7.2.0 and Search service versions prior to 2.0.3.
-Newer versions require the security header to be set in order to access the Solr
-api, so it doesn't make much sense to use external access.
+external access which is disabled by default. You must also manually forge the
+security header to access the Solr API externally. This workaround is clunky and
+not recommended for production use.
 
 ### Prepare Data
 
