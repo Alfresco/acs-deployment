@@ -1,0 +1,56 @@
+---
+name: Release Download trials
+
+on:
+  workflow_dispatch:
+
+env:
+  DEFAULT_BRANCH_NAME: master
+  TRIALS_BRANCH_NAME: download-trial
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    name: Create PR for download trials
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          ref: ${{ env.TRIALS_BRANCH_NAME }}
+
+      - name: Generate Download trial compose files
+        working-directory: docker-compose
+        run: |
+          git fetch --no-tags --depth=1 origin ${{ env.DEFAULT_BRANCH_NAME }}:${{ env.DEFAULT_BRANCH_NAME }}
+          git restore --source ${{ env.DEFAULT_BRANCH_NAME }} compose.yaml community-compose.yaml commons/
+          docker compose -f compose.yaml config -o docker-compose.yml
+          docker compose -f community-compose.yaml config -o community-docker-compose.yml
+
+      - name: Set Commit Branch Name
+        id: set_commit_branch_name
+        run:
+          echo COMMIT_BRANCH_NAME=download-trial-release-${{ github.run_id }} >> $GITHUB_OUTPUT
+
+      - name: Commit updated compose files
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79  # v5.1.0
+        with:
+          commit_message: |
+            🛠 Update download trial compose files
+          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
+          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
+          branch: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
+          create_branch: true
+          file_pattern: >-
+            docker-compose/docker-compose.yml
+            docker-compose/community-docker-compose.yml
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+        run: >-
+          gh pr create --title "🛠 Update download trial compose files"
+          --body "This PR updates the download trial compose files"
+          --base ${{ env.TRIALS_BRANCH_NAME }}
+          --head ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
+          --reviewer Alfresco/alfresco-ops-readiness
