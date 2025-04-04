@@ -41,20 +41,20 @@ dependencies:
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository
-    version: 0.9.1
+    version: 0.9.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
     version: 3.6.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
   - name: alfresco-transform-service
-    version: 2.1.4
+    version: 2.1.5
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-transform-service.enabled
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 5.0.1
+    version: 5.0.2
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/

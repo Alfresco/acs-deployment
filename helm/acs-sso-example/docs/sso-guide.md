@@ -260,7 +260,7 @@ extraVolumeMounts: |
   - name: theme
     mountPath: /opt/keycloak/themes
 extraInitContainers: |
-  - image: busybox:1.36
+  - image: busybox:1.37
     imagePullPolicy: IfNotPresent
     name: theme-fetcher
     command: [sh]
