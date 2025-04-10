@@ -344,8 +344,8 @@ needs a at least 32GB memory to split among below pods:
 > Note: this is the default settings but requirements can be lowered by
 dropping the `replicaCount` value to 1 for each service.
 
-Default CPU and memory requirements for each pods are set as low as e think is
-reasonable. If you need to teak the resource allocation you can use the
+Default CPU and memory requirements for each pods are set as low as we think is
+reasonable. If you need to tweak the resource allocation you can use the
 `resources.limits.cpu` & `resources.limits.memory` for each component of the
 platform. Remember that most of them are running in JAVA VM so you might want
 to also raise the JVM memory settings (-Xmx) which is possible using pods'
