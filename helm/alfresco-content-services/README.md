@@ -102,7 +102,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
+| alfresco-knowledge-retrieval.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
+| alfresco-knowledge-retrieval.bulkIngester.enabled | bool | `false` |  |
 | alfresco-knowledge-retrieval.enabled | bool | `false` |  |
+| alfresco-knowledge-retrieval.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
+| alfresco-knowledge-retrieval.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
+| alfresco-knowledge-retrieval.predictionApplier.enabled | bool | `false` |  |
 | alfresco-repository.autoscaling.kedaDisableIdle | bool | `true` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
