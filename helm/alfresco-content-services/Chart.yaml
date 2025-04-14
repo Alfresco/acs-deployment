@@ -89,4 +89,9 @@ dependencies:
     version: 0.3.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-audit-storage.enabled
+  - name: alfresco-connector-hxi
+    alias: alfresco-knowledge-retrieval
+    version: 0.1.2
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    condition: alfresco-knowledge-retrieval.enabled 
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4

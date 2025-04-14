@@ -601,6 +601,8 @@ alfresco-audit-storage:
       keys:
         username: AUDIT_ELASTICSEARCH_USERNAME
         password: AUDIT_ELASTICSEARCH_PASSWORD
+alfresco-knowledge-retrieval:
+  enabled: false
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false
