@@ -618,6 +618,9 @@ alfresco-knowledge-retrieval:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
       name: *infrastructure_cmName
+  repository:
+    authType: basic
+    versionOverride: 25.1.0
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false
