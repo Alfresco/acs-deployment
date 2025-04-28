@@ -85,7 +85,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.18.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v8.18.3
         with:
           ingress-nginx-ref: controller-v1.12.1
           metrics: "true"
@@ -121,7 +121,7 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for pods to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.18.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.18.3
 
       - name: Spit cluster status after install
         if: always()
