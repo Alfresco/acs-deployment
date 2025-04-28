@@ -54,7 +54,7 @@ dependencies:
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 5.0.2
+    version: 5.0.3
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/
