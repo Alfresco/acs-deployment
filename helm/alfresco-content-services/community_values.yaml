@@ -16,7 +16,7 @@ alfresco-repository:
 activemq:
   image:
     repository: docker.io/alfresco/alfresco-activemq
-    tag: 5.18.6-jre17-rockylinux8
+    tag: 5.18.7-jre17-rockylinux8
 alfresco-search-enterprise:
   enabled: false
 elasticsearch:
