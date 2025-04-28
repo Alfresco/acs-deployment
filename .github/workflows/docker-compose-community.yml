@@ -9,6 +9,7 @@ on:
       - next/**
     paths:
       - docker-compose/community-compose.yaml
+      - docker-compose/commons/**
       - test/postman/docker-compose/**
       - .github/workflows/docker-compose-community.yml
   push:
