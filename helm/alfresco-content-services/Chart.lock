@@ -25,7 +25,7 @@ dependencies:
   version: 2.1.5
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 5.0.2
+  version: 5.0.3
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 7.1.1
@@ -50,5 +50,5 @@ dependencies:
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.3.0
-digest: sha256:ba530a7235e9942d51c2d4b866f6789dcd83bff0cd6efadbb06e6678bed8d127
-generated: "2025-04-03T15:19:57.127364102Z"
+digest: sha256:f56c17fc84a4383d21f0bde5ac284f94dac20e833aa91cc7124f01ed0ee6a81f
+generated: "2025-04-28T13:53:32.588163756Z"
