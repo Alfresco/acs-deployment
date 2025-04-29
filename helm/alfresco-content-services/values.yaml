@@ -623,7 +623,6 @@ alfresco-knowledge-retrieval:
         sfsUrl: SFS_BASE_URL
   repository:
     authType: basic
-    versionOverride: 25.1.0
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false

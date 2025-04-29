@@ -110,7 +110,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-knowledge-retrieval.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-knowledge-retrieval.predictionApplier.enabled | bool | `false` |  |
 | alfresco-knowledge-retrieval.repository.authType | string | `"basic"` |  |
-| alfresco-knowledge-retrieval.repository.versionOverride | string | `"25.1.0"` |  |
 | alfresco-repository.autoscaling.kedaDisableIdle | bool | `true` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
