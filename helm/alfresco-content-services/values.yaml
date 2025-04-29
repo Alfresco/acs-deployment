@@ -618,6 +618,11 @@ alfresco-knowledge-retrieval:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
       name: *infrastructure_cmName
+      keys:
+        # -- Key within the configmap holding the URL of the alfresco transform
+        transformUrl: ATS_BASE_URL
+        # -- Key within the configmap holding the URL of the alfresco shared filestore
+        sfsUrl: SFS_BASE_URL 
   repository:
     authType: basic
     versionOverride: 25.1.0

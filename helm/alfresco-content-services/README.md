@@ -102,6 +102,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
+| alfresco-knowledge-retrieval.ats.existingConfigMap.keys.sfsUrl | string | `"SFS_BASE_URL"` | Key within the configmap holding the URL of the alfresco shared filestore |
+| alfresco-knowledge-retrieval.ats.existingConfigMap.keys.transformUrl | string | `"ATS_BASE_URL"` | Key within the configmap holding the URL of the alfresco transform |
 | alfresco-knowledge-retrieval.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-knowledge-retrieval.bulkIngester.enabled | bool | `false` |  |
 | alfresco-knowledge-retrieval.enabled | bool | `false` |  |
