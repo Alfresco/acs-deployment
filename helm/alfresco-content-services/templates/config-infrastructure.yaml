@@ -19,6 +19,7 @@ data:
   SYNC_DATABASE_URL: {{ hasPrefix "jdbc:" $sync_db_url | ternary $sync_db_url (print "jdbc:" $sync_db_url) }}
   SYNC_DATABASE_DRIVER: {{ template "alfresco-common.db.driver" (dict "url" $sync_db_url "driver" .Values.database.sync.driver) }}
   {{- end }}
+  BROKER_BASE_URL: {{ include "alfresco-content-services.mq.baseurl" . }}
   {{ template "alfresco-common.activemq.cm" (include "alfresco-content-services.mq.url" .) }}
   {{- $search_url := "" }}
   {{- $search_flavor := include "alfresco-content-services.search.flavor" . }}
