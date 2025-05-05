@@ -20,6 +20,30 @@ alfresco-repository:
         - name: *hxiSecretName
           key: HX_APP_SOURCE_ID
           purpose: property:hxi.connector.source-id
+  image:
+    repository: quay.io/alfresco/alfresco-content-repository-aws
+  extraVolumes:
+    - name: hxinsight-ext
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: hxinsight-ext
+      mountPath: /usr/local/tomcat/webapps/alfresco/WEB-INF/lib/alfresco-hxinsight-connector-hxinsight-extension.jar
+      subPath: alfresco-hxinsight-connector-hxinsight-extension.jar
+      readOnly: true
+  extraInitContainers:
+    - name: init-hxinsight-ext
+      image: busybox:1.37
+      env:
+        - name: HXINSIGHT_EXT_VERSION
+          value: 2.0.2
+        - name: HXINSIGHT_EXT_NAME
+          value: alfresco-hxinsight-connector-hxinsight-extension
+        - name: HXINSIGHT_EXT_URL
+          value: https://nexus.alfresco.com/nexus/repository/releases/org/alfresco/$(HXINSIGHT_EXT_NAME)/$(HXINSIGHT_EXT_VERSION)/$(HXINSIGHT_EXT_NAME)-$(HXINSIGHT_EXT_VERSION).jar
+      command: ["sh", "-c", "cd /data && wget -c ${HXINSIGHT_EXT_URL} && cp -f ${HXINSIGHT_EXT_NAME}-${HXINSIGHT_EXT_VERSION}.jar ${HXINSIGHT_EXT_NAME}.jar"]
+      volumeMounts:
+        - name: hxinsight-ext
+          mountPath: /data
 alfresco-knowledge-retrieval:
   enabled: true
   hxi:
@@ -29,7 +53,7 @@ alfresco-knowledge-retrieval:
       name: *hxiSecretName
   liveIngester:
     image:
-      repository: localhost/alfresco/alfresco-hxinsight-connector-live-ingester
-      tag: latest
+      repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
+      tag: 2.0.2
   repository:
     versionOverride: 25.1.0 # use the same version as the repository
