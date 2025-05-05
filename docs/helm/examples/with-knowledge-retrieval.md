@@ -4,10 +4,10 @@ parent: Examples
 grand_parent: Helm
 ---
 
-# Deploying Elasticsearch with Kibana and Authentication Enabled
+# Deploying ACS + Knowledge Retrieval
 
-This guide demonstrates how to deploy Knowledge Retirieval using the Alfresco
-ACS Deployment repository.
+This guide demonstrates how to deploy connector for Knowledge Retirieval using
+the Alfresco ACS Deployment repository.
 
 ## Prerequisites
 
@@ -23,22 +23,18 @@ Ensure you have the following:
 Create env file with passwords. Customize the values as needed for your setup.
 
 ```txt
-elastic-user=elastic
-elasticsearch-password=alfresco
-kibana-password=alfrescokibana
-AUDIT_ELASTICSEARCH_USERNAME=elastic
-AUDIT_ELASTICSEARCH_PASSWORD=alfresco
-SEARCH_USERNAME=elastic
-SEARCH_PASSWORD=alfresco
+HX_CLIENT_ID=sc-e26b1939-0012-4fb6-b270-d63188d6b78c
+HX_CLIENT_SECRET=yoursecret
+HX_ENV_KEY=alfresco-kd-ci-8931ff99-97d8-4c36-a235-ba9269286322
+HX_APP_SOURCE_ID=984b2de8-528a-488a-94c2-342e84ec8eb0
 ```
 
-Create a Kubernetes secret containing the credentials for Elasticsearch and
-Kibana using created env file.
+Create a Kubernetes secret containing the credentials for Knowledge Retrieval instance
 
 ```bash
-kubectl create secret generic elastic-search-secret \
+kubectl create secret generic hxi-secrets \
     --namespace=default \
-    --from-env-file=elastic.env
+    --from-env-file=hxi.env
 ```
 
 ### Ingress
@@ -57,13 +53,12 @@ section.
 
 ### Understand the Patch File
 
-Patch file `elasticsearch_auth_values.yaml` defines the configuration for
-enabling authentication and integrating Elasticsearch and Kibana with the
-Alfresco deployment. Update the patch file to match your requirements if
-necessary.
+The `hxi.yml` patch file defines the configuration for the Knowledge Retrieval.
+It includes settings for secrets and URLs required by both the repository and
+the live ingester instances.
 
 ```bash
-curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/elasticsearch_auth_values.yaml
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/hxi.yaml
 ```
 
 ### Deploy the Infrastructure
@@ -75,18 +70,5 @@ helm install acs alfresco/alfresco-content-services \
     --set global.known_urls=http://localhost \
     --set global.alfrescoRegistryPullSecrets=quay-registry-secret \
     --values local-dev_values.yaml \
-    --values elasticsearch_auth_values.yaml
+    --values hxi.yaml
 ```
-
-## Accessing Kibana
-
-After the deployment is successful:
-
-1. Open your browser and navigate to: `http://localhost/kibana`
-
-2. Use the credentials specified in the secret to log in.
-
-   - **Username**: elastic
-   - **Password**: alfresco
-
-You should now have access to Kibana with Elasticsearch authentication enabled.
