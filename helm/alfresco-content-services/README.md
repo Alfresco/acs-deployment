@@ -106,7 +106,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-knowledge-retrieval.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-knowledge-retrieval.bulkIngester.enabled | bool | `false` |  |
 | alfresco-knowledge-retrieval.enabled | bool | `false` |  |
-| alfresco-knowledge-retrieval.messageBroker.existingConfigMap.keys.url | string | `"BROKER_BASE_URL"` |  |
 | alfresco-knowledge-retrieval.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-knowledge-retrieval.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-knowledge-retrieval.predictionApplier.enabled | bool | `false` |  |

@@ -14,14 +14,3 @@ Usage: include "alfresco-content-services.mq.url" $
   {{- fail "Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url" }}
   {{- end }}
 {{- end }}
-
-{{- define "alfresco-content-services.mq.baseurl" -}}
-  {{- if .Values.messageBroker.url }}
-  {{- .Values.messageBroker.url }}
-  {{- else if .Values.activemq.enabled }}
-  {{- $mqCtx := dict "Values" .Values.activemq "Chart" .Chart "Release" .Release }}
-  {{- printf "nio://%s-broker:61616" (include "activemq.fullname" $mqCtx) }}
-  {{- else }}
-  {{- fail "Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.baseurl" }}
-  {{- end }}
-{{- end -}}

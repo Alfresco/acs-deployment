@@ -611,8 +611,6 @@ alfresco-knowledge-retrieval:
     existingConfigMap:
       # -- Name of the configmap which holds the message broker URL
       name: *infrastructure_cmName
-      keys:
-        url: BROKER_BASE_URL
     existingSecret:
       # -- Name of the configmap which holds the message broker credentials
       name: *acs_messageBroker_secretName
