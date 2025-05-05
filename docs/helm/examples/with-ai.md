@@ -11,7 +11,7 @@ Services](https://docs.alfresco.com/intelligence/concepts/ai-welcome.html)
 feature is disabled, this example describes how to deploy ACS onto
 [EKS](https://aws.amazon.com/eks) with AIS enabled.
 
-The diagram below shows the deployment produced by this example:
+The diagram below shows the deployment produced by this example test:
 
 ## Architecture
 
