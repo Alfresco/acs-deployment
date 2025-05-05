@@ -1,0 +1,35 @@
+config:
+  repository:
+    additionalGlobalProperties:
+      hxi.discovery.base-url: "https://discovery.staging.experience.hyland.com"
+      hxi.auth.providers.hyland-experience.token-uri: &hxiAuthTokenURI "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
+      hxi.knowledge-retrieval.url: "https://alfresco-kd-ci-8931ff99-97d8-4c36-a235-ba9269286322.insight.staging.ncp.hyland.com/discovery/agents"
+alfresco-repository:
+  configuration:
+    repository:
+      existingSecrets:
+        - name: &hxiSecretName hxi-secrets # same name as the manually created secret
+          key: HX_CLIENT_ID
+          purpose: property:hxi.auth.providers.hyland-experience.client-id
+        - name: *hxiSecretName
+          key: HX_CLIENT_SECRET
+          purpose: property:hxi.auth.providers.hyland-experience.client-secret
+        - name: *hxiSecretName
+          key: HX_ENV_KEY
+          purpose: property:hxi.auth.providers.hyland-experience.environment-key
+        - name: *hxiSecretName
+          key: HX_APP_SOURCE_ID
+          purpose: property:hxi.connector.source-id
+alfresco-knowledge-retrieval:
+  enabled: true
+  hxi:
+    hxAuthTokenUrl: *hxiAuthTokenURI
+    hxInsightIngestionUrl: "https://ingestion-api.insight.staging.ncp.hyland.com/v1"
+    existingSecret:
+      name: *hxiSecretName
+  liveIngester:
+    image:
+      repository: localhost/alfresco/alfresco-hxinsight-connector-live-ingester
+      tag: latest
+  repository:
+    versionOverride: 25.1.0 # use the same version as the repository
