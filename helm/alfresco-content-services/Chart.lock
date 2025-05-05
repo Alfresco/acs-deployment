@@ -53,5 +53,5 @@ dependencies:
 - name: alfresco-connector-hxi
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.1.2
-digest: sha256:030d1c04b69c35287993757b1133b1c180f760a3cb5d76b12d3e6006b5c799e7
-generated: "2025-04-14T12:54:09.070835+02:00"
+digest: sha256:d0227e68d6078d87b42d093a2fd06b8dde6b10a81dfdc9700a3581f1846496bf
+generated: "2025-05-05T10:26:22.996781+02:00"
