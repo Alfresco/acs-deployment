@@ -58,7 +58,7 @@ It includes settings for secrets and URLs required by both the repository and
 the live ingester instances.
 
 ```bash
-curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/hxi.yaml
+curl -fO https://github.com/Alfresco/acs-deployment/blob/OPSEXP-3132/docs/helm/values/hxi.yml
 ```
 
 ### Deploy the Infrastructure
