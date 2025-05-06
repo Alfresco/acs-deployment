@@ -29,4 +29,4 @@ jobs:
       working-directory: .
       publish: ${{ github.event_name != 'pull_request' }}
       validate-html: true
-      validate-html-args: "--ignore_status_codes 429"
+      validate-html-args: "--ignore-status-codes 429"
