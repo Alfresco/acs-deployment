@@ -20,7 +20,7 @@ Ensure you have the following:
 
 ### Create a Secret
 
-Create env file with passwords. Customize the values as needed for your setup.
+Create env file with credentials. Customize the values as needed for your setup.
 
 ```txt
 HX_CLIENT_ID=sc-e26b1939-0012-4fb6-b270-d63188d6b78c
