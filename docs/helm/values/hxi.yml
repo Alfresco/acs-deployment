@@ -20,8 +20,6 @@ alfresco-repository:
         - name: *hxiSecretName
           key: HX_APP_SOURCE_ID
           purpose: property:hxi.connector.source-id
-  image:
-    repository: quay.io/alfresco/alfresco-content-repository-aws
   extraVolumes:
     - name: hxinsight-ext
       emptyDir: {}
@@ -35,7 +33,7 @@ alfresco-repository:
       image: busybox:1.37
       env:
         - name: HXINSIGHT_EXT_VERSION
-          value: 2.0.2
+          value: &hxi-version 2.0.2
         - name: HXINSIGHT_EXT_NAME
           value: alfresco-hxinsight-connector-hxinsight-extension
         - name: HXINSIGHT_EXT_URL
@@ -54,6 +52,6 @@ alfresco-knowledge-retrieval:
   liveIngester:
     image:
       repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
-      tag: 2.0.2
+      tag: *hxi-version
   repository:
-    versionOverride: 25.1.0 # use the same version as the repository
+    versionOverride: 25.1.0
