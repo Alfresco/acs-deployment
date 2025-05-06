@@ -22,6 +22,9 @@ on:
       - "docs/**"
       - ".github/workflows/docs.yml"
 
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   publish:
     uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@main
