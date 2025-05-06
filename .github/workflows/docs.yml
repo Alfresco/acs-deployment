@@ -1,7 +1,7 @@
 name: Publish docs
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -21,9 +21,6 @@ on:
     paths:
       - "docs/**"
       - ".github/workflows/docs.yml"
-
-env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   publish:
