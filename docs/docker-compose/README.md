@@ -225,6 +225,78 @@ docker volume prune
 
 ## Additional deployment options
 
+### Enabling Knowledge Retrieval with ACS
+
+To enable ACS with Knowledge Retrieval, apply the `hxi-overrides.yaml` file.
+Before doing so, you must build a repository image that includes the HXI
+extension.
+
+For detailed instructions, refer to the
+[alfresco-dockerfiles-bakery](https://github.com/Alfresco/alfresco-dockerfiles-bakery)
+repository, particularly the [simple_modules section](https://github.com/Alfresco/alfresco-dockerfiles-bakery/tree/main/repository/simple_modules).
+
+**Important Notes:**
+
+* Ensure that the versions of the repository extension and the live ingester
+  images match.
+* In the `hxi-overrides.yaml` file, configure the credentials for your Knowledge
+  Retrieval service.
+* These same credentials must also be added to the repository properties using
+  the `-Dhxi` prefix.
+
+Once configured, you can run and verify the installation with the following
+command:
+
+```bash
+docker compose -f compose.yaml -f hxi-overrides.yaml up -d
+```
+
+### Running Only the Live Ingester with an Existing Repository
+
+If you want to run **only the Live Ingester** with an already running repository
+instance, follow these steps:
+
+* Remove the `alfresco` service from the `hxi-overrides.yaml` file to
+  prevent it from starting a new repository container.
+* Update the environment variables in the `knowledge-retrieval` service to
+  point to the correct ActiveMQ and Shared File Store services:
+
+```yaml
+SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true
+ALFRESCO_TRANSFORM_SHAREDFILESTORE_BASEURL: http://shared-file-store:8099
+```
+
+* If ActiveMQ requires authentication, also set:
+
+```yaml
+SPRING_ACTIVEMQ_USER: admin
+SPRING_ACTIVEMQ_PASSWORD: admin
+```
+
+* **Map the Live Ingester settings to repository Java properties**:  
+  For the Live Ingester to properly connect and authenticate, the repository
+  must include equivalent settings using the `-Dhxi` prefix in `JAVA_OPTS`.
+  Here's how the mapping works:
+
+| Live Ingester Env Variable                        | Repository `JAVA_OPTS` Property                              |
+|---------------------------------------------------|--------------------------------------------------------------|
+| `AUTH_PROVIDERS_HYLANDEXPERIENCE_TOKENURI`        | `-Dhxi.auth.providers.hyland-experience.token-uri`           |
+| `AUTH_PROVIDERS_HYLANDEXPERIENCE_CLIENTID`        | `-Dhxi.auth.providers.hyland-experience.client-id`           |
+| `AUTH_PROVIDERS_HYLANDEXPERIENCE_CLIENTSECRET`    | `-Dhxi.auth.providers.hyland-experience.client-secret`       |
+| `AUTH_PROVIDERS_HYLANDEXPERIENCE_ENVIRONMENTKEY`  | `-Dhxi.auth.providers.hyland-experience.environment-key`     |
+| `APPLICATION_SOURCEID`                            | `-Dhxi.connector.source-id`                                  |
+| `HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL`      | *(No equivalent needed on repo side unless explicitly used)* |
+| *(not directly in ingester)*                      | `-Dhxi.discovery.base-url`                                   |
+| *(not directly in ingester)*                      | `-Dhxi.knowledge-retrieval.url`                              |
+
+* Run the compose
+
+```bash
+docker compose -f hxi-overrides.yaml up -d
+```
+
+Ensure these `-Dhxi` values are defined in the `JAVA_OPTS` section of the repository service.
+
 ### Switching to previous solr search engine
 
 Alfresco comes either with Solr or Elasticsearch as a Full Text Search engine.
@@ -241,12 +313,12 @@ docker compose -f compose.yaml -f solr6-override-docker-compose.yml up -d
 ### Troubleshooting Search Enterprise
 
 Make sure that exposed ports are open on your host. Check the
-_compose.yaml_ file to determine the exposed ports - refer to the
+`compose.yaml` file to determine the exposed ports - refer to the
 `host:container` port definitions. You'll see they include 5432, 8080, 8083 and
 others.
 
 If Docker is running on your local machine, the IP address will be just
-_localhost_.
+*localhost*.
 
 ## Configure
 
