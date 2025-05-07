@@ -285,7 +285,7 @@ SPRING_ACTIVEMQ_PASSWORD: admin
 | `AUTH_PROVIDERS_HYLANDEXPERIENCE_CLIENTSECRET`    | `-Dhxi.auth.providers.hyland-experience.client-secret`       |
 | `AUTH_PROVIDERS_HYLANDEXPERIENCE_ENVIRONMENTKEY`  | `-Dhxi.auth.providers.hyland-experience.environment-key`     |
 | `APPLICATION_SOURCEID`                            | `-Dhxi.connector.source-id`                                  |
-| `HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL`      | *(No equivalent needed on repo side unless explicitly used)* |
+| `HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL`      | *(No equivalent needed)*                                     |
 | *(not directly in ingester)*                      | `-Dhxi.discovery.base-url`                                   |
 | *(not directly in ingester)*                      | `-Dhxi.knowledge-retrieval.url`                              |
 
