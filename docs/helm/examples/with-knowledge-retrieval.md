@@ -23,10 +23,10 @@ Ensure you have the following:
 Create env file with credentials. Customize the values as needed for your setup.
 
 ```txt
-HX_CLIENT_ID=sc-e26b1939-0012-4fb6-b270-d63188d6b78c
+HX_CLIENT_ID=sc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
 HX_CLIENT_SECRET=yoursecret
-HX_ENV_KEY=alfresco-kd-ci-8931ff99-97d8-4c36-a235-ba9269286322
-HX_APP_SOURCE_ID=984b2de8-528a-488a-94c2-342e84ec8eb0
+HX_ENV_KEY=alfresco-kd-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+HX_APP_SOURCE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
 ```
 
 Create a Kubernetes secret containing the credentials for Knowledge Retrieval instance

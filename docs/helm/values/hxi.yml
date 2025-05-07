@@ -3,7 +3,7 @@ config:
     additionalGlobalProperties:
       hxi.discovery.base-url: "https://discovery.staging.experience.hyland.com"
       hxi.auth.providers.hyland-experience.token-uri: &hxiAuthTokenURI "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
-      hxi.knowledge-retrieval.url: "https://alfresco-kd-ci-8931ff99-97d8-4c36-a235-ba9269286322.insight.staging.ncp.hyland.com/discovery/agents"
+      hxi.knowledge-retrieval.url: "https://alfresco-kd-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx.insight.staging.ncp.hyland.com/discovery/agents"
 alfresco-repository:
   configuration:
     repository:
