@@ -601,6 +601,28 @@ alfresco-audit-storage:
       keys:
         username: AUDIT_ELASTICSEARCH_USERNAME
         password: AUDIT_ELASTICSEARCH_PASSWORD
+alfresco-knowledge-retrieval:
+  enabled: false
+  bulkIngester:
+    enabled: false
+  predictionApplier:
+    enabled: false
+  messageBroker:
+    existingConfigMap:
+      # -- Name of the configmap which holds the message broker URL
+      name: *infrastructure_cmName
+    existingSecret:
+      # -- Name of the configmap which holds the message broker credentials
+      name: *acs_messageBroker_secretName
+  ats:
+    existingConfigMap:
+      # -- Name of the configmap which holds the ATS shared filestore URL
+      name: *infrastructure_cmName
+      keys:
+        # -- Key within the configmap holding the URL of the alfresco shared filestore
+        sfsUrl: SFS_BASE_URL
+  repository:
+    authType: basic
 dtas:
   # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
   enabled: false

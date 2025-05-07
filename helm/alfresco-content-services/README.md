@@ -28,6 +28,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.0.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.2 |
@@ -101,6 +102,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
 | alfresco-digital-workspace.nameOverride | string | `"alfresco-dw"` |  |
+| alfresco-knowledge-retrieval.ats.existingConfigMap.keys.sfsUrl | string | `"SFS_BASE_URL"` | Key within the configmap holding the URL of the alfresco shared filestore |
+| alfresco-knowledge-retrieval.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
+| alfresco-knowledge-retrieval.bulkIngester.enabled | bool | `false` |  |
+| alfresco-knowledge-retrieval.enabled | bool | `false` |  |
+| alfresco-knowledge-retrieval.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
+| alfresco-knowledge-retrieval.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
+| alfresco-knowledge-retrieval.predictionApplier.enabled | bool | `false` |  |
+| alfresco-knowledge-retrieval.repository.authType | string | `"basic"` |  |
 | alfresco-repository.autoscaling.kedaDisableIdle | bool | `true` |  |
 | alfresco-repository.configuration.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.db.existingSecret.name | string | `"alfresco-cs-database"` |  |

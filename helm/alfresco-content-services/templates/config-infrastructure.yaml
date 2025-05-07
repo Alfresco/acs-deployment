@@ -58,7 +58,9 @@ data:
   {{- with (index .Values "alfresco-transform-service") }}
   {{- $atsCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
   {{- if and .enabled .filestore.enabled .transformrouter.enabled }}
-  SFS_URL: {{ template "alfresco-common.sfs.fullurl" (printf "http://%s" (include "alfresco-transform-service.filestore.fullname" $atsCtx)) }}
+  {{- $sfs_baseurl := printf "http://%s" (include "alfresco-transform-service.filestore.fullname" $atsCtx) }}
+  SFS_BASE_URL: {{ $sfs_baseurl }}
+  SFS_URL: {{ template "alfresco-common.sfs.fullurl" $sfs_baseurl }}
     {{- $ats_baseurl := (printf "http://%s" (include "alfresco-transform-service.transform-router.fullname" $atsCtx)) }}
     {{- if index $.Values "alfresco-search-enterprise" "enabled" }}
       {{- include "alfresco-search-enterprise.ats.fullurl" $ats_baseurl | nindent 2 }}

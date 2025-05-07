@@ -1,0 +1,57 @@
+config:
+  repository:
+    additionalGlobalProperties:
+      hxi.discovery.base-url: "https://discovery.staging.experience.hyland.com"
+      hxi.auth.providers.hyland-experience.token-uri: &hxiAuthTokenURI "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
+      hxi.knowledge-retrieval.url: "https://alfresco-kd-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx.insight.staging.ncp.hyland.com/discovery/agents"
+alfresco-repository:
+  configuration:
+    repository:
+      existingSecrets:
+        - name: &hxiSecretName hxi-secrets # same name as the manually created secret
+          key: HX_CLIENT_ID
+          purpose: property:hxi.auth.providers.hyland-experience.client-id
+        - name: *hxiSecretName
+          key: HX_CLIENT_SECRET
+          purpose: property:hxi.auth.providers.hyland-experience.client-secret
+        - name: *hxiSecretName
+          key: HX_ENV_KEY
+          purpose: property:hxi.auth.providers.hyland-experience.environment-key
+        - name: *hxiSecretName
+          key: HX_APP_SOURCE_ID
+          purpose: property:hxi.connector.source-id
+  extraVolumes:
+    - name: hxinsight-ext
+      emptyDir: {}
+  extraVolumeMounts:
+    - name: hxinsight-ext
+      mountPath: /usr/local/tomcat/webapps/alfresco/WEB-INF/lib/alfresco-hxinsight-connector-hxinsight-extension.jar
+      subPath: alfresco-hxinsight-connector-hxinsight-extension.jar
+      readOnly: true
+  extraInitContainers:
+    - name: init-hxinsight-ext
+      image: busybox:1.37
+      env:
+        - name: HXINSIGHT_EXT_VERSION
+          value: &hxi-version 2.0.2
+        - name: HXINSIGHT_EXT_NAME
+          value: alfresco-hxinsight-connector-hxinsight-extension
+        - name: HXINSIGHT_EXT_URL
+          value: https://nexus.alfresco.com/nexus/repository/releases/org/alfresco/$(HXINSIGHT_EXT_NAME)/$(HXINSIGHT_EXT_VERSION)/$(HXINSIGHT_EXT_NAME)-$(HXINSIGHT_EXT_VERSION).jar
+      command: ["sh", "-c", "cd /data && wget -c ${HXINSIGHT_EXT_URL} && cp -f ${HXINSIGHT_EXT_NAME}-${HXINSIGHT_EXT_VERSION}.jar ${HXINSIGHT_EXT_NAME}.jar"]
+      volumeMounts:
+        - name: hxinsight-ext
+          mountPath: /data
+alfresco-knowledge-retrieval:
+  enabled: true
+  hxi:
+    hxAuthTokenUrl: *hxiAuthTokenURI
+    hxInsightIngestionUrl: "https://ingestion-api.insight.staging.ncp.hyland.com/v1"
+    existingSecret:
+      name: *hxiSecretName
+  liveIngester:
+    image:
+      repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
+      tag: *hxi-version
+  repository:
+    versionOverride: 25.1.0
