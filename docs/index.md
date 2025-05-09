@@ -86,6 +86,7 @@ file for a version with the latest charts or using the old charts.
 
 | unsupported ACS version | Last chart version providing it |
 |-------------------------|---------------------------------|
+| 7.2                     | 9.1.1                           |
 | 7.1                     | 8.5.2                           |
 | 7.0                     | 8.0.1                           |
 | 6.2                     | 5.3.0                           |
