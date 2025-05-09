@@ -192,6 +192,7 @@ matrix:
       compose_target: *composeOss
       compose_key: $.services.solr6.image
     tengine-aio:
+      image: alfresco/alfresco-transform-core-aio
       compose_target: *composeOss
       compose_key: $.services.transform-core-aio.image
     adminApp:
