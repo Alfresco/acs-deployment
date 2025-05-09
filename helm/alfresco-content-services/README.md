@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 9.1.0](https://img.shields.io/badge/Version-9.1.0-informational?style=flat-square) ![AppVersion: 25.1.0](https://img.shields.io/badge/AppVersion-25.1.0-informational?style=flat-square)
+![Version: 9.2.0](https://img.shields.io/badge/Version-9.2.0-informational?style=flat-square) ![AppVersion: 25.1.0](https://img.shields.io/badge/AppVersion-25.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -22,20 +22,20 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.2.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.2.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.0.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.0.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.3.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.0.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.4.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.4.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.0.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.5 |
 | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
@@ -50,7 +50,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
 | activemq.enabled | bool | `true` |  |
 | activemq.image.repository | string | `"quay.io/alfresco/alfresco-activemq"` |  |
-| activemq.image.tag | string | `"5.18.6-jre17-rockylinux8"` |  |
+| activemq.image.tag | string | `"5.18.7-jre17-rockylinux8"` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |

@@ -2,13 +2,13 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 7.4.2.4
+    tag: 7.4.2.5
   configuration:
     search:
       flavor: solr6
 activemq:
   image:
-    tag: 5.17.6-jre17-rockylinux8
+    tag: 5.17.7-jre17-rockylinux8
 alfresco-transform-service:
   transformrouter:
     image:
@@ -36,7 +36,7 @@ alfresco-ai-transformer:
     tag: 3.1.9
 share:
   image:
-    tag: 7.4.2.4
+    tag: 7.4.2.5
 alfresco-search:
   enabled: true
   searchServicesImage:
