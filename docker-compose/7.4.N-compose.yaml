@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.4.2.4
+    image: quay.io/alfresco/alfresco-content-repository:7.4.2.5
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -131,7 +131,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:7.4.2.4
+    image: quay.io/alfresco/alfresco-share:7.4.2.5
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080

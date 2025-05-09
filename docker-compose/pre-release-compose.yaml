@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:25.1.0
+    image: quay.io/alfresco/alfresco-content-repository:25.2.0-A.8
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -129,7 +129,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:25.1.0
+    image: quay.io/alfresco/alfresco-share:25.2.0-A.8
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -211,7 +211,7 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.0.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.1.0-A.1
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -234,7 +234,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.0.0
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.1.0-A.1
     mem_limit: 1g
     restart: on-failure:5
     environment:
@@ -286,7 +286,7 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:1.1.0
+    image: quay.io/alfresco/alfresco-audit-storage:1.1.1-A.2
     mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
