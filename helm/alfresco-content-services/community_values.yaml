@@ -1,5 +1,19 @@
 # This values file can be used to install the latest ACS Community version using
 # the latest version of the chart
+global:
+  search:
+    # === Communication Security Mode ===
+    # Set the security level used with the external search service
+    # Options:
+    #   - none  : No secure communication (HTTP)
+    #   - https : Use mTLS
+    #   - secret: Use a shared secret (REQUIRES setting 'sharedSecret' below)
+    securecoms: secret
+    # === SHARED SECRET ===
+    # !!! REQUIRED IF securecoms: secret !!!
+    # Set this to a strong, unique string if using 'secret' mode above.
+    # Example: "my-shared-secret-key"
+    sharedSecret: "CHANGE_ME_SECRET_REQUIRED_IF_SECURECOMS_IS_SECRET"
 alfresco-repository:
   autoscaling:
     enabled: false
