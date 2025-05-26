@@ -5,6 +5,29 @@ templates:
   - secret-search.yaml
   - secret-audit-elasticsearch.yaml
 tests:
+  - it: should fail to render a secret when search is not given a secret
+    set:
+      global:
+        search:
+          securecomms: secret
+          sharedSecret: ""
+      alfresco-search:
+        enabled: true
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: solr6
+    template: secret-search.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            You have selected 'secret' mode of communication for
+            global.search.securecomms, but did not provide a secret value for
+            global.search.sharedSecret - see
+            https://alfresco.github.io/acs-deployment/docs/helm/desktop-deployment.html
+        template: secret-search.yaml
   - it: should render solr6 with secret
     values: &testvalues
       - values/test_values.yaml
