@@ -25,7 +25,7 @@ jobs:
     if: >-
       github.event_name == 'push'
       || (
-        ! github.event.repository.fork
+        ! github.event.pull_request.head.repo.fork
         && github.actor != 'dependabot[bot]'
       )
     outputs:
