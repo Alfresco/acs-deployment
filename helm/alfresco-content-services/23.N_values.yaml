@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 23.4.1
+    tag: 23.5.0
 activemq:
   image:
     tag: 5.18.7-jre17-rockylinux8
@@ -33,24 +33,24 @@ alfresco-ai-transformer:
     tag: 3.1.9
 share:
   image:
-    tag: 23.4.1
+    tag: 23.5.0
 alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 4.2.0
+        tag: 5.1.0
     content:
       image:
-        tag: 4.2.0
+        tag: 5.1.0
     metadata:
       image:
-        tag: 4.2.0
+        tag: 5.1.0
     path:
       image:
-        tag: 4.2.0
+        tag: 5.1.0
   reindexing:
     image:
-      tag: 4.2.0
+      tag: 5.1.0
 alfresco-search:
   enabled: false
   searchServicesImage:

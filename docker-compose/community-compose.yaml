@@ -74,7 +74,7 @@ services:
       activemq:
         condition: service_healthy
   share:
-    image: docker.io/alfresco/alfresco-share:25.1.0
+    image: docker.io/alfresco/alfresco-share:25.1.1
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
