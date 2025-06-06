@@ -142,7 +142,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 25.1.0
+    tag: 25.1.1
   autoscaling:
     kedaDisableIdle: true
   configuration:
@@ -297,7 +297,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 25.1.0
+    tag: 25.1.1
   nameOverride: share
   repository:
     existingConfigMap:
@@ -370,16 +370,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.0.0
+        tag: 5.1.0
     content:
       image:
-        tag: 5.0.0
+        tag: 5.1.0
     metadata:
       image:
-        tag: 5.0.0
+        tag: 5.1.0
     path:
       image:
-        tag: 5.0.0
+        tag: 5.1.0
   reindexing:
     enabled: true
     repository:
@@ -391,7 +391,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 5.0.0
+      tag: 5.1.0
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
@@ -640,7 +640,7 @@ dtas:
     assertions:
       acs:
         edition: Enterprise
-        version: 25.1.0
+        version: 25.1.1
         identity: false
         modules:
         - id: org_alfresco_device_sync_repo

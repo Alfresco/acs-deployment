@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 9.2.0](https://img.shields.io/badge/Version-9.2.0-informational?style=flat-square) ![AppVersion: 25.1.0](https://img.shields.io/badge/AppVersion-25.1.0-informational?style=flat-square)
+![Version: 9.3.0](https://img.shields.io/badge/Version-9.3.0-informational?style=flat-square) ![AppVersion: 25.1.1](https://img.shields.io/badge/AppVersion-25.1.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -31,12 +31,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.0.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.4.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.0.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.3.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.5 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.6 |
 | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
@@ -128,24 +128,24 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| alfresco-repository.image.tag | string | `"25.1.0"` |  |
+| alfresco-repository.image.tag | string | `"25.1.1"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
-| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.0.0"` |  |
-| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.0.0"` |  |
-| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.0.0"` |  |
-| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.0.0"` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.1.0"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.1.0"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.1.0"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.1.0"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.nameOverride | string | `"alfresco-search-enterprise"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
-| alfresco-search-enterprise.reindexing.image.tag | string | `"5.0.0"` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"5.1.0"` |  |
 | alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
@@ -241,7 +241,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.assertions.acs.modules[2].id | string | `"alfresco-aos-module"` |  |
 | dtas.config.assertions.acs.modules[2].installed | bool | `true` |  |
 | dtas.config.assertions.acs.modules[2].version | string | `"3.2.0"` |  |
-| dtas.config.assertions.acs.version | string | `"25.1.0"` |  |
+| dtas.config.assertions.acs.version | string | `"25.1.1"` |  |
 | dtas.config.assertions.adw.base_path | string | `"/workspace"` |  |
 | dtas.config.config.host | string | `"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"` |  |
 | dtas.config.config.password | string | `"admin"` |  |
@@ -330,7 +330,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | prometheus.url | string | `nil` | URL of the prometheus server (must be reachable by KEDA pods) |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"25.1.0"` |  |
+| share.image.tag | string | `"25.1.1"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
