@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 9.3.0](https://img.shields.io/badge/Version-9.3.0-informational?style=flat-square) ![AppVersion: 25.1.0](https://img.shields.io/badge/AppVersion-25.1.0-informational?style=flat-square)
+![Version: 9.3.0](https://img.shields.io/badge/Version-9.3.0-informational?style=flat-square) ![AppVersion: 25.1.1](https://img.shields.io/badge/AppVersion-25.1.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -240,8 +240,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.assertions.acs.modules[1].version | string | `"4.1.0"` |  |
 | dtas.config.assertions.acs.modules[2].id | string | `"alfresco-aos-module"` |  |
 | dtas.config.assertions.acs.modules[2].installed | bool | `true` |  |
-| dtas.config.assertions.acs.modules[2].version | string | `"3.3.0"` |  |
-| dtas.config.assertions.acs.version | string | `"25.1.0"` |  |
+| dtas.config.assertions.acs.modules[2].version | string | `"3.2.0"` |  |
+| dtas.config.assertions.acs.version | string | `"25.1.1"` |  |
 | dtas.config.assertions.adw.base_path | string | `"/workspace"` |  |
 | dtas.config.config.host | string | `"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"` |  |
 | dtas.config.config.password | string | `"admin"` |  |
