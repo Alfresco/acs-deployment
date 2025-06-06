@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 23.5.0
+    tag: 23.4.1
 activemq:
   image:
     tag: 5.18.7-jre17-rockylinux8
