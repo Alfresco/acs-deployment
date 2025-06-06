@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 9.2.0](https://img.shields.io/badge/Version-9.2.0-informational?style=flat-square) ![AppVersion: 25.1.0](https://img.shields.io/badge/AppVersion-25.1.0-informational?style=flat-square)
+![Version: 9.3.0](https://img.shields.io/badge/Version-9.3.0-informational?style=flat-square) ![AppVersion: 25.1.0](https://img.shields.io/badge/AppVersion-25.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -31,10 +31,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.0.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.4.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.9.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.0.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.3.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.1.5 |
 | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
