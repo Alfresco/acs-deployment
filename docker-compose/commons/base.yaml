@@ -33,6 +33,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
+      - "traefik.http.services.digital-workspace.loadbalancer.server.port=8080"
       - "traefik.http.middlewares.adwforceslash.redirectregex.regex=^(.*/workspace)$$"
       - "traefik.http.middlewares.adwforceslash.redirectregex.replacement=$${1}/"
       - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
@@ -42,6 +43,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.aca.rule=PathPrefix(`/content-app`)"
+      - "traefik.http.services.content-app.loadbalancer.server.port=8080"
       - "traefik.http.middlewares.acaroot.stripprefix.prefixes=/content-app"
       - "traefik.http.middlewares.acaforceslash.redirectregex.regex=^(.*/content-app)$$"
       - "traefik.http.middlewares.acaforceslash.redirectregex.replacement=$${1}/"
@@ -51,6 +53,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
+      - "traefik.http.services.control-center.loadbalancer.server.port=8080"
       - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin,/control-center"
       - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/(admin|control-center))$$"
       - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
