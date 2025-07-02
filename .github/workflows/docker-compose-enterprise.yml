@@ -69,5 +69,5 @@ jobs:
       - name: Run k6 tests
         uses: grafana/run-k6-action@dd07168651b12218c7c7b93c3cc4514c4e037bfa # v1.2.0
         with:
-          paths: |
+          path: |
             docker-compose/k6-alfresco.js
