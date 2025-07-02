@@ -67,7 +67,34 @@ jobs:
       - uses: grafana/setup-k6-action@e7b8eb0f44844dea09e7b7ba449fb3c79775ecd5 # v1.1.0
 
       - name: Run k6 tests
+        id: k6-tests
         uses: grafana/run-k6-action@dd07168651b12218c7c7b93c3cc4514c4e037bfa # v1.2.0
         with:
           path: |
             docker-compose/k6-alfresco.js
+          flags: --out json=k6-results.json
+
+      - name: Convert k6 output to structured JSON
+        if: always()
+        run: |
+          # Create a structured JSON output with metadata
+          cat > k6-test-results.json << EOF
+          {
+            "test_run": {
+              "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+              "compose_file": "${{ matrix.compose_file }}",
+              "workflow_run_id": "${{ github.run_id }}",
+              "commit_sha": "${{ github.sha }}",
+              "branch": "${{ github.ref_name }}"
+            },
+            "results": $(cat k6-results.json | jq -s '.')
+          }
+          EOF
+
+      - name: Upload k6 test results
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: k6-test-results-${{ matrix.compose_file }}-${{ github.run_id }}
+          path: k6-test-results.json
+          retention-days: 30
