@@ -110,6 +110,9 @@ jobs:
           helm repo add elastic https://helm.elastic.co/
           helm repo add grafana https://grafana.github.io/helm-charts
 
+      - name: Helm install operator
+        run: helm install k6-operator grafana/k6-operator
+
       - name: Helm install
         run: >-
           helm dep build ./helm/alfresco-content-services &&
@@ -149,9 +152,6 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
-
-      - name: Helm install operator
-        run: helm install k6-operator grafana/k6-operator
 
       - name: Run helm test
         id: helm_test
