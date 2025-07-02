@@ -64,3 +64,10 @@ jobs:
           compose_file_path: docker-compose/${{ matrix.compose_file }}
           quay_username: ${{ secrets.QUAY_USERNAME }}
           quay_password: ${{ secrets.QUAY_PASSWORD }}
+      - uses: grafana/setup-k6-action@e7b8eb0f44844dea09e7b7ba449fb3c79775ecd5 # v1.1.0
+
+      - name: Run k6 tests
+        uses: grafana/run-k6-action@dd07168651b12218c7c7b93c3cc4514c4e037bfa # v1.2.0
+        with:
+          paths: |
+            docker-compose/k6-alfresco.js

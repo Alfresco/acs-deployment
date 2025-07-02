@@ -1,0 +1,102 @@
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+import { Rate } from 'k6/metrics';
+import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+import encoding from 'k6/encoding';
+
+const errorRate = new Rate('errors');
+
+// Configuration
+const BASE_URL = 'http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1';
+const USERNAME = 'admin'; // Change to your admin username
+const PASSWORD = 'admin'; // Change to your admin password
+
+export const options = {
+  vus: 10,
+  duration: '40s',
+  thresholds: {
+    http_req_duration: ['p(95)<5000'],
+    errors: ['rate<0.1']
+  }
+};
+
+export default function () {
+  const credentials = `${USERNAME}:${PASSWORD}`;
+  const encodedCredentials = encoding.b64encode(credentials);
+
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Basic ${__ENV.ALFRESCO_AUTH || encodedCredentials}`
+  };
+
+  const testData = {
+    fileName: `test_file_${randomString(8)}.txt`,
+    fileContent: `Test content created by k6 at ${new Date().toISOString()}`
+  };
+
+  const healthCheck = http.get('http://localhost:8080/alfresco');
+  check(healthCheck, {
+    'Alfresco is accessible': (r) => r.status === 200
+  }) || errorRate.add(1);
+
+  const companyHomeId = '-root-';
+
+  const filePayload = JSON.stringify({
+    name: testData.fileName,
+    nodeType: 'cm:content',
+    properties: {
+      'cm:title': `Test File ${randomString(5)}`,
+      'cm:description': 'File created by k6 performance test'
+    }
+  });
+
+  const createFileResponse = http.post(`${BASE_URL}/nodes/${companyHomeId}/children`, filePayload, { headers });
+
+  const checks = check(createFileResponse, {
+    'file created successfully': (r) => {
+      const statusOk = r.status === 201;
+      return statusOk;
+    },
+    'file creation response time OK': (r) => {
+      const durationOk = r.timings.duration < 8000;
+      return durationOk;
+    }
+  });
+
+  if (!checks) {
+    console.log(`Failed to create file: ${createFileResponse.status} - ${createFileResponse.body} (duration: ${createFileResponse.timings.duration}ms)`);
+    errorRate.add(1);
+    return;
+  }
+  sleep(1);
+
+  const fileData = JSON.parse(createFileResponse.body);
+  const fileId = fileData.entry.id;
+
+  const contentHeaders = {
+    Authorization: headers.Authorization,
+    'Content-Type': 'text/plain'
+  };
+
+  const uploadResponse = http.put(`${BASE_URL}/nodes/${fileId}/content`, testData.fileContent, { headers: contentHeaders });
+  check(uploadResponse, {
+    'content uploaded successfully': (r) => r.status === 200,
+    'content upload response time OK': (r) => r.timings.duration < 2000
+  }) || errorRate.add(1);
+  sleep(1);
+
+  const downloadResponse = http.get(`${BASE_URL}/nodes/${fileId}/content`, { headers });
+  check(downloadResponse, {
+    'content downloaded successfully': (r) => r.status === 200,
+    'downloaded content matches': (r) => r.body === testData.fileContent,
+    'download response time OK': (r) => r.timings.duration < 2000
+  }) || errorRate.add(1);
+  sleep(1);
+
+  const metadataResponse = http.get(`${BASE_URL}/nodes/${fileId}`, { headers });
+  check(metadataResponse, {
+    'file metadata retrieved': (r) => r.status === 200,
+    'metadata response time OK': (r) => r.timings.duration < 1000
+  }) || errorRate.add(1);
+  sleep(1);
+}
