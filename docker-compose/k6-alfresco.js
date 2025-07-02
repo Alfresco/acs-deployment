@@ -13,7 +13,7 @@ const PASSWORD = 'admin'; // Change to your admin password
 
 export const options = {
   vus: 10,
-  duration: '40s',
+  duration: '5m',
   thresholds: {
     http_req_duration: ['p(95)<5000'],
     errors: ['rate<0.1']
