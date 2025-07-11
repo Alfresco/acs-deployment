@@ -23,7 +23,7 @@ on:
         default: master
 
 env:
-  DEFAULT_BRANCH_NAME: master
+  DEFAULT_BRANCH_NAME: OPSEXP-3292
 
 jobs:
   bump-charts-dependencies:
