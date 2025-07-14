@@ -57,14 +57,13 @@ jobs:
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403  # v5.2.0
+        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         with:
           commit_message: |
             🛠 Updatecli pipeline charts bump
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-helm' || github.ref_name }}
-          create_branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME }}
           push_options: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && '--force' || '' }}
 
   bump-values-dependencies:
@@ -108,12 +107,11 @@ jobs:
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403  # v5.2.0
+        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         with:
           commit_message: |
             🛠 Updatecli pipeline values bump
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-acs' || github.ref_name }}
-          create_branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME }}
           push_options: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && '--force' || '' }}
