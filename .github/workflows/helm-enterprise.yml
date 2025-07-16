@@ -108,6 +108,10 @@ jobs:
         run: |
           helm repo add self https://alfresco.github.io/alfresco-helm-charts/
           helm repo add elastic https://helm.elastic.co/
+          helm repo add grafana https://grafana.github.io/helm-charts
+
+      - name: Helm install operator
+        run: helm install k6-operator grafana/k6-operator
 
       - name: Helm install
         run: >-
