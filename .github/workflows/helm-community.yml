@@ -124,6 +124,8 @@ jobs:
 
       - name: Run SSO example chart tests
         if: matrix.name == 'acs-sso-example'
+        env:
+          K6_BROWSER_ARGS: no-sandbox
         uses: grafana/run-k6-action@c6b79182b9b666aa4f630f4a6be9158ead62536e # v1.2.0
         with:
           path: test/k6/acs-sso-example.js
