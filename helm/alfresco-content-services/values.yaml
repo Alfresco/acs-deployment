@@ -640,7 +640,7 @@ dtas:
     assertions:
       acs:
         edition: Enterprise
-        version: 25.1.1
+        version: 25.2.0
         identity: false
         modules:
         - id: org_alfresco_device_sync_repo
@@ -650,7 +650,7 @@ dtas:
           version: 4.1.0
           installed: true
         - id: alfresco-aos-module
-          version: 3.2.0
+          version: 3.3.0
           installed: true
       adw:
         base_path: "/workspace"
