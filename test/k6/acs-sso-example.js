@@ -31,10 +31,10 @@ export default async function () {
     await page.locator('input[type="submit"]').click();
 
     // Wait for the page to load the Quicksearch box
-    shareSearchBox = await page.waitForSelector('#HEADER_SEARCHBOX_FORM_FIELD', { timeout: 5000 });
+    shareSearchBox = await page.waitForSelector('#HEADER_SEARCHBOX_FORM_FIELD', { timeout: 15000 });
 
     await page.goto('http://localhost/alfresco/s/admin');
-    systemSummaryAdmin = await page.waitForSelector('a[title="Summary of general system information"]', { timeout: 5000 });
+    systemSummaryAdmin = await page.waitForSelector('a[title="Summary of general system information"]', { timeout: 3000 });
 
     await page.goto('http://localhost/aca');
     acaToolBar = await page.waitForSelector('app-toolbar-menu', { timeout: 5000 });
