@@ -20,7 +20,7 @@ export const options = {
 export default async function () {
   const page = await browser.newPage();
   let shareSearchBox = null;
-  let  systemSummaryAdmin = null;
+  let systemSummaryAdmin = null;
   let acaToolBar = null;
   try {
     await page.goto('http://localhost/share');

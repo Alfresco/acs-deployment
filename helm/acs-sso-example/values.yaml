@@ -107,7 +107,7 @@ keycloakx:
           - "zh-CN"
   # -- hostname-backchannel-dynamic is only needed if you want to use the
   # backchannel authentication flow. This is needed when the client application
-  # can only access the Keycloak server via an internal hstname (such as
+  # can only access the Keycloak server via an internal hostname (such as
   # localhost).
   command:
     - /opt/keycloak/bin/kc.sh
