@@ -107,7 +107,6 @@ jobs:
           kubectl describe pod
 
       - uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v.3.0.2
-        id: newman
         if: matrix.name == 'alfresco-content-services'
         with:
           timeout_minutes: 1
@@ -119,8 +118,18 @@ jobs:
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
             --global-var protocol=http --global-var url=localhost
 
+      - name: Setup k6
+        if: matrix.name == 'acs-sso-example'
+        uses: grafana/setup-k6-action@ffe7d7290dfa715e48c2ccc924d068444c94bde2 # v1.1.0
+
+      - name: Run SSO example chart tests
+        if: matrix.name == 'acs-sso-example'
+        uses: grafana/run-k6-action@c6b79182b9b666aa4f630f4a6be9158ead62536e # v1.2.0
+        with:
+          path: test/k6/acs-sso-example.js
+
       - name: Spit cluster status after tests
-        if: always() && steps.newman.outcome != 'skipped'
+        if: always()
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
