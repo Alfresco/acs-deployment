@@ -11,7 +11,22 @@ data:
     aims.realm = {{ index .admin.realm 0 "realm" }}
     aims.resource = {{ index .admin.realm 0 "clients" 0 "clientId" }}
     aims.publicClient=true
-    aims.principalAttribute=sub
-    aims.publicClient=true
+    aims.scopes=openid,profile,email
+    aims.atIssuerAttribute=issuer
     aims.authServerUrl = {{ printf "http://%s-http%s" (include "keycloak.fullname" $kCtx) .http.relativePath }}
+    aims.alwaysRefreshToken=false
+    aims.enableBasicAuth=true
+    aims.sslRequired=external
+    aims.secret=
+    aims.logoutUri=
+    aims.postLogoutUrl=
+    aims.audience=
+    aims.redirectURI=
+    aims.logout.post_logout_redirect_uri_label=
+    aims.logout.post_logout_redirect_uri_value=
+    aims.logout.client_id_label=
+    aims.logout.client_id_value=
+    aims.logout.useIdTokenHint=
+    aims.shareContext.value=
+    aims.principalAttribute=
     {{- end }}
