@@ -59,10 +59,10 @@ alfresco-search-enterprise:
       tag: 5.1.1
 alfresco-digital-workspace:
   image:
-    tag: 7.0.0-16295333024
+    tag: 8.0.0-16410617498
 alfresco-control-center:
   image:
-    tag: 10.0.0-16295333024
+    tag: 11.0.0-16410617498
 postgresql:
   image:
     tag: 16.5.0
