@@ -68,7 +68,7 @@ keycloakx:
               "oauth2.device.authorization.grant.enabled": false
               "oidc.ciba.grant.enabled": false
               "display.on.consent.screen": false
-              "use.refresh.tokens": "false"
+              "use.refresh.tokens": false
             redirectUris: >-
               {{- $redirectUris := list }}
               {{- range (index (include "alfresco-common.known.urls" $ | mustFromJson) "known_urls") }}
