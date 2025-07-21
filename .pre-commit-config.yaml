@@ -20,15 +20,15 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v8.4.0
+    rev: v8.27.0
     hooks:
       - id: helm-deps-build
   - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.24
+    rev: v0.1.30
     hooks:
       - id: helmlint
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 3.2.395
+    rev: 3.2.451
     hooks:
       - id: checkov
         types: [yaml]
@@ -45,7 +45,7 @@ repos:
         files : docker-compose/.*compose.yaml
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint
         args: ["--ignore", "helm/**/README.md"]
