@@ -267,7 +267,7 @@ services:
       retries: 5
       start_period: 5s
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:8.0.0-16410617498
+    image: quay.io/alfresco/alfresco-digital-workspace:8.0.0-16413334830
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -306,7 +306,7 @@ services:
       elasticsearch:
         condition: service_healthy
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:11.0.0-16410617498
+    image: quay.io/alfresco/alfresco-control-center:11.0.0-16413334830
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
