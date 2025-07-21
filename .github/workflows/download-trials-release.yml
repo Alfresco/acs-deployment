@@ -33,14 +33,13 @@ jobs:
           echo COMMIT_BRANCH_NAME=download-trial-release-${{ github.run_id }} >> $GITHUB_OUTPUT
 
       - name: Commit updated compose files
-        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403  # v5.2.0
+        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
         with:
           commit_message: |
             🛠 Update download trial compose files
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
-          create_branch: true
           file_pattern: >-
             docker-compose/docker-compose.yml
             docker-compose/community-docker-compose.yml
