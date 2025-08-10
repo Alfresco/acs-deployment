@@ -28,10 +28,11 @@ services:
         -Dmetadata-keystore.metadata.password=oKIWzVdEdA
         -Dmetadata-keystore.metadata.algorithm=DESede
       JAVA_OPTS: >-
-        -Ddb.driver=org.postgresql.Driver
-        -Ddb.username=alfresco
-        -Ddb.password=alfresco
-        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Ddb.driver=com.microsoft.sqlserver.jdbc.SQLServerDriver
+        -Ddb.name=alfresco -Ddb.username=sa
+        -Ddb.password=Alfresco1
+        -Ddb.url=jdbc:sqlserver://sqlserver:1433\;databaseName=alfresco\;user=sa\;password=Alfresco1\;lockTimeout=1000
+        -Ddb.host=sqlserver -Ddb.port=1433 -Ddb.txn.isolation=4096 -Ddb.pool.max=275
         -Dindex.subsystem.name=elasticsearch
         -Delasticsearch.createIndexIfNotExists=true
         -Delasticsearch.host=elasticsearch
@@ -48,7 +49,6 @@ services:
         -Dtransform.service.url=http://transform-router:8095
         -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
-        -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
     healthcheck:
@@ -59,6 +59,9 @@ services:
       start_period: 1m
     volumes:
       - /usr/local/tomcat/alf_data
+      - type: bind
+        source: ./mssql-jdbc-9.4.0.jre11.jar
+        target: /usr/local/tomcat/lib/mssql-jdbc-9.4.0.jre11.jar
     extends:
       file: commons/base.yaml
       service: alfresco
@@ -155,22 +158,10 @@ services:
     extends:
       file: commons/base.yaml
       service: share
-  postgres:
-    image: postgres:16.5
-    mem_limit: 512m
-    environment:
-      - POSTGRES_PASSWORD=alfresco
-      - POSTGRES_USER=alfresco
-      - POSTGRES_DB=alfresco
-    command: postgres -c max_connections=300 -c log_min_messages=LOG
-    ports:
-      - "5432:5432"
+  sqlserver:
+    image: alfresco-mssql:local
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
+      disable: true
   elasticsearch:
     image: elasticsearch:8.17.3
     environment:
@@ -241,13 +232,15 @@ services:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
-      SPRING_DATASOURCE_USERNAME: alfresco
-      SPRING_DATASOURCE_PASSWORD: alfresco
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://sqlserver:1433;databaseName=alfresco;user=sa;password=Alfresco1;lockTimeout=1000
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: Alfresco1
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
+    volumes:
+      - type: bind
+        source: ./mssql-jdbc-9.4.0.jre11.jar
+        target: /opt/db-drivers/mssql-jdbc-9.4.0.jre11.jar
     depends_on:
-      postgres:
-        condition: service_healthy
       elasticsearch:
         condition: service_healthy
       alfresco:
@@ -325,35 +318,3 @@ services:
     extends:
       file: commons/base.yaml
       service: proxy
-  sync-service:
-    image: quay.io/alfresco/service-sync:5.2.0
-    mem_limit: 1g
-    environment:
-      JAVA_OPTS: >-
-        -Dsync.cluster.enabled=false
-        -Dsql.db.driver=org.postgresql.Driver
-        -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsql.db.username=alfresco
-        -Dsql.db.password=alfresco
-        -Dmessaging.broker.host=activemq
-        -Drepo.hostname=alfresco
-        -Drepo.port=8080
-        -Ddw.server.applicationConnectors[0].type=http
-        -XX:MinRAMPercentage=50
-        -XX:MaxRAMPercentage=80
-    ports:
-      - "9090:9090"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
-      interval: 30s
-      timeout: 2s
-      retries: 3
-      start_period: 20s
-    depends_on:
-      postgres:
-        condition: service_healthy
-      alfresco:
-        condition: service_healthy
-    extends:
-      file: commons/base.yaml
-      service: sync-service
