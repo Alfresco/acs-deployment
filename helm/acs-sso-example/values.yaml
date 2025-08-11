@@ -281,3 +281,7 @@ alfresco-content-app:
     BASE_PATH: /aca
     APP_CONFIG_OAUTH2_REDIRECT_LOGIN: /aca
     APP_CONFIG_OAUTH2_REDIRECT_LOGOUT: /aca
+postgresql:
+  image:
+    tag: 16.6.0
+    repository: bitnamilegacy/postgresql

@@ -433,6 +433,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
+    repository: bitnamilegacy/postgresql
     tag: 16.6.0
     pullPolicy: IfNotPresent
   commonAnnotations:
@@ -497,7 +498,8 @@ postgresql-sync:
   enabled: true
   nameOverride: postgresql-sync
   image:
-    tag: 15.5.0
+    repository: bitnamilegacy/postgresql
+    tag: 16.6.0
   auth:
     enablePostgresUser: false
     username: alfresco

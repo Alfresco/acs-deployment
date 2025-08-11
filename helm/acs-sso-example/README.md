@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # acs-sso-example
 
-![Version: 1.3.1](https://img.shields.io/badge/Version-1.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.2.0](https://img.shields.io/badge/AppVersion-25.2.0-informational?style=flat-square)
+![Version: 1.3.2](https://img.shields.io/badge/Version-1.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.2.0](https://img.shields.io/badge/AppVersion-25.2.0-informational?style=flat-square)
 
 An example Chart to demonstrate how to compose your own Alfresco platform
 with SSO on kubernetes using a nthrid party Keycloak.
@@ -60,4 +60,6 @@ deployment is destroyed or rolled back!
 | keycloakx.admin.realm[0].users[0].credentials[0].value | string | `"secret"` | default Alfresco admin password |
 | keycloakx.admin.username | string | `"admin"` | Keycloak admin username |
 | keycloakx.command | list | `["/opt/keycloak/bin/kc.sh","start","--hostname=http://localhost/auth","--hostname-backchannel-dynamic=true","--health-enabled=true","--http-enabled=true","--http-port=8080","--import-realm"]` | hostname-backchannel-dynamic is only needed if you want to use the backchannel authentication flow. This is needed when the client application can only access the Keycloak server via an internal hostname (such as localhost). |
+| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` |  |
+| postgresql.image.tag | string | `"16.6.0"` |  |
 | repository-database | object | check values.yaml | Configure the ACS repository Postgres database as per https://github.com/bitnami/charts/tree/002c752f871c8fa068a770dc80fec4cf798798ab/bitnami/postgresql |
