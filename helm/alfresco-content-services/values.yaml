@@ -79,6 +79,9 @@ global:
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
   alfrescoRegistryPullSecrets: null
+  security:
+    # -- Required when using bitnami images from legacy repository
+    allowInsecureImages: true
   strategy:
     rollingUpdate:
       maxSurge: 1

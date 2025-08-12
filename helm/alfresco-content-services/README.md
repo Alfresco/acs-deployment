@@ -288,6 +288,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
 | global.search.url | string | `nil` | set this URL if you have an external search service |
 | global.search.username | string | `nil` | Set username for authentication against the external elasticsearch service |
+| global.security.allowInsecureImages | bool | `true` | Required when using bitnami images from legacy repository |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
