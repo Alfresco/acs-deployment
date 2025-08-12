@@ -116,6 +116,7 @@ jobs:
           --set global.search.sharedSecret="$(openssl rand -hex 24)"
           --set global.known_urls=http://localhost
           --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }}
+          --set global.imagePullSecrets=${{ env.REGISTRY_SECRET_NAME }}
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
