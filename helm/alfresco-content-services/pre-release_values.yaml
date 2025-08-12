@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 25.2.0
+    tag: 25.3.0-A.2
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
@@ -10,31 +10,31 @@ activemq:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.2.0
+      tag: 4.2.1-A.3
   pdfrenderer:
     image:
-      tag: 5.2.0
+      tag: 5.2.1-A.3
   imagemagick:
     image:
-      tag: 5.2.0
+      tag: 5.2.1-A.3
   libreoffice:
     image:
-      tag: 5.2.0
+      tag: 5.2.1-A.3
   tika:
     image:
-      tag: 5.2.0
+      tag: 5.2.1-A.3
   transformmisc:
     image:
-      tag: 5.2.0
+      tag: 5.2.1-A.3
   filestore:
     image:
-      tag: 4.2.0
+      tag: 4.2.1-A.3
 alfresco-ai-transformer:
   image:
-    tag: 3.2.0
+    tag: 3.2.1-A.1
 share:
   image:
-    tag: 25.2.0
+    tag: 25.3.0-A.2
 alfresco-search:
   searchServicesImage:
     tag: 2.1.0-A9
@@ -44,25 +44,25 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.1.1
+        tag: 5.1.2-A.3
     content:
       image:
-        tag: 5.1.1
+        tag: 5.1.2-A.3
     metadata:
       image:
-        tag: 5.1.1
+        tag: 5.1.2-A.3
     path:
       image:
-        tag: 5.1.1
+        tag: 5.1.2-A.3
   reindexing:
     image:
-      tag: 5.1.1
+      tag: 5.1.2-A.3
 alfresco-digital-workspace:
   image:
-    tag: 8.0.0-16413334830
+    tag: 8.0.0-16831192072
 alfresco-control-center:
   image:
-    tag: 11.0.0-16413334830
+    tag: 11.0.0-16831192072
 postgresql:
   image:
     tag: 16.5.0
@@ -86,12 +86,12 @@ elastisearch:
       tag: 8.17.1
 alfresco-audit-storage:
   image:
-    tag: 1.1.1-A.3
+    tag: 1.1.1-A.6
 dtas:
   config:
     assertions:
       acs:
-        version: 25.2.0
+        version: 25.3.0
         modules:
         - id: org.alfresco.integrations.google.docs
           version: 4.1.0

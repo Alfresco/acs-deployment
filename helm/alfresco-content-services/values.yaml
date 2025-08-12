@@ -79,6 +79,9 @@ global:
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
   alfrescoRegistryPullSecrets: null
+  security:
+    # -- Required when using bitnami images from legacy repository
+    allowInsecureImages: true
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -403,7 +406,7 @@ alfresco-digital-workspace:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 7.0.0
+    tag: 7.0.1
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -420,7 +423,7 @@ alfresco-control-center:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 10.0.0
+    tag: 10.0.1
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -433,6 +436,7 @@ postgresql:
   enabled: true
   nameOverride: postgresql-acs
   image:
+    repository: bitnamilegacy/postgresql
     tag: 16.6.0
     pullPolicy: IfNotPresent
   commonAnnotations:
@@ -497,7 +501,8 @@ postgresql-sync:
   enabled: true
   nameOverride: postgresql-sync
   image:
-    tag: 15.5.0
+    repository: bitnamilegacy/postgresql
+    tag: 16.6.0
   auth:
     enablePostgresUser: false
     username: alfresco
@@ -546,6 +551,7 @@ elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: true
   image:
+    repository: bitnamilegacy/elasticsearch
     tag: 8.17.3
   master:
     masterOnly: false
@@ -558,6 +564,7 @@ elasticsearch:
     replicaCount: 0
   kibana:
     image:
+      repository: bitnamilegacy/kibana
       tag: 7.17.26
     configuration:
       server:

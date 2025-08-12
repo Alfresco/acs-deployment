@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 9.4.0](https://img.shields.io/badge/Version-9.4.0-informational?style=flat-square) ![AppVersion: 25.2.0](https://img.shields.io/badge/AppVersion-25.2.0-informational?style=flat-square)
+![Version: 9.4.1](https://img.shields.io/badge/Version-9.4.1-informational?style=flat-square) ![AppVersion: 25.2.0](https://img.shields.io/badge/AppVersion-25.2.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -26,16 +26,16 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.2.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.2.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.3.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.3.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.4 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.0.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.0.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.10.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.0.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.5 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.10.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.4.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.0 |
 | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
@@ -86,7 +86,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.env.BASE_PATH | string | `"/control-center"` |  |
 | alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
-| alfresco-control-center.image.tag | string | `"10.0.0"` |  |
+| alfresco-control-center.image.tag | string | `"10.0.1"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].path | string | `"/control-center"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-control-center.ingress.tls | list | `[]` |  |
@@ -97,7 +97,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.env.BASE_PATH | string | `"/workspace"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
-| alfresco-digital-workspace.image.tag | string | `"7.0.0"` |  |
+| alfresco-digital-workspace.image.tag | string | `"7.0.1"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
@@ -253,12 +253,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.coordinating.replicaCount | int | `0` |  |
 | elasticsearch.data.replicaCount | int | `0` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
+| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
 | elasticsearch.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.ingest.replicaCount | int | `0` |  |
 | elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366 |
 | elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
 | elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` | This setting defines the base URL for accessing Kibana in your deployment.    - For **local deployments**: Use "http://localhost/kibana" (default).    - For **production or remote deployments**: Replace `localhost` with the fully qualified domain name (FQDN) or IP address      where Kibana is accessible. Example: "http://kibana.mycompany.com" or "http://192.168.1.100/kibana".    - Ensure this URL is accessible by users or other services that need to interact with Kibana. |
 | elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
+| elasticsearch.kibana.image.repository | string | `"bitnamilegacy/kibana"` |  |
 | elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
 | elasticsearch.kibana.ingress.hostname | string | `"*"` |  |
@@ -286,6 +288,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
 | global.search.url | string | `nil` | set this URL if you have an external search service |
 | global.search.username | string | `nil` | Set username for authentication against the external elasticsearch service |
+| global.security.allowInsecureImages | bool | `true` | Required when using bitnami images from legacy repository |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | infrastructure.configMapName | string | `"alfresco-infrastructure"` |  |
@@ -303,7 +306,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.auth.password | string | `"admin"` |  |
 | postgresql-sync.auth.username | string | `"alfresco"` |  |
 | postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
-| postgresql-sync.image.tag | string | `"15.5.0"` |  |
+| postgresql-sync.image.repository | string | `"bitnamilegacy/postgresql"` |  |
+| postgresql-sync.image.tag | string | `"16.6.0"` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
 | postgresql-sync.primary.extendedConfiguration | string | `"max_connections = 150\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
 | postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
@@ -317,6 +321,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
 | postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository Check [PostgreSQL Bitnami chart Documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) |
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
+| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` |  |
 | postgresql.image.tag | string | `"16.6.0"` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.extendedConfiguration | string | `"max_connections = 250\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |

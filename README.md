@@ -17,7 +17,15 @@ Compose](https://docs.docker.com/compose) or on
 
 User docs available at: [https://alfresco.github.io/acs-deployment/](https://alfresco.github.io/acs-deployment/)
 
-## Important changes for Docker Compose
+## ⚠️ Important changes for Helm charts
+
+Charts are currently using `bitnamilegacy` images for PostgreSQL and
+Elasticsearch. This is due to upcoming changes to the Bitnami Catalog. See the
+[Bitnami announcement](https://github.com/bitnami/containers/issues/83267) for
+more details. Work on creating our own charts for these components is tracked in
+[OPSEXP-3421](https://hyland.atlassian.net/browse/OPSEXP-3421).
+
+## ⚠️ Important changes for Docker Compose
 
 ### Repository content store persistence
 
