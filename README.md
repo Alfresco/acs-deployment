@@ -23,7 +23,7 @@ Charts are currently using `bitnamilegacy` images for PostgreSQL and
 Elasticsearch. This is due to upcoming changes to the Bitnami Catalog. See the
 [Bitnami announcement](https://github.com/bitnami/containers/issues/83267) for
 more details. Work on creating our own charts for these components is tracked in
-OPSEXP-3421.
+[OPSEXP-3421](https://hyland.atlassian.net/browse/OPSEXP-3421).
 
 ## Important changes for Docker Compose
 
