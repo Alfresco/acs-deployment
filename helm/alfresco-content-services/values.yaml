@@ -548,6 +548,7 @@ elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: true
   image:
+    repository: bitnamilegacy/elasticsearch
     tag: 8.17.3
   master:
     masterOnly: false
@@ -560,6 +561,7 @@ elasticsearch:
     replicaCount: 0
   kibana:
     image:
+      repository: bitnamilegacy/kibana
       tag: 7.17.26
     configuration:
       server:

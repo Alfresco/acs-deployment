@@ -253,12 +253,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.coordinating.replicaCount | int | `0` |  |
 | elasticsearch.data.replicaCount | int | `0` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
+| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
 | elasticsearch.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.ingest.replicaCount | int | `0` |  |
 | elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366 |
 | elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
 | elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` | This setting defines the base URL for accessing Kibana in your deployment.    - For **local deployments**: Use "http://localhost/kibana" (default).    - For **production or remote deployments**: Replace `localhost` with the fully qualified domain name (FQDN) or IP address      where Kibana is accessible. Example: "http://kibana.mycompany.com" or "http://192.168.1.100/kibana".    - Ensure this URL is accessible by users or other services that need to interact with Kibana. |
 | elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
+| elasticsearch.kibana.image.repository | string | `"bitnamilegacy/kibana"` |  |
 | elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
 | elasticsearch.kibana.ingress.hostname | string | `"*"` |  |
