@@ -21,6 +21,7 @@ export default async function () {
   const page = await browser.newPage();
   let shareSearchBox = null;
   let systemSummaryAdmin = null;
+  let acaToolBar = null;
   try {
     await page.goto('http://localhost/share');
 
@@ -34,12 +35,18 @@ export default async function () {
 
     await page.goto('http://localhost/alfresco/s/admin');
     systemSummaryAdmin = await page.waitForSelector('a[title="Summary of general system information"]', { timeout: 3000 });
+
+    await page.goto('http://localhost/aca');
+    acaToolBar = await page.waitForSelector('app-toolbar-menu', { timeout: 5000 });
   } finally {
     check(shareSearchBox, {
       'search box is visible': (el) => el !== null,
     }, {SSO: "loginWithRedir"});
     check(systemSummaryAdmin, {
       'system summary admin is visible': (el) => el !== null,
+    }, {SSO: "loginWithRedir"});
+    check(acaToolBar, {
+      'ACA toolbar is visible': (el) => el !== null,
     }, {SSO: "loginWithRedir"});
     await page.close();
   }

@@ -8,7 +8,6 @@ on:
       - next/**
     paths:
       - helm/**
-      - test/k6/acs-sso-example.js
       - test/postman/helm/**
       - .github/workflows/helm*
       - test/community-integration-test-values.yaml
