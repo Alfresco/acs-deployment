@@ -38,7 +38,7 @@ services:
       interval: 30s
       retries: 5
       start_period: 1m0s
-    image: quay.io/alfresco/alfresco-content-repository:25.1.0
+    image: quay.io/alfresco/alfresco-content-repository:25.2.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.acsfakeauth.basicauth.users: 'fake:'
@@ -102,7 +102,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-control-center:9.4.0
+    image: quay.io/alfresco/alfresco-control-center:10.0.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.accchain.chain.middlewares: accforceslash,accroot
@@ -111,6 +111,7 @@ services:
       traefik.http.middlewares.accroot.stripprefix.prefixes: /admin,/control-center
       traefik.http.routers.acc.middlewares: accchain@docker
       traefik.http.routers.acc.rule: PathPrefix(`/control-center`) || PathPrefix(`/admin`)
+      traefik.http.services.control-center.loadbalancer.server.port: "8080"
     mem_limit: "134217728"
     networks:
       default: null
@@ -132,7 +133,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-digital-workspace:6.0.0
+    image: quay.io/alfresco/alfresco-digital-workspace:7.0.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.adwchain.chain.middlewares: adwforceslash,adwroot
@@ -141,6 +142,7 @@ services:
       traefik.http.middlewares.adwroot.stripprefix.prefixes: /workspace
       traefik.http.routers.adw.middlewares: adwchain@docker
       traefik.http.routers.adw.rule: PathPrefix(`/workspace`)
+      traefik.http.services.digital-workspace.loadbalancer.server.port: "8080"
     mem_limit: "134217728"
     networks:
       default: null
@@ -279,7 +281,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.0.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.1.1
     mem_limit: "1073741824"
     networks:
       default: null
@@ -301,7 +303,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.0.0
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.1.1
     mem_limit: "1073741824"
     networks:
       default: null
@@ -327,7 +329,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 15s
-    image: quay.io/alfresco/alfresco-share:25.1.0
+    image: quay.io/alfresco/alfresco-share:25.2.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.limit.buffering.maxRequestBodyBytes: "5368709120"
@@ -358,7 +360,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: quay.io/alfresco/alfresco-shared-file-store:4.1.7
+    image: quay.io/alfresco/alfresco-shared-file-store:4.2.0
     mem_limit: "536870912"
     networks:
       default: null
@@ -421,7 +423,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.1.7
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.0
     mem_limit: "1610612736"
     networks:
       default: null
@@ -450,7 +452,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/alfresco-transform-router:4.1.7
+    image: quay.io/alfresco/alfresco-transform-router:4.2.0
     mem_limit: "536870912"
     networks:
       default: null

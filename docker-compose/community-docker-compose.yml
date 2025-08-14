@@ -20,22 +20,10 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8161
-        published: "8161"
-        protocol: tcp
-      - mode: ingress
-        target: 5672
-        published: "5672"
-        protocol: tcp
-      - mode: ingress
-        target: 61616
-        published: "61616"
-        protocol: tcp
-      - mode: ingress
-        target: 61613
-        published: "61613"
-        protocol: tcp
+      - "8161:8161" # Web Console
+      - "5672:5672" # AMQP
+      - "61616:61616" # OpenWire
+      - "61613:61613" # STOMP
   alfresco:
     environment:
       JAVA_OPTS: -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco -Dsolr.host=solr6 -Dsolr.port=8983 -Dsolr.http.connection.timeout=1000 -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6 -Dshare.host=localhost -Dshare.port=8080 -Dalfresco.host=localhost -Dalfresco.port=8080 -Dcsrf.filter.enabled=false -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true" -Ddeployment.method=DOCKER_COMPOSE -DlocalTransform.core-aio.url=http://transform-core-aio:8090/ -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
@@ -50,7 +38,7 @@ services:
       interval: 30s
       retries: 5
       start_period: 1m0s
-    image: docker.io/alfresco/alfresco-content-repository-community:25.1.0
+    image: docker.io/alfresco/alfresco-content-repository-community:25.2.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.acsfakeauth.basicauth.users: 'fake:'
@@ -70,9 +58,7 @@ services:
     networks:
       default: null
     volumes:
-      - type: volume
-        target: /usr/local/tomcat/alf_data
-        volume: {}
+      - /usr/local/tomcat/alf_data
   content-app:
     environment:
       APP_BASE_SHARE_URL: http://localhost:8080/aca/#/preview/s
@@ -86,7 +72,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: alfresco/alfresco-content-app:6.0.0
+    image: alfresco/alfresco-content-app:7.0.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.acachain.chain.middlewares: acaforceslash,acaroot
@@ -95,6 +81,7 @@ services:
       traefik.http.middlewares.acaroot.stripprefix.prefixes: /content-app
       traefik.http.routers.aca.middlewares: acachain@docker
       traefik.http.routers.aca.rule: PathPrefix(`/content-app`)
+      traefik.http.services.content-app.loadbalancer.server.port: "8080"
     mem_limit: "134217728"
     networks:
       default: null
@@ -113,7 +100,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-control-center:9.4.0
+    image: quay.io/alfresco/alfresco-control-center:10.0.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.accchain.chain.middlewares: accforceslash,accroot
@@ -122,6 +109,7 @@ services:
       traefik.http.middlewares.accroot.stripprefix.prefixes: /admin,/control-center
       traefik.http.routers.acc.middlewares: accchain@docker
       traefik.http.routers.acc.rule: PathPrefix(`/control-center`) || PathPrefix(`/admin`)
+      traefik.http.services.control-center.loadbalancer.server.port: "8080"
     mem_limit: "134217728"
     networks:
       default: null
@@ -149,10 +137,7 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 5432
-        published: "5432"
-        protocol: tcp
+      - "5432:5432"
   proxy:
     command:
       - --api.insecure=true
@@ -179,23 +164,12 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8080
-        published: "8080"
-        protocol: tcp
-      - mode: ingress
-        target: 8888
-        published: "8888"
-        protocol: tcp
+      - "8080:8080"
+      - "8888:8888"
     security_opt:
       - label=disable
     volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-        read_only: true
-        bind:
-          create_host_path: true
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   share:
     depends_on:
       alfresco:
@@ -217,7 +191,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 15s
-    image: docker.io/alfresco/alfresco-share:25.1.0
+    image: docker.io/alfresco/alfresco-share:25.2.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.limit.buffering.maxRequestBodyBytes: "5368709120"
@@ -242,15 +216,12 @@ services:
       SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
       SOLR_SOLR_HOST: solr6
       SOLR_SOLR_PORT: "8983"
-    image: docker.io/alfresco/alfresco-search-services:2.0.15
+    image: docker.io/alfresco/alfresco-search-services:2.0.16
     mem_limit: "2147483648"
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8983
-        published: "8083"
-        protocol: tcp
+      - "8083:8983"
   transform-core-aio:
     depends_on:
       activemq:
@@ -268,15 +239,12 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: alfresco/alfresco-transform-core-aio:5.1.7
+    image: alfresco/alfresco-transform-core-aio:5.2.0
     mem_limit: "1610612736"
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8090
-        published: "8090"
-        protocol: tcp
+      - "8090:8090"
 networks:
   default:
     name: docker-compose_default
