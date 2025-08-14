@@ -50,7 +50,7 @@ services:
       interval: 30s
       retries: 5
       start_period: 1m0s
-    image: docker.io/alfresco/alfresco-content-repository-community:25.1.0
+    image: docker.io/alfresco/alfresco-content-repository-community:25.2.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.acsfakeauth.basicauth.users: 'fake:'
@@ -86,7 +86,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: alfresco/alfresco-content-app:6.0.0
+    image: alfresco/alfresco-content-app:7.0.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.acachain.chain.middlewares: acaforceslash,acaroot
@@ -95,6 +95,7 @@ services:
       traefik.http.middlewares.acaroot.stripprefix.prefixes: /content-app
       traefik.http.routers.aca.middlewares: acachain@docker
       traefik.http.routers.aca.rule: PathPrefix(`/content-app`)
+      traefik.http.services.content-app.loadbalancer.server.port: "8080"
     mem_limit: "134217728"
     networks:
       default: null
@@ -113,7 +114,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-control-center:9.4.0
+    image: quay.io/alfresco/alfresco-control-center:10.0.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.accchain.chain.middlewares: accforceslash,accroot
@@ -122,6 +123,7 @@ services:
       traefik.http.middlewares.accroot.stripprefix.prefixes: /admin,/control-center
       traefik.http.routers.acc.middlewares: accchain@docker
       traefik.http.routers.acc.rule: PathPrefix(`/control-center`) || PathPrefix(`/admin`)
+      traefik.http.services.control-center.loadbalancer.server.port: "8080"
     mem_limit: "134217728"
     networks:
       default: null
@@ -217,7 +219,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 15s
-    image: docker.io/alfresco/alfresco-share:25.1.0
+    image: docker.io/alfresco/alfresco-share:25.2.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.limit.buffering.maxRequestBodyBytes: "5368709120"
@@ -242,7 +244,7 @@ services:
       SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
       SOLR_SOLR_HOST: solr6
       SOLR_SOLR_PORT: "8983"
-    image: docker.io/alfresco/alfresco-search-services:2.0.15
+    image: docker.io/alfresco/alfresco-search-services:2.0.16
     mem_limit: "2147483648"
     networks:
       default: null
@@ -268,7 +270,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: alfresco/alfresco-transform-core-aio:5.1.7
+    image: alfresco/alfresco-transform-core-aio:5.2.0
     mem_limit: "1610612736"
     networks:
       default: null
