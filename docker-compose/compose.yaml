@@ -17,6 +17,8 @@ services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:25.2.0
     mem_limit: 1900m
+    command: ["bash", "-c", "java -jar /usr/local/tomcat/alfresco-mmt/alfresco-mmt*.jar install /usr/local/tomcat/amps/to-install /usr/local/tomcat/webapps/alfresco -directory -nobackup && catalina.sh run -security"]
+    user: root
     environment:
       JAVA_TOOL_OPTIONS: >-
         -Dencryption.keystore.type=JCEKS
@@ -59,6 +61,7 @@ services:
       start_period: 1m
     volumes:
       - /usr/local/tomcat/alf_data
+      - ./repo_amps_to_install:/usr/local/tomcat/amps/to-install
     extends:
       file: commons/base.yaml
       service: alfresco
@@ -131,6 +134,7 @@ services:
   share:
     image: quay.io/alfresco/alfresco-share:25.2.0
     mem_limit: 1g
+    entrypoint: ["/usr/local/tomcat/shared/classes/alfresco/substituter.sh", "java -jar /usr/local/tomcat/alfresco-mmt/alfresco-mmt*.jar install /usr/local/tomcat/amps_share/to-install /usr/local/tomcat/webapps/share -directory -nobackup && catalina.sh run"]
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
       CSRF_FILTER_REFERER: http://localhost:8080/share/.*
@@ -155,6 +159,8 @@ services:
     extends:
       file: commons/base.yaml
       service: share
+    volumes:
+      - ./share_amps_to_install:/usr/local/tomcat/amps_share/to-install
   postgres:
     image: postgres:16.5
     mem_limit: 512m
