@@ -64,7 +64,7 @@ services:
       service: alfresco
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.2.0
+    image: quay.io/alfresco/alfresco-transform-router:4.2.1
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -87,7 +87,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.0
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.1
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -110,7 +110,7 @@ services:
       shared-file-store:
         condition: service_healthy
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.2.0
+    image: quay.io/alfresco/alfresco-shared-file-store:4.2.1
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -287,7 +287,7 @@ services:
       elasticsearch:
         condition: service_healthy
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:7.0.1
+    image: quay.io/alfresco/alfresco-digital-workspace:7.1.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -306,7 +306,7 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:10.0.1
+    image: quay.io/alfresco/alfresco-control-center:10.1.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

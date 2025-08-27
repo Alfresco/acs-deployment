@@ -235,7 +235,7 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.2.0
+      tag: 4.2.1
     livenessProbe:
       # -- Overrride liveness probe endpoint to work around
       # https://alfresco.atlassian.net/browse/ACS-7269
@@ -246,35 +246,35 @@ alfresco-transform-service:
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-pdf-renderer
-      tag: 5.2.0
+      tag: 5.2.1
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-imagemagick
-      tag: 5.2.0
+      tag: 5.2.1
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-libreoffice
-      tag: 5.2.0
+      tag: 5.2.1
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-tika
-      tag: 5.2.0
+      tag: 5.2.1
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-transform-misc
-      tag: 5.2.0
+      tag: 5.2.1
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -283,7 +283,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.2.0
+      tag: 4.2.1
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -406,7 +406,7 @@ alfresco-digital-workspace:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 7.0.1
+    tag: 7.1.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -423,7 +423,7 @@ alfresco-control-center:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 10.0.1
+    tag: 10.1.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -532,7 +532,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.2.0
+    tag: 3.2.1
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL

@@ -270,7 +270,7 @@ alfresco-content-app:
             pathType: Prefix
   image:
     repository: alfresco/alfresco-content-app
-    tag: 7.0.1
+    tag: 7.1.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: ECM
