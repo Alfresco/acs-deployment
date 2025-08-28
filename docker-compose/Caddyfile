@@ -1,0 +1,3 @@
+https://alfresco.localhost {
+	reverse_proxy :8080
+}
