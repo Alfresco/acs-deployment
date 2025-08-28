@@ -38,12 +38,14 @@ services:
         -Delasticsearch.createIndexIfNotExists=true
         -Delasticsearch.host=elasticsearch
         -Delasticsearch.port=9200
-        -Dshare.host=localhost
-        -Dshare.port=8080
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
+        -Dshare.host=alfresco.localhost
+        -Dshare.port=443
+        -Dshare.protocol=https
+        -Dalfresco.host=alfresco.localhost
+        -Dalfresco.port=443
+        -Dalfresco.protocol=https
         -Dcsrf.filter.enabled=false
-        -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
+        -Daos.baseUrlOverwrite=https://alfresco.localhost/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
         -Dtransform.service.enabled=true
@@ -136,17 +138,19 @@ services:
     mem_limit: 1g
     entrypoint: ["/usr/local/tomcat/shared/classes/alfresco/substituter.sh", "java -jar /usr/local/tomcat/alfresco-mmt/alfresco-mmt*.jar install /usr/local/tomcat/amps_share/to-install /usr/local/tomcat/webapps/share -directory -nobackup && catalina.sh run"]
     environment:
-      CSRF_FILTER_ORIGIN: http://localhost:8080
-      CSRF_FILTER_REFERER: http://localhost:8080/share/.*
+      CSRF_FILTER_ORIGIN: https://alfresco.localhost
+      CSRF_FILTER_REFERER: https://alfresco.localhost/share/.*
       REPO_HOST: "alfresco"
       REPO_PORT: "8080"
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
+        -Dalfresco.host=alfresco.localhost
+        -Dhttp.secured.session=true
+        -Dcookies.sameSite=None
+        -Dalfresco.port=443
         -Dalfresco.context=alfresco
-        -Dalfresco.protocol=http
+        -Dalfresco.protocol=https
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/share"]
       interval: 20s
