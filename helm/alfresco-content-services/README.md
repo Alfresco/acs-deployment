@@ -32,7 +32,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.10.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
