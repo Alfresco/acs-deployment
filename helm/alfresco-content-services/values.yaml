@@ -550,6 +550,8 @@ alfresco-ai-transformer:
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: true
+  sysctlImage:
+    repository: bitnamilegacy/os-shell
   image:
     repository: bitnamilegacy/elasticsearch
     tag: 8.17.3

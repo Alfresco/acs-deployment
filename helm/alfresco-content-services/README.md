@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 9.5.0](https://img.shields.io/badge/Version-9.5.0-informational?style=flat-square) ![AppVersion: 25.2.0](https://img.shields.io/badge/AppVersion-25.2.0-informational?style=flat-square)
+![Version: 9.5.1](https://img.shields.io/badge/Version-9.5.1-informational?style=flat-square) ![AppVersion: 25.2.0](https://img.shields.io/badge/AppVersion-25.2.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -32,7 +32,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.10.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
@@ -268,6 +268,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.kibana.ingress.path | string | `"/kibana"` |  |
 | elasticsearch.master.masterOnly | bool | `false` |  |
 | elasticsearch.master.replicaCount | int | `1` |  |
+| elasticsearch.sysctlImage.repository | string | `"bitnamilegacy/os-shell"` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
 | global.auditIndex.password | string | `nil` | set password for authentication against the external elasticsearch service for audit indexing |
