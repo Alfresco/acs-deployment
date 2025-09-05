@@ -1,42 +1,44 @@
-{{- if .Values.postgresql.enabled }}
+{{- with .Values.postgresql}}
+{{- if .enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.postgresql.nameOverride }}
+  name: {{ .nameOverride }}
   labels:
-    {{- include "alfresco-content-services.database.repo.labels" . | nindent 4 }}
+    {{- include "alfresco-content-services.database.repo.labels" $ | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "alfresco-content-services.database.repo.selectorLabels" . | nindent 8 }}
+      {{- include "alfresco-content-services.database.repo.selectorLabels" $ | nindent 8 }}
   template:
     metadata:
       labels:
-        {{- include "alfresco-content-services.database.repo.labels" . | nindent 8 }}
+        {{- include "alfresco-content-services.database.repo.labels" $ | nindent 8 }}
     spec:
       containers:
         - name: postgres
-          image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
-          imagePullPolicy: {{ .Values.postgresql.image.pullPolicy }}
-          {{- if .Values.postgresql.auth.existingSecret }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy }}
+          {{- if .auth.existingSecret }}
           envFrom:
             - secretRef: 
-                name: {{ .Values.postgresql.auth.existingSecret }}
+                name: {{ .auth.existingSecret }}
           {{- else }}
           env:
             - name: POSTGRES_DB
-              value: {{ .Values.postgresql.auth.database | default "alfresco" }}
+              value: {{ .auth.database | default "alfresco" }}
             - name: POSTGRES_PASSWORD
-              value: {{ .Values.postgresql.auth.password | default "alfresco" }}
+              value: {{ .auth.password | default "alfresco" }}
             - name: POSTGRES_USER
-              value: {{ .Values.postgresql.auth.username | default "alfresco" }}
+              value: {{ .auth.username | default "alfresco" }}
           {{- end }}
           ports:
-            - containerPort: {{ .Values.postgresql.primary.service.ports.postgresql | default 5432 }}
+            - containerPort: {{ .primary.service.ports.postgresql | default 5432 }}
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.postgresql.livenessProbe | nindent 12 }}
+            {{- toYaml .livenessProbe | nindent 12 }}
           resources:
-            {{- toYaml .Values.postgresql.primary.resources | nindent 12 }}
+            {{- toYaml .primary.resources | nindent 12 }}
+{{- end }}
 {{- end }}
