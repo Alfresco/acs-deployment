@@ -50,5 +50,11 @@ spec:
             {{- toYaml .livenessProbe | nindent 12 }}
           resources:
             {{- toYaml .primary.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .primary.persistence.data.mountPath }}
+              subPath: {{ .primary.persistence.data.subPath }}
+      volumes:
+        {{- include "alfresco-common.data_volume" .primary | nindent 8 }}
 {{- end }}
 {{- end }}

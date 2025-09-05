@@ -329,6 +329,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.livenessProbe.timeoutSeconds | int | `3` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.extendedConfiguration | string | `"max_connections=250\nshared_buffers=512MB\neffective_cache_size=2GB\nwal_level=minimal\nmax_wal_senders=0\nmax_replication_slots=0\nlog_min_messages=LOG\n"` |  |
+| postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
+| postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |
+| postgresql.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
+| postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services/database-data"` |  |
+| postgresql.primary.persistence.enabled | bool | `true` |  |
+| postgresql.primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
+| postgresql.primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
 | postgresql.primary.resources.limits.cpu | string | `"8"` |  |
 | postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
