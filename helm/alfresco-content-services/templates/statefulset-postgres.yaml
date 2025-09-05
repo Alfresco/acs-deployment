@@ -4,7 +4,7 @@ kind: StatefulSet
 metadata:
   name: {{ .Values.postgresql.nameOverride }}
   labels:
-    {{- include "alfresco-content-services.labels" . | nindent 4 }}
+    {{- include "alfresco-content-services.database.repo.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "alfresco-content-services.labels" . | nindent 8 }}
+        {{- include "alfresco-content-services.database.repo.labels" . | nindent 8 }}
     spec:
       containers:
         - name: postgres

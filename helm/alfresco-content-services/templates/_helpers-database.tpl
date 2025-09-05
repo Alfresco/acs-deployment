@@ -19,22 +19,6 @@ Usage: include "alfresco-content-services.database.repo" $
 {{- end -}}
 
 {{/*
-Create repository database selector labels
-*/}}
-{{- define "alfresco-content-services.database.repo.selectorLabels" -}}
-{{ include "alfresco-content-services.selectorLabels" . }}
-app.kubernetes.io/component: postgresql-repo
-{{- end }}
-
-{{/*
-Create repository database labels
-*/}}
-{{- define "alfresco-content-services.database.repo.labels" -}}
-{{ include "alfresco-content-services.labels" . }}
-app.kubernetes.io/component: postgresql-repo
-{{- end }}
-
-{{/*
 Compute the sync-service database URL
 
 Usage: include "alfresco-content-services.database.sync" $
@@ -53,3 +37,25 @@ Usage: include "alfresco-content-services.database.sync" $
   {{- end }}
 {{- end }}
 {{- end -}}
+
+{{- define "alfresco-content-services.database.repo.name" -}}
+{{- $component := printf "%s-%s" (include "alfresco-content-services.name" .) "postgresql-acs" }}
+{{- $scope := (dict "Values" (dict "nameOverride" $component ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-content-services.name" $scope }}
+{{- end }}
+
+{{- define "alfresco-content-services.database.repo.fullname" -}}
+{{- $component := include "alfresco-content-services.database.repo.name" . }}
+{{- $scope := (dict "Values" (dict "nameOverride" $component ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-content-services.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-content-services.database.repo.labels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-content-services.database.repo.name" .)) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-content-services.labels" $scope }}
+{{- end }}
+
+{{- define "alfresco-content-services.database.repo.selectorLabels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-content-services.database.repo.name" .)) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-content-services.selectorLabels" $scope }}
+{{- end }}
