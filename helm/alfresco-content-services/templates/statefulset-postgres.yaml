@@ -1,9 +1,9 @@
-{{- with .Values.postgresql}}
+{{- with .Values.postgresql }}
 {{- if .enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .nameOverride }}
+  name: {{ template "alfresco-content-services.database.repo.fullname" $ }}
   labels:
     {{- include "alfresco-content-services.database.repo.labels" $ | nindent 4 }}
 spec:
@@ -20,6 +20,16 @@ spec:
         - name: postgres
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
+          {{- $extConf := .primary.extendedConfiguration }}
+          {{- if $extConf }}
+          args:
+            {{- range $line := splitList "\n" $extConf }}
+            {{- if $line }}
+            - "-c"
+            - {{ $line | trim | quote }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
           {{- if .auth.existingSecret }}
           envFrom:
             - secretRef: 
@@ -34,8 +44,8 @@ spec:
               value: {{ .auth.username | default "alfresco" }}
           {{- end }}
           ports:
-            - containerPort: {{ .primary.service.ports.postgresql | default 5432 }}
-              protocol: TCP
+            - name: tcp-postgresql
+              containerPort: {{ .primary.service.ports.postgresql | default 5432 }}
           livenessProbe:
             {{- toYaml .livenessProbe | nindent 12 }}
           resources:

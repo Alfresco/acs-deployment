@@ -39,8 +39,7 @@ Usage: include "alfresco-content-services.database.sync" $
 {{- end -}}
 
 {{- define "alfresco-content-services.database.repo.name" -}}
-{{- $component := printf "%s-%s" (include "alfresco-content-services.name" .) "postgresql-acs" }}
-{{- $scope := (dict "Values" (dict "nameOverride" $component ) "Chart" .Chart "Release" .Release) }}
+{{- $scope := (dict "Values" (dict "nameOverride" .Values.postgresql.nameOverride ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-content-services.name" $scope }}
 {{- end }}
 

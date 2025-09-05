@@ -320,15 +320,15 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.auth.username | string | `"alfresco"` |  |
 | postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository |
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql.image.repository | string | `"postgresql"` |  |
-| postgresql.image.tag | string | `"16.6.0"` |  |
+| postgresql.image.repository | string | `"postgres"` |  |
+| postgresql.image.tag | float | `16.6` |  |
 | postgresql.livenessProbe.exec.command[0] | string | `"pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"` |  |
 | postgresql.livenessProbe.failureThreshold | int | `3` |  |
 | postgresql.livenessProbe.initialDelaySeconds | int | `5` |  |
 | postgresql.livenessProbe.periodSeconds | int | `10` |  |
 | postgresql.livenessProbe.timeoutSeconds | int | `3` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
-| postgresql.primary.extendedConfiguration | string | `"max_connections = 250\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
+| postgresql.primary.extendedConfiguration | string | `"max_connections=250\nshared_buffers=512MB\neffective_cache_size=2GB\nwal_level=minimal\nmax_wal_senders=0\nmax_replication_slots=0\nlog_min_messages=LOG\n"` |  |
 | postgresql.primary.resources.limits.cpu | string | `"8"` |  |
 | postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
