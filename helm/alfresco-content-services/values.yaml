@@ -431,21 +431,25 @@ alfresco-control-center:
     BASE_PATH: /control-center
 postgresql:
   # -- Toggle embedded postgres for Alfresco Content Services repository
-  # Check [PostgreSQL Bitnami chart
-  # Documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)
   enabled: true
   nameOverride: postgresql-acs
   image:
-    repository: bitnamilegacy/postgresql
+    repository: postgresql
     tag: 16.6.0
     pullPolicy: IfNotPresent
-  commonAnnotations:
-    application: alfresco-content-services
   auth:
     existingSecret: null
     username: alfresco
     password: alfresco
     database: alfresco
+  livenessProbe:
+    exec:
+      command:
+        - pg_isready -d $POSTGRES_DB -U $POSTGRES_USER
+    failureThreshold: 3
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 3
   primary:
     extendedConfiguration: |
       max_connections = 250
@@ -455,6 +459,9 @@ postgresql:
       max_wal_senders = 0
       max_replication_slots = 0
       log_min_messages = LOG
+    service:
+      ports:
+        postgresql: 5432
     resources:
       requests:
         cpu: "500m"
@@ -462,14 +469,6 @@ postgresql:
       limits:
         cpu: "8"
         memory: "8Gi"
-    persistence:
-      # -- set the storageClass to use for dynamic provisioning.
-      # setting it to null means "default storageClass".
-      storageClass: null
-      # -- provide an existing persistent volume claim name to persist SQL data
-      # Make sure the root folder has the appropriate permissions/ownership set.
-      existingClaim: null
-      subPath: "alfresco-content-services/database-data"
 alfresco-sync-service:
   # -- Toggle deployment of Alfresco Sync Service (Desktop-Sync)
   # Check [Alfresco Sync Service

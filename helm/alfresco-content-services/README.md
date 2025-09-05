@@ -39,7 +39,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.1 |
 | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
 
@@ -319,20 +318,22 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |
 | postgresql.auth.username | string | `"alfresco"` |  |
-| postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
-| postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository Check [PostgreSQL Bitnami chart Documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) |
+| postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository |
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` |  |
+| postgresql.image.repository | string | `"postgresql"` |  |
 | postgresql.image.tag | string | `"16.6.0"` |  |
+| postgresql.livenessProbe.exec.command[0] | string | `"pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"` |  |
+| postgresql.livenessProbe.failureThreshold | int | `3` |  |
+| postgresql.livenessProbe.initialDelaySeconds | int | `5` |  |
+| postgresql.livenessProbe.periodSeconds | int | `10` |  |
+| postgresql.livenessProbe.timeoutSeconds | int | `3` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.extendedConfiguration | string | `"max_connections = 250\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
-| postgresql.primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
-| postgresql.primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
-| postgresql.primary.persistence.subPath | string | `"alfresco-content-services/database-data"` |  |
 | postgresql.primary.resources.limits.cpu | string | `"8"` |  |
 | postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
 | postgresql.primary.resources.requests.memory | string | `"1Gi"` |  |
+| postgresql.primary.service.ports.postgresql | int | `5432` |  |
 | prometheus.url | string | `nil` | URL of the prometheus server (must be reachable by KEDA pods) |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
