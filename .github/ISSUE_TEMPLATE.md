@@ -14,7 +14,7 @@ your issue or even in closing it without further notice.
 
 > - [ ] [Alfresco Content Services Helm chart](../helm/alfresco-content-services)
 >
->   This chart being an umbrella charts the issue may actually lie in one of the
+>   This chart being an umbrella chart the issue may actually lie in one of the
 >   sub-charts located in the [Alfresco components' Helm
 >   charts](https://github.com/Alfresco/alfresco-helm-charts/charts).
 > - [ ] [ACS SSO example Helm chart](../helm/acs-sso-example)
