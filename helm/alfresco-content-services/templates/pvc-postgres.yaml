@@ -1,4 +1,0 @@
-{{- if and (not .Values.postgresql.primary.persistence.existingClaim) .Values.postgresql.primary.persistence.enabled }}
-{{- $pvcContext := mergeOverwrite (dict) .Values.postgresql.primary (dict "service" (dict "name" (include "alfresco-content-services.database.repo.name" .))) -}}
-{{ include "component_pvc" $pvcContext }}
-{{- end }}

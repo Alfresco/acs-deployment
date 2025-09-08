@@ -19,11 +19,16 @@ dependencies:
   - name: alfresco-common
     version: 4.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
-  - name: postgresql
-    version: 12.8.5
-    repository: oci://registry-1.docker.io/bitnamicharts
+  - name: postgres
+    version: 0.1.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
     alias: postgresql-sync
     condition: postgresql-sync.enabled
+  - name: postgres
+    version: 0.1.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    alias: postgresql
+    condition: postgresql.enabled
   - name: alfresco-adf-app
     alias: alfresco-control-center
     repository: https://alfresco.github.io/alfresco-helm-charts/
