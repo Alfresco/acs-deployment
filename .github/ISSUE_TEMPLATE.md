@@ -16,7 +16,7 @@ your issue or even in closing it without further notice.
 >
 >   This chart being an umbrella chart the issue may actually lie in one of the
 >   sub-charts located in the [Alfresco components' Helm
->   charts](https://github.com/Alfresco/alfresco-helm-charts/charts).
+>   charts](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts).
 > - [ ] [ACS SSO example Helm chart](../helm/acs-sso-example)
 > - [ ] [Alfresco Docker Compose files](../docker-compose)
 
