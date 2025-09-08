@@ -1,0 +1,61 @@
+{
+  "clients": [
+    {
+      "attributes": {
+        "display.on.consent.screen": false,
+        "oauth2.device.authorization.grant.enabled": false,
+        "oidc.ciba.grant.enabled": false,
+        "use.refresh.tokens": false
+      },
+      "clientId": "alfresco",
+      "enabled": true,
+      "implicitFlowEnabled": true,
+      "publicClient": true,
+      "redirectUris": [
+        "http://localhost/*"
+      ],
+      "standardFlowEnabled": true,
+      "webOrigins": [
+        "http://localhost"
+      ]
+    }
+  ],
+  "defaultLocale": "en",
+  "enabled": true,
+  "id": "alfresco",
+  "internationalizationEnabled": true,
+  "loginTheme": "alfresco",
+  "realm": "alfresco",
+  "sslRequired": "none",
+  "supportedLocales": [
+    "ca",
+    "de",
+    "en",
+    "es",
+    "fr",
+    "it",
+    "ja",
+    "lt",
+    "nl",
+    "no",
+    "pt-BR",
+    "ru",
+    "sv",
+    "zh-CN"
+  ],
+  "users": [
+    {
+      "credentials": [
+        {
+          "type": "password",
+          "value": "secret"
+        }
+      ],
+      "email": "admin@example.org",
+      "enabled": true,
+      "firstName": "admin",
+      "lastName": "admin",
+      "username": "admin"
+    }
+  ]
+}

@@ -409,9 +409,16 @@ alfresco-digital-workspace:
     tag: 7.1.0
     pullPolicy: IfNotPresent
   env:
-    APP_CONFIG_PROVIDER: "ECM"
-    APP_CONFIG_AUTH_TYPE: "BASIC"
     BASE_PATH: /workspace
+    APP_CONFIG_AUTH_TYPE: "OAUTH"
+    APP_CONFIG_ECM_HOST: "http://localhost"
+    APP_CONFIG_IDENTITY_HOST: "http://localhost/auth/realms/alfresco"
+    APP_CONFIG_OAUTH2_CLIENTID: "alfresco"
+    APP_CONFIG_OAUTH2_HOST: "http://localhost/auth/realms/alfresco"
+    APP_CONFIG_PROVIDER: "ALL"
+    APP_CONFIG_OAUTH2_REDIRECT_LOGIN: /workspace
+    APP_CONFIG_OAUTH2_REDIRECT_LOGOUT: /workspace
+    APP_CONFIG_OAUTH2_REDIRECT_SILENT_IFRAME_URI: https://localhost/assets/silent-refresh.html
 alfresco-control-center:
   enabled: true
   nameOverride: "alfresco-cc"

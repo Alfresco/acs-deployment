@@ -48,3 +48,8 @@ data:
     {{- range $key, $value := .Values.config.repository.additionalGlobalProperties }}
     {{ $key }}={{ $value }}
     {{- end }}
+    authentication.chain = identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
+    identity-service.authentication.enabled = true
+    identity-service.realm = alfresco
+    identity-service.auth-server-url = http://keycloak-http/auth
+    identity-service.enable-basic-auth = true
