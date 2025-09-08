@@ -2,8 +2,8 @@
 <!--
 Please use this template to report issues in this repository.
 
-This helps us to process your issue faster. Remember we are mind readers, so the
-more information you provide the better.
+This helps us to process your issue faster. Remember we are not mind readers, so
+the more information you provide the better.
 Failure to provide the requested information may result in delays in answering
 your issue or even in closing it without further notice.
 -->
