@@ -28,7 +28,7 @@ body:
       label: What version of Alfresco Content Service deployment tool are you using?
       description: Please provide the version number (check the tags if unsure).
       placeholder: "9.5.1"
-  - type: dropdown
+  - type: checkboxes
     id: edition
     validations:
       required: true
@@ -36,9 +36,8 @@ body:
       label: Does the issue affect the Community or Enterprise edition?
       description: Select all that apply.
       options:
-        - Alfresco Content Service Community Edition
-        - Alfresco Content Service Enterprise Edition
-        - Both
+        - label: Alfresco Content Service Community Edition
+        - label: Alfresco Content Service Enterprise Edition
   - type: dropdown
     id: issueType
     validations:
