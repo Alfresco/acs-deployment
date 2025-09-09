@@ -37,24 +37,3 @@ Usage: include "alfresco-content-services.database.sync" $
   {{- end }}
 {{- end }}
 {{- end -}}
-
-{{- define "alfresco-content-services.database.repo.name" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" .Values.postgresql.nameOverride ) "Chart" .Chart "Release" .Release) }}
-{{- include "alfresco-content-services.name" $scope }}
-{{- end }}
-
-{{- define "alfresco-content-services.database.repo.fullname" -}}
-{{- $component := include "alfresco-content-services.database.repo.name" . }}
-{{- $scope := (dict "Values" (dict "nameOverride" $component ) "Chart" .Chart "Release" .Release) }}
-{{- include "alfresco-content-services.fullname" $scope }}
-{{- end }}
-
-{{- define "alfresco-content-services.database.repo.labels" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-content-services.database.repo.name" .)) "Chart" .Chart "Release" .Release) }}
-{{- include "alfresco-content-services.labels" $scope }}
-{{- end }}
-
-{{- define "alfresco-content-services.database.repo.selectorLabels" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-content-services.database.repo.name" .)) "Chart" .Chart "Release" .Release) }}
-{{- include "alfresco-content-services.selectorLabels" $scope }}
-{{- end }}
