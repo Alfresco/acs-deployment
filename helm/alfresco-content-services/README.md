@@ -37,9 +37,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.0 |
 | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
 
@@ -303,32 +303,40 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | messageBroker.user | string | `nil` | External message broker user |
 | messageBroker.webConsole | string | `nil` | URL of the web console interface for the external message broker Your broker we console interface should respond to URl built using the `restAPITemplate` below where `.ManagementEndpoint` evaluates to the `webConsole`value below. |
 | postgresql-sync.auth.database | string | `"syncservice-postgresql"` |  |
-| postgresql-sync.auth.enablePostgresUser | bool | `false` |  |
 | postgresql-sync.auth.password | string | `"admin"` |  |
 | postgresql-sync.auth.username | string | `"alfresco"` |  |
 | postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
-| postgresql-sync.image.repository | string | `"bitnamilegacy/postgresql"` |  |
-| postgresql-sync.image.tag | string | `"16.6.0"` |  |
+| postgresql-sync.image.pullPolicy | string | `"IfNotPresent"` |  |
+| postgresql-sync.image.repository | string | `"postgres"` |  |
+| postgresql-sync.image.tag | float | `16.6` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
-| postgresql-sync.primary.extendedConfiguration | string | `"max_connections = 150\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
+| postgresql-sync.primary.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| postgresql-sync.primary.persistence.baseSize | string | `"8Gi"` |  |
+| postgresql-sync.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
+| postgresql-sync.primary.persistence.data.subPath | string | `"alfresco-sync-service/database-data"` |  |
+| postgresql-sync.primary.persistence.enabled | bool | `true` |  |
+| postgresql-sync.primary.persistence.existingClaim | string | `nil` |  |
+| postgresql-sync.primary.persistence.storageClass | string | `nil` |  |
 | postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
 | postgresql-sync.primary.resources.limits.memory | string | `"4Gi"` |  |
 | postgresql-sync.primary.resources.requests.cpu | string | `"250m"` |  |
 | postgresql-sync.primary.resources.requests.memory | string | `"1Gi"` |  |
+| postgresql-sync.primary.service.name | string | `"postgresql-sync"` |  |
 | postgresql.auth.database | string | `"alfresco"` |  |
-| postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |
 | postgresql.auth.username | string | `"alfresco"` |  |
-| postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
-| postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository Check [PostgreSQL Bitnami chart Documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) |
+| postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository |
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` |  |
-| postgresql.image.tag | string | `"16.6.0"` |  |
+| postgresql.image.repository | string | `"postgres"` |  |
+| postgresql.image.tag | float | `16.6` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
-| postgresql.primary.extendedConfiguration | string | `"max_connections = 250\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
+| postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
+| postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |
+| postgresql.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
+| postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services/database-data"` |  |
+| postgresql.primary.persistence.enabled | bool | `true` |  |
 | postgresql.primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
 | postgresql.primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
-| postgresql.primary.persistence.subPath | string | `"alfresco-content-services/database-data"` |  |
 | postgresql.primary.resources.limits.cpu | string | `"8"` |  |
 | postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |

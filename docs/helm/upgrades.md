@@ -16,6 +16,14 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## Unreleased
+
+* PostgreSQL is now deployed using our own Helm chart
+  [postgres](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/postgres).
+  ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
+  use this chart in any staging, or production environment. Read more in the
+  chart readme.
+
 ## 9.0.0
 
 * External dependencies on bitnami/common chart have been completely removed
