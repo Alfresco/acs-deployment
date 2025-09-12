@@ -325,6 +325,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql.image.repository | string | `"postgres"` |  |
 | postgresql.image.tag | float | `16.6` |  |
+| postgresql.livenessProbe.timeoutSeconds | int | `3` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
 | postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |
