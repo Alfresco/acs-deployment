@@ -38,8 +38,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.1 |
 
 ## Values
 
@@ -325,7 +325,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql.image.repository | string | `"postgres"` |  |
 | postgresql.image.tag | float | `16.6` |  |
-| postgresql.livenessProbe.timeoutSeconds | int | `3` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
 | postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |

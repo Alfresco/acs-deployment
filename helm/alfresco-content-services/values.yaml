@@ -439,8 +439,6 @@ postgresql:
     username: alfresco
     password: alfresco
     database: alfresco
-  livenessProbe:
-    timeoutSeconds: 3
   primary:
     resources:
       requests:

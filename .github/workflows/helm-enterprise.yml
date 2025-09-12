@@ -161,18 +161,3 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
-
-      - name: Collect logs from all containers
-        if: always()
-        run: |
-          mkdir -p logs
-          for pod in $(kubectl get pods -n default -o jsonpath='{.items[*].metadata.name}'); do
-            kubectl logs $pod -n default > logs/${pod}.log
-          done
-
-      - name: Upload logs as artifact
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 #v4.6.2
-        with:
-          name: k8s-logs${{ matrix.name }}-${{ matrix.values }}
-          path: logs
