@@ -110,6 +110,7 @@ jobs:
           helm repo add elastic https://helm.elastic.co/
 
       - name: Helm install
+        id: helm_install
         run: >-
           helm dep build ./helm/alfresco-content-services &&
           helm install acs ./helm/alfresco-content-services
@@ -161,3 +162,10 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
+
+      - name: Collect and push logs as artifact
+        if: always() && steps.helm_install.outcome != 'skipped'
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v8.33.1
+        with:
+          log_retention: 7
+          log_name_identifier: "k8s-logs-${{ matrix.name }}-${{ matrix.values }}"
