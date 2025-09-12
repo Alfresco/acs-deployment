@@ -73,8 +73,6 @@ global:
     secretName: &aas_elasticsearch_secretName alfresco-aas-elasticsearch-secret
     # -- Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys.
     existingSecretName: null
-  # -- Enable/Disable Kibana for the embedded elasticsearch cluster
-  kibanaEnabled: false
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
@@ -549,43 +547,29 @@ alfresco-ai-transformer:
 elasticsearch:
   # -- Enables the embedded elasticsearch cluster
   enabled: true
-  sysctlImage:
-    repository: bitnamilegacy/os-shell
-  image:
-    repository: bitnamilegacy/elasticsearch
-    tag: 8.17.3
-  master:
-    masterOnly: false
-    replicaCount: 1
-  data:
-    replicaCount: 0
-  coordinating:
-    replicaCount: 0
-  ingest:
-    replicaCount: 0
-  kibana:
+  nameOverride: elasticsearch
+  elasticsearch:
     image:
-      repository: bitnamilegacy/kibana
+      repository: elasticsearch
+      tag: 8.17.3
+    ingress:
+      # -- toggle deploying elasticsearch-audit ingress
+      enabled: false
+    persistence:
+      enabled: true
+      baseSize: 8Gi
+  kibana:
+    enabled: false
+    image:
+      repository: kibana
       tag: 7.17.26
-    configuration:
-      server:
-        basePath: "/kibana"
-        # -- This setting defines the base URL for accessing Kibana in your deployment.
-        #    - For **local deployments**: Use "http://localhost/kibana" (default).
-        #    - For **production or remote deployments**: Replace `localhost` with the fully qualified domain name (FQDN) or IP address
-        #      where Kibana is accessible. Example: "http://kibana.mycompany.com" or "http://192.168.1.100/kibana".
-        #    - Ensure this URL is accessible by users or other services that need to interact with Kibana.
-        publicBaseUrl: "http://localhost/kibana"
-        rewriteBasePath: true
+    serverBasePath: "/kibana"
     ingress:
       enabled: true
-      ingressClassName: nginx
-      hostname: "*"
-      path: /kibana
-  ingress:
-    # -- toggle deploying elasticsearch-audit ingress for more details about configuration check
-    # https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366
-    enabled: false
+      hosts:
+        - paths:
+            - path: /kibana
+              pathType: ImplementationSpecific
 alfresco-audit-storage:
   enabled: true
   nameOverride: alfresco-audit-storage

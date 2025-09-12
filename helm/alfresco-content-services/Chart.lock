@@ -44,14 +44,14 @@ dependencies:
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.1.1
-- name: elasticsearch
-  repository: oci://registry-1.docker.io/bitnamicharts
-  version: 21.4.1
+- name: elastic
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 0.1.0
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.3.2
 - name: alfresco-connector-hxi
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.1.5
-digest: sha256:73c35584e9a9fa881bbfde8ae27547b1b179a2e0cc9a0e4a9f6cf3103f62c8e1
-generated: "2025-09-09T10:18:37.538315+02:00"
+digest: sha256:b07bfee0d7cabdae38e997878900371034f3715b8afb541b5606ab0aa6a78333
+generated: "2025-09-12T10:53:59.103381+02:00"

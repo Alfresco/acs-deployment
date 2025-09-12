@@ -22,12 +22,16 @@ User docs available at: [https://alfresco.github.io/acs-deployment/](https://alf
 PostgreSQL is now deployed using our own Helm chart
 [postgres](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/postgres).
 ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
-use this chart in any staging, or production environment. Read more in the chart readme.
+use this chart in any staging, or production environment. Read more in the chart
+readme.
 
-Charts are currently using `bitnamilegacy` images for Elasticsearch. This is due
-to upcoming changes to the Bitnami Catalog. See the [Bitnami
-announcement](https://github.com/bitnami/containers/issues/83267) for more
-details. Work on creating our own charts for these components is tracked in
+Elasticsearch and Kibana are now deployed using
+[elastic](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/elastic).
+⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
+use this chart in any staging, or production environment. Read more in the chart
+readme.
+
+Work on creating our own charts for these components is tracked in
 [OPSEXP-3421](https://hyland.atlassian.net/browse/OPSEXP-3421).
 
 ## ⚠️ Important changes for Docker Compose

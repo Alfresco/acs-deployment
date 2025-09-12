@@ -37,9 +37,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.0 |
-| oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
 
 ## Values
 
@@ -250,32 +250,26 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
 | dtas.image.tag | string | `"v1.7.2"` |  |
-| elasticsearch.coordinating.replicaCount | int | `0` |  |
-| elasticsearch.data.replicaCount | int | `0` |  |
+| elasticsearch.elasticsearch.image.repository | string | `"elasticsearch"` |  |
+| elasticsearch.elasticsearch.image.tag | string | `"8.17.3"` |  |
+| elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
+| elasticsearch.elasticsearch.persistence.baseSize | string | `"8Gi"` |  |
+| elasticsearch.elasticsearch.persistence.enabled | bool | `true` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
-| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
-| elasticsearch.image.tag | string | `"8.17.3"` |  |
-| elasticsearch.ingest.replicaCount | int | `0` |  |
-| elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366 |
-| elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
-| elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` | This setting defines the base URL for accessing Kibana in your deployment.    - For **local deployments**: Use "http://localhost/kibana" (default).    - For **production or remote deployments**: Replace `localhost` with the fully qualified domain name (FQDN) or IP address      where Kibana is accessible. Example: "http://kibana.mycompany.com" or "http://192.168.1.100/kibana".    - Ensure this URL is accessible by users or other services that need to interact with Kibana. |
-| elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
-| elasticsearch.kibana.image.repository | string | `"bitnamilegacy/kibana"` |  |
+| elasticsearch.kibana.enabled | bool | `false` |  |
+| elasticsearch.kibana.image.repository | string | `"kibana"` |  |
 | elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
-| elasticsearch.kibana.ingress.hostname | string | `"*"` |  |
-| elasticsearch.kibana.ingress.ingressClassName | string | `"nginx"` |  |
-| elasticsearch.kibana.ingress.path | string | `"/kibana"` |  |
-| elasticsearch.master.masterOnly | bool | `false` |  |
-| elasticsearch.master.replicaCount | int | `1` |  |
-| elasticsearch.sysctlImage.repository | string | `"bitnamilegacy/os-shell"` |  |
+| elasticsearch.kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
+| elasticsearch.kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| elasticsearch.kibana.serverBasePath | string | `"/kibana"` |  |
+| elasticsearch.nameOverride | string | `"elasticsearch"` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
 | global.auditIndex.password | string | `nil` | set password for authentication against the external elasticsearch service for audit indexing |
 | global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.auditIndex.url | string | `nil` | set this URL if you have an external elasticsearch for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
-| global.kibanaEnabled | bool | `false` | Enable/Disable Kibana for the embedded elasticsearch cluster |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, please search this topic in https://support.hyland.com/r/alfresco |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
