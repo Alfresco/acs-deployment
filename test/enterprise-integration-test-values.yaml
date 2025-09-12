@@ -37,7 +37,7 @@ alfresco-search:
       cpu: "2"
       memory: "1280Mi"
 elasticsearch:
-  master:
+  elasticsearch:
     resources:
       requests:
         cpu: "0.01"

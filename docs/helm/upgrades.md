@@ -24,6 +24,12 @@ version in which they have been released.
   use this chart in any staging, or production environment. Read more in the
   chart readme.
 
+* Elasticsearch and Kibana are now deployed using
+  [elastic](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/elastic).
+  ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
+  use this chart in any staging, or production environment. Read more in the
+  chart readme.
+
 ## 9.0.0
 
 * External dependencies on bitnami/common chart have been completely removed
