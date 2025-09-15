@@ -557,7 +557,7 @@ elasticsearch:
       enabled: false
     persistence:
       enabled: true
-      baseSize: 8Gi
+      baseSize: 4Gi
     livenessProbe:
       initialDelaySeconds: 100
     readinessProbe:
