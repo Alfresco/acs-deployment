@@ -84,7 +84,7 @@ dependencies:
     condition: alfresco-ai-transformer.enabled
   - name: elastic
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.1.0
+    version: 0.1.1
     alias: elasticsearch
     condition: elasticsearch.enabled
   - name: alfresco-audit-storage

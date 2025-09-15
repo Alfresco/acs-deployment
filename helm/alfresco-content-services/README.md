@@ -37,7 +37,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.1.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.1 |
 
@@ -255,7 +255,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
 | elasticsearch.elasticsearch.livenessProbe.initialDelaySeconds | int | `100` |  |
 | elasticsearch.elasticsearch.persistence.baseSize | string | `"8Gi"` |  |
-| elasticsearch.elasticsearch.persistence.data.subPath | string | `nil` |  |
 | elasticsearch.elasticsearch.persistence.enabled | bool | `true` |  |
 | elasticsearch.elasticsearch.readinessProbe.initialDelaySeconds | int | `100` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |

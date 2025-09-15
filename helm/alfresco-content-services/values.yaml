@@ -558,8 +558,6 @@ elasticsearch:
     persistence:
       enabled: true
       baseSize: 8Gi
-      data:
-        subPath: null
     livenessProbe:
       initialDelaySeconds: 100
     readinessProbe:
