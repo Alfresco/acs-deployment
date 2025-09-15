@@ -122,6 +122,11 @@ jobs:
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
+      - name: patch acs-postgresql-acs and acs-postgresql-sync with pod security context fs group 1000
+        run: |
+          kubectl patch statefulset acs-postgresql-acs -p '{"spec":{"template":{"spec":{"securityContext":{"fsGroup":1000}}}}}'
+          kubectl patch statefulset acs-postgresql-sync -p '{"spec":{"template":{"spec":{"securityContext":{"fsGroup":1000}}}}}'
+
       - name: Wait for pods to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.32.1
 
