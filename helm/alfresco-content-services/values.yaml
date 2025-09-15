@@ -452,7 +452,7 @@ postgresql:
       # -- set the storageClass to use for dynamic provisioning.
       # setting it to null means "default storageClass".
       storageClass: null
-      baseSize: 2Gi
+      baseSize: 8Gi
       # -- provide an existing persistent volume claim name to persist SQL data
       # Make sure the root folder has the appropriate permissions/ownership set.
       existingClaim: null
@@ -514,7 +514,7 @@ postgresql-sync:
     persistence:
       enabled: true
       storageClass: null
-      baseSize: 2Gi
+      baseSize: 8Gi
       existingClaim: null
       accessModes:
         - ReadWriteOnce
@@ -557,7 +557,7 @@ elasticsearch:
       enabled: false
     persistence:
       enabled: true
-      baseSize: 2Gi
+      baseSize: 4Gi
     livenessProbe:
       initialDelaySeconds: 100
     readinessProbe:
