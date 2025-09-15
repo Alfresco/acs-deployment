@@ -329,7 +329,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
 | postgresql.primary.persistence.baseSize | string | `"2Gi"` |  |
 | postgresql.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
-| postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services/database-data"` |  |
+| postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services-pg/database-data"` |  |
 | postgresql.primary.persistence.enabled | bool | `true` |  |
 | postgresql.primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
 | postgresql.primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
