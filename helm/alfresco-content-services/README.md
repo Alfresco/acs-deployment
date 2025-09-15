@@ -255,6 +255,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
 | elasticsearch.elasticsearch.livenessProbe.initialDelaySeconds | int | `100` |  |
 | elasticsearch.elasticsearch.persistence.baseSize | string | `"8Gi"` |  |
+| elasticsearch.elasticsearch.persistence.data.subPath | string | `nil` |  |
 | elasticsearch.elasticsearch.persistence.enabled | bool | `true` |  |
 | elasticsearch.elasticsearch.readinessProbe.initialDelaySeconds | int | `100` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
