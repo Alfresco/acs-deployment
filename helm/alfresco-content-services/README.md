@@ -255,7 +255,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
 | elasticsearch.elasticsearch.livenessProbe.initialDelaySeconds | int | `100` |  |
 | elasticsearch.elasticsearch.persistence.baseSize | string | `"4Gi"` |  |
-| elasticsearch.elasticsearch.persistence.enabled | bool | `false` |  |
+| elasticsearch.elasticsearch.persistence.enabled | bool | `true` |  |
 | elasticsearch.elasticsearch.readinessProbe.initialDelaySeconds | int | `100` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.kibana.enabled | bool | `false` |  |
@@ -310,7 +310,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.primary.persistence.baseSize | string | `"8Gi"` |  |
 | postgresql-sync.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
 | postgresql-sync.primary.persistence.data.subPath | string | `"alfresco-sync-service/database-data"` |  |
-| postgresql-sync.primary.persistence.enabled | bool | `false` |  |
+| postgresql-sync.primary.persistence.enabled | bool | `true` |  |
 | postgresql-sync.primary.persistence.existingClaim | string | `nil` |  |
 | postgresql-sync.primary.persistence.storageClass | string | `nil` |  |
 | postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
@@ -330,7 +330,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |
 | postgresql.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
 | postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services/database-data"` |  |
-| postgresql.primary.persistence.enabled | bool | `false` |  |
+| postgresql.primary.persistence.enabled | bool | `true` |  |
 | postgresql.primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
 | postgresql.primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
 | postgresql.primary.resources.limits.cpu | string | `"8"` |  |
