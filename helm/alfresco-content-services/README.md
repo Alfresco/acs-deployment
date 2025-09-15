@@ -254,7 +254,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.elasticsearch.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
 | elasticsearch.elasticsearch.livenessProbe.initialDelaySeconds | int | `100` |  |
-| elasticsearch.elasticsearch.persistence.baseSize | string | `"4Gi"` |  |
+| elasticsearch.elasticsearch.persistence.baseSize | string | `"2Gi"` |  |
 | elasticsearch.elasticsearch.persistence.enabled | bool | `true` |  |
 | elasticsearch.elasticsearch.readinessProbe.initialDelaySeconds | int | `100` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
@@ -307,7 +307,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.image.tag | float | `16.6` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
 | postgresql-sync.primary.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| postgresql-sync.primary.persistence.baseSize | string | `"8Gi"` |  |
+| postgresql-sync.primary.persistence.baseSize | string | `"2Gi"` |  |
 | postgresql-sync.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
 | postgresql-sync.primary.persistence.data.subPath | string | `"alfresco-sync-service/database-data"` |  |
 | postgresql-sync.primary.persistence.enabled | bool | `true` |  |
@@ -327,7 +327,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.image.tag | float | `16.6` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
-| postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |
+| postgresql.primary.persistence.baseSize | string | `"2Gi"` |  |
 | postgresql.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
 | postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services/database-data"` |  |
 | postgresql.primary.persistence.enabled | bool | `true` |  |
