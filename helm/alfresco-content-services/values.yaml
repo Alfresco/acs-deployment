@@ -448,7 +448,7 @@ postgresql:
         cpu: "8"
         memory: "8Gi"
     persistence:
-      enabled: true
+      enabled: false
       # -- set the storageClass to use for dynamic provisioning.
       # setting it to null means "default storageClass".
       storageClass: null
@@ -512,7 +512,7 @@ postgresql-sync:
     service:
       name: *syncNameOverride
     persistence:
-      enabled: true
+      enabled: false
       storageClass: null
       baseSize: 8Gi
       existingClaim: null
@@ -556,7 +556,7 @@ elasticsearch:
       # -- toggle deploying elasticsearch-audit ingress
       enabled: false
     persistence:
-      enabled: true
+      enabled: false
       baseSize: 4Gi
     livenessProbe:
       initialDelaySeconds: 100
