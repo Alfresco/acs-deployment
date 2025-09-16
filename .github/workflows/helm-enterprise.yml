@@ -123,6 +123,8 @@ jobs:
 
       - name: Wait for pods to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.32.1
+        with:
+          wait-timeout: 13m
 
       - name: Spit cluster status after install
         if: always()

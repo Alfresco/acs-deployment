@@ -461,7 +461,7 @@ postgresql:
       accessModes:
         - ReadWriteOnce
       data:
-        subPath: "alfresco-content-services-pg/database-data"
+        subPath: "alfresco-content-services/database-data"
         mountPath: "/var/lib/postgresql/data"
 alfresco-sync-service:
   # -- Toggle deployment of Alfresco Sync Service (Desktop-Sync)
