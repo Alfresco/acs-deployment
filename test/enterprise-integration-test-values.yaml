@@ -21,7 +21,7 @@ share:
       memory: "256Mi"
     limits:
       cpu: "2"
-      memory: "512Mi"
+      memory: "1Gi"
   readinessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
