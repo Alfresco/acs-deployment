@@ -121,10 +121,25 @@ jobs:
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
-      - name: Wait for pods to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.32.1
+      - name: Wait for deployments to be ready
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
         with:
-          wait-timeout: 13m
+          wait-resource: "deployments"
+          wait-condition: "condition=Available"
+
+      - name: Wait for statefulsets to be ready
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
+        with:
+          wait-resource: "sts"
+          wait-condition: "jsonpath='{.status.readyReplicas}'=1"
+          wait-timeout: 10s
+
+      - name: Wait for jobs to be completed
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
+        with:
+          wait-resource: "jobs"
+          wait-condition: "condition=complete"
+          wait-timeout: 10s
 
       - name: Spit cluster status after install
         if: always()
