@@ -52,7 +52,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.image.repository | string | `"quay.io/alfresco/alfresco-activemq"` |  |
 | activemq.image.tag | string | `"5.18.7-jre17-rockylinux8"` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
-| activemq.persistence.baseSize | string | `"2Gi"` |  |
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
@@ -132,7 +131,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.image.tag | string | `"25.2.0"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
-| alfresco-repository.persistence.baseSize | string | `"4Gi"` |  |
+| alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
@@ -183,7 +182,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.filestore.enabled | bool | `true` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | alfresco-transform-service.filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
 | alfresco-transform-service.filestore.image.tag | string | `"4.2.1"` |  |
-| alfresco-transform-service.filestore.persistence.baseSize | string | `"4Gi"` |  |
 | alfresco-transform-service.filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | alfresco-transform-service.filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
 | alfresco-transform-service.filestore.persistence.enabled | bool | `true` | Persist filestore data |
@@ -309,7 +307,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.image.tag | float | `16.6` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
 | postgresql-sync.primary.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
-| postgresql-sync.primary.persistence.baseSize | string | `"4Gi"` |  |
+| postgresql-sync.primary.persistence.baseSize | string | `"8Gi"` |  |
 | postgresql-sync.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
 | postgresql-sync.primary.persistence.data.subPath | string | `"alfresco-sync-service/database-data"` |  |
 | postgresql-sync.primary.persistence.enabled | bool | `true` |  |
@@ -329,7 +327,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql.image.tag | float | `16.6` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
 | postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
-| postgresql.primary.persistence.baseSize | string | `"4Gi"` |  |
+| postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |
 | postgresql.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
 | postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services-pg/database-data"` |  |
 | postgresql.primary.persistence.enabled | bool | `true` |  |

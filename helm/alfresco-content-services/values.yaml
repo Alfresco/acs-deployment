@@ -178,7 +178,7 @@ alfresco-repository:
   persistence:
     # -- Persist repository data
     enabled: true
-    baseSize: 4Gi
+    baseSize: 20Gi
     # -- Specify a storageClass for dynamic provisioning
     accessModes:
       - ReadWriteMany
@@ -188,8 +188,6 @@ activemq:
     tag: 5.18.7-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
-  persistence:
-    baseSize: 2Gi
   adminUser:
     # -- Default username for the embedded broker admin user
     user: admin
@@ -287,7 +285,6 @@ alfresco-transform-service:
     persistence:
       # -- Persist filestore data
       enabled: true
-      baseSize: 4Gi
       data:
         mountPath: "/tmp/Alfresco"
         subPath: "alfresco-content-services/filestore-data"
@@ -455,7 +452,7 @@ postgresql:
       # -- set the storageClass to use for dynamic provisioning.
       # setting it to null means "default storageClass".
       storageClass: null
-      baseSize: 4Gi
+      baseSize: 8Gi
       # -- provide an existing persistent volume claim name to persist SQL data
       # Make sure the root folder has the appropriate permissions/ownership set.
       existingClaim: null
@@ -517,7 +514,7 @@ postgresql-sync:
     persistence:
       enabled: true
       storageClass: null
-      baseSize: 4Gi
+      baseSize: 8Gi
       existingClaim: null
       accessModes:
         - ReadWriteOnce
