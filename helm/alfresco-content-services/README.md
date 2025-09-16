@@ -38,8 +38,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.1.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.2 |
 
 ## Values
 

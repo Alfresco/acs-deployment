@@ -4,10 +4,10 @@ dependencies:
   version: 4.0.0
 - name: postgres
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.1
+  version: 0.1.2
 - name: postgres
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.1
+  version: 0.1.2
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.2.2
@@ -53,5 +53,5 @@ dependencies:
 - name: alfresco-connector-hxi
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.1.5
-digest: sha256:4c31e04109908b78a1c4e23169c41cefc8e7661a432c69ed2fac00499a2975aa
-generated: "2025-09-15T12:56:30.515186+02:00"
+digest: sha256:39ba45c4e16d448458956002ad3626cfb8ea5c23597566f75ac5fc169c6caf35
+generated: "2025-09-16T12:04:11.526569+02:00"
