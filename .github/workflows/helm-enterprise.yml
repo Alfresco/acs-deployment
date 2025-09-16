@@ -121,13 +121,6 @@ jobs:
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
-      - name: Setup tmate session
-        if: matrix.values == 'values.yaml'
-        uses: mxschmitt/action-tmate@v3
-        with:
-          # provide access to SSH user that triggered the build
-          limit-access-to-actor: true
-
       - name: Wait for pods to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.32.1
 
