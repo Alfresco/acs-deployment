@@ -125,21 +125,20 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
         with:
           wait-resource: "deployments"
-          wait-condition: "condition=Available"
+          wait-condition: "Available"
 
       - name: Wait for statefulsets to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
         with:
           wait-resource: "sts"
-          wait-condition: "jsonpath='{.status.readyReplicas}'=1"
-          wait-timeout: 10s
+          wait-for-what: "jsonpath"
+          wait-condition: "'{.status.readyReplicas}'=1"
 
       - name: Wait for jobs to be completed
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
         with:
           wait-resource: "jobs"
-          wait-condition: "condition=complete"
-          wait-timeout: 10s
+          wait-condition: "complete"
 
       - name: Spit cluster status after install
         if: always()
