@@ -122,13 +122,13 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for deployments to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.35.0
         with:
           wait-resource: "deployments"
           wait-condition: "Available"
 
       - name: Wait for statefulsets to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.35.0
         with:
           wait-resource: "sts"
           wait-for-what: "jsonpath"
@@ -136,7 +136,7 @@ jobs:
 
       - name: Wait for jobs to be completed
         if: matrix.values != '7.3.N_values.yaml' && matrix.values != '7.4.N_values.yaml'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@run-wait-after-timeout
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v8.35.0
         with:
           wait-resource: "jobs"
           wait-condition: "complete"
