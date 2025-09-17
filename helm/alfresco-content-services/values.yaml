@@ -558,10 +558,6 @@ elasticsearch:
     persistence:
       enabled: true
       baseSize: 4Gi
-    livenessProbe:
-      initialDelaySeconds: 100
-    readinessProbe:
-      initialDelaySeconds: 100
   kibana:
     enabled: false
     image:
