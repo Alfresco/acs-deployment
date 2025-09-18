@@ -11,6 +11,8 @@ global:
 # https://github.com/bitnami/charts/tree/002c752f871c8fa068a770dc80fec4cf798798ab/bitnami/postgresql
 # @default -- check values.yaml
 repository-database:
+  image:
+    repository: bitnamilegacy/postgresql
   nameOverride: repository-database
   auth:
     database: alfresco
@@ -281,7 +283,3 @@ alfresco-content-app:
     BASE_PATH: /aca
     APP_CONFIG_OAUTH2_REDIRECT_LOGIN: /aca
     APP_CONFIG_OAUTH2_REDIRECT_LOGOUT: /aca
-postgresql:
-  image:
-    tag: 16.6.0
-    repository: bitnamilegacy/postgresql
