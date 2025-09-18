@@ -19,6 +19,10 @@ User docs available at: [https://alfresco.github.io/acs-deployment/](https://alf
 
 ## ⚠️ Important changes for Helm charts
 
+We migrated from using Bitnami charts for PostgreSQL, Elasticsearch and Kibana
+to our own charts due changes to the Bitnami Catalog. See the [Bitnami
+announcement](https://github.com/bitnami/containers/issues/83267)
+
 PostgreSQL is now deployed using our own Helm chart
 [postgres](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/postgres).
 ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
