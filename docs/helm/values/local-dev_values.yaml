@@ -92,7 +92,7 @@ alfresco-search-enterprise:
       cpu: "1"
       memory: "1Gi"
 elasticsearch:
-  master:
+  elasticsearch:
     resources:
       requests:
         cpu: "0.1"

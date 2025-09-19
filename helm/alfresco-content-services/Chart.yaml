@@ -4,7 +4,7 @@
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 apiVersion: v2
 name: alfresco-content-services
-version: 9.5.1
+version: 10.0.0-alpha.0
 appVersion: 25.2.0
 description: A Helm chart for deploying Alfresco Content Services
 keywords:
@@ -20,12 +20,12 @@ dependencies:
     version: 4.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgres
-    version: 0.1.0
+    version: 0.1.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     alias: postgresql-sync
     condition: postgresql-sync.enabled
   - name: postgres
-    version: 0.1.0
+    version: 0.1.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     alias: postgresql
     condition: postgresql.enabled
@@ -82,9 +82,10 @@ dependencies:
     version: 3.1.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
-  - name: elasticsearch
-    repository: oci://registry-1.docker.io/bitnamicharts
-    version: 21.4.1
+  - name: elastic
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.1.2
+    alias: elasticsearch
     condition: elasticsearch.enabled
   - name: alfresco-audit-storage
     version: 0.3.2

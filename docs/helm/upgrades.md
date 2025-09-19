@@ -24,6 +24,23 @@ version in which they have been released.
   use this chart in any staging, or production environment. Read more in the
   chart readme.
 
+* Elasticsearch and Kibana are now deployed using
+  [elastic](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/elastic).
+  ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
+  use this chart in any staging, or production environment. Read more in the
+  chart readme.
+* Enabled/Disable switch for kibana has been moved from `global.kibanaEnabled`
+  to `elasticsearch.kibana.enabled`
+* Elasticsearch configuration is now in `elasticsearch.elasticsearch.*` instead
+  of `elasticsearch.*`
+* Embedded elasticsearch url calculation is now using template from its
+  component chart instead of using `($.Values.global.elasticsearch).service.*`
+  values which were coming from bitnami chart.
+* Kibana path configuration has been moved from
+  `elasticsearch.kibana.configuration.server.*` to just
+  `elasticsearch.kibana.serverBasePath`. This setting has to me the same as
+  ingress path if ingress is used.
+
 ## 9.0.0
 
 * External dependencies on bitnami/common chart have been completely removed
