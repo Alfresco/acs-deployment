@@ -34,15 +34,6 @@ services:
         -Dmetrics.restMetricsReporter.path.enabled=true
         -Dmetrics.tomcatMetricsReporter.enabled=true
         -Dmetrics.authenticationMetricsReporter.enabled=true
-        -Dcom.sun.management.jmxremote
-        -Dcom.sun.management.jmxremote.ssl=false
-        -Dcom.sun.management.jmxremote.authenticate=false
-        -Dcom.sun.management.jmxremote.port=50500
-        -Dcom.sun.management.jmxremote.rmi.port=50500
-        -Dalfresco.jmx.connector.enabled=true
-        -Dalfresco.rmi.services.port=50500
-        -Djava.rmi.server.hostname=127.0.0.1
-        -Dcom.sun.management.jmxremote.local.only=false
         -javaagent:/usr/local/tomcat/lib/jolokia-agent-jvm.jar=port=7777,host=0.0.0.0,user=admin,password=admin
     ports:
       - "50500:50500"
