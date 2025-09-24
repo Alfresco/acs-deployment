@@ -8,25 +8,34 @@ parent: Docker Compose
 This guide aims to demonstrate how to set up Jconsole to access JMX metrics from
 an Alfresco Content Services instance.
 
-## Prerequisites
-
-This example uses values files from `docs/docker-compose/examples/values` folder:
-
-```yaml
-- jconsole-overrides.yaml
-```
-
-To ease the setup process, you can copy these files to to `docker-compose` folder.
-
 ## Running the Example
 
-When the files are in place, you can start the ACS instance with JMX enabled:
+Edit `compose.yaml` and locate the `alfresco` service. Merge the following
+snippet into its `environment` and `ports` sections:
 
-```bash
-docker-compose -f compose.yaml -f jconsole-overrides.yaml up -d
+```yaml
+services:
+  alfresco:
+    environment:
+      JAVA_OPTS: >-
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.port=50500
+        -Dcom.sun.management.jmxremote.rmi.port=50500
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dalfresco.jmx.connector.enabled=true
+        -Dalfresco.rmi.services.port=50500
+        -Djava.rmi.server.hostname=127.0.0.1
+    ports:
+      - "50500:50500"
 ```
 
-This will start the ACS instance with JMX enabled.
+Then start the stack:
+
+```bash
+docker-compose up -d
+```
 
 ## Accessing JMX with Jconsole
 
