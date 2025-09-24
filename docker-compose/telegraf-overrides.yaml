@@ -43,7 +43,7 @@ services:
         -Dalfresco.rmi.services.port=50500
         -Djava.rmi.server.hostname=127.0.0.1
         -Dcom.sun.management.jmxremote.local.only=false
-        -javaagent:/usr/local/tomcat/lib/jolokia-agent-jvm.jar=port=7777,host=0.0.0.0
+        -javaagent:/usr/local/tomcat/lib/jolokia-agent-jvm.jar=port=7777,host=0.0.0.0,user=admin,password=admin
     ports:
       - "50500:50500"
       - "7777:7777"
