@@ -35,26 +35,13 @@ services:
         -Dmetrics.tomcatMetricsReporter.enabled=true
         -Dmetrics.authenticationMetricsReporter.enabled=true
         -Dcom.sun.management.jmxremote
-        -javaagent:/usr/local/tomcat/lib/jolokia-agent-jvm.jar=port=7777,host=0.0.0.0,user=admin,password=admin
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.port=50500
+        -Dcom.sun.management.jmxremote.rmi.port=50500
+        -Dalfresco.jmx.connector.enabled=true
+        -Dalfresco.rmi.services.port=50500
+        -Djava.rmi.server.hostname=127.0.0.1
+        -Dcom.sun.management.jmxremote.local.only=false
     ports:
       - "50500:50500"
-      - "7777:7777"
-    volumes:
-      - /usr/local/tomcat/alf_data
-      - ./jolokia-agent-jvm-2.3.0-javaagent.jar:/usr/local/tomcat/lib/jolokia-agent-jvm.jar:ro    
-  influxdb2:
-    image: influxdb:2
-    ports:
-      - 8086:8086
-    environment:
-      - DOCKER_INFLUXDB_INIT_MODE=setup
-      - DOCKER_INFLUXDB_INIT_USERNAME=alfresco
-      - DOCKER_INFLUXDB_INIT_PASSWORD=alfresco
-      - DOCKER_INFLUXDB_INIT_ORG=alfresco
-      - DOCKER_INFLUXDB_INIT_BUCKET=alfresco
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=influx
-  telegraf:
-    image: telegraf:1.34
-    privileged: true
-    volumes:
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro    
