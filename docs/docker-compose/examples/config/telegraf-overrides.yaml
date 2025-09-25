@@ -54,6 +54,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=influx
   telegraf:
     image: telegraf:1.34
-    privileged: true
+    cap_add:
+      - NET_RAW
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro    

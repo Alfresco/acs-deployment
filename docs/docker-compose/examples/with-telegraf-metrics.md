@@ -6,11 +6,14 @@ parent: Docker Compose
 # Collecting Alfresco metrics with Telegraf
 
 This guide aims to demonstrate how to set up Telegraf to collect JMX and
-Micrometer metrics from an Alfresco Content Services instance.
+Micrometer metrics from an Alfresco Content Services instance. The collected
+metrics in this example are shipped to an InfluxDB instance but Telegraf
+supports other outputs as well. See [output plugins](https://github.com/influxdata/telegraf/tree/release-1.35/plugins/outputs)
+for details.
 
 ## Prerequisites
 
-This example uses values files from `docs/docker-compose/examples/values` folder:
+This example uses config files from `docs/docker-compose/examples/config` folder:
 
 - telegraf-overrides.yaml
 - telegraf.conf
