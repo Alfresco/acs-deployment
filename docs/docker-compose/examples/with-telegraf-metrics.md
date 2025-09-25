@@ -18,7 +18,7 @@ This example uses config files from `docs/docker-compose/examples/config` folder
 - telegraf-overrides.yaml
 - telegraf.conf
 
-To ease the setup process, you can copy these files to to `docker-compose` folder.
+To ease the setup process, you can copy these files to `docker-compose` folder.
 
 For Jolokia to work it is required to download the
 [Jolokia JVM agent jar](https://search.maven.org/remotecontent?filepath=org/jolokia/jolokia-agent-jvm/2.3.0/jolokia-agent-jvm-2.3.0-javaagent.jar) file and place it in `docker-compose` folder.

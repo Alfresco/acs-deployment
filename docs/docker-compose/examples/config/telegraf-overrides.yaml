@@ -40,7 +40,7 @@ services:
       - "7777:7777"
     volumes:
       - /usr/local/tomcat/alf_data
-      - ./jolokia-agent-jvm-2.3.0-javaagent.jar:/usr/local/tomcat/lib/jolokia-agent-jvm.jar:ro    
+      - ./jolokia-agent-jvm-2.3.0-javaagent.jar:/usr/local/tomcat/lib/jolokia-agent-jvm.jar:ro
   influxdb2:
     image: influxdb:2
     ports:
@@ -57,4 +57,4 @@ services:
     cap_add:
       - NET_RAW
     volumes:
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro    
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
