@@ -135,17 +135,17 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
-| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.1.1"` |  |
-| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.1.1"` |  |
-| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.1.1"` |  |
-| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.1.1"` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.1.1.1"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.1.1.1"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.1.1.1"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.1.1.1"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.nameOverride | string | `"alfresco-search-enterprise"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
-| alfresco-search-enterprise.reindexing.image.tag | string | `"5.1.1"` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"5.1.1.1"` |  |
 | alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
