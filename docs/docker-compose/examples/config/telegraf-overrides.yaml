@@ -34,7 +34,6 @@ services:
         -Dmetrics.restMetricsReporter.path.enabled=true
         -Dmetrics.tomcatMetricsReporter.enabled=true
         -Dmetrics.authenticationMetricsReporter.enabled=true
-        -Dcom.sun.management.jmxremote
         -javaagent:/usr/local/tomcat/lib/jolokia-agent-jvm.jar=port=7777,host=0.0.0.0,user=admin,password=admin
     ports:
       - "7777:7777"
