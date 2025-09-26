@@ -38,19 +38,19 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.1.1
+        tag: 5.1.1.1
     content:
       image:
-        tag: 5.1.1
+        tag: 5.1.1.1
     metadata:
       image:
-        tag: 5.1.1
+        tag: 5.1.1.1
     path:
       image:
-        tag: 5.1.1
+        tag: 5.1.1.1
   reindexing:
     image:
-      tag: 5.1.1
+      tag: 5.1.1.1
 alfresco-search:
   enabled: false
   searchServicesImage:
