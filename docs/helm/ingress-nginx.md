@@ -7,10 +7,11 @@ grand_parent: Helm
 # Install ingress-nginx
 
 We currently support and test only
-[ingress-nginx](https://github.com/kubernetes/ingress-nginx), but all of our
-charts support overriding via values the `sourceClass` and `annotations` or
-alternatively `enabled` to toggle our Ingress resource completely,
-which allows to use your preferred ingress controller.
+[ingress-nginx](https://github.com/kubernetes/ingress-nginx). However, all
+charts provide flexibility through values such as `.ingress.className` and
+`.ingress.annotations`, allowing you to customize the Ingress configuration. If
+you prefer to manage Ingress resources yourself, you can set `.ingress.enabled`
+to `false` to disable the bundled Ingress resource and provide your own.
 
 ## Install on a generic Kubernetes cluster
 
