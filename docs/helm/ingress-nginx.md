@@ -8,7 +8,7 @@ grand_parent: Helm
 
 We currently support and test only
 [ingress-nginx](https://github.com/kubernetes/ingress-nginx), but all of our
-charts supports overriding via values the `sourceClass` and `annotations` or
+charts support overriding via values the `sourceClass` and `annotations` or
 alternatively `enabled` to toggle our Ingress resource completely,
 which allows to use your preferred ingress controller.
 
