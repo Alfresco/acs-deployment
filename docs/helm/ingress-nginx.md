@@ -7,7 +7,7 @@ grand_parent: Helm
 # Install ingress-nginx
 
 We currently support and test only
-[ingress-nginx](https://github.com/kubernetes/ingress-nginx). However, all
+[ingress-nginx](https://github.com/kubernetes/ingress-nginx). However, our
 charts provide flexibility through values such as `.ingress.className` and
 `.ingress.annotations`, allowing you to customize the Ingress configuration. If
 you prefer to manage Ingress resources yourself, you can set `.ingress.enabled`
