@@ -9,7 +9,7 @@ Although it's possible to change and mount files/folders into existing Docker im
 
 Installling AMPs also requires the creation of a custom image, this guide describes the steps required to install AMP files into Alfresco Content Repository and Alfresco Share images. These custom images can then be deployed using Docker Compose.
 
-This process requires some familiarty with [Docker](https://www.docker.com/) and specifically [Dockerfile commands](https://docs.docker.com/engine/reference/builder/).
+This process requires some familiarty with [Docker](https://www.docker.com/) and specifically [Dockerfile commands](https://docs.docker.com/reference/dockerfile/).
 
 ## Setting Up
 
