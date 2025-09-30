@@ -142,5 +142,10 @@ Services container are part of the same Docker network created by Docker
 Compose. This configuration is specific to the
 [jolokia2_agent input plugin](https://github.com/influxdata/telegraf/tree/release-1.35/plugins/inputs/jolokia2_agent).
 
+Starlark processor is used to transform the collected JMX metrics before
+shipping them to InfluxDB. It retrieves the Alfresco version from the
+`Alfresco:Name=RepositoryDescriptor,Type=Current` and Java version from
+`Alfresco:Name=SystemProperties` MBeans and adds it as a tag to all metrics.
+
 Shipping metrics is done using the same InfluxDB configuration as for Micrometer
 metrics.
