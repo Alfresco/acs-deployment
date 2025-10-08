@@ -251,7 +251,7 @@ For example, you can override the ACS repository image by specifying in the
 repository:
   image:
     repository: registry.example.org/my-custom-alfresco-content-repository
-    tag: 7.3.0
+    tag: 7.4.0
 ```
 
 See the [registry authentication](registry-authentication.md) page to configure
