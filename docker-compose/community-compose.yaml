@@ -56,7 +56,7 @@ services:
       file: commons/base.yaml
       service: alfresco
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.2.1
+    image: alfresco/alfresco-transform-core-aio:5.2.2
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
