@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # 5.0.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v9.0.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v9.3.1
       - name: Add dependency chart repos
         run: |
           for repo in $(yq eval-all \
