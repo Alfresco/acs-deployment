@@ -49,24 +49,24 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
   - name: alfresco-transform-service
-    version: 2.2.1
+    version: 2.2.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-transform-service.enabled
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 5.1.0
+    version: 5.1.1
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 7.2.0
+    version: 7.3.0
     condition: alfresco-sync-service.enabled
   - name: alfresco-search-enterprise
-    version: 4.5.3
+    version: 4.6.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
   - name: alfresco-connector-msteams
-    version: 2.2.0
+    version: 2.2.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-msteams.enabled
   - name: alfresco-share
@@ -75,11 +75,11 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: share.enabled
   - name: alfresco-connector-ms365
-    version: 3.2.0
+    version: 3.2.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-connector-ms365.enabled
   - name: alfresco-ai-transformer
-    version: 3.1.1
+    version: 3.1.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-ai-transformer.enabled
   - name: elastic
