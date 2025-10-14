@@ -56,7 +56,7 @@ services:
       file: commons/base.yaml
       service: alfresco
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.2.1
+    image: alfresco/alfresco-transform-core-aio:5.2.2
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -117,7 +117,7 @@ services:
       retries: 3
       start_period: 5s
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.16
+    image: docker.io/alfresco/alfresco-search-services:2.0.17
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
