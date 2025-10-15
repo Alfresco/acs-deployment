@@ -14,11 +14,14 @@ services:
         -Dsolr.sharedSecret=secret
         -Dsolr.base.url=/solr
         -Dindex.subsystem.name=solr6
-        -Dshare.host=localhost
-        -Dshare.port=8080
-        -Dalfresco.host=localhost
-        -Dalfresco.port=8080
-        -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
+        -Dshare.host=alfresco.localhost
+        -Dshare.port=443
+        -Dshare.protocol=https
+        -Dalfresco.host=alfresco.localhost
+        -Dalfresco.port=443
+        -Dalfresco.protocol=https
+        -Dcsrf.filter.enabled=false
+        -Daos.baseUrlOverwrite=https://alfresco.localhost/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Ddeployment.method=DOCKER_COMPOSE
         -Dtransform.service.enabled=true
