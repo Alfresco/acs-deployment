@@ -85,7 +85,7 @@ dtas:
   config:
     assertions:
       acs:
-        version: 23.5.0
+        version: 23.6.0
         modules:
         - id: org_alfresco_device_sync_repo
           version: 5.3.0
