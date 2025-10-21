@@ -246,7 +246,7 @@ services:
       file: commons/base.yaml
       service: proxy
   sync-service:
-    image: quay.io/alfresco/service-sync:5.3.0
+    image: quay.io/alfresco/service-sync:3.11.3
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
