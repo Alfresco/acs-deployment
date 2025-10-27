@@ -20,10 +20,22 @@ services:
     networks:
       default: null
     ports:
-      - "8161:8161"
-      - "5672:5672"
-      - "61616:61616"
-      - "61613:61613"
+      - mode: ingress
+        target: 8161
+        published: "8161"
+        protocol: tcp
+      - mode: ingress
+        target: 5672
+        published: "5672"
+        protocol: tcp
+      - mode: ingress
+        target: 61616
+        published: "61616"
+        protocol: tcp
+      - mode: ingress
+        target: 61613
+        published: "61613"
+        protocol: tcp
   alfresco:
     environment:
       JAVA_OPTS: -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco -Dindex.subsystem.name=elasticsearch -Delasticsearch.createIndexIfNotExists=true -Delasticsearch.host=elasticsearch -Delasticsearch.port=9200 -Dshare.host=localhost -Dshare.port=8080 -Dalfresco.host=localhost -Dalfresco.port=8080 -Dcsrf.filter.enabled=false -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true" -Ddeployment.method=DOCKER_COMPOSE -Dtransform.service.enabled=true -Dtransform.service.url=http://transform-router:8095 -Dsfs.url=http://shared-file-store:8099/ -DlocalTransform.core-aio.url=http://transform-core-aio:8090/ -Ddsync.service.uris=http://localhost:9090/alfresco -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
@@ -58,7 +70,9 @@ services:
     networks:
       default: null
     volumes:
-      - /usr/local/tomcat/alf_data
+      - type: volume
+        target: /usr/local/tomcat/alf_data
+        volume: {}
   audit-storage:
     depends_on:
       activemq:
@@ -102,7 +116,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-control-center:10.0.1
+    image: quay.io/alfresco/alfresco-control-center:10.1.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.accchain.chain.middlewares: accforceslash,accroot
@@ -133,7 +147,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-digital-workspace:7.0.1
+    image: quay.io/alfresco/alfresco-digital-workspace:7.1.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.adwchain.chain.middlewares: adwforceslash,adwroot
@@ -164,8 +178,14 @@ services:
     networks:
       default: null
     ports:
-      - "9200:9200"
-      - "9300:9300"
+      - mode: ingress
+        target: 9200
+        published: "9200"
+        protocol: tcp
+      - mode: ingress
+        target: 9300
+        published: "9300"
+        protocol: tcp
     ulimits:
       memlock:
         soft: -1
@@ -197,7 +217,10 @@ services:
     networks:
       default: null
     ports:
-      - "5601:5601"
+      - mode: ingress
+        target: 5601
+        published: "5601"
+        protocol: tcp
   postgres:
     command:
       - postgres
@@ -222,7 +245,10 @@ services:
     networks:
       default: null
     ports:
-      - "5432:5432"
+      - mode: ingress
+        target: 5432
+        published: "5432"
+        protocol: tcp
   proxy:
     command:
       - --api.insecure=true
@@ -249,12 +275,23 @@ services:
     networks:
       default: null
     ports:
-      - "8080:8080"
-      - "8888:8888"
+      - mode: ingress
+        target: 8080
+        published: "8080"
+        protocol: tcp
+      - mode: ingress
+        target: 8888
+        published: "8888"
+        protocol: tcp
     security_opt:
       - label=disable
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+        bind:
+          create_host_path: true
   search:
     depends_on:
       elasticsearch:
@@ -281,7 +318,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.1.1
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.2.0
     mem_limit: "1073741824"
     networks:
       default: null
@@ -303,7 +340,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.1.1
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.2.0
     mem_limit: "1073741824"
     networks:
       default: null
@@ -360,14 +397,19 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: quay.io/alfresco/alfresco-shared-file-store:4.2.0
+    image: quay.io/alfresco/alfresco-shared-file-store:4.2.2
     mem_limit: "536870912"
     networks:
       default: null
     ports:
-      - "8099:8099"
+      - mode: ingress
+        target: 8099
+        published: "8099"
+        protocol: tcp
     volumes:
-      - /tmp/Alfresco
+      - type: volume
+        target: /tmp/Alfresco
+        volume: {}
   sync-service:
     depends_on:
       alfresco:
@@ -388,7 +430,7 @@ services:
       interval: 30s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/service-sync:5.2.0
+    image: quay.io/alfresco/service-sync:5.3.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.syncservice.replacepathregex.regex: ^/syncservice/(.*)
@@ -400,7 +442,10 @@ services:
     networks:
       default: null
     ports:
-      - "9090:9090"
+      - mode: ingress
+        target: 9090
+        published: "9090"
+        protocol: tcp
   transform-core-aio:
     depends_on:
       activemq:
@@ -423,12 +468,15 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.0
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.2
     mem_limit: "1610612736"
     networks:
       default: null
     ports:
-      - "8090:8090"
+      - mode: ingress
+        target: 8090
+        published: "8090"
+        protocol: tcp
   transform-router:
     depends_on:
       activemq:
@@ -452,12 +500,15 @@ services:
       interval: 10s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/alfresco-transform-router:4.2.0
+    image: quay.io/alfresco/alfresco-transform-router:4.2.2
     mem_limit: "536870912"
     networks:
       default: null
     ports:
-      - "8095:8095"
+      - mode: ingress
+        target: 8095
+        published: "8095"
+        protocol: tcp
 networks:
   default:
     name: docker-compose_default
