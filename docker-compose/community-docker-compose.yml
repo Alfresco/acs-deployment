@@ -244,10 +244,7 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8090
-        published: "8090"
-        protocol: tcp
+      - "8090:8090"
 networks:
   default:
     name: docker-compose_default
