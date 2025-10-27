@@ -20,22 +20,10 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8161
-        published: "8161"
-        protocol: tcp
-      - mode: ingress
-        target: 5672
-        published: "5672"
-        protocol: tcp
-      - mode: ingress
-        target: 61616
-        published: "61616"
-        protocol: tcp
-      - mode: ingress
-        target: 61613
-        published: "61613"
-        protocol: tcp
+      - "8161:8161" # Web Console
+      - "5672:5672" # AMQP
+      - "61616:61616" # OpenWire
+      - "61613:61613" # STOMP
   alfresco:
     environment:
       JAVA_OPTS: -Ddb.driver=org.postgresql.Driver -Ddb.username=alfresco -Ddb.password=alfresco -Ddb.url=jdbc:postgresql://postgres:5432/alfresco -Dsolr.host=solr6 -Dsolr.port=8983 -Dsolr.http.connection.timeout=1000 -Dsolr.secureComms=secret -Dsolr.sharedSecret=secret -Dsolr.base.url=/solr -Dindex.subsystem.name=solr6 -Dshare.host=localhost -Dshare.port=8080 -Dalfresco.host=localhost -Dalfresco.port=8080 -Dcsrf.filter.enabled=false -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true" -Ddeployment.method=DOCKER_COMPOSE -DlocalTransform.core-aio.url=http://transform-core-aio:8090/ -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
@@ -70,9 +58,7 @@ services:
     networks:
       default: null
     volumes:
-      - type: volume
-        target: /usr/local/tomcat/alf_data
-        volume: {}
+      - /usr/local/tomcat/alf_data
   content-app:
     environment:
       APP_BASE_SHARE_URL: http://localhost:8080/aca/#/preview/s
@@ -151,10 +137,7 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 5432
-        published: "5432"
-        protocol: tcp
+      - "5432:5432"
   proxy:
     command:
       - --api.insecure=true
@@ -181,23 +164,12 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8080
-        published: "8080"
-        protocol: tcp
-      - mode: ingress
-        target: 8888
-        published: "8888"
-        protocol: tcp
+      - "8080:8080"
+      - "8888:8888"
     security_opt:
       - label=disable
     volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-        read_only: true
-        bind:
-          create_host_path: true
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   share:
     depends_on:
       alfresco:
@@ -249,10 +221,7 @@ services:
     networks:
       default: null
     ports:
-      - mode: ingress
-        target: 8983
-        published: "8083"
-        protocol: tcp
+      - "8083:8983"
   transform-core-aio:
     depends_on:
       activemq:
