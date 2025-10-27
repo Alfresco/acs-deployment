@@ -64,6 +64,7 @@ jobs:
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-helm' || github.ref_name }}
+          create_branch: true
           push_options: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && '--force' || '' }}
 
   bump-values-dependencies:
@@ -114,4 +115,5 @@ jobs:
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-acs' || github.ref_name }}
+          create_branch: true
           push_options: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && '--force' || '' }}
