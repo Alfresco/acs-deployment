@@ -40,6 +40,7 @@ jobs:
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
+          create_branch: true
           file_pattern: >-
             docker-compose/docker-compose.yml
             docker-compose/community-docker-compose.yml
