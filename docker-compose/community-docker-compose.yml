@@ -72,7 +72,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: alfresco/alfresco-content-app:7.0.1
+    image: alfresco/alfresco-content-app:7.1.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.acachain.chain.middlewares: acaforceslash,acaroot
@@ -100,7 +100,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-control-center:10.0.1
+    image: quay.io/alfresco/alfresco-control-center:10.1.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.accchain.chain.middlewares: accforceslash,accroot
@@ -216,7 +216,7 @@ services:
       SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
       SOLR_SOLR_HOST: solr6
       SOLR_SOLR_PORT: "8983"
-    image: docker.io/alfresco/alfresco-search-services:2.0.16
+    image: docker.io/alfresco/alfresco-search-services:2.0.17
     mem_limit: "2147483648"
     networks:
       default: null
@@ -239,7 +239,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: alfresco/alfresco-transform-core-aio:5.2.0
+    image: alfresco/alfresco-transform-core-aio:5.2.2
     mem_limit: "1610612736"
     networks:
       default: null

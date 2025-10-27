@@ -102,7 +102,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-control-center:10.0.1
+    image: quay.io/alfresco/alfresco-control-center:10.1.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.accchain.chain.middlewares: accforceslash,accroot
@@ -133,7 +133,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 1s
-    image: quay.io/alfresco/alfresco-digital-workspace:7.0.1
+    image: quay.io/alfresco/alfresco-digital-workspace:7.1.1
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.adwchain.chain.middlewares: adwforceslash,adwroot
@@ -281,7 +281,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.1.1
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.2.0
     mem_limit: "1073741824"
     networks:
       default: null
@@ -303,7 +303,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.1.1
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.2.0
     mem_limit: "1073741824"
     networks:
       default: null
@@ -360,7 +360,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: quay.io/alfresco/alfresco-shared-file-store:4.2.0
+    image: quay.io/alfresco/alfresco-shared-file-store:4.2.2
     mem_limit: "536870912"
     networks:
       default: null
@@ -388,7 +388,7 @@ services:
       interval: 30s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/service-sync:5.2.0
+    image: quay.io/alfresco/service-sync:5.3.0
     labels:
       traefik.enable: "true"
       traefik.http.middlewares.syncservice.replacepathregex.regex: ^/syncservice/(.*)
@@ -423,7 +423,7 @@ services:
       interval: 20s
       retries: 3
       start_period: 10s
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.0
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.2
     mem_limit: "1610612736"
     networks:
       default: null
@@ -452,7 +452,7 @@ services:
       interval: 10s
       retries: 3
       start_period: 20s
-    image: quay.io/alfresco/alfresco-transform-router:4.2.0
+    image: quay.io/alfresco/alfresco-transform-router:4.2.2
     mem_limit: "536870912"
     networks:
       default: null
