@@ -21,7 +21,7 @@ jobs:
       app_charts: ${{ steps.getcharts.outputs.app }}
       lib_charts: ${{ steps.getcharts.outputs.lib }}
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
         with:
           fetch-depth: 2
       - id: getcharts
@@ -38,13 +38,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v9.3.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v9.5.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-plugin@v9.3.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-plugin@v9.5.0
         with:
           plugin_url: https://github.com/helm-unittest/helm-unittest
           plugin_version: v1.0.0
@@ -62,13 +62,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v9.3.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v9.5.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v9.3.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v9.5.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           helm-options: >-
