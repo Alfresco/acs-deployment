@@ -143,7 +143,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 25.2.0
+    tag: 25.3.0
   autoscaling:
     kedaDisableIdle: true
   configuration:
@@ -233,7 +233,7 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.2.2
+      tag: 4.2.3
     livenessProbe:
       # -- Overrride liveness probe endpoint to work around
       # https://alfresco.atlassian.net/browse/ACS-7269
@@ -244,35 +244,35 @@ alfresco-transform-service:
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-pdf-renderer
-      tag: 5.2.2
+      tag: 5.2.4
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-imagemagick
-      tag: 5.2.2
+      tag: 5.2.4
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-libreoffice
-      tag: 5.2.2
+      tag: 5.2.4
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-tika
-      tag: 5.2.2
+      tag: 5.2.4
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-transform-misc
-      tag: 5.2.2
+      tag: 5.2.4
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -281,7 +281,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.2.2
+      tag: 4.2.3
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -298,7 +298,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 25.2.0
+    tag: 25.3.0
   nameOverride: share
   repository:
     existingConfigMap:
@@ -371,16 +371,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.2.0
+        tag: 5.2.1
     content:
       image:
-        tag: 5.2.0
+        tag: 5.2.1
     metadata:
       image:
-        tag: 5.2.0
+        tag: 5.2.1
     path:
       image:
-        tag: 5.2.0
+        tag: 5.2.1
   reindexing:
     enabled: true
     repository:
@@ -392,7 +392,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 5.2.0
+      tag: 5.2.1
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
@@ -404,7 +404,7 @@ alfresco-digital-workspace:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-digital-workspace
-    tag: 7.1.1
+    tag: 7.2.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -421,7 +421,7 @@ alfresco-control-center:
             pathType: Prefix
   image:
     repository: quay.io/alfresco/alfresco-control-center
-    tag: 10.1.0
+    tag: 10.2.0
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: "ECM"
@@ -529,7 +529,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.2.2
+    tag: 3.2.3
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
@@ -575,7 +575,7 @@ alfresco-audit-storage:
   nameOverride: alfresco-audit-storage
   image:
     repository: quay.io/alfresco/alfresco-audit-storage
-    tag: 1.1.0
+    tag: 1.2.0
   messageBroker:
     existingConfigMap:
       # -- Name of the configmap which holds the message broker URL
@@ -632,17 +632,17 @@ dtas:
     assertions:
       acs:
         edition: Enterprise
-        version: 25.2.0
+        version: 25.3.0
         identity: false
         modules:
         - id: org_alfresco_device_sync_repo
-          version: 5.2.0
+          version: 5.3.0
           installed: true
         - id: org.alfresco.integrations.google.docs
           version: 4.1.0
           installed: true
         - id: alfresco-aos-module
-          version: 3.3.0
+          version: 3.4.0
           installed: true
       adw:
         base_path: "/workspace"
