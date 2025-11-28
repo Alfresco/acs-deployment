@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 9.4.1](https://img.shields.io/badge/Version-9.4.1-informational?style=flat-square) ![AppVersion: 25.2.0](https://img.shields.io/badge/AppVersion-25.2.0-informational?style=flat-square)
+![Version: 10.1.0](https://img.shields.io/badge/Version-10.1.0-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -25,21 +25,21 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.2.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.2.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.3.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.1.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.1.5 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.10.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.5.2 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.4.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.1.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.0 |
-| oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql-sync(postgresql) | 12.8.5 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.2.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.2.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.11.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.6.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 5.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 1.5.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.2.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.1.2 |
 
 ## Values
 
@@ -55,14 +55,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| alfresco-ai-transformer.image.tag | string | `"3.2.0"` |  |
+| alfresco-ai-transformer.image.tag | string | `"3.2.3"` |  |
 | alfresco-ai-transformer.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
 | alfresco-ai-transformer.sfs.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-audit-storage.enabled | bool | `true` |  |
 | alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
-| alfresco-audit-storage.image.tag | string | `"1.1.0"` |  |
+| alfresco-audit-storage.image.tag | string | `"1.2.0"` |  |
 | alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
 | alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
@@ -73,20 +73,20 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-audit-storage.nameOverride | string | `"alfresco-audit-storage"` |  |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
 | alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
-| alfresco-connector-ms365.image.tag | string | `"2.0.7"` |  |
+| alfresco-connector-ms365.image.tag | string | `"2.0.8"` |  |
 | alfresco-connector-ms365.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | alfresco-connector-ms365.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
 | alfresco-connector-ms365.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which hold the repository connection details |
 | alfresco-connector-msteams.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft Teams |
 | alfresco-connector-msteams.image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
-| alfresco-connector-msteams.image.tag | string | `"2.0.7"` |  |
+| alfresco-connector-msteams.image.tag | string | `"2.0.8"` |  |
 | alfresco-control-center.enabled | bool | `true` |  |
 | alfresco-control-center.env.APP_CONFIG_AUTH_TYPE | string | `"BASIC"` |  |
 | alfresco-control-center.env.APP_CONFIG_PROVIDER | string | `"ECM"` |  |
 | alfresco-control-center.env.BASE_PATH | string | `"/control-center"` |  |
 | alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
-| alfresco-control-center.image.tag | string | `"10.0.1"` |  |
+| alfresco-control-center.image.tag | string | `"10.2.0"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].path | string | `"/control-center"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-control-center.ingress.tls | list | `[]` |  |
@@ -97,7 +97,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.env.BASE_PATH | string | `"/workspace"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
-| alfresco-digital-workspace.image.tag | string | `"7.0.1"` |  |
+| alfresco-digital-workspace.image.tag | string | `"7.2.0"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |
@@ -128,24 +128,24 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| alfresco-repository.image.tag | string | `"25.2.0"` |  |
+| alfresco-repository.image.tag | string | `"25.3.0"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
-| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.1.1"` |  |
-| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.1.1"` |  |
-| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.1.1"` |  |
-| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.1.1"` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.2.1"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.2.1"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.2.1"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.2.1"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.nameOverride | string | `"alfresco-search-enterprise"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
-| alfresco-search-enterprise.reindexing.image.tag | string | `"5.1.1"` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"5.2.1"` |  |
 | alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
@@ -157,7 +157,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| alfresco-search.insightEngineImage.tag | string | `"2.0.16"` |  |
+| alfresco-search.insightEngineImage.tag | string | `"2.0.17"` |  |
 | alfresco-search.nameOverride | string | `"alfresco-search"` |  |
 | alfresco-search.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-search.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
@@ -166,12 +166,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` |  |
 | alfresco-search.repository.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.0.16"` |  |
+| alfresco-search.searchServicesImage.tag | string | `"2.0.17"` |  |
 | alfresco-sync-service.database.existingConfigMap.keys.url | string | `"SYNC_DATABASE_URL"` |  |
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
 | alfresco-sync-service.enabled | bool | `true` | Toggle deployment of Alfresco Sync Service (Desktop-Sync) Check [Alfresco Sync Service Documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-sync-service) |
-| alfresco-sync-service.image.tag | string | `"5.2.0"` |  |
+| alfresco-sync-service.image.tag | string | `"5.3.0"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-sync-service.replicaCount | int | `1` |  |
@@ -181,7 +181,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.enabled | bool | `true` |  |
 | alfresco-transform-service.filestore.enabled | bool | `true` | Declares the alfresco-shared-file-store used by the content repository and transform service |
 | alfresco-transform-service.filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
-| alfresco-transform-service.filestore.image.tag | string | `"4.2.0"` |  |
+| alfresco-transform-service.filestore.image.tag | string | `"4.2.3"` |  |
 | alfresco-transform-service.filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | alfresco-transform-service.filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
 | alfresco-transform-service.filestore.persistence.enabled | bool | `true` | Persist filestore data |
@@ -189,25 +189,25 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-transform-service.filestore.strategy.type | string | `"Recreate"` | Strategy must be set to Recreate when persistence supports only `ReadWriteOnce` access mode. If `ReadWriteMany` is supported, then it can be set to RollingUpdate. |
 | alfresco-transform-service.imagemagick.enabled | bool | `true` | Declares the alfresco-imagemagick service used by the content repository to transform image files |
 | alfresco-transform-service.imagemagick.image.repository | string | `"quay.io/alfresco/alfresco-imagemagick"` |  |
-| alfresco-transform-service.imagemagick.image.tag | string | `"5.2.0"` |  |
+| alfresco-transform-service.imagemagick.image.tag | string | `"5.2.4"` |  |
 | alfresco-transform-service.libreoffice.enabled | bool | `true` | Declares the alfresco-libreoffice service used by the content repository to transform office files |
 | alfresco-transform-service.libreoffice.image.repository | string | `"quay.io/alfresco/alfresco-libreoffice"` |  |
-| alfresco-transform-service.libreoffice.image.tag | string | `"5.2.0"` |  |
+| alfresco-transform-service.libreoffice.image.tag | string | `"5.2.4"` |  |
 | alfresco-transform-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-transform-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-transform-service.nameOverride | string | `"alfresco-transform-service"` |  |
 | alfresco-transform-service.pdfrenderer.enabled | bool | `true` | Declares the alfresco-pdf-renderer service used by the content repository to transform pdf files |
 | alfresco-transform-service.pdfrenderer.image.repository | string | `"quay.io/alfresco/alfresco-pdf-renderer"` |  |
-| alfresco-transform-service.pdfrenderer.image.tag | string | `"5.2.0"` |  |
+| alfresco-transform-service.pdfrenderer.image.tag | string | `"5.2.4"` |  |
 | alfresco-transform-service.tika.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
 | alfresco-transform-service.tika.image.repository | string | `"quay.io/alfresco/alfresco-tika"` |  |
-| alfresco-transform-service.tika.image.tag | string | `"5.2.0"` |  |
+| alfresco-transform-service.tika.image.tag | string | `"5.2.4"` |  |
 | alfresco-transform-service.transformmisc.enabled | bool | `true` | Declares the alfresco-tika service used by the content repository to transform office files |
 | alfresco-transform-service.transformmisc.image.repository | string | `"quay.io/alfresco/alfresco-transform-misc"` |  |
-| alfresco-transform-service.transformmisc.image.tag | string | `"5.2.0"` |  |
+| alfresco-transform-service.transformmisc.image.tag | string | `"5.2.4"` |  |
 | alfresco-transform-service.transformrouter.enabled | bool | `true` | Declares the alfresco-transform-router service used by the content repository to route transformation requests |
 | alfresco-transform-service.transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
-| alfresco-transform-service.transformrouter.image.tag | string | `"4.2.0"` |  |
+| alfresco-transform-service.transformrouter.image.tag | string | `"4.2.3"` |  |
 | alfresco-transform-service.transformrouter.livenessProbe.path | string | `"/transform/config"` | Overrride liveness probe endpoint to work around https://alfresco.atlassian.net/browse/ACS-7269 |
 | alfresco-transform-service.transformrouter.replicaCount | int | `2` |  |
 | config.repository.additionalGlobalProperties | object | `{}` |  |
@@ -234,14 +234,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.assertions.acs.identity | bool | `false` |  |
 | dtas.config.assertions.acs.modules[0].id | string | `"org_alfresco_device_sync_repo"` |  |
 | dtas.config.assertions.acs.modules[0].installed | bool | `true` |  |
-| dtas.config.assertions.acs.modules[0].version | string | `"5.2.0"` |  |
+| dtas.config.assertions.acs.modules[0].version | string | `"5.3.0"` |  |
 | dtas.config.assertions.acs.modules[1].id | string | `"org.alfresco.integrations.google.docs"` |  |
 | dtas.config.assertions.acs.modules[1].installed | bool | `true` |  |
 | dtas.config.assertions.acs.modules[1].version | string | `"4.1.0"` |  |
 | dtas.config.assertions.acs.modules[2].id | string | `"alfresco-aos-module"` |  |
 | dtas.config.assertions.acs.modules[2].installed | bool | `true` |  |
-| dtas.config.assertions.acs.modules[2].version | string | `"3.3.0"` |  |
-| dtas.config.assertions.acs.version | string | `"25.2.0"` |  |
+| dtas.config.assertions.acs.modules[2].version | string | `"3.4.0"` |  |
+| dtas.config.assertions.acs.version | string | `"25.3.0"` |  |
 | dtas.config.assertions.adw.base_path | string | `"/workspace"` |  |
 | dtas.config.config.host | string | `"http://ingress-nginx-controller.ingress-nginx.svc.cluster.local"` |  |
 | dtas.config.config.password | string | `"admin"` |  |
@@ -250,31 +250,26 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
 | dtas.image.tag | string | `"v1.7.2"` |  |
-| elasticsearch.coordinating.replicaCount | int | `0` |  |
-| elasticsearch.data.replicaCount | int | `0` |  |
+| elasticsearch.elasticsearch.image.repository | string | `"elasticsearch"` |  |
+| elasticsearch.elasticsearch.image.tag | string | `"8.17.3"` |  |
+| elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
+| elasticsearch.elasticsearch.persistence.baseSize | string | `"4Gi"` |  |
+| elasticsearch.elasticsearch.persistence.enabled | bool | `true` |  |
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
-| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
-| elasticsearch.image.tag | string | `"8.17.3"` |  |
-| elasticsearch.ingest.replicaCount | int | `0` |  |
-| elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress for more details about configuration check https://github.com/bitnami/charts/blob/main/bitnami/elasticsearch/values.yaml#L366 |
-| elasticsearch.kibana.configuration.server.basePath | string | `"/kibana"` |  |
-| elasticsearch.kibana.configuration.server.publicBaseUrl | string | `"http://localhost/kibana"` | This setting defines the base URL for accessing Kibana in your deployment.    - For **local deployments**: Use "http://localhost/kibana" (default).    - For **production or remote deployments**: Replace `localhost` with the fully qualified domain name (FQDN) or IP address      where Kibana is accessible. Example: "http://kibana.mycompany.com" or "http://192.168.1.100/kibana".    - Ensure this URL is accessible by users or other services that need to interact with Kibana. |
-| elasticsearch.kibana.configuration.server.rewriteBasePath | bool | `true` |  |
-| elasticsearch.kibana.image.repository | string | `"bitnamilegacy/kibana"` |  |
+| elasticsearch.kibana.enabled | bool | `false` |  |
+| elasticsearch.kibana.image.repository | string | `"kibana"` |  |
 | elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
-| elasticsearch.kibana.ingress.hostname | string | `"*"` |  |
-| elasticsearch.kibana.ingress.ingressClassName | string | `"nginx"` |  |
-| elasticsearch.kibana.ingress.path | string | `"/kibana"` |  |
-| elasticsearch.master.masterOnly | bool | `false` |  |
-| elasticsearch.master.replicaCount | int | `1` |  |
+| elasticsearch.kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
+| elasticsearch.kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| elasticsearch.kibana.serverBasePath | string | `"/kibana"` |  |
+| elasticsearch.nameOverride | string | `"elasticsearch"` |  |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.auditIndex.existingSecretName | string | `nil` | Name of an existing secret that contains AUDIT_ELASTICSEARCH_USERNAME and AUDIT_ELASTICSEARCH_PASSWORD keys. |
 | global.auditIndex.password | string | `nil` | set password for authentication against the external elasticsearch service for audit indexing |
 | global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.auditIndex.url | string | `nil` | set this URL if you have an external elasticsearch for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
-| global.kibanaEnabled | bool | `false` | Enable/Disable Kibana for the embedded elasticsearch cluster |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, please search this topic in https://support.hyland.com/r/alfresco |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
@@ -302,32 +297,40 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | messageBroker.user | string | `nil` | External message broker user |
 | messageBroker.webConsole | string | `nil` | URL of the web console interface for the external message broker Your broker we console interface should respond to URl built using the `restAPITemplate` below where `.ManagementEndpoint` evaluates to the `webConsole`value below. |
 | postgresql-sync.auth.database | string | `"syncservice-postgresql"` |  |
-| postgresql-sync.auth.enablePostgresUser | bool | `false` |  |
 | postgresql-sync.auth.password | string | `"admin"` |  |
 | postgresql-sync.auth.username | string | `"alfresco"` |  |
 | postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
-| postgresql-sync.image.repository | string | `"bitnamilegacy/postgresql"` |  |
-| postgresql-sync.image.tag | string | `"16.6.0"` |  |
+| postgresql-sync.image.pullPolicy | string | `"IfNotPresent"` |  |
+| postgresql-sync.image.repository | string | `"postgres"` |  |
+| postgresql-sync.image.tag | float | `16.6` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
-| postgresql-sync.primary.extendedConfiguration | string | `"max_connections = 150\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
+| postgresql-sync.primary.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| postgresql-sync.primary.persistence.baseSize | string | `"8Gi"` |  |
+| postgresql-sync.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
+| postgresql-sync.primary.persistence.data.subPath | string | `"alfresco-sync-service/database-data"` |  |
+| postgresql-sync.primary.persistence.enabled | bool | `true` |  |
+| postgresql-sync.primary.persistence.existingClaim | string | `nil` |  |
+| postgresql-sync.primary.persistence.storageClass | string | `nil` |  |
 | postgresql-sync.primary.resources.limits.cpu | string | `"4"` |  |
 | postgresql-sync.primary.resources.limits.memory | string | `"4Gi"` |  |
 | postgresql-sync.primary.resources.requests.cpu | string | `"250m"` |  |
 | postgresql-sync.primary.resources.requests.memory | string | `"1Gi"` |  |
+| postgresql-sync.primary.service.name | string | `"postgresql-sync"` |  |
 | postgresql.auth.database | string | `"alfresco"` |  |
-| postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |
 | postgresql.auth.username | string | `"alfresco"` |  |
-| postgresql.commonAnnotations.application | string | `"alfresco-content-services"` |  |
-| postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository Check [PostgreSQL Bitnami chart Documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql) |
+| postgresql.enabled | bool | `true` | Toggle embedded postgres for Alfresco Content Services repository |
 | postgresql.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` |  |
-| postgresql.image.tag | string | `"16.6.0"` |  |
+| postgresql.image.repository | string | `"postgres"` |  |
+| postgresql.image.tag | float | `16.6` |  |
 | postgresql.nameOverride | string | `"postgresql-acs"` |  |
-| postgresql.primary.extendedConfiguration | string | `"max_connections = 250\nshared_buffers = 512MB\neffective_cache_size = 2GB\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\nlog_min_messages = LOG\n"` |  |
+| postgresql.primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
+| postgresql.primary.persistence.baseSize | string | `"8Gi"` |  |
+| postgresql.primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
+| postgresql.primary.persistence.data.subPath | string | `"alfresco-content-services/database-data"` |  |
+| postgresql.primary.persistence.enabled | bool | `true` |  |
 | postgresql.primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
 | postgresql.primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
-| postgresql.primary.persistence.subPath | string | `"alfresco-content-services/database-data"` |  |
 | postgresql.primary.resources.limits.cpu | string | `"8"` |  |
 | postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
 | postgresql.primary.resources.requests.cpu | string | `"500m"` |  |
@@ -335,7 +338,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | prometheus.url | string | `nil` | URL of the prometheus server (must be reachable by KEDA pods) |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"25.2.0"` |  |
+| share.image.tag | string | `"25.3.0"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |

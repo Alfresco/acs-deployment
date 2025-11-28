@@ -30,9 +30,10 @@ data:
     {{- else if eq "elasticsearch" $search_flavor }}
       {{- with .Values.elasticsearch }}
         {{- if .enabled }}
-          {{- $esHost := printf "%s-%s" $.Release.Name (($.Values.global.elasticsearch).service.name | default "elasticsearch") }}
-          {{- $esPort := ($.Values.global.elasticsearch).service.ports.restApi | default 9200 }}
-          {{- $esProto := .protocol | default "http" }}
+          {{- $elasticCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
+          {{- $esHost := include "elastic.es-servicename" $elasticCtx }}
+          {{- $esPort := 9200 }}
+          {{- $esProto := "http" }}
           {{- $search_url = coalesce $.Values.global.search.url (printf "%s://%s:%v" $esProto $esHost $esPort) }}
         {{- else }}
           {{- fail "Chart is configured to use Alfresco Search Enterprise but no index backend has been provided. Set one using either global.search.url or elasticsearch.enabled" }}

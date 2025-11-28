@@ -338,7 +338,7 @@ To change this behavior, you need to set to different values for:
 
 * `entrypoints.web.transport.respondingTimeouts.readTimeout` in the
   as a command argument in `.services.proxy.command`. Check the
-  [Traefik documentation](https://doc.traefik.io/traefik/routing/entrypoints/#respondingtimeouts)
+  [Traefik documentation](https://doc.traefik.io/traefik/reference/install-configuration/entrypoints/#configuration-options)
   for more information.
 * each `traefik.http.middlewares.limit.buffering.maxRequestBodyBytes` label
   of each service where the restriction applies: `.services.alfresco`,
@@ -564,8 +564,8 @@ it:
 
 In particular you may want to tweak the max file upload settings. This is
 handled by the Traefik routing & buffering middleware. Check out
-[maxRequestBodyBytes](https://doc.traefik.io/traefik/middlewares/http/buffering/#maxrequestbodybytes)
-and [readTimeouts](https://doc.traefik.io/traefik/routing/entrypoints/#respondingtimeouts)
+[maxRequestBodyBytes](https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/buffering/#configuration-options)
+and [readTimeouts](https://doc.traefik.io/traefik/reference/install-configuration/entrypoints/#configuration-options)
 for details and amend compose services labels accordingly to your needs (these
 labels are used in alfresco & share services).
 

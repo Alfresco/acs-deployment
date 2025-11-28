@@ -1,0 +1,87 @@
+name: Bug Report
+description: Alfresco Content Service deployment issue
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please use this template to report issues in this repository.
+        This helps us to process your issue faster. Remember we are not mind readers, so
+        the more information you provide the better.
+        Failure to provide the requested information may result in delays in answering
+        your issue or even in closing it without further notice.
+  - type: checkboxes
+    id: tool
+    validations:
+      required: true
+    attributes:
+      label: What tool(s) are you facing an issue with?
+      description: Select all that apply.
+      options:
+        - label: Docker Compose
+        - label: Alfresco Content Service Helm Chart
+        - label: ACS SSO example Helm Chart
+  - type: input
+    id: version
+    validations:
+      required: false
+    attributes:
+      label: What version of Alfresco Content Service deployment tool are you using?
+      description: Please provide the version number (check the tags if unsure).
+      placeholder: "9.5.1"
+  - type: checkboxes
+    id: edition
+    validations:
+      required: true
+    attributes:
+      label: Does the issue affect the Community or Enterprise edition?
+      description: Select all that apply.
+      options:
+        - label: Alfresco Content Service Community Edition
+        - label: Alfresco Content Service Enterprise Edition
+  - type: dropdown
+    id: issueType
+    validations:
+      required: true
+    attributes:
+      label: What type of issue are you reporting?
+      description: Select one option.
+      options:
+        - Bug
+        - Feature Request
+        - Documentation Issue
+  - type: textarea
+    id: issueDescription
+    validations:
+      required: true
+      min_length: 20
+    attributes:
+      label: Description
+      description: Please provide a clear and concise description of the issue you are facing.
+      placeholder: "E.g. I followed the instructions in the README to deploy Alfresco Content Service using Helm, but the deployment fails with the error 'X'."
+  - type: textarea
+    id: stepsToReproduce
+    validations:
+      required: true
+      min_length: 20
+    attributes:
+      label: Steps to Reproduce
+      description: Please provide a step-by-step description of how to reproduce the issue.
+      placeholder: "E.g. 1. Clone the repository. 2. Navigate to the helm directory. 3. Run 'helm install ...'."
+  - type: textarea
+    id: expectedBehavior
+    validations:
+      required: true
+      min_length: 10
+    attributes:
+      label: Expected Behavior
+      description: Please describe what you expected to happen.
+      placeholder: "E.g. The Helm chart should deploy Alfresco Content Service successfully without errors."
+  - type: textarea
+    id: actualBehavior
+    validations:
+      required: true
+      min_length: 10
+    attributes:
+      label: Actual Behavior
+      description: Please describe what actually happened.
+      placeholder: "E.g. The deployment fails with the error 'X'."

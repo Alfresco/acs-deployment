@@ -38,6 +38,7 @@ matrix:
     audit-storage:
       compose_target: *composeNext
       compose_key: $.services.audit-storage.image
+
   current:
     id: current
     acs:
@@ -146,37 +147,6 @@ matrix:
       compose_key: $.services.shared-file-store.image
     tengine-aio:
       compose_target: *compose74
-      compose_key: $.services.transform-core-aio.image
-
-  7.3.N:
-    id: 73n
-    acs:
-      compose_target: &compose73 >-
-        docker-compose/7.3.N-compose.yaml
-      compose_key: $.services.alfresco.image
-    share:
-      compose_target: *compose73
-      compose_key: $.services.share.image
-    search:
-      compose_target: *compose73
-      compose_key: $.services.solr6.image
-    sync:
-      compose_target: *compose73
-      compose_key: $.services.sync-service.image
-    adw:
-      compose_target: *compose73
-      compose_key: $.services.digital-workspace.image
-    adminApp:
-      compose_target: *compose73
-      compose_key: $.services.control-center.image
-    trouter:
-      compose_target: *compose73
-      compose_key: $.services.transform-router.image
-    sfs:
-      compose_target: *compose73
-      compose_key: $.services.shared-file-store.image
-    tengine-aio:
-      compose_target: *compose73
       compose_key: $.services.transform-core-aio.image
 
   community: &community

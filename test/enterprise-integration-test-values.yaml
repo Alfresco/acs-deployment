@@ -21,7 +21,7 @@ share:
       memory: "256Mi"
     limits:
       cpu: "2"
-      memory: "512Mi"
+      memory: "1Gi"
   readinessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
@@ -37,7 +37,7 @@ alfresco-search:
       cpu: "2"
       memory: "1280Mi"
 elasticsearch:
-  master:
+  elasticsearch:
     resources:
       requests:
         cpu: "0.01"
@@ -45,6 +45,10 @@ elasticsearch:
       limits:
         cpu: "1"
         memory: "1Gi"
+    livenessProbe:
+      initialDelaySeconds: 100
+    readinessProbe:
+      initialDelaySeconds: 100
   kibana:
     resources:
       requests:

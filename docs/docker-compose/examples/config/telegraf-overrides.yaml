@@ -1,0 +1,59 @@
+services:
+  alfresco:
+    environment:
+      JAVA_OPTS: >-
+        -Ddb.driver=org.postgresql.Driver
+        -Ddb.username=alfresco
+        -Ddb.password=alfresco
+        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dindex.subsystem.name=elasticsearch
+        -Delasticsearch.createIndexIfNotExists=true
+        -Delasticsearch.host=elasticsearch
+        -Delasticsearch.port=9200
+        -Dshare.host=localhost
+        -Dshare.port=8080
+        -Dalfresco.host=localhost
+        -Dalfresco.port=8080
+        -Dcsrf.filter.enabled=false
+        -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
+        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+        -Ddeployment.method=DOCKER_COMPOSE
+        -Dtransform.service.enabled=true
+        -Dtransform.service.url=http://transform-router:8095
+        -Dsfs.url=http://shared-file-store:8099/
+        -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
+        -Ddsync.service.uris=http://localhost:9090/alfresco
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+        -Dmetrics.enabled=true
+        -Dmetrics.dbMetricsReporter.enabled=true
+        -Dmetrics.dbMetricsReporter.query.enabled=true
+        -Dmetrics.dbMetricsReporter.query.statements.enabled=true
+        -Dmetrics.jvmMetricsReporter.enabled=true
+        -Dmetrics.restMetricsReporter.enabled=true
+        -Dmetrics.restMetricsReporter.path.enabled=true
+        -Dmetrics.tomcatMetricsReporter.enabled=true
+        -Dmetrics.authenticationMetricsReporter.enabled=true
+        -javaagent:/usr/local/tomcat/lib/jolokia-agent-jvm.jar=port=7777,host=0.0.0.0,user=admin,password=admin
+    ports:
+      - "7777:7777"
+    volumes:
+      - /usr/local/tomcat/alf_data
+      - ./jolokia-agent-jvm-2.3.0-javaagent.jar:/usr/local/tomcat/lib/jolokia-agent-jvm.jar:ro
+  influxdb2:
+    image: influxdb:2
+    ports:
+      - 8086:8086
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=alfresco
+      - DOCKER_INFLUXDB_INIT_PASSWORD=alfresco
+      - DOCKER_INFLUXDB_INIT_ORG=alfresco
+      - DOCKER_INFLUXDB_INIT_BUCKET=alfresco
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=influx
+  telegraf:
+    image: telegraf:1.34
+    cap_add:
+      - NET_RAW
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro

@@ -34,8 +34,8 @@ account.
 
 As of version 8.0.0 of the chart we have changed the release policy.
 Previously, the chart was released together with the ACS product and we were
-delivering additional values files for each major release of ACS (e.g. 7.3,
-7.4, ...) and chart version were bumped with a similar increment as ACS.
+delivering additional values files for each major release of ACS (e.g. 7.4, ...)
+and chart version were bumped with a similar increment as ACS.
 With version 6.0.0, we started applying major versions bumps to reflect
 breaking changes in the chart, despite only minor ACS release happened.
 
@@ -86,6 +86,7 @@ file for a version with the latest charts or using the old charts.
 
 | unsupported ACS version | Last chart version providing it |
 |-------------------------|---------------------------------|
+| 7.3                     | 9.5.1                           |
 | 7.2                     | 9.1.1                           |
 | 7.1                     | 8.5.2                           |
 | 7.0                     | 8.0.1                           |
