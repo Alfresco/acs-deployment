@@ -31,7 +31,7 @@ jobs:
     outputs:
       ver_json: ${{ steps.app_versions.outputs.json }}
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # v6.0.0
         with:
           fetch-depth: 0
       - name: Get charts
@@ -65,7 +65,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # v6.0.0
 
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
         with:
@@ -85,7 +85,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v10.1.0
         with:
           ingress-nginx-ref: controller-v1.12.1
           metrics: "true"
@@ -122,13 +122,13 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for deployments to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v10.1.0
         with:
           wait-resource: "deployments"
           wait-condition: "Available"
 
       - name: Wait for statefulsets to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v10.1.0
         with:
           wait-resource: "sts"
           wait-for-what: "jsonpath"
@@ -136,7 +136,7 @@ jobs:
 
       - name: Wait for jobs to be completed
         if: matrix.values != '7.4.N_values.yaml'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v10.1.0
         with:
           wait-resource: "jobs"
           wait-condition: "complete"
