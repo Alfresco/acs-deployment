@@ -27,8 +27,8 @@ jobs:
     name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # 5.0.1
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v9.5.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # 6.0.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v10.1.0
       - name: Add dependency chart repos
         run: |
           for repo in $(yq eval-all \
