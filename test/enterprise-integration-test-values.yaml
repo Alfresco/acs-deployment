@@ -60,6 +60,13 @@ elasticsearch:
 alfresco-search-enterprise:
   reindexing:
     hookExecution: false
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "128Mi"
+      limits:
+        cpu: "1"
+        memory: "1Gi"
   resources:
     requests:
       cpu: "0.01"
@@ -134,6 +141,14 @@ alfresco-transform-service:
         cpu: "2"
         memory: "800Mi"
     replicaCount: 1
+  filestore:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        cpu: "2"
+        memory: "512Mi"
 postgresql:
   primary:
     resources:

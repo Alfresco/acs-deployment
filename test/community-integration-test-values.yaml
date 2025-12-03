@@ -80,6 +80,14 @@ alfresco-transform-service:
       limits:
         cpu: "2"
         memory: "512Mi"
+  filestore:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        cpu: "2"
+        memory: "512Mi"
 # Disable features
 postgresql:
   primary:
