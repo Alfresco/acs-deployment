@@ -58,10 +58,19 @@ services:
       retries: 5
       start_period: 1m
     volumes:
-      - /usr/local/tomcat/alf_data
+      - alf-data:/usr/local/tomcat/alf_data
+      - ./perf-model-1.0-SNAPSHOT.jar:/usr/local/tomcat/webapps/alfresco/WEB-INF/lib/perf.jar
     extends:
       file: commons/base.yaml
       service: alfresco
+  data-population:
+    image: quay.io/alfresco/alfresco-perf-populate:latest
+    deploy:
+      replicas: 0
+    restart: never
+    volumes:
+      - ./config.json:/opt/app/config.json
+      - alf-data:/opt/alf-data
   transform-router:
     mem_limit: 512m
     image: quay.io/alfresco/alfresco-transform-router:4.2.3
@@ -158,6 +167,7 @@ services:
   postgres:
     image: postgres:16.5
     mem_limit: 512m
+    shm_size: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
       - POSTGRES_USER=alfresco
@@ -357,3 +367,6 @@ services:
     extends:
       file: commons/base.yaml
       service: sync-service
+volumes:
+  alf-data:
+    name: "alf-data"
