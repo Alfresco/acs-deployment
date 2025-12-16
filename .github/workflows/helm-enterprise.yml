@@ -65,6 +65,12 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
+      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v11.1.0
+        with:
+          remove-android: true
+          remove-codeql: true
+          remove-docker-images: true
+
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # v6.0.0
 
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
