@@ -7,15 +7,15 @@ dependencies:
   version: 6.0.0
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.11.0
+  version: 0.12.0
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.6.2
+  version: 3.7.0
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.5.0
+  version: 1.6.0
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.2
-digest: sha256:73d1fa5dec4e14bebb79a7a4f50dd3f8055a56556521f627f116578f577d3a77
-generated: "2025-11-25T12:29:17.55384236Z"
+  version: 0.3.0
+digest: sha256:d846e21c6851740d6b2c644b95d746cca96901c7088b97c18a42aa3f9ed8ae15
+generated: "2025-12-16T09:49:00.194015152Z"
