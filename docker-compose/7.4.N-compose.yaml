@@ -193,7 +193,7 @@ services:
     ports:
       - "8083:8983" # Browser port
   activemq:
-    image: quay.io/alfresco/alfresco-activemq:5.17-jre17-rockylinux8
+    image: quay.io/alfresco/alfresco-activemq:5.19.1-jre17-rockylinux8-pr-123
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console
