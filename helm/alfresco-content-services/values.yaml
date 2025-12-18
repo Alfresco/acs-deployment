@@ -185,7 +185,7 @@ alfresco-repository:
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.18.7-jre17-rockylinux8
+    tag: 5.18.7-jre17-rockylinux8-pr-123
   nameOverride: activemq
   enabled: true
   adminUser:

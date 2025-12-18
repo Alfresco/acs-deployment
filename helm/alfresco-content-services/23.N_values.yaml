@@ -5,7 +5,7 @@ alfresco-repository:
     tag: 23.6.0
 activemq:
   image:
-    tag: 5.18.7-jre17-rockylinux8
+    tag: 5.18.7-jre17-rockylinux8-pr-123
 alfresco-transform-service:
   transformrouter:
     image:
