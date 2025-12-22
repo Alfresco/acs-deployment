@@ -10,7 +10,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # v6.0.0
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
         with:
           fetch-depth: 0
 
@@ -20,7 +20,7 @@ jobs:
 
       - name: Publish chart
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v10.1.0
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v12.0.0
         with:
           chart_name: alfresco-content-services
           github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
