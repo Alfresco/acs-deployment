@@ -6,7 +6,7 @@ alfresco-repository:
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.18-jre17-rockylinux8
+    tag: 5.18.7-jre17-rockylinux8
 alfresco-transform-service:
   transformrouter:
     image:
