@@ -40,6 +40,8 @@ services:
         -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+        -Dmessaging.broker.username=admin
+        -Dmessaging.broker.password=admin
         -Ddeployment.method=DOCKER_COMPOSE
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -XX:MinRAMPercentage=50
@@ -136,7 +138,7 @@ services:
     ports:
       - "8083:8983" # Browser port
   activemq:
-    image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
+    image: alfresco/alfresco-activemq:5.18.7-jre17-rockylinux8-pr-123
     mem_limit: 1g
     ports:
       - "8161:8161" # Web Console
