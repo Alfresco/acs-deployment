@@ -270,7 +270,7 @@ services:
     image: quay.io/alfresco/alfresco-audit-storage:1.2.0
     mem_limit: 512m
     environment:
-      SPRING_ACTIVEMQ_BROKERURL: activemq
+      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin

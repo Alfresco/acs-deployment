@@ -336,6 +336,7 @@ services:
         -Dsql.db.username=alfresco
         -Dsql.db.password=alfresco
         -Dmessaging.broker.host=activemq
+        -Drepo.hostname=alfresco
         -Drepo.port=8080
         -Ddw.server.applicationConnectors[0].type=http
         -XX:MinRAMPercentage=50
