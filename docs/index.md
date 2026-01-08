@@ -14,7 +14,7 @@ This project contains the code for running Alfresco Content Services (ACS) with
 Compose](https://docs.docker.com/compose) or on
 [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
-> Automated tests for helm charts are running on KinD cluster v1.31 and EKS v1.31.
+> Automated tests for helm charts are running on KinD cluster v1.33 and EKS v1.33.
 
 ## Prerequisites
 
