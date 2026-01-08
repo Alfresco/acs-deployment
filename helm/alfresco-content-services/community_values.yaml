@@ -15,8 +15,8 @@ alfresco-repository:
       flavor: solr6
 activemq:
   image:
-    repository: quay.io/alfresco/alfresco-activemq
-    tag: 5.18.7-jre17-rockylinux8-pr-123
+    repository: docker.io/alfresco/alfresco-activemq
+    tag: 5.18.7-jre17-rockylinux8
 alfresco-search-enterprise:
   enabled: false
 elasticsearch:
