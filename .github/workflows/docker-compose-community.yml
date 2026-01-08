@@ -29,6 +29,3 @@ jobs:
           compose_file_path: docker-compose/community-compose.yaml
           postman_path: test/postman/docker-compose
           postman_json: acs-test-docker-compose-collection.json
-          #only for testing private images
-          quay_username: ${{ secrets.QUAY_USERNAME }}
-          quay_password: ${{ secrets.QUAY_PASSWORD }}
