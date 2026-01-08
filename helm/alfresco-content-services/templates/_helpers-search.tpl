@@ -12,7 +12,7 @@ Usage: include "alfresco-content-services.search.flavor" $
     {{- if eq (index . "alfresco-repository" "configuration" "search" "flavor") "elasticsearch" }}
       {{- print "elasticsearch" }}
     {{- else if not (index . "alfresco-search" "enabled") }}
-      {{ fail ".Values.alfresco-repository.search.flavor must be set to elasticsearch" }}
+      {{ fail ".Values.alfresco-repository.configuration.search.flavor must be set to elasticsearch" }}
     {{- else }}
       {{- print "solr6" }}{{/* migration scenario when both engines are enabled */}}
     {{- end }}
@@ -20,7 +20,7 @@ Usage: include "alfresco-content-services.search.flavor" $
     {{- if eq (index . "alfresco-repository" "configuration" "search" "flavor") "solr6" }}
       {{- print "solr6" }}
     {{- else }}
-      {{ fail ".Values.alfresco-repository.search.flavor must be set to solr6" }}
+      {{ fail ".Values.alfresco-repository.configuration.search.flavor must be set to solr6" }}
     {{- end }}
   {{- else }}
     {{- print "noindex" }}

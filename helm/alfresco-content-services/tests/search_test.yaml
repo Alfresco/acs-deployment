@@ -167,7 +167,7 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: >-
-            .Values.alfresco-repository.search.flavor must be set to solr6
+            .Values.alfresco-repository.configuration.search.flavor must be set to solr6
         template: secret-search.yaml
 
   - it: Should complain on search flavour mismatch (elasticsearch)
@@ -180,7 +180,7 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: >-
-            .Values.alfresco-repository.search.flavor must be set to elasticsearch
+            .Values.alfresco-repository.configuration.search.flavor must be set to elasticsearch
         template: secret-search.yaml
 
   - it: Should allow fallback on solr when both are enabled
