@@ -147,6 +147,7 @@ jobs:
           helm status acs --show-resources
 
       - name: Setup tmate session
+        if: ${{ matrix.values == 'values.yaml' }}
         uses: mxschmitt/action-tmate@v3
         with:
           # provide access to SSH user that triggered the build
