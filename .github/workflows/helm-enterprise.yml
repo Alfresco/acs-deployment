@@ -146,6 +146,12 @@ jobs:
           helm ls --all-namespaces --all
           helm status acs --show-resources
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          # provide access to SSH user that triggered the build
+          limit-access-to-actor: true
+
       - name: Run Newman tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
         id: newman
