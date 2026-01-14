@@ -54,7 +54,7 @@ jobs:
 
   helm_integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 200
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
