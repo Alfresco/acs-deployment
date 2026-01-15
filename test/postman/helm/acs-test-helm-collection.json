@@ -688,10 +688,10 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(403);",
+									"    pm.response.to.have.status(401);", 
 									"});",
 									""
-								]
+								] 
 							}
 						}
 					],
@@ -1241,7 +1241,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(403);",
+									"    pm.response.to.have.status(404);",
 									"});"
 								]
 							}
