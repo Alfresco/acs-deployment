@@ -626,7 +626,7 @@ dtas:
     - --tb=short
   config:
     config:
-      host: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
+      host: http://traefik.traefik.svc.cluster.local
       username: admin
       password: admin
     assertions:
