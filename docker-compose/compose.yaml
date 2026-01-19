@@ -17,7 +17,8 @@ services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:25.3.0
     mem_limit: 1900m
-    command: ["bash", "-c", "java -jar /usr/local/tomcat/alfresco-mmt/alfresco-mmt*.jar install /usr/local/tomcat/amps/to-install /usr/local/tomcat/webapps/alfresco -directory -nobackup && catalina.sh run -security"]
+    command: ["bash", "-c", " java -jar /usr/local/tomcat/alfresco-mmt/alfresco-mmt*.jar uninstall alfresco-aos-module /usr/local/tomcat/webapps/alfresco
+        && java -jar /usr/local/tomcat/alfresco-mmt/alfresco-mmt*.jar install /usr/local/tomcat/amps/to-install /usr/local/tomcat/webapps/alfresco -directory -nobackup && catalina.sh run -security"]
     user: root
     environment:
       JAVA_TOOL_OPTIONS: >-
