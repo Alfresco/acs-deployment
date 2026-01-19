@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - name: run kics Scan
-        uses: checkmarx/kics-github-action@63fca4ca72e56edbb5a599ee756e6af1fdb1e785 # v2.1.18
+        uses: checkmarx/kics-github-action@00def9108246ec656aea725db2167522d26a99d2 # v2.1.19
         with:
           path: 'docker-compose,helm'
           ignore_on_exit: results
@@ -36,6 +36,6 @@ jobs:
           config_path: .github/kics.yml
       - name: Upload SARIF file
         if: github.actor != 'dependabot[bot]'
-        uses: github/codeql-action/upload-sarif@5d4e8d1aca955e8d8589aabd499c5cae939e33c7 # v4.31.9
+        uses: github/codeql-action/upload-sarif@cdefb33c0f6224e58673d9004f47f7cb3e328b89 # v4.31.10
         with:
           sarif_file: report-dir/results.sarif
