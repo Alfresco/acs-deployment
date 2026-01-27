@@ -24,7 +24,7 @@ on:
 
 jobs:
   publish:
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@main
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@v0.2.1
     with:
       working-directory: .
       publish: ${{ github.event_name != 'pull_request' }}
