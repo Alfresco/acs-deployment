@@ -552,7 +552,7 @@ share:
 Traefik is a modern HTTP reverse proxy and load balancer that makes deploying
 microservices easy. In particular it makes dynamic configuration easy and
 integrates with docker compose using
-[labels](https://docs.docker.com/reference/compose-file/deploy/#labels){: data-proofer-ignore}.
+[labels](https://docs.docker.com/reference/compose-file/deploy/#labels).
 
 Please refer to Traefik documentation for more information on how to configure
 it:
