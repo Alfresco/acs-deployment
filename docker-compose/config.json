@@ -1,0 +1,224 @@
+{
+  "locale": "en_",
+  "acl_strategy": "inherit",
+  "user_name": "admin",
+  "metadata_db_config": {
+    "db_type": "postgres",
+    "data_source": {
+      "dataSource.databaseName": "alfresco",
+      "dataSourceClassName": "org.postgresql.ds.PGSimpleDataSource",
+      "dataSource.password": "alfresco",
+      "dataSource.serverName": "postgres",
+      "dataSource.portNumber": "5432",
+      "dataSource.user": "alfresco"
+    }
+  },
+  "search_config": {
+    "uri": "http://elasticsearch:9200",
+    "index_name": "alfresco"
+  },
+  "folder_config": {
+    "existing_folder_name": "app:company_home",
+    "number_of_folders": 1000,
+    "max_folder_depth": 100
+  },
+  "content_config": {
+    "number_of_content_nodes": 500000,
+    "content_source_path": "/usr/data/all.utf8",
+    "namespace_mapping": {
+      "http://www.alfresco.org/model/perftest/1.0": "perf"
+    },
+    "assigned_aspects": {
+      "perf:perflocation": {
+        "probability": 0.7,
+        "properties": {
+          "perf:buildingCode": {
+            "generator": "fromListText",
+            "list": [
+              "PL-B1",
+              "PL-B2",
+              "PL-B3",
+              "PL-B4",
+              "PL-B5",
+              "PL-B6",
+              "PL-B7",
+              "PL-B8",
+              "PL-B9",
+              "PL-A1",
+              "PL-A2",
+              "PL-A3",
+              "PL-A4",
+              "PL-A5",
+              "PL-A6",
+              "PL-A7",
+              "PL-A8",
+              "PL-A9"
+            ]
+          },
+          "perf:roomNumber": {
+            "generator": "randomLong",
+            "lowerBound": 1,
+            "upperBound": 1000
+          }
+        }
+      },
+      "perf:perfmarker": {
+        "probability": 1.0,
+        "properties": {
+          "perf:dateMarker": {
+            "generator": "constInstant",
+            "value": "2025-12-02T07:40:18Z"
+          },
+          "perf:longMarker": {
+            "generator": "constLong",
+            "value": 12345
+          },
+          "perf:textMarker": {
+            "generator": "constText",
+            "value": "alabama"
+          }
+        }
+      },
+      "perf:perfarchived": {
+        "probability": 0.5,
+        "properties": {
+          "perf:approvedDate": {
+            "generator": "randomDate",
+            "lowerBound": "2021-01-01T00:00:00Z",
+            "upperBound": "2021-12-31T23:59:59Z"
+          },
+          "perf:archivedDate": {
+            "generator": "randomDate",
+            "lowerBound": "2020-01-01T00:00:00Z",
+            "upperBound": "2020-12-31T23:59:59Z"
+          }
+        }
+      },
+      "perf:perfreviewed": {
+        "probability": 0.6,
+        "properties": {
+          "perf:reviewerCode": {
+            "generator": "fromTemplateText",
+            "template": "REV-{A}{A}{A}-{D}{D}"
+          },
+          "perf:reviewStatus": {
+            "generator": "fromListText",
+            "list": [
+              "NONE",
+              "APPROVED",
+              "REJECTED",
+              "UNKNOWN",
+              "WAITING"
+            ]
+          },
+          "perf:approverCode": {
+            "generator": "fromTemplateText",
+            "template": "APP-{A}{A}{A}-{D}{D}"
+          }
+        }
+      }
+    },
+    "content_types": {
+      "small-docx": {
+        "type": "docx",
+        "weight": 10,
+        "size": "S"
+      },
+      "small-pdf": {
+        "type": "pdf",
+        "weight": 20,
+        "size": "S"
+      },
+      "small-txt": {
+        "type": "txt",
+        "weight": 30,
+        "size": "S"
+      },
+      "small-jpeg": {
+        "type": "jpeg",
+        "weight": 40,
+        "size": "S"
+      }
+    }
+  },
+  "content_store_config": {
+    "name": "none"
+  },
+  "tuning_config": {
+    "metadata": {
+      "batch_size": 2048,
+      "number_of_workers": 10
+    },
+    "storage": {
+      "number_of_workers": 128,
+      "capacity": 40000
+    },
+    "index": {
+      "batch_size": 256,
+      "number_of_workers": 32,
+      "capacity": 20000
+    },
+    "pools": {
+      "raw_string_S": {
+        "content_size": 10240,
+        "number_of_workers": 8,
+        "capacity": 8192
+      },
+      "raw_string_M": {
+        "content_size": 102400,
+        "number_of_workers": 4,
+        "capacity": 16
+      },
+      "raw_string_L": {
+        "content_size": 1024000,
+        "number_of_workers": 4,
+        "capacity": 16
+      },
+      "txt_S": {
+        "number_of_workers": 16,
+        "capacity": 4096,
+        "delayed_start": false
+      },
+      "txt_M": {
+        "number_of_workers": 16,
+        "capacity": 2048,
+        "delayed_start": true
+      },
+      "txt_L": {
+        "number_of_workers": 8,
+        "capacity": 1024,
+        "delayed_start": true
+      },
+      "docx_S": {
+        "number_of_workers": 16,
+        "capacity": 8192,
+        "delayed_start": false
+      },
+      "docx_M": {
+        "number_of_workers": 16,
+        "capacity": 2048,
+        "delayed_start": true
+      },
+      "docx_L": {
+        "number_of_workers": 8,
+        "capacity": 1024,
+        "delayed_start": true
+      },
+      "pdf_S": {
+        "number_of_workers": 16,
+        "capacity": 4096,
+        "delayed_start": false
+      },
+      "pdf_M": {
+        "number_of_workers": 16,
+        "capacity": 2048,
+        "delayed_start": true
+      },
+      "pdf_L": {
+        "number_of_workers": 8,
+        "capacity": 1024,
+        "delayed_start": true
+      }
+    }
+  }
+}
