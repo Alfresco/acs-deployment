@@ -16,7 +16,7 @@ alfresco-repository:
       cpu: "0.01"
       memory: "1024Mi"
     limits:
-      memory: "1560Mi"
+      memory: "2Gi"
 alfresco-transform-service:
   transformrouter:
     replicaCount: 1
@@ -99,7 +99,7 @@ elasticsearch:
         memory: "512Mi"
       limits:
         cpu: "1"
-        memory: "1Gi"
+        memory: "1280Mi"
   kibana:
     resources:
       requests:
