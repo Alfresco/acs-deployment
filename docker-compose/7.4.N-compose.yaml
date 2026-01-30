@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:7.4.2.5
+    image: quay.io/alfresco/alfresco-content-repository:7.4.2.6
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -66,7 +66,7 @@ services:
       service: alfresco
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.2.3
+    image: quay.io/alfresco/alfresco-transform-router:4.3.0
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -89,7 +89,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.4
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.3.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -112,7 +112,7 @@ services:
       shared-file-store:
         condition: service_healthy
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.2.3
+    image: quay.io/alfresco/alfresco-shared-file-store:4.3.0
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -131,7 +131,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:7.4.2.5
+    image: quay.io/alfresco/alfresco-share:7.4.2.6
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080

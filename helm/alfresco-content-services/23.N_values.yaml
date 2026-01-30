@@ -2,55 +2,55 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 23.6.0
+    tag: 23.6.1
 activemq:
   image:
     tag: 5.18.7-jre17-rockylinux8
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.2.3
+      tag: 4.3.0
   pdfrenderer:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   imagemagick:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   libreoffice:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   tika:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   transformmisc:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   filestore:
     image:
-      tag: 4.2.3
+      tag: 4.3.0
 alfresco-ai-transformer:
   image:
-    tag: 3.2.3
+    tag: 3.3.0
 share:
   image:
-    tag: 23.6.0
+    tag: 23.6.1
 alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
     content:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
     metadata:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
     path:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
   reindexing:
     image:
-      tag: 5.2.1
+      tag: 5.3.0
 alfresco-search:
   enabled: false
   searchServicesImage:
