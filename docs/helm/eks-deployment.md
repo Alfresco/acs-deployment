@@ -271,7 +271,7 @@ Create the cluster using the latest supported version - check the main [README](
 Most common choices for instance types are `m5.xlarge` and `t3.xlarge`:
 
 ```sh
-eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.31 --instance-types t3.xlarge --nodes 3
+eksctl create cluster --name $EKS_CLUSTER_NAME --version 1.33 --instance-types t3.xlarge --nodes 3
 ```
 
 Enable the OIDC provider that is necessary to install further EKS addons later:
