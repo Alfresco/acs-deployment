@@ -87,7 +87,7 @@ elasticsearch:
       tag: 8.17.1
 alfresco-audit-storage:
   image:
-    tag: 1.3.0-A.1
+    tag: 1.2.0
 dtas:
   config:
     assertions:

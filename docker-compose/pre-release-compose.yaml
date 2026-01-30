@@ -296,7 +296,7 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:1.3.0-A.1
+    image: quay.io/alfresco/alfresco-audit-storage:1.2.0
     mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
