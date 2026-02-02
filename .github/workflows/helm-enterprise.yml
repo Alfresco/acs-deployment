@@ -65,7 +65,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v12.9.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v12.10.1
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
@@ -87,7 +87,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.10.1
         with:
           ingress-nginx-ref: controller-v1.12.1
           metrics: "true"
@@ -124,13 +124,13 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for deployments to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.10.1
         with:
           wait-resource: "deployments"
           wait-condition: "Available"
 
       - name: Wait for statefulsets to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.10.1
         with:
           wait-resource: "sts"
           wait-for-what: "jsonpath"
@@ -138,7 +138,7 @@ jobs:
 
       - name: Wait for jobs to be completed
         if: matrix.values != '7.4.N_values.yaml'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.10.1
         with:
           wait-resource: "jobs"
           wait-condition: "complete"
