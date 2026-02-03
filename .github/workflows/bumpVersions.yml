@@ -43,15 +43,15 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v12.10.2
 
       - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v12.9.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v12.10.2
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v12.10.2
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -78,7 +78,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v12.10.2
 
       - name: Checkout updatecli configs
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -100,9 +100,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v12.9.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v12.10.2
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v12.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v12.10.2
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
