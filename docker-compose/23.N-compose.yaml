@@ -274,7 +274,6 @@ services:
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
-      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
       interval: 60s
