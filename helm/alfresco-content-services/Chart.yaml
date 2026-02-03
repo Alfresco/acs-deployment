@@ -88,7 +88,7 @@ dependencies:
     alias: elasticsearch
     condition: elasticsearch.enabled
   - name: alfresco-audit-storage
-    version: 0.7.0
+    version: 0.7.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-audit-storage.enabled
   - name: alfresco-connector-hxi
