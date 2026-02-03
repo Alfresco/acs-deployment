@@ -49,9 +49,9 @@ dependencies:
   version: 0.3.0
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.7.1
+  version: 0.7.2
 - name: alfresco-connector-hxi
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.4.0
-digest: sha256:5530b8858d0871a8b4d7dedbf219f436f34625b7a4aaa4f74caace0fb3dad784
-generated: "2026-02-03T13:00:04.086617+01:00"
+digest: sha256:07bb9d598a4caa087cbd734d1f5766c1faccd35b7b002b572a64f4033a9bf5b3
+generated: "2026-02-03T16:43:27.856512+01:00"
