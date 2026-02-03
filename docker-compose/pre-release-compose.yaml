@@ -306,7 +306,7 @@ services:
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/liveness"]
       interval: 60s
       timeout: 2s
       retries: 3
