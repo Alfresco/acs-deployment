@@ -173,6 +173,21 @@ jobs:
         id: helm_test
         run: helm test acs
 
+      - name: Collect logs from all containers
+        if: always()
+        run: |
+          mkdir -p logs
+          for pod in $(kubectl get pods -n default -o jsonpath='{.items[*].metadata.name}'); do
+            kubectl logs $pod -n default > logs/${pod}.log
+          done
+
+      - name: Upload logs as artifact
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 #v5.0.0
+        with:
+          name: k8s-logs-${{ matrix.values }}-${{ matrix.name }}
+          path: logs
+
       - name: Spit cluster status after helm test
         if: always() && steps.helm_test.outcome != 'skipped'
         run: |
