@@ -26,7 +26,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.4.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.7.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.7.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.4.0 |
