@@ -41,7 +41,7 @@ deployment is destroyed or rolled back!
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-content-app(alfresco-adf-app) | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 0.13.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 1.7.0 |
-| https://codecentric.github.io/helm-charts | keycloakx | 7.1.7 |
+| https://codecentric.github.io/helm-charts | keycloakx | 7.1.6 |
 | oci://registry-1.docker.io/bitnamicharts | repository-database(postgresql) | 13.4.0 |
 
 ## Values
