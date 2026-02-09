@@ -146,6 +146,30 @@ alfresco-repository:
     tag: 25.3.0
   autoscaling:
     kedaDisableIdle: true
+  # -- For testing only
+  ingress:
+    hosts:
+      - paths:
+          - path: /
+            pathType: Prefix
+          - path: /api-explorer
+            pathType: Prefix
+          # -- Block direct access to Solr API endpoints as it contains sensitive information
+          - path: /alfresco/service/api/solr/
+            pathType: Prefix
+            serviceName: blocked-api-solr
+          - path: /alfresco/s/api/solr/
+            pathType: Prefix
+            serviceName: blocked-api-solr
+          - path: /alfresco/wcservice/api/solr/
+            pathType: Prefix
+            serviceName: blocked-api-solr
+          - path: /alfresco/wcs/api/solr/
+            pathType: Prefix
+            serviceName: blocked-api-solr
+          - path: /alfresco/s/prometheus
+            pathType: Prefix
+            serviceName: blocked-prometheus
   configuration:
     repository:
       existingConfigMap: *repository_cmName
@@ -311,6 +335,22 @@ share:
         # -- Name of the key in the configmap which points to the repository
         # service port
         port: repo_svc_port
+  # -- For testing only
+  ingress:
+    hosts:
+      - paths:
+          - path: /share
+            pathType: Prefix
+          # -- Block direct access to Solr API endpoints as it contains sensitive information
+          - path: /share/service/proxy/alfresco/api/solr/
+            pathType: Prefix
+            serviceName: blocked-api-solr
+          - path: /share/proxy/alfresco-noauth/api/solr/
+            pathType: Prefix
+            serviceName: blocked-api-solr
+          - path: /share/proxy/alfresco-feed/api/solr/
+            pathType: Prefix
+            serviceName: blocked-api-solr
 alfresco-search:
   enabled: false
   repository:
