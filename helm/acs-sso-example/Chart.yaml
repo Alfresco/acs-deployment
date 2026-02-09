@@ -2,7 +2,7 @@ apiVersion: v2
 name: acs-sso-example
 description: |
   An example Chart to demonstrate how to compose your own Alfresco platform
-  with SSO on kubernetes using a nthrid party Keycloak.
+  with SSO on kubernetes using a third party Keycloak.
   if you're familiar with [Helm](ttps://helm.sh) &
   [Kubernetes](https://kubernetes.io) taking a look at the `values.yaml` should
   be enough but the principals are also documented in two differents steps:
