@@ -24,9 +24,9 @@ on:
 
 jobs:
   publish:
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@main
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@v0.2.1
     with:
       working-directory: .
       publish: ${{ github.event_name != 'pull_request' }}
       validate-html: true
-      validate-html-args: "--ignore-status-codes 429"
+      validate-html-args: --ignore-status-codes 429

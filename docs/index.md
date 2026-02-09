@@ -7,14 +7,14 @@ permalink: /index.html
 # Alfresco Content Services Containerized Deployment
 
 [![release](https://img.shields.io/github/v/release/Alfresco/acs-deployment?display_name=release)](https://github.com/Alfresco/acs-deployment/releases/latest)
-![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.31-blue)
+![kubernetes tested version](https://img.shields.io/badge/k8s%20version-v1.34-blue)
 
 This project contains the code for running Alfresco Content Services (ACS) with
 [Docker](https://docs.docker.com/get-started) using [Docker
 Compose](https://docs.docker.com/compose) or on
 [Kubernetes](https://kubernetes.io) using [Helm Charts](https://helm.sh).
 
-> Automated tests for helm charts are running on KinD cluster v1.33 and EKS v1.32.
+> Automated tests for helm charts are running on KinD cluster v1.34 and EKS v1.33.
 
 ## Prerequisites
 

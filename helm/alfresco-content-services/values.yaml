@@ -233,7 +233,7 @@ alfresco-transform-service:
     replicaCount: 2
     image:
       repository: quay.io/alfresco/alfresco-transform-router
-      tag: 4.2.3
+      tag: 4.3.0
     livenessProbe:
       # -- Overrride liveness probe endpoint to work around
       # https://alfresco.atlassian.net/browse/ACS-7269
@@ -244,35 +244,35 @@ alfresco-transform-service:
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-pdf-renderer
-      tag: 5.2.4
+      tag: 5.3.0
   imagemagick:
     # -- Declares the alfresco-imagemagick service used by the content repository
     # to transform image files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-imagemagick
-      tag: 5.2.4
+      tag: 5.3.0
   libreoffice:
     # -- Declares the alfresco-libreoffice service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-libreoffice
-      tag: 5.2.4
+      tag: 5.3.0
   tika:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-tika
-      tag: 5.2.4
+      tag: 5.3.0
   transformmisc:
     # -- Declares the alfresco-tika service used by the content repository
     # to transform office files
     enabled: true
     image:
       repository: quay.io/alfresco/alfresco-transform-misc
-      tag: 5.2.4
+      tag: 5.3.0
   filestore:
     # -- Declares the alfresco-shared-file-store used by the content repository
     # and transform service
@@ -281,7 +281,7 @@ alfresco-transform-service:
     replicaCount: 1
     image:
       repository: quay.io/alfresco/alfresco-shared-file-store
-      tag: 4.2.3
+      tag: 4.3.0
     persistence:
       # -- Persist filestore data
       enabled: true
@@ -371,16 +371,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
     content:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
     metadata:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
     path:
       image:
-        tag: 5.2.1
+        tag: 5.3.0
   reindexing:
     enabled: true
     repository:
@@ -392,7 +392,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 5.2.1
+      tag: 5.3.0
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"
@@ -529,7 +529,7 @@ alfresco-ai-transformer:
   fullnameOverride: alfresco-intelligence-service
   image:
     repository: quay.io/alfresco/alfresco-ai-docker-engine
-    tag: 3.2.3
+    tag: 3.3.0
   sfs:
     existingConfigMap:
       # -- Name of the configmap which holds the ATS shared filestore URL
@@ -620,7 +620,7 @@ dtas:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
-    tag: v1.7.2
+    tag: v1.7.3
     pullPolicy: IfNotPresent
   additionalArgs:
     - --tb=short

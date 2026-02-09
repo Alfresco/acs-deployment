@@ -4,54 +4,54 @@ dependencies:
   version: 4.0.0
 - name: postgres
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0
+  version: 0.3.0
 - name: postgres
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0
-- name: alfresco-adf-app
-  repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.3.0
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.3.0
+  version: 0.4.0
+- name: alfresco-adf-app
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 0.4.0
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.12.0
+  version: 0.13.0
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.7.0
+  version: 3.8.0
 - name: alfresco-transform-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.3.0
+  version: 2.5.0
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 5.2.0
+  version: 5.3.0
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 7.4.0
+  version: 7.6.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.7.0
+  version: 4.9.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.3.0
+  version: 2.4.0
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.6.0
+  version: 1.7.0
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.3.0
+  version: 3.4.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.2.0
+  version: 3.4.0
 - name: elastic
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0
+  version: 0.3.0
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.5.0
+  version: 0.7.2
 - name: alfresco-connector-hxi
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0
-digest: sha256:26fa1d2d07b34bb538fdd3e7747a09784bae42976cf7815ccc91e1106a9507e4
-generated: "2025-12-16T09:50:02.546638267Z"
+  version: 0.4.0
+digest: sha256:07bb9d598a4caa087cbd734d1f5766c1faccd35b7b002b572a64f4033a9bf5b3
+generated: "2026-02-03T16:43:27.856512+01:00"

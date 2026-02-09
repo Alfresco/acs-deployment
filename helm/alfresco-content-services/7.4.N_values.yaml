@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 7.4.2.5
+    tag: 7.4.2.6
   configuration:
     search:
       flavor: solr6
@@ -12,31 +12,31 @@ activemq:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.2.3
+      tag: 4.3.0
   pdfrenderer:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   imagemagick:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   libreoffice:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   tika:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   transformmisc:
     image:
-      tag: 5.2.4
+      tag: 5.3.0
   filestore:
     image:
-      tag: 4.2.3
+      tag: 4.3.0
 alfresco-ai-transformer:
   image:
-    tag: 3.2.3
+    tag: 3.3.0
 share:
   image:
-    tag: 7.4.2.5
+    tag: 7.4.2.6
 alfresco-search:
   enabled: true
   searchServicesImage:
