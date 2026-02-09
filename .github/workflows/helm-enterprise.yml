@@ -87,7 +87,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        id: setup_kind
+        id: setup-kind
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3723-setup-kind
         with:
           ingress-traefik-version: 39.0.0
@@ -170,7 +170,7 @@ jobs:
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
-            --global-var protocol=http --global-var url=${{ steps.setup_kind.outputs.traefik-endpoint }}
+            --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Spit cluster status after newman tests
         if: always() && steps.newman.outcome != 'skipped'

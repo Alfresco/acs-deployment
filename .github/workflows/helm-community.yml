@@ -72,6 +72,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
+        id: setup-kind
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3723-setup-kind
         with:
           ingress-traefik-version: 39.0.0
@@ -79,10 +80,16 @@ jobs:
           ingress-nginx-ref: skip
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
-      - name: Set nginx ingress config
+      - name: Apply nginx ingress class for traefik retrocompatibility
         run: |
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-            -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
+          kubectl apply -f - <<EOF
+          apiVersion: networking.k8s.io/v1
+          kind: IngressClass
+          metadata:
+            name: nginx
+          spec:
+            controller: k8s.io/ingress-nginx
+          EOF
 
       - name: Add dependency chart repos
         run: |
@@ -120,7 +127,7 @@ jobs:
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
-            --global-var protocol=http --global-var url=localhost
+            --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
