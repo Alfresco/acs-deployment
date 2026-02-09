@@ -91,7 +91,7 @@ jobs:
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3723-setup-kind
         with:
           ingress-traefik-version: 39.0.0
-          cloud-provider-kind-version: v0.10.0
+          cloud-provider-kind-version: 0.10.0
           ingress-nginx-ref: skip
           metrics: "true"
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}

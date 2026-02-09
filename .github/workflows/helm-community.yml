@@ -72,9 +72,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.11.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3723-setup-kind
         with:
-          ingress-nginx-ref: controller-v1.12.1
+          ingress-traefik-version: 39.0.0
+          cloud-provider-kind-version: 0.10.0
+          ingress-nginx-ref: skip
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Set nginx ingress config
