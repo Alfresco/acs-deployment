@@ -5,7 +5,7 @@ description: |
   with SSO on kubernetes using a third party Keycloak.
   if you're familiar with [Helm](ttps://helm.sh) &
   [Kubernetes](https://kubernetes.io) taking a look at the `values.yaml` should
-  be enough but the principals are also documented in two differents steps:
+  be enough but the principals are also documented in two different steps:
 
   * Composing your ACS from individual component charts we provide.
     Check the [step by step documentation](./docs/step-by-step-guide.md)
