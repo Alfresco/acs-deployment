@@ -21,7 +21,7 @@ description: |
   deployment is destroyed or rolled back!
 type: application
 version: 1.6.0
-appVersion: 25.3.0
+appVersion: 25.4.0
 home: https://www.alfresco.com
 sources:
   - https://github.com/Alfresco/acs-deployment
@@ -32,7 +32,7 @@ dependencies:
     alias: repository-database
   - name: keycloakx
     repository: https://codecentric.github.io/helm-charts
-    version: 6.0.0
+    version: 7.1.7
   - name: alfresco-repository
     repository: https://alfresco.github.io/alfresco-helm-charts/
     version: 0.13.0
