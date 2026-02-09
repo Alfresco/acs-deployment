@@ -32,7 +32,7 @@ dependencies:
     alias: repository-database
   - name: keycloakx
     repository: https://codecentric.github.io/helm-charts
-    version: 7.1.7
+    version: 7.1.6
   - name: alfresco-repository
     repository: https://alfresco.github.io/alfresco-helm-charts/
     version: 0.13.0

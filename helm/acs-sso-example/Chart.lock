@@ -4,7 +4,7 @@ dependencies:
   version: 13.4.0
 - name: keycloakx
   repository: https://codecentric.github.io/helm-charts
-  version: 7.1.7
+  version: 7.1.6
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.13.0
@@ -17,5 +17,5 @@ dependencies:
 - name: alfresco-adf-app
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.4.0
-digest: sha256:e8e06a36894e3c9d423e797e72995de2ac5605ae1e53333074ae5750681344e3
-generated: "2026-02-09T12:49:49.124505+01:00"
+digest: sha256:33ce77a9e3016b5249a43400d816dd1d767536efa92611d7f96ae1d585199fa3
+generated: "2026-02-09T14:27:50.566377+01:00"
