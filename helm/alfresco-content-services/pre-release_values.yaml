@@ -101,5 +101,5 @@ dtas:
           version: 4.1.0
           installed: true
         - id: alfresco-aos-module
-          version: 3.4.0
+          version: 3.4.1-A.1
           installed: true
