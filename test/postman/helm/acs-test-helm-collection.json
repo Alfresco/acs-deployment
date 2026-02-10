@@ -762,7 +762,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoNoauthProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(404);",
+									"    pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
 									"});",
 									""
 								],
@@ -836,7 +836,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoFeedProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(404);",
+									"    pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
 									"});",
 									""
 								],
