@@ -129,8 +129,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | alfresco-repository.image.tag | string | `"25.3.0"` |  |
-| alfresco-repository.ingress | object | `{"hosts":[{"paths":[{"path":"/","pathType":"Prefix"},{"path":"/api-explorer","pathType":"Prefix"},{"path":"/alfresco/service/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"},{"path":"/alfresco/s/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"},{"path":"/alfresco/wcservice/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"},{"path":"/alfresco/wcs/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"},{"path":"/alfresco/s/prometheus","pathType":"Prefix","serviceName":"blocked-prometheus"}]}]}` | For testing only |
-| alfresco-repository.ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/service/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"}` | Block direct access to Solr API endpoints as it contains sensitive information |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
@@ -341,8 +339,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | share.image.tag | string | `"25.3.0"` |  |
-| share.ingress | object | `{"hosts":[{"paths":[{"path":"/share","pathType":"Prefix"},{"path":"/share/service/proxy/alfresco/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"},{"path":"/share/proxy/alfresco-noauth/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"},{"path":"/share/proxy/alfresco-feed/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"}]}]}` | For testing only |
-| share.ingress.hosts[0].paths[1] | object | `{"path":"/share/service/proxy/alfresco/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"}` | Block direct access to Solr API endpoints as it contains sensitive information |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |
