@@ -688,7 +688,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(401);",
+									"    pm.response.to.have.status(403);",
 									"});",
 									""
 								]
@@ -762,7 +762,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoNoauthProxyStatusCodeTest\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
+									"    pm.response.to.have.status(403);",
 									"});",
 									""
 								],
@@ -836,7 +836,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoFeedProxyStatusCodeTest\", function () {",
-									"pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
+									"    pm.response.to.have.status(403);",
 									"});",
 									""
 								],
@@ -911,7 +911,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoCodeTest_service\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
+									"    pm.response.to.have.status(403);",
 									"});",
 									""
 								]
@@ -1241,7 +1241,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
+									"    pm.response.to.have.status(403);",
 									"});"
 								]
 							}
