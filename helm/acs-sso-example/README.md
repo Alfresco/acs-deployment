@@ -9,10 +9,10 @@ grand_parent: Helm
 ![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
 
 An example Chart to demonstrate how to compose your own Alfresco platform
-with SSO on kubernetes using a nthrid party Keycloak.
-if you're familiar with [Helm](ttps://helm.sh) &
+with SSO on kubernetes using a third party Keycloak.
+If you're familiar with [Helm](https://helm.sh) &
 [Kubernetes](https://kubernetes.io) taking a look at the `values.yaml` should
-be enough but the principals are also documented in two differents steps:
+be enough but the principals are also documented in two different steps:
 
 * Composing your ACS from individual component charts we provide.
   Check the [step by step documentation](./docs/step-by-step-guide.md)
