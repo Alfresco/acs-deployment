@@ -17,17 +17,17 @@ Create the secret of type `docker-registry` with following command, replacing
 with your private registry hostname:
 
 ```bash
-kubectl -n alfresco create secret docker-registry my-registry-secret --docker-server=YOUR-REGISTRY --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD 
+kubectl -n alfresco create secret docker-registry my-registry-secret --docker-server=YOUR-REGISTRY --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD
 ```
 
 For the Alfresco Enterprise docker images, you need to have credentials for `quay.io`:
 
 ```bash
-kubectl -n alfresco create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD 
+kubectl -n alfresco create secret docker-registry quay-registry-secret --docker-server=quay.io --docker-username=YOUR-USERNAME --docker-password=YOUR-PASSWORD
 ```
 
 Alternatively, you can also leverage an already configured docker client using the `--from-file` option (this will create a secret containing ALL the credentials you have currently configured):
 
 ```bash
-kubectl -n alfresco create secret generic docker-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson 
+kubectl -n alfresco create secret generic docker-registry-secrets --from-file=.dockerconfigjson=/your-home/.docker/config.json --type=kubernetes.io/dockerconfigjson
 ```

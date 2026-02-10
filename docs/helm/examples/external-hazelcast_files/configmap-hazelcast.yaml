@@ -13,7 +13,7 @@ data:
             <trusted-interfaces>
                 <interface>10.42.0.*</interface>
             </trusted-interfaces>
-        </management-center>         
+        </management-center>
         <!-- Ephemeral lock store map definition -->
         <map name="lockStore">
             <backup-count>1</backup-count>

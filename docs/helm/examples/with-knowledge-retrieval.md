@@ -66,9 +66,9 @@ curl -fO https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/values
 Deploy the ACS stack with the appropriate values files.
 
 > :warning: This example adds the HXI extension to the repository using an init
-> container.  
+> container.
 > However, a more recommended approach is to bake the extension directly into
-> the image.  
+> the image.
 > For guidance, see our
 > [alfresco-dockerfiles-bakery](https://github.com/Alfresco/alfresco-dockerfiles-bakery)
 > repository — especially the [simple_modules section](https://github.com/Alfresco/alfresco-dockerfiles-bakery/tree/main/repository/simple_modules).

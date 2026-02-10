@@ -14,6 +14,7 @@ repos:
         args: ["--fix=lf"]
       - id: end-of-file-fixer
         exclude: README.md
+      - id: trailing-whitespace
   # Helm hooks section (excluded in pre-commit-compose workflow)
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.14.2
