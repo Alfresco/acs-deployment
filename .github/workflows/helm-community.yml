@@ -143,7 +143,7 @@ jobs:
         uses: grafana/run-k6-action@a15e2072ede004e8d46141e33d7f7dad8ad08d9d # v1.3.1
         with:
           path: test/k6/acs-sso-example.js
-          flags: -e BASE_URL=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
+          flags: -e BASE_URL=http://myssohost
 
       - name: Spit cluster status after tests
         if: always()
