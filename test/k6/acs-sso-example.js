@@ -1,6 +1,9 @@
 import { browser } from 'k6/browser';
 import { check, sleep } from 'k6';
 
+// Get base URL from environment variable, default to localhost
+const BASE_URL = __ENV.BASE_URL || 'http://localhost';
+
 export const options = {
   scenarios: {
     ui: {
@@ -23,7 +26,7 @@ export default async function () {
   let systemSummaryAdmin = null;
   let acaToolBar = null;
   try {
-    await page.goto('http://localhost/share');
+    await page.goto(`${BASE_URL}/share`);
 
     // Enter login credentials
     await page.locator('input[name="username"]').type('admin');
@@ -33,10 +36,10 @@ export default async function () {
     // Wait for the page to load the Quicksearch box
     shareSearchBox = await page.waitForSelector('#HEADER_SEARCHBOX_FORM_FIELD', { timeout: 15000 });
 
-    await page.goto('http://localhost/alfresco/s/admin');
+    await page.goto(`${BASE_URL}/alfresco/s/admin`);
     systemSummaryAdmin = await page.waitForSelector('a[title="Summary of general system information"]', { timeout: 3000 });
 
-    await page.goto('http://localhost/aca');
+    await page.goto(`${BASE_URL}/aca`);
     acaToolBar = await page.waitForSelector('app-toolbar-menu', { timeout: 5000 });
   } finally {
     check(shareSearchBox, {
