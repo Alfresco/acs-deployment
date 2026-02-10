@@ -91,6 +91,14 @@ jobs:
             controller: k8s.io/ingress-nginx
           EOF
 
+      - name: Build target url for tests
+        id: build-target-url
+        run: |
+          docker ps -a
+          CID="$(docker ps --filter 'name=^/kindccm-' --format '{{.ID}}' | head -n 1)"
+          EXPOSED_PORT=$(docker port $CID 80/tcp | awk -F: '{print $NF}')
+          echo "url=http://localhost:$EXPOSED_PORT" >> $GITHUB_OUTPUT
+
       - name: Add dependency chart repos
         run: |
           helm repo add self https://alfresco.github.io/alfresco-helm-charts/
@@ -99,13 +107,10 @@ jobs:
 
       - name: Helm install
         run: |
-          INGRESS_IP=$(echo "${{ steps.setup-kind.outputs.ingress-endpoint }}" | cut -d: -f1)
-          echo "$INGRESS_IP myssohost" | sudo tee -a /etc/hosts
-
           helm dep build .
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
-            --set global.known_urls=http://myssohost \
+            --set global.known_urls=${{ steps.build-target-url.outputs.url }} \
             --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout 6m0s \
@@ -130,7 +135,7 @@ jobs:
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
-            --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
+            --global-var protocol=http --global-var url=${{ steps.build-target-url.outputs.url }}
 
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
@@ -143,7 +148,7 @@ jobs:
         uses: grafana/run-k6-action@a15e2072ede004e8d46141e33d7f7dad8ad08d9d # v1.3.1
         with:
           path: test/k6/acs-sso-example.js
-          flags: -e BASE_URL=http://myssohost
+          flags: -e BASE_URL=${{ steps.build-target-url.outputs.url }}
 
       - name: Spit cluster status after tests
         if: always()
