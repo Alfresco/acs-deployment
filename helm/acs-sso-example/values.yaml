@@ -6,7 +6,7 @@ global:
   # URLs a re used to configure Cross-origin protections
   # Also the first entry is considered the main hosting domain of the platform.
   known_urls:
-    - http://localhost
+    - http://myssohost
 # -- Configure the ACS repository Postgres database as per
 # https://github.com/bitnami/charts/tree/002c752f871c8fa068a770dc80fec4cf798798ab/bitnami/postgresql
 # @default -- check values.yaml
@@ -114,7 +114,7 @@ keycloakx:
   command:
     - /opt/keycloak/bin/kc.sh
     - start
-    - --hostname=http://localhost/auth
+    - --hostname=http://myssohost/auth
     - --hostname-backchannel-dynamic=true
     - --health-enabled=true
     - --http-enabled=true
@@ -221,7 +221,7 @@ alfresco-repository:
         name: repository-message-broker
   ingress:
     hosts:
-      - host: localhost
+      - host: myssohost
         paths:
           - path: /
             pathType: Prefix
@@ -249,7 +249,7 @@ alfresco-share:
       subPath: share.properties
   ingress:
     hosts:
-      - host: localhost
+      - host: myssohost
         paths:
           - path: /share
             pathType: Prefix
@@ -266,7 +266,7 @@ alfresco-content-app:
       nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
     tls: []
     hosts:
-      - host: localhost
+      - host: myssohost
         paths:
           - path: /aca
             pathType: Prefix

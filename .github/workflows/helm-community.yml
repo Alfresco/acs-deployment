@@ -99,10 +99,13 @@ jobs:
 
       - name: Helm install
         run: |
+          INGRESS_IP=$(echo "${{ steps.setup-kind.outputs.ingress-endpoint }}" | cut -d: -f1)
+          echo "$INGRESS_IP myssohost" | sudo tee -a /etc/hosts
+
           helm dep build .
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
-            --set global.known_urls=http://localhost \
+            --set global.known_urls=http://myssohost \
             --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout 6m0s \
