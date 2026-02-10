@@ -10,7 +10,7 @@ grand_parent: Helm
 
 An example Chart to demonstrate how to compose your own Alfresco platform
 with SSO on kubernetes using a third party Keycloak.
-if you're familiar with [Helm](ttps://helm.sh) &
+If you're familiar with [Helm](https://helm.sh) &
 [Kubernetes](https://kubernetes.io) taking a look at the `values.yaml` should
 be enough but the principals are also documented in two different steps:
 
