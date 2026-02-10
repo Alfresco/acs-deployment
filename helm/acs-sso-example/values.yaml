@@ -42,7 +42,7 @@ repository-database:
 keycloakx:
   nameOverride: keycloak
   image:
-    tag: 26.0.7
+    tag: 26.5.0
   proxy:
     mode: xforwarded
   admin:
