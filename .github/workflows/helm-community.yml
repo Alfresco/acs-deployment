@@ -73,14 +73,14 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3723-setup-kind
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.12.0
         with:
           ingress-traefik-version: 39.0.0
           cloud-provider-kind-version: 0.10.0
           ingress-nginx-ref: skip
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
-      - name: Apply nginx ingress class for traefik retrocompatibility
+      - name: Apply nginx ingress class for traefik retrocompat
         run: |
           kubectl apply -f - <<EOF
           apiVersion: networking.k8s.io/v1
