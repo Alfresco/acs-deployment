@@ -80,17 +80,6 @@ jobs:
           ingress-nginx-ref: skip
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
-      - name: Apply nginx ingress class for traefik retrocompat
-        run: |
-          kubectl apply -f - <<EOF
-          apiVersion: networking.k8s.io/v1
-          kind: IngressClass
-          metadata:
-            name: nginx
-          spec:
-            controller: k8s.io/ingress-nginx
-          EOF
-
       - name: Build target url for tests
         id: build-target-url
         run: |
