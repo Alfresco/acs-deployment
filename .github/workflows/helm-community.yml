@@ -96,8 +96,11 @@ jobs:
         run: |
           docker ps -a
           CID="$(docker ps --filter 'name=^/kindccm-' --format '{{.ID}}' | head -n 1)"
-          EXPOSED_PORT=$(docker port $CID 80/tcp | awk -F: '{print $NF}')
-          echo "url=http://localhost:$EXPOSED_PORT" >> $GITHUB_OUTPUT
+          DOCKER_PORT_OUTPUT=$(docker port $CID 80/tcp | head -n 1)
+          echo "Container ID: $CID, Docker Port: $DOCKER_PORT_OUTPUT"
+
+          PARSED_PORT=$(echo $DOCKER_PORT_OUTPUT | awk -F: '{print $NF}')
+          echo "url=http://localhost:$PARSED_PORT" >> $GITHUB_OUTPUT
 
       - name: Add dependency chart repos
         run: |
