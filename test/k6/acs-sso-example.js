@@ -38,7 +38,8 @@ export default async function () {
     await page.locator('input[type="submit"]').click();
 
     // Wait for the page to load the Quicksearch box
-    shareSearchBox = await page.waitForSelector('#HEADER_SEARCHBOX_FORM_FIELD', { timeout: 15000 });
+    await page.waitForURL(`${BASE_URL}/share/page/user/admin/dashboard`, { timeout: 15000 });
+    shareSearchBox = await page.waitForSelector('#HEADER_SEARCHBOX_FORM_FIELD', { timeout: 5000 });
 
     await page.goto(`${BASE_URL}/alfresco/s/admin`);
     systemSummaryAdmin = await page.waitForSelector('a[title="Summary of general system information"]', { timeout: 3000 });
