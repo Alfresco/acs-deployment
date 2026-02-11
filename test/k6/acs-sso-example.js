@@ -24,9 +24,13 @@ export default async function () {
   const page = await browser.newPage();
   let shareSearchBox = null;
   let systemSummaryAdmin = null;
+  let appName = null;
   let acaToolBar = null;
   try {
     await page.goto(`${BASE_URL}/share`);
+
+    // Wait for the login page to load
+    appName = await page.waitForSelector('input[name="username"]', { timeout: 15000 });
 
     // Enter login credentials
     await page.locator('input[name="username"]').type('admin');
@@ -44,6 +48,9 @@ export default async function () {
   } finally {
     check(shareSearchBox, {
       'search box is visible': (el) => el !== null,
+    }, {SSO: "loginWithRedir"});
+    check(appName, {
+      'identity service login form visible': (el) => el !== null,
     }, {SSO: "loginWithRedir"});
     check(systemSummaryAdmin, {
       'system summary admin is visible': (el) => el !== null,
