@@ -80,18 +80,6 @@ jobs:
           ingress-nginx-ref: skip
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
-      - name: Build target url for tests
-        id: build-target-url
-        run: |
-          docker ps -a
-          CID="$(docker ps --filter 'name=^/kindccm-' --format '{{.ID}}' | head -n 1)"
-          DOCKER_PORT_OUTPUT=$(docker port $CID 80/tcp | head -n 1)
-          echo "Container ID: $CID, Docker Port: $DOCKER_PORT_OUTPUT"
-
-          PARSED_PORT=$(echo $DOCKER_PORT_OUTPUT | awk -F: '{print $NF}')
-          echo "endpoint=localhost:$PARSED_PORT" >> $GITHUB_OUTPUT
-          echo "url=http://localhost:$PARSED_PORT" >> $GITHUB_OUTPUT
-
       - name: Add dependency chart repos
         run: |
           helm repo add self https://alfresco.github.io/alfresco-helm-charts/
@@ -103,7 +91,7 @@ jobs:
           helm dep build .
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
-            --set global.known_urls=${{ steps.build-target-url.outputs.url }} \
+            --set global.known_urls=http://${{ steps.setup-kind.outputs.ingress-endpoint }} \
             --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout 6m0s \
@@ -134,7 +122,7 @@ jobs:
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
-            --global-var protocol=http --global-var url=${{ steps.build-target-url.outputs.endpoint }}
+            --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
@@ -147,7 +135,7 @@ jobs:
         uses: grafana/run-k6-action@a15e2072ede004e8d46141e33d7f7dad8ad08d9d # v1.3.1
         with:
           path: test/k6/acs-sso-example.js
-          flags: -e BASE_URL=${{ steps.build-target-url.outputs.url }}
+          flags: -e BASE_URL=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Spit cluster status after tests
         if: always()

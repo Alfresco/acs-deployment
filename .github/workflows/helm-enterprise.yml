@@ -158,7 +158,7 @@ jobs:
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
-            --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
+            --global-var protocol=http --global-var url=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Spit cluster status after newman tests
         if: always() && steps.newman.outcome != 'skipped'
