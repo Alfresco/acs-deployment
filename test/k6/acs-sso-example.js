@@ -30,22 +30,22 @@ export default async function () {
     await page.goto(`${BASE_URL}/share`);
 
     // Wait for the login page to load
-    appName = await page.waitForSelector('input[name="username"]', { timeout: 15000 });
+    appName = await page.waitForSelector('form#kc-form-login', { timeout: 5000 });
 
     // Enter login credentials
     await page.locator('input[name="username"]').type('admin');
     await page.locator('input[name="password"]').type('secret');
     await page.locator('input[type="submit"]').click();
 
-    // Wait for the page to load the Quicksearch box
+    // Wait for the share page to load the Quicksearch box
     await page.waitForURL(`${BASE_URL}/share/page/user/admin/dashboard`, { timeout: 15000 });
-    shareSearchBox = await page.waitForSelector('#HEADER_SEARCHBOX_FORM_FIELD', { timeout: 5000 });
+    shareSearchBox = await page.waitForSelector('#HEADER_SEARCHBOX_FORM_FIELD', { timeout: 3000 });
 
     await page.goto(`${BASE_URL}/alfresco/s/admin`);
     systemSummaryAdmin = await page.waitForSelector('a[title="Summary of general system information"]', { timeout: 3000 });
 
     await page.goto(`${BASE_URL}/aca`);
-    acaToolBar = await page.waitForSelector('app-toolbar-menu', { timeout: 5000 });
+    acaToolBar = await page.waitForSelector('app-toolbar-menu', { timeout: 3000 });
   } finally {
     check(shareSearchBox, {
       'search box is visible': (el) => el !== null,
