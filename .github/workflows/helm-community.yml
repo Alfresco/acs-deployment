@@ -99,14 +99,14 @@ jobs:
             --values ../../test/community-integration-test-values.yaml
         working-directory: helm/${{ matrix.name }}
 
-      - name: Spit cluster status
+      - name: Spit cluster status after Helm install
         if: always()
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
 
-      - name: ipv6 workaround
+      - name: Disable IPv6 to avoid connection refused when connecting to traefik on localhost
         run: |
             sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
             sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1

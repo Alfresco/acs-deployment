@@ -140,11 +140,17 @@ jobs:
           wait-resource: "jobs"
           wait-condition: "complete"
 
-      - name: Spit cluster status after install
+      - name: Spit cluster status after Helm install
         if: always()
         run: |
           helm ls --all-namespaces --all
           helm status acs --show-resources
+
+      - name: Disable IPv6 to avoid connection refused when connecting to traefik on localhost
+        run: |
+            sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+            sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+            sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 
       - name: Run Newman tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
@@ -159,7 +165,7 @@ jobs:
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
             --global-var protocol=http --global-var url=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
 
-      - name: Spit cluster status after newman tests
+      - name: Spit cluster status after Newman tests
         if: always() && steps.newman.outcome != 'skipped'
         run: |
           kubectl get all --all-namespaces
