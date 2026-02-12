@@ -73,7 +73,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3724-kind-lb
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.13.0
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
