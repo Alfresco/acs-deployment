@@ -90,10 +90,9 @@ jobs:
         id: setup-kind
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3724-kind-lb
         with:
-          ingress-traefik-version: 39.0.0
-          cloud-provider-kind-version: 0.10.0
-          ingress-nginx-ref: skip
-          metrics: "true"
+          traefik-enabled: true
+          cloud-provider-kind-enabled: true
+          metrics: true
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Check if we want additional helm customizations

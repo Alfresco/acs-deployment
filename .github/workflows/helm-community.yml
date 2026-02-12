@@ -33,7 +33,7 @@ jobs:
         uses: ./.github/actions/charts-as-json
         with:
           charts-root: helm
-      - name: Keep only ACS enterprise
+      - name: Select ACS community versions excluding any enterprise versions
         id: app_versions
         env:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
@@ -75,9 +75,9 @@ jobs:
         id: setup-kind
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3724-kind-lb
         with:
-          ingress-traefik-version: 39.0.0
-          cloud-provider-kind-version: 0.10.0
-          ingress-nginx-ref: skip
+          traefik-enabled: true
+          cloud-provider-kind-enabled: true
+          metrics: true
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Add dependency chart repos
