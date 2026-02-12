@@ -1,6 +1,6 @@
 ---
 # In case of any changes, please remember that values may need to be updated in
-# `docs/helm/values/local-dev_values.yaml` as wells
+# `docs/helm/values/local-dev_values.yaml` as well
 alfresco-repository:
   resources:
     requests:
