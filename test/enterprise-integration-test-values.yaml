@@ -45,8 +45,8 @@ elasticsearch:
         cpu: "0.01"
         memory: "512Mi"
       limits:
-        cpu: "1"
-        memory: "1Gi"
+        cpu: "2"
+        memory: "1.5Gi"
     livenessProbe:
       initialDelaySeconds: 100
     readinessProbe:
