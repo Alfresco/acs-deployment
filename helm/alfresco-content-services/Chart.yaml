@@ -17,7 +17,7 @@ sources:
   - https://github.com/Alfresco/acs-deployment
 dependencies:
   - name: alfresco-common
-    version: 4.0.0
+    version: 5.0.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgres
     version: 0.3.0
@@ -42,7 +42,7 @@ dependencies:
     condition: >-
       alfresco-digital-workspace.enabled
   - name: alfresco-repository
-    version: 0.13.0
+    version: 1.0.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
     version: 3.8.0
@@ -55,7 +55,7 @@ dependencies:
   - name: alfresco-search-service
     alias: alfresco-search
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 5.3.0
+    version: 6.0.0-alpha.0
     condition: alfresco-search.enabled
   - name: alfresco-sync-service
     repository: https://alfresco.github.io/alfresco-helm-charts/
@@ -71,7 +71,7 @@ dependencies:
     condition: alfresco-connector-msteams.enabled
   - name: alfresco-share
     alias: share
-    version: 1.7.0
+    version: 2.0.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: share.enabled
   - name: alfresco-connector-ms365
