@@ -114,7 +114,6 @@ keycloakx:
   command:
     - /opt/keycloak/bin/kc.sh
     - start
-    - --hostname=http://localhost/auth
     - --hostname-backchannel-dynamic=true
     - --health-enabled=true
     - --http-enabled=true
@@ -160,6 +159,8 @@ keycloakx:
     - secretRef:
         name: keycloak
   extraEnv: |
+    - name: KC_HOSTNAME
+      value: {{ template "alfresco-common.external.url" $ }}{{ .Values.http.relativePath }}
     - name: JAVA_OPTS_APPEND
       value: >-
         -Djgroups.dns.query={{ include "keycloak.fullname" . }}-headless
@@ -219,14 +220,6 @@ alfresco-repository:
         name: repository-message-broker
       existingSecret:
         name: repository-message-broker
-  ingress:
-    hosts:
-      - host: localhost
-        paths:
-          - path: /
-            pathType: Prefix
-          - path: /api-explorer
-            pathType: Prefix
 # -- Configure the Alfresco Share as per
 # https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-share-0.3.0/charts/alfresco-share
 # @default -- check values.yaml
@@ -247,13 +240,7 @@ alfresco-share:
       mountPath: >-
         /usr/local/tomcat/webapps/share/WEB-INF/classes/share-config.properties
       subPath: share.properties
-  ingress:
-    hosts:
-      - host: localhost
-        paths:
-          - path: /share
-            pathType: Prefix
-# -- Configure the Alfresco Conent-app as per
+# -- Configure the Alfresco Content-app as per
 # https://github.com/Activiti/activiti-cloud-common-chart/tree/8.2.0/charts/common
 # @default -- check values.yaml
 alfresco-content-app:
@@ -266,8 +253,7 @@ alfresco-content-app:
       nginx.ingress.kubernetes.io/proxy-buffer-size: 8k
     tls: []
     hosts:
-      - host: localhost
-        paths:
+      - paths:
           - path: /aca
             pathType: Prefix
   image:

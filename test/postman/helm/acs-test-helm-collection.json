@@ -558,7 +558,7 @@
 									"",
 									"    pm.test(\"Check that body matches string\", function () {",
 									"        pm.expect(pm.response.text()).to.include(\"Alfresco Digital Workspace\");",
-									"    });",									
+									"    });",
 									"}",
 									"else",
 									"{",
@@ -688,7 +688,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(403);",
+									"    pm.response.to.have.status(401);",
 									"});",
 									""
 								]
@@ -762,7 +762,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoNoauthProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(403);",
+									"    pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
 									"});",
 									""
 								],
@@ -836,7 +836,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"searchAlfrescoFeedProxyStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(403);",
+									"    pm.expect(pm.response.code).to.be.oneOf([403, 404]);",
 									"});",
 									""
 								],
@@ -1241,7 +1241,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(403);",
+									"    pm.response.to.have.status(404);",
 									"});"
 								]
 							}

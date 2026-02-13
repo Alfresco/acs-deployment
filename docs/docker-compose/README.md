@@ -150,31 +150,31 @@ Docker Daemon).
    [here](https://github.com/Alfresco/acs-deployment)
 
 2. Enter the `docker-compose` directory:
-  
+
    ```bash
    cd docker-compose
    ```
 
 3. If you want to run one of the Enteprise editions, log in to Quay.io with your credentials:
-  
+
    ```bash
    docker login quay.io
    ```
-  
+
 4. Run `docker compose up` to spin up latest Enterprise edition
-  
+
    ```bash
    docker compose up -d
    ```
-  
+
    or provide an alternate compose config, e.g. to spin up the Community edition:
-  
+
    ```bash
    docker compose -f community-compose.yaml up -d
    ```
 
    or to spin up a specific version of the Enterprise edition:
-  
+
    ```bash
     docker compose -f 7.4.N-compose.yaml up -d
     ```
@@ -184,7 +184,7 @@ Docker Daemon).
     ```bash
     docker compose -f pre-release-compose.yaml up -d
     ```
-  
+
    This will download the required Docker images and start the containers. The
    first time you run this command it will take a while to download the images.
 
@@ -273,7 +273,7 @@ SPRING_ACTIVEMQ_USER: admin
 SPRING_ACTIVEMQ_PASSWORD: admin
 ```
 
-* **Map the Live Ingester settings to repository Java properties**:  
+* **Map the Live Ingester settings to repository Java properties**:
   For the Live Ingester to properly connect and authenticate, the repository
   must include equivalent settings using the `-Dhxi` prefix in `JAVA_OPTS`.
   Here's how the mapping works:

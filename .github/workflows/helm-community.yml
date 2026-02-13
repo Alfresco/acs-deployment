@@ -33,7 +33,7 @@ jobs:
         uses: ./.github/actions/charts-as-json
         with:
           charts-root: helm
-      - name: Keep only ACS enterprise
+      - name: Select ACS community versions excluding any enterprise versions
         id: app_versions
         env:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
@@ -72,15 +72,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.11.0
+        id: setup-kind
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.13.0
         with:
-          ingress-nginx-ref: controller-v1.12.1
+          traefik-enabled: true
+          cloud-provider-kind-enabled: true
+          metrics: true
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
-
-      - name: Set nginx ingress config
-        run: |
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-            -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
 
       - name: Add dependency chart repos
         run: |
@@ -93,7 +91,7 @@ jobs:
           helm dep build .
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
-            --set global.known_urls=http://localhost \
+            --set global.known_urls=http://${{ steps.setup-kind.outputs.ingress-endpoint }} \
             --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout 6m0s \
@@ -101,12 +99,18 @@ jobs:
             --values ../../test/community-integration-test-values.yaml
         working-directory: helm/${{ matrix.name }}
 
-      - name: Spit cluster status
+      - name: Spit cluster status after Helm install
         if: always()
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+
+      - name: Disable IPv6 to avoid connection refused when connecting to traefik on localhost
+        run: |
+            sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+            sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+            sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 
       - uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v.3.0.2
         if: matrix.name == 'alfresco-content-services'
@@ -118,7 +122,7 @@ jobs:
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
-            --global-var protocol=http --global-var url=localhost
+            --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
@@ -131,6 +135,7 @@ jobs:
         uses: grafana/run-k6-action@a15e2072ede004e8d46141e33d7f7dad8ad08d9d # v1.3.1
         with:
           path: test/k6/acs-sso-example.js
+          flags: -e BASE_URL=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Spit cluster status after tests
         if: always()

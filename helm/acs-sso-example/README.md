@@ -49,7 +49,7 @@ deployment is destroyed or rolled back!
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | activemq | object | check values.yaml | Configure the ACS ActiveMQ message broker as per https://github.com/Alfresco/alfresco-helm-charts/tree/activemq-3.4.1/charts/activemq |
-| alfresco-content-app | object | check values.yaml | Configure the Alfresco Conent-app as per https://github.com/Activiti/activiti-cloud-common-chart/tree/8.2.0/charts/common |
+| alfresco-content-app | object | check values.yaml | Configure the Alfresco Content-app as per https://github.com/Activiti/activiti-cloud-common-chart/tree/8.2.0/charts/common |
 | alfresco-repository | object | check values.yaml | Configure the ACS repository as per https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-repository-0.1.3/charts/alfresco-repository |
 | alfresco-share | object | check values.yaml | Configure the Alfresco Share as per https://github.com/Alfresco/alfresco-helm-charts/tree/alfresco-share-0.3.0/charts/alfresco-share |
 | global.known_urls | list | `["http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
@@ -59,5 +59,5 @@ deployment is destroyed or rolled back!
 | keycloakx.admin.realm[0].users[0] | object | `{"credentials":[{"type":"password","value":"secret"}],"email":"admin@example.org","enabled":true,"firstName":"admin","lastName":"admin","username":"admin"}` | default Alfresco admin user |
 | keycloakx.admin.realm[0].users[0].credentials[0].value | string | `"secret"` | default Alfresco admin password |
 | keycloakx.admin.username | string | `"admin"` | Keycloak admin username |
-| keycloakx.command | list | `["/opt/keycloak/bin/kc.sh","start","--hostname=http://localhost/auth","--hostname-backchannel-dynamic=true","--health-enabled=true","--http-enabled=true","--http-port=8080","--import-realm"]` | hostname-backchannel-dynamic is only needed if you want to use the backchannel authentication flow. This is needed when the client application can only access the Keycloak server via an internal hostname (such as localhost). |
+| keycloakx.command | list | `["/opt/keycloak/bin/kc.sh","start","--hostname-backchannel-dynamic=true","--health-enabled=true","--http-enabled=true","--http-port=8080","--import-realm"]` | hostname-backchannel-dynamic is only needed if you want to use the backchannel authentication flow. This is needed when the client application can only access the Keycloak server via an internal hostname (such as localhost). |
 | repository-database | object | check values.yaml | Configure the ACS repository Postgres database as per https://github.com/bitnami/charts/tree/002c752f871c8fa068a770dc80fec4cf798798ab/bitnami/postgresql |

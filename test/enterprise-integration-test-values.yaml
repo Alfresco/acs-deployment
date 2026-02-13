@@ -1,4 +1,6 @@
 ---
+# In case of any changes, please remember that values may need to be updated in
+# `docs/helm/values/local-dev_values.yaml` as well
 alfresco-repository:
   resources:
     requests:
@@ -215,4 +217,6 @@ alfresco-audit-storage:
       memory: "256Mi"
 dtas:
   enabled: true
-# In case of any changes, please ensure that the values are also updated in `docs/helm/values/local-dev_values.yaml`
+  additionalArgs:
+    - --tb=short
+    - -k=not test_sync # traefik missing rewrite-target support

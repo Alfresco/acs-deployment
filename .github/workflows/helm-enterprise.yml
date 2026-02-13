@@ -54,7 +54,7 @@ jobs:
 
   helm_integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -65,7 +65,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v12.11.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v12.13.0
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
@@ -87,16 +87,13 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Setup cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.11.0
+        id: setup-kind
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.13.0
         with:
-          ingress-nginx-ref: controller-v1.12.1
-          metrics: "true"
+          traefik-enabled: true
+          cloud-provider-kind-enabled: true
+          metrics: true
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
-
-      - name: Set nginx ingress config
-        run: |
-          kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-            -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
 
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
@@ -124,13 +121,13 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for deployments to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.11.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.13.0
         with:
           wait-resource: "deployments"
           wait-condition: "Available"
 
       - name: Wait for statefulsets to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.11.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.13.0
         with:
           wait-resource: "sts"
           wait-for-what: "jsonpath"
@@ -138,16 +135,22 @@ jobs:
 
       - name: Wait for jobs to be completed
         if: matrix.values != '7.4.N_values.yaml'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.11.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v12.13.0
         with:
           wait-resource: "jobs"
           wait-condition: "complete"
 
-      - name: Spit cluster status after install
+      - name: Spit cluster status after Helm install
         if: always()
         run: |
           helm ls --all-namespaces --all
           helm status acs --show-resources
+
+      - name: Disable IPv6 to avoid connection refused when connecting to traefik on localhost
+        run: |
+            sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+            sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+            sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 
       - name: Run Newman tests
         uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v3.0.2
@@ -160,9 +163,9 @@ jobs:
             docker run --network=host
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
-            --global-var protocol=http --global-var url=localhost
+            --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
 
-      - name: Spit cluster status after newman tests
+      - name: Spit cluster status after Newman tests
         if: always() && steps.newman.outcome != 'skipped'
         run: |
           kubectl get all --all-namespaces
