@@ -19,17 +19,10 @@ prerequisites section
 - You are proficient in Kubernetes
 - A machine with at least 16GB memory
 - Having installed either of:
+  - [Podman Desktop](https://podman-desktop.io/). Includes kubectl and Helm,
+    ready to use right after installation.
   - [Rancher for Desktop](https://rancherdesktop.io/). Includes kubectl and Helm, ready to use right after installation.
   - [Docker for Desktop](https://docs.docker.com/desktop/). Requires separate install of kubectl and Helm.
-
-### Rancher Desktop specific configuration
-
-Uncheck `Enable Traefik` from the `Kubernetes Settings` page to disable the
-default ingress controller. You may need to exit and restart Rancher Desktop
-for the change to take effect. Ref: [Setup NGINX Ingress
-Controller](https://docs.rancherdesktop.io/how-to-guides/setup-NGINX-Ingress-Controller)
-
-Then proceed to the [deployment](#deployment) section to install ingress-nginx.
 
 ### Docker Desktop specific configuration
 
@@ -66,7 +59,10 @@ kubectl create namespace alfresco
 
 ### Ingress
 
-See [ingress-nginx](ingress-nginx.md) section.
+See [Traefik](traefik.md) section.
+
+The [ingress-nginx](ingress-nginx.md) section is kept for reference only, as
+ingress-nginx is deprecated and not recommended for new deployments.
 
 ### ACS
 

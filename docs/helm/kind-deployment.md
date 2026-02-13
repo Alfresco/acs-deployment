@@ -28,55 +28,31 @@ that you can run.
 
 ## Step 2: Create a Kind Cluster
 
-Run the following command to create a Kind cluster:
+Run the following command to create the default Kind cluster:
 
 ```shell
-cat <<EOF | kind create cluster --config=-
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-  kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "ingress-ready=true"
-  extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
-    protocol: TCP
-  - containerPort: 443
-    hostPort: 443
-    protocol: TCP
-EOF
+kind create cluster
 ```
 
-Wait for the Kind cluster to be created. This may take a few minutes.
+You can also create a cluster targeting a specific Kubernetes version, for example:
 
-## Step 3: Install ingress-nginx
-
-Install the ingress-nginx controller namespace:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/kind/deploy.yaml
+```shell
+kind create cluster --image kindest/node:v1.34.3@sha256:08497ee19eace7b4b5348db5c6a1591d7752b164530a36f855cb0f2bdcbadd48
 ```
 
-Reconfigure ingress-nginx to allow snippet-annotations:
+The node image ref needs to be retrieved from the [KinD releases
+page](https://github.com/kubernetes-sigs/kind/releases), by looking at the
+release notes of your current kind version (run `kind version` to check your
+version).
 
-```sh
-kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
-```
+Wait for the Kind cluster to be created. This usually takes a few minutes.
 
-Wait for the ingress-nginx controller:
+## Step 3: Install an Ingress Controller
 
-```sh
-kubectl wait --namespace ingress-nginx \
---for=condition=ready pod \
---selector=app.kubernetes.io/component=controller \
---timeout=90s
-```
+See [Traefik](traefik.md) section.
+
+The [ingress-nginx](ingress-nginx.md) section is kept for reference only, as
+ingress-nginx is deprecated and not recommended for new deployments.
 
 ## Install metrics server
 
@@ -105,6 +81,6 @@ kubectl top pods
 
 ## Conclusion
 
-Now that you have successfully set up a Kind cluster with ingress-nginx and
-metrics-server, you can now proceed with installing ACS via helm charts as per
-[Desktop deployment](desktop-deployment.md#acs).
+Now that you have successfully set up a Kind cluster with an Ingress controller
+and metrics-server, you can now proceed with installing ACS via helm charts as
+per [Desktop deployment](desktop-deployment.md#acs).
