@@ -28,7 +28,7 @@ alfresco-search:
       memory: "512Mi"
     limits:
       cpu: "2"
-      memory: "1280Mi"
+      memory: "1.5Gi"
 alfresco-transform-service:
   pdfrenderer:
     livenessProbe:
