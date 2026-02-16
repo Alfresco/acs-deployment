@@ -36,7 +36,7 @@ testing more similar to a real Kubernetes environment.
 ### Bitnami discontinuation (September 2025)
 
 We migrated from using Bitnami charts for PostgreSQL, Elasticsearch and Kibana
-to our own charts due changes to the Bitnami Catalog discontinuation. See the
+to our own charts due to changes to the Bitnami Catalog. See the
 [Bitnami announcement](https://github.com/bitnami/containers/issues/83267)
 
 PostgreSQL is now deployed using our own Helm chart

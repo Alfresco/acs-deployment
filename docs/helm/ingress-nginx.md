@@ -7,7 +7,7 @@ grand_parent: Helm
 # Install ingress-nginx
 
 > Starting from March 2026, the ingress-nginx controller will be officially
-> discontinued and users needs to move away.
+> discontinued and users need to move away.
 >
 > The present guide is kept for reference but we recommend to move to a more
 > modern ingress controller such as [Traefik](https://doc.traefik.io/traefik/).
