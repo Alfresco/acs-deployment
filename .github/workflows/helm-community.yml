@@ -83,14 +83,14 @@ jobs:
       - name: Background metrics monitoring
         run: |
           while true; do
-            echo "--- $(date) ---" >> /tmp/pod-memory.log
-            kubectl top pod --all-namespaces --sort-by=memory >> /tmp/pod-memory.log
+            echo "--- $(date) ---" >> ${{ runner.temp }}/pod-memory.log
+            kubectl top pod --all-namespaces --sort-by=memory >> ${{ runner.temp }}/pod-memory.log
             sleep 10
           done &
 
           while true; do
-            echo "--- $(date) ---" >> /tmp/node-memory.log
-            kubectl top node >> /tmp/node-memory.log
+            echo "--- $(date) ---" >> ${{ runner.temp }}/node-memory.log
+            kubectl top node >> ${{ runner.temp }}/node-memory.log
             sleep 10
           done &
 
@@ -162,10 +162,10 @@ jobs:
         if: always()
         run: |
           echo "Pod memory usage:"
-          cat /tmp/pod-memory.log
+          cat ${{ runner.temp }}/pod-memory.log
 
       - name: Spit node metrics logs
         if: always()
         run: |
           echo "Node memory usage:"
-          cat /tmp/node-memory.log
+          cat ${{ runner.temp }}/node-memory.log
