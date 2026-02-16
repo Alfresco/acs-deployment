@@ -12,8 +12,8 @@ charts integrate with Traefik.
 
 ## Install on KinD cluster
 
-If you are using a KinD cluster, you can follow the instructions in the
-[KinD deployment](kind-deployment.md#step-3-install-an-ingress-controller)
+If you are using a KinD cluster, you can follow the instructions in the [KinD
+deployment](../kind-deployment.md).
 
 ## Install on a generic Kubernetes cluster
 

@@ -185,7 +185,7 @@ If you deployed Enterprise you'll also have access to:
 
 If you are using KinD, you will need to use the exposed LoadBalancer port
 instead of the default `80`. More details at [KinD
-deployment](kind-deployment.md#step-5-install-an-ingress-controller) section.
+deployment](kind-deployment.md) section.
 
 ## Cleanup
 

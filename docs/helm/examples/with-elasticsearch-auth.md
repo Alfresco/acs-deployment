@@ -50,9 +50,9 @@ kubectl create secret generic elastic-search-secret \
 
 ### Ingress
 
-See [Traefik](traefik.md) section.
+See [Traefik](../traefik.md) section.
 
-The [ingress-nginx](ingress-nginx.md) section is kept for reference only, as
+The [ingress-nginx](../ingress-nginx.md) section is kept for reference only, as
 ingress-nginx is deprecated and not recommended for new deployments.
 
 ### ACS Chart
