@@ -95,6 +95,20 @@ jobs:
           metrics: true
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
+      - name: Background metrics monitoring
+        run: |
+          while true; do
+            echo "--- $(date) ---" >> /tmp/pod-memory.log
+            kubectl top pod --all-namespaces --sort-by=memory >> /tmp/pod-memory.log
+            sleep 10
+          done &
+
+          while true; do
+            echo "--- $(date) ---" >> /tmp/node-memory.log
+            kubectl top node >> /tmp/node-memory.log
+            sleep 10
+          done &
+
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
         run: |
@@ -183,3 +197,15 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
+
+      - name: Spit pod metrics logs
+        if: always()
+        run: |
+          echo "Pod memory usage:"
+          cat /tmp/pod-memory.log
+
+      - name: Spit node metricslogs
+        if: always()
+        run: |
+          echo "Node memory usage:"
+          cat /tmp/node-memory.log
