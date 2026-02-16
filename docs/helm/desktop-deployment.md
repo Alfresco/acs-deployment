@@ -183,6 +183,10 @@ If you deployed Enterprise you'll also have access to:
 - ADW: `http://localhost/workspace/`
 - Sync Service: `http://localhost/syncservice/healthcheck`
 
+If you are using KinD, you will need to use the exposed LoadBalancer port
+instead of the default `80`. More details at [KinD
+deployment](kind-deployment.md#step-5-install-an-ingress-controller) section.
+
 ## Cleanup
 
 1. Remove the `acs` and `acs-ingress` deployments by running the following command:

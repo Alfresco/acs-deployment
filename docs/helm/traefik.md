@@ -20,12 +20,22 @@ If you are using a KinD cluster, you can follow the instructions in the
 Add the Traefik Helm repository and install the chart into the `traefik`
 namespace:
 
-```bash
+```sh
 helm repo add traefik https://traefik.github.io/charts
 helm repo update
 helm upgrade --install traefik traefik/traefik \
+  --set providers.kubernetesIngressNginx.enabled=true \
+  --set logs.access.enabled=true \
   --namespace traefik --create-namespace
 ```
+
+The `providers.kubernetesIngressNginx.enabled=true` option is required to tell
+Traefik to watch for `Ingress` resources with `ingressClassName` set to `nginx`,
+which is still the default in our charts for backwards compatibility reasons.
+
+While the access logs are not strictly required, they can be very useful for
+debugging and monitoring purposes, especially during the initial setup and
+configuration of Traefik.
 
 Wait for the Traefik pods to become ready:
 
