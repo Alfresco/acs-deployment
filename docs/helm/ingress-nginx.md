@@ -54,6 +54,55 @@ kubectl get pods --namespace=ingress-nginx
 More information can be found in the
 [ingress-nginx deploy docs](https://kubernetes.github.io/ingress-nginx/deploy/).
 
+## Install on KinD cluster
+
+Create a KinD cluster with the necessary port mappings and node labels for
+reaching the ingress-nginx controller from your local machine:
+
+```shell
+cat <<EOF | kind create cluster --config=-
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    protocol: TCP
+EOF
+```
+
+Install the specific flavor of the ingress-nginx controller for KinD
+(`controller-v1.12.0` is the specific version we were using for testing, you can
+check any newer version on the official ingress-nginx repository):
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/kind/deploy.yaml
+```
+
+Allow using snippet annotations in the ingress-nginx controller configuration,
+which is required for older versions of the Alfresco charts to work properly (in
+the newer versions of the charts, this is not required anymore as we moved to
+avoid  using controller-specific annotations):
+
+```sh
+kubectl -n ingress-nginx patch cm ingress-nginx-controller \
+  -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
+```
+
+> Warning: Enable this option only if you TRUST users with permission to create
+> Ingress objects, as this may allow a user to add restricted configurations to
+> the final nginx.conf file.
+
 ## Configure file uploads limitations
 
 The alfresco-repository & alfresco-share Helm charts this chart depends on, come
