@@ -84,9 +84,9 @@ Give your kubernetes setup 8GB of RAM and a few CPUs.
 
 ### Ingress
 
-See [Traefik](../traefik.md) section.
+See [Traefik](https://alfresco.github.io/acs-deployment/docs/helm/traefik.html) section.
 
-The [ingress-nginx](../ingress-nginx.md) section is kept for reference only, as
+The [ingress-nginx](https://alfresco.github.io/acs-deployment/docs/helm/ingress-nginx.html) section is kept for reference only, as
 ingress-nginx is deprecated and not recommended for new deployments.
 
 ### Helm

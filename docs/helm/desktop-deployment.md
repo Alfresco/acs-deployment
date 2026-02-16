@@ -184,8 +184,7 @@ If you deployed Enterprise you'll also have access to:
 - Sync Service: `http://localhost/syncservice/healthcheck`
 
 If you are using KinD, you will need to use the exposed LoadBalancer port
-instead of the default `80`. More details at [KinD
-deployment](kind-deployment.md) section.
+instead of the default `80`. More details at [KinD deployment](kind-deployment.md) section.
 
 ## Cleanup
 

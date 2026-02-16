@@ -1,5 +1,5 @@
 ---
-title: Traefik guide
+title: Traefik install
 parent: Guides
 grand_parent: Helm
 ---
@@ -12,8 +12,8 @@ charts integrate with Traefik.
 
 ## Install on KinD cluster
 
-If you are using a KinD cluster, you can follow the instructions in the [KinD
-deployment](../kind-deployment.md).
+If you are using a KinD cluster, you can follow the instructions in the
+[KinD deployment](kind-deployment.md).
 
 ## Install on a generic Kubernetes cluster
 

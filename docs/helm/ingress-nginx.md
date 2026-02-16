@@ -1,5 +1,5 @@
 ---
-title: Ingress guide
+title: ingress-nginx install
 parent: Guides
 grand_parent: Helm
 ---
