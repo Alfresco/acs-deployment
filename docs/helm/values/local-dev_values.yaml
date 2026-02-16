@@ -98,8 +98,8 @@ elasticsearch:
         cpu: "0.1"
         memory: "512Mi"
       limits:
-        cpu: "1"
-        memory: "1280Mi"
+        cpu: "2"
+        memory: "1.5Gi"
   kibana:
     resources:
       requests:
