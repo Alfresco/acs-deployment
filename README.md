@@ -19,7 +19,7 @@ User docs available at: [https://alfresco.github.io/acs-deployment/](https://alf
 
 ## ⚠️ Important changes for Helm charts
 
-### Traefik as the recommended Ingress Controller
+### Traefik as the recommended Ingress Controller (March 2026)
 
 Since ingress-nginx is [being
 deprecated](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), we
