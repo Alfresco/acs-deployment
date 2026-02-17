@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build_vars:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: >-
       github.event_name == 'push'
       || (
