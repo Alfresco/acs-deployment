@@ -18,7 +18,7 @@ alfresco-repository:
     failureThreshold: 20
   environment:
     JAVA_OPTS: >-
-      -XX:MaxRAMPercentage=75
+      -XX:MaxRAMPercentage=70
 share:
   resources:
     requests:

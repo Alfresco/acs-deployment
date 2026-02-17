@@ -9,7 +9,7 @@ alfresco-repository:
       memory: "2Gi"
   environment:
     JAVA_OPTS: >-
-      -XX:MaxRAMPercentage=75
+      -XX:MaxRAMPercentage=70
 share: &share_values
   resources:
     requests:
