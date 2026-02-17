@@ -199,7 +199,11 @@ jobs:
           kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl events --for deployment/acs-alfresco-repository
+
+          OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
+          if [ -n "$OOM_PODS" ]; then
+            echo "::error::OOMKilled pods detected: $OOM_PODS"
+          fi
 
       - name: Spit pod metrics logs
         if: always() && steps.metrics-init.outcome != 'skipped'
