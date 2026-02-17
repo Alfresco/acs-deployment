@@ -5,7 +5,7 @@ alfresco-repository:
   resources:
     requests:
       cpu: "0.01"
-      memory: "1024Mi"
+      memory: "1Gi"
     limits:
       cpu: "2"
       memory: "2Gi"
@@ -16,6 +16,9 @@ alfresco-repository:
       - ReadWriteOnce
   startupProbe:
     failureThreshold: 20
+  environment:
+    JAVA_OPTS: >-
+      -XX:MaxRAMPercentage=65
 share:
   resources:
     requests:
@@ -30,6 +33,10 @@ share:
   livenessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
+  environment:
+    CATALINA_OPTS: >-
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=75
 alfresco-search:
   resources:
     requests:
@@ -37,7 +44,7 @@ alfresco-search:
       memory: "512Mi"
     limits:
       cpu: "2"
-      memory: "1280Mi"
+      memory: "1.5Gi"
 elasticsearch:
   elasticsearch:
     resources:
@@ -108,7 +115,7 @@ alfresco-transform-service:
         memory: "512Mi"
       limits:
         cpu: "2"
-        memory: "1024Mi"
+        memory: "1Gi"
     replicaCount: 1
   tika:
     livenessProbe:
