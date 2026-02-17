@@ -199,7 +199,6 @@ jobs:
           kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl describe cm acs-alfresco-opts
 
           OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
           if [ -n "$OOM_PODS" ]; then
