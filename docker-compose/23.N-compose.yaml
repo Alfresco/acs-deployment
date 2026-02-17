@@ -271,9 +271,13 @@ services:
     mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
+      # Uncomment when updating activemq to 6.x and above
+      # SPRING_ACTIVEMQ_USER: admin
+      # SPRING_ACTIVEMQ_PASSWORD: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
+      SPRING_PROFILES_ACTIVE: "durable-subscriptions"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
       interval: 60s
