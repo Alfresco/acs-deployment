@@ -16,6 +16,17 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## Unreleased
+
+* ingress-nginx is being deprecated and we are moving to a more generic ingress
+  controller support. We are testing against [Traefik](traefik.md) now but
+  virtually we are compatible with any ingress controller that support the
+  Kubernetes Ingress API. We have removed nginx specific annotations that were
+  used in the past to restrict accessing solr sensible endpoints which are not
+  needed since mtls authentication has been made available. There are no
+  breaking changes as of now but we will likely change the default ingress class
+  in the future.
+
 ## 10.0.0
 
 * PostgreSQL is now deployed using our own Helm chart
@@ -23,7 +34,6 @@ version in which they have been released.
   ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
   use this chart in any staging, or production environment. Read more in the
   chart readme.
-
 * Elasticsearch and Kibana are now deployed using
   [elastic](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/elastic).
   ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
