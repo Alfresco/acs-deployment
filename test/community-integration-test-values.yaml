@@ -6,21 +6,29 @@ alfresco-repository:
       memory: "1024Mi"
     limits:
       cpu: "2"
-      memory: "2Gi"
-share:
+      memory: "2.0Gi"
+  environment:
+    JAVA_OPTS: >-
+      -XX:MaxRAMPercentage=75
+share: &share_values
   resources:
     requests:
       cpu: "0.01"
       memory: "256Mi"
     limits:
       cpu: "2"
-      memory: "512Mi"
+      memory: "1Gi"
   readinessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
   livenessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
+  environment:
+    CATALINA_OPTS: >-
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=75
+alfresco-share: *share_values # acs-sso-example uses alfresco-share
 alfresco-search:
   resources:
     requests:

@@ -8,7 +8,7 @@ alfresco-repository:
       memory: "1024Mi"
     limits:
       cpu: "2"
-      memory: "2Gi"
+      memory: "2.0Gi"
   # https://alfresco.atlassian.net/browse/ACS-6670
   replicaCount: 1
   persistence:
@@ -16,6 +16,9 @@ alfresco-repository:
       - ReadWriteOnce
   startupProbe:
     failureThreshold: 20
+  environment:
+    JAVA_OPTS: >-
+      -XX:MaxRAMPercentage=75
 share:
   resources:
     requests:
@@ -30,6 +33,10 @@ share:
   livenessProbe:
     initialDelaySeconds: 60
     timeoutSeconds: 45
+  environment:
+    CATALINA_OPTS: >-
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=75
 alfresco-search:
   resources:
     requests:
