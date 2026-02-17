@@ -5,10 +5,10 @@ alfresco-repository:
   resources:
     requests:
       cpu: "0.01"
-      memory: "1024Mi"
+      memory: "1Gi"
     limits:
       cpu: "2"
-      memory: "2.0Gi"
+      memory: "2Gi"
   # https://alfresco.atlassian.net/browse/ACS-6670
   replicaCount: 1
   persistence:
@@ -115,7 +115,7 @@ alfresco-transform-service:
         memory: "512Mi"
       limits:
         cpu: "2"
-        memory: "1024Mi"
+        memory: "1Gi"
     replicaCount: 1
   tika:
     livenessProbe:

@@ -3,10 +3,10 @@ alfresco-repository:
   resources:
     requests:
       cpu: "0.01"
-      memory: "1024Mi"
+      memory: "1Gi"
     limits:
       cpu: "2"
-      memory: "2.0Gi"
+      memory: "2Gi"
   environment:
     JAVA_OPTS: >-
       -XX:MaxRAMPercentage=75
@@ -67,7 +67,7 @@ alfresco-transform-service:
         memory: "512Mi"
       limits:
         cpu: "2"
-        memory: "1024Mi"
+        memory: "1Gi"
   tika:
     livenessProbe:
       initialDelaySeconds: 30
