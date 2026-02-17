@@ -52,6 +52,8 @@ jobs:
       - build_vars
     env:
       REGISTRY_SECRET_NAME: ${{ github.event.pull_request.head.repo.fork && '' || 'regcred' }}
+      POD_METRICS_LOG: /tmp/pod-metrics.log
+      NODE_METRICS_LOG: /tmp/node-metrics.log
     strategy:
       fail-fast: false
       matrix:
@@ -81,16 +83,17 @@ jobs:
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
 
       - name: Background metrics monitoring
+        id: metrics-init
         run: |
           while true; do
-            echo "--- $(date) ---" >> ${{ runner.temp }}/pod-memory.log
-            kubectl top pod --all-namespaces --sort-by=memory >> ${{ runner.temp }}/pod-memory.log
+            echo "--- $(date) ---" >> $POD_METRICS_LOG
+            kubectl top pod --all-namespaces --sort-by=memory >> $POD_METRICS_LOG
             sleep 10
           done &
 
           while true; do
-            echo "--- $(date) ---" >> ${{ runner.temp }}/node-memory.log
-            kubectl top node >> ${{ runner.temp }}/node-memory.log
+            echo "--- $(date) ---" >> $NODE_METRICS_LOG
+            kubectl top node >> $NODE_METRICS_LOG
             sleep 10
           done &
 
@@ -159,13 +162,11 @@ jobs:
           kubectl describe pod
 
       - name: Spit pod metrics logs
-        if: always()
+        if: always() && steps.metrics-init.outcome != 'skipped'
         run: |
-          echo "Pod memory usage:"
-          cat ${{ runner.temp }}/pod-memory.log
+          cat $POD_METRICS_LOG
 
       - name: Spit node metrics logs
-        if: always()
+        if: always() && steps.metrics-init.outcome != 'skipped'
         run: |
-          echo "Node memory usage:"
-          cat ${{ runner.temp }}/node-memory.log
+          cat $NODE_METRICS_LOG
