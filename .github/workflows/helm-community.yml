@@ -87,13 +87,13 @@ jobs:
         run: |
           while true; do
             echo "--- $(date) ---" >> $POD_METRICS_LOG
-            kubectl top pod --all-namespaces --sort-by=memory >> $POD_METRICS_LOG
+            kubectl top pod --all-namespaces --sort-by=memory >> $POD_METRICS_LOG 2>&1 || true
             sleep 10
           done &
 
           while true; do
             echo "--- $(date) ---" >> $NODE_METRICS_LOG
-            kubectl top node >> $NODE_METRICS_LOG
+            kubectl top node >> $NODE_METRICS_LOG 2>&1 || true
             sleep 10
           done &
 
