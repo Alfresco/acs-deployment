@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build_vars:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: >-
       github.event_name == 'push'
       || (
@@ -60,6 +60,8 @@ jobs:
     name: ${{ matrix.values }} on ${{ matrix.name }}
     env:
       REGISTRY_SECRET_NAME: regcred
+      POD_METRICS_LOG: /tmp/pod-metrics.log
+      NODE_METRICS_LOG: /tmp/node-metrics.log
     strategy:
       fail-fast: false
       matrix:
@@ -88,12 +90,27 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v13.0.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v14.1.1
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
           metrics: true
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
+
+      - name: Background metrics monitoring
+        id: metrics-init
+        run: |
+          while true; do
+            echo "--- $(date) ---" >> $POD_METRICS_LOG
+            kubectl top pod --all-namespaces --sort-by=memory >> $POD_METRICS_LOG 2>&1 || true
+            sleep 10
+          done &
+
+          while true; do
+            echo "--- $(date) ---" >> $NODE_METRICS_LOG
+            kubectl top node >> $NODE_METRICS_LOG 2>&1 || true
+            sleep 10
+          done &
 
       - name: Check if we want additional helm customizations
         id: configurable-extra-values
@@ -182,4 +199,18 @@ jobs:
           kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
           kubectl get all --all-namespaces
           kubectl describe pod
-          kubectl events --for deployment/acs-alfresco-repository
+
+          OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
+          if [ -n "$OOM_PODS" ]; then
+            echo "::error::OOMKilled pods detected: $OOM_PODS"
+          fi
+
+      - name: Spit pod metrics logs
+        if: always() && steps.metrics-init.outcome != 'skipped'
+        run: |
+          cat $POD_METRICS_LOG
+
+      - name: Spit node metrics logs
+        if: always() && steps.metrics-init.outcome != 'skipped'
+        run: |
+          cat $NODE_METRICS_LOG

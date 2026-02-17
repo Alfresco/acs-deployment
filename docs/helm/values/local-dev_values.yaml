@@ -82,7 +82,7 @@ alfresco-search:
       cpu: 0.1
       memory: "1000Mi"
     limits:
-      memory: "1500Mi"
+      memory: "1.5Gi"
 alfresco-search-enterprise:
   resources:
     requests:
