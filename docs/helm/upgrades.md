@@ -23,9 +23,9 @@ version in which they have been released.
   virtually we are compatible with any ingress controller that support the
   Kubernetes Ingress API. We have removed nginx specific annotations that were
   used in the past to restrict accessing solr sensible endpoints which are not
-  needed since mtls authentication has been made available. There are no
-  breaking changes as of now but we will likely change the default ingress class
-  in the future.
+  strictly required given their unauthenticated exposure is not possible anymore.
+  There are no breaking changes as of now but we will likely change the default
+  ingress class in the future
 
 ## 10.0.0
 
