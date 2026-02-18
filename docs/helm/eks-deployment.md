@@ -467,11 +467,11 @@ ingress-nginx is deprecated and not recommended for new deployments.
 ### DNS
 
 In order to access Alfresco once installed, you need to set up a DNS record that
-resolve to the ELB hostname that has been provisioned by the Service of type
+resolves to the ELB hostname that has been provisioned by the Service of type
 LoadBalancer of the Ingress Controller.
 
 To retrieve the automatically assigned hostname of the ELB you need to inspect
-the ingress resources:
+the Ingress Controller Service of type LoadBalancer:
 
 ```sh
 kubectl get service -n traefik

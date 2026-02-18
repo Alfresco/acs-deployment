@@ -19,13 +19,14 @@ version in which they have been released.
 ## Unreleased
 
 * ingress-nginx is being deprecated and we are moving to a more generic ingress
-  controller support. We are testing against [Traefik](traefik.md) now but
-  virtually we are compatible with any ingress controller that support the
-  Kubernetes Ingress API. We have removed nginx specific annotations that were
-  used in the past to restrict accessing solr sensible endpoints which are not
-  strictly required given their unauthenticated exposure is not possible anymore.
-  There are no breaking changes as of now but we will likely change the default
-  ingress class in the future
+  controller that supports the Kubernetes Ingress API. We are testing against
+  [Traefik](traefik.md) now but virtually we are compatible with any ingress
+  controller that supports the Kubernetes Ingress API. We have removed nginx
+  specific annotations that were used in the past to restrict accessing Solr
+  sensitive endpoints which are not strictly required given their
+  unauthenticated exposure is not possible anymore. There are no breaking
+  changes as of now but we will likely change the default ingress class in the
+  future.
 
 ## 10.0.0
 
