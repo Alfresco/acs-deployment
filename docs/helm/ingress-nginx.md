@@ -6,22 +6,14 @@ grand_parent: Helm
 
 # Install ingress-nginx
 
-> Starting from March 2026, the ingress-nginx controller will be officially
-> discontinued and users need to move away.
->
-> The present guide is kept for reference but we recommend to move to a more
-> modern ingress controller such as [Traefik](https://doc.traefik.io/traefik/).
->
-> More information about the deprecation of ingress-nginx can be found in the
-> [ingress-nginx deprecation
-> notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/)
+**DEPRECATION NOTICE**: starting from March 2026, the ingress-nginx controller
+will be officially discontinued and users need to move away.
 
-We currently support and test only
-[ingress-nginx](https://github.com/kubernetes/ingress-nginx). However, our
-charts provide flexibility through values such as `.ingress.className` and
-`.ingress.annotations`, allowing you to customize the Ingress configuration. If
-you prefer to manage Ingress resources yourself, you can set `.ingress.enabled`
-to `false` to disable the bundled Ingress resource and provide your own.
+The present guide is kept for reference but we recommend to move to a more
+modern ingress controller such as [Traefik](traefik.md).
+
+More information about the deprecation of ingress-nginx can be found in the
+[ingress-nginx deprecation notice](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/).
 
 ## Install on a generic Kubernetes cluster
 

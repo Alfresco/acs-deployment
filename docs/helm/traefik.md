@@ -10,6 +10,12 @@ We recommend using Traefik as a modern, feature-rich ingress controller for
 Kubernetes deployments. This short guide shows a minimal install and how our
 charts integrate with Traefik.
 
+However, our charts provide flexibility through values such as
+`.ingress.className` and `.ingress.annotations`, allowing you to customize the
+Ingress configuration. If you prefer to manage Ingress resources yourself, you
+can set `.ingress.enabled` to `false` to disable the bundled Ingress resource
+and provide your own.
+
 ## Install on KinD cluster
 
 If you are using a KinD cluster, you can follow the instructions in the
