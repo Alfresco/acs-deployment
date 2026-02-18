@@ -122,12 +122,12 @@ xxxxxxxxxxxx  docker.io/envoyproxy/envoy:v1.33.2  ...  0.0.0.0:36059->80/tcp, 0.
 xxxxxxxxxxxx  docker.io/envoyproxy/envoy:v1.33.2  ...  0.0.0.0:43741->80/tcp, 0.0.0.0:36821->10000/tcp                          kindccm-gw-xxxxxxxxx
 ```
 
-Try briefly to access the port used to expose the port 80 e.g. `localhost:36059`
+Try accessing the port that exposes port 80, e.g. `localhost:36059`,
 from your browser and you should see the default `404 page not found` of
 Traefik, which means that the traffic is correctly routed to the Traefik
 controller.
 
-Verify that also the traefik pod logs show the incoming request:
+Also verify that the traefik pod logs show the incoming request:
 
 ```sh
 kubectl logs -n traefik -l app.kubernetes.io/name=traefik
