@@ -117,9 +117,9 @@ You will see a container named `kindccm-...` with the ports 80 and 443 exposed,
 which is the one routing the traffic to Traefik, making it reachable from your
 local machine.
 
-```sh
-ee93d7c8c02d  docker.io/envoyproxy/envoy:v1.33.2                                                              bash -c echo -en ...  About a minute ago  Up About a minute  0.0.0.0:36059->80/tcp, 0.0.0.0:36315->443/tcp, 0.0.0.0:39449->10000/tcp  kindccm-7110e8686bde
-ee3409fd1845  docker.io/envoyproxy/envoy:v1.33.2                                                              bash -c echo -en ...  About a minute ago  Up About a minute  0.0.0.0:43741->80/tcp, 0.0.0.0:36821->10000/tcp                          kindccm-gw-7b19b33a85f6
+```text
+xxxxxxxxxxxx  docker.io/envoyproxy/envoy:v1.33.2  ...  0.0.0.0:36059->80/tcp, 0.0.0.0:36315->443/tcp, 0.0.0.0:39449->10000/tcp  kindccm-xxxxxxxxx
+xxxxxxxxxxxx  docker.io/envoyproxy/envoy:v1.33.2  ...  0.0.0.0:43741->80/tcp, 0.0.0.0:36821->10000/tcp                          kindccm-gw-xxxxxxxxx
 ```
 
 Try briefly to access `localhost:36059` from your browser and you should see the
