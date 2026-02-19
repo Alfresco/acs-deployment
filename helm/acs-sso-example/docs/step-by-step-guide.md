@@ -84,31 +84,10 @@ Give your kubernetes setup 8GB of RAM and a few CPUs.
 
 ### Ingress
 
-You will also need to have the [nginx-ingress](https://docs.nginx.com/nginx-ingress-controller/)
-installed and configured to handle local traffic on port 80.
+See [Traefik](https://alfresco.github.io/acs-deployment/docs/helm/traefik.html) section.
 
-> :warning: If you use KinD, you need to install a patched version of the NGINX
-> ingress as described
-> [here](../../../docs/helm/kind-deployment.md#step-3-install-ingress-nginx)
-> If using another kubernetes distribution check it doesn't come with a default
-> ingress controller different from NGINX and if so, disable it. Once done
-> install the [NGINX ingress
-> controller](https://docs.nginx.com/nginx-ingress-controller/installation/installing-nic/)
-
-Make sure the nginx ingress controller have the following settings enabled:
-
-- `allow-snippet-annotations` set to `true`
-- `annotations-risk-level` set to `Critical`
-- `proxy-buffer-size` set to `12k`
-
-You can do that at installation time using [nginx-ingress
-annotations](https://docs.nginx.com/nginx-ingress-controller/configuration/ingress-resources/advanced-configuration-with-annotations/)
-or after the installation of the ingress, using the command below (e.g. for KinD):
-
-```bash
-kubectl -n ingress-nginx patch cm ingress-nginx-controller -p \
-  '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true","proxy-buffer-size":"12k"}}'
-```
+The [ingress-nginx](https://alfresco.github.io/acs-deployment/docs/helm/ingress-nginx.html) section is kept for reference only, as
+ingress-nginx is deprecated and not recommended for new deployments.
 
 ### Helm
 

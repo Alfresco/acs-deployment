@@ -19,9 +19,25 @@ User docs available at: [https://alfresco.github.io/acs-deployment/](https://alf
 
 ## ⚠️ Important changes for Helm charts
 
+### Traefik as the recommended Ingress Controller (March 2026)
+
+Since ingress-nginx is [being
+deprecated](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), we
+have started switching to [Traefik](https://doc.traefik.io/traefik/) as the
+recommended Ingress Controller for our Helm charts and for our CI pipelines. The
+new [Traefik guide](docs/helm/traefik.md) provides instructions for installing
+Traefik and configuring it to work with our charts.
+
+For KinD deployments, we also started using
+[cloud-provider-kind](docs/helm/kind-deployment.md#step-3-install-cloud-provider-kind)
+plugin that allows to use LoadBalancer type services natively, which makes
+testing more similar to a real Kubernetes environment.
+
+### Bitnami discontinuation (September 2025)
+
 We migrated from using Bitnami charts for PostgreSQL, Elasticsearch and Kibana
-to our own charts due changes to the Bitnami Catalog. See the [Bitnami
-announcement](https://github.com/bitnami/containers/issues/83267)
+to our own charts due to changes to the Bitnami Catalog. See the
+[Bitnami announcement](https://github.com/bitnami/containers/issues/83267)
 
 PostgreSQL is now deployed using our own Helm chart
 [postgres](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/postgres).
@@ -34,9 +50,6 @@ Elasticsearch and Kibana are now deployed using
 ⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
 use this chart in any staging, or production environment. Read more in the chart
 readme.
-
-Work on creating our own charts for these components is tracked in
-[OPSEXP-3421](https://hyland.atlassian.net/browse/OPSEXP-3421).
 
 ## ⚠️ Important changes for Docker Compose
 

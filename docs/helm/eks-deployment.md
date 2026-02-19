@@ -459,28 +459,29 @@ top of it.
 
 ### Ingress
 
-See [ingress-nginx](ingress-nginx.md) section.
+See [Traefik](traefik.md) section.
+
+The [ingress-nginx](ingress-nginx.md) section is kept for reference only, as
+ingress-nginx is deprecated and not recommended for new deployments.
 
 ### DNS
 
 In order to access Alfresco once installed, you need to set up a DNS record that
-resolve to the ELB hostname that has been provisioned by `ingress-nginx`.
-
-This is a typical architecture, which you can learn more about at
-[Exposing Kubernetes Applications article](https://aws.amazon.com/blogs/containers/exposing-kubernetes-applications-part-3-nginx-ingress-controller/).
+resolves to the ELB hostname that has been provisioned by the Service of type
+LoadBalancer of the Ingress Controller.
 
 To retrieve the automatically assigned hostname of the ELB you need to inspect
-the ingress resources:
+the Ingress Controller Service of type LoadBalancer:
 
 ```sh
-kubectl get service -n ingress-nginx
+kubectl get service -n traefik
 ```
 
 which will return an output like the following:
 
 ```sh
 NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP                       PORT(S)                      AGE
-ingress-nginx-controller   LoadBalancer   10.100.132.184   ???.eu-west-1.elb.amazonaws.com   80:31780/TCP,443:32152/TCP   3m
+traefik                    LoadBalancer   10.100.132.184   ???.eu-west-1.elb.amazonaws.com   80:31780/TCP,443:32152/TCP   3m
 ```
 
 Now you can proceed to creating a new DNS record in `YOUR-DOMAIN-NAME` zone, like:
@@ -490,8 +491,8 @@ Now you can proceed to creating a new DNS record in `YOUR-DOMAIN-NAME` zone, lik
 * Value: `???.eu-west-1.elb.amazonaws.com`
 
 Wait a few minutes before trying to access `http://acs.YOUR-DOMAIN-NAME` in your
-browser to allow the new record to propagate. Once ready, you should get the
-default `404 Not Found` nginx error page.
+browser to allow the new record to propagate. Once ready, you should get a
+default `404 Not Found` error page.
 
 Set an environment variable with the hostname which will be useful later.
 
@@ -545,7 +546,7 @@ spec:
     solvers:
     - http01:
         ingress:
-          ingressClassName: nginx
+          ingressClassName: traefik
 EOF
 ```
 

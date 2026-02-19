@@ -28,57 +28,112 @@ that you can run.
 
 ## Step 2: Create a Kind Cluster
 
-Run the following command to create a Kind cluster:
+Run the following command to create the default Kind cluster:
 
 ```shell
-cat <<EOF | kind create cluster --config=-
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-nodes:
-- role: control-plane
-  kubeadmConfigPatches:
-  - |
-    kind: InitConfiguration
-    nodeRegistration:
-      kubeletExtraArgs:
-        node-labels: "ingress-ready=true"
-  extraPortMappings:
-  - containerPort: 80
-    hostPort: 80
-    protocol: TCP
-  - containerPort: 443
-    hostPort: 443
-    protocol: TCP
-EOF
+kind create cluster
 ```
 
-Wait for the Kind cluster to be created. This may take a few minutes.
+You can also create a cluster targeting a specific Kubernetes version, for example:
 
-## Step 3: Install ingress-nginx
-
-Install the ingress-nginx controller namespace:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0/deploy/static/provider/kind/deploy.yaml
+```shell
+kind create cluster --image kindest/node:v1.34.3@sha256:08497ee19eace7b4b5348db5c6a1591d7752b164530a36f855cb0f2bdcbadd48
 ```
 
-Reconfigure ingress-nginx to allow snippet-annotations:
+The node image ref needs to be retrieved from the [KinD releases
+page](https://github.com/kubernetes-sigs/kind/releases), by looking at the
+release notes of your current kind version (run `kind version` to check your
+version).
+
+Wait for the Kind cluster to be created. This usually takes a few minutes.
+
+## Step 3: Install cloud-provider-kind
+
+Install the cloud-provider-kind plugin to enable cloud provider features on your KinD cluster.
+
+You can find the latest binaries available on the GitHub
+[releases page](https://github.com/kubernetes-sigs/cloud-provider-kind/releases) of the project.
+
+If you are using brew, you can install it with:
+
+```shell
+brew install cloud-provider-kind
+```
+
+## Step 4: Run cloud-provider-kind
+
+`cloud-provider-kind` is a separate binary that you need to keep running in the
+background while your cluster is up and running.
+
+It will automatically attach to your KinD cluster and monitor for any `Service`
+of type `LoadBalancer` that you create, by assigning them an IP address and
+making them reachable from your local machine.
+
+Open a new terminal and run the following command:
+
+```shell
+sudo cloud-provider-kind
+```
+
+If you are running a Docker server that runs within a dedicated VM (like Podman
+Desktop on Mac and Windows), it will automatically detect it and enable the
+`--enable-lb-port-mapping` option to make the LoadBalancer endpoint easily
+reachable from your local machine, exposed on `localhost`.
+
+This is not strictly required when running on native Linux, but accessing
+Alfresco via `localhost` is usually more compatible when using plain http
+access.
+
+## Step 5: Install an Ingress Controller
+
+See [Traefik](traefik.md) section.
+
+The [ingress-nginx](ingress-nginx.md) section is kept for reference only, as
+ingress-nginx is deprecated and not recommended for new deployments.
+
+Once traefik is installed, verify that the LoadBalancer external IP has been
+assigned by running:
 
 ```sh
-kubectl -n ingress-nginx patch cm ingress-nginx-controller \
-  -p '{"data": {"annotations-risk-level":"Critical","allow-snippet-annotations":"true"}}'
+kubectl get svc -n traefik
 ```
 
-Wait for the ingress-nginx controller:
+You should see something like:
 
 ```sh
-kubectl wait --namespace ingress-nginx \
---for=condition=ready pod \
---selector=app.kubernetes.io/component=controller \
---timeout=90s
+NAME      TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+traefik   LoadBalancer   10.96.209.229   10.89.0.3     80:30539/TCP,443:31996/TCP   4m
 ```
 
-## Install metrics server
+The `external-ip` is the IP address of the container that `cloud-provider-kind`
+plugin has created to route the traffic to the Traefik controller, and that you
+can see when looking at the running containers in your Docker server:
+
+```sh
+docker ps
+```
+
+You will see a container named `kindccm-...` with the ports `80` and `443`
+exposed, which is the one routing the traffic to Traefik, making it reachable
+from your local machine.
+
+```text
+xxxxxxxxxxxx  docker.io/envoyproxy/envoy:v1.33.2  ...  0.0.0.0:36059->80/tcp, 0.0.0.0:36315->443/tcp, 0.0.0.0:39449->10000/tcp  kindccm-xxxxxxxxx
+xxxxxxxxxxxx  docker.io/envoyproxy/envoy:v1.33.2  ...  0.0.0.0:43741->80/tcp, 0.0.0.0:36821->10000/tcp                          kindccm-gw-xxxxxxxxx
+```
+
+Try accessing the port that exposes port 80, e.g. `localhost:36059`,
+from your browser and you should see the default `404 page not found` of
+Traefik, which means that the traffic is correctly routed to the Traefik
+controller.
+
+Also verify that the traefik pod logs show the incoming request:
+
+```sh
+kubectl logs -n traefik -l app.kubernetes.io/name=traefik
+```
+
+## Step 6: Install metrics server
 
 Optionally, you can [install metrics
 server](https://github.com/kubernetes-sigs/metrics-server#installation) to
@@ -105,6 +160,6 @@ kubectl top pods
 
 ## Conclusion
 
-Now that you have successfully set up a Kind cluster with ingress-nginx and
-metrics-server, you can now proceed with installing ACS via helm charts as per
-[Desktop deployment](desktop-deployment.md#acs).
+Now that you have successfully set up a Kind cluster with an Ingress controller
+and metrics-server, you can now proceed with installing ACS via helm charts as
+per [Desktop deployment](desktop-deployment.md#acs).

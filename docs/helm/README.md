@@ -7,9 +7,16 @@ nav_order: 1
 
 # Alfresco Content Services Helm Deployment
 
-Alfresco Content Services (ACS) is an Enterprise Content Management (ECM) system that is used for document and case management, project collaboration, web content publishing, and compliant records management.  The flexible compute, storage, and database services that Kubernetes offers make it an ideal platform for Alfresco Content Services. This helm chart presents an enterprise-grade Alfresco Content Services configuration that you can adapt to virtually any scenario with the ability to scale up, down or out, depending on your use case.
+Alfresco Content Services (ACS) is an Enterprise Content Management (ECM) system
+that is used for document and case management, project collaboration, web
+content publishing, and compliant records management.  The flexible compute,
+storage, and database services that Kubernetes offers make it an ideal platform
+for Alfresco Content Services. This helm chart presents an enterprise-grade
+Alfresco Content Services configuration that you can adapt to virtually any
+scenario with the ability to scale up, down or out, depending on your use case.
 
-The Helm chart in this repository supports deploying the Enterprise or Community Edition of ACS.
+The Helm chart in this repository supports deploying both Enterprise and
+Community Edition of ACS.
 
 ## Architectures
 
@@ -280,7 +287,7 @@ There are also several [examples](../helm-examples.md) showing how to deploy wit
 * [Deploy with Microsoft 365 Connector (Office Online Integration)](./examples/with-ooi.md)
 * [Deploy with external Keycloak SSO authentication](./examples/with-keycloak.md)
 * [Deploy with external infrastructure components](./examples/with-external-infrastructure.md) (e.g. elasticsearch, activemq, postgres)
-* [Enable access to Search Services](./examples/search-services.md#enable-alfresco-search-services-external-access)
+* [Deploy with Search Services](./examples/search-services.md)
 * [Enable Email Services](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/email.html)
 * [Use a custom metadata keystore](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html)
 * [Install ACS license as part of the deployment](https://alfresco.github.io/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html)
