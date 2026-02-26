@@ -206,7 +206,7 @@ alfresco-repository:
   replicaCount: 1
   image:
     repository: alfresco/alfresco-content-repository-community
-    tag: 25.3.0
+    tag: 26.1.0-A.14
   configuration:
     repository:
       existingConfigMap: repository-properties
@@ -227,7 +227,7 @@ alfresco-share:
   nameOverride: alfresco-share
   image:
     repository: alfresco/alfresco-share
-    tag: 25.3.0
+    tag: 26.1.0-A.17
   repository:
     existingConfigMap:
       name: share-repository
@@ -258,7 +258,7 @@ alfresco-content-app:
             pathType: Prefix
   image:
     repository: alfresco/alfresco-content-app
-    tag: 7.2.0
+    tag: develop-22431660484
     pullPolicy: IfNotPresent
   env:
     APP_CONFIG_PROVIDER: ECM

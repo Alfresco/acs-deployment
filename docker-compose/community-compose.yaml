@@ -9,7 +9,7 @@
 #
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:25.3.0
+    image: docker.io/alfresco/alfresco-content-repository-community:26.1.0-A.14
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -56,7 +56,7 @@ services:
       file: commons/base.yaml
       service: alfresco
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.3.0
+    image: alfresco/alfresco-transform-core-aio:5.3.2-A.2
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -74,7 +74,7 @@ services:
       activemq:
         condition: service_healthy
   share:
-    image: docker.io/alfresco/alfresco-share:25.3.0
+    image: docker.io/alfresco/alfresco-share:26.1.0-A.17
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -117,7 +117,7 @@ services:
       retries: 3
       start_period: 5s
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.17
+    image: docker.io/alfresco/alfresco-search-services:2.1.0-A9
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -150,7 +150,7 @@ services:
       retries: 5
       start_period: 5s
   content-app:
-    image: alfresco/alfresco-content-app:7.2.0
+    image: alfresco/alfresco-content-app:develop-22431660484
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
@@ -164,7 +164,7 @@ services:
       file: commons/base.yaml
       service: content-app
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:10.2.0
+    image: quay.io/alfresco/alfresco-control-center:10.3.0-22434626274
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

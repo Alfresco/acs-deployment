@@ -2,39 +2,39 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 26.1.0-A.11
+    tag: 26.1.0-A.17
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 6.2.0-jre17-rockylinux8
+    tag: 6.2.1-jre17-rockylinux8
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.3.0
+      tag: 4.3.2-A.2
   pdfrenderer:
     image:
-      tag: 5.3.0
+      tag: 5.3.2-A.2
   imagemagick:
     image:
-      tag: 5.3.0
+      tag: 5.3.2-A.2
   libreoffice:
     image:
-      tag: 5.3.0
+      tag: 5.3.2-A.2
   tika:
     image:
-      tag: 5.3.0
+      tag: 5.3.2-A.2
   transformmisc:
     image:
-      tag: 5.3.0
+      tag: 5.3.2-A.2
   filestore:
     image:
-      tag: 4.3.0
+      tag: 4.3.2-A.2
 alfresco-ai-transformer:
   image:
-    tag: 3.3.0
+    tag: 3.3.2-A.2
 share:
   image:
-    tag: 26.1.0-A.11
+    tag: 26.1.0-A.17
 alfresco-search:
   searchServicesImage:
     tag: 2.1.0-A9
@@ -44,25 +44,25 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.3.0
+        tag: 5.4.0-A.2
     content:
       image:
-        tag: 5.3.0
+        tag: 5.4.0-A.2
     metadata:
       image:
-        tag: 5.3.0
+        tag: 5.4.0-A.2
     path:
       image:
-        tag: 5.3.0
+        tag: 5.4.0-A.2
   reindexing:
     image:
-      tag: 5.3.0
+      tag: 5.4.0-A.2
 alfresco-digital-workspace:
   image:
-    tag: 7.3.0-21515540378
+    tag: 7.3.0-22434626274
 alfresco-control-center:
   image:
-    tag: 10.3.0-21515540378
+    tag: 10.3.0-22434626274
 postgresql:
   image:
     tag: 16.5
@@ -71,13 +71,13 @@ postgresql-sync:
     tag: 16.5
 alfresco-sync-service:
   image:
-    tag: 5.3.0-A.5
+    tag: 5.3.0
 alfresco-connector-ms365:
   image:
-    tag: 2.0.8-A.2
+    tag: 2.1.0-A.2
 alfresco-connector-msteams:
   image:
-    tag: 2.0.8-A.2
+    tag: 2.1.0-A.4
 elasticsearch:
   elasticsearch:
     image:

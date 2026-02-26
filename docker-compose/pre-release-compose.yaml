@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:26.1.0-A.11
+    image: quay.io/alfresco/alfresco-content-repository:26.1.0-A.17
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -66,7 +66,7 @@ services:
       service: alfresco
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.3.0
+    image: quay.io/alfresco/alfresco-transform-router:4.3.2-A.2
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -91,7 +91,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.3.0
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.3.2-A.2
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -116,7 +116,7 @@ services:
       shared-file-store:
         condition: service_healthy
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.3.0
+    image: quay.io/alfresco/alfresco-shared-file-store:4.3.2-A.2
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -135,7 +135,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:26.1.0-A.11
+    image: quay.io/alfresco/alfresco-share:26.1.0-A.17
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -217,7 +217,7 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.3.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.4.0-A.2
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -242,7 +242,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.3.0
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.4.0-A.2
     mem_limit: 1g
     restart: on-failure:5
     environment:
@@ -277,7 +277,7 @@ services:
       retries: 5
       start_period: 5s
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:7.3.0-21515540378
+    image: quay.io/alfresco/alfresco-digital-workspace:7.3.0-22434626274
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -318,7 +318,7 @@ services:
       elasticsearch:
         condition: service_healthy
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:10.3.0-21515540378
+    image: quay.io/alfresco/alfresco-control-center:10.3.0-22434626274
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -338,7 +338,7 @@ services:
       file: commons/base.yaml
       service: proxy
   sync-service:
-    image: quay.io/alfresco/service-sync:5.3.0-A.5
+    image: quay.io/alfresco/service-sync:5.3.0
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
