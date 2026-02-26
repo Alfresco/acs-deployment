@@ -61,7 +61,7 @@ services:
         -Dcom.sun.management.jmxremote.authenticate=false
         -Dcom.sun.management.jmxremote.local.only=false
         -Djava.rmi.server.hostname=127.0.0.1
-        -Dcd.aspects={http://www.alfresco.org/model/customdictionarymodel/1.0}department,{http://www.alfresco.org/model/customdictionarymodel/1.0}account
+        -Dcd.aspects={http://www.alfresco.org/model/customdictionarymodel/1.0}department,{http://www.alfresco.org/model/customdictionarymodel/1.0}account,{http://www.alfresco.org/model/customdictionarymodel/1.0}location
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
     ports:
