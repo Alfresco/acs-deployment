@@ -265,6 +265,9 @@ services:
   activemq:
     image: quay.io/alfresco/alfresco-activemq:6.2-jre17-rockylinux8
     mem_limit: 1g
+    environment:
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
     ports:
       - "8161:8161" # Web Console
       - "5672:5672" # AMQP
