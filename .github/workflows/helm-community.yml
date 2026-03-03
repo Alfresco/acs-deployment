@@ -154,6 +154,8 @@ jobs:
         with:
           path: test/k6/acs-sso-example.js
           flags: -e BASE_URL=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
+          debug: true
+          disable-analytics: true
 
       - name: Spit cluster status after tests
         if: always() && steps.helm_install.outcome != 'skipped'
