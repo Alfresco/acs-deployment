@@ -104,6 +104,7 @@ jobs:
           helm repo add elastic https://helm.elastic.co/
 
       - name: Helm install
+        id: helm_install
         run: |
           helm dep build .
           helm install ${{ matrix.name }} . \
@@ -117,7 +118,7 @@ jobs:
         working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status after Helm install
-        if: always()
+        if: always() && steps.helm_install.outcome != 'skipped'
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
@@ -155,7 +156,7 @@ jobs:
           flags: -e BASE_URL=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Spit cluster status after tests
-        if: always()
+        if: always() && steps.helm_install.outcome != 'skipped'
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
@@ -175,3 +176,11 @@ jobs:
         if: always() && steps.metrics-init.outcome != 'skipped'
         run: |
           cat $NODE_METRICS_LOG
+
+      - name: Upload pods logs
+        if: always() && steps.helm_install.outcome != 'skipped'
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v15.6.4
+        with:
+          namespace: default
+          log_retention: 7
+          log_name_identifier: "logs-pods-helm-community-${{ matrix.name }}"
