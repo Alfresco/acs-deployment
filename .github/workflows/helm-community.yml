@@ -146,7 +146,7 @@ jobs:
         if: matrix.name == 'acs-sso-example'
         uses: grafana/setup-k6-action@ffe7d7290dfa715e48c2ccc924d068444c94bde2 # v1.1.0
         with:
-          k6-version: 1.5.0
+          k6-version: "1.6.1"
           browser: true
 
       - name: Run SSO example chart tests
