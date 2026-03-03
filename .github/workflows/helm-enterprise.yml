@@ -222,4 +222,4 @@ jobs:
         with:
           namespace: default
           log_retention: 7
-          log_name_identifier: "logs-pods-helm-enterprise-${{ matrix.name }}"
+          log_name_identifier: "logs-pods-helm-ent-${{ matrix.name }}-${{ matrix.values }}"

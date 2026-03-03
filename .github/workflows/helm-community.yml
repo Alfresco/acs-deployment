@@ -183,4 +183,4 @@ jobs:
         with:
           namespace: default
           log_retention: 7
-          log_name_identifier: "logs-pods-helm-community-${{ matrix.name }}"
+          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}"
