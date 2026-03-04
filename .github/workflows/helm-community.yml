@@ -104,6 +104,7 @@ jobs:
           helm repo add elastic https://helm.elastic.co/
 
       - name: Helm install
+        id: helm_install
         run: |
           helm dep build .
           helm install ${{ matrix.name }} . \
@@ -117,7 +118,7 @@ jobs:
         working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status after Helm install
-        if: always()
+        if: always() && steps.helm_install.outcome != 'skipped'
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
@@ -144,18 +145,20 @@ jobs:
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
         uses: grafana/setup-k6-action@ffe7d7290dfa715e48c2ccc924d068444c94bde2 # v1.1.0
+        with:
+          k6-version: "1.6.1"
+          browser: true
 
       - name: Run SSO example chart tests
         if: matrix.name == 'acs-sso-example'
-        env:
-          K6_BROWSER_ARGS: no-sandbox
         uses: grafana/run-k6-action@a15e2072ede004e8d46141e33d7f7dad8ad08d9d # v1.3.1
         with:
           path: test/k6/acs-sso-example.js
           flags: -e BASE_URL=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
+          disable-analytics: true
 
       - name: Spit cluster status after tests
-        if: always()
+        if: always() && steps.helm_install.outcome != 'skipped'
         run: |
           helm ls --all-namespaces
           kubectl get all --all-namespaces
@@ -175,3 +178,11 @@ jobs:
         if: always() && steps.metrics-init.outcome != 'skipped'
         run: |
           cat $NODE_METRICS_LOG
+
+      - name: Upload pods logs
+        if: always() && steps.helm_install.outcome != 'skipped'
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v15.6.4
+        with:
+          namespace: default
+          log_retention: 7
+          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}"
