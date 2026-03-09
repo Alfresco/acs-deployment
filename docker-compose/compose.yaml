@@ -15,10 +15,11 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:25.3.0
+    image: alfresco/alfresco-content-repository:latest
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
         -Dencryption.keystore.type=JCEKS
         -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
         -Dencryption.keyAlgorithm=DESede
@@ -49,8 +50,20 @@ services:
         -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -Ddsync.service.uris=http://localhost:9090/alfresco
+        -Dcd.definitions=department,account,location
+        -Dcd.def.department.aspect={http://www.alfresco.org/model/customdictionarymodel/1.0}department
+        -Dcd.def.department.keyProperty=departmentId
+        -Dcd.def.department.versionProperty=departmentDictVersion
+        -Dcd.def.account.aspect={http://www.alfresco.org/model/customdictionarymodel/1.0}account
+        -Dcd.def.account.keyProperty=accountNumber
+        -Dcd.def.account.versionProperty=accountDictVersion
+        -Dcd.def.location.aspect={http://www.alfresco.org/model/customdictionarymodel/1.0}location
+        -Dcd.def.location.keyProperty=locId
+        -Dcd.def.location.versionProperty=locDictVersion
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+    ports:
+      - "5005:5005"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
       interval: 30s
@@ -64,7 +77,7 @@ services:
       service: alfresco
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.3.0
+    image: quay.io/alfresco/alfresco-transform-router:4.4.0-A.1
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
@@ -87,7 +100,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.3.0
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.4.0-A.1
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -110,7 +123,7 @@ services:
       shared-file-store:
         condition: service_healthy
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.3.0
+    image: quay.io/alfresco/alfresco-shared-file-store:4.4.0-A.1
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -129,7 +142,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:25.3.0
+    image: quay.io/alfresco/alfresco-share:26.1.0-A.21
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -211,7 +224,7 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.3.0
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.4.0-A.3
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -234,7 +247,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.3.0
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.4.0-A.3
     mem_limit: 1g
     restart: on-failure:5
     environment:
