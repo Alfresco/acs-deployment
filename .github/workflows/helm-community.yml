@@ -66,7 +66,7 @@ jobs:
          version: "3.12.1"
 
       - name: Login to Docker Hub
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9  # v3.7.0
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2  # v4.0.0
         if: >-
           ! github.event.pull_request.head.repo.fork
         with:
@@ -75,7 +75,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.6.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.7.1
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -181,7 +181,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v15.6.4
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v15.7.1
         with:
           namespace: default
           log_retention: 7
