@@ -1,0 +1,127 @@
+{
+  "definition": {
+    "displayProperties": [
+      "locCountry",
+      "locRegionCode",
+      "locRegionName",
+      "locCity",
+      "locZipCode",
+      "locStreet",
+      "locBuilding"
+    ]
+  },
+  "data": [
+    {
+      "properties": {
+        "locCountry": "USA"
+      },
+      "children": [
+        {
+          "properties": {
+            "locRegionCode": "NY",
+            "locRegionName": "New York"
+          },
+          "children": [
+            {
+              "properties": {
+                "locCity": "New York"
+              },
+              "children": [
+                {
+                  "properties": {
+                    "locZipCode": "10118"
+                  },
+                  "children": [
+                    {
+                      "properties": {
+                        "locStreet": "5th Avenue"
+                      },
+                      "children": [
+                        {
+                          "properties": {
+                            "locBuilding": "350",
+                            "locId": "USA-1"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "locRegionCode": "CA",
+            "locRegionName": "California"
+          },
+          "children": [
+            {
+              "properties": {
+                "locCity": "Mountain View"
+              },
+              "children": [
+                {
+                  "properties": {
+                    "locZipCode": "94043"
+                  },
+                  "children": [
+                    {
+                      "properties": {
+                        "locStreet": "Amphitheatre Pkwy"
+                      },
+                      "children": [
+                        {
+                          "properties": {
+                            "locBuilding": "1600",
+                            "locId": "USA-2"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "locRegionCode": "TX",
+            "locRegionName": "Texas"
+          },
+          "children": [
+            {
+              "properties": {
+                "locCity": "Austin"
+              },
+              "children": [
+                {
+                  "properties": {
+                    "locZipCode": "78701"
+                  },
+                  "children": [
+                    {
+                      "properties": {
+                        "locStreet": "Congress Ave"
+                      },
+                      "children": [
+                        {
+                          "properties": {
+                            "locBuilding": "600",
+                            "locId": "USA-3"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

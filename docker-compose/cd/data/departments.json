@@ -1,0 +1,345 @@
+{
+  "definition": {
+    "displayProperties": [
+      "departmentName"
+    ]
+  },
+  "data": [
+    {
+      "properties": {
+        "departmentId": "EXE",
+        "departmentName": "Executive Leadership"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "ENG",
+        "departmentName": "Engineering (general)"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "BEG",
+        "departmentName": "Backend Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "FEG",
+        "departmentName": "Frontend Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "FSE",
+        "departmentName": "Full stack Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "MOB",
+        "departmentName": "Mobile Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "PLT",
+        "departmentName": "Platform / Core Services"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "INF",
+        "departmentName": "Infrastructure Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "DEV",
+        "departmentName": "DevOps / Cloud Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "SRE",
+        "departmentName": "Site Reliability Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "QAE",
+        "departmentName": "Quality Assurance / Test Eng"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "DEX",
+        "departmentName": "Developer Experience"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "PRD",
+        "departmentName": "Product Management"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "POP",
+        "departmentName": "Product Operations"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "TPM",
+        "departmentName": "Technical Program Mgmt"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "DSN",
+        "departmentName": "Design & UX"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "UXR",
+        "departmentName": "UX Research"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "UID",
+        "departmentName": "UI / Product Design"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "CDN",
+        "departmentName": "Content Design"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "ITS",
+        "departmentName": "IT & Systems"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "ITD",
+        "departmentName": "IT Support / Helpdesk"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "ITI",
+        "departmentName": "IT Infrastructure"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "IAM",
+        "departmentName": "Identity & Access Mgmt"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "CSE",
+        "departmentName": "Corporate Security"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "DAT",
+        "departmentName": "Data & Analytics"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "DTE",
+        "departmentName": "Data Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "DTS",
+        "departmentName": "Data Science"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "BIQ",
+        "departmentName": "Business Intelligence"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "MLE",
+        "departmentName": "Machine Learning Eng"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "SEC",
+        "departmentName": "Security & Compliance"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "OPS",
+        "departmentName": "Security Operations"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "APS",
+        "departmentName": "Application Security"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "GRC",
+        "departmentName": "Governance, Risk & Compliance"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "SAL",
+        "departmentName": "Sales"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "SEN",
+        "departmentName": "Sales Engineering"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "CUS",
+        "departmentName": "Customer Success"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "ACM",
+        "departmentName": "Account Management"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "MKT",
+        "departmentName": "Marketing"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "GRW",
+        "departmentName": "Growth Marketing"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "BRD",
+        "departmentName": "Brand & Communications"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "PMK",
+        "departmentName": "Product Marketing"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "BOP",
+        "departmentName": "Business Operations"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "STP",
+        "departmentName": "Strategy & Planning"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "TMO",
+        "departmentName": "Transformation / Program Office"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "HR",
+        "departmentName": "Human Resources"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "TAQ",
+        "departmentName": "Talent Acquisition"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "POP",
+        "departmentName": "People Operations (PO already used, POP is OK)"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "CBE",
+        "departmentName": "Compensation & Benefits"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "LND",
+        "departmentName": "Learning & Development"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "FIN",
+        "departmentName": "Finance"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "ACC",
+        "departmentName": "Accounting"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "FPA",
+        "departmentName": "Financial Planning & Analysis"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "REV",
+        "departmentName": "Revenue Operations"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "LEG",
+        "departmentName": "Legal"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "PRV",
+        "departmentName": "Privacy"
+      }
+    },
+    {
+      "properties": {
+        "departmentId": "CCL",
+        "departmentName": "Corporate Counsel"
+      }
+    }
+  ]
+}

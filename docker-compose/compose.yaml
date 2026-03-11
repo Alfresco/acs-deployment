@@ -50,16 +50,7 @@ services:
         -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -Ddsync.service.uris=http://localhost:9090/alfresco
-        -Dcd.definitions=department,account,location
-        -Dcd.def.department.aspect={http://www.alfresco.org/model/customdictionarymodel/1.0}department
-        -Dcd.def.department.keyProperty=departmentId
-        -Dcd.def.department.versionProperty=departmentDictVersion
-        -Dcd.def.account.aspect={http://www.alfresco.org/model/customdictionarymodel/1.0}account
-        -Dcd.def.account.keyProperty=accountNumber
-        -Dcd.def.account.versionProperty=accountDictVersion
-        -Dcd.def.location.aspect={http://www.alfresco.org/model/customdictionarymodel/1.0}location
-        -Dcd.def.location.keyProperty=locId
-        -Dcd.def.location.versionProperty=locDictVersion
+        -Dcd.aspects={http://www.alfresco.org/model/customdictionarymodel/1.0}department,{http://www.alfresco.org/model/customdictionarymodel/1.0}account,{http://www.alfresco.org/model/customdictionarymodel/1.0}location
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
     ports:
@@ -373,3 +364,17 @@ services:
     extends:
       file: commons/base.yaml
       service: sync-service
+  cd-init:
+    build:
+      context: ./cd
+      dockerfile: Dockerfile
+    pull_policy: build
+    environment:
+      - ACS_API_URL=http://alfresco:8080
+      - USERNAME=admin
+      - PASSWORD=admin
+    depends_on:
+      alfresco:
+        condition: service_healthy
+      search-reindexing:
+        condition: service_completed_successfully

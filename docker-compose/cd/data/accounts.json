@@ -1,0 +1,288 @@
+{
+  "definition": {
+    "displayProperties": [
+      "accountName",
+      "accountCategory"
+    ]
+  },
+  "data": [
+    {
+      "properties": {
+        "accountCategory": "Current Assets"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 1000,
+            "accountName": "Cash"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1010,
+            "accountName": "Petty Cash"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1100,
+            "accountName": "Accounts Receivable"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1200,
+            "accountName": "Inventory"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1300,
+            "accountName": "Prepaid Expenses"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1400,
+            "accountName": "Short term Investments"
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "accountCategory": "Fixed Assets"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 1500,
+            "accountName": "Furniture & Fixtures"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1550,
+            "accountName": "Office Equipment"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1600,
+            "accountName": "Vehicles"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1700,
+            "accountName": "Buildings"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1800,
+            "accountName": "Land"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 1900,
+            "accountName": "Accumulated Depreciation (Contra asset)"
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "accountCategory": "Current Liabilities"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 2000,
+            "accountName": "Accounts Payable"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 2100,
+            "accountName": "Accrued Expenses"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 2200,
+            "accountName": "Short term Loans"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 2300,
+            "accountName": "Payroll Liabilities"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 2400,
+            "accountName": "Unearned Revenue"
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "accountCategory": "Long term Liabilities"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 2500,
+            "accountName": "Long term Loan Payable"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 2600,
+            "accountName": "Mortgage Payable"
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "accountCategory": "Equity"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 3000,
+            "accountName": "Owner's Capital / Share Capital"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 3100,
+            "accountName": "Retained Earnings"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 3200,
+            "accountName": "Owner's Drawings / Dividends"
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "accountCategory": "Revenue"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 4000,
+            "accountName": "Sales Revenue"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 4100,
+            "accountName": "Service Revenue"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 4200,
+            "accountName": "Interest Income"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 4300,
+            "accountName": "Other Operating Income"
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "accountCategory": "Operating Expenses"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 5000,
+            "accountName": "Cost of Goods Sold"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 5100,
+            "accountName": "Salaries Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 5200,
+            "accountName": "Rent Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 5300,
+            "accountName": "Utilities Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 5400,
+            "accountName": "Supplies Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 5500,
+            "accountName": "Insurance Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 5600,
+            "accountName": "Marketing Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 5700,
+            "accountName": "Repairs & Maintenance"
+          }
+        }
+      ]
+    },
+    {
+      "properties": {
+        "accountCategory": "Non Operating Expenses"
+      },
+      "children": [
+        {
+          "properties": {
+            "accountNumber": 6000,
+            "accountName": "Interest Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 6100,
+            "accountName": "Depreciation Expense"
+          }
+        },
+        {
+          "properties": {
+            "accountNumber": 6200,
+            "accountName": "Loss on Asset Disposal"
+          }
+        }
+      ]
+    }
+  ]
+}

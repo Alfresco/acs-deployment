@@ -1,0 +1,11 @@
+services:
+  cd-init:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ACS_API_URL=http://localhost:8080
+      - USERNAME=admin
+      - PASSWORD=admin
+    network_mode: "host"
+    container_name: cd-init
