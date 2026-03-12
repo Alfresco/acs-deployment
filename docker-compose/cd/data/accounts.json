@@ -1,8 +1,14 @@
 {
   "definition": {
-    "displayProperties": [
-      "accountName",
-      "accountCategory"
+    "levels": [
+      {
+        "level": 0,
+        "properties": ["accountCategory"]
+       },
+      {
+        "level": 1,
+        "properties": ["accountNumber", "accountName"]
+      }
     ]
   },
   "data": [

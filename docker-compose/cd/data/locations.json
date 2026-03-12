@@ -1,13 +1,30 @@
 {
   "definition": {
-    "displayProperties": [
-      "locCountry",
-      "locRegionCode",
-      "locRegionName",
-      "locCity",
-      "locZipCode",
-      "locStreet",
-      "locBuilding"
+    "levels": [
+      {
+        "level": 0,
+        "properties": ["locCountry"]
+      },
+      {
+        "level": 1,
+        "properties": ["locRegionCode", "locRegionName"]
+      },
+      {
+        "level": 2,
+        "properties": ["locCity"]
+      },
+      {
+        "level": 3,
+        "properties": ["locZipCode"]
+      },
+      {
+        "level": 4,
+        "properties": ["locStreet"]
+      },
+      {
+        "level": 5,
+        "properties": ["locBuilding", "locId"]
+      }
     ]
   },
   "data": [

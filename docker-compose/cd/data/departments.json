@@ -1,7 +1,10 @@
 {
   "definition": {
-    "displayProperties": [
-      "departmentName"
+    "levels": [
+      {
+        "level": 0,
+        "properties": ["departmentId", "departmentName"]
+      }
     ]
   },
   "data": [
