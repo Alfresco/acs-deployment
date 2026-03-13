@@ -13,6 +13,10 @@
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
+x-elastic-images:
+  elasticsearch: &elasticsearch-image "elasticsearch:8.17.3"
+  kibana: &kibana-image "kibana:8.17.3"
+
 services:
   alfresco:
     image: quay.io/alfresco/alfresco-content-repository:25.3.0
@@ -172,7 +176,7 @@ services:
       retries: 3
       start_period: 5s
   elasticsearch:
-    image: elasticsearch:8.17.3
+    image: *elasticsearch-image
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -195,7 +199,7 @@ services:
       retries: 5
       start_period: 30s
   kibana:
-    image: kibana:8.17.3
+    image: *kibana-image
     mem_limit: 1g
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
