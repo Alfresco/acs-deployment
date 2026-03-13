@@ -84,7 +84,7 @@ elasticsearch:
       tag: 8.17.3
   kibana:
     image:
-      tag: 8.17.1
+      tag: 8.17.3
 alfresco-audit-storage:
   image:
     tag: 1.3.0-A.3

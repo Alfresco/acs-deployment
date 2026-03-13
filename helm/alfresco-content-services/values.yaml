@@ -562,7 +562,7 @@ elasticsearch:
     enabled: false
     image:
       repository: kibana
-      tag: 7.17.26
+      tag: 8.17.3
     serverBasePath: "/kibana"
     ingress:
       enabled: true

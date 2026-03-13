@@ -258,7 +258,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.kibana.enabled | bool | `false` |  |
 | elasticsearch.kibana.image.repository | string | `"kibana"` |  |
-| elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
+| elasticsearch.kibana.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
 | elasticsearch.kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | elasticsearch.kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
