@@ -551,7 +551,7 @@ elasticsearch:
   elasticsearch:
     image:
       repository: elasticsearch
-      tag: 8.17.3
+      tag: &elastic-tag "8.17.3"
     ingress:
       # -- toggle deploying elasticsearch-audit ingress
       enabled: false
@@ -562,7 +562,7 @@ elasticsearch:
     enabled: false
     image:
       repository: kibana
-      tag: 7.17.26
+      tag: *elastic-tag
     serverBasePath: "/kibana"
     ingress:
       enabled: true
