@@ -53,6 +53,16 @@ readme.
 
 ## ⚠️ Important changes for Docker Compose
 
+### ActiveMQ authentication enabled for ACS 26 and later (March 2026)
+
+Starting with ACS 26, ActiveMQ authentication is enabled by default with version
+6.2.x. This change will provide better security and ensure that credentials are
+properly provided by each component when connecting to ActiveMQ.
+
+ActiveMQ versions prior to 6.2.x will continue to work without authentication
+for backward compatibility, but we recommend upgrading to the latest version to
+benefit from improved security and performance.
+
 ### Repository content store persistence
 
 We've introduced an anonymous volume for the alfresco service to ensure content
