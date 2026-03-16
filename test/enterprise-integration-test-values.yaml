@@ -226,4 +226,3 @@ dtas:
   enabled: true
   additionalArgs:
     - --tb=short
-    - -k=not test_sync # traefik missing rewrite-target support
