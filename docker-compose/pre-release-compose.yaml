@@ -42,7 +42,7 @@ services:
         -Dalfresco.port=8080
         -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
-        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+        -Dmessaging.broker.url=nio://activemq:61616
         -Dmessaging.broker.username=admin
         -Dmessaging.broker.password=admin
         -Ddeployment.method=DOCKER_COMPOSE
@@ -302,7 +302,7 @@ services:
     image: quay.io/alfresco/alfresco-audit-storage:1.3.0
     mem_limit: 512m
     environment:
-      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
+      SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
       SPRING_ACTIVEMQ_USER: admin
       SPRING_ACTIVEMQ_PASSWORD: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
@@ -350,7 +350,7 @@ services:
         -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
         -Dsql.db.username=alfresco
         -Dsql.db.password=alfresco
-        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+        -Dmessaging.broker.url=nio://activemq:61616
         -Dmessaging.username=admin
         -Dmessaging.password=admin
         -Drepo.hostname=alfresco
