@@ -81,7 +81,7 @@ alfresco-connector-msteams:
 elasticsearch:
   elasticsearch:
     image:
-      tag: 8.17.3
+      tag: 8.17.10
   kibana:
     image:
       tag: 8.17.1

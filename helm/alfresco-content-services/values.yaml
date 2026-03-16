@@ -551,7 +551,7 @@ elasticsearch:
   elasticsearch:
     image:
       repository: elasticsearch
-      tag: 8.17.3
+      tag: 8.17.10
     ingress:
       # -- toggle deploying elasticsearch-audit ingress
       enabled: false

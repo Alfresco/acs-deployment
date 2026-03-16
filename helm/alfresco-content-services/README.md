@@ -251,7 +251,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
 | dtas.image.tag | string | `"v1.7.3"` |  |
 | elasticsearch.elasticsearch.image.repository | string | `"elasticsearch"` |  |
-| elasticsearch.elasticsearch.image.tag | string | `"8.17.3"` |  |
+| elasticsearch.elasticsearch.image.tag | string | `"8.17.10"` |  |
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
 | elasticsearch.elasticsearch.persistence.baseSize | string | `"4Gi"` |  |
 | elasticsearch.elasticsearch.persistence.enabled | bool | `true` |  |
