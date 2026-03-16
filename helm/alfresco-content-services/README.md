@@ -240,7 +240,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.assertions.acs.modules[1].version | string | `"4.1.0"` |  |
 | dtas.config.assertions.acs.modules[2].id | string | `"alfresco-aos-module"` |  |
 | dtas.config.assertions.acs.modules[2].installed | bool | `true` |  |
-| dtas.config.assertions.acs.modules[2].version | string | `"3.4.0"` |  |
+| dtas.config.assertions.acs.modules[2].version | string | `"3.4.1"` |  |
 | dtas.config.assertions.acs.version | string | `"26.1.0"` |  |
 | dtas.config.assertions.adw.base_path | string | `"/workspace"` |  |
 | dtas.config.config.host | string | `"http://traefik.traefik.svc.cluster.local"` |  |
