@@ -53,6 +53,24 @@ readme.
 
 ## ⚠️ Important changes for Docker Compose
 
+### ActiveMQ authentication enabled for ACS 26 and later (March 2026)
+
+Starting with ACS 26, the `alfresco-activemq:6.2.x` Docker image used by the
+Docker Compose bundles has authentication enabled by default. This change
+provides better security and ensures that credentials are required and
+validated for each component when connecting to ActiveMQ. When using this
+image, make sure that:
+
+* on the broker (`alfresco-activemq` service), `ACTIVEMQ_ADMIN_LOGIN` and
+  `ACTIVEMQ_ADMIN_PASSWORD` are set, and
+* in each ACS service that connects to ActiveMQ, `SPRING_ACTIVEMQ_USER` and
+  `SPRING_ACTIVEMQ_PASSWORD` are configured with the same values.
+
+When using older ActiveMQ images (prior to `alfresco-activemq:6.2.x`),
+authentication remains disabled by default for backward compatibility, but we
+recommend upgrading to the latest image to benefit from improved security and
+performance.
+
 ### Repository content store persistence
 
 We've introduced an anonymous volume for the alfresco service to ensure content
