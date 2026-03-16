@@ -90,7 +90,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3943-traefik-v40
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.11.0
         with:
           traefik-enabled: true
           traefik-chart-version: v40.0.0-ea.1
