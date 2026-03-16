@@ -9,7 +9,7 @@
 #
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:25.3.0
+    image: docker.io/alfresco/alfresco-content-repository-community:26.1.0
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -40,6 +40,8 @@ services:
         -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+        -Dmessaging.broker.username=admin
+        -Dmessaging.broker.password=admin
         -Ddeployment.method=DOCKER_COMPOSE
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
         -XX:MinRAMPercentage=50
@@ -56,7 +58,7 @@ services:
       file: commons/base.yaml
       service: alfresco
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.3.0
+    image: alfresco/alfresco-transform-core-aio:5.4.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -74,7 +76,7 @@ services:
       activemq:
         condition: service_healthy
   share:
-    image: docker.io/alfresco/alfresco-share:25.3.0
+    image: docker.io/alfresco/alfresco-share:26.1.0
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -101,7 +103,7 @@ services:
       file: commons/base.yaml
       service: share
   postgres:
-    image: postgres:16.5
+    image: postgres:17.9
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
@@ -117,7 +119,7 @@ services:
       retries: 3
       start_period: 5s
   solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.17
+    image: docker.io/alfresco/alfresco-search-services:2.0.18
     mem_limit: 2g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -136,8 +138,11 @@ services:
     ports:
       - "8083:8983" # Browser port
   activemq:
-    image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
+    image: docker.io/alfresco/alfresco-activemq:6.2.1-jre17-rockylinux8
     mem_limit: 1g
+    environment:
+      - ACTIVEMQ_ADMIN_LOGIN=admin
+      - ACTIVEMQ_ADMIN_PASSWORD=admin
     ports:
       - "8161:8161" # Web Console
       - "5672:5672" # AMQP
@@ -150,7 +155,7 @@ services:
       retries: 5
       start_period: 5s
   content-app:
-    image: alfresco/alfresco-content-app:7.2.0
+    image: alfresco/alfresco-content-app:7.3.0
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
@@ -164,7 +169,7 @@ services:
       file: commons/base.yaml
       service: content-app
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:10.2.0
+    image: quay.io/alfresco/alfresco-control-center:10.3.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

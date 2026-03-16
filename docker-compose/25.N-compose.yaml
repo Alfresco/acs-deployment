@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:26.1.0
+    image: quay.io/alfresco/alfresco-content-repository:25.3.0
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -43,8 +43,6 @@ services:
         -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Dmessaging.broker.username=admin
-        -Dmessaging.broker.password=admin
         -Ddeployment.method=DOCKER_COMPOSE
         -Dtransform.service.enabled=true
         -Dtransform.service.url=http://transform-router:8095
@@ -72,8 +70,6 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
       ACTIVEMQ_URL: nio://activemq:61616
-      ACTIVEMQ_USER: admin
-      ACTIVEMQ_PASSWORD: admin
       CORE_AIO_URL: http://transform-core-aio:8090
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
@@ -98,8 +94,6 @@ services:
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
       ACTIVEMQ_URL: nio://activemq:61616
-      ACTIVEMQ_USER: admin
-      ACTIVEMQ_PASSWORD: admin
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
@@ -135,7 +129,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:26.1.0
+    image: quay.io/alfresco/alfresco-share:25.3.0
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -162,7 +156,7 @@ services:
       file: commons/base.yaml
       service: share
   postgres:
-    image: postgres:17.9
+    image: postgres:16.13
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
@@ -225,8 +219,6 @@ services:
       ALFRESCO_SHAREDFILESTORE_BASEURL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
@@ -249,8 +241,6 @@ services:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_DATASOURCE_PASSWORD: alfresco
@@ -263,11 +253,8 @@ services:
       alfresco:
         condition: service_healthy
   activemq:
-    image: quay.io/alfresco/alfresco-activemq:6.2.1-jre17-rockylinux8
+    image: quay.io/alfresco/alfresco-activemq:5.19.2-jre17-rockylinux8
     mem_limit: 1g
-    environment:
-      ACTIVEMQ_ADMIN_LOGIN: admin
-      ACTIVEMQ_ADMIN_PASSWORD: admin
     ports:
       - "8161:8161" # Web Console
       - "5672:5672" # AMQP
@@ -284,8 +271,6 @@ services:
     mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
@@ -351,8 +336,6 @@ services:
         -Dsql.db.username=alfresco
         -Dsql.db.password=alfresco
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Dmessaging.username=admin
-        -Dmessaging.password=admin
         -Drepo.hostname=alfresco
         -Drepo.port=8080
         -Ddw.server.applicationConnectors[0].type=http
