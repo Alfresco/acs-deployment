@@ -16,7 +16,7 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
-## Unreleased
+## 10.3.0
 
 * ingress-nginx is being deprecated and we are moving to a more generic ingress
   controller that supports the Kubernetes Ingress API. We are testing against
