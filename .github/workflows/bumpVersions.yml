@@ -6,7 +6,8 @@ on:
   push:
     paths:
       - .github/workflows/bumpVersions.yml
-      - updatecli-matrix-targets.yaml
+      - docker-compose/updatecli-matrix-targets.yaml
+      - helm/*/updatecli-matrix-targets.yaml
     tags-ignore:
       - '**'
   workflow_dispatch:
