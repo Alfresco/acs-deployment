@@ -1,5 +1,5 @@
-# This values file can be used to install ACS with pre released images using the latest version of
-# the chart
+# This values file can be used to install ACS with pre-release images using the
+# latest version of the chart
 alfresco-repository:
   image:
     tag: 26.2.0-A.1

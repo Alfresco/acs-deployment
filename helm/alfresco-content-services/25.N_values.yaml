@@ -1,4 +1,4 @@
-# This values file can be used to install ACS 7.4.x using the latest version of
+# This values file can be used to install ACS 25.x using the latest version of
 # the chart
 alfresco-repository:
   image:
