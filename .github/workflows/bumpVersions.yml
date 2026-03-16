@@ -8,6 +8,8 @@ on:
       - .github/workflows/bumpVersions.yml
       - docker-compose/updatecli-matrix-targets.yaml
       - helm/*/updatecli-matrix-targets.yaml
+    branches:
+      - '**'
     tags-ignore:
       - '**'
   workflow_dispatch:
@@ -71,7 +73,7 @@ jobs:
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
-    if: inputs.update-type == 'values'
+    if: inputs.update-type == 'values' || github.event_name == 'push'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
