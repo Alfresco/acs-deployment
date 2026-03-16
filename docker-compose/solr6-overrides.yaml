@@ -19,7 +19,7 @@ services:
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
-        -Dmessaging.broker.url=nio://activemq:61616
+        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Dmessaging.broker.username=admin
         -Dmessaging.broker.password=admin
         -Ddeployment.method=DOCKER_COMPOSE
