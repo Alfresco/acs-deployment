@@ -61,9 +61,9 @@ provides better security and ensures that credentials are required and
 validated for each component when connecting to ActiveMQ. When using this
 image, make sure that:
 
-- on the broker (`alfresco-activemq` service), `ACTIVEMQ_ADMIN_LOGIN` and
+* on the broker (`alfresco-activemq` service), `ACTIVEMQ_ADMIN_LOGIN` and
   `ACTIVEMQ_ADMIN_PASSWORD` are set, and
-- in each ACS service that connects to ActiveMQ, `SPRING_ACTIVEMQ_USER` and
+* in each ACS service that connects to ActiveMQ, `SPRING_ACTIVEMQ_USER` and
   `SPRING_ACTIVEMQ_PASSWORD` are configured with the same values.
 
 When using older ActiveMQ images (prior to `alfresco-activemq:6.2.x`),
