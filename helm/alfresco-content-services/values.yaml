@@ -433,7 +433,7 @@ postgresql:
   nameOverride: postgresql-acs
   image:
     repository: postgres
-    tag: 16.6
+    tag: "17.9"
     pullPolicy: IfNotPresent
   auth:
     username: alfresco

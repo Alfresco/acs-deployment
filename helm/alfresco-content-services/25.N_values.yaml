@@ -65,10 +65,10 @@ alfresco-control-center:
     tag: 10.3.0
 postgresql:
   image:
-    tag: 15.10
+    tag: "16.13"
 postgresql-sync:
   image:
-    tag: 15.10
+    tag: "16.13"
 alfresco-sync-service:
   image:
     tag: 5.3.1

@@ -156,7 +156,7 @@ services:
       file: commons/base.yaml
       service: share
   postgres:
-    image: postgres:16.5
+    image: postgres:17.9
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
