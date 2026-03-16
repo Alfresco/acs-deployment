@@ -255,7 +255,7 @@ services:
         -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
         -Dsql.db.username=alfresco
         -Dsql.db.password=alfresco
-        -Dmessaging.broker.host=activemq
+        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
         -Drepo.hostname=alfresco
         -Drepo.port=8080
         -Ddw.server.applicationConnectors[0].type=http
