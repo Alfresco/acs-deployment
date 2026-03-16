@@ -38,6 +38,9 @@ matrix:
     audit-storage:
       compose_target: *composeNext
       compose_key: $.services.audit-storage.image
+    activemq:
+      compose_target: *composeNext
+      compose_key: $.services.activemq.image
 
   current:
     id: current
@@ -78,6 +81,51 @@ matrix:
     audit-storage:
       compose_target: *composeCurrent
       compose_key: $.services.audit-storage.image
+    activemq:
+      compose_target: *composeCurrent
+      compose_key: $.services.activemq.image
+
+  25.N:
+    id: 25n
+    acs:
+      compose_target: &compose25 >-
+        docker-compose/25.N-compose.yaml
+      compose_key: $.services.alfresco.image
+    share:
+      compose_target: *compose25
+      compose_key: $.services.share.image
+    search:
+      compose_target: docker-compose/solr6-overrides.yaml
+      compose_key: $.services.solr6.image
+    search-enterprise:
+      compose_target: *compose25
+      compose_keys:
+        live-indexing: $.services.search.image
+        reindexing: $.services.search-reindexing.image
+    sync:
+      compose_target: *compose25
+      compose_key: $.services.sync-service.image
+    adw:
+      compose_target: *compose25
+      compose_key: $.services.digital-workspace.image
+    adminApp:
+      compose_target: *compose25
+      compose_key: $.services.control-center.image
+    trouter:
+      compose_target: *compose25
+      compose_key: $.services.transform-router.image
+    sfs:
+      compose_target: *compose25
+      compose_key: $.services.shared-file-store.image
+    tengine-aio:
+      compose_target: *compose25
+      compose_key: $.services.transform-core-aio.image
+    audit-storage:
+      compose_target: *compose25
+      compose_key: $.services.audit-storage.image
+    activemq:
+      compose_target: *compose25
+      compose_key: $.services.activemq.image
 
   23.N:
     id: 23n
@@ -117,6 +165,9 @@ matrix:
     audit-storage:
       compose_target: *compose23
       compose_key: $.services.audit-storage.image
+    activemq:
+      compose_target: *compose23
+      compose_key: $.services.activemq.image
 
   7.4.N:
     id: 74n
@@ -148,6 +199,9 @@ matrix:
     tengine-aio:
       compose_target: *compose74
       compose_key: $.services.transform-core-aio.image
+    activemq:
+      compose_target: *compose74
+      compose_key: $.services.activemq.image
 
   community: &community
     id: com
@@ -171,3 +225,6 @@ matrix:
     aca:
       compose_target: *composeOss
       compose_key: $.services.content-app.image
+    activemq:
+      compose_target: *composeOss
+      compose_key: $.services.activemq.image

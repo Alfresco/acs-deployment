@@ -1,12 +1,15 @@
 ---
 name: Bump versions
-run-name: Bump ${{ inputs.update-type }} using alfresco-updatecli/${{ inputs.alfresco-updatecli-ref }}
+run-name: Bump ${{ inputs.update-type }}${{ inputs.update-type == 'values' && format(' using alfresco-updatecli/{0}', inputs.alfresco-updatecli-ref || 'master') || '' }}
 
 on:
   push:
     paths:
       - .github/workflows/bumpVersions.yml
-      - updatecli-matrix-targets.yaml
+      - docker-compose/updatecli-matrix-targets.yaml
+      - helm/*/updatecli-matrix-targets.yaml
+    branches:
+      - '**'
     tags-ignore:
       - '**'
   workflow_dispatch:
@@ -18,7 +21,7 @@ on:
         - charts
         - values
       alfresco-updatecli-ref:
-        description: "The version to use for alfresco/alfresco-updatecli configs"
+        description: "The version to use for alfresco/alfresco-updatecli configs (only for values update-type)"
         type: string
         default: master
 
@@ -45,7 +48,7 @@ jobs:
       - name: Install Updatecli
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v15.9.1
 
-      - run: updatecli apply
+      - run: updatecli pipeline apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -70,7 +73,7 @@ jobs:
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
-    if: inputs.update-type == 'values'
+    if: inputs.update-type == 'values' || github.event_name == 'push'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -93,7 +96,7 @@ jobs:
           for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do
              TARGET=$(basename $(dirname $i))
              echo -e "\n###### Building Updatecli manifest for ${TARGET}\n"
-             updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v alfresco-updatecli/deployments/values/supported-matrix.yaml -v ${i}
+             updatecli pipeline apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v alfresco-updatecli/deployments/values/supported-matrix.yaml -v ${i}
           done
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}

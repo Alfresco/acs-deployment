@@ -1,8 +1,8 @@
-# This values file can be used to install ACS 23.x using the latest version of
+# This values file can be used to install ACS 25.x using the latest version of
 # the chart
 alfresco-repository:
   image:
-    tag: 23.6.1
+    tag: 25.3.0
 activemq:
   image:
     tag: 5.19.2-jre17-rockylinux8
@@ -33,7 +33,7 @@ alfresco-ai-transformer:
     tag: 3.4.0
 share:
   image:
-    tag: 23.6.1
+    tag: 25.3.0
 alfresco-search-enterprise:
   liveIndexing:
     mediation:
@@ -65,10 +65,10 @@ alfresco-control-center:
     tag: 10.3.0
 postgresql:
   image:
-    tag: "15.17"
+    tag: "16.13"
 postgresql-sync:
   image:
-    tag: "15.17"
+    tag: "16.13"
 alfresco-sync-service:
   image:
     tag: 5.3.1
@@ -85,7 +85,7 @@ dtas:
   config:
     assertions:
       acs:
-        version: 23.6.1
+        version: 25.3.0
         modules:
         - id: org_alfresco_device_sync_repo
           version: 5.3.0
