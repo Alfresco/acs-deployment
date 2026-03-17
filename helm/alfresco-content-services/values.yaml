@@ -495,7 +495,7 @@ postgresql-sync:
   nameOverride: &syncNameOverride postgresql-sync
   image:
     repository: postgres
-    tag: 16.6
+    tag: "17.9"
     pullPolicy: IfNotPresent
   auth:
     username: alfresco
@@ -562,7 +562,7 @@ elasticsearch:
     enabled: false
     image:
       repository: kibana
-      tag: 7.17.26
+      tag: 8.17.10
     serverBasePath: "/kibana"
     ingress:
       enabled: true

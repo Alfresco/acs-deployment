@@ -258,7 +258,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.enabled | bool | `true` | Enables the embedded elasticsearch cluster |
 | elasticsearch.kibana.enabled | bool | `false` |  |
 | elasticsearch.kibana.image.repository | string | `"kibana"` |  |
-| elasticsearch.kibana.image.tag | string | `"7.17.26"` |  |
+| elasticsearch.kibana.image.tag | string | `"8.17.10"` |  |
 | elasticsearch.kibana.ingress.enabled | bool | `true` |  |
 | elasticsearch.kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | elasticsearch.kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -302,7 +302,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | postgresql-sync.enabled | bool | `true` | Toggle creation of the "in-cluster" test postgresql instance for Alfresco Sync service |
 | postgresql-sync.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgresql-sync.image.repository | string | `"postgres"` |  |
-| postgresql-sync.image.tag | float | `16.6` |  |
+| postgresql-sync.image.tag | string | `"17.9"` |  |
 | postgresql-sync.nameOverride | string | `"postgresql-sync"` |  |
 | postgresql-sync.primary.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | postgresql-sync.primary.persistence.baseSize | string | `"8Gi"` |  |
