@@ -1,0 +1,20 @@
+name: Release → Jira
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  propagate-release:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Propagate release on Jira
+        uses: Alfresco/alfresco-build-tools/.github/actions/jira-propagate-release@v15.12.0
+        with:
+          jira-project-key: "OPSEXP"
+          jira-token: ${{ secrets.JIRA_TOKEN }}
+          jira-url: ${{ vars.JIRA_URL }}
+          jira-user: ${{ vars.JIRA_USER }}
+          jira-version-prefix: "Alfresco Charts - content services "
+          github-version-prefix: "v"
+          merge-versions: "true"
