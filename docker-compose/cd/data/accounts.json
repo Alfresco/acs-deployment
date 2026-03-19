@@ -3,289 +3,289 @@
     "levels": [
       {
         "level": 0,
-        "properties": ["accountCategory"]
+        "properties": ["cdict:accountCategory"]
        },
       {
         "level": 1,
-        "properties": ["accountNumber", "accountName"]
+        "properties": ["cdict:accountNumber", "cdict:accountName"]
       }
     ]
   },
   "data": [
     {
       "properties": {
-        "accountCategory": "Current Assets"
+        "cdict:accountCategory": "Current Assets"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 1000,
-            "accountName": "Cash"
+            "cdict:accountNumber": 1000,
+            "cdict:accountName": "Cash"
           }
         },
         {
           "properties": {
-            "accountNumber": 1010,
-            "accountName": "Petty Cash"
+            "cdict:accountNumber": 1010,
+            "cdict:accountName": "Petty Cash"
           }
         },
         {
           "properties": {
-            "accountNumber": 1100,
-            "accountName": "Accounts Receivable"
+            "cdict:accountNumber": 1100,
+            "cdict:accountName": "Accounts Receivable"
           }
         },
         {
           "properties": {
-            "accountNumber": 1200,
-            "accountName": "Inventory"
+            "cdict:accountNumber": 1200,
+            "cdict:accountName": "Inventory"
           }
         },
         {
           "properties": {
-            "accountNumber": 1300,
-            "accountName": "Prepaid Expenses"
+            "cdict:accountNumber": 1300,
+            "cdict:accountName": "Prepaid Expenses"
           }
         },
         {
           "properties": {
-            "accountNumber": 1400,
-            "accountName": "Short term Investments"
+            "cdict:accountNumber": 1400,
+            "cdict:accountName": "Short term Investments"
           }
         }
       ]
     },
     {
       "properties": {
-        "accountCategory": "Fixed Assets"
+        "cdict:accountCategory": "Fixed Assets"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 1500,
-            "accountName": "Furniture & Fixtures"
+            "cdict:accountNumber": 1500,
+            "cdict:accountName": "Furniture & Fixtures"
           }
         },
         {
           "properties": {
-            "accountNumber": 1550,
-            "accountName": "Office Equipment"
+            "cdict:accountNumber": 1550,
+            "cdict:accountName": "Office Equipment"
           }
         },
         {
           "properties": {
-            "accountNumber": 1600,
-            "accountName": "Vehicles"
+            "cdict:accountNumber": 1600,
+            "cdict:accountName": "Vehicles"
           }
         },
         {
           "properties": {
-            "accountNumber": 1700,
-            "accountName": "Buildings"
+            "cdict:accountNumber": 1700,
+            "cdict:accountName": "Buildings"
           }
         },
         {
           "properties": {
-            "accountNumber": 1800,
-            "accountName": "Land"
+            "cdict:accountNumber": 1800,
+            "cdict:accountName": "Land"
           }
         },
         {
           "properties": {
-            "accountNumber": 1900,
-            "accountName": "Accumulated Depreciation (Contra asset)"
+            "cdict:accountNumber": 1900,
+            "cdict:accountName": "Accumulated Depreciation (Contra asset)"
           }
         }
       ]
     },
     {
       "properties": {
-        "accountCategory": "Current Liabilities"
+        "cdict:accountCategory": "Current Liabilities"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 2000,
-            "accountName": "Accounts Payable"
+            "cdict:accountNumber": 2000,
+            "cdict:accountName": "Accounts Payable"
           }
         },
         {
           "properties": {
-            "accountNumber": 2100,
-            "accountName": "Accrued Expenses"
+            "cdict:accountNumber": 2100,
+            "cdict:accountName": "Accrued Expenses"
           }
         },
         {
           "properties": {
-            "accountNumber": 2200,
-            "accountName": "Short term Loans"
+            "cdict:accountNumber": 2200,
+            "cdict:accountName": "Short term Loans"
           }
         },
         {
           "properties": {
-            "accountNumber": 2300,
-            "accountName": "Payroll Liabilities"
+            "cdict:accountNumber": 2300,
+            "cdict:accountName": "Payroll Liabilities"
           }
         },
         {
           "properties": {
-            "accountNumber": 2400,
-            "accountName": "Unearned Revenue"
+            "cdict:accountNumber": 2400,
+            "cdict:accountName": "Unearned Revenue"
           }
         }
       ]
     },
     {
       "properties": {
-        "accountCategory": "Long term Liabilities"
+        "cdict:accountCategory": "Long term Liabilities"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 2500,
-            "accountName": "Long term Loan Payable"
+            "cdict:accountNumber": 2500,
+            "cdict:accountName": "Long term Loan Payable"
           }
         },
         {
           "properties": {
-            "accountNumber": 2600,
-            "accountName": "Mortgage Payable"
+            "cdict:accountNumber": 2600,
+            "cdict:accountName": "Mortgage Payable"
           }
         }
       ]
     },
     {
       "properties": {
-        "accountCategory": "Equity"
+        "cdict:accountCategory": "Equity"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 3000,
-            "accountName": "Owner's Capital / Share Capital"
+            "cdict:accountNumber": 3000,
+            "cdict:accountName": "Owner's Capital / Share Capital"
           }
         },
         {
           "properties": {
-            "accountNumber": 3100,
-            "accountName": "Retained Earnings"
+            "cdict:accountNumber": 3100,
+            "cdict:accountName": "Retained Earnings"
           }
         },
         {
           "properties": {
-            "accountNumber": 3200,
-            "accountName": "Owner's Drawings / Dividends"
+            "cdict:accountNumber": 3200,
+            "cdict:accountName": "Owner's Drawings / Dividends"
           }
         }
       ]
     },
     {
       "properties": {
-        "accountCategory": "Revenue"
+        "cdict:accountCategory": "Revenue"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 4000,
-            "accountName": "Sales Revenue"
+            "cdict:accountNumber": 4000,
+            "cdict:accountName": "Sales Revenue"
           }
         },
         {
           "properties": {
-            "accountNumber": 4100,
-            "accountName": "Service Revenue"
+            "cdict:accountNumber": 4100,
+            "cdict:accountName": "Service Revenue"
           }
         },
         {
           "properties": {
-            "accountNumber": 4200,
-            "accountName": "Interest Income"
+            "cdict:accountNumber": 4200,
+            "cdict:accountName": "Interest Income"
           }
         },
         {
           "properties": {
-            "accountNumber": 4300,
-            "accountName": "Other Operating Income"
+            "cdict:accountNumber": 4300,
+            "cdict:accountName": "Other Operating Income"
           }
         }
       ]
     },
     {
       "properties": {
-        "accountCategory": "Operating Expenses"
+        "cdict:accountCategory": "Operating Expenses"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 5000,
-            "accountName": "Cost of Goods Sold"
+            "cdict:accountNumber": 5000,
+            "cdict:accountName": "Cost of Goods Sold"
           }
         },
         {
           "properties": {
-            "accountNumber": 5100,
-            "accountName": "Salaries Expense"
+            "cdict:accountNumber": 5100,
+            "cdict:accountName": "Salaries Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 5200,
-            "accountName": "Rent Expense"
+            "cdict:accountNumber": 5200,
+            "cdict:accountName": "Rent Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 5300,
-            "accountName": "Utilities Expense"
+            "cdict:accountNumber": 5300,
+            "cdict:accountName": "Utilities Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 5400,
-            "accountName": "Supplies Expense"
+            "cdict:accountNumber": 5400,
+            "cdict:accountName": "Supplies Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 5500,
-            "accountName": "Insurance Expense"
+            "cdict:accountNumber": 5500,
+            "cdict:accountName": "Insurance Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 5600,
-            "accountName": "Marketing Expense"
+            "cdict:accountNumber": 5600,
+            "cdict:accountName": "Marketing Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 5700,
-            "accountName": "Repairs & Maintenance"
+            "cdict:accountNumber": 5700,
+            "cdict:accountName": "Repairs & Maintenance"
           }
         }
       ]
     },
     {
       "properties": {
-        "accountCategory": "Non Operating Expenses"
+        "cdict:accountCategory": "Non Operating Expenses"
       },
       "children": [
         {
           "properties": {
-            "accountNumber": 6000,
-            "accountName": "Interest Expense"
+            "cdict:accountNumber": 6000,
+            "cdict:accountName": "Interest Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 6100,
-            "accountName": "Depreciation Expense"
+            "cdict:accountNumber": 6100,
+            "cdict:accountName": "Depreciation Expense"
           }
         },
         {
           "properties": {
-            "accountNumber": 6200,
-            "accountName": "Loss on Asset Disposal"
+            "cdict:accountNumber": 6200,
+            "cdict:accountName": "Loss on Asset Disposal"
           }
         }
       ]

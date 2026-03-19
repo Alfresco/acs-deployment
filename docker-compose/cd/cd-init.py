@@ -160,17 +160,17 @@ if __name__ == "__main__":
     _cd_def_folder = find_cd_definition_node(_encoded_ticket)
     logger.info(f"CD definitions folder id: {_cd_def_folder['id']}")
 
-    _account_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Accounts", "{http://www.alfresco.org/model/customdictionarymodel/1.0}account", "accountNumber", "accountDictVersion")
+    _account_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Accounts", "cdict:account", "cdict:accountNumber", "cdict:accountDictVersion")
     logger.info(f"Created node id: {_account_node['id']}")
     _uploaded_node = upload_cd_definition_content(_encoded_ticket, _account_node['id'], "data/accounts.json")
     logger.info(f"Uploaded content, new version: {_uploaded_node['properties']['cm:versionLabel']}")
 
-    _department_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Departments", "{http://www.alfresco.org/model/customdictionarymodel/1.0}department", "departmentId", "departmentDictVersion")
+    _department_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Departments", "cdict:department", "cdict:departmentId", "cdict:departmentDictVersion")
     logger.info(f"Created node id: {_account_node['id']}")
     _uploaded_node = upload_cd_definition_content(_encoded_ticket, _department_node['id'], "data/departments.json")
     logger.info(f"Uploaded content, new version: {_uploaded_node['properties']['cm:versionLabel']}")
 
-    _location_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Locations", "{http://www.alfresco.org/model/customdictionarymodel/1.0}location", "locId", "locDictVersion")
+    _location_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Locations", "cdict:location", "cdict:locId", "cdict:locDictVersion")
     logger.info(f"Created node id: {_account_node['id']}")
     _uploaded_node = upload_cd_definition_content(_encoded_ticket, _location_node['id'], "data/locations.json")
     logger.info(f"Uploaded content, new version: {_uploaded_node['properties']['cm:versionLabel']}")

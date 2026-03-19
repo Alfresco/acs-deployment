@@ -3,61 +3,61 @@
     "levels": [
       {
         "level": 0,
-        "properties": ["locCountry"]
+        "properties": ["cdict:locCountry"]
       },
       {
         "level": 1,
-        "properties": ["locRegionCode", "locRegionName"]
+        "properties": ["cdict:locRegionCode", "cdict:locRegionName"]
       },
       {
         "level": 2,
-        "properties": ["locCity"]
+        "properties": ["cdict:locCity"]
       },
       {
         "level": 3,
-        "properties": ["locZipCode"]
+        "properties": ["cdict:locZipCode"]
       },
       {
         "level": 4,
-        "properties": ["locStreet"]
+        "properties": ["cdict:locStreet"]
       },
       {
         "level": 5,
-        "properties": ["locBuilding", "locId"]
+        "properties": ["cdict:locBuilding", "cdict:locId"]
       }
     ]
   },
   "data": [
     {
       "properties": {
-        "locCountry": "USA"
+        "cdict:locCountry": "USA"
       },
       "children": [
         {
           "properties": {
-            "locRegionCode": "NY",
-            "locRegionName": "New York"
+            "cdict:locRegionCode": "NY",
+            "cdict:locRegionName": "New York"
           },
           "children": [
             {
               "properties": {
-                "locCity": "New York"
+                "cdict:locCity": "New York"
               },
               "children": [
                 {
                   "properties": {
-                    "locZipCode": "10118"
+                    "cdict:locZipCode": "10118"
                   },
                   "children": [
                     {
                       "properties": {
-                        "locStreet": "5th Avenue"
+                        "cdict:locStreet": "5th Avenue"
                       },
                       "children": [
                         {
                           "properties": {
-                            "locBuilding": "350",
-                            "locId": "USA-1"
+                            "cdict:locBuilding": "350",
+                            "cdict:locId": "USA-1"
                           }
                         }
                       ]
@@ -70,29 +70,29 @@
         },
         {
           "properties": {
-            "locRegionCode": "CA",
-            "locRegionName": "California"
+            "cdict:locRegionCode": "CA",
+            "cdict:locRegionName": "California"
           },
           "children": [
             {
               "properties": {
-                "locCity": "Mountain View"
+                "cdict:locCity": "Mountain View"
               },
               "children": [
                 {
                   "properties": {
-                    "locZipCode": "94043"
+                    "cdict:locZipCode": "94043"
                   },
                   "children": [
                     {
                       "properties": {
-                        "locStreet": "Amphitheatre Pkwy"
+                        "cdict:locStreet": "Amphitheatre Pkwy"
                       },
                       "children": [
                         {
                           "properties": {
-                            "locBuilding": "1600",
-                            "locId": "USA-2"
+                            "cdict:locBuilding": "1600",
+                            "cdict:locId": "USA-2"
                           }
                         }
                       ]
@@ -105,29 +105,29 @@
         },
         {
           "properties": {
-            "locRegionCode": "TX",
-            "locRegionName": "Texas"
+            "cdict:locRegionCode": "TX",
+            "cdict:locRegionName": "Texas"
           },
           "children": [
             {
               "properties": {
-                "locCity": "Austin"
+                "cdict:locCity": "Austin"
               },
               "children": [
                 {
                   "properties": {
-                    "locZipCode": "78701"
+                    "cdict:locZipCode": "78701"
                   },
                   "children": [
                     {
                       "properties": {
-                        "locStreet": "Congress Ave"
+                        "cdict:locStreet": "Congress Ave"
                       },
                       "children": [
                         {
                           "properties": {
-                            "locBuilding": "600",
-                            "locId": "USA-3"
+                            "cdict:locBuilding": "600",
+                            "cdict:locId": "USA-3"
                           }
                         }
                       ]

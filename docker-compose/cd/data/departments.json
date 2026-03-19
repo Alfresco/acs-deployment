@@ -3,345 +3,345 @@
     "levels": [
       {
         "level": 0,
-        "properties": ["departmentId", "departmentName"]
+        "properties": ["cdict:departmentId", "cdict:departmentName"]
       }
     ]
   },
   "data": [
     {
       "properties": {
-        "departmentId": "EXE",
-        "departmentName": "Executive Leadership"
+        "cdict:departmentId": "EXE",
+        "cdict:departmentName": "Executive Leadership"
       }
     },
     {
       "properties": {
-        "departmentId": "ENG",
-        "departmentName": "Engineering (general)"
+        "cdict:departmentId": "ENG",
+        "cdict:departmentName": "Engineering (general)"
       }
     },
     {
       "properties": {
-        "departmentId": "BEG",
-        "departmentName": "Backend Engineering"
+        "cdict:departmentId": "BEG",
+        "cdict:departmentName": "Backend Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "FEG",
-        "departmentName": "Frontend Engineering"
+        "cdict:departmentId": "FEG",
+        "cdict:departmentName": "Frontend Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "FSE",
-        "departmentName": "Full stack Engineering"
+        "cdict:departmentId": "FSE",
+        "cdict:departmentName": "Full stack Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "MOB",
-        "departmentName": "Mobile Engineering"
+        "cdict:departmentId": "MOB",
+        "cdict:departmentName": "Mobile Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "PLT",
-        "departmentName": "Platform / Core Services"
+        "cdict:departmentId": "PLT",
+        "cdict:departmentName": "Platform / Core Services"
       }
     },
     {
       "properties": {
-        "departmentId": "INF",
-        "departmentName": "Infrastructure Engineering"
+        "cdict:departmentId": "INF",
+        "cdict:departmentName": "Infrastructure Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "DEV",
-        "departmentName": "DevOps / Cloud Engineering"
+        "cdict:departmentId": "DEV",
+        "cdict:departmentName": "DevOps / Cloud Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "SRE",
-        "departmentName": "Site Reliability Engineering"
+        "cdict:departmentId": "SRE",
+        "cdict:departmentName": "Site Reliability Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "QAE",
-        "departmentName": "Quality Assurance / Test Eng"
+        "cdict:departmentId": "QAE",
+        "cdict:departmentName": "Quality Assurance / Test Eng"
       }
     },
     {
       "properties": {
-        "departmentId": "DEX",
-        "departmentName": "Developer Experience"
+        "cdict:departmentId": "DEX",
+        "cdict:departmentName": "Developer Experience"
       }
     },
     {
       "properties": {
-        "departmentId": "PRD",
-        "departmentName": "Product Management"
+        "cdict:departmentId": "PRD",
+        "cdict:departmentName": "Product Management"
       }
     },
     {
       "properties": {
-        "departmentId": "POP",
-        "departmentName": "Product Operations"
+        "cdict:departmentId": "POP",
+        "cdict:departmentName": "Product Operations"
       }
     },
     {
       "properties": {
-        "departmentId": "TPM",
-        "departmentName": "Technical Program Mgmt"
+        "cdict:departmentId": "TPM",
+        "cdict:departmentName": "Technical Program Mgmt"
       }
     },
     {
       "properties": {
-        "departmentId": "DSN",
-        "departmentName": "Design & UX"
+        "cdict:departmentId": "DSN",
+        "cdict:departmentName": "Design & UX"
       }
     },
     {
       "properties": {
-        "departmentId": "UXR",
-        "departmentName": "UX Research"
+        "cdict:departmentId": "UXR",
+        "cdict:departmentName": "UX Research"
       }
     },
     {
       "properties": {
-        "departmentId": "UID",
-        "departmentName": "UI / Product Design"
+        "cdict:departmentId": "UID",
+        "cdict:departmentName": "UI / Product Design"
       }
     },
     {
       "properties": {
-        "departmentId": "CDN",
-        "departmentName": "Content Design"
+        "cdict:departmentId": "CDN",
+        "cdict:departmentName": "Content Design"
       }
     },
     {
       "properties": {
-        "departmentId": "ITS",
-        "departmentName": "IT & Systems"
+        "cdict:departmentId": "ITS",
+        "cdict:departmentName": "IT & Systems"
       }
     },
     {
       "properties": {
-        "departmentId": "ITD",
-        "departmentName": "IT Support / Helpdesk"
+        "cdict:departmentId": "ITD",
+        "cdict:departmentName": "IT Support / Helpdesk"
       }
     },
     {
       "properties": {
-        "departmentId": "ITI",
-        "departmentName": "IT Infrastructure"
+        "cdict:departmentId": "ITI",
+        "cdict:departmentName": "IT Infrastructure"
       }
     },
     {
       "properties": {
-        "departmentId": "IAM",
-        "departmentName": "Identity & Access Mgmt"
+        "cdict:departmentId": "IAM",
+        "cdict:departmentName": "Identity & Access Mgmt"
       }
     },
     {
       "properties": {
-        "departmentId": "CSE",
-        "departmentName": "Corporate Security"
+        "cdict:departmentId": "CSE",
+        "cdict:departmentName": "Corporate Security"
       }
     },
     {
       "properties": {
-        "departmentId": "DAT",
-        "departmentName": "Data & Analytics"
+        "cdict:departmentId": "DAT",
+        "cdict:departmentName": "Data & Analytics"
       }
     },
     {
       "properties": {
-        "departmentId": "DTE",
-        "departmentName": "Data Engineering"
+        "cdict:departmentId": "DTE",
+        "cdict:departmentName": "Data Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "DTS",
-        "departmentName": "Data Science"
+        "cdict:departmentId": "DTS",
+        "cdict:departmentName": "Data Science"
       }
     },
     {
       "properties": {
-        "departmentId": "BIQ",
-        "departmentName": "Business Intelligence"
+        "cdict:departmentId": "BIQ",
+        "cdict:departmentName": "Business Intelligence"
       }
     },
     {
       "properties": {
-        "departmentId": "MLE",
-        "departmentName": "Machine Learning Eng"
+        "cdict:departmentId": "MLE",
+        "cdict:departmentName": "Machine Learning Eng"
       }
     },
     {
       "properties": {
-        "departmentId": "SEC",
-        "departmentName": "Security & Compliance"
+        "cdict:departmentId": "SEC",
+        "cdict:departmentName": "Security & Compliance"
       }
     },
     {
       "properties": {
-        "departmentId": "OPS",
-        "departmentName": "Security Operations"
+        "cdict:departmentId": "OPS",
+        "cdict:departmentName": "Security Operations"
       }
     },
     {
       "properties": {
-        "departmentId": "APS",
-        "departmentName": "Application Security"
+        "cdict:departmentId": "APS",
+        "cdict:departmentName": "Application Security"
       }
     },
     {
       "properties": {
-        "departmentId": "GRC",
-        "departmentName": "Governance, Risk & Compliance"
+        "cdict:departmentId": "GRC",
+        "cdict:departmentName": "Governance, Risk & Compliance"
       }
     },
     {
       "properties": {
-        "departmentId": "SAL",
-        "departmentName": "Sales"
+        "cdict:departmentId": "SAL",
+        "cdict:departmentName": "Sales"
       }
     },
     {
       "properties": {
-        "departmentId": "SEN",
-        "departmentName": "Sales Engineering"
+        "cdict:departmentId": "SEN",
+        "cdict:departmentName": "Sales Engineering"
       }
     },
     {
       "properties": {
-        "departmentId": "CUS",
-        "departmentName": "Customer Success"
+        "cdict:departmentId": "CUS",
+        "cdict:departmentName": "Customer Success"
       }
     },
     {
       "properties": {
-        "departmentId": "ACM",
-        "departmentName": "Account Management"
+        "cdict:departmentId": "ACM",
+        "cdict:departmentName": "Account Management"
       }
     },
     {
       "properties": {
-        "departmentId": "MKT",
-        "departmentName": "Marketing"
+        "cdict:departmentId": "MKT",
+        "cdict:departmentName": "Marketing"
       }
     },
     {
       "properties": {
-        "departmentId": "GRW",
-        "departmentName": "Growth Marketing"
+        "cdict:departmentId": "GRW",
+        "cdict:departmentName": "Growth Marketing"
       }
     },
     {
       "properties": {
-        "departmentId": "BRD",
-        "departmentName": "Brand & Communications"
+        "cdict:departmentId": "BRD",
+        "cdict:departmentName": "Brand & Communications"
       }
     },
     {
       "properties": {
-        "departmentId": "PMK",
-        "departmentName": "Product Marketing"
+        "cdict:departmentId": "PMK",
+        "cdict:departmentName": "Product Marketing"
       }
     },
     {
       "properties": {
-        "departmentId": "BOP",
-        "departmentName": "Business Operations"
+        "cdict:departmentId": "BOP",
+        "cdict:departmentName": "Business Operations"
       }
     },
     {
       "properties": {
-        "departmentId": "STP",
-        "departmentName": "Strategy & Planning"
+        "cdict:departmentId": "STP",
+        "cdict:departmentName": "Strategy & Planning"
       }
     },
     {
       "properties": {
-        "departmentId": "TMO",
-        "departmentName": "Transformation / Program Office"
+        "cdict:departmentId": "TMO",
+        "cdict:departmentName": "Transformation / Program Office"
       }
     },
     {
       "properties": {
-        "departmentId": "HR",
-        "departmentName": "Human Resources"
+        "cdict:departmentId": "HR",
+        "cdict:departmentName": "Human Resources"
       }
     },
     {
       "properties": {
-        "departmentId": "TAQ",
-        "departmentName": "Talent Acquisition"
+        "cdict:departmentId": "TAQ",
+        "cdict:departmentName": "Talent Acquisition"
       }
     },
     {
       "properties": {
-        "departmentId": "POP",
-        "departmentName": "People Operations (PO already used, POP is OK)"
+        "cdict:departmentId": "POP",
+        "cdict:departmentName": "People Operations (PO already used, POP is OK)"
       }
     },
     {
       "properties": {
-        "departmentId": "CBE",
-        "departmentName": "Compensation & Benefits"
+        "cdict:departmentId": "CBE",
+        "cdict:departmentName": "Compensation & Benefits"
       }
     },
     {
       "properties": {
-        "departmentId": "LND",
-        "departmentName": "Learning & Development"
+        "cdict:departmentId": "LND",
+        "cdict:departmentName": "Learning & Development"
       }
     },
     {
       "properties": {
-        "departmentId": "FIN",
-        "departmentName": "Finance"
+        "cdict:departmentId": "FIN",
+        "cdict:departmentName": "Finance"
       }
     },
     {
       "properties": {
-        "departmentId": "ACC",
-        "departmentName": "Accounting"
+        "cdict:departmentId": "ACC",
+        "cdict:departmentName": "Accounting"
       }
     },
     {
       "properties": {
-        "departmentId": "FPA",
-        "departmentName": "Financial Planning & Analysis"
+        "cdict:departmentId": "FPA",
+        "cdict:departmentName": "Financial Planning & Analysis"
       }
     },
     {
       "properties": {
-        "departmentId": "REV",
-        "departmentName": "Revenue Operations"
+        "cdict:departmentId": "REV",
+        "cdict:departmentName": "Revenue Operations"
       }
     },
     {
       "properties": {
-        "departmentId": "LEG",
-        "departmentName": "Legal"
+        "cdict:departmentId": "LEG",
+        "cdict:departmentName": "Legal"
       }
     },
     {
       "properties": {
-        "departmentId": "PRV",
-        "departmentName": "Privacy"
+        "cdict:departmentId": "PRV",
+        "cdict:departmentName": "Privacy"
       }
     },
     {
       "properties": {
-        "departmentId": "CCL",
-        "departmentName": "Corporate Counsel"
+        "cdict:departmentId": "CCL",
+        "cdict:departmentName": "Corporate Counsel"
       }
     }
   ]
