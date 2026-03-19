@@ -36,23 +36,15 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
-
-      - name: Login to quay.io
-        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2  # v4.0.0
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
+          token: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
 
       - name: Install Updatecli
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v15.9.1
 
       - run: updatecli pipeline apply
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v15.9.1
+
       - name: Regenerate helm docs if necessary
         uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v15.9.1
         with:
@@ -61,6 +53,7 @@ jobs:
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+        if: github.actor != 'dependabot[bot]'
         with:
           commit_message: |
             🛠 Updatecli pipeline charts bump
@@ -73,7 +66,7 @@ jobs:
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
-    if: inputs.update-type == 'values' || github.event_name == 'push'
+    if: (inputs.update-type == 'values' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
