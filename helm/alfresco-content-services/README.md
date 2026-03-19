@@ -150,14 +150,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.alfresco-insight-zeppelin.enabled | bool | `false` |  |
-| alfresco-search.enabled | bool | `false` |  |
+| alfresco-search.enabled | bool | `false` | Search Services (`alfresco-search`) is no longer supported for Enterprise edition starting with ACS v26 |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
 | alfresco-search.external.port | string | `nil` | Port of the external solr6 instance. |
 | alfresco-search.ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utility & encode it with base64. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | alfresco-search.ingress.enabled | bool | `false` | Alfresco Search services endpoint ('/solr') |
 | alfresco-search.ingress.tls | list | `[]` |  |
 | alfresco-search.insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| alfresco-search.insightEngineImage.tag | string | `"2.0.17"` |  |
+| alfresco-search.insightEngineImage.tag | string | `nil` |  |
 | alfresco-search.nameOverride | string | `"alfresco-search"` |  |
 | alfresco-search.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-search.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
@@ -166,7 +166,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search.repository.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` |  |
 | alfresco-search.repository.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search.searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| alfresco-search.searchServicesImage.tag | string | `"2.0.17"` |  |
+| alfresco-search.searchServicesImage.tag | string | `nil` |  |
 | alfresco-sync-service.database.existingConfigMap.keys.url | string | `"SYNC_DATABASE_URL"` |  |
 | alfresco-sync-service.database.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.database.existingSecret.name | string | `"alfresco-cs-sync"` |  |
