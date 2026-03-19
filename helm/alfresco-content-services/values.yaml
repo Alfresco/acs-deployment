@@ -328,10 +328,10 @@ alfresco-search:
         sharedSecret: SOLR_SECRET
   searchServicesImage:
     repository: quay.io/alfresco/search-services
-    tag: ~
+    tag: null
   insightEngineImage:
     repository: quay.io/alfresco/insight-engine
-    tag: ~
+    tag: null
   nameOverride: alfresco-search
   # If an external Solr service is to be used then enabled must be set to false
   # and external has to be configured accordingly.
