@@ -61,7 +61,7 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
 
-      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4  # v4.3.1
+      - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2  # v5.0.0
         with:
          version: "3.12.1"
 
@@ -75,7 +75,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.12.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.12.1
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -130,7 +130,7 @@ jobs:
             sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
             sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 
-      - uses: nick-fields/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 # v.3.0.2
+      - uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v.4.0.0
         if: matrix.name == 'alfresco-content-services'
         with:
           timeout_minutes: 1
@@ -181,7 +181,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v15.12.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v15.12.1
         with:
           namespace: default
           log_retention: 7
