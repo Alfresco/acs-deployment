@@ -28,7 +28,7 @@ dependencies:
   version: 6.0.0
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 7.8.0-alpha.2
+  version: 7.8.0
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 4.10.0
@@ -53,5 +53,5 @@ dependencies:
 - name: alfresco-connector-hxi
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.5.0
-digest: sha256:2ea9d6b10988553535e14030ef4d3f3136253ad61725175bbda514aeb737ff41
-generated: "2026-03-27T13:04:18.639771032Z"
+digest: sha256:8b0785e547f03a0b400fdfa02e2064a1c1eea8082ad89e58968bd09abf8aee04
+generated: "2026-03-27T14:15:14.442181591Z"

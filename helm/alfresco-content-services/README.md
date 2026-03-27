@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 10.3.1](https://img.shields.io/badge/Version-10.3.1-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 10.3.2](https://img.shields.io/badge/Version-10.3.2-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -35,7 +35,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.10.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.8.0-alpha.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.6.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.4.0 |
