@@ -75,7 +75,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.12.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v16.0.0
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -181,7 +181,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v15.12.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v16.0.0
         with:
           namespace: default
           log_retention: 7
