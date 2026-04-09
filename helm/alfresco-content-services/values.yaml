@@ -84,6 +84,12 @@ global:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+  # -- Ingress class name to be used for all ingresses created by this chart.
+  # You can override it for each sub-chart if needed, usually via
+  # `ingress.className` value in the corresponding sub-chart. Default is still
+  # set to `nginx` for backward compatibility, but it is recommended to set it
+  # to `traefik` or whatever ingress controller you are using in your cluster.
+  ingressClassName: nginx
 database:
   # -- Enable using an external database for Alfresco Content Services. Must disable `postgresql.enabled` when true.
   external: false

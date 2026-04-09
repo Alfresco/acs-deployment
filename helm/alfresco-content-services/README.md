@@ -270,6 +270,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.auditIndex.url | string | `nil` | set this URL if you have an external elasticsearch for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
+| global.ingressClassName | string | `"nginx"` | Ingress class name to be used for all ingresses created by this chart. You can override it for each sub-chart if needed, usually via `ingress.className` value in the corresponding sub-chart. Default is still set to `nginx` for backward compatibility, but it is recommended to set it to `traefik` or whatever ingress controller you are using in your cluster. |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, please search this topic in https://support.hyland.com/r/alfresco |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
