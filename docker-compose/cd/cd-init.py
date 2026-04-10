@@ -39,43 +39,6 @@ def get_auth_ticket(username: str, password: str) -> str:
 ALFRESCO_BASE_URL = f"{BASE_URL}/alfresco/versions/1"
 
 
-def find_cd_definition_node(ticket: str) -> dict:
-    url = f"{SEARCH_BASE_URL}/search"
-    headers = {
-        "Authorization": f"Basic {ticket}",
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "query": {
-            "query": "(PATH:'//app:company_home//app:dictionary//app:cd_definitions')",
-            "language": "afts"
-        },
-        "paging": {
-            "skipCount": 0,
-            "maxItems": 25
-        },
-        "sort": [
-            {
-                "type": "SCORE",
-                "field": "score",
-                "ascending": False
-            }
-        ]
-    }
-
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
-    response.raise_for_status()
-
-    entries = response.json()["list"]["entries"]
-    if not entries:
-        raise ValueError("CD definitions node not found")
-
-    folder = entries[0]["entry"]
-    logger.info(f"Found CD definitions node: id={folder['id']}, name={folder['name']}")
-    return folder
-
-
 def find_root_node(ticket: str) -> dict:
     url = f"{ALFRESCO_BASE_URL}/nodes/-root-"
     headers = {
@@ -110,8 +73,8 @@ def create_classification_node(ticket: str, root_node_id: str, name: str) -> dic
     return node
 
 
-def create_cd_definition_node(ticket: str, cd_def_folder_id: str, cd_name: str, cd_aspect: str, key_property: str, version_property: str) -> dict:
-    url = f"{ALFRESCO_BASE_URL}/nodes/{cd_def_folder_id}/children?majorVersion=true"
+def create_cd_definition(ticket: str, cd_name: str, cd_aspect: str, key_property: str, version_property: str) -> dict:
+    url = f"{ALFRESCO_BASE_URL}/cascading-dictionaries"
     headers = {
         "Authorization": f"Basic {ticket}",
         "Accept": "application/json",
@@ -119,37 +82,36 @@ def create_cd_definition_node(ticket: str, cd_def_folder_id: str, cd_name: str, 
     }
     payload = {
         "name": cd_name,
-        "nodeType": "cd:definition",
-        "properties": {
-            "cd:aspect": cd_aspect,
-            "cd:keyProperty": key_property,
-            "cd:versionProperty": version_property
-        }
+        "aspect": cd_aspect,
+        "keyProperty": key_property,
+        "versionProperty": version_property
     }
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
     response.raise_for_status()
 
-    node = response.json()["entry"]
-    logger.info(f"Created CD definition node: id={node['id']}, name={node['name']}, aspect={node['properties']['cd:aspect']}")
-    return node
+    res = response.json()["entry"]
+    logger.info(f"Created CD definition for aspect {cd_aspect}: createdAt={res['createdAt']}")
+    return res
 
 
-def upload_cd_definition_content(ticket: str, node_id: str, filename: str) -> dict:
-    url = f"{ALFRESCO_BASE_URL}/nodes/{node_id}/content?majorVersion=true"
+def upload_cd_content(ticket: str, cd_aspect: str, filename: str) -> dict:
+    url = f"{ALFRESCO_BASE_URL}/cascading-dictionaries/{cd_aspect}/content?majorVersion=true"
     headers = {
         "Authorization": f"Basic {ticket}",
         "Accept": "application/json",
         "Content-Type": "application/json"
     }
 
-    with open(filename, 'rb') as f:
-        response = requests.put(url, headers=headers, data=f)
+    with open(filename, 'r') as f:
+        data = json.load(f)
+
+    response = requests.post(url, headers=headers, data=json.dumps(data))
     response.raise_for_status()
 
-    node = response.json()["entry"]
-    logger.info(f"Uploaded content to node: id={node['id']}, name={node['name']}, version={node['properties']['cm:versionLabel']}")
-    return node
+    res = response.json()["entry"]
+    logger.info(f"Uploaded CD content for aspect {cd_aspect}: version={res['version']} modifiedAt={res['modifiedAt']}")
+    return res
 
 
 if __name__ == "__main__":
@@ -157,28 +119,17 @@ if __name__ == "__main__":
     logger.info(f"Obtained authentication ticket: {_encoded_ticket}")
 
     # Adding example dictionaries to CD definitions folder
-    _cd_def_folder = find_cd_definition_node(_encoded_ticket)
-    logger.info(f"CD definitions folder id: {_cd_def_folder['id']}")
+    create_cd_definition(_encoded_ticket, "Accounts", "cdict:account", "cdict:accountNumber", "cdict:accountDictVersion")
+    upload_cd_content(_encoded_ticket, "cdict:account", "data/accounts.json")
 
-    _account_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Accounts", "cdict:account", "cdict:accountNumber", "cdict:accountDictVersion")
-    logger.info(f"Created node id: {_account_node['id']}")
-    _uploaded_node = upload_cd_definition_content(_encoded_ticket, _account_node['id'], "data/accounts.json")
-    logger.info(f"Uploaded content, new version: {_uploaded_node['properties']['cm:versionLabel']}")
+    create_cd_definition(_encoded_ticket, "Departments", "cdict:department", "cdict:departmentId", "cdict:departmentDictVersion")
+    upload_cd_content(_encoded_ticket, "cdict:department", "data/departments.json")
 
-    _department_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Departments", "cdict:department", "cdict:departmentId", "cdict:departmentDictVersion")
-    logger.info(f"Created node id: {_account_node['id']}")
-    _uploaded_node = upload_cd_definition_content(_encoded_ticket, _department_node['id'], "data/departments.json")
-    logger.info(f"Uploaded content, new version: {_uploaded_node['properties']['cm:versionLabel']}")
-
-    _location_node = create_cd_definition_node(_encoded_ticket, _cd_def_folder['id'], "Locations", "cdict:location", "cdict:locId", "cdict:locDictVersion")
-    logger.info(f"Created node id: {_account_node['id']}")
-    _uploaded_node = upload_cd_definition_content(_encoded_ticket, _location_node['id'], "data/locations.json")
-    logger.info(f"Uploaded content, new version: {_uploaded_node['properties']['cm:versionLabel']}")
+    create_cd_definition(_encoded_ticket,"Locations", "cdict:location", "cdict:locId", "cdict:locDictVersion")
+    upload_cd_content(_encoded_ticket, "cdict:location", "data/locations.json")
 
     #Adding example node ready to classification to root folder
     _root_folder = find_root_node(_encoded_ticket)
     logger.info(f"Root folder id: {_root_folder['id']}")
     _cl_node = create_classification_node(_encoded_ticket, _root_folder["id"], "Classification Example")
     logger.info(f"Created classification node id: {_cl_node['id']}")
-
-
