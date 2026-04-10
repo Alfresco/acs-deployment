@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 10.3.2](https://img.shields.io/badge/Version-10.3.2-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 10.4.0](https://img.shields.io/badge/Version-10.4.0-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
