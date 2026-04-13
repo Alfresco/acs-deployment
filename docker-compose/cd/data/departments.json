@@ -286,7 +286,7 @@
     },
     {
       "properties": {
-        "cdict:departmentId": "POP",
+        "cdict:departmentId": "PPO",
         "cdict:departmentName": "People Operations (PO already used, POP is OK)"
       }
     },
