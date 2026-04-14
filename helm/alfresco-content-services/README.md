@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 10.3.2](https://img.shields.io/badge/Version-10.3.2-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 10.4.0](https://img.shields.io/badge/Version-10.4.0-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -23,21 +23,21 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.8.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.9.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.10.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.0.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.8.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.4.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.11.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.10.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.7.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.5.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.4.0 |
 
@@ -270,6 +270,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.auditIndex.secretName | string | `"alfresco-aas-elasticsearch-secret"` | Name of the secret managed by this chart |
 | global.auditIndex.url | string | `nil` | set this URL if you have an external elasticsearch for audit indexing |
 | global.auditIndex.username | string | `nil` | set usernname for authentication against the external elasticsearch service for audit indexing |
+| global.ingressClassName | string | `"nginx"` | Ingress class name to be used for all ingresses created by this chart. You can override it for each sub-chart if needed, usually via `ingress.className` value in the corresponding sub-chart. Default is still set to `nginx` for backward compatibility, but it is recommended to set it to `traefik` or whatever ingress controller you are using in your cluster. |
 | global.known_urls | list | `["https://localhost","http://localhost"]` | list of trusted URLs. URLs a re used to configure Cross-origin protections Also the first entry is considered the main hosting domain of the platform. |
 | global.mail | object | `{"host":null,"password":null,"port":587,"protocol":"smtp","smtp":{"auth":true,"starttls":{"enable":true}},"smtps":{"auth":true},"username":"anonymous"}` | For a full information of configuring the outbound email system, please search this topic in https://support.hyland.com/r/alfresco |
 | global.mail.host | string | `nil` | SMTP server to use for the system to send outgoing email |
