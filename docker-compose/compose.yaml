@@ -15,7 +15,10 @@
 #
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository:latest
+    build:
+      context: ./cd
+      dockerfile: Dockerfile
+      target: alfresco-content-repository
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -368,6 +371,7 @@ services:
     build:
       context: ./cd
       dockerfile: Dockerfile
+      target: cd-init
     pull_policy: build
     environment:
       - ACS_API_URL=http://alfresco:8080
