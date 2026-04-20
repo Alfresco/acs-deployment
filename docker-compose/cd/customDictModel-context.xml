@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="customDictModel" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+        <property name="models">
+            <list>
+                <value>alfresco/model/customDictModel.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--
+        Override cdConfigSupplier to ensure it initialises AFTER our model bootstrap.
+        Without this, Spring may initialise cdConfigSupplier before customDictModel,
+        causing a NamespaceException because the 'cdict' prefix isn't registered yet.
+    -->
+    <bean id="cdConfigSupplier"
+          class="org.alfresco.enterprise.repo.cascadingdictionary.config.CDConfigSupplier"
+          init-method="init"
+          depends-on="customDictModel">
+        <constructor-arg index="0" ref="namespaceService" />
+        <constructor-arg index="1" ref="dictionaryService" />
+        <constructor-arg index="2" value="${cd.aspects}" />
+    </bean>
+
+</beans>

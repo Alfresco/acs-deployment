@@ -64,6 +64,7 @@ services:
     volumes:
       - /usr/local/tomcat/alf_data
       - ./cd/model/customDictModel.xml:/usr/local/tomcat/shared/classes/alfresco/model/customDictModel.xml
+      - ./cd/customDictModel-context.xml:/usr/local/tomcat/shared/classes/alfresco/extension/customDictModel-context.xml
     extends:
       file: commons/base.yaml
       service: alfresco
