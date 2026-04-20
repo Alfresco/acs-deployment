@@ -15,10 +15,7 @@
 #
 services:
   alfresco:
-    build:
-      context: ./cd
-      dockerfile: Dockerfile
-      target: alfresco-content-repository
+    image: alfresco/alfresco-content-repository:latest
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -66,6 +63,7 @@ services:
       start_period: 1m
     volumes:
       - /usr/local/tomcat/alf_data
+      - ./cd/model/customDictModel.xml:/usr/local/tomcat/shared/classes/alfresco/model/customDictModel.xml
     extends:
       file: commons/base.yaml
       service: alfresco
@@ -371,7 +369,6 @@ services:
     build:
       context: ./cd
       dockerfile: Dockerfile
-      target: cd-init
     pull_policy: build
     environment:
       - ACS_API_URL=http://alfresco:8080
