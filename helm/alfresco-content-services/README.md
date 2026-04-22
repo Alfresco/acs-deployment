@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 10.4.0](https://img.shields.io/badge/Version-10.4.0-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 10.5.0](https://img.shields.io/badge/Version-10.5.0-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -22,21 +22,21 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.6.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.9.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.6.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.9.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.11.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.10.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.7.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.6.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.6.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 4.12.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.1.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.10.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.7.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.5.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.4.0 |
@@ -86,7 +86,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-control-center.env.BASE_PATH | string | `"/control-center"` |  |
 | alfresco-control-center.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-control-center.image.repository | string | `"quay.io/alfresco/alfresco-control-center"` |  |
-| alfresco-control-center.image.tag | string | `"10.3.0"` |  |
+| alfresco-control-center.image.tag | string | `"10.4.0"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].path | string | `"/control-center"` |  |
 | alfresco-control-center.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-control-center.ingress.tls | list | `[]` |  |
@@ -97,7 +97,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-digital-workspace.env.BASE_PATH | string | `"/workspace"` |  |
 | alfresco-digital-workspace.image.pullPolicy | string | `"IfNotPresent"` |  |
 | alfresco-digital-workspace.image.repository | string | `"quay.io/alfresco/alfresco-digital-workspace"` |  |
-| alfresco-digital-workspace.image.tag | string | `"7.3.0"` |  |
+| alfresco-digital-workspace.image.tag | string | `"7.4.0"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].path | string | `"/workspace"` |  |
 | alfresco-digital-workspace.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | alfresco-digital-workspace.ingress.tls | list | `[]` |  |

@@ -2,7 +2,7 @@
 # the chart
 alfresco-repository:
   image:
-    tag: 23.6.1
+    tag: 23.7.0
 activemq:
   image:
     tag: 5.19.5-jre17-rockylinux8
@@ -33,7 +33,7 @@ alfresco-ai-transformer:
     tag: 3.4.1
 share:
   image:
-    tag: 23.6.1
+    tag: 23.7.0
 alfresco-search-enterprise:
   liveIndexing:
     mediation:
@@ -59,10 +59,10 @@ alfresco-search:
     tag: 2.0.19
 alfresco-digital-workspace:
   image:
-    tag: 7.3.0
+    tag: 7.4.0
 alfresco-control-center:
   image:
-    tag: 10.3.0
+    tag: 10.4.0
 postgresql:
   image:
     tag: "15.17"
@@ -85,14 +85,14 @@ dtas:
   config:
     assertions:
       acs:
-        version: 23.6.1
+        version: 23.7.0
         modules:
         - id: org_alfresco_device_sync_repo
-          version: 5.3.0
+          version: 5.3.2
           installed: true
         - id: org.alfresco.integrations.google.docs
           version: 4.1.0
           installed: true
         - id: alfresco-aos-module
-          version: 3.4.0
+          version: 3.4.1
           installed: true
