@@ -13,6 +13,7 @@
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
+# TODO: Finally we need to revert this temporary compose change and move it to `cd/` directory.
 services:
   alfresco:
     image: alfresco/alfresco-content-repository:latest
@@ -63,6 +64,8 @@ services:
       start_period: 1m
     volumes:
       - /usr/local/tomcat/alf_data
+      - ./cd/model/customDictModel.xml:/usr/local/tomcat/shared/classes/alfresco/model/customDictModel.xml
+      - ./cd/model/customDictModel-context.xml:/usr/local/tomcat/shared/classes/alfresco/extension/customDictModel-context.xml
     extends:
       file: commons/base.yaml
       service: alfresco
