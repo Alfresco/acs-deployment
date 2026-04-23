@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="customDictModel" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+    <bean id="customDictModelBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
         <property name="models">
             <list>
                 <value>alfresco/model/customDictModel.xml</value>
