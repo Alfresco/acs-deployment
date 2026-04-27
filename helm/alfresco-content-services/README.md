@@ -174,7 +174,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-sync-service.image.tag | string | `"5.3.2"` |  |
 | alfresco-sync-service.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-sync-service.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
-| alfresco-sync-service.messageBroker.uniqueClientId | bool | `true` |  |
 | alfresco-sync-service.replicaCount | int | `1` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` |  |
 | alfresco-sync-service.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` |  |
