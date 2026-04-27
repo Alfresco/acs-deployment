@@ -487,7 +487,6 @@ alfresco-sync-service:
       keys:
         url: SYNC_DATABASE_URL
   messageBroker:
-    uniqueClientId: true
     existingSecret:
       name: *acs_messageBroker_secretName
     existingConfigMap:
