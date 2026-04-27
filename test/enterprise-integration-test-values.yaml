@@ -52,7 +52,6 @@ elasticsearch:
         cpu: "0.01"
         memory: "512Mi"
       limits:
-        cpu: "2"
         memory: "1.5Gi"
     livenessProbe:
       initialDelaySeconds: 100
@@ -64,7 +63,6 @@ elasticsearch:
         cpu: "0.01"
         memory: "512Mi"
       limits:
-        cpu: "1"
         memory: "1Gi"
 alfresco-search-enterprise:
   reindexing:
@@ -165,7 +163,6 @@ postgresql:
         cpu: "0.01"
         memory: "1Gi"
       limits:
-        cpu: "2"
         memory: "1Gi"
 postgresql-sync: &postgresql-sync
   primary:
@@ -174,7 +171,6 @@ postgresql-sync: &postgresql-sync
         cpu: "0.01"
         memory: "512Mi"
       limits:
-        cpu: "2"
         memory: "1Gi"
 alfresco-sync-service:
   livenessProbe:
