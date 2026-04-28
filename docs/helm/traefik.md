@@ -39,9 +39,34 @@ The `providers.kubernetesIngressNginx.enabled=true` option is required to tell
 Traefik to watch for `Ingress` resources with `ingressClassName` set to `nginx`,
 which is still the default in our charts for backwards compatibility reasons.
 
-While the access logs are not strictly required, they can be very useful for
-debugging and monitoring purposes, especially during the initial setup and
-configuration of Traefik.
+It's critical to have an `nginx` `IngressClass` resource in the cluster, even
+after uninstalling ingress-nginx, otherwise Traefik won't pick up any `Ingress`
+resources with `ingressClassName: nginx` (currently the default in our charts).
+
+Ensure that the `nginx` `IngressClass` resource is present in the cluster:
+
+```sh
+kubectl get ingressclass nginx
+```
+
+If the `nginx` `IngressClass` resource is missing, you can create it with the
+following command:
+
+```sh
+kubectl apply -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+EOF
+```
+
+While the access logs are not strictly required (enabled via
+`logs.access.enabled=true`), they can be very useful for debugging and
+monitoring purposes, especially during the initial setup and configuration of
+Traefik.
 
 Wait for the Traefik pods to become ready:
 
