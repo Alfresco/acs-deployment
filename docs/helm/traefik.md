@@ -49,15 +49,18 @@ Ensure that the `nginx` `IngressClass` resource is present in the cluster:
 kubectl get ingressclass nginx
 ```
 
-If the `nginx` `IngressClass` resource is missing, you can create it with the following manifest:
+If the `nginx` `IngressClass` resource is missing, you can create it with the
+following command:
 
-```yaml
+```sh
+kubectl apply -f - <<EOF
 apiVersion: networking.k8s.io/v1
 kind: IngressClass
 metadata:
   name: nginx
 spec:
   controller: k8s.io/ingress-nginx
+EOF
 ```
 
 While the access logs are not strictly required (enabled via
