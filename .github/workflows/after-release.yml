@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-slim
     steps:
       - name: Propagate release on Jira
-        uses: Alfresco/alfresco-build-tools/.github/actions/jira-propagate-release@v17.6.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/jira-propagate-release@v17.6.1
         with:
           jira-project-key: "OPSEXP"
           jira-token: ${{ secrets.JIRA_TOKEN }}
