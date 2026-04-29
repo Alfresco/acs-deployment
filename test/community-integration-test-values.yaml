@@ -87,7 +87,7 @@ alfresco-transform-service:
         memory: "256Mi"
       limits:
         cpu: "2"
-        memory: "512Mi"
+        memory: "1Gi"
   filestore:
     resources:
       requests:
