@@ -1,12 +1,15 @@
 ---
 name: Bump versions
-run-name: Bump ${{ inputs.update-type }} using alfresco-updatecli/${{ inputs.alfresco-updatecli-ref }}
+run-name: Bump ${{ inputs.update-type }}${{ inputs.update-type == 'values' && format(' using alfresco-updatecli/{0}', inputs.alfresco-updatecli-ref || 'master') || '' }}
 
 on:
   push:
     paths:
       - .github/workflows/bumpVersions.yml
-      - updatecli-matrix-targets.yaml
+      - docker-compose/updatecli-matrix-targets.yaml
+      - helm/*/updatecli-matrix-targets.yaml
+    branches:
+      - '**'
     tags-ignore:
       - '**'
   workflow_dispatch:
@@ -18,7 +21,7 @@ on:
         - charts
         - values
       alfresco-updatecli-ref:
-        description: "The version to use for alfresco/alfresco-updatecli configs"
+        description: "The version to use for alfresco/alfresco-updatecli configs (only for values update-type)"
         type: string
         default: master
 
@@ -33,31 +36,24 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
-
-      - name: Login to quay.io
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9  # v3.7.0
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_PASSWORD }}
+          token: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v15.6.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v17.6.0
 
-      - run: updatecli apply
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: updatecli pipeline apply
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v15.6.2
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v17.6.0
+
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v15.6.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v17.6.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+        if: github.actor != 'dependabot[bot]'
         with:
           commit_message: |
             🛠 Updatecli pipeline charts bump
@@ -70,7 +66,7 @@ jobs:
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
-    if: inputs.update-type == 'values'
+    if: (inputs.update-type == 'values' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -78,7 +74,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v15.6.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v17.6.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
@@ -93,16 +89,16 @@ jobs:
           for i in {docker-compose,helm/*}/updatecli-matrix-targets.yaml; do
              TARGET=$(basename $(dirname $i))
              echo -e "\n###### Building Updatecli manifest for ${TARGET}\n"
-             updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v alfresco-updatecli/deployments/values/supported-matrix.yaml -v ${i}
+             updatecli pipeline apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v alfresco-updatecli/deployments/values/supported-matrix.yaml -v ${i}
           done
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v15.6.2
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v17.6.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v15.6.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v17.6.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
