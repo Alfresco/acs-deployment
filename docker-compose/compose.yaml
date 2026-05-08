@@ -16,7 +16,7 @@
 # TODO: Finally we need to revert this temporary compose change and move it to `cd/` directory.
 services:
   alfresco:
-    image: alfresco/alfresco-content-repository:latest
+    image: quay.io/alfresco/alfresco-content-repository:26.1.0
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -270,7 +270,7 @@ services:
       alfresco:
         condition: service_healthy
   activemq:
-    image: quay.io/alfresco/alfresco-activemq:6.2.4-jre17-rockylinux8
+    image: quay.io/alfresco/alfresco-activemq:6.2.5-jre17-rockylinux8
     mem_limit: 1g
     environment:
       ACTIVEMQ_ADMIN_LOGIN: admin
