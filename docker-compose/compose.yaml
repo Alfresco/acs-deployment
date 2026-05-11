@@ -16,7 +16,7 @@
 # TODO: Finally we need to revert this temporary compose change and move it to `cd/` directory.
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:26.1.0
+    image: alfresco/alfresco-content-repository:latest
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
