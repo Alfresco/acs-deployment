@@ -183,4 +183,4 @@ grand_parent: Helm
     ????????admin????(92023d8ea10294a2e32b238963e67d8013342e30
     ```
 
-[alfresco-docs-site]: https://support.hyland.com/r/alfresco
+[alfresco-docs-site]: https://docs.hyland.com/p/alfresco
