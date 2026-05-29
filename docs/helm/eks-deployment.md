@@ -732,4 +732,4 @@ Finally, delete the EKS cluster:
 eksctl delete cluster --name $EKS_CLUSTER_NAME
 ```
 
-[alfresco-docs-site]: https://support.hyland.com/r/alfresco
+[alfresco-docs-site]: https://docs.hyland.com/p/alfresco

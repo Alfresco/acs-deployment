@@ -604,4 +604,4 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
 
-[alfresco-docs-site]: https://support.hyland.com/r/alfresco
+[alfresco-docs-site]: https://docs.hyland.com/p/alfresco
