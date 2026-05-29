@@ -71,7 +71,7 @@ You will now need to install the AMP files into the Alfresco Content Repository 
     USER alfresco
     ```
 
-    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/7.4/Alfresco-Content-Services/Alfresco-Content-Services/Develop/Extension-packaging-modules/Module-package-formats/Alfresco-Module-Package-AMP/Using-the-Module-Management-Tool-MMT).
+    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/26.1/Alfresco-Content-Services/Develop/Extension-Packaging-Modules/Module-Package-Formats/Alfresco-Module-Package-AMP/Using-the-Module-Management-Tool-MMT).
 
 4. Build the image, make sure you give the image an appropriate name and tag so you can easily identify the image afterwards. In the below example, you will want to replace `myregistrydomain/my-custom-alfresco-content-repository:7.4.0.1` and `myregistrydomain/my-custom-alfresco-content-repository:latest` with your own Docker registry, image name and tag as per your requirements
 
@@ -114,7 +114,7 @@ We will now repeat the process for the Alfresco Share image.
         ${TOMCAT_DIR}/amps_share ${TOMCAT_DIR}/webapps/share -directory -nobackup -verbose
     ```
 
-    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/7.4/Alfresco-Content-Services/Alfresco-Content-Services/Develop/Extension-packaging-modules/Module-package-formats/Alfresco-Module-Package-AMP/Using-the-Module-Management-Tool-MMT).
+    > **NOTE:** In the above example RUN docker command, alfresco-mmt jar is run with -directory, -nobackup and -verbose options. You must make sure these are suitable for your requirements. Documentation on alfresco-mmt can be found [here](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/26.1/Alfresco-Content-Services/Develop/Extension-Packaging-Modules/Module-Package-Formats/Alfresco-Module-Package-AMP/Using-the-Module-Management-Tool-MMT).
 
 3. Build the image, make sure you give the image an appropriate name and tag so you can easily identify the image afterwards. In the below command, you will want to replace `myregistrydomain/my-custom-alfresco-share:7.4.0` and `myregistrydomain/my-custom-alfresco-share:latest` with your own Docker registry, image name and tag as per your requirements
 

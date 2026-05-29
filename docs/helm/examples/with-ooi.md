@@ -7,7 +7,7 @@ grand_parent: Helm
 # ACS Helm Deployment with Microsoft 365 Connector
 
 The [Alfresco Microsoft 365
-Connector](https://docs.hyland.com/r/Alfresco/Alfresco-Collaboration-Connector-for-Microsoft-365/1.1/Alfresco-Collaboration-Connector-for-Microsoft-365/Alfresco-Collaboration-Connector-for-Microsoft-365)
+Connector](https://docs.hyland.com/r/Alfresco/Alfresco-Collaboration-Connector-for-Microsoft-365/2.1/Alfresco-Collaboration-Connector-for-Microsoft-365/Introduction)
 enables Office Online Integration (OOI) within Alfresco Digital Workspace such
 that users can share and co-author Office documents stored within ACS using the
 Microsoft 365. By default, this feature is disabled.

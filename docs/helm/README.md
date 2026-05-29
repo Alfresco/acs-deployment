@@ -224,7 +224,7 @@ Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> pv4
 Alfresco provides tested Helm charts as a "template" to accelerate deployment
 and configuration for customers who want to take advantage of Kubernetes
 orchestration capabilities. Please remember that as stated in our [support
-policies](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/23.7/Alfresco-Content-Services/Install/Overview/Install-and-deploy-methods),
+policies](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/26.1/Alfresco-Content-Services/Install/Overview/Install-and-deploy-methods),
 similarly to other deployment artifacts, they are not meant to be used 'as-is'
 in production. Our goal is to save you time and effort deploying Alfresco
 Content Services for your organization.
