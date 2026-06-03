@@ -50,19 +50,19 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
 | activemq.enabled | bool | `true` |  |
 | activemq.image.repository | string | `"quay.io/alfresco/alfresco-activemq"` |  |
-| activemq.image.tag | string | `"6.2.5-jre17-rockylinux8"` |  |
+| activemq.image.tag | string | `"6.2.4-jre17-rockylinux8"` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
 | alfresco-ai-transformer.image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| alfresco-ai-transformer.image.tag | string | `"3.4.2"` |  |
+| alfresco-ai-transformer.image.tag | string | `"3.4.1"` |  |
 | alfresco-ai-transformer.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-ai-transformer.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-ai-transformer.sfs.existingConfigMap.keys.url | string | `"SFS_URL"` | Name of the key within the configmap which holds the sfs url |
 | alfresco-ai-transformer.sfs.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the ATS shared filestore URL |
 | alfresco-audit-storage.enabled | bool | `true` |  |
 | alfresco-audit-storage.image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
-| alfresco-audit-storage.image.tag | string | `"1.3.2"` |  |
+| alfresco-audit-storage.image.tag | string | `"1.3.1"` |  |
 | alfresco-audit-storage.index.existingConfigMap.keys.url | string | `"AUDIT_ELASTICSEARCH_URL"` |  |
 | alfresco-audit-storage.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-audit-storage.index.existingSecret.keys.password | string | `"AUDIT_ELASTICSEARCH_PASSWORD"` |  |
