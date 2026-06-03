@@ -34,7 +34,7 @@ account.
 
 As of version 8.0.0 of the chart we have changed the release policy.
 Previously, the chart was released together with the ACS product and we were
-delivering additional values files for each major release of ACS (e.g. 7.4, ...)
+delivering additional values files for each major release of ACS (e.g. 23.N, ...)
 and chart version were bumped with a similar increment as ACS.
 With version 6.0.0, we started applying major versions bumps to reflect
 breaking changes in the chart, despite only minor ACS release happened.
