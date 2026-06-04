@@ -264,7 +264,7 @@ repository:
 See the [registry authentication](registry-authentication.md) page to configure
 credentials for your private registry.
 
-Helm charts values contains secrets to be set. For deployment in sensitive
+Helm chart values contain secrets that must be set. For deployment in sensitive
 environments please see the [Security](security.md) page before proceeding with
 the installation.
 
@@ -387,7 +387,7 @@ alfresco-repository:
       -Dcom.sun.management.jmxremote.authenticate=false
 ```
 
-Then use pod port orwarding as explained above:
+Then use pod port forwarding as explained above:
 
 ```bash
 kubectl port-forward acs-alfresco-cs-repository-69545958df-6wzl6 9876:9876 -n alfresco
@@ -396,7 +396,7 @@ kubectl port-forward acs-alfresco-cs-repository-69545958df-6wzl6 9876:9876 -n al
 > Where you need to use the right pod & namespace names that match your deployment
 
 You can now connect to the JMX interface using a JMX client like JConsole or
-VisualVM using the netwrok socker `localhost:9876`.
+VisualVM using the network socket `localhost:9876`.
 
 ![VisualVM connected to acs pod](./images/visualvm.png)
 
@@ -416,7 +416,7 @@ Then to retrieve the logs for a pod using the following command (replacing the p
 kubectl logs acs-alfresco-cs-repository-69545958df-6wzl6 -n alfresco
 ```
 
-To continually follow the log file for a pod use the `-f` options as follows:
+To continually follow the log file for a pod use the `-f` option as follows:
 
 ```bash
 kubectl logs -f acs-alfresco-cs-repository-69545958df-6wzl6 -n alfresco
