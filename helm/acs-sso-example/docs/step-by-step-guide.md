@@ -9,7 +9,7 @@ grand_parent: Helm
 This document explains the mechanisms used in this chart to build an Alfresco
 platform to deploy on [Kubernetes](https://kubernetes.io/).
 
-## Why an example chart when there is already the alfresco-content-services one?
+## Why an example chart when the alfresco-content-services chart already exists?
 
 With [alfresco-content-services chart](../../alfresco-content-services/README.md) we
 tried to provide something that can deploy most of our software components -
@@ -17,8 +17,8 @@ still not all of them are included - but also serves as a basis for
 customization for real world scenarios. These two paradigms have actually
 proven to fight one another and we think this chart is doing way too many
 things to really be both understandable - and serve the example purpose and to
-build upon - and to also offer a holistic and straightforward deployment
-mean: There's no-one-size-fits-all configuration and when it comes to deployment
+build upon - and to also offer a holistic and straightforward deployment.
+Meaning: There's no one-size-fits-all configuration when it comes to deployment
 and configuration of a platform which involves so many different components,
 including third party ones (database, message broker, Identity provider, ...).
 
@@ -44,7 +44,7 @@ work together.
 
 ### Architecture of the deployment
 
-In the document below we discuss an initial basic setup :
+In the document below we discuss an initial basic setup:
 
 ```mermaid
 flowchart TB
@@ -279,8 +279,8 @@ can use either of the following YAML data structure:
 > another, check each chart README page.
 
 The key difference between values based config and resource based config is
-that values can only take static strings, while resource can be pre-existing
-configmaps or secrets, or can even be rendered  from template in the main
+that values can only take static strings, while resources can be pre-existing
+configmaps or secrets, or can even be rendered from template in the main
 umbrella chart, thus allowing for a bit of manipulation. The latter is the
 approach we prefer using to configure Alfresco component charts.
 
