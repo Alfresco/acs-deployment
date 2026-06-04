@@ -177,13 +177,13 @@ Docker Daemon).
 
    ```bash
    docker compose -f 23.N-compose.yaml up -d
-    ```
+   ```
 
     or to spin up the pre-release version of the Enterprise edition:
 
-    ```bash
-    docker compose -f pre-release-compose.yaml up -d
-    ```
+   ```bash
+   docker compose -f pre-release-compose.yaml up -d
+   ```
 
    This will download the required Docker images and start the containers. The
    first time you run this command it will take a while to download the images.

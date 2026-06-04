@@ -255,7 +255,7 @@ For example, you can override the ACS repository image by specifying in the
 [values](../../helm/alfresco-content-services/README.md):
 
 ```yaml
-repository:
+alfresco-repository:
   image:
     repository: registry.example.org/my-custom-alfresco-content-repository
     tag: x.y.z
