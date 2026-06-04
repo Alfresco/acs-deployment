@@ -264,7 +264,7 @@ repository:
 See the [registry authentication](registry-authentication.md) page to configure
 credentials for your private registry.
 
-Helm chart values contains secrets to be set. For deployment in sensitive
+Helm chart values contain secrets that must be set. For deployment in sensitive
 environments please see the [Security](security.md) page before proceeding with
 the installation.
 
