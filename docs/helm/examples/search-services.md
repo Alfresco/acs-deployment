@@ -29,7 +29,7 @@ Solr instance outside of the kubernetes cluster.
 
 Installing Solr instance(s) is out of the scope of this document, but it can be
 done following the [Search service
-documentation](https://docs.alfresco.com/insight-engine/latest/install/options/#install-without-mutual-tls---http-with-secret-word-zip),
+documentation](https://docs.hyland.com/r/Alfresco/Alfresco-Search-and-Insight-Engine/2.0/Alfresco-Search-and-Insight-Engine/Install/Installation-options/Install-without-mutual-TLS-HTTP-with-secret-word-zip),
 or by using the Ansible playbook (replication setup require an additional
 load-balancer), as explained
 [here](https://github.com/Alfresco/alfresco-ansible-deployment/blob/master/docs/search-services-deployment-guide.md).

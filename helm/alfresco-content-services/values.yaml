@@ -28,7 +28,7 @@ global:
     - https://localhost
     - http://localhost
   # -- For a full information of configuring the outbound email system, please
-  # search this topic in https://support.hyland.com/r/alfresco
+  # search this topic in https://docs.hyland.com/p/alfresco
   mail:
     # -- SMTP server to use for the system to send outgoing email
     host: null

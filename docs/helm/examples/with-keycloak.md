@@ -99,4 +99,4 @@ alfresco-control-center:
 Please search the [Alfresco Products Official Documentation][alfresco-docs-site]
 for more configuration options.
 
-[alfresco-docs-site]: https://support.hyland.com/r/alfresco
+[alfresco-docs-site]: https://docs.hyland.com/p/alfresco
