@@ -173,7 +173,7 @@ Docker Daemon).
    docker compose -f community-compose.yaml up -d
    ```
 
-  or to spin up a specific version line of the Enterprise edition:
+   or to spin up a specific version line of the Enterprise edition:
 
    ```bash
    docker compose -f 23.N-compose.yaml up -d
