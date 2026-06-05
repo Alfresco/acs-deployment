@@ -255,10 +255,10 @@ For example, you can override the ACS repository image by specifying in the
 [values](../../helm/alfresco-content-services/README.md):
 
 ```yaml
-repository:
+alfresco-repository:
   image:
     repository: registry.example.org/my-custom-alfresco-content-repository
-    tag: 7.4.0
+    tag: x.y.z
 ```
 
 See the [registry authentication](registry-authentication.md) page to configure
@@ -308,9 +308,9 @@ file as an additional argument to the install command like the following:
    ```
 
 **NOTE:** Each values file is pre-configured with the latest supported component versions
-for the specified ACS major version. For example, the 7.4.N values file will
-deploy ACS version 7.4.2.3 alongside Alfresco Digital Workspace (ADW) version
-4.4.1. These configurations are recommended to ensure compatibility and
+for the specified ACS major version. For example, the 23.N values file deploys
+the latest supported 23.x release alongside compatible component versions.
+These configurations are recommended to ensure compatibility and
 stability across components. However, if a specific version of any component is
 needed, you can either edit the values file directly or override the version by
 adding the --set component.image.tag=x.y.z option to the Helm command.
