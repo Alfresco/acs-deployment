@@ -35,6 +35,16 @@ steps:
   - name: Install helm-docs
     uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.1.0
 safe-outputs:
+  create-issue:
+    labels: [release, automation]
+    max: 1
+  update-issue:
+    body: true
+    target: "*"
+    max: 1
+  add-comment:
+    max: 1
+    hide-older-comments: true
   create-pull-request:
     branch-prefix: "release-prep/"
     labels: [release, automation]
@@ -56,15 +66,31 @@ You are preparing the release PR described in the [Helm charts release](../../RE
 
 You do NOT run the `Bump versions` workflow, you do NOT tag the release, and you do NOT touch the `supported-matrix` or `alfresco-helm-charts` repos. A maintainer handles those steps before triggering your execution.
 
-## Determine the next version
+## Step 0 — Find or create the tracking issue
+
+Search for an existing open issue titled **`📦 Release: <next-version> (${{ inputs.release-name }})`**:
+
+```bash
+gh search issues \
+  --repo Alfresco/acs-deployment \
+  --state open \
+  --limit 5 \
+  --json number,title,body,url \
+  -- "in:title \"📦 Release:\""
+```
+
+- **Found**: store the issue number — you will call `update-issue` at the end of this run.
+- **Not found**: you will call `create-issue` at the end of this run.
+
+## Step 1 — Determine the next version
 
 Read the current `version:` from `helm/alfresco-content-services/Chart.yaml`. Compute the next release version by bumping the **minor** component and resetting patch to `0` (e.g. `10.5.0` → `10.6.0`). Use this value (referenced below as `<next-version>`) for both charts.
 
 If the current version contains a pre-release suffix (`-alpha.`, `-M.`, etc.), call `noop` and explain — a maintainer must clean up dependencies first.
 
-## Task
+## Step 2 — Perform the release preparation
 
-Perform exactly these four steps and open one pull request:
+Perform exactly these four steps:
 
 1. **Merge the updatecli bump branches** into the working tree, in order:
 
@@ -93,15 +119,51 @@ Perform exactly these four steps and open one pull request:
    - If no `## To be released` section exists, insert a new `## <next-version>` section directly under the introductory paragraphs (above the highest existing version heading) with a single placeholder bullet: `* No breaking changes.` and also insert a new empty `## To be released` section above it.
    - Preserve all existing section content verbatim.
 
-## Output
+If any step above produces no diff, call `noop` with a one-line explanation instead of opening an empty PR.
+
+## Step 3 — Open the draft PR
 
 Open a single draft pull request via the configured `create-pull-request` safe output.
 
-- **Title**: build it as `<jira-prefix>release: prepare <next-version> (${{ inputs.release-name }})`, where `<jira-prefix>` is `"${{ inputs.jira-id }} "` (with a trailing space) when `jira-id` is non-empty, and an empty string otherwise. Example with both inputs: `OPSEXP-1234 release: prepare 10.6.0 (nitrogen)`.
-- **Body**: a checklist that mirrors the README's release steps, with the four items above marked done (note that the updatecli merges replace the manual `Bump versions` runs) and the remaining maintainer steps (tag and create the GitHub release; review release notes; publish) left unchecked.
+- **Title**: `<jira-prefix>release: prepare <next-version> (${{ inputs.release-name }})`, where `<jira-prefix>` is `"${{ inputs.jira-id }} "` (with a trailing space) when `jira-id` is non-empty, and an empty string otherwise.
 - **Commit message**: same as the title.
+- **Body**: a concise summary only — what branches were merged and which chart versions were bumped. Do not include a release checklist here; that lives in the tracking issue.
 
-If any step above produces no diff (e.g. helm-docs has nothing to update and the chart versions already match `<next-version>`), call `noop` with a one-line explanation instead of opening an empty PR.
+## Step 4 — Create or update the tracking issue
+
+Always run last. Compose the issue body:
+
+```markdown
+## Release: <next-version> (${{ inputs.release-name }})
+
+| Field | Value |
+|-------|-------|
+| Version | `<next-version>` |
+| Codename | `${{ inputs.release-name }}` |
+| Jira ID | `${{ inputs.jira-id || '(none)' }}` |
+| Triggered by | @${{ github.actor }} |
+| Draft PR | <PR link> |
+
+## Checklist
+
+### Automated (completed by this workflow)
+- [x] Merged `updatecli-bump-acs`
+- [x] Merged `updatecli-bump-helm`
+- [x] Bumped `alfresco-content-services` and `acs-sso-example` to `<next-version>`
+- [x] Refreshed helm-docs
+- [x] Updated `docs/helm/upgrades.md`
+- [x] Opened draft PR
+
+### Manual
+- [ ] Review and approve the draft PR
+- [ ] Merge the draft PR into `master`
+- [ ] `gh release create`
+```
+
+- Existing issue → `update-issue` with that issue number.
+- New issue → `create-issue` with title `📦 Release: <next-version> (${{ inputs.release-name }})`.
+
+Post an `add-comment` summarising what this run did and linking the draft PR.
 
 ## Constraints
 
