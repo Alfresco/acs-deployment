@@ -24,6 +24,21 @@ on:
         description: "The version to use for alfresco/alfresco-updatecli configs (only for values update-type)"
         type: string
         default: master
+  workflow_call:
+    inputs:
+      update-type:
+        type: string
+        required: true
+      alfresco-updatecli-ref:
+        type: string
+        default: master
+    secrets:
+      BOT_GITHUB_TOKEN:
+        required: true
+      QUAY_USERNAME:
+        required: false
+      QUAY_PASSWORD:
+        required: false
 
 env:
   DEFAULT_BRANCH_NAME: master

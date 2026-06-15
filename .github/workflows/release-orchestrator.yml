@@ -1,0 +1,155 @@
+---
+name: Release Orchestrator
+run-name: "Release: prepare ${{ inputs.release-name }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-name:
+        description: 'Release codename (e.g. "nitrogen")'
+        type: string
+        required: true
+      jira-id:
+        description: 'Jira ticket ID to prefix PR titles (e.g. "OPSEXP-1234")'
+        type: string
+        required: false
+      bump-versions:
+        description: 'Run the Bump versions workflow before preparing the release'
+        type: boolean
+        default: true
+
+jobs:
+  bump-charts:
+    if: inputs.bump-versions
+    uses: ./.github/workflows/bumpVersions.yml
+    with:
+      update-type: charts
+    secrets: inherit
+
+  bump-values:
+    if: inputs.bump-versions
+    uses: ./.github/workflows/bumpVersions.yml
+    with:
+      update-type: values
+    secrets: inherit
+
+  prepare-release:
+    needs: [bump-charts, bump-values]
+    if: always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
+          fetch-depth: 0
+
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
+
+      - name: Configure git
+        run: |
+          git config user.name "${{ vars.BOT_GITHUB_USERNAME || 'github-actions[bot]' }}"
+          git config user.email "${{ vars.BOT_GITHUB_EMAIL || 'github-actions[bot]@users.noreply.github.com' }}"
+
+      - name: Verify and merge updatecli branches
+        run: |
+          for branch in updatecli-bump-acs updatecli-bump-helm; do
+            if ! git ls-remote --exit-code --heads origin "$branch" > /dev/null 2>&1; then
+              echo "::error::Branch $branch not found on origin — run the Bump versions workflow first."
+              exit 1
+            fi
+          done
+          git merge --no-ff --no-edit origin/updatecli-bump-acs
+          git merge --no-ff --no-edit origin/updatecli-bump-helm
+
+      - name: Compute next versions
+        id: version
+        run: |
+          acs_current=$(grep '^version:' helm/alfresco-content-services/Chart.yaml | awk '{print $2}')
+          sso_current=$(grep '^version:' helm/acs-sso-example/Chart.yaml | awk '{print $2}')
+
+          for v in "$acs_current" "$sso_current"; do
+            if echo "$v" | grep -qE '[-]'; then
+              echo "::error::Version $v still contains a pre-release suffix after merging updatecli branches — a maintainer must resolve this first."
+              exit 1
+            fi
+          done
+
+          bump_minor() {
+            local major minor
+            major=$(echo "$1" | cut -d. -f1)
+            minor=$(echo "$1" | cut -d. -f2)
+            echo "${major}.$((minor + 1)).0"
+          }
+
+          acs_next=$(bump_minor "$acs_current")
+          sso_next=$(bump_minor "$sso_current")
+
+          echo "acs_current=$acs_current" >> "$GITHUB_OUTPUT"
+          echo "acs_next=$acs_next"       >> "$GITHUB_OUTPUT"
+          echo "sso_next=$sso_next"       >> "$GITHUB_OUTPUT"
+
+      - name: Bump chart versions
+        env:
+          ACS_NEXT: ${{ steps.version.outputs.acs_next }}
+          SSO_NEXT: ${{ steps.version.outputs.sso_next }}
+        run: |
+          sed -i "s/^version: .*/version: ${ACS_NEXT}/" helm/alfresco-content-services/Chart.yaml
+          sed -i "s/^version: .*/version: ${SSO_NEXT}/" helm/acs-sso-example/Chart.yaml
+
+      - name: Refresh helm-docs
+        run: helm-docs
+
+      - name: Create release branch and commit
+        id: commit
+        env:
+          ACS_NEXT: ${{ steps.version.outputs.acs_next }}
+          RELEASE_NAME: ${{ inputs.release-name }}
+          JIRA_ID: ${{ inputs.jira-id }}
+        run: |
+          jira_prefix="${JIRA_ID:+${JIRA_ID} }"
+          title="${jira_prefix}release: prepare ${ACS_NEXT} (${RELEASE_NAME})"
+          sanitized=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | tr -s '-' | sed 's/-$//')
+          branch="release/${sanitized}"
+
+          git checkout -b "$branch"
+          git add helm/
+          git commit -m "$title"
+          git push origin "$branch"
+
+          echo "title=$title"   >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Create draft PR
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
+          ACS_CURRENT: ${{ steps.version.outputs.acs_current }}
+          ACS_NEXT: ${{ steps.version.outputs.acs_next }}
+          SSO_NEXT: ${{ steps.version.outputs.sso_next }}
+          RELEASE_NAME: ${{ inputs.release-name }}
+          TITLE: ${{ steps.commit.outputs.title }}
+          BRANCH: ${{ steps.commit.outputs.branch }}
+        run: |
+          cat << 'EOF' | envsubst > /tmp/pr-body.md
+          Prepares release `${ACS_NEXT}` (_${RELEASE_NAME}_).
+
+          Merged `updatecli-bump-acs` and `updatecli-bump-helm`, bumped `alfresco-content-services` `${ACS_CURRENT}` → `${ACS_NEXT}` and `acs-sso-example` to `${SSO_NEXT}`, and refreshed helm-docs.
+
+          ## Checklist
+          - [ ] Review and update `docs/helm/upgrades.md`
+
+          ## After merging
+          Run `gh release create -d` to create a draft GitHub release.
+          EOF
+
+          url=$(gh pr create \
+            --title "$TITLE" \
+            --base master \
+            --head "$BRANCH" \
+            --draft \
+            --label release --label automation \
+            --body-file /tmp/pr-body.md)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
