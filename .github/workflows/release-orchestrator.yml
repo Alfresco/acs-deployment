@@ -106,7 +106,7 @@ jobs:
           jira_prefix="${JIRA_ID:+${JIRA_ID} }"
           title="${jira_prefix}release: prepare ${ACS_NEXT} (${RELEASE_NAME})"
           sanitized=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | tr -s '-' | sed 's/-$//')
-          branch="release/${sanitized}"
+          branch="prepare/release-${sanitized}"
 
           git checkout -b "$branch"
           git add helm/ docker-compose/
