@@ -144,6 +144,6 @@ jobs:
             --base master \
             --head "$BRANCH" \
             --draft \
-            --label release --label automation \
+            --label release \
             --body-file /tmp/pr-body.md)
           echo "url=$url" >> "$GITHUB_OUTPUT"
