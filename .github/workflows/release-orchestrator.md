@@ -62,7 +62,7 @@ safe-outputs:
 
 ## Context
 
-You are preparing the release PR described in the [Helm charts release](../../README.md#helm-charts-release) section of the repository README. The release codename is `${{ inputs.release-name }}`. The PR targets the branch this workflow was dispatched from.
+You are preparing the release PR described in the [Helm charts release](../../README.md#helm-charts-release) section of the repository README. The release codename is `${{ inputs.release-name }}`. The PR targets `master`.
 
 You do NOT run the `Bump versions` workflow, you do NOT tag the release, and you do NOT touch the `supported-matrix` or `alfresco-helm-charts` repos. A maintainer handles those steps before triggering your execution.
 
