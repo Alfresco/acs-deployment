@@ -95,7 +95,6 @@ Perform exactly these four steps:
 1. **Merge the updatecli bump branches** into the working tree, in order:
 
    ```bash
-   git fetch origin updatecli-bump-acs updatecli-bump-helm
    git merge --no-ff --no-edit origin/updatecli-bump-acs
    git merge --no-ff --no-edit origin/updatecli-bump-helm
    ```
