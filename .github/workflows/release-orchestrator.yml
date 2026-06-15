@@ -47,7 +47,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.9.0
 
       - name: Configure git
         run: |
