@@ -22,22 +22,15 @@ permissions:
   contents: read
 
 jobs:
-  bump-charts:
+  bump-versions:
     if: inputs.bump-versions
     uses: ./.github/workflows/bumpVersions.yml
     with:
-      update-type: charts
-    secrets: inherit
-
-  bump-values:
-    if: inputs.bump-versions
-    uses: ./.github/workflows/bumpVersions.yml
-    with:
-      update-type: values
+      update-type: all
     secrets: inherit
 
   prepare-release:
-    needs: [bump-charts, bump-values]
+    needs: [bump-versions]
     if: always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     runs-on: ubuntu-latest
     permissions: {}

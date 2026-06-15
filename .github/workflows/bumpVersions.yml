@@ -20,6 +20,7 @@ on:
         options:
         - charts
         - values
+        - all
       alfresco-updatecli-ref:
         description: "The version to use for alfresco/alfresco-updatecli configs (only for values update-type)"
         type: string
@@ -47,7 +48,7 @@ jobs:
   bump-charts-dependencies:
     runs-on: ubuntu-latest
     name: Helm charts dependencies
-    if: inputs.update-type == 'charts'
+    if: inputs.update-type == 'charts' || inputs.update-type == 'all'
     permissions:
       contents: read
     steps:
@@ -84,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
     permissions: {}
-    if: (inputs.update-type == 'values' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
+    if: (inputs.update-type == 'values' || inputs.update-type == 'all' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
