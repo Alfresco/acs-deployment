@@ -111,7 +111,7 @@ jobs:
           git checkout -b "$branch"
           git add helm/ docker-compose/
           git commit -m "$title"
-          git push origin "$branch"
+          git push --force origin "$branch"
 
           echo "title=$title"   >> "$GITHUB_OUTPUT"
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
