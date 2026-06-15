@@ -18,6 +18,9 @@ on:
         type: boolean
         default: true
 
+permissions:
+  contents: read
+
 jobs:
   bump-charts:
     if: inputs.bump-versions
