@@ -50,3 +50,4 @@ repos:
     hooks:
       - id: markdownlint
         args: ["--ignore", "helm/**/README.md"]
+        exclude: ^\.github/(agents|skills)/
