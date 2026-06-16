@@ -299,16 +299,18 @@ Ensure these `-Dhxi` values are defined in the `JAVA_OPTS` section of the reposi
 
 ### Switching to previous solr search engine
 
-Alfresco comes either with Solr or Elasticsearch as a Full Text Search engine.
-By default ACS enterprise flavor 23 and above are shipped with Elasticsearch.
-Versions 7.x enterprise and all Community versions are shipped with Solr.
+Up until Alfresco Enterprise 26, one could choose either with Solr or Elasticsearch as a Full Text Search engine.
+By default, ACS Enterprise is shipped with Elasticsearch.
+Alfresco Community versions are shipped with Solr.
 
-It is still possible to use Solr on the latest Enterprise
+If you're running an enterprise version of ACS below 26 it's still possible to use Solr.
 versions by using the `solr6-overrides.yaml` file:
 
 ```bash
-docker compose -f compose.yaml -f solr6-override-docker-compose.yml up -d
+docker compose -f compose.yaml -f solr6-overrides.yaml up -d
 ```
+
+> Starting from ACS enterprise26 Solr is not supported anymore and you need to use elasticsearch instead.
 
 ### Troubleshooting Search Enterprise
 
