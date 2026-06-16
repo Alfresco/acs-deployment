@@ -22,22 +22,15 @@ permissions:
   contents: read
 
 jobs:
-  bump-charts:
+  bump-versions:
     if: inputs.bump-versions
     uses: ./.github/workflows/bumpVersions.yml
     with:
-      update-type: charts
-    secrets: inherit
-
-  bump-values:
-    if: inputs.bump-versions
-    uses: ./.github/workflows/bumpVersions.yml
-    with:
-      update-type: values
+      update-type: all
     secrets: inherit
 
   prepare-release:
-    needs: [bump-charts, bump-values]
+    needs: [bump-versions]
     if: always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     runs-on: ubuntu-latest
     permissions: {}
@@ -113,12 +106,12 @@ jobs:
           jira_prefix="${JIRA_ID:+${JIRA_ID} }"
           title="${jira_prefix}release: prepare ${ACS_NEXT} (${RELEASE_NAME})"
           sanitized=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | tr -s '-' | sed 's/-$//')
-          branch="release/${sanitized}"
+          branch="prepare/release-${sanitized}"
 
           git checkout -b "$branch"
           git add helm/ docker-compose/
           git commit -m "$title"
-          git push origin "$branch"
+          git push --force origin "$branch"
 
           echo "title=$title"   >> "$GITHUB_OUTPUT"
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
@@ -151,6 +144,6 @@ jobs:
             --base master \
             --head "$BRANCH" \
             --draft \
-            --label release --label automation \
+            --label release \
             --body-file /tmp/pr-body.md)
           echo "url=$url" >> "$GITHUB_OUTPUT"

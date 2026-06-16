@@ -20,6 +20,7 @@ on:
         options:
         - charts
         - values
+        - all
       alfresco-updatecli-ref:
         description: "The version to use for alfresco/alfresco-updatecli configs (only for values update-type)"
         type: string
@@ -40,16 +41,15 @@ on:
       QUAY_PASSWORD:
         required: false
 
-env:
-  DEFAULT_BRANCH_NAME: master
-
 jobs:
   bump-charts-dependencies:
     runs-on: ubuntu-latest
     name: Helm charts dependencies
-    if: inputs.update-type == 'charts'
+    if: inputs.update-type == 'charts' || inputs.update-type == 'all'
     permissions:
       contents: read
+    env:
+      USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
         with:
@@ -76,15 +76,17 @@ jobs:
             🛠 Updatecli pipeline charts bump
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-helm' || github.ref_name }}
+          branch: ${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-helm' || github.ref_name }}
           create_branch: true
-          push_options: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && '--force' || '' }}
+          push_options: ${{ env.USE_DEDICATED_BRANCH == 'true' && '--force' || '' }}
 
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
     permissions: {}
-    if: (inputs.update-type == 'values' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
+    if: (inputs.update-type == 'values' || inputs.update-type == 'all' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
+    env:
+      USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
@@ -98,7 +100,7 @@ jobs:
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
         with:
           repository: alfresco/alfresco-updatecli
-          ref: ${{ inputs.alfresco-updatecli-ref || env.DEFAULT_BRANCH_NAME }}
+          ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
           path: alfresco-updatecli
 
       - name: Build manifest and run Updatecli pipelines
@@ -128,6 +130,6 @@ jobs:
             🛠 Updatecli pipeline values bump
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && 'updatecli-bump-acs' || github.ref_name }}
+          branch: ${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-acs' || github.ref_name }}
           create_branch: true
-          push_options: ${{ github.ref_name == env.DEFAULT_BRANCH_NAME && '--force' || '' }}
+          push_options: ${{ env.USE_DEDICATED_BRANCH == 'true' && '--force' || '' }}

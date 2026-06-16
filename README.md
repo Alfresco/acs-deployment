@@ -105,6 +105,8 @@ Please use [this guide](CONTRIBUTING.md) to make a contribution to the project a
 
 ### Helm charts release
 
+> **Preferred method:** use the [Release Orchestrator][2] workflow. It automates the steps below (bump versions, version bump, helm-docs refresh, draft PR) in a single run. Trigger it with a release codename and optionally a Jira ticket ID. The manual steps below remain valid for cases where more control is needed.
+
 New releases are usually made from the default branch. When a bugfix release is
 necessary and master branch already received updates that are meant to be
 released at a later time, then the release must be made from a branch which
@@ -139,6 +141,7 @@ Start the release by opening a PR against the appropriate branch that will:
   Inspect the changes pushed on the branch, looking for any missing update.
 
 [1]: https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml
+[2]: https://github.com/Alfresco/acs-deployment/actions/workflows/release-orchestrator.yml
 
 Once the PR has been merged, create the release with:
 
