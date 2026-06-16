@@ -309,7 +309,7 @@ If you're running an enterprise version of ACS below 26 it's still possible to u
 docker compose -f compose.yaml -f solr6-overrides.yaml up -d
 ```
 
-> Starting from ACS enterprise26 Solr is not supported anymore and you need to use elasticsearch instead.
+> Starting from ACS Enterprise 26, Solr is no longer supported and you need to use Elasticsearch instead.
 
 ### Troubleshooting Search Enterprise
 
