@@ -303,8 +303,7 @@ Up until Alfresco Enterprise 26, one could choose either with Solr or Elasticsea
 By default, ACS Enterprise is shipped with Elasticsearch.
 Alfresco Community versions are shipped with Solr.
 
-If you're running an enterprise version of ACS below 26 it's still possible to use Solr.
-versions by using the `solr6-overrides.yaml` file:
+If you're running an enterprise version of ACS below 26 it's still possible to use Solr by using the `solr6-overrides.yaml` file:
 
 ```bash
 docker compose -f compose.yaml -f solr6-overrides.yaml up -d
