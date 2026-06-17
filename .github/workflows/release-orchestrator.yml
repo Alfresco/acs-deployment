@@ -141,7 +141,7 @@ jobs:
           RELEASE_NAME: ${{ inputs.release-name }}
           TITLE: ${{ steps.commit.outputs.title }}
           BRANCH: ${{ steps.commit.outputs.branch }}
-        uses: peter-evans/create-or-update-comment@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           token: ${{ github.token }}
           base: master
