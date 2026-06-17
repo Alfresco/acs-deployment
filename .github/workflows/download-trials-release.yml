@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     name: Create PR for download trials
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
@@ -32,22 +33,29 @@ jobs:
         run:
           echo COMMIT_BRANCH_NAME=download-trial-release-${{ github.run_id }} >> $GITHUB_OUTPUT
 
+      - name: Create target branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
+        run: |
+          sha=$(git rev-parse HEAD)
+          gh api --method POST "repos/${{ github.repository }}/git/refs" \
+            -f ref="refs/heads/$BRANCH" -f sha="$sha"
+
       - name: Commit updated compose files
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
         with:
-          commit_message: |
-            🛠 Update download trial compose files
-          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
-          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
-          create_branch: true
-          file_pattern: >-
+          ref: refs/heads/${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
+          files: |
             docker-compose/docker-compose.yml
             docker-compose/community-docker-compose.yml
+          if-no-commit: info
+          message: |
+            🛠 Update download trial compose files
 
       - name: Create Pull Request
         env:
-          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: >-
           gh pr create --title "🛠 Update download trial compose files"
           --body "This PR updates the download trial compose files"
