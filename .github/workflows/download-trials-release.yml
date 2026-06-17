@@ -39,9 +39,13 @@ jobs:
           BRANCH: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
         run: |
           sha=$(git rev-parse HEAD)
-          gh api --method POST "repos/${{ github.repository }}/git/refs" \
-            -f ref="refs/heads/$BRANCH" -f sha="$sha"
-
+          if gh api "repos/${{ github.repository }}/git/refs/heads/$BRANCH" >/dev/null 2>&1; then
+            gh api --method PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
+              -f sha="$sha" -F force=true
+          else
+            gh api --method POST "repos/${{ github.repository }}/git/refs" \
+              -f ref="refs/heads/$BRANCH" -f sha="$sha"
+          fi
       - name: Commit updated compose files
         uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
         with:
