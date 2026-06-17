@@ -1,0 +1,44 @@
+# OpenShift values overlay — apply on top of community_values.yaml:
+#
+#   helm install acs . -f community_values.yaml -f openshift_values.yaml
+#
+# OpenShift SCCs (Security Context Constraints) manage UID/GID assignment per
+# namespace. Specifying a fixed runAsUser conflicts with that mechanism and
+# will cause pods to be rejected by the restricted SCC. This file nulls out
+# every explicit UID/GID so OpenShift can assign them freely, while keeping
+# runAsNonRoot: true and fsGroupChangePolicy omitted (SCC controls those).
+
+alfresco-repository:
+  podSecurityContext: &osPodSecCtx
+    runAsNonRoot: true
+    runAsUser: null
+    runAsGroup: null
+    fsGroup: null
+    fsGroupChangePolicy: null
+
+activemq:
+  podSecurityContext: *osPodSecCtx
+
+share:
+  podSecurityContext: *osPodSecCtx
+
+alfresco-search:
+  podSecurityContext: *osPodSecCtx
+
+postgresql:
+  podSecurityContext: *osPodSecCtx
+
+alfresco-control-center:
+  podSecurityContext: *osPodSecCtx
+
+alfresco-transform-service:
+  pdfrenderer:
+    podSecurityContext: *osPodSecCtx
+  imagemagick:
+    podSecurityContext: *osPodSecCtx
+  libreoffice:
+    podSecurityContext: *osPodSecCtx
+  tika:
+    podSecurityContext: *osPodSecCtx
+  transformmisc:
+    podSecurityContext: *osPodSecCtx
