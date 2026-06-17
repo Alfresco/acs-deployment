@@ -47,13 +47,11 @@ jobs:
     name: Helm charts dependencies
     if: inputs.update-type == 'charts' || inputs.update-type == 'all'
     permissions:
-      contents: read
+      contents: write
     env:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
-        with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
 
       - name: Install Updatecli
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.7.0
@@ -68,30 +66,43 @@ jobs:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
-      - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+      - name: Create or reset target branch
+        if: github.actor != 'dependabot[bot]' && env.USE_DEDICATED_BRANCH == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: updatecli-bump-helm
+        run: |
+          sha=$(git rev-parse HEAD)
+          if gh api "repos/${{ github.repository }}/git/refs/heads/$BRANCH" >/dev/null 2>&1; then
+            gh api --method PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
+              -f sha="$sha" -F force=true
+          else
+            gh api --method POST "repos/${{ github.repository }}/git/refs" \
+              -f ref="refs/heads/$BRANCH" -f sha="$sha"
+          fi
+
+      - name: Commit changes
         if: github.actor != 'dependabot[bot]'
+        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
         with:
-          commit_message: |
+          ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-helm' || github.ref_name }}
+          files: |
+            helm/**
+          if-no-commit: info
+          message: |
             🛠 Updatecli pipeline charts bump
-          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
-          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-helm' || github.ref_name }}
-          create_branch: true
-          push_options: ${{ env.USE_DEDICATED_BRANCH == 'true' && '--force' || '' }}
 
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
-    permissions: {}
+    permissions:
+      contents: write
     if: (inputs.update-type == 'values' || inputs.update-type == 'all' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
     env:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
-        with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.7.0
@@ -123,13 +134,28 @@ jobs:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
-      - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+      - name: Create or reset target branch
+        if: env.USE_DEDICATED_BRANCH == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: updatecli-bump-acs
+        run: |
+          sha=$(git rev-parse HEAD)
+          if gh api "repos/${{ github.repository }}/git/refs/heads/$BRANCH" >/dev/null 2>&1; then
+            gh api --method PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
+              -f sha="$sha" -F force=true
+          else
+            gh api --method POST "repos/${{ github.repository }}/git/refs" \
+              -f ref="refs/heads/$BRANCH" -f sha="$sha"
+          fi
+
+      - name: Commit changes
+        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
         with:
-          commit_message: |
+          ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-acs' || github.ref_name }}
+          files: |
+            helm/**
+            docker-compose/**
+          if-no-commit: info
+          message: |
             🛠 Updatecli pipeline values bump
-          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
-          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-acs' || github.ref_name }}
-          create_branch: true
-          push_options: ${{ env.USE_DEDICATED_BRANCH == 'true' && '--force' || '' }}
