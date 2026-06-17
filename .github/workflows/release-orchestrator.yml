@@ -134,8 +134,6 @@ jobs:
 
       - name: Create draft PR
         id: pr
-        outputs:
-          url: ${{ steps.pr.outputs.pull-request-url }}
         env:
           ACS_CURRENT: ${{ steps.version.outputs.acs_current }}
           ACS_NEXT: ${{ steps.version.outputs.acs_next }}
