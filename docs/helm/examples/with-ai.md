@@ -7,7 +7,7 @@ grand_parent: Helm
 # ACS Helm Deployment with Intelligence Services
 
 By default, [Alfresco Intelligence
-Services](https://docs.alfresco.com/intelligence/concepts/ai-welcome.html)
+Services](https://docs.hyland.com/r/Alfresco/Alfresco-Intelligence-Services/3.4/Alfresco-Intelligence-Services/Introduction/Introduction)
 feature is disabled, this example describes how to deploy ACS onto
 [EKS](https://aws.amazon.com/eks) with AIS enabled.
 
@@ -51,7 +51,7 @@ Follow the [AWS Services](with-aws-services.md) example up until the
 ## Setup S3 Bucket
 
 Follow the steps in the official documentation to [setup an IAM user and an S3
-bucket](https://docs.alfresco.com/intelligence/concepts/aws-setup.html) for use
+bucket](https://docs.hyland.com/r/Alfresco/Alfresco-Intelligence-Services/3.4/Alfresco-Intelligence-Services/Configure/Configure-Intelligence-Services) for use
 by AIS.
 
 ## Deploy

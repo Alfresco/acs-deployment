@@ -224,7 +224,7 @@ Deployment_solr --> PersistentVolumeClaim_solr-default-pvc --> pv4
 Alfresco provides tested Helm charts as a "template" to accelerate deployment
 and configuration for customers who want to take advantage of Kubernetes
 orchestration capabilities. Please remember that as stated in our [support
-policies](https://docs.alfresco.com/support/latest/policies/deployment/),
+policies](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/26.1/Alfresco-Content-Services/Install/Overview/Install-and-deploy-methods),
 similarly to other deployment artifacts, they are not meant to be used 'as-is'
 in production. Our goal is to save you time and effort deploying Alfresco
 Content Services for your organization.
@@ -255,16 +255,16 @@ For example, you can override the ACS repository image by specifying in the
 [values](../../helm/alfresco-content-services/README.md):
 
 ```yaml
-repository:
+alfresco-repository:
   image:
     repository: registry.example.org/my-custom-alfresco-content-repository
-    tag: 7.4.0
+    tag: x.y.z
 ```
 
 See the [registry authentication](registry-authentication.md) page to configure
 credentials for your private registry.
 
-Helm charts values contains secrets to be set. For deployment in sensitive
+Helm chart values contain secrets that must be set. For deployment in sensitive
 environments please see the [Security](security.md) page before proceeding with
 the installation.
 
@@ -308,9 +308,9 @@ file as an additional argument to the install command like the following:
    ```
 
 **NOTE:** Each values file is pre-configured with the latest supported component versions
-for the specified ACS major version. For example, the 7.4.N values file will
-deploy ACS version 7.4.2.3 alongside Alfresco Digital Workspace (ADW) version
-4.4.1. These configurations are recommended to ensure compatibility and
+for the specified ACS major version. For example, the 23.N values file deploys
+the latest supported 23.x release alongside compatible component versions.
+These configurations are recommended to ensure compatibility and
 stability across components. However, if a specific version of any component is
 needed, you can either edit the values file directly or override the version by
 adding the --set component.image.tag=x.y.z option to the Helm command.
@@ -387,7 +387,7 @@ alfresco-repository:
       -Dcom.sun.management.jmxremote.authenticate=false
 ```
 
-Then use pod port orwarding as explained above:
+Then use pod port forwarding as explained above:
 
 ```bash
 kubectl port-forward acs-alfresco-cs-repository-69545958df-6wzl6 9876:9876 -n alfresco
@@ -396,7 +396,7 @@ kubectl port-forward acs-alfresco-cs-repository-69545958df-6wzl6 9876:9876 -n al
 > Where you need to use the right pod & namespace names that match your deployment
 
 You can now connect to the JMX interface using a JMX client like JConsole or
-VisualVM using the netwrok socker `localhost:9876`.
+VisualVM using the network socket `localhost:9876`.
 
 ![VisualVM connected to acs pod](./images/visualvm.png)
 
@@ -416,7 +416,7 @@ Then to retrieve the logs for a pod using the following command (replacing the p
 kubectl logs acs-alfresco-cs-repository-69545958df-6wzl6 -n alfresco
 ```
 
-To continually follow the log file for a pod use the `-f` options as follows:
+To continually follow the log file for a pod use the `-f` option as follows:
 
 ```bash
 kubectl logs -f acs-alfresco-cs-repository-69545958df-6wzl6 -n alfresco

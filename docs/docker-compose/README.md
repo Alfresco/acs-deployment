@@ -173,17 +173,17 @@ Docker Daemon).
    docker compose -f community-compose.yaml up -d
    ```
 
-   or to spin up a specific version of the Enterprise edition:
+   or to spin up a specific version line of the Enterprise edition:
 
    ```bash
-    docker compose -f 7.4.N-compose.yaml up -d
-    ```
+   docker compose -f 23.N-compose.yaml up -d
+   ```
 
     or to spin up the pre-release version of the Enterprise edition:
 
-    ```bash
-    docker compose -f pre-release-compose.yaml up -d
-    ```
+   ```bash
+   docker compose -f pre-release-compose.yaml up -d
+   ```
 
    This will download the required Docker images and start the containers. The
    first time you run this command it will take a while to download the images.
@@ -299,16 +299,17 @@ Ensure these `-Dhxi` values are defined in the `JAVA_OPTS` section of the reposi
 
 ### Switching to previous solr search engine
 
-Alfresco comes either with Solr or Elasticsearch as a Full Text Search engine.
-By default ACS enterprise flavor 23 and above are shipped with Elasticsearch.
-Versions 7.x enterprise and all Community versions are shipped with Solr.
+Prior to Alfresco Enterprise 26, you could choose either Solr or Elasticsearch as the full-text search engine.
+By default, ACS Enterprise ships with Elasticsearch.
+Alfresco Community versions are shipped with Solr.
 
-It is still possible to use Solr on the latest Enterprise
-versions by using the `solr6-overrides.yaml` file:
+If you're running an enterprise version of ACS below 26 it's still possible to use Solr by using the `solr6-overrides.yaml` file:
 
 ```bash
-docker compose -f compose.yaml -f solr6-override-docker-compose.yml up -d
+docker compose -f compose.yaml -f solr6-overrides.yaml up -d
 ```
+
+> Starting from ACS Enterprise 26, Solr is no longer supported and you need to use Elasticsearch instead.
 
 ### Troubleshooting Search Enterprise
 
@@ -604,4 +605,4 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
 
-[alfresco-docs-site]: https://support.hyland.com/r/alfresco
+[alfresco-docs-site]: https://docs.hyland.com/p/alfresco
