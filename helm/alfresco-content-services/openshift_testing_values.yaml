@@ -1,0 +1,39 @@
+# OpenShift simulation overlay for vanilla Kubernetes testing.
+# Pins every pod to a high arbitrary UID and adds GID 0 supplemental group,
+# replicating the runtime identity OpenShift's restricted SCC assigns.
+#
+# Usage:
+#   helm install acs . -f community_values.yaml -f openshift_testing_values.yaml
+
+alfresco-repository:
+  podSecurityContext: &osTestPodSecCtx
+    runAsNonRoot: true
+    runAsUser: 1000650000
+    supplementalGroups: [0]
+
+activemq:
+  podSecurityContext: *osTestPodSecCtx
+
+share:
+  podSecurityContext: *osTestPodSecCtx
+
+alfresco-search:
+  podSecurityContext: *osTestPodSecCtx
+
+postgresql:
+  podSecurityContext: *osTestPodSecCtx
+
+alfresco-control-center:
+  podSecurityContext: *osTestPodSecCtx
+
+alfresco-transform-service:
+  pdfrenderer:
+    podSecurityContext: *osTestPodSecCtx
+  imagemagick:
+    podSecurityContext: *osTestPodSecCtx
+  libreoffice:
+    podSecurityContext: *osTestPodSecCtx
+  tika:
+    podSecurityContext: *osTestPodSecCtx
+  transformmisc:
+    podSecurityContext: *osTestPodSecCtx

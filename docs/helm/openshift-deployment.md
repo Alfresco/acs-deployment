@@ -170,8 +170,16 @@ restricted SCC (missing `runAsNonRoot`, wrong capabilities, etc.).
 ### Explicit high UID — catches runtime permission failures
 
 PSA only validates the pod spec; it does not catch entrypoint failures at
-runtime. Use [`openshift_values.yaml`](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/openshift_values.yaml)
-as a starting point, adding `runAsUser: 1000650000` and `supplementalGroups: [0]`
-to each `podSecurityContext` block. `supplementalGroups: [0]` replicates
-OpenShift's automatic GID 0 membership. Any container that fails to start will
-surface the same permission errors you would see on OpenShift.
+runtime. An [`openshift_testing_values.yaml`](https://github.com/Alfresco/acs-deployment/blob/master/helm/alfresco-content-services/openshift_testing_values.yaml)
+file is provided for this purpose. It pins every pod to UID `1000650000` and
+adds `supplementalGroups: [0]` to replicate OpenShift's automatic GID 0
+membership:
+
+```bash
+helm install acs . \
+  -f community_values.yaml \
+  -f openshift_testing_values.yaml
+```
+
+Any container that fails to start will surface the same permission errors you
+would see on OpenShift.
