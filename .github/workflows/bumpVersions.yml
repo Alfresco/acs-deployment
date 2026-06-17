@@ -72,14 +72,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           BRANCH: updatecli-bump-helm
         run: |
-          sha=$(git rev-parse HEAD)
-          if gh api "repos/${{ github.repository }}/git/refs/heads/$BRANCH" >/dev/null 2>&1; then
-            gh api --method PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
-              -f sha="$sha" -F force=true
-          else
-            gh api --method POST "repos/${{ github.repository }}/git/refs" \
-              -f ref="refs/heads/$BRANCH" -f sha="$sha"
-          fi
+          git checkout -b "${{ env.UPDATECLI_BRANCH_NAME }}"
+          git push --force origin "${{ env.UPDATECLI_BRANCH_NAME }}"
 
       - name: Commit changes
         if: github.actor != 'dependabot[bot]'
@@ -143,20 +137,14 @@ jobs:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
-      - name: Create or reset target branch
+      - name: Create target branch
         if: env.USE_DEDICATED_BRANCH == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           BRANCH: updatecli-bump-acs
         run: |
-          sha=$(git rev-parse HEAD)
-          if gh api "repos/${{ github.repository }}/git/refs/heads/$BRANCH" >/dev/null 2>&1; then
-            gh api --method PATCH "repos/${{ github.repository }}/git/refs/heads/$BRANCH" \
-              -f sha="$sha" -F force=true
-          else
-            gh api --method POST "repos/${{ github.repository }}/git/refs" \
-              -f ref="refs/heads/$BRANCH" -f sha="$sha"
-          fi
+          git checkout -b "${{ env.UPDATECLI_BRANCH_NAME }}"
+          git push --force origin "${{ env.UPDATECLI_BRANCH_NAME }}"
 
       - name: Commit changes
         uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
