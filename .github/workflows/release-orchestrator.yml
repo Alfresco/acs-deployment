@@ -49,11 +49,6 @@ jobs:
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
 
-      - name: Configure git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Verify and merge updatecli branches
         run: |
           for branch in updatecli-bump-acs updatecli-bump-helm; do
@@ -139,32 +134,29 @@ jobs:
 
       - name: Create draft PR
         id: pr
+        outputs:
+          url: ${{ steps.pr.outputs.pull-request-url }}
         env:
-          GH_TOKEN: ${{ github.token }}
           ACS_CURRENT: ${{ steps.version.outputs.acs_current }}
           ACS_NEXT: ${{ steps.version.outputs.acs_next }}
           SSO_NEXT: ${{ steps.version.outputs.sso_next }}
           RELEASE_NAME: ${{ inputs.release-name }}
           TITLE: ${{ steps.commit.outputs.title }}
           BRANCH: ${{ steps.commit.outputs.branch }}
-        run: |
-          cat << 'EOF' | envsubst > /tmp/pr-body.md
-          Prepares release `${ACS_NEXT}` (_${RELEASE_NAME}_).
+        uses: peter-evans/create-or-update-comment@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ github.token }}
+          base: master
+          draft: true
+          body: |
+            Prepares release `${ACS_NEXT}` (_${RELEASE_NAME}_).
 
-          Merged `updatecli-bump-acs` and `updatecli-bump-helm`, bumped `alfresco-content-services` `${ACS_CURRENT}` → `${ACS_NEXT}` and `acs-sso-example` to `${SSO_NEXT}`, and refreshed helm-docs.
+            Merged `updatecli-bump-acs` and `updatecli-bump-helm`, bumped `alfresco-content-services` `${ACS_CURRENT}` → `${ACS_NEXT}` and `acs-sso-example` to `${SSO_NEXT}`, and refreshed helm-docs.
 
-          ## Checklist
-          - [ ] Review and update `docs/helm/upgrades.md`
+            ## Checklist
+            - [ ] Review and update `docs/helm/upgrades.md`
 
-          ## After merging
-          Run `gh release create -d` to create a draft GitHub release.
-          EOF
-
-          url=$(gh pr create \
-            --title "$TITLE" \
-            --base master \
-            --head "$BRANCH" \
-            --draft \
-            --label release \
-            --body-file /tmp/pr-body.md)
-          echo "url=$url" >> "$GITHUB_OUTPUT"
+            ## After merging
+            Run `gh release create -d` to create a draft GitHub release.
+          author: github-actions[bot]
+          sign-commits: true
