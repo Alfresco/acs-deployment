@@ -34,7 +34,7 @@ on:
         type: string
         default: master
     secrets:
-      BOT_GITHUB_TOKEN:
+      GH_APP_ENGINEERING_RO_PRIVATE_KEY:
         required: true
       QUAY_USERNAME:
         required: false
@@ -114,6 +114,15 @@ jobs:
           ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
           path: alfresco-updatecli
 
+      - name: Generate engineering read-only app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_RO_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_RO_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          permission-contents: read
+
       - name: Build manifest and run Updatecli pipelines
         shell: bash
         run: |
@@ -125,7 +134,7 @@ jobs:
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
-          UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          UPDATECLI_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
       - name: Regenerate helm docs if necessary
