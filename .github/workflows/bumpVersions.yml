@@ -41,13 +41,14 @@ on:
       QUAY_PASSWORD:
         required: false
 
+permissions:
+  contents: write
+
 jobs:
   bump-charts-dependencies:
     runs-on: ubuntu-latest
     name: Helm charts dependencies
     if: inputs.update-type == 'charts' || inputs.update-type == 'all'
-    permissions:
-      contents: write
     env:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
@@ -89,8 +90,6 @@ jobs:
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
-    permissions:
-      contents: write
     if: (inputs.update-type == 'values' || inputs.update-type == 'all' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
     env:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
