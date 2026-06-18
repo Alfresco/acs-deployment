@@ -1,6 +1,8 @@
 ---
 name: Helm (Enterprise)
 on:
+  pull_request_review:
+    types: [submitted]
   pull_request:
     branches:
       - master
@@ -24,9 +26,11 @@ jobs:
     runs-on: ubuntu-slim
     if: >-
       github.event_name == 'push'
+      || github.actor != 'dependabot[bot]'
       || (
-        ! github.event.pull_request.head.repo.fork
-        && github.actor != 'dependabot[bot]'
+        github.event_name == 'pull_request_review'
+        && github.event.review.state == 'approved'
+        && github.event.pull_request.user.login == 'github-actions[bot]'
       )
     outputs:
       ver_json: ${{ steps.app_versions.outputs.json }}

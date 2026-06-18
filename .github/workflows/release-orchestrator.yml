@@ -110,16 +110,8 @@ jobs:
           title="${jira_prefix}release: prepare ${ACS_NEXT} (${RELEASE_NAME})"
           sanitized=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | tr -s '-' | sed 's/-$//')
           branch="prepare/release-${sanitized}"
-
-          sha="${{ steps.base.outputs.sha }}"
-          if gh api "repos/${{ github.repository }}/git/refs/heads/$branch" >/dev/null 2>&1; then
-            gh api --method PATCH "repos/${{ github.repository }}/git/refs/heads/$branch" \
-              -f sha="$sha" -F force=true
-          else
-            gh api --method POST "repos/${{ github.repository }}/git/refs" \
-              -f ref="refs/heads/$branch" -f sha="$sha"
-          fi
-
+          git checkout -B "$branch"
+          git push origin "$branch" --force
           echo "title=$title"   >> "$GITHUB_OUTPUT"
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
@@ -134,7 +126,6 @@ jobs:
           BRANCH: ${{ steps.commit.outputs.branch }}
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          token: ${{ github.token }}
           base: master
           draft: true
           commit-message: ${{ steps.commit.outputs.title }}
@@ -151,5 +142,4 @@ jobs:
 
             ## After merging
             Run `gh release create -d` to create a draft GitHub release.
-          author: github-actions[bot]
           sign-commits: true
