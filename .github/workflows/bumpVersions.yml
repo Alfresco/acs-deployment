@@ -73,8 +73,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           BRANCH: updatecli-bump-helm
         run: |
-          git checkout -b "${{ env.UPDATECLI_BRANCH_NAME }}"
-          git push --force origin "${{ env.UPDATECLI_BRANCH_NAME }}"
+          git checkout -b "${{ env.BRANCH }}"
+          git push --force origin "${{ env.BRANCH }}"
 
       - name: Commit changes
         if: github.actor != 'dependabot[bot]'
@@ -142,8 +142,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           BRANCH: updatecli-bump-acs
         run: |
-          git checkout -b "${{ env.UPDATECLI_BRANCH_NAME }}"
-          git push --force origin "${{ env.UPDATECLI_BRANCH_NAME }}"
+          git checkout -b "${{ env.BRANCH }}"
+          git push --force origin "${{ env.BRANCH }}"
 
       - name: Commit changes
         uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
