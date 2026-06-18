@@ -143,6 +143,9 @@ Start the release by opening a PR against the appropriate branch that will:
 [1]: https://github.com/Alfresco/acs-deployment/actions/workflows/bumpVersions.yml
 [2]: https://github.com/Alfresco/acs-deployment/actions/workflows/release-orchestrator.yml
 
+The generated Pull request needs to be approved for the tests to run. Avoid
+using auto-merge to make sure all tests pass (not all of them are mandatory
+checks).
 Once the PR has been merged, create the release with:
 
 ```sh
