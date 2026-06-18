@@ -123,15 +123,6 @@ jobs:
           echo "title=$title"   >> "$GITHUB_OUTPUT"
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
-      - name: Commit release changes
-        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
-        with:
-          ref: refs/heads/${{ steps.commit.outputs.branch }}
-          files: |
-            helm/**
-            docker-compose/**
-          message: ${{ steps.commit.outputs.title }}
-
       - name: Create draft PR
         id: pr
         env:
@@ -146,6 +137,10 @@ jobs:
           token: ${{ github.token }}
           base: master
           draft: true
+          commit-message: ${{ steps.commit.outputs.title }}
+          add-paths: |
+            helm/**
+            docker-compose/**
           body: |
             Prepares release `${ACS_NEXT}` (_${RELEASE_NAME}_).
 
