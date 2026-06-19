@@ -72,6 +72,25 @@ docker compose -f docker-compose/cd/docker-compose.yml up
 The `cd-init` container connects to ACS at the URL specified by the
 `ACS_API_URL` environment variable (defaults to `http://localhost:8080`).
 
+### 4. (Optional) Integrate CD initialization container in compose lifecycle
+If you want the CD initialization to be part of your compose lifecycle, you can add the `cd-init` service to your main `docker-compose.yml` with appropriate dependencies:
+```yaml
+  cd-init:
+    build:
+      context: ./cd
+      dockerfile: Dockerfile
+    pull_policy: build
+    environment:
+      - ACS_API_URL=http://alfresco:8080
+      - USERNAME=admin
+      - PASSWORD=admin
+    depends_on:
+      alfresco:
+        condition: service_healthy
+      search-reindexing:
+        condition: service_completed_successfully
+```
+
 ## Directory Structure
 
 ```
