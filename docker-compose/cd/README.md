@@ -1,4 +1,4 @@
-# Cascading Dictionaries (CD) 
+# Cascading Dictionaries (CD)
 
 This directory contains a custom content model and an initialization script that
 demonstrate the **Cascading Dictionaries** feature in Alfresco Content Services.
@@ -9,12 +9,13 @@ The model defines a namespace `cdict` (Custom Dictionary Model) with:
 
 * **Content type** `cdict:content` – extends `cm:content` and mandates the three
   classification aspects below.
-* **Aspects** (all inherit from `cd:classifiable`):
-  | Aspect | Key properties |
-  |---|---|
-  | `cdict:department` | `departmentId`, `departmentName`, `departmentDictVersion` |
-  | `cdict:account` | `accountNumber`, `accountName`, `accountCategory`, `accountDictVersion` |
-  | `cdict:location` | `locId`, `locRegionCode`, `locRegionName`, `locCity`, `locZipCode`, `locStreet`, `locBuilding`, `locCountry`, `locDictVersion` |
+* **Aspects** (all inherit from `cd:classifiable`)
+
+| Aspect             | Key properties                                                                                                                 |
+|--------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `cdict:department` | `departmentId`, `departmentName`, `departmentDictVersion`                                                                      |
+| `cdict:account`    | `accountNumber`, `accountName`, `accountCategory`,  `accountDictVersion`                                                       |
+| `cdict:location`   | `locId`, `locRegionCode`, `locRegionName`, `locCity`, `locZipCode`, `locStreet`, `locBuilding`, `locCountry`, `locDictVersion` |
 
 The companion Spring context file `model/customDictModel-context.xml` registers
 the model with the Alfresco dictionary bootstrap so it is loaded at startup.
@@ -65,7 +66,7 @@ data and create a sample classifiable node:
 
 ```yaml
 docker compose -f docker-compose/compose.yaml up -d
-# wait for the alfresco service to be healthy, then:
+  # wait for the alfresco service to be healthy, then:
 docker compose -f docker-compose/cd/docker-compose.yml up
 ```
 
@@ -73,7 +74,10 @@ The `cd-init` container connects to ACS at the URL specified by the
 `ACS_API_URL` environment variable (defaults to `http://localhost:8080`).
 
 ### 4. (Optional) Integrate CD initialization container in compose lifecycle
-If you want the CD initialization to be part of your compose lifecycle, you can add the `cd-init` service to your main `docker-compose.yml` with appropriate dependencies:
+
+If you want the CD initialization to be part of your compose lifecycle, you can add the `cd-init` service to your main
+`docker-compose.yml` with appropriate dependencies:
+
 ```yaml
   cd-init:
     build:
@@ -93,7 +97,7 @@ If you want the CD initialization to be part of your compose lifecycle, you can 
 
 ## Directory Structure
 
-```
+```text
 cd/
 ├── cd-init.py                     # Initialisation script
 ├── docker-compose.yml             # Compose file for the init container
