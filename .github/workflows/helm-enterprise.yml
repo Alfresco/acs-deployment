@@ -35,7 +35,7 @@ jobs:
     outputs:
       ver_json: ${{ steps.app_versions.outputs.json }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
           fetch-depth: 0
       - name: Get charts
@@ -71,9 +71,9 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v18.7.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v18.12.0
 
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
 
       - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2
         with:
@@ -94,7 +94,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.12.0
         with:
           traefik-enabled: true
           traefik-chart-version: v40.0.0-ea.1
@@ -144,20 +144,20 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
 
       - name: Wait for deployments to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.12.0
         with:
           wait-resource: "deployments"
           wait-condition: "Available"
 
       - name: Wait for statefulsets to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.12.0
         with:
           wait-resource: "sts"
           wait-for-what: "jsonpath"
           wait-condition: "'{.status.readyReplicas}'=1"
 
       - name: Wait for jobs to be completed
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.12.0
         with:
           wait-resource: "jobs"
           wait-condition: "complete"
@@ -222,7 +222,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.12.0
         with:
           namespace: default
           log_retention: 7

@@ -33,4 +33,4 @@ jobs:
         && github.event.pull_request.user.login == 'github-actions[bot]'
       )
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.7.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.12.0
