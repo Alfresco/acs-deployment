@@ -1,6 +1,8 @@
 name: kics
 
 on:
+  pull_request_review:
+    types: [submitted]
   pull_request:
     branches: [master]
     paths:
@@ -20,6 +22,13 @@ permissions:
 jobs:
   kics:
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name != 'pull_request_review'
+      || (
+        github.event_name == 'pull_request_review'
+        && github.event.review.state == 'approved'
+        && github.event.pull_request.user.login == 'github-actions[bot]'
+      )
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - name: run kics Scan

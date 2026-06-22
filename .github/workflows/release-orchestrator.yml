@@ -24,6 +24,8 @@ permissions:
 jobs:
   bump-versions:
     if: inputs.bump-versions
+    permissions:
+      contents: write
     uses: ./.github/workflows/bumpVersions.yml
     with:
       update-type: all
@@ -33,19 +35,19 @@ jobs:
     needs: [bump-versions]
     if: always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     runs-on: ubuntu-latest
-    permissions: {}
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
         with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
+      - name: Save base commit
+        id: base
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Configure git
-        run: |
-          git config user.name "${{ vars.BOT_GITHUB_USERNAME }}"
-          git config user.email "${{ vars.BOT_GITHUB_EMAIL }}"
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
 
       - name: Verify and merge updatecli branches
         run: |
@@ -96,54 +98,48 @@ jobs:
       - name: Refresh helm-docs
         run: helm-docs
 
-      - name: Create release branch and commit
+      - name: Prepare release branch
         id: commit
         env:
           ACS_NEXT: ${{ steps.version.outputs.acs_next }}
           RELEASE_NAME: ${{ inputs.release-name }}
           JIRA_ID: ${{ inputs.jira-id }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           jira_prefix="${JIRA_ID:+${JIRA_ID} }"
           title="${jira_prefix}release: prepare ${ACS_NEXT} (${RELEASE_NAME})"
           sanitized=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | tr -s '-' | sed 's/-$//')
           branch="prepare/release-${sanitized}"
-
-          git checkout -b "$branch"
-          git add helm/ docker-compose/
-          git commit -m "$title"
-          git push --force origin "$branch"
-
+          git checkout -B "$branch"
+          git push origin "$branch" --force
           echo "title=$title"   >> "$GITHUB_OUTPUT"
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
       - name: Create draft PR
         id: pr
         env:
-          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
           ACS_CURRENT: ${{ steps.version.outputs.acs_current }}
           ACS_NEXT: ${{ steps.version.outputs.acs_next }}
           SSO_NEXT: ${{ steps.version.outputs.sso_next }}
           RELEASE_NAME: ${{ inputs.release-name }}
           TITLE: ${{ steps.commit.outputs.title }}
           BRANCH: ${{ steps.commit.outputs.branch }}
-        run: |
-          cat << 'EOF' | envsubst > /tmp/pr-body.md
-          Prepares release `${ACS_NEXT}` (_${RELEASE_NAME}_).
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          base: master
+          draft: true
+          commit-message: ${{ steps.commit.outputs.title }}
+          add-paths: |
+            helm/**
+            docker-compose/**
+          body: |
+            Prepares release `${ACS_NEXT}` (_${RELEASE_NAME}_).
 
-          Merged `updatecli-bump-acs` and `updatecli-bump-helm`, bumped `alfresco-content-services` `${ACS_CURRENT}` → `${ACS_NEXT}` and `acs-sso-example` to `${SSO_NEXT}`, and refreshed helm-docs.
+            Merged `updatecli-bump-acs` and `updatecli-bump-helm`, bumped `alfresco-content-services` `${ACS_CURRENT}` → `${ACS_NEXT}` and `acs-sso-example` to `${SSO_NEXT}`, and refreshed helm-docs.
 
-          ## Checklist
-          - [ ] Review and update `docs/helm/upgrades.md`
+            ## Checklist
+            - [ ] Review and update `docs/helm/upgrades.md`
 
-          ## After merging
-          Run `gh release create -d` to create a draft GitHub release.
-          EOF
-
-          url=$(gh pr create \
-            --title "$TITLE" \
-            --base master \
-            --head "$BRANCH" \
-            --draft \
-            --label release \
-            --body-file /tmp/pr-body.md)
-          echo "url=$url" >> "$GITHUB_OUTPUT"
+            ## After merging
+            Run `gh release create -d` to create a draft GitHub release.
+          sign-commits: true

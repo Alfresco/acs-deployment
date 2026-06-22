@@ -13,17 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     name: Create PR for download trials
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
         with:
-          ref: ${{ env.TRIALS_BRANCH_NAME }}
+          ref: ${{ env.DEFAULT_BRANCH_NAME }}
 
       - name: Generate Download trial compose files
         working-directory: docker-compose
         run: |
-          git fetch --no-tags --depth=1 origin ${{ env.DEFAULT_BRANCH_NAME }}:${{ env.DEFAULT_BRANCH_NAME }}
-          git restore --source ${{ env.DEFAULT_BRANCH_NAME }} compose.yaml community-compose.yaml commons/
           docker compose -f compose.yaml config -o docker-compose.yml
           docker compose -f community-compose.yaml config -o community-docker-compose.yml
 
@@ -32,25 +31,27 @@ jobs:
         run:
           echo COMMIT_BRANCH_NAME=download-trial-release-${{ github.run_id }} >> $GITHUB_OUTPUT
 
-      - name: Commit updated compose files
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+      - name: Create draft PR
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          commit_message: |
-            🛠 Update download trial compose files
-          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
-          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
+          token: ${{ github.token }}
           branch: ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
-          create_branch: true
-          file_pattern: >-
+          base: ${{ env.TRIALS_BRANCH_NAME }}
+          draft: true
+          commit-message: "🛠 Update download trial compose files"
+          add-paths: |
             docker-compose/docker-compose.yml
             docker-compose/community-docker-compose.yml
+          body: |
+            This PR updates the download trial compose files served by the Download Trials service.
 
-      - name: Create Pull Request
-        env:
-          GH_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
-        run: >-
-          gh pr create --title "🛠 Update download trial compose files"
-          --body "This PR updates the download trial compose files"
-          --base ${{ env.TRIALS_BRANCH_NAME }}
-          --head ${{ steps.set_commit_branch_name.outputs.COMMIT_BRANCH_NAME }}
-          --reviewer Alfresco/alfresco-ops-readiness
+            Pay attention to using the Docker compose short syntax for:
+              * [ports](https://docs.docker.com/reference/compose-file/services/#short-syntax-3)
+              * [volumes](https://docs.docker.com/reference/compose-file/services/#short-syntax-5)
+            The download trial service cannot parse the long syntax and will fail.
+          author: github-actions[bot]
+          team-reviewers: Alfresco/alfresco-ops-readiness
+          sign-commits: true

@@ -34,26 +34,25 @@ on:
         type: string
         default: master
     secrets:
-      BOT_GITHUB_TOKEN:
+      GH_APP_ENGINEERING_RO_PRIVATE_KEY:
         required: true
       QUAY_USERNAME:
         required: false
       QUAY_PASSWORD:
         required: false
 
+permissions:
+  contents: write
+
 jobs:
   bump-charts-dependencies:
     runs-on: ubuntu-latest
     name: Helm charts dependencies
     if: inputs.update-type == 'charts' || inputs.update-type == 'all'
-    permissions:
-      contents: read
     env:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
-        with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN || github.token }}
 
       - name: Install Updatecli
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.7.0
@@ -68,30 +67,35 @@ jobs:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
-      - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+      - name: Create or reset target branch
+        if: github.actor != 'dependabot[bot]' && env.USE_DEDICATED_BRANCH == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: updatecli-bump-helm
+        run: |
+          git checkout -b "${{ env.BRANCH }}"
+          git push --force origin "${{ env.BRANCH }}"
+
+      - name: Commit changes
         if: github.actor != 'dependabot[bot]'
+        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
         with:
-          commit_message: |
+          ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-helm' || github.ref_name }}
+          files: |
+            helm/**
+          if-no-commit: info
+          message: |
             🛠 Updatecli pipeline charts bump
-          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
-          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-helm' || github.ref_name }}
-          create_branch: true
-          push_options: ${{ env.USE_DEDICATED_BRANCH == 'true' && '--force' || '' }}
 
   bump-values-dependencies:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
-    permissions: {}
     if: (inputs.update-type == 'values' || inputs.update-type == 'all' || github.event_name == 'push') && github.actor != 'dependabot[bot]'
     env:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
       - name: Checkout
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
-        with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - name: Install Updatecli
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.7.0
@@ -102,6 +106,15 @@ jobs:
           repository: alfresco/alfresco-updatecli
           ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
           path: alfresco-updatecli
+
+      - name: Generate engineering read-only app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_RO_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_RO_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          permission-contents: read
 
       - name: Build manifest and run Updatecli pipelines
         shell: bash
@@ -114,7 +127,7 @@ jobs:
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
-          UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+          UPDATECLI_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
       - name: Regenerate helm docs if necessary
@@ -123,13 +136,22 @@ jobs:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
-      - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+      - name: Create target branch
+        if: env.USE_DEDICATED_BRANCH == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: updatecli-bump-acs
+        run: |
+          git checkout -b "${{ env.BRANCH }}"
+          git push --force origin "${{ env.BRANCH }}"
+
+      - name: Commit changes
+        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
         with:
-          commit_message: |
+          ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-acs' || github.ref_name }}
+          files: |
+            helm/**
+            docker-compose/**
+          if-no-commit: info
+          message: |
             🛠 Updatecli pipeline values bump
-          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
-          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-acs' || github.ref_name }}
-          create_branch: true
-          push_options: ${{ env.USE_DEDICATED_BRANCH == 'true' && '--force' || '' }}
