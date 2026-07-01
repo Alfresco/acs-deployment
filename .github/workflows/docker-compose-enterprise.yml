@@ -26,6 +26,14 @@ concurrency:
 jobs:
   build_vars:
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'push'
+      || (github.event_name == 'pull_request' && github.actor != 'dependabot[bot]')
+      || (
+        github.event_name == 'pull_request_review'
+        && github.event.review.state == 'approved'
+        && github.event.pull_request.user.login == 'github-actions[bot]'
+      )
     outputs:
       matrix_json: ${{ steps.eval.outputs.matrix_json }}
     steps:
@@ -48,14 +56,6 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.build_vars.outputs.matrix_json) }}
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name == 'push'
-      || github.actor != 'dependabot[bot]'
-      || (
-        github.event_name == 'pull_request_review'
-        && github.event.review.state == 'approved'
-        && github.event.pull_request.user.login == 'github-actions[bot]'
-      )
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
       - name: Verify docker-compose
