@@ -1,0 +1,96 @@
+---
+name: Bump pre-release
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: bump-pre-release
+  cancel-in-progress: false
+
+jobs:
+  bump-pre-release:
+    runs-on: ubuntu-latest
+    name: Pre-release image tags
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+
+      - name: Install Updatecli
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.7.0
+
+      - name: Checkout updatecli configs
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+        with:
+          repository: alfresco/alfresco-updatecli
+          ref: master
+          path: alfresco-updatecli
+
+      - name: Generate engineering read-only app token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1  # v3.2.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_RO_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_RO_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          permission-contents: read
+
+      - name: Run Updatecli pipelines for the pre-release branch only
+        shell: bash
+        run: |
+          # Keep only the 'next' branch so no other version file gets a target.
+          FILTER='.matrix |= with_entries(select(.key == "next"))'
+          for i in docker-compose/updatecli-matrix-targets.yaml \
+                   helm/alfresco-content-services/updatecli-matrix-targets.yaml; do
+            echo -e "\n###### Building pre-release Updatecli manifest for ${i}\n"
+            yq "$FILTER" "$i" > /tmp/target-next.yaml
+            updatecli pipeline apply \
+              -c alfresco-updatecli/deployments/uber-manifest.tpl \
+              -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
+              -v /tmp/target-next.yaml
+          done
+        env:
+          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+          QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+          UPDATECLI_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
+
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
+      - name: Regenerate helm docs if necessary
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.7.0
+        with:
+          pre-commit-args: helm-docs || true
+          skip_checkout: "true"
+
+      - name: Create pull request
+        id: cpr
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1  # v8.1.1
+        with:
+          base: master
+          branch: updatecli-pre-release
+          sign-commits: true
+          add-paths: |
+            helm/**
+            docker-compose/**
+          commit-message: |
+            🛠 Updatecli pipeline pre-release bump
+          title: "chore: bump pre-release image tags"
+          body: |
+            Automated bump of the pre-release (`next`) image tags in
+            `docker-compose/pre-release-compose.yaml` and
+            `helm/alfresco-content-services/pre-release_values.yaml`.
+
+            Auto-merge is enabled: once an engineer approves this PR the test
+            workflows run and it merges automatically when the required checks pass.
+
+      - name: Enable auto-merge
+        if: steps.cpr.outputs.pull-request-operation == 'created' || steps.cpr.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
+        run: gh pr merge "$PR_NUMBER" --auto --squash
