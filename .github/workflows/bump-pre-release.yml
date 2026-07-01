@@ -49,7 +49,7 @@ jobs:
           for i in docker-compose/updatecli-matrix-targets.yaml \
                    helm/alfresco-content-services/updatecli-matrix-targets.yaml; do
             echo -e "\n###### Building pre-release Updatecli manifest for ${i}\n"
-            yq "$FILTER" "$i" > /tmp/target-next.yaml
+            yq eval "$FILTER" "$i" > /tmp/target-next.yaml
             updatecli pipeline apply \
               -c alfresco-updatecli/deployments/uber-manifest.tpl \
               -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
