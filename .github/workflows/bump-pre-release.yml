@@ -74,7 +74,6 @@ jobs:
           base: master
           branch: updatecli-pre-release
           sign-commits: true
-          team-reviewers: ops-readiness-performance
           add-paths: |
             helm/**
             docker-compose/**
