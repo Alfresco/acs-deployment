@@ -52,17 +52,17 @@ jobs:
     env:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.15.0
 
       - run: updatecli pipeline apply
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.15.0
 
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.15.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -78,7 +78,7 @@ jobs:
 
       - name: Commit changes
         if: github.actor != 'dependabot[bot]'
-        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
+        uses: iarekylew00t/verified-bot-commit@33985d44b7719dcaf0b854a0f4b0caad9bdc5b86  # v2.3.3
         with:
           ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-helm' || github.ref_name }}
           files: |
@@ -95,13 +95,13 @@ jobs:
       USE_DEDICATED_BRANCH: ${{ inputs.update-type == 'all' || github.ref_name == 'master' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.15.0
 
       - name: Checkout updatecli configs
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
           repository: alfresco/alfresco-updatecli
           ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
@@ -129,9 +129,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.7.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.15.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.15.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -146,7 +146,7 @@ jobs:
           git push --force origin "${{ env.BRANCH }}"
 
       - name: Commit changes
-        uses: iarekylew00t/verified-bot-commit@5b4e8852dc472093935b8debcb81459bb79f7986  # v2.3.2
+        uses: iarekylew00t/verified-bot-commit@33985d44b7719dcaf0b854a0f4b0caad9bdc5b86  # v2.3.3
         with:
           ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-acs' || github.ref_name }}
           files: |

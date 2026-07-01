@@ -34,7 +34,7 @@ jobs:
         && github.event.pull_request.user.login == 'github-actions[bot]'
       )
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
         with:
           fetch-depth: 0
       - name: Get charts
@@ -68,9 +68,9 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10  # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7.0.0
 
-      - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2  # v5.0.0
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310  # v5.0.1
         with:
          version: "3.12.1"
 
@@ -84,7 +84,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.15.0
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -190,7 +190,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.7.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.15.0
         with:
           namespace: default
           log_retention: 7
