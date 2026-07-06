@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:26.2.0-A.23
+    image: quay.io/alfresco/alfresco-content-repository:26.2.0-A.24
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -91,7 +91,7 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.4.3-A.9
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.4.3-A.10
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -135,7 +135,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:26.2.0-A.23
+    image: quay.io/alfresco/alfresco-share:26.2.0-A.24
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -217,7 +217,7 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.7.0-A.3
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.7.0-A.4
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -242,7 +242,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.7.0-A.3
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.7.0-A.4
     mem_limit: 1g
     restart: on-failure:5
     environment:
@@ -302,7 +302,7 @@ services:
       elasticsearch:
         condition: service_healthy
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:8.0.0-28233181891
+    image: quay.io/alfresco/alfresco-digital-workspace:8.0.0-28659060886
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -321,7 +321,7 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:11.0.0-28233181891
+    image: quay.io/alfresco/alfresco-control-center:11.0.0-28659060886
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
