@@ -2,7 +2,7 @@
 # latest version of the chart
 alfresco-repository:
   image:
-    tag: 26.2.0-A.23
+    tag: 26.2.0-A.24
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
@@ -13,19 +13,19 @@ alfresco-transform-service:
       tag: 4.4.2
   pdfrenderer:
     image:
-      tag: 5.4.3-A.9
+      tag: 5.4.3-A.10
   imagemagick:
     image:
-      tag: 5.4.3-A.9
+      tag: 5.4.3-A.10
   libreoffice:
     image:
-      tag: 5.4.3-A.9
+      tag: 5.4.3-A.10
   tika:
     image:
-      tag: 5.4.3-A.9
+      tag: 5.4.3-A.10
   transformmisc:
     image:
-      tag: 5.4.3-A.9
+      tag: 5.4.3-A.10
   filestore:
     image:
       tag: 4.4.2
@@ -34,7 +34,7 @@ alfresco-ai-transformer:
     tag: 3.4.3
 share:
   image:
-    tag: 26.2.0-A.23
+    tag: 26.2.0-A.24
 alfresco-search:
   searchServicesImage:
     tag: 2.1.0-A9
@@ -44,25 +44,25 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.7.0-A.3
+        tag: 5.7.0-A.4
     content:
       image:
-        tag: 5.7.0-A.3
+        tag: 5.7.0-A.4
     metadata:
       image:
-        tag: 5.7.0-A.3
+        tag: 5.7.0-A.4
     path:
       image:
-        tag: 5.7.0-A.3
+        tag: 5.7.0-A.4
   reindexing:
     image:
-      tag: 5.7.0-A.3
+      tag: 5.7.0-A.4
 alfresco-digital-workspace:
   image:
-    tag: 8.0.0-28233181891
+    tag: 8.0.0-28659060886
 alfresco-control-center:
   image:
-    tag: 11.0.0-28233181891
+    tag: 11.0.0-28659060886
 postgresql:
   image:
     tag: 16.5
