@@ -94,7 +94,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@bump-setup-kind-traefik-41
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.16.0
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
