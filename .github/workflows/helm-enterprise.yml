@@ -94,10 +94,9 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.15.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.16.0
         with:
           traefik-enabled: true
-          traefik-chart-version: v40.0.0-ea.1
           cloud-provider-kind-enabled: true
           metrics: true
           import-docker-credentials-secret-name: ${{ env.REGISTRY_SECRET_NAME }}
@@ -193,6 +192,7 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
+          kubectl logs -n traefik -l app.kubernetes.io/name=traefik --tail=-1
 
       - name: Run helm test
         id: helm_test

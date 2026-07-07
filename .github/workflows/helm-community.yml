@@ -84,7 +84,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.15.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.16.0
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -172,6 +172,7 @@ jobs:
           helm ls --all-namespaces
           kubectl get all --all-namespaces
           kubectl describe pod
+          kubectl logs -n traefik -l app.kubernetes.io/name=traefik --tail=-1
 
           OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
           if [ -n "$OOM_PODS" ]; then

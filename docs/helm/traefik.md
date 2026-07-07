@@ -30,12 +30,12 @@ namespace:
 helm repo add traefik https://traefik.github.io/charts
 helm repo update
 helm upgrade --install traefik traefik/traefik \
-  --set providers.kubernetesIngressNginx.enabled=true \
+  --set providers.kubernetesIngressNGINX.enabled=true \
   --set logs.access.enabled=true \
   --namespace traefik --create-namespace
 ```
 
-The `providers.kubernetesIngressNginx.enabled=true` option is required to tell
+The `providers.kubernetesIngressNGINX.enabled=true` option is required to tell
 Traefik to watch for `Ingress` resources with `ingressClassName` set to `nginx`,
 which is still the default in our charts for backwards compatibility reasons.
 

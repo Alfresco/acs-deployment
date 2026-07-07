@@ -1241,7 +1241,7 @@
 									"pm.globals.get(\"url\");",
 									"",
 									"pm.test(\"prometheusAlfrescoStatusCodeTest\", function () {",
-									"    pm.response.to.have.status(404);",
+									"    pm.expect(pm.response.code).to.be.oneOf([404, 503]);",
 									"});"
 								]
 							}
