@@ -47,7 +47,7 @@ jobs:
         id: base
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.15.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.15.1
 
       - name: Verify and merge updatecli branches
         run: |
