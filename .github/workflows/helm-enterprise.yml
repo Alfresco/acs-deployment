@@ -192,6 +192,7 @@ jobs:
           kubectl get all --all-namespaces
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
+          kubectl logs -n traefik -l app.kubernetes.io/name=traefik --tail=-1
 
       - name: Run helm test
         id: helm_test
@@ -226,3 +227,11 @@ jobs:
           namespace: default
           log_retention: 7
           log_name_identifier: "logs-pods-helm-ent-${{ matrix.name }}-${{ matrix.values }}"
+
+      - name: Upload traefik logs
+        if: always() && steps.helm_install.outcome != 'skipped'
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.15.1
+        with:
+          namespace: traefik
+          log_retention: 7
+          log_name_identifier: "logs-traefik-helm-ent-${{ matrix.name }}-${{ matrix.values }}"
