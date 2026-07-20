@@ -349,6 +349,9 @@ the information required to deploy ACS.
 3. If not already allowed, add 443/tcp access to the security group associated
    with the Domain.
 
+> To authenticate to the domain with AWS IAM (SigV4) instead of a master
+> username and password, see [OpenSearch IAM Auth](with-opensearch-iam-auth.md).
+
 ## Deploy
 
 In order to use the S3 connector and external database options, the S3
