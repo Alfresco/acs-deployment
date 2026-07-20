@@ -182,12 +182,9 @@ is how the repository is told to sign OpenSearch requests with SigV4.
    kubectl -n <namespace> logs <acs-repository-pod> -c create-index-template
    ```
 
-3. Confirm live indexing is writing to the domain — the `alfresco` and
-   `alfresco-archive` indices should appear and grow as content is added:
-
-   ```bash
-   GET https://YOUR-DOMAIN-HOSTNAME/_cat/indices/alfresco*?v
-   ```
+3. Confirm live indexing is working by adding or updating content and then
+   searching for it in the ACS UI (or through the search API); newly indexed
+   content should become findable.
 
 4. Check the repository and search-enterprise logs for authentication or
    authorization errors against OpenSearch; there should be none.
