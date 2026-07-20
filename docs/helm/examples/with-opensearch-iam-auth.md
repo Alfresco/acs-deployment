@@ -35,10 +35,7 @@ This applies to an **external AWS OpenSearch** domain only, using
 embedded Elasticsearch cluster or to Solr.
 
 > This page covers only what the helm charts need. How you provision the EKS
-> cluster, the OpenSearch domain and the IAM role is up to you. If you deploy
-> with the internal `terraform-alfresco-pipeline`, set
-> `ACS_EXTERNAL_ELASTICSEARCH_IAM_AUTH=true` and it wires up everything described
-> below automatically.
+> cluster, the OpenSearch domain and the IAM role is up to you.
 
 ## AWS prerequisites
 
