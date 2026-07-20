@@ -51,7 +51,10 @@ jobs:
             | select(.values=="community_values.yaml" or .name=="acs-sso-example")]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
-          VERS=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
+          BASE=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}' \
+            | jq -c 'map(. + {test_values: "community-integration-test-values.yaml"})')
+          ES=$(echo "$BASE" | jq -c 'map(select(.name=="alfresco-content-services") | .test_values = "community-es-integration-test-values.yaml")')
+          VERS=$(jq -nc --argjson a "$BASE" --argjson b "$ES" '$a + $b')
           echo "json=$VERS" >> $GITHUB_OUTPUT
 
   community_charts:
@@ -123,7 +126,7 @@ jobs:
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout 6m0s \
             --values ${{ matrix.values }} \
-            --values ../../test/community-integration-test-values.yaml
+            --values ../../test/${{ matrix.test_values }}
         working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status after Helm install
@@ -195,4 +198,4 @@ jobs:
         with:
           namespace: default
           log_retention: 7
-          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}"
+          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}-${{ matrix.test_values }}"

@@ -401,6 +401,34 @@ alfresco-search-enterprise:
         name: *infrastructure_cmName
     image:
       tag: 5.6.0
+alfresco-search-community:
+  # -- Elasticsearch batch indexing for ACS Community. Mutually exclusive with
+  # `alfresco-search` (Solr); enabling both fails the render. Requires
+  # `elasticsearch.enabled: true` and
+  # `alfresco-repository.configuration.search.flavor: elasticsearch`.
+  enabled: false
+  nameOverride: alfresco-search-community
+  index:
+    existingConfigMap:
+      name: *infrastructure_cmName
+    existingSecret:
+      name: *acs_search_secretName
+  db:
+    existingConfigMap:
+      name: *infrastructure_cmName
+    existingSecret:
+      name: *acs_database_secretName
+  repository:
+    existingConfigMap:
+      name: *infrastructure_cmName
+  transform:
+    # The media types cache is disabled below, so this endpoint is never
+    # queried; the chart still requires a value to be set.
+    url: http://localhost/transform/config
+  sharedSecret:
+    value: notused
+  environment:
+    ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_ENABLED: "false"
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"

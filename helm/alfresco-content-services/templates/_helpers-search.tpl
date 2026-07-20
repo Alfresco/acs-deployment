@@ -6,6 +6,9 @@ Usage: include "alfresco-content-services.search.flavor" $
 */}}
 {{- define "alfresco-content-services.search.flavor" -}}
 {{- with .Values }}
+  {{- if and (index . "alfresco-search" "enabled") (index . "alfresco-search-community" "enabled") }}
+    {{ fail "alfresco-search (Solr) and alfresco-search-community (Elasticsearch batch indexing) are mutually exclusive - enable only one" }}
+  {{- end }}
   {{- if .global.search.flavor }}
     {{- .global.search.flavor }}
   {{- else if (index . "alfresco-search-enterprise" "enabled") }}
@@ -15,6 +18,12 @@ Usage: include "alfresco-content-services.search.flavor" $
       {{ fail ".Values.alfresco-repository.configuration.search.flavor must be set to elasticsearch" }}
     {{- else }}
       {{- print "solr6" }}{{/* migration scenario when both engines are enabled */}}
+    {{- end }}
+  {{- else if (index . "alfresco-search-community" "enabled") }}
+    {{- if eq (index . "alfresco-repository" "configuration" "search" "flavor") "elasticsearch" }}
+      {{- print "elasticsearch" }}
+    {{- else }}
+      {{ fail ".Values.alfresco-repository.configuration.search.flavor must be set to elasticsearch" }}
     {{- end }}
   {{- else if (index . "alfresco-search" "enabled") }}
     {{- if eq (index . "alfresco-repository" "configuration" "search" "flavor") "solr6" }}
