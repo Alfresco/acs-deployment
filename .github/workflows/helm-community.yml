@@ -1,5 +1,6 @@
 ---
 name: Helm (Community)
+
 on:
   pull_request_review:
     types: [submitted]
@@ -18,9 +19,14 @@ on:
     branches:
       - master
       - release/**
+
 concurrency:
   group: helm-com-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   build_vars:
     runs-on: ubuntu-slim
