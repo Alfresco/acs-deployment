@@ -55,7 +55,7 @@ data:
       {{- printf "SOLR_BASE_URL: %s" (include "alfresco-common.url.path" $search_url | default "/solr") | nindent 2 }}
     {{- end }}
   {{- end }}
-  SEARCH_FLAVOR: {{ template "alfresco-content-services.search.flavor" . }}
+  SEARCH_FLAVOR: {{ template "alfresco-content-services.repository.searchFlavor" . }}
   {{- with (index .Values "alfresco-transform-service") }}
   {{- $atsCtx := dict "Values" . "Chart" $.Chart "Release" $.Release }}
   {{- if and .enabled .filestore.enabled .transformrouter.enabled }}
