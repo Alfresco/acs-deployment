@@ -422,14 +422,6 @@ alfresco-search-community:
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
-  transform:
-    # The media types cache is disabled below, so this endpoint is never
-    # queried; the chart still requires a value to be set.
-    url: http://localhost/transform/config
-  sharedSecret:
-    value: notused
-  environment:
-    ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_ENABLED: "false"
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"

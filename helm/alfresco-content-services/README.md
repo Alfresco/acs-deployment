@@ -28,19 +28,19 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.11.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.8.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.9.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.7.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-community | 0.1.0-alpha.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 5.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.8.0-alpha.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-community | 0.1.0-alpha.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 5.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.4.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.12.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.9.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.7.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.6.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.7.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.7.0-alpha.0 |
 
 ## Values
 
@@ -137,13 +137,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-community.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-community.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-community.enabled | bool | `false` | Elasticsearch batch indexing for ACS Community. Mutually exclusive with `alfresco-search` (Solr) and `alfresco-search-enterprise` (which defaults to enabled); enabling it alongside either fails the render. Requires `elasticsearch.enabled: true` and `alfresco-repository.configuration.search.flavor: elasticsearch`. |
-| alfresco-search-community.environment.ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_ENABLED | string | `"false"` |  |
 | alfresco-search-community.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-community.index.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search-community.nameOverride | string | `"alfresco-search-community"` |  |
 | alfresco-search-community.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
-| alfresco-search-community.sharedSecret.value | string | `"notused"` |  |
-| alfresco-search-community.transform.url | string | `"http://localhost/transform/config"` |  |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.6.0"` |  |
