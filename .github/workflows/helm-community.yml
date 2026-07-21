@@ -48,14 +48,13 @@ jobs:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
-            | select(.values=="community_values.yaml" or .name=="acs-sso-example")]
+            | select(.values=="community_values.yaml" or .name=="acs-sso-example")
+            | (. + {test_values: "community-integration-test-values.yaml"}),
+              (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml"})]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
-          BASE=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}' \
-            | jq -c 'map(. + {test_values: "community-integration-test-values.yaml"})')
-          ES=$(echo "$BASE" | jq -c 'map(select(.name=="alfresco-content-services") | .test_values = "community-es-integration-test-values.yaml")')
-          VERS=$(jq -nc --argjson a "$BASE" --argjson b "$ES" '$a + $b')
-          echo "json=$VERS" >> $GITHUB_OUTPUT
+          MATRIX=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
+          echo "json=$MATRIX" >> $GITHUB_OUTPUT
 
   community_charts:
     runs-on: ubuntu-latest
