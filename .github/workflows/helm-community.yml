@@ -59,13 +59,14 @@ jobs:
 
   community_charts:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 14
     needs:
       - build_vars
     env:
       REGISTRY_SECRET_NAME: ${{ github.event.pull_request.head.repo.fork && '' || 'regcred' }}
       POD_METRICS_LOG: /tmp/pod-metrics.log
       NODE_METRICS_LOG: /tmp/node-metrics.log
+      HELM_INSTALL_TIMEOUT: 10m0s
     strategy:
       fail-fast: false
       matrix:
@@ -124,7 +125,7 @@ jobs:
             --set global.known_urls=http://${{ steps.setup-kind.outputs.ingress-endpoint }} \
             --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
-            --wait --timeout 6m0s \
+            --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }} \
             --values ${{ matrix.values }} \
             --values ../../test/${{ matrix.test_values }}
         working-directory: helm/${{ matrix.name }}
