@@ -32,6 +32,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.8.0-alpha.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-community | 0.1.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 5.2.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.3.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.4.0 |
@@ -133,6 +134,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
+| alfresco-search-community.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-search-community.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
+| alfresco-search-community.enabled | bool | `false` | Elasticsearch batch indexing for ACS Community. Mutually exclusive with `alfresco-search` (Solr) and `alfresco-search-enterprise` (which defaults to enabled); enabling it alongside either fails the render. Requires `elasticsearch.enabled: true` and `alfresco-repository.configuration.search.flavor: elasticsearch`. |
+| alfresco-search-community.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-search-community.index.existingSecret.name | string | `"alfresco-search-secret"` |  |
+| alfresco-search-community.nameOverride | string | `"alfresco-search-community"` |  |
+| alfresco-search-community.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.6.0"` |  |

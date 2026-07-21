@@ -65,6 +65,10 @@ dependencies:
     version: 5.2.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-search-enterprise.enabled
+  - name: alfresco-search-community
+    version: 0.1.0-alpha.1
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    condition: alfresco-search-community.enabled
   - name: alfresco-connector-msteams
     version: 2.8.0
     repository: https://alfresco.github.io/alfresco-helm-charts/

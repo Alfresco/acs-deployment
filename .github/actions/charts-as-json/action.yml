@@ -7,13 +7,16 @@ inputs:
     type: string
 outputs:
   all:
-    description: matrix object charts
+    description: >-
+      JSON object of every chart found under charts-root, shaped as
+      {"charts":[{name, type, version, values}, ...]}. `values` is the array of
+      *values.yaml filenames in the chart dir (excluding linter_values.yaml).
     value: ${{ steps.getcharts.outputs.all }}
   app:
-    description: matrix object apps
+    description: Same shape as `all`, filtered to application charts (type != "library").
     value: ${{ steps.getcharts.outputs.app }}
   lib:
-    description: matrix object libs
+    description: Same shape as `all`, filtered to library charts (type == "library").
     value: ${{ steps.getcharts.outputs.lib }}
 description: Return as JSON string with charts details
 runs:

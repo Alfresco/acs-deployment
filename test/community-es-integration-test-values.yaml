@@ -1,0 +1,148 @@
+---
+# Overlay on top of community_values.yaml that switches the community stack from
+# Solr to the Elasticsearch batch indexing component (alfresco-search-community),
+# with resource sizing tuned for the KIND integration runner.
+alfresco-search:
+  enabled: false
+alfresco-search-community:
+  enabled: true
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      cpu: "2"
+      memory: "1Gi"
+  environment:
+    JAVA_OPTS: "-Xms256m -Xmx768m"
+elasticsearch:
+  enabled: true
+  elasticsearch:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        memory: "1.5Gi"
+    livenessProbe:
+      initialDelaySeconds: 100
+    readinessProbe:
+      initialDelaySeconds: 100
+alfresco-repository:
+  image:
+    tag: 26.2.0-A.23
+  configuration:
+    search:
+      flavor: elasticsearch
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "1Gi"
+    limits:
+      cpu: "2"
+      memory: "2Gi"
+  environment:
+    JAVA_OPTS: >-
+      -XX:MaxRAMPercentage=65
+share: &share_values
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      cpu: "2"
+      memory: "1Gi"
+  readinessProbe:
+    initialDelaySeconds: 60
+    timeoutSeconds: 45
+  livenessProbe:
+    initialDelaySeconds: 60
+    timeoutSeconds: 45
+  environment:
+    CATALINA_OPTS: >-
+      -XX:MinRAMPercentage=50
+      -XX:MaxRAMPercentage=75
+alfresco-share: *share_values # acs-sso-example uses alfresco-share
+alfresco-transform-service:
+  pdfrenderer:
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        cpu: "2"
+        memory: "512Mi"
+  imagemagick:
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
+  libreoffice:
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
+  tika:
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
+  transformmisc:
+    livenessProbe:
+      initialDelaySeconds: 30
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        cpu: "2"
+        memory: "1Gi"
+  filestore:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "256Mi"
+      limits:
+        cpu: "2"
+        memory: "512Mi"
+postgresql:
+  primary:
+    resources:
+      requests:
+        cpu: "0.01"
+        memory: "512Mi"
+      limits:
+        memory: "1Gi"
+alfresco-audit-storage:
+  enabled: false
+dtas:
+  enabled: true
+  config:
+    assertions:
+      acs:
+        edition: Community
+        modules:
+        - id: org.alfresco.integrations.google.docs
+          version: 4.1.0
+          installed: true
+        - id: alfresco-aos-module
+          version: 3.3.0
+          installed: true
+      adw: null

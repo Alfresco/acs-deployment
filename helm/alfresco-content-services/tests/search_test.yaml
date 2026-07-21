@@ -132,6 +132,110 @@ tests:
           path: data.SEARCH_FLAVOR
           value: elasticsearch
 
+  - it: should render a community search config (elasticsearch batch indexing)
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-search-community:
+        enabled: true
+      elasticsearch:
+        enabled: true
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: elasticsearch
+    template: config-infrastructure.yaml
+    asserts:
+      - equal:
+          path: data.SEARCH_FLAVOR
+          value: elasticsearch
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: none
+      - equal:
+          path: data.SEARCH_URL
+          value: http://RELEASE-NAME-elasticsearch:9200
+
+  - it: should complain when both solr and community search are enabled
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: true
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-search-community:
+        enabled: true
+    template: secret-search.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            alfresco-search (Solr) and alfresco-search-community (Elasticsearch
+            batch indexing) are mutually exclusive - enable only one
+
+  - it: should complain when both enterprise and community search are enabled
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: true
+      alfresco-search-community:
+        enabled: true
+    template: secret-search.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            alfresco-search-enterprise and alfresco-search-community
+            (Elasticsearch batch indexing) are mutually exclusive - enable only
+            one
+
+  - it: should complain on community search flavour mismatch
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-search-community:
+        enabled: true
+      elasticsearch:
+        enabled: true
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: solr6
+    template: secret-search.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            .Values.alfresco-repository.configuration.search.flavor must be set to elasticsearch
+
+  - it: should complain when community search has no elasticsearch backend
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-search-community:
+        enabled: true
+      elasticsearch:
+        enabled: false
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: elasticsearch
+    template: secret-search.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            alfresco-search-community (Elasticsearch batch indexing) requires an
+            Elasticsearch backend - set elasticsearch.enabled or
+            global.search.url
+
   - it: should not render a secret render property with default credentials
     values: *testvalues
     set:

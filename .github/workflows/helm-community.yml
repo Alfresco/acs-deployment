@@ -1,5 +1,6 @@
 ---
 name: Helm (Community)
+
 on:
   pull_request_review:
     types: [submitted]
@@ -14,13 +15,19 @@ on:
       - test/postman/helm/**
       - .github/workflows/helm*
       - test/community-integration-test-values.yaml
+      - test/community-es-integration-test-values.yaml
   push:
     branches:
       - master
       - release/**
+
 concurrency:
   group: helm-com-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   build_vars:
     runs-on: ubuntu-slim
@@ -48,21 +55,27 @@ jobs:
           JSON: ${{ toJSON(fromJSON(steps.getcharts.outputs.all)) }}
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
-            | select(.values=="community_values.yaml" or .name=="acs-sso-example")]
+            | select(.values=="community_values.yaml" or .name=="acs-sso-example")
+            | (. + {test_values: "community-integration-test-values.yaml",
+                    label: (if .name=="alfresco-content-services" then "alfresco-content-services (solr)" else .name end)}),
+              (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml",
+                    label: "alfresco-content-services (elasticsearch)"})]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
-          VERS=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
-          echo "json=$VERS" >> $GITHUB_OUTPUT
+          MATRIX=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
+          echo "json=$MATRIX" >> $GITHUB_OUTPUT
 
   community_charts:
+    name: ${{ matrix.label }}
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 14
     needs:
       - build_vars
     env:
       REGISTRY_SECRET_NAME: ${{ github.event.pull_request.head.repo.fork && '' || 'regcred' }}
       POD_METRICS_LOG: /tmp/pod-metrics.log
       NODE_METRICS_LOG: /tmp/node-metrics.log
+      HELM_INSTALL_TIMEOUT: 10m0s
     strategy:
       fail-fast: false
       matrix:
@@ -121,9 +134,9 @@ jobs:
             --set global.known_urls=http://${{ steps.setup-kind.outputs.ingress-endpoint }} \
             --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }} \
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
-            --wait --timeout 6m0s \
+            --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }} \
             --values ${{ matrix.values }} \
-            --values ../../test/community-integration-test-values.yaml
+            --values ../../test/${{ matrix.test_values }}
         working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status after Helm install
@@ -195,4 +208,4 @@ jobs:
         with:
           namespace: default
           log_retention: 7
-          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}"
+          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}-${{ matrix.test_values }}"
