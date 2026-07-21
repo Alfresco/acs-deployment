@@ -49,14 +49,17 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | select(.values=="community_values.yaml" or .name=="acs-sso-example")
-            | (. + {test_values: "community-integration-test-values.yaml"}),
-              (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml"})]
+            | (. + {test_values: "community-integration-test-values.yaml",
+                    label: (if .name=="alfresco-content-services" then "alfresco-content-services (solr)" else .name end)}),
+              (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml",
+                    label: "alfresco-content-services (elasticsearch)"})]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
           MATRIX=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
           echo "json=$MATRIX" >> $GITHUB_OUTPUT
 
   community_charts:
+    name: ${{ matrix.label }}
     runs-on: ubuntu-latest
     timeout-minutes: 14
     needs:
