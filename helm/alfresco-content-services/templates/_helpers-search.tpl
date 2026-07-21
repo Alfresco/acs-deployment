@@ -38,25 +38,6 @@ Usage: include "alfresco-content-services.search.flavor" $
 {{- end -}}
 
 {{/*
-Compute the repository's index subsystem (the SEARCH_FLAVOR the repository runs).
-
-This mirrors the deployment search flavor, except for Community Elasticsearch
-batch indexing (alfresco-search-community): Elasticsearch is populated
-out-of-process by the batch indexer, so the repository runs no search subsystem
-(Community has no elasticsearch subsystem) and must use noindex.
-
-Usage: include "alfresco-content-services.repository.searchFlavor" $
-
-*/}}
-{{- define "alfresco-content-services.repository.searchFlavor" -}}
-{{- if index .Values "alfresco-search-community" "enabled" -}}
-{{- print "noindex" -}}
-{{- else -}}
-{{- include "alfresco-content-services.search.flavor" . -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
 Compute the url for elasticsearch for audit
 
 Usage: include "alfresco-content-services.audit.elasticsearchUrl" $

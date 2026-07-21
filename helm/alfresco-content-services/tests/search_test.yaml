@@ -147,7 +147,7 @@ tests:
     asserts:
       - equal:
           path: data.SEARCH_FLAVOR
-          value: noindex
+          value: elasticsearch
       - equal:
           path: data.SEARCH_SECURECOMMS
           value: none
