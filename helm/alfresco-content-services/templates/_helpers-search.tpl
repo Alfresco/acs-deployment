@@ -20,10 +20,12 @@ Usage: include "alfresco-content-services.search.flavor" $
       {{- print "solr6" }}{{/* migration scenario when both engines are enabled */}}
     {{- end }}
   {{- else if (index . "alfresco-search-community" "enabled") }}
-    {{- if eq (index . "alfresco-repository" "configuration" "search" "flavor") "elasticsearch" }}
-      {{- print "elasticsearch" }}
-    {{- else }}
+    {{- if ne (index . "alfresco-repository" "configuration" "search" "flavor") "elasticsearch" }}
       {{ fail ".Values.alfresco-repository.configuration.search.flavor must be set to elasticsearch" }}
+    {{- else if not (or (index . "elasticsearch" "enabled") .global.search.url) }}
+      {{ fail "alfresco-search-community (Elasticsearch batch indexing) requires an Elasticsearch backend - set elasticsearch.enabled or global.search.url" }}
+    {{- else }}
+      {{- print "elasticsearch" }}
     {{- end }}
   {{- else if (index . "alfresco-search" "enabled") }}
     {{- if eq (index . "alfresco-repository" "configuration" "search" "flavor") "solr6" }}
