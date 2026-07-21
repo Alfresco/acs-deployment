@@ -29,6 +29,8 @@ elasticsearch:
     readinessProbe:
       initialDelaySeconds: 100
 alfresco-repository:
+  image:
+    tag: 26.2.0-A.23
   configuration:
     search:
       flavor: elasticsearch
