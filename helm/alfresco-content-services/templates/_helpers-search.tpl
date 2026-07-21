@@ -9,6 +9,9 @@ Usage: include "alfresco-content-services.search.flavor" $
   {{- if and (index . "alfresco-search" "enabled") (index . "alfresco-search-community" "enabled") }}
     {{ fail "alfresco-search (Solr) and alfresco-search-community (Elasticsearch batch indexing) are mutually exclusive - enable only one" }}
   {{- end }}
+  {{- if and (index . "alfresco-search-enterprise" "enabled") (index . "alfresco-search-community" "enabled") }}
+    {{ fail "alfresco-search-enterprise and alfresco-search-community (Elasticsearch batch indexing) are mutually exclusive - enable only one" }}
+  {{- end }}
   {{- if .global.search.flavor }}
     {{- .global.search.flavor }}
   {{- else if (index . "alfresco-search-enterprise" "enabled") }}

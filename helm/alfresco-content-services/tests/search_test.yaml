@@ -143,6 +143,10 @@ tests:
         enabled: true
       elasticsearch:
         enabled: true
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: elasticsearch
     template: config-infrastructure.yaml
     asserts:
       - equal:
@@ -170,6 +174,23 @@ tests:
           errorMessage: >-
             alfresco-search (Solr) and alfresco-search-community (Elasticsearch
             batch indexing) are mutually exclusive - enable only one
+
+  - it: should complain when both enterprise and community search are enabled
+    values: *testvalues
+    set:
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: true
+      alfresco-search-community:
+        enabled: true
+    template: secret-search.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            alfresco-search-enterprise and alfresco-search-community
+            (Elasticsearch batch indexing) are mutually exclusive - enable only
+            one
 
   - it: should complain on community search flavour mismatch
     values: *testvalues
@@ -203,6 +224,10 @@ tests:
         enabled: true
       elasticsearch:
         enabled: false
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: elasticsearch
     template: secret-search.yaml
     asserts:
       - failedTemplate:

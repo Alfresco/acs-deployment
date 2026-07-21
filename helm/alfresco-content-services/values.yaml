@@ -403,7 +403,8 @@ alfresco-search-enterprise:
       tag: 5.6.0
 alfresco-search-community:
   # -- Elasticsearch batch indexing for ACS Community. Mutually exclusive with
-  # `alfresco-search` (Solr); enabling both fails the render. Requires
+  # `alfresco-search` (Solr) and `alfresco-search-enterprise` (which defaults to
+  # enabled); enabling it alongside either fails the render. Requires
   # `elasticsearch.enabled: true` and
   # `alfresco-repository.configuration.search.flavor: elasticsearch`.
   enabled: false
