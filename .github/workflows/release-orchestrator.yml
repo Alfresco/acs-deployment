@@ -104,44 +104,36 @@ jobs:
       - name: Refresh helm-docs
         run: helm-docs
 
-      - name: Prepare release branch
+      - name: Compute release title and branch
         id: commit
         env:
           ACS_NEXT: ${{ steps.version.outputs.acs_next }}
           RELEASE_NAME: ${{ inputs.release-name }}
           JIRA_ID: ${{ inputs.jira-id }}
-          GH_TOKEN: ${{ github.token }}
         run: |
           jira_prefix="${JIRA_ID:+${JIRA_ID} }"
           title="${jira_prefix}release: prepare ${ACS_NEXT} (${RELEASE_NAME})"
           sanitized=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | tr -s '-' | sed 's/-$//')
           branch="prepare/release-${sanitized}"
-          git checkout -B "$branch"
-          git push origin "$branch" --force
           echo "title=$title"   >> "$GITHUB_OUTPUT"
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
       - name: Create draft PR
         id: pr
-        env:
-          ACS_CURRENT: ${{ steps.version.outputs.acs_current }}
-          ACS_NEXT: ${{ steps.version.outputs.acs_next }}
-          SSO_NEXT: ${{ steps.version.outputs.sso_next }}
-          RELEASE_NAME: ${{ inputs.release-name }}
-          TITLE: ${{ steps.commit.outputs.title }}
-          BRANCH: ${{ steps.commit.outputs.branch }}
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
           base: master
+          branch: ${{ steps.commit.outputs.branch }}
           draft: true
+          title: ${{ steps.commit.outputs.title }}
           commit-message: ${{ steps.commit.outputs.title }}
           add-paths: |
             helm/**
             docker-compose/**
           body: |
-            Prepares release `${ACS_NEXT}` (_${RELEASE_NAME}_).
+            Prepares release `${{ steps.version.outputs.acs_next }}` (_${{ inputs.release-name }}_).
 
-            Merged `updatecli-bump-acs` and `updatecli-bump-helm`, bumped `alfresco-content-services` `${ACS_CURRENT}` → `${ACS_NEXT}` and `acs-sso-example` to `${SSO_NEXT}`, and refreshed helm-docs.
+            Merged `updatecli-bump-acs` and `updatecli-bump-helm`, bumped `alfresco-content-services` `${{ steps.version.outputs.acs_current }}` → `${{ steps.version.outputs.acs_next }}` and `acs-sso-example` to `${{ steps.version.outputs.sso_next }}`, and refreshed helm-docs.
 
             ## Checklist
             - [ ] Review and update `docs/helm/upgrades.md`
