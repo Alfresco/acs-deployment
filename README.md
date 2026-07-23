@@ -17,81 +17,13 @@ Compose](https://docs.docker.com/compose) or on
 
 User docs available at: [https://alfresco.github.io/acs-deployment/](https://alfresco.github.io/acs-deployment/)
 
-## ⚠️ Important changes for Helm charts
+## ⚠️ Important changes
 
-### Traefik as the recommended Ingress Controller (March 2026)
+Breaking changes and other notable announcements are now tracked by version in
+the docs site:
 
-Since ingress-nginx is [being
-deprecated](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), we
-have started switching to [Traefik](https://doc.traefik.io/traefik/) as the
-recommended Ingress Controller for our Helm charts and for our CI pipelines. The
-new [Traefik guide](docs/helm/traefik.md) provides instructions for installing
-Traefik and configuring it to work with our charts.
-
-For KinD deployments, we also started using
-[cloud-provider-kind](docs/helm/kind-deployment.md#step-3-install-cloud-provider-kind)
-plugin that allows to use LoadBalancer type services natively, which makes
-testing more similar to a real Kubernetes environment.
-
-### Bitnami discontinuation (September 2025)
-
-We migrated from using Bitnami charts for PostgreSQL, Elasticsearch and Kibana
-to our own charts due to changes to the Bitnami Catalog. See the
-[Bitnami announcement](https://github.com/bitnami/containers/issues/83267)
-
-PostgreSQL is now deployed using our own Helm chart
-[postgres](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/postgres).
-⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
-use this chart in any staging, or production environment. Read more in the chart
-readme.
-
-Elasticsearch and Kibana are now deployed using
-[elastic](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/elastic).
-⚠️ This chart is meant to ease initial deployment for TESTING purposes. DO NOT
-use this chart in any staging, or production environment. Read more in the chart
-readme.
-
-## ⚠️ Important changes for Docker Compose
-
-### ActiveMQ authentication enabled for ACS 26 and later (March 2026)
-
-Starting with ACS 26, the `alfresco-activemq:6.2.x` Docker image used by the
-Docker Compose bundles has authentication enabled by default. This change
-provides better security and ensures that credentials are required and
-validated for each component when connecting to ActiveMQ. When using this
-image, make sure that:
-
-* on the broker (`alfresco-activemq` service), `ACTIVEMQ_ADMIN_LOGIN` and
-  `ACTIVEMQ_ADMIN_PASSWORD` are set, and
-* in each ACS service that connects to ActiveMQ, `SPRING_ACTIVEMQ_USER` and
-  `SPRING_ACTIVEMQ_PASSWORD` are configured with the same values.
-
-When using older ActiveMQ images (prior to `alfresco-activemq:6.2.x`),
-authentication remains disabled by default for backward compatibility, but we
-recommend upgrading to the latest image to benefit from improved security and
-performance.
-
-### Repository content store persistence
-
-We've introduced an anonymous volume for the alfresco service to ensure content
-store data remains intact across container restarts. This enhancement improves
-the user experience when fine-tuning Compose files and allows for repeated use
-of `docker compose up -d` without data loss.
-
-### Compose extends feature
-
-We have started to leverage
-[extends](https://docs.docker.com/compose/how-tos/multiple-compose-files/extends/)
-feature of docker compose to improve maintainability of the compose files we
-provide. This means that any compose file in
-[docker-compose](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose)
-folder cannot be used anymore as a standalone file but must be invoked within
-that folder.
-
-If you want to further customize the compose files, make sure to understand and
-use the definitions included in the
-[commons](https://github.com/Alfresco/acs-deployment/tree/master/docker-compose/commons)
-folder.
+* [Helm charts upgrades](https://alfresco.github.io/acs-deployment/helm/upgrades.html)
+* [Docker Compose upgrades](https://alfresco.github.io/acs-deployment/docker-compose/upgrades.html)
 
 ## License
 

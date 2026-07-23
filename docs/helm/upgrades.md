@@ -27,6 +27,10 @@ version in which they have been released.
   unauthenticated exposure is not possible anymore. There are no breaking
   changes as of now but we will likely change the default ingress class in the
   future.
+* For KinD deployments, we also started using
+  [cloud-provider-kind](kind-deployment.md#step-3-install-cloud-provider-kind)
+  plugin that allows to use LoadBalancer type services natively, which makes
+  testing more similar to a real Kubernetes environment.
 
 ## 10.0.0
 
