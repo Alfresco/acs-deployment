@@ -16,6 +16,14 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## 10.3.1
+
+* `alfresco-search` (Search Services / Solr, Enterprise) is no longer supported
+  starting with ACS v26, so its `searchServicesImage.tag` and
+  `insightEngineImage.tag` no longer have a default value (previously pinned to
+  `2.0.17`). If you still enable `alfresco-search` to run an ACS version below
+  26, you must now set both tags explicitly.
+
 ## 10.3.0
 
 * ingress-nginx is being deprecated and we are moving to a more generic ingress

@@ -60,3 +60,10 @@ version in which they have been released.
   content store data remains intact across container restarts. This
   enhancement improves the user experience when fine-tuning Compose files and
   allows for repeated use of `docker compose up -d` without data loss.
+
+## 8.5.0
+
+* The Docker Compose deployment has moved from a custom NGINX based proxy to a
+  Traefik based proxy. If you customized the previous NGINX proxy
+  configuration, see the [Alfresco Proxy (proxy)](README.md#alfresco-proxy-proxy)
+  section for how to configure Traefik instead.
