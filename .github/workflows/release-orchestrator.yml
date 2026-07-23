@@ -49,6 +49,11 @@ jobs:
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.19.0
 
+      - uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v18.20.0
+        with:
+          username: ${{ vars.BOT_GITHUB_USERNAME }}
+          email: ${{ vars.BOT_GITHUB_EMAIL }}
+
       - name: Verify and merge updatecli branches
         run: |
           for branch in updatecli-bump-acs updatecli-bump-helm; do
