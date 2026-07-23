@@ -30,6 +30,9 @@ alfresco-search:
   searchServicesImage:
     repository: alfresco/alfresco-search-services
     tag: 2.0.21
+alfresco-search-community:
+  image:
+    tag: 5.7.0
 # Disable Enterprise only features
 alfresco-transform-service:
   enabled: true
