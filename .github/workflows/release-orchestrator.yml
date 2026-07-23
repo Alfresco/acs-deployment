@@ -57,8 +57,8 @@ jobs:
               exit 1
             fi
           done
-          git merge --no-ff --no-edit origin/updatecli-bump-acs
-          git merge --no-ff --no-edit origin/updatecli-bump-helm
+          git merge --ff-only --no-edit origin/updatecli-bump-acs
+          git merge --ff-only --no-edit origin/updatecli-bump-helm
 
       - name: Compute next versions
         id: version
