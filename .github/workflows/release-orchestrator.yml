@@ -57,8 +57,9 @@ jobs:
               exit 1
             fi
           done
-          git merge --ff-only --no-edit origin/updatecli-bump-acs
-          git merge --ff-only --no-edit origin/updatecli-bump-helm
+          git merge --no-ff --no-edit origin/updatecli-bump-acs
+          git merge --no-ff --no-edit origin/updatecli-bump-helm
+          git reset "${{ steps.base.outputs.sha }}"
 
       - name: Compute next versions
         id: version
