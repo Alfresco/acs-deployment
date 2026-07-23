@@ -13,11 +13,10 @@ Elasticsearch cluster, which the repository then queries for search.
 
 ## Requirements
 
-- The repository image must be
-  `alfresco/alfresco-content-repository-community:26.2.0-A.23` or newer. The
-  Community `elasticsearch` search subsystem is not present in `26.1.0` (the
-  default tag in `community_values.yaml`) and the repository would fail to start
-  with `No bean named 'elasticsearch' available`.
+- The repository image must be `26.2.0` or newer (the default tag in
+  `community_values.yaml` already satisfies this). Older versions don't have the
+  Community `elasticsearch` search subsystem and the repository would fail to
+  start with `No bean named 'elasticsearch' available`.
 - This option is mutually exclusive with Solr (`alfresco-search`) and with
   Enterprise search (`alfresco-search-enterprise`). The chart fails the render if
   more than one search backend is enabled. `community_values.yaml` already
@@ -32,8 +31,6 @@ provide an overlay that switches the backend to Elasticsearch. Save it as
 
 ```yaml
 alfresco-repository:
-  image:
-    tag: 26.2.0-A.23
   configuration:
     search:
       flavor: elasticsearch
