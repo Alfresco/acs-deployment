@@ -1,8 +1,6 @@
 ---
 name: Helm static checks
 on:
-  pull_request_review:
-    types: [submitted]
   pull_request:
     branches:
       - master
@@ -19,13 +17,6 @@ on:
 jobs:
   build_vars:
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name != 'pull_request_review'
-      || (
-        github.event_name == 'pull_request_review'
-        && github.event.review.state == 'approved'
-        && github.event.pull_request.user.login == 'github-actions[bot]'
-      )
     outputs:
       app_charts: ${{ steps.getcharts.outputs.app }}
       lib_charts: ${{ steps.getcharts.outputs.lib }}
