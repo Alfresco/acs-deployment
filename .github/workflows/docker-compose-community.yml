@@ -2,8 +2,6 @@
 name: Docker Compose (Community)
 
 on:
-  pull_request_review:
-    types: [submitted]
   pull_request:
     branches:
       - master
@@ -23,13 +21,6 @@ jobs:
   compose_community:
     name: Docker Compose community
     runs-on: ubuntu-latest
-    if: >-
-      github.event_name != 'pull_request_review'
-      || (
-        github.event_name == 'pull_request_review'
-        && github.event.review.state == 'approved'
-        && github.event.pull_request.user.login == 'github-actions[bot]'
-      )
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - uses: >-

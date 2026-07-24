@@ -27,13 +27,8 @@ jobs:
   build_vars:
     runs-on: ubuntu-latest
     if: >-
-      github.event_name == 'push'
-      || (github.event_name == 'pull_request' && github.actor != 'dependabot[bot]')
-      || (
-        github.event_name == 'pull_request_review'
-        && github.event.review.state == 'approved'
-        && github.event.pull_request.user.login == 'github-actions[bot]'
-      )
+      (github.event.review.state == 'approved' && github.event.pull_request.user.login == 'dependabot[bot]') ||
+      (github.actor != 'dependabot[bot]' && github.event_name != 'pull_request_review')
     outputs:
       matrix_json: ${{ steps.eval.outputs.matrix_json }}
     steps:
