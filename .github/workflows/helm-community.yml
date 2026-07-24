@@ -2,8 +2,6 @@
 name: Helm (Community)
 
 on:
-  pull_request_review:
-    types: [submitted]
   pull_request:
     branches:
       - master
@@ -33,13 +31,6 @@ jobs:
     runs-on: ubuntu-slim
     outputs:
       ver_json: ${{ steps.app_versions.outputs.json }}
-    if: >-
-      github.event_name != 'pull_request_review'
-      || (
-        github.event_name == 'pull_request_review'
-        && github.event.review.state == 'approved'
-        && github.event.pull_request.user.login == 'dependabot[bot]'
-      )
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
@@ -72,7 +63,7 @@ jobs:
     needs:
       - build_vars
     env:
-      REGISTRY_SECRET_NAME: ${{ github.event.pull_request.head.repo.fork && '' || 'regcred' }}
+      REGISTRY_SECRET_NAME: ${{ (github.event.pull_request.head.repo.fork || github.actor == 'dependabot[bot]') && '' || 'regcred' }}
       POD_METRICS_LOG: /tmp/pod-metrics.log
       NODE_METRICS_LOG: /tmp/node-metrics.log
       HELM_INSTALL_TIMEOUT: 10m0s
@@ -90,7 +81,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@06fb636fac595d6fb4b28a5dfcb21a6f5091859c  # v4.5.0
         if: >-
-          ! github.event.pull_request.head.repo.fork
+          ! github.event.pull_request.head.repo.fork && github.actor != 'dependabot[bot]'
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
