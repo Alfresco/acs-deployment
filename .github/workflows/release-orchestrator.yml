@@ -47,9 +47,9 @@ jobs:
         id: base
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.19.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.0
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v18.20.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v18.21.0
         with:
           username: ${{ vars.BOT_GITHUB_USERNAME }}
           email: ${{ vars.BOT_GITHUB_EMAIL }}

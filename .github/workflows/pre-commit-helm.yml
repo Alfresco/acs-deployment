@@ -37,7 +37,7 @@ jobs:
       )
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # 7.0.1
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.19.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.0
       - name: Add dependency chart repos
         run: |
           for repo in $(yq eval-all \
