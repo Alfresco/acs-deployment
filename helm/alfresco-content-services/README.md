@@ -242,7 +242,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.assertions.acs.identity | bool | `false` |  |
 | dtas.config.assertions.acs.modules[0].id | string | `"org_alfresco_device_sync_repo"` |  |
 | dtas.config.assertions.acs.modules[0].installed | bool | `true` |  |
-| dtas.config.assertions.acs.modules[0].version | string | `"5.3.1"` |  |
+| dtas.config.assertions.acs.modules[0].version | string | `"5.3.5"` |  |
 | dtas.config.assertions.acs.modules[1].id | string | `"org.alfresco.integrations.google.docs"` |  |
 | dtas.config.assertions.acs.modules[1].installed | bool | `true` |  |
 | dtas.config.assertions.acs.modules[1].version | string | `"4.1.0"` |  |
