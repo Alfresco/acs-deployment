@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -60,9 +60,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.19.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.21.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
