@@ -5,7 +5,7 @@ parent: Docker Compose
 
 # Upgrading the Docker Compose files
 
-Our Docker Compose files are continuously improved and sometimes arise the need
+Our Docker Compose files are continuously improved and sometimes the need arises
 to introduce a breaking change.
 
 To get an overview of the changes in each release, first take a look at the

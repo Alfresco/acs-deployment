@@ -165,7 +165,7 @@ services:
       transform-core-aio:
         condition: service_healthy
     environment:
-      JAVA_OPTS: " -Xms256m -Xmx768m"
+      JAVA_OPTS: "-Xms256m -Xmx768m"
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_DATASOURCE_PASSWORD: alfresco
