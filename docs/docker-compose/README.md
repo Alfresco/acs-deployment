@@ -95,9 +95,11 @@ subgraph "Docker Compose (community)"
   Client("👥 Users")
   proxy("Traefik reverse proxy")
   acs("Alfresco Content Services")
-  ass("Alfresco Search Services")
+  bi("Batch Indexing")
+  kib("Kibana")
   pg[("PostgreSQL")]
   amq[("ActiveMQ")]
+  es[("Elasticsearch")]
   tcore("Transform Core (AIO)")
 
   acc("Alfresco Control Center")
@@ -112,11 +114,16 @@ proxy --> share
 proxy --> aca
 proxy --> acs
 
-acs --> ass
+acs --> es
 acs --> pg
 acs --> tcore
 acs --> amq
 share --> acs
+
+bi --> es
+bi --> pg
+bi --> tcore
+kib --> es
 
 ```
 
@@ -193,7 +200,8 @@ Docker Daemon).
    * Control Center: `http://localhost:8080/control-center` (`http://localhost:8080/admin` still works but is deprecated)
    * Alfresco Digital Workspace: `http://localhost:8080/workspace`
    * Share: `http://localhost:8080/share`
-   * Search administration: `http://localhost:8083/solr` (for community and older enterprise versions)
+   * Search administration: `http://localhost:8083/solr` (for older enterprise versions)
+   * Kibana (search administration for community and current enterprise versions): `http://localhost:5601`
 
 6. If you requested an extended trial license navigate to the Admin Console and
    apply your license:
@@ -457,6 +465,23 @@ share:
 | SPRING_DATASOURCE_USERNAME (reindexing only)         | Username to authenticate to the repository database                               | `alfresco`                                                                          |
 | SPRING_DATASOURCE_PASSWORD (reindexing only)         | Password to authenticate to the repository database                               | `alfresco`                                                                          |
 
+### Alfresco Search Community (batch-indexing)
+
+| Property                                              | Description                                                              | Default value                                      |
+|--------------------------------------------------------|---------------------------------------------------------------------------|-----------------------------------------------------|
+| JAVA_OPTS                                              | A set of properties that are picked up by the JVM inside the container    | `-Xms256m -Xmx768m`                                  |
+| SPRING_DATASOURCE_URL                                  | JDBC URL of the repository database                                       | `jdbc:postgresql://postgres:5432/alfresco`           |
+| SPRING_DATASOURCE_USERNAME                             | Username to authenticate to the repository database                      | `alfresco`                                           |
+| SPRING_DATASOURCE_PASSWORD                             | Password to authenticate to the repository database                      | `alfresco`                                           |
+| SPRING_ELASTICSEARCH_REST_URIS                         | URL of the Elasticsearch REST API                                         | `http://elasticsearch:9200`                          |
+| ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL        | URL where to fetch supported media types (typically t-engine AIO URL)     | `http://transform-core-aio:8090/transform/config`    |
+| ALFRESCO_ACS_URL                                       | URL of the Alfresco repository                                            | `http://alfresco:8080`                               |
+| ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET                | Shared secret used to authenticate against the repository                 | `secret`                                             |
+| ALFRESCO_REINDEX_CONTINUOUS_POLLINGINTERVAL            | How often to poll the repository for new transactions to index           | `15s`                                                |
+| ALFRESCO_REINDEX_CONTINUOUS_CATCHUPPOLLINGINTERVAL     | How often to poll while catching up on a backlog                          | `1s`                                                 |
+| ALFRESCO_REINDEX_CONTINUOUS_MAXWINDOW                  | Maximum time window of transactions processed per batch                   | `30m`                                                |
+| ALFRESCO_REINDEX_CONTINUOUS_OVERLAP                    | Overlap applied between successive windows to avoid missing transactions | `10m`                                                |
+
 ### Alfresco Search Services (solr6)
 
 | Property                      | Description                                                                                                                                                                                                                                  | Default value    |
@@ -601,7 +626,6 @@ The list below shows the location of the publicly available `Dockerfile` for the
 * [alfresco](https://github.com/Alfresco/acs-packaging/blob/master/docker-alfresco/Dockerfile)
 * [share](https://github.com/Alfresco/share/blob/master/packaging/docker/Dockerfile)
 * [content-app](https://github.com/Alfresco/alfresco-content-app/blob/master/Dockerfile)
-* [solr6](https://github.com/Alfresco/SearchServices/blob/master/search-services/packaging/src/docker/Dockerfile)
 * [transform-core-aio](https://github.com/Alfresco/alfresco-transform-core/blob/master/engines/aio/Dockerfile)
 * [activemq](https://github.com/Alfresco/alfresco-docker-activemq/blob/master/Dockerfile)
 

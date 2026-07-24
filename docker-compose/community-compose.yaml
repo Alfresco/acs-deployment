@@ -9,7 +9,7 @@
 #
 services:
   alfresco:
-    image: docker.io/alfresco/alfresco-content-repository-community:26.1.0
+    image: docker.io/alfresco/alfresco-content-repository-community:26.2.0
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -26,13 +26,10 @@ services:
         -Ddb.username=alfresco
         -Ddb.password=alfresco
         -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsolr.host=solr6
-        -Dsolr.port=8983
-        -Dsolr.http.connection.timeout=1000
-        -Dsolr.secureComms=secret
-        -Dsolr.sharedSecret=secret
-        -Dsolr.base.url=/solr
-        -Dindex.subsystem.name=solr6
+        -Dindex.subsystem.name=elasticsearch
+        -Delasticsearch.createIndexIfNotExists=true
+        -Delasticsearch.host=elasticsearch
+        -Delasticsearch.port=9200
         -Dshare.host=localhost
         -Dshare.port=8080
         -Dalfresco.host=localhost
@@ -58,7 +55,7 @@ services:
       file: commons/base.yaml
       service: alfresco
   transform-core-aio:
-    image: alfresco/alfresco-transform-core-aio:5.4.2
+    image: alfresco/alfresco-transform-core-aio:5.4.3
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
@@ -76,7 +73,7 @@ services:
       activemq:
         condition: service_healthy
   share:
-    image: docker.io/alfresco/alfresco-share:26.1.0
+    image: docker.io/alfresco/alfresco-share:26.2.0
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -118,25 +115,68 @@ services:
       timeout: 3s
       retries: 3
       start_period: 5s
-  solr6:
-    image: docker.io/alfresco/alfresco-search-services:2.0.20
-    mem_limit: 2g
+  elasticsearch:
+    image: elasticsearch:8.17.10
     environment:
-      # Solr needs to know how to register itself with Alfresco
-      SOLR_ALFRESCO_HOST: "alfresco"
-      SOLR_ALFRESCO_PORT: "8080"
-      # Alfresco needs to know how to call solr
-      SOLR_SOLR_HOST: "solr6"
-      SOLR_SOLR_PORT: "8983"
-      # Create the default alfresco and archive cores
-      SOLR_CREATE_ALFRESCO_DEFAULTS: "alfresco,archive"
-      # HTTPS or SECRET
-      ALFRESCO_SECURE_COMMS: "secret"
-      # SHARED SECRET VALUE
-      JAVA_TOOL_OPTIONS: >-
-        -Dalfresco.secureComms.secret=secret
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
     ports:
-      - "8083:8983" # Browser port
+      - 9200:9200
+      - 9300:9300
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  kibana:
+    image: kibana:8.17.10
+    mem_limit: 1g
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status"]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+      start_period: 30s
+  batch-indexing:
+    image: docker.io/alfresco/alfresco-elasticsearch-batch-indexing:5.7.0
+    mem_limit: 1g
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      alfresco:
+        condition: service_healthy
+      transform-core-aio:
+        condition: service_healthy
+    environment:
+      JAVA_OPTS: "-Xms256m -Xmx768m"
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
+      SPRING_DATASOURCE_USERNAME: alfresco
+      SPRING_DATASOURCE_PASSWORD: alfresco
+      SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
+      ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://transform-core-aio:8090/transform/config
+      ALFRESCO_ACS_URL: http://alfresco:8080
+      ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET: secret
+      ALFRESCO_REINDEX_CONTINUOUS_POLLINGINTERVAL: 15s
+      ALFRESCO_REINDEX_CONTINUOUS_CATCHUPPOLLINGINTERVAL: 1s
+      ALFRESCO_REINDEX_CONTINUOUS_MAXWINDOW: 30m
+      ALFRESCO_REINDEX_CONTINUOUS_OVERLAP: 10m
   activemq:
     image: docker.io/alfresco/alfresco-activemq:6.2.6-jre17-rockylinux8
     mem_limit: 1g
@@ -155,7 +195,7 @@ services:
       retries: 5
       start_period: 5s
   content-app:
-    image: alfresco/alfresco-content-app:7.5.0
+    image: alfresco/alfresco-content-app:8.0.0
     mem_limit: 128m
     environment:
       APP_BASE_SHARE_URL: "http://localhost:8080/aca/#/preview/s"
@@ -169,7 +209,7 @@ services:
       file: commons/base.yaml
       service: content-app
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:10.5.0
+    image: quay.io/alfresco/alfresco-control-center:11.0.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
