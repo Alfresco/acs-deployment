@@ -1,11 +1,11 @@
 # This Docker Compose file will spin up an ACS cluster on a local host.
 # It requires a minimum of 13GB Memory to distribute among containers.
 #
-# For performance tuning, assign the container memory and give a percentage of
-# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
-# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
-# More details here:
-# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
+# For performance tuning, adjust the mem_limit for each container based on available
+# system resources, then use -XX:MinRAMPercentage and -XX:MaxRAMPercentage to control
+# the JVM heap allocation. For example, setting mem_limit: 2000m and
+# -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 will allocate between 1000m and 1600m
+# of heap to the JVM.
 #
 # Note: The Docker Compose file from github.com is a limited trial that goes
 # into read-only mode after 2 days. Get the latest compose.yaml file with
@@ -15,7 +15,7 @@
 #
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:26.2.0-A.30
+    image: quay.io/alfresco/alfresco-content-repository:26.2.0
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -135,7 +135,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:26.2.0-A.30
+    image: quay.io/alfresco/alfresco-share:26.2.0
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -217,7 +217,7 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.7.0-A.5
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.7.1-A.1
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -242,7 +242,7 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.7.0-A.5
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.7.1-A.1
     mem_limit: 1g
     restart: on-failure:5
     environment:
@@ -280,7 +280,7 @@ services:
       retries: 5
       start_period: 5s
   audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:1.3.3-A.8
+    image: quay.io/alfresco/alfresco-audit-storage:1.3.3
     mem_limit: 512m
     environment:
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
@@ -302,7 +302,7 @@ services:
       elasticsearch:
         condition: service_healthy
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:8.0.0-29579693958
+    image: quay.io/alfresco/alfresco-digital-workspace:8.1.0-29991065254
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -321,7 +321,7 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:11.0.0-29579693958
+    image: quay.io/alfresco/alfresco-control-center:11.1.0-29991065254
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"

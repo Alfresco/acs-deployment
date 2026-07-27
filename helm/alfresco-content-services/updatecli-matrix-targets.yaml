@@ -307,3 +307,6 @@ matrix:
       helm_target: *helmvaluesOss
       helm_keys:
         search: $.alfresco-search.searchServicesImage.tag
+    batch-indexing:
+      helm_target: *helmvaluesOss
+      helm_key: $.alfresco-search-community.image.tag

@@ -16,6 +16,14 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## 10.3.1
+
+* `alfresco-search` (Search Services / Solr, Enterprise) is no longer supported
+  starting with ACS v26, so its `searchServicesImage.tag` and
+  `insightEngineImage.tag` no longer have a default value (previously pinned to
+  `2.0.17`). If you still enable `alfresco-search` to run an ACS version below
+  26, you must now set both tags explicitly.
+
 ## 10.3.0
 
 * ingress-nginx is being deprecated and we are moving to a more generic ingress
@@ -27,6 +35,10 @@ version in which they have been released.
   unauthenticated exposure is not possible anymore. There are no breaking
   changes as of now but we will likely change the default ingress class in the
   future.
+* For KinD deployments, we also started using
+  [cloud-provider-kind](kind-deployment.md#step-3-install-cloud-provider-kind)
+  plugin that allows to use LoadBalancer type services natively, which makes
+  testing more similar to a real Kubernetes environment.
 
 ## 10.0.0
 

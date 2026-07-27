@@ -178,9 +178,9 @@ matrix:
     share:
       compose_target: *composeOss
       compose_key: $.services.share.image
-    search:
+    batch-indexing:
       compose_target: *composeOss
-      compose_key: $.services.solr6.image
+      compose_key: $.services.batch-indexing.image
     tengine-aio:
       image: alfresco/alfresco-transform-core-aio
       compose_target: *composeOss
