@@ -412,6 +412,10 @@ alfresco-search-community:
   # `alfresco-repository.configuration.search.flavor: elasticsearch`.
   enabled: false
   nameOverride: alfresco-search-community
+  environment:
+    # Override default /alfresco/service/api/solr/textContent which depends on deployment-specific routing.
+    # The /alfresco prefix is provided by ALFRESCO_ACS_URL with trailing slash.
+    ALFRESCO_CONTENT_TRANSFORM_URLPATH: /service/api/solr/textContent
   index:
     existingConfigMap:
       name: *infrastructure_cmName

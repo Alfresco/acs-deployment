@@ -137,6 +137,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-community.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-community.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-community.enabled | bool | `false` | Elasticsearch batch indexing for ACS Community. Mutually exclusive with `alfresco-search` (Solr) and `alfresco-search-enterprise` (which defaults to enabled); enabling it alongside either fails the render. Requires `elasticsearch.enabled: true` and `alfresco-repository.configuration.search.flavor: elasticsearch`. |
+| alfresco-search-community.environment.ALFRESCO_CONTENT_TRANSFORM_URLPATH | string | `"/service/api/solr/textContent"` |  |
 | alfresco-search-community.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-community.index.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search-community.nameOverride | string | `"alfresco-search-community"` |  |
