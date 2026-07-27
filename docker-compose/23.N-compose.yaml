@@ -1,11 +1,11 @@
 # This Docker Compose file will spin up an ACS cluster on a local host.
 # It requires a minimum of 13GB Memory to distribute among containers.
 #
-# For performance tuning, assign the container memory and give a percentage of
-# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
-# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
-# More details here:
-# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
+# For performance tuning, adjust the mem_limit for each container based on available
+# system resources, then use -XX:MinRAMPercentage and -XX:MaxRAMPercentage to control
+# the JVM heap allocation. For example, setting mem_limit: 2000m and
+# -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 will allocate between 1000m and 1600m
+# of heap to the JVM.
 #
 # Note: The Docker Compose file from github.com is a limited trial that goes
 # into read-only mode after 2 days. Get the latest compose.yaml file with

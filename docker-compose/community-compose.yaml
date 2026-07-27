@@ -1,11 +1,20 @@
-# This Docker Compose file will spin up an ACS community installation on a local host.
-# It requires at least 6GB of memory available to distribute among containers.
+# This Docker Compose file will spin up an ACS community installation on a local
+# host. It requires at least 6GB of memory available to distribute among
+# containers.
 #
-# For performance tuning, increase each container mem_limit and give a percentage of
-# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
-# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
-# More details here:
-# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
+# This setup uses the new batch-indexing component for search instead of the
+# deprecated Solr search service (officially deprecated since ACS 26.2.0).
+# However, the Solr endpoint is still required for content transformation. The
+# solr.secureComms and solr.sharedSecret properties must be set to enable secure
+# communication with Solr for transformations. The shared secret value must
+# match between the Alfresco service (solr.sharedSecret) and the batch-indexing
+# service (ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET).
+#
+# For performance tuning, adjust the mem_limit for each container based on available
+# system resources, then use -XX:MinRAMPercentage and -XX:MaxRAMPercentage to control
+# the JVM heap allocation. For example, setting mem_limit: 2000m and
+# -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 will allocate between 1000m and 1600m
+# of heap to the JVM.
 #
 services:
   alfresco:
@@ -26,6 +35,8 @@ services:
         -Ddb.username=alfresco
         -Ddb.password=alfresco
         -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dsolr.secureComms=secret
+        -Dsolr.sharedSecret=secret
         -Dindex.subsystem.name=elasticsearch
         -Delasticsearch.createIndexIfNotExists=true
         -Delasticsearch.host=elasticsearch
