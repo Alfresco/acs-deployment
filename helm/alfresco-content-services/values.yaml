@@ -645,7 +645,7 @@ alfresco-knowledge-retrieval:
   repository:
     authType: basic
 dtas:
-  # -- Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only)
+  # -- Enables the deployment test suite which can run via `helm test`
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
