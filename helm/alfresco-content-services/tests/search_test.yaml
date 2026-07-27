@@ -158,6 +158,33 @@ tests:
       - equal:
           path: data.SEARCH_URL
           value: http://RELEASE-NAME-elasticsearch:9200
+      - equal:
+          path: data.SOLR_SECRET
+          value: ZHVtbXk=
+        template: secret-search.yaml
+
+  - it: should not render the legacy Solr shared secret under elasticsearch without one configured
+    values: *testvalues
+    set:
+      global:
+        search:
+          sharedSecret: ""
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: false
+      alfresco-search-community:
+        enabled: true
+      elasticsearch:
+        enabled: true
+      alfresco-repository:
+        configuration:
+          search:
+            flavor: elasticsearch
+    template: secret-search.yaml
+    asserts:
+      - notExists:
+          path: data.SOLR_SECRET
 
   - it: should complain when both solr and community search are enabled
     values: *testvalues
