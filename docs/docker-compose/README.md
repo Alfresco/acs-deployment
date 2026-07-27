@@ -120,6 +120,7 @@ acs --> tcore
 acs --> amq
 share --> acs
 
+bi --> acs
 bi --> es
 bi --> pg
 bi --> tcore
