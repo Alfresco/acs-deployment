@@ -29,14 +29,6 @@ share: &share_values
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=75
 alfresco-share: *share_values # acs-sso-example uses alfresco-share
-alfresco-search:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "512Mi"
-    limits:
-      cpu: "2"
-      memory: "1.5Gi"
 alfresco-transform-service:
   pdfrenderer:
     livenessProbe:

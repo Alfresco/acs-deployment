@@ -13,6 +13,7 @@ on:
       - test/postman/helm/**
       - .github/workflows/helm*
       - test/community-integration-test-values.yaml
+      - test/community-solr-integration-test-values.yaml
       - test/community-es-integration-test-values.yaml
   push:
     branches:
@@ -47,7 +48,7 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | select(.values=="community_values.yaml" or .name=="acs-sso-example")
-            | (. + {test_values: "community-integration-test-values.yaml",
+            | (. + {test_values: (if .name=="alfresco-content-services" then "community-solr-integration-test-values.yaml" else "" end),
                     label: (if .name=="alfresco-content-services" then "alfresco-content-services (solr)" else .name end)}),
               (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml",
                     label: "alfresco-content-services (elasticsearch)"})]
@@ -120,6 +121,10 @@ jobs:
         id: helm_install
         run: |
           helm dep build .
+          EXTRA_VALUES=()
+          if [ -n "${{ matrix.test_values }}" ]; then
+            EXTRA_VALUES=(--values "../../test/${{ matrix.test_values }}")
+          fi
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://${{ steps.setup-kind.outputs.ingress-endpoint }} \
@@ -127,7 +132,8 @@ jobs:
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }} \
             --values ${{ matrix.values }} \
-            --values ../../test/${{ matrix.test_values }}
+            --values ../../test/community-integration-test-values.yaml \
+            "${EXTRA_VALUES[@]}"
         working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status after Helm install
@@ -156,21 +162,10 @@ jobs:
             --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Run helm test
-        id: helm_test
         if: matrix.name == 'alfresco-content-services'
-        run: helm test ${{ matrix.name }}
-
-      - name: Spit cluster status after helm test
-        if: always() && steps.helm_test.outcome != 'skipped'
-        run: |
-          kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
-          kubectl get all --all-namespaces
-          kubectl describe pod
-
-          OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
-          if [ -n "$OOM_PODS" ]; then
-            echo "::error::OOMKilled pods detected: $OOM_PODS"
-          fi
+        uses: ./.github/actions/helm-test
+        with:
+          release-name: ${{ matrix.name }}
 
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
