@@ -155,6 +155,23 @@ jobs:
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
             --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
 
+      - name: Run helm test
+        id: helm_test
+        if: matrix.name == 'alfresco-content-services'
+        run: helm test ${{ matrix.name }}
+
+      - name: Spit cluster status after helm test
+        if: always() && steps.helm_test.outcome != 'skipped'
+        run: |
+          kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
+          kubectl get all --all-namespaces
+          kubectl describe pod
+
+          OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
+          if [ -n "$OOM_PODS" ]; then
+            echo "::error::OOMKilled pods detected: $OOM_PODS"
+          fi
+
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
         uses: grafana/setup-k6-action@db07bd9765aac508ef18982e52ab937fe633a065 # v1.2.1
