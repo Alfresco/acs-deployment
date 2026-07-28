@@ -163,7 +163,7 @@ tests:
           value: ZHVtbXk=
         template: secret-search.yaml
 
-  - it: should not render the legacy Solr shared secret under elasticsearch without one configured
+  - it: should fail to render when community search is enabled without a shared secret
     values: *testvalues
     set:
       global:
@@ -181,6 +181,28 @@ tests:
         configuration:
           search:
             flavor: elasticsearch
+    template: secret-search.yaml
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            alfresco-search-community (Elasticsearch batch indexing) is
+            enabled, but did not provide a secret value for
+            global.search.sharedSecret - it authenticates the batch indexer
+            against the repository's legacy Solr tracking webscripts API
+            regardless of the primary search flavor
+
+  - it: should not render the legacy Solr shared secret under elasticsearch without community search enabled
+    values: *testvalues
+    set:
+      global:
+        search:
+          sharedSecret: ""
+      alfresco-search:
+        enabled: false
+      alfresco-search-enterprise:
+        enabled: true
+      elasticsearch:
+        enabled: true
     template: secret-search.yaml
     asserts:
       - notExists:
