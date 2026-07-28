@@ -47,10 +47,10 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | select(.values=="community_values.yaml" or .name=="acs-sso-example")
-            | (. + {test_values: "community-integration-test-values.yaml",
-                    label: (if .name=="alfresco-content-services" then "alfresco-content-services (solr)" else .name end)}),
+            | (. + {test_values: "",
+                    label: (if .name=="alfresco-content-services" then "acs-solr" else .name end)}),
               (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml",
-                    label: "alfresco-content-services (elasticsearch)"})]
+                    label: "acs-elasticsearch"})]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
           MATRIX=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
@@ -79,7 +79,7 @@ jobs:
          version: "3.12.1"
 
       - name: Login to Docker Hub
-        uses: docker/login-action@06fb636fac595d6fb4b28a5dfcb21a6f5091859c  # v4.5.0
+        uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7  # v4.5.1
         if: >-
           ! github.event.pull_request.head.repo.fork && github.actor != 'dependabot[bot]'
         with:
@@ -116,6 +116,15 @@ jobs:
           helm repo add codecentric https://codecentric.github.io/helm-charts/
           helm repo add elastic https://helm.elastic.co/
 
+      - name: Determine extra test values
+        id: extra_values
+        run: |
+          if [ -n "${{ matrix.test_values }}" ]; then
+            echo "args=--values ../../test/${{ matrix.test_values }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "args=" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Helm install
         id: helm_install
         run: |
@@ -127,7 +136,8 @@ jobs:
             --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }} \
             --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }} \
             --values ${{ matrix.values }} \
-            --values ../../test/${{ matrix.test_values }}
+            --values ../../test/community-integration-test-values.yaml \
+            ${{ steps.extra_values.outputs.args }}
         working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status after Helm install
@@ -154,6 +164,12 @@ jobs:
             -v $(pwd)/test/postman:/etc/postman
             -t postman/newman run /etc/postman/helm/acs-test-helm-collection.json
             --global-var protocol=http --global-var url=${{ steps.setup-kind.outputs.ingress-endpoint }}
+
+      - name: Run helm test
+        if: matrix.name == 'alfresco-content-services'
+        uses: ./.github/actions/helm-test
+        with:
+          release-name: ${{ matrix.name }}
 
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
@@ -199,4 +215,4 @@ jobs:
         with:
           namespace: default
           log_retention: 7
-          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}-${{ matrix.test_values }}"
+          log_name_identifier: "logs-pods-helm-com-${{ matrix.label }}"

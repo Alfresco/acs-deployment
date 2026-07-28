@@ -1,0 +1,28 @@
+---
+name: helm_test
+description: Run `helm test` (DTAS) against a release and report cluster status/logs
+inputs:
+  release-name:
+    required: true
+    description: name of the Helm release to test
+    type: string
+runs:
+  using: composite
+  steps:
+    - id: helm_test
+      name: Run helm test
+      shell: bash
+      run: helm test ${{ inputs.release-name }}
+
+    - name: Spit cluster status after helm test
+      if: always() && steps.helm_test.outcome != 'skipped'
+      shell: bash
+      run: |
+        kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
+        kubectl get all --all-namespaces
+        kubectl describe pod
+
+        OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
+        if [ -n "$OOM_PODS" ]; then
+          echo "::error::OOMKilled pods detected: $OOM_PODS"
+        fi
