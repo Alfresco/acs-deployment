@@ -117,14 +117,19 @@ jobs:
           helm repo add codecentric https://codecentric.github.io/helm-charts/
           helm repo add elastic https://helm.elastic.co/
 
+      - name: Determine extra test values
+        id: extra_values
+        run: |
+          if [ -n "${{ matrix.test_values }}" ]; then
+            echo "args=--values ../../test/${{ matrix.test_values }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "args=" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Helm install
         id: helm_install
         run: |
           helm dep build .
-          EXTRA_VALUES=()
-          if [ -n "${{ matrix.test_values }}" ]; then
-            EXTRA_VALUES=(--values "../../test/${{ matrix.test_values }}")
-          fi
           helm install ${{ matrix.name }} . \
             --set global.search.sharedSecret="$(openssl rand -hex 24)" \
             --set global.known_urls=http://${{ steps.setup-kind.outputs.ingress-endpoint }} \
@@ -133,7 +138,7 @@ jobs:
             --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }} \
             --values ${{ matrix.values }} \
             --values ../../test/community-integration-test-values.yaml \
-            "${EXTRA_VALUES[@]}"
+            ${{ steps.extra_values.outputs.args }}
         working-directory: helm/${{ matrix.name }}
 
       - name: Spit cluster status after Helm install
