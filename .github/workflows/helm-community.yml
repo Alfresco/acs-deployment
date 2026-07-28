@@ -13,7 +13,6 @@ on:
       - test/postman/helm/**
       - .github/workflows/helm*
       - test/community-integration-test-values.yaml
-      - test/community-solr-integration-test-values.yaml
       - test/community-es-integration-test-values.yaml
   push:
     branches:
@@ -48,10 +47,10 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | select(.values=="community_values.yaml" or .name=="acs-sso-example")
-            | (. + {test_values: (if .name=="alfresco-content-services" then "community-solr-integration-test-values.yaml" else "" end),
-                    label: (if .name=="alfresco-content-services" then "alfresco-content-services (solr)" else .name end)}),
+            | (. + {test_values: "",
+                    label: (if .name=="alfresco-content-services" then "acs-solr" else .name end)}),
               (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml",
-                    label: "alfresco-content-services (elasticsearch)"})]
+                    label: "acs-elasticsearch"})]
         run: |
           echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}'
           MATRIX=$(echo "${JSON}" | jq -nc '${{ env.JQ_FILTER }}')
@@ -216,4 +215,4 @@ jobs:
         with:
           namespace: default
           log_retention: 7
-          log_name_identifier: "logs-pods-helm-com-${{ matrix.name }}-${{ matrix.test_values }}"
+          log_name_identifier: "logs-pods-helm-com-${{ matrix.label }}"
