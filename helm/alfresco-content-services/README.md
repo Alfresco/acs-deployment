@@ -254,10 +254,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.config.host | string | `"http://traefik.traefik.svc.cluster.local"` |  |
 | dtas.config.config.password | string | `"admin"` |  |
 | dtas.config.config.username | string | `"admin"` |  |
-| dtas.enabled | bool | `false` | Enables the deployment test suite which can run via `helm test` (currently available for Enterprise only) |
+| dtas.enabled | bool | `false` | Enables the deployment test suite which can run via `helm test` |
 | dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
-| dtas.image.tag | string | `"v1.7.5"` |  |
+| dtas.image.tag | string | `"v1.9.0"` |  |
 | elasticsearch.elasticsearch.image.repository | string | `"elasticsearch"` |  |
 | elasticsearch.elasticsearch.image.tag | string | `"8.17.10"` |  |
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
