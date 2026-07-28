@@ -51,7 +51,10 @@ global:
     flavor: null
     # -- set the security level used with the external search service (secret, none or https)
     securecomms: secret
-    # -- Mandatory secret to provide when using Solr search with 'secret' security level
+    # -- Mandatory secret to provide when using Solr search with 'secret' security
+    # level. Also used, regardless of search flavour, to authenticate against the
+    # repository's legacy Solr tracking webscripts API - required when
+    # alfresco-search-community (Elasticsearch batch indexing) is enabled.
     sharedSecret: null
     # -- Set username for authentication against the external elasticsearch service
     username: null
@@ -409,6 +412,10 @@ alfresco-search-community:
   # `alfresco-repository.configuration.search.flavor: elasticsearch`.
   enabled: false
   nameOverride: alfresco-search-community
+  environment:
+    # Override default /alfresco/service/api/solr/textContent which depends on deployment-specific routing.
+    # The /alfresco prefix is provided by ALFRESCO_ACS_URL with trailing slash.
+    ALFRESCO_CONTENT_TRANSFORM_URLPATH: /service/api/solr/textContent
   index:
     existingConfigMap:
       name: *infrastructure_cmName
@@ -422,6 +429,16 @@ alfresco-search-community:
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
+  transform:
+    # -- Despite the name, this is the shared secret authenticating the batch
+    # indexer against the repository's legacy Solr tracking webscripts API -
+    # it must match alfresco-repository's configuration.search.solr-secret
+    # (here, global.search.sharedSecret via the shared alfresco-search-secret).
+    sharedSecret:
+      existingSecret:
+        name: *acs_search_secretName
+        keys:
+          sharedSecret: SOLR_SECRET
 alfresco-digital-workspace:
   enabled: true
   nameOverride: "alfresco-dw"

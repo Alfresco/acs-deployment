@@ -12,25 +12,24 @@ alfresco-repository:
       - ReadWriteOnce
   configuration:
     search:
-      flavor: solr6
+      flavor: elasticsearch
 activemq:
   image:
     repository: docker.io/alfresco/alfresco-activemq
     tag: 6.2.6-jre17-rockylinux8
 alfresco-search-enterprise:
   enabled: false
-elasticsearch:
-  enabled: false
 share:
   image:
     repository: alfresco/alfresco-share
     tag: 26.2.0
 alfresco-search:
-  enabled: true
+  enabled: false
   searchServicesImage:
     repository: alfresco/alfresco-search-services
     tag: 2.0.21
 alfresco-search-community:
+  enabled: true
   image:
     tag: 5.7.0
 # Disable Enterprise only features

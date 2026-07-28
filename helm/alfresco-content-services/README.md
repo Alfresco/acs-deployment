@@ -31,7 +31,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.9.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.8.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.9.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-community | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 5.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.3.1 |
@@ -137,10 +137,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-community.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-community.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-community.enabled | bool | `false` | Elasticsearch batch indexing for ACS Community. Mutually exclusive with `alfresco-search` (Solr) and `alfresco-search-enterprise` (which defaults to enabled); enabling it alongside either fails the render. Requires `elasticsearch.enabled: true` and `alfresco-repository.configuration.search.flavor: elasticsearch`. |
+| alfresco-search-community.environment.ALFRESCO_CONTENT_TRANSFORM_URLPATH | string | `"/service/api/solr/textContent"` |  |
 | alfresco-search-community.index.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-community.index.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-search-community.nameOverride | string | `"alfresco-search-community"` |  |
 | alfresco-search-community.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-search-community.transform.sharedSecret | object | `{"existingSecret":{"keys":{"sharedSecret":"SOLR_SECRET"},"name":"alfresco-search-secret"}}` | Despite the name, this is the shared secret authenticating the batch indexer against the repository's legacy Solr tracking webscripts API - it must match alfresco-repository's configuration.search.solr-secret (here, global.search.sharedSecret via the shared alfresco-search-secret). |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
 | alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.7.0"` |  |
@@ -289,7 +291,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.search.password | string | `nil` | Set password for authentication against the external elasticsearch service |
 | global.search.secretName | string | `"alfresco-search-secret"` | Name of the secret managed by this chart |
 | global.search.securecomms | string | `"secret"` | set the security level used with the external search service (secret, none or https) |
-| global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level |
+| global.search.sharedSecret | string | `nil` | Mandatory secret to provide when using Solr search with 'secret' security level. Also used, regardless of search flavour, to authenticate against the repository's legacy Solr tracking webscripts API - required when alfresco-search-community (Elasticsearch batch indexing) is enabled. |
 | global.search.url | string | `nil` | set this URL if you have an external search service |
 | global.search.username | string | `nil` | Set username for authentication against the external elasticsearch service |
 | global.security.allowInsecureImages | bool | `true` | Required when using bitnami images from legacy repository |
