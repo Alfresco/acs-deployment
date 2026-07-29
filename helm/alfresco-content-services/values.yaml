@@ -184,6 +184,7 @@ alfresco-repository:
         keys:
           username: SEARCH_USERNAME
           password: SEARCH_PASSWORD
+          solr-secret: SOLR_SECRET
   persistence:
     # -- Persist repository data
     enabled: true
