@@ -48,6 +48,7 @@ Then install ACS Community with both values files:
 helm install acs alfresco/alfresco-content-services \
   --values=community_values.yaml \
   --values=community-es_values.yaml \
+  --set global.search.sharedSecret=$(openssl rand -hex 24) \
   --namespace=alfresco
 ```
 
