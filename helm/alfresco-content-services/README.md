@@ -31,7 +31,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-knowledge-retrieval(alfresco-connector-hxi) | 0.9.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.9.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.9.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-community | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 5.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.3.1 |
@@ -39,8 +39,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.12.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.9.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.7.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.7.0-alpha.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.7.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.7.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.7.0 |
 
 ## Values
 
@@ -125,6 +125,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.repository.existingSecrets[1].purpose | string | `"property:mail.password"` |  |
 | alfresco-repository.configuration.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` |  |
+| alfresco-repository.configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` |  |
 | alfresco-repository.configuration.search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` |  |
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
