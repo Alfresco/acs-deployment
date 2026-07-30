@@ -1,11 +1,8 @@
 ---
-# Overlay on top of community-integration-test-values.yaml that switches the community stack from
-# Solr to the Elasticsearch batch indexing component (alfresco-search-community),
-# with resource sizing tuned for the KIND integration runner.
-alfresco-search:
-  enabled: false
+# Overlay on top of community-integration-test-values.yaml with resource sizing tuned for the
+# KIND integration runner, for the Elasticsearch batch indexing component (alfresco-search-community)
+# already enabled by default in community_values.yaml.
 alfresco-search-community:
-  enabled: true
   resources:
     requests:
       cpu: "0.01"
@@ -16,7 +13,6 @@ alfresco-search-community:
   environment:
     JAVA_OPTS: "-Xms256m -Xmx768m"
 elasticsearch:
-  enabled: true
   elasticsearch:
     resources:
       requests:
@@ -28,7 +24,3 @@ elasticsearch:
       initialDelaySeconds: 100
     readinessProbe:
       initialDelaySeconds: 100
-alfresco-repository:
-  configuration:
-    search:
-      flavor: elasticsearch

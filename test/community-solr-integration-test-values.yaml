@@ -1,0 +1,15 @@
+---
+# Overlay on top of community-integration-test-values.yaml that switches the community stack from
+# the default Elasticsearch batch indexing component (alfresco-search-community) to Solr
+# (Alfresco Search Services). Resource sizing for alfresco-search is already provided by
+# community-integration-test-values.yaml.
+alfresco-search-community:
+  enabled: false
+elasticsearch:
+  enabled: false
+alfresco-search:
+  enabled: true
+alfresco-repository:
+  configuration:
+    search:
+      flavor: solr6

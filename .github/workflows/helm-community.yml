@@ -14,6 +14,7 @@ on:
       - .github/workflows/helm*
       - test/community-integration-test-values.yaml
       - test/community-es-integration-test-values.yaml
+      - test/community-solr-integration-test-values.yaml
   push:
     branches:
       - master
@@ -47,7 +48,7 @@ jobs:
           JQ_FILTER: >-
             [inputs | .charts[] | {name: .name, values: .values[]}
             | select(.values=="community_values.yaml" or .name=="acs-sso-example")
-            | (. + {test_values: "",
+            | (. + {test_values: (if .name=="alfresco-content-services" then "community-solr-integration-test-values.yaml" else "" end),
                     label: (if .name=="alfresco-content-services" then "acs-solr" else .name end)}),
               (select(.name=="alfresco-content-services") + {test_values: "community-es-integration-test-values.yaml",
                     label: "acs-elasticsearch"})]
