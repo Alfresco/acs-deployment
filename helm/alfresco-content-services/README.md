@@ -125,6 +125,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.repository.existingSecrets[1].purpose | string | `"property:mail.password"` |  |
 | alfresco-repository.configuration.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-repository.configuration.search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` |  |
+| alfresco-repository.configuration.search.existingSecret.keys.solr-secret | string | `nil` | Only set to SOLR_SECRET for the Community profile, see community_values.yaml |
 | alfresco-repository.configuration.search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` |  |
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |

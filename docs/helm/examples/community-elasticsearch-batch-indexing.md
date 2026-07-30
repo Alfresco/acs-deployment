@@ -9,10 +9,11 @@ grand_parent: Helm
 `community_values.yaml` installs ACS Community with Elasticsearch batch
 indexing by default: an out-of-process indexer (`alfresco-search-community`)
 reads content from the repository and populates an embedded Elasticsearch
-cluster, which the repository then queries for search. This is mutually
-exclusive with Solr (`alfresco-search`) and with Enterprise search
-(`alfresco-search-enterprise`) - the chart fails the render if more than one
-search backend is enabled.
+cluster, which the repository then queries for search. `alfresco-search-community`
+is mutually exclusive with Solr (`alfresco-search`) and with Enterprise search
+(`alfresco-search-enterprise`) - the chart fails the render if either of those
+is enabled alongside it. Solr and Enterprise search can still be enabled
+together, as a migration scenario.
 
 ## Requirements
 
