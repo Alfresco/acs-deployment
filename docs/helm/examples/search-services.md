@@ -39,6 +39,12 @@ On the chart side you need to:
 - Tell the Helm to not create the Solr deployment
 - Give Helm the shared secret to use when contacting Solr.
 - Provide details so the repository can be configured properly
+- Tell the repository itself to use the `solr6` flavor and to read that shared
+  secret from the `SOLR_SECRET` key - `global.search.flavor` only drives the
+  chart's own resources (e.g. the `alfresco-search` deployment), the
+  `alfresco-repository` subchart needs its own `configuration.search` set
+  explicitly, otherwise it silently starts in `elasticsearch` mode with no
+  `solr.sharedSecret` wired in
 
   ```yaml
   global:
@@ -49,6 +55,13 @@ On the chart side you need to:
       sharedSecret: d0ntT3llAny0n3
   alfresco-search:
     enabled: false
+  alfresco-repository:
+    configuration:
+      search:
+        flavor: solr6
+        existingSecret:
+          keys:
+            solr-secret: SOLR_SECRET
   ```
 
 In this example an internal load balancer is created and aims a target group
