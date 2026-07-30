@@ -184,7 +184,10 @@ alfresco-repository:
         keys:
           username: SEARCH_USERNAME
           password: SEARCH_PASSWORD
-          # -- Only set to SOLR_SECRET for the Community profile, see community_values.yaml
+          # -- Only needed when authenticating against Solr's legacy tracking
+          # webscripts API: set to SOLR_SECRET for the Community profile (see
+          # community_values.yaml) or when switching to legacy Search Services
+          # (Solr)
           solr-secret: null
   persistence:
     # -- Persist repository data
