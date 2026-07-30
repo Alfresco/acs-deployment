@@ -37,3 +37,6 @@ alfresco-updatecli
 *_merged.yaml
 
 _site
+
+# Claude Code
+.claude/
