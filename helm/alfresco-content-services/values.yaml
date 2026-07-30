@@ -399,8 +399,6 @@ alfresco-search-enterprise:
         tag: 5.7.0
   reindexing:
     enabled: true
-    environment:
-      ALFRESCO_REINDEX_PATHINDEXINGENABLED: true
     repository:
       existingConfigMap:
         name: *infrastructure_cmName
