@@ -34,7 +34,7 @@ dependencies:
   version: 5.2.0
 - name: alfresco-search-community
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0
+  version: 0.2.0-alpha.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 2.8.1
@@ -56,5 +56,5 @@ dependencies:
 - name: alfresco-connector-hxi
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.9.0-alpha.1
-digest: sha256:a8b33d4213a028ef7283aced32f988a3bf91f254eb703471363ba32c8c9c9f4c
-generated: "2026-07-29T12:32:29.353349525Z"
+digest: sha256:b558476e4665c706255b0c37c23fb0f659fea1ad43d7cdcf7d13d7e3d0ffbe76
+generated: "2026-07-30T09:35:31.487272+02:00"

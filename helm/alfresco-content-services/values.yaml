@@ -431,11 +431,10 @@ alfresco-search-community:
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
-  transform:
-    # -- Despite the name, this is the shared secret authenticating the batch
-    # indexer against the repository's legacy Solr tracking webscripts API -
-    # it must match alfresco-repository's configuration.search.solr-secret
-    # (here, global.search.sharedSecret via the shared alfresco-search-secret).
+    # -- Shared secret authenticating the batch indexer against the
+    # repository's legacy Solr tracking webscripts API - must match
+    # alfresco-repository's configuration.search.solr-secret (here,
+    # global.search.sharedSecret via the shared alfresco-search-secret).
     sharedSecret:
       existingSecret:
         name: *acs_search_secretName
