@@ -16,6 +16,31 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## 10.7.0
+
+* ACS Community now defaults to Elasticsearch batch indexing
+  (`alfresco-search-community`) instead of Search Services (Solr,
+  `alfresco-search`), following `alfresco-repository.configuration.search.flavor:
+  elasticsearch`. To keep using Solr with Community, set
+  `alfresco-search.enabled: true`, `alfresco-search-community.enabled: false` and
+  `alfresco-repository.configuration.search.flavor: solr6` explicitly.
+* `global.search.sharedSecret` (wired as `SOLR_SECRET`) is now required whenever
+  `alfresco-search-community` is enabled, regardless of the primary search
+  flavor, since it authenticates the Elasticsearch batch indexer against the
+  repository's legacy Solr tracking webscripts API.
+* `alfresco-repository.configuration.search.existingSecret.keys.solr-secret` no
+  longer defaults to `SOLR_SECRET`; it is now `null` by default.
+  `community_values.yaml` sets it back to `SOLR_SECRET`, so Community
+  deployments (including reverting to Solr as described above) are
+  unaffected. Enterprise deployments using legacy Search Services (`solr6`)
+  must now set this key explicitly, in addition to providing
+  `global.search.sharedSecret`.
+* The `alfresco-knowledge-retrieval` (HXI) dependency, its values and related
+  docs have been removed from the `alfresco-content-services` chart. If you were
+  using Knowledge Retrieval / HXI features, deploy that chart independently. The
+  HXI chart itself is deprecated and will soon be replaced by a new CIC
+  connector chart.
+
 ## 10.3.1
 
 * `alfresco-search` (Search Services / Solr, Enterprise) is no longer supported
