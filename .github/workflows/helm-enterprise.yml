@@ -129,7 +129,6 @@ jobs:
         run: >-
           helm dep build ./helm/alfresco-content-services &&
           helm install acs ./helm/alfresco-content-services
-          --set global.search.sharedSecret="$(openssl rand -hex 24)"
           --set global.known_urls=http://localhost
           --set global.alfrescoRegistryPullSecrets=${{ env.REGISTRY_SECRET_NAME }}
           --set global.imagePullSecrets[0]=${{ env.REGISTRY_SECRET_NAME }}

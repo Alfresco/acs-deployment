@@ -184,7 +184,11 @@ alfresco-repository:
         keys:
           username: SEARCH_USERNAME
           password: SEARCH_PASSWORD
-          solr-secret: SOLR_SECRET
+          # -- Only needed when authenticating against Solr's legacy tracking
+          # webscripts API: set to SOLR_SECRET for the Community profile (see
+          # community_values.yaml) or when switching to legacy Search Services
+          # (Solr)
+          solr-secret: null
   persistence:
     # -- Persist repository data
     enabled: true
@@ -430,11 +434,10 @@ alfresco-search-community:
   repository:
     existingConfigMap:
       name: *infrastructure_cmName
-  transform:
-    # -- Despite the name, this is the shared secret authenticating the batch
-    # indexer against the repository's legacy Solr tracking webscripts API -
-    # it must match alfresco-repository's configuration.search.solr-secret
-    # (here, global.search.sharedSecret via the shared alfresco-search-secret).
+    # -- Shared secret authenticating the batch indexer against the
+    # repository's legacy Solr tracking webscripts API - must match
+    # alfresco-repository's configuration.search.solr-secret (here,
+    # global.search.sharedSecret via the shared alfresco-search-secret).
     sharedSecret:
       existingSecret:
         name: *acs_search_secretName

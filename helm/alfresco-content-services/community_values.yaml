@@ -13,6 +13,9 @@ alfresco-repository:
   configuration:
     search:
       flavor: elasticsearch
+      existingSecret:
+        keys:
+          solr-secret: SOLR_SECRET
 activemq:
   image:
     repository: docker.io/alfresco/alfresco-activemq
