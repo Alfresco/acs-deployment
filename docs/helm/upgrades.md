@@ -37,7 +37,9 @@ version in which they have been released.
   `global.search.sharedSecret`.
 * The `alfresco-knowledge-retrieval` (HXI) dependency, its values and related
   docs have been removed from the `alfresco-content-services` chart. If you were
-  using Knowledge Retrieval / HXI features, deploy that chart independently.
+  using Knowledge Retrieval / HXI features, deploy that chart independently. The
+  HXI chart itself is deprecated and will soon be replaced by a new CIC
+  connector chart.
 
 ## 10.3.1
 
