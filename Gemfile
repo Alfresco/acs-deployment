@@ -7,4 +7,4 @@ gem "just-the-docs", "0.12.0"
 gem "jekyll-relative-links"
 
 # Validate built HTML files (e.g. broken links)
-gem "html-proofer", "~> 5.2.1"
+gem "html-proofer", "~> 5.2.2"
