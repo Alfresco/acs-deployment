@@ -643,6 +643,21 @@ alfresco-audit-storage:
       keys:
         username: AUDIT_ELASTICSEARCH_USERNAME
         password: AUDIT_ELASTICSEARCH_PASSWORD
+alfresco-connector-cic:
+  # -- Toggle deploying Alfresco Content Connector for Intelligence Cloud (CIC).
+  # Brings up live-ingester, bulk-ingester and nucleus-sync.
+  # See https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-connector-cic
+  enabled: false
+  repository:
+    existingConfigMap:
+      name: *infrastructure_cmName
+      keys:
+        url: REPOSITORY_URL
+  messageBroker:
+    existingConfigMap:
+      name: *infrastructure_cmName
+    existingSecret:
+      name: *acs_messageBroker_secretName
 dtas:
   # -- Enables the deployment test suite which can run via `helm test`
   enabled: false

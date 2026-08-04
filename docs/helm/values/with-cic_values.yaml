@@ -1,0 +1,11 @@
+alfresco-connector-cic:
+  enabled: true
+  cic:
+    hxAuthTokenUrl: null
+    hxInsightIngestionUrl: null
+    hxClientId: null
+    hxClientSecret: null
+    hxAppSourceId: null
+    nucleusBaseUrl: null
+    nucleusIdpBaseUrl: null
+    nucleusSystemId: null

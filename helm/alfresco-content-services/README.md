@@ -28,6 +28,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.11.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-cic | 0.1.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.9.0 |
@@ -71,6 +72,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-audit-storage.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` | Name of the configmap which holds the message broker URL |
 | alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-audit-storage.nameOverride | string | `"alfresco-audit-storage"` |  |
+| alfresco-connector-cic.enabled | bool | `false` | Toggle deploying Alfresco Content Connector for Intelligence Cloud (CIC). Brings up live-ingester, bulk-ingester and nucleus-sync. See https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-connector-cic |
+| alfresco-connector-cic.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-connector-cic.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
+| alfresco-connector-cic.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` |  |
+| alfresco-connector-cic.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-connector-ms365.enabled | bool | `false` | Enable/Disable Alfresco Content Connector for Microsoft 365 |
 | alfresco-connector-ms365.image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | alfresco-connector-ms365.image.tag | string | `"2.1.3"` |  |
