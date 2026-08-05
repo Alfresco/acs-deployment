@@ -1,11 +1,10 @@
 alfresco-connector-cic:
   enabled: true
   cic:
-    hxAuthTokenUrl: null
-    hxInsightIngestionUrl: null
-    hxClientId: null
-    hxClientSecret: null
-    hxAppSourceId: null
-    nucleusBaseUrl: null
-    nucleusIdpBaseUrl: null
-    nucleusSystemId: null
+    hxAuthTokenUrl: "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
+    hxInsightIngestionUrl: "https://ingestion-api.insight.staging.ncp.hyland.com/v1"
+    nucleusBaseUrl: "https://nucleus-api.staging.experience.hyland.com"
+    nucleusIdpBaseUrl: "https://auth.iam.staging.experience.hyland.com"
+    nucleusSystemId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    existingSecret:
+      name: &cicSecretName cic-secrets  # pre-created Secret with HX_CLIENT_ID, HX_CLIENT_SECRET, HX_ENV_KEY, HX_APP_SOURCE_ID
