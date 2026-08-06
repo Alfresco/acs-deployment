@@ -23,7 +23,7 @@ version in which they have been released.
   the deprecated `alfresco-knowledge-retrieval` (HXI) connector and brings up
   three services — `live-ingester`, `bulk-ingester` and `nucleus-sync` — when
   `alfresco-connector-cic.enabled: true`. See
-  [`docs/helm/values/with-cic_values.yaml`](values/with-cic_values.yaml) for a
+  [`docs/helm/values/with-cic_values.yaml`](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/with-cic_values.yaml) for a
   reference configuration. No ACS-side extension or repository JVM properties
   are required.
 

@@ -46,7 +46,7 @@ kubectl create secret generic repository-admin-secret \
 ## Deploy
 
 Use the reference values file provided in
-[`docs/helm/values/with-cic_values.yaml`](../values/with-cic_values.yaml)
+[`docs/helm/values/with-cic_values.yaml`](https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/with-cic_values.yaml)
 as a starting point. Adjust the URLs for your target environment
 (staging/production) and reference the secret created above:
 
