@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # alfresco-content-services
 
-![Version: 10.7.0](https://img.shields.io/badge/Version-10.7.0-informational?style=flat-square) ![AppVersion: 26.2.1](https://img.shields.io/badge/AppVersion-26.2.1-informational?style=flat-square)
+![Version: 10.8.0](https://img.shields.io/badge/Version-10.8.0-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Content Services
 
@@ -51,7 +51,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
 | activemq.enabled | bool | `true` |  |
 | activemq.image.repository | string | `"quay.io/alfresco/alfresco-activemq"` |  |
-| activemq.image.tag | string | `"6.2.8-jre17-rockylinux8"` |  |
+| activemq.image.tag | string | `"6.2.6-jre17-rockylinux8"` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | alfresco-ai-transformer.enabled | bool | `false` | toggle deploying Alfresco ai transformer for more details about configuration check https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-ai-transformer |
 | alfresco-ai-transformer.fullnameOverride | string | `"alfresco-intelligence-service"` | Enforce static resource naming in AIS so the ATS trouter can be given the URL of the service |
@@ -127,7 +127,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.configuration.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
 | alfresco-repository.configuration.search.flavor | string | `"elasticsearch"` |  |
 | alfresco-repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| alfresco-repository.image.tag | string | `"26.2.1"` |  |
+| alfresco-repository.image.tag | string | `"26.2.0"` |  |
 | alfresco-repository.nameOverride | string | `"alfresco-repository"` |  |
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
@@ -143,17 +143,17 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-search-community.repository.sharedSecret | object | `{"existingSecret":{"keys":{"sharedSecret":"SOLR_SECRET"},"name":"alfresco-search-secret"}}` | Shared secret authenticating the batch indexer against the repository's legacy Solr tracking webscripts API - must match alfresco-repository's configuration.search.solr-secret (here, global.search.sharedSecret via the shared alfresco-search-secret). |
 | alfresco-search-enterprise.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.enabled | bool | `true` |  |
-| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.7.1"` |  |
-| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.7.1"` |  |
-| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.7.1"` |  |
-| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.7.1"` |  |
+| alfresco-search-enterprise.liveIndexing.content.image.tag | string | `"5.7.0"` |  |
+| alfresco-search-enterprise.liveIndexing.mediation.image.tag | string | `"5.7.0"` |  |
+| alfresco-search-enterprise.liveIndexing.metadata.image.tag | string | `"5.7.0"` |  |
+| alfresco-search-enterprise.liveIndexing.path.image.tag | string | `"5.7.0"` |  |
 | alfresco-search-enterprise.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-search-enterprise.nameOverride | string | `"alfresco-search-enterprise"` |  |
 | alfresco-search-enterprise.reindexing.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.reindexing.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-enterprise.reindexing.enabled | bool | `true` |  |
-| alfresco-search-enterprise.reindexing.image.tag | string | `"5.7.1"` |  |
+| alfresco-search-enterprise.reindexing.image.tag | string | `"5.7.0"` |  |
 | alfresco-search-enterprise.reindexing.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-enterprise.search.existingSecret.name | string | `"alfresco-search-secret"` |  |
@@ -347,7 +347,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | prometheus.url | string | `nil` | URL of the prometheus server (must be reachable by KEDA pods) |
 | share.enabled | bool | `true` | toggle deploying Alfresco Share UI |
 | share.image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| share.image.tag | string | `"26.2.1"` |  |
+| share.image.tag | string | `"26.2.0"` |  |
 | share.nameOverride | string | `"share"` |  |
 | share.repository.existingConfigMap.keys.host | string | `"repo_svc_name"` | Name of the key in the configmap which points to the repository service hostname |
 | share.repository.existingConfigMap.keys.port | string | `"repo_svc_port"` | Name of the key in the configmap which points to the repository service port |

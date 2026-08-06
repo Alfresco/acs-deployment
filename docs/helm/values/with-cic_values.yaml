@@ -8,3 +8,10 @@ alfresco-connector-cic:
     nucleusSystemId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
     existingSecret:
       name: &cicSecretName cic-secrets  # pre-created Secret with HX_CLIENT_ID, HX_CLIENT_SECRET, HX_ENV_KEY, HX_APP_SOURCE_ID
+  repository:
+    authType: basic
+    existingSecret:
+      name: repository-admin-secret  # pre-created Secret with REPOSITORY_USERNAME, REPOSITORY_PASSWORD, REPOSITORY_CLIENT_ID, REPOSITORY_CLIENT_SECRET
+  nucleusSync:
+    # -- Set to true once nucleusSystemId above is provisioned; chart default is true
+    enabled: false

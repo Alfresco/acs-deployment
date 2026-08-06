@@ -152,7 +152,7 @@ alfresco-repository:
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
-    tag: 26.2.1
+    tag: 26.2.0
   autoscaling:
     kedaDisableIdle: true
   configuration:
@@ -199,7 +199,7 @@ alfresco-repository:
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
-    tag: 6.2.8-jre17-rockylinux8
+    tag: 6.2.6-jre17-rockylinux8
   nameOverride: activemq
   enabled: true
   adminUser:
@@ -312,7 +312,7 @@ share:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-share
-    tag: 26.2.1
+    tag: 26.2.0
   nameOverride: share
   repository:
     existingConfigMap:
@@ -387,16 +387,16 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.7.1
+        tag: 5.7.0
     content:
       image:
-        tag: 5.7.1
+        tag: 5.7.0
     metadata:
       image:
-        tag: 5.7.1
+        tag: 5.7.0
     path:
       image:
-        tag: 5.7.1
+        tag: 5.7.0
   reindexing:
     enabled: true
     repository:
@@ -408,7 +408,7 @@ alfresco-search-enterprise:
       existingConfigMap:
         name: *infrastructure_cmName
     image:
-      tag: 5.7.1
+      tag: 5.7.0
 alfresco-search-community:
   # -- Elasticsearch batch indexing for ACS Community. Mutually exclusive with
   # `alfresco-search` (Solr) and `alfresco-search-enterprise` (which defaults to
