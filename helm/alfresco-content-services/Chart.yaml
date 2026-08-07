@@ -96,7 +96,7 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: alfresco-audit-storage.enabled
   - name: alfresco-connector-cic
-    version: 0.1.0-alpha.1
-    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.1.0-alpha.2
+    repository: file:///tmp/alfresco-helm-charts-4187/charts/alfresco-connector-cic
     condition: alfresco-connector-cic.enabled
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
