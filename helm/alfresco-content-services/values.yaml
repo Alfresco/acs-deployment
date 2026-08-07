@@ -649,15 +649,27 @@ alfresco-connector-cic:
   # See https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-connector-cic
   enabled: false
   repository:
+    authType: basic
     existingConfigMap:
       name: *infrastructure_cmName
       keys:
         url: REPOSITORY_URL
+  nucleusSync:
+    # -- disabled until cic.nucleusSystemId is provisioned per environment
+    enabled: false
   messageBroker:
     existingConfigMap:
       name: *infrastructure_cmName
     existingSecret:
       name: *acs_messageBroker_secretName
+  ats:
+    existingConfigMap:
+      name: *infrastructure_cmName
+  db:
+    existingConfigMap:
+      name: *infrastructure_cmName
+    existingSecret:
+      name: *acs_database_secretName
 dtas:
   # -- Enables the deployment test suite which can run via `helm test`
   enabled: false
