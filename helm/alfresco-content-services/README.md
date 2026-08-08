@@ -22,13 +22,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file:///tmp/alfresco-helm-charts-4187/charts/alfresco-connector-cic | alfresco-connector-cic | 0.1.0-alpha.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.11.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-cic | 0.1.0-alpha.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.9.0 |
