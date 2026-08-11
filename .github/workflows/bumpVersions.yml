@@ -55,14 +55,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.3
 
       - run: updatecli pipeline apply
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.2
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.3
 
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.21.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.21.3
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -78,7 +78,7 @@ jobs:
 
       - name: Commit changes
         if: github.actor != 'dependabot[bot]'
-        uses: iarekylew00t/verified-bot-commit@33985d44b7719dcaf0b854a0f4b0caad9bdc5b86  # v2.3.3
+        uses: iarekylew00t/verified-bot-commit@1ccc6afd0f789e8442cff7deec3e9856a693cc7e  # v2.3.4
         with:
           ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-helm' || github.ref_name }}
           files: |
@@ -98,7 +98,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.3
 
       - name: Checkout updatecli configs
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -129,9 +129,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.2
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.3
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.21.2
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.21.3
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -146,7 +146,7 @@ jobs:
           git push --force origin "${{ env.BRANCH }}"
 
       - name: Commit changes
-        uses: iarekylew00t/verified-bot-commit@33985d44b7719dcaf0b854a0f4b0caad9bdc5b86  # v2.3.3
+        uses: iarekylew00t/verified-bot-commit@1ccc6afd0f789e8442cff7deec3e9856a693cc7e  # v2.3.4
         with:
           ref: refs/heads/${{ env.USE_DEDICATED_BRANCH == 'true' && 'updatecli-bump-acs' || github.ref_name }}
           files: |
