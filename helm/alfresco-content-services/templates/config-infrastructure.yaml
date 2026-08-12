@@ -12,6 +12,7 @@ data:
   repo_svc_name: {{ $repo_svc_name }}
   repo_svc_port: {{ $repo_svc_port | quote }}
   REPOSITORY_URL: {{ printf "http://%s:%v/alfresco" $repo_svc_name $repo_svc_port }}
+  REPOSITORY_API_BASE_URL: {{ printf "http://%s:%v/alfresco/api/-default-/public/alfresco/versions/1" $repo_svc_name $repo_svc_port }}
   {{- $db_url := include "alfresco-content-services.database.repo" $ }}
   {{ template "alfresco-repository.db.cm" (dict "url" $db_url "driver" .Values.database.driver) }}
   {{- if index .Values "alfresco-sync-service" "enabled" }}
