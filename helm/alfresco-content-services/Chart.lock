@@ -55,6 +55,6 @@ dependencies:
   version: 0.11.1
 - name: alfresco-connector-cic
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0-alpha.2
-digest: sha256:268e7a8697b83555f539c08bb7309f385fe6b951a047f493ffe3a3af02ff0b3d
-generated: "2026-08-10T16:22:53.506521+05:30"
+  version: 0.1.0-alpha.3
+digest: sha256:4a8470a38b162df69056e59e66c026c8b2a81beeb237739979650b7bb276a3f3
+generated: "2026-08-12T13:47:10.996409+05:30"
