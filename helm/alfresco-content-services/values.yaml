@@ -648,6 +648,8 @@ alfresco-connector-cic:
   # Brings up live-ingester, bulk-ingester and nucleus-sync.
   # See https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-connector-cic
   enabled: false
+  bulkIngester:
+    enabled: false
   repository:
     authType: basic
     existingConfigMap:
@@ -655,8 +657,7 @@ alfresco-connector-cic:
       keys:
         url: REPOSITORY_URL
   nucleusSync:
-    # -- disabled until cic.nucleusSystemId is provisioned per environment
-    enabled: false
+    enabled: true
   messageBroker:
     existingConfigMap:
       name: *infrastructure_cmName

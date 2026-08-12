@@ -73,12 +73,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-audit-storage.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` | Name of the configmap which holds the message broker credentials |
 | alfresco-audit-storage.nameOverride | string | `"alfresco-audit-storage"` |  |
 | alfresco-connector-cic.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
+| alfresco-connector-cic.bulkIngester.enabled | bool | `false` |  |
 | alfresco-connector-cic.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-connector-cic.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-connector-cic.enabled | bool | `false` | Toggle deploying Alfresco Content Connector for Intelligence Cloud (CIC). Brings up live-ingester, bulk-ingester and nucleus-sync. See https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-connector-cic |
 | alfresco-connector-cic.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-connector-cic.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
-| alfresco-connector-cic.nucleusSync.enabled | bool | `false` | disabled until cic.nucleusSystemId is provisioned per environment |
+| alfresco-connector-cic.nucleusSync.enabled | bool | `true` |  |
 | alfresco-connector-cic.repository.authType | string | `"basic"` |  |
 | alfresco-connector-cic.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` |  |
 | alfresco-connector-cic.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |

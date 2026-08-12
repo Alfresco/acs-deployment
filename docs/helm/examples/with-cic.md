@@ -17,6 +17,12 @@ disabled by default.
 - A running Kubernetes cluster with the ACS umbrella chart deployed.
 - Credentials for a Hyland Intelligence Cloud environment
   (`HX_CLIENT_ID`, `HX_CLIENT_SECRET`, `HX_ENV_KEY`, `HX_APP_SOURCE_ID`).
+- CIC endpoint URLs (from your Intelligence Cloud environment):
+  - `cic_auth_token_url`
+  - `cic_insight_ingestion_url`
+  - `cic_nucleus_base_url`
+  - `cic_nucleus_idp_base_url`
+  - `cic_nucleus_system_id`
 
 ## Create Secrets
 
@@ -38,9 +44,19 @@ live-ingester and nucleus-sync to authenticate against the repository REST API):
 kubectl create secret generic repository-admin-secret \
   --namespace=<your-namespace> \
   --from-literal=REPOSITORY_USERNAME=admin \
-  --from-literal=REPOSITORY_PASSWORD=<your-repo-password> \
-  --from-literal=REPOSITORY_CLIENT_ID=<your-oauth-client-id> \
-  --from-literal=REPOSITORY_CLIENT_SECRET=<your-oauth-client-secret>
+  --from-literal=REPOSITORY_PASSWORD=<your-repo-password>
+```
+
+Create a ConfigMap containing the CIC configuration URLs:
+
+```bash
+kubectl create configmap cic-config \
+  --namespace=<your-namespace> \
+  --from-literal=HX_AUTH_TOKEN_URL=https://api.hx.cloud/oauth/token \
+  --from-literal=HX_INSIGHT_INGESTION_URL=https://api.hx.cloud/insights/ingest \
+  --from-literal=NUCLEUS_BASE_URL=https://nucleus.hx.cloud \
+  --from-literal=NUCLEUS_IDP_BASE_URL=https://nucleus-idp.hx.cloud \
+  --from-literal=NUCLEUS_SYSTEM_ID=<your-system-id>
 ```
 
 ## Deploy
