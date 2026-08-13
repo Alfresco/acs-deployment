@@ -653,7 +653,9 @@ alfresco-connector-cic:
   repository:
     authType: basic
     existingConfigMap:
-      name: null
+      name: *infrastructure_cmName
+      keys:
+        url: REPOSITORY_URL
   nucleusSync:
     enabled: true
   messageBroker:
