@@ -20,12 +20,12 @@ dependencies:
     version: 5.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgres
-    version: 0.7.0
+    version: 0.8.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     alias: postgresql-sync
     condition: postgresql-sync.enabled
   - name: postgres
-    version: 0.7.0
+    version: 0.8.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     alias: postgresql
     condition: postgresql.enabled
