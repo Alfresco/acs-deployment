@@ -1,17 +1,29 @@
 alfresco-connector-cic:
   enabled: true
   cic:
-    hxAuthTokenUrl: "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
-    hxInsightIngestionUrl: "https://ingestion-api.insight.staging.ncp.hyland.com/v1"
-    nucleusBaseUrl: "https://nucleus-api.staging.experience.hyland.com"
-    nucleusIdpBaseUrl: "https://auth.iam.staging.experience.hyland.com"
-    nucleusSystemId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    existingConfigMap:
+      name: cic-config
+      keys:
+        hxAuthTokenUrl: HX_AUTH_TOKEN_URL
+        hxInsightIngestionUrl: HX_INSIGHT_INGESTION_URL
+        nucleusBaseUrl: NUCLEUS_BASE_URL
+        nucleusIdpBaseUrl: NUCLEUS_IDP_BASE_URL
+        nucleusSystemId: NUCLEUS_SYSTEM_ID
     existingSecret:
-      name: &cicSecretName cic-secrets  # pre-created Secret with HX_CLIENT_ID, HX_CLIENT_SECRET, HX_ENV_KEY, HX_APP_SOURCE_ID
+      name: cic-secrets
+      keys:
+        hxClientId: HX_CLIENT_ID
+        hxClientSecret: HX_CLIENT_SECRET
+        hxEnvKey: HX_ENV_KEY
+        hxAppSourceId: HX_APP_SOURCE_ID
   repository:
     authType: basic
     existingSecret:
-      name: repository-admin-secret  # pre-created Secret with REPOSITORY_USERNAME, REPOSITORY_PASSWORD, REPOSITORY_CLIENT_ID, REPOSITORY_CLIENT_SECRET
+      name: repository-admin-secret
+      keys:
+        username: REPOSITORY_USERNAME
+        password: REPOSITORY_PASSWORD
+        clientId: REPOSITORY_CLIENT_ID
+        clientSecret: REPOSITORY_CLIENT_SECRET
   nucleusSync:
-    # -- Set to true once nucleusSystemId above is provisioned; chart default is true
     enabled: false
