@@ -1,0 +1,82 @@
+---
+title: Content Connector for Intelligence Cloud
+parent: Examples
+grand_parent: Helm
+---
+
+# ACS Helm Deployment with Content Connector for Intelligence Cloud (CIC)
+
+The [Alfresco Content Connector for Intelligence Cloud
+(CIC)](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-connector-cic)
+integrates ACS with Hyland's Intelligence Cloud platform. It deploys three
+services — `live-ingester`, `bulk-ingester`, and `nucleus-sync` — and is
+disabled by default.
+
+## Prerequisites
+
+- A running Kubernetes cluster with the ACS umbrella chart deployed.
+- Credentials for a Hyland Intelligence Cloud environment
+  (`HX_CLIENT_ID`, `HX_CLIENT_SECRET`, `HX_ENV_KEY`, `HX_APP_SOURCE_ID`).
+- CIC endpoint URLs (from your Intelligence Cloud environment):
+  - `cic_auth_token_url`
+  - `cic_insight_ingestion_url`
+  - `cic_nucleus_base_url`
+  - `cic_nucleus_idp_base_url`
+  - `cic_nucleus_system_id`
+
+## Create Secrets
+
+Create a Kubernetes secret containing the CIC credentials:
+
+```bash
+kubectl create secret generic cic-secrets \
+  --namespace=<your-namespace> \
+  --from-literal=HX_CLIENT_ID=sc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx \
+  --from-literal=HX_CLIENT_SECRET=your-client-secret \
+  --from-literal=HX_ENV_KEY=alfresco-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx \
+  --from-literal=HX_APP_SOURCE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+```
+
+Create a second secret with the Alfresco repository credentials (used by the
+live-ingester and nucleus-sync to authenticate against the repository REST API):
+
+```bash
+kubectl create secret generic repository-admin-secret \
+  --namespace=<your-namespace> \
+  --from-literal=REPOSITORY_USERNAME=admin \
+  --from-literal=REPOSITORY_PASSWORD=<your-repo-password>
+```
+
+Create a ConfigMap containing the CIC configuration URLs:
+
+```bash
+kubectl create configmap cic-config \
+  --namespace=<your-namespace> \
+  --from-literal=HX_AUTH_TOKEN_URL=https://api.hx.cloud/oauth/token \
+  --from-literal=HX_INSIGHT_INGESTION_URL=https://api.hx.cloud/insights/ingest \
+  --from-literal=NUCLEUS_BASE_URL=https://nucleus.hx.cloud \
+  --from-literal=NUCLEUS_IDP_BASE_URL=https://nucleus-idp.hx.cloud \
+  --from-literal=NUCLEUS_SYSTEM_ID=<your-system-id>
+```
+
+## Deploy
+
+Download the reference values file as a starting point:
+
+```bash
+curl -fO https://raw.githubusercontent.com/Alfresco/acs-deployment/master/docs/helm/values/with-cic_values.yaml
+```
+
+Adjust the URLs for your target environment
+(staging/production) and reference the secrets created above:
+
+```bash
+helm upgrade --install alfresco-content-services alfresco/alfresco-content-services \
+  --values local-dev_values.yaml \
+  --values with-cic_values.yaml \
+  --namespace=<your-namespace>
+```
+
+No ACS repository extension or additional JVM properties are required — CIC
+operates independently over the message broker and shared filestore that are
+already wired up by the umbrella chart.

@@ -1,0 +1,29 @@
+alfresco-connector-cic:
+  enabled: true
+  cic:
+    existingConfigMap:
+      name: cic-config
+      keys:
+        hxAuthTokenUrl: HX_AUTH_TOKEN_URL
+        hxInsightIngestionUrl: HX_INSIGHT_INGESTION_URL
+        nucleusBaseUrl: NUCLEUS_BASE_URL
+        nucleusIdpBaseUrl: NUCLEUS_IDP_BASE_URL
+        nucleusSystemId: NUCLEUS_SYSTEM_ID
+    existingSecret:
+      name: cic-secrets
+      keys:
+        hxClientId: HX_CLIENT_ID
+        hxClientSecret: HX_CLIENT_SECRET
+        hxEnvKey: HX_ENV_KEY
+        hxAppSourceId: HX_APP_SOURCE_ID
+  repository:
+    authType: basic
+    existingSecret:
+      name: repository-admin-secret
+      keys:
+        username: REPOSITORY_USERNAME
+        password: REPOSITORY_PASSWORD
+        clientId: REPOSITORY_CLIENT_ID
+        clientSecret: REPOSITORY_CLIENT_SECRET
+  nucleusSync:
+    enabled: false

@@ -16,6 +16,17 @@ Releases](https://github.com/Alfresco/acs-deployment/releases).
 Here follows a more detailed explanation of any breaking change grouped by
 version in which they have been released.
 
+## Unreleased
+
+* The `alfresco-connector-cic` subchart has been added to the
+  `alfresco-content-services` umbrella chart (disabled by default). It replaces
+  the deprecated `alfresco-knowledge-retrieval` (HXI) connector and brings up
+  three services — `live-ingester`, `bulk-ingester` and `nucleus-sync` — when
+  `alfresco-connector-cic.enabled: true`. See
+  `docs/helm/values/with-cic_values.yaml` for a
+  reference configuration. No ACS-side extension or repository JVM properties
+  are required.
+
 ## 10.7.0
 
 * ACS Community now defaults to Elasticsearch batch indexing
@@ -38,8 +49,8 @@ version in which they have been released.
 * The `alfresco-knowledge-retrieval` (HXI) dependency, its values and related
   docs have been removed from the `alfresco-content-services` chart. If you were
   using Knowledge Retrieval / HXI features, deploy that chart independently. The
-  HXI chart itself is deprecated and will soon be replaced by a new CIC
-  connector chart.
+  replacement is the new `alfresco-connector-cic` subchart, available from chart
+  version 10.8.0.
 
 ## 10.3.1
 
