@@ -1,6 +1,12 @@
 ---
 name: Helm (Enterprise)
 on:
+  workflow_dispatch:
+    inputs:
+      debug_enabled:
+        description: Keep the runner alive over SSH (tmate) after Newman tests for live debugging
+        type: boolean
+        default: false
   pull_request_review:
     types: [submitted]
   pull_request:
@@ -53,7 +59,7 @@ jobs:
 
   helm_integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -187,6 +193,13 @@ jobs:
           kubectl describe pod
           kubectl events --for deployment/acs-alfresco-repository
           kubectl logs -n traefik -l app.kubernetes.io/name=traefik --tail=-1
+
+      - name: Debug with tmate (keep environment alive over SSH)
+        if: always() && (failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled))
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+        timeout-minutes: 30
 
       - name: Run helm test
         uses: ./.github/actions/helm-test
