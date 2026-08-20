@@ -676,7 +676,7 @@ dtas:
   enabled: false
   image:
     repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
-    tag: OPSEXP-4240
+    tag: pr-230
     pullPolicy: IfNotPresent
   additionalArgs:
     - --tb=short
