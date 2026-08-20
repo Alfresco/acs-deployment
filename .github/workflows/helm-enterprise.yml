@@ -193,59 +193,6 @@ jobs:
         with:
           release-name: acs
 
-      - name: Checkout DTAS for search content test
-        continue-on-error: true
-        run: |
-          echo "=== Checking for DTAS in repo ==="
-          if [ -d "test/alfresco-deployment-test-automation-scripts" ]; then
-            echo "✓ DTAS found locally"
-          else
-            echo "DTAS not found - skipping search content test"
-          fi
-
-      - name: Run search document content test (if DTAS available)
-        continue-on-error: true
-        timeout-minutes: 10
-        run: |
-          if [ ! -d "test/alfresco-deployment-test-automation-scripts" ]; then
-            echo "Skipping: DTAS not available"
-            exit 0
-          fi
-
-          echo "=== Setting up Python environment for DTAS ==="
-          cd test/alfresco-deployment-test-automation-scripts
-
-          if [ -f "requirements.txt" ]; then
-            pip install -q -r requirements.txt
-          fi
-
-          echo "=== Running test_search_document_content ==="
-          python -m pytest tests/scenarios/test_content_lifecycle.py::test_search_document_content \
-            -v --tb=short --timeout=300 2>&1 | tee search-test.log
-
-      - name: Collect search test results
-        if: always()
-        continue-on-error: true
-        run: |
-          if [ -f "test/alfresco-deployment-test-automation-scripts/search-test.log" ]; then
-            echo "=== Search Test Results ==="
-            cat test/alfresco-deployment-test-automation-scripts/search-test.log
-
-            echo ""
-            echo "=== Repository transformation logs ==="
-            REPO_POD=$(kubectl get pod -l app=alfresco-repository -o jsonpath='{.items[0].metadata.name}' 2>/dev/null || echo "")
-            if [ -n "$REPO_POD" ]; then
-              kubectl logs $REPO_POD --tail=100 | grep -i "transform\|index\|search" || echo "No matching logs"
-            fi
-
-            echo ""
-            echo "=== Elasticsearch indexing logs ==="
-            ES_POD=$(kubectl get pod -l app.kubernetes.io/component=elasticsearch -o jsonpath='{.items[0].metadata.name}' 2>/dev/null || echo "")
-            if [ -n "$ES_POD" ]; then
-              kubectl logs $ES_POD --tail=50 || echo "Could not get ES logs"
-            fi
-          fi
-
       - name: Spit pod metrics logs
         if: always() && steps.metrics-init.outcome != 'skipped'
         run: |

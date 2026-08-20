@@ -263,7 +263,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.enabled | bool | `false` | Enables the deployment test suite which can run via `helm test` |
 | dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
-| dtas.image.tag | string | `"v1.9.0"` |  |
+| dtas.image.tag | string | `"OPSEXP-4240"` |  |
 | elasticsearch.elasticsearch.image.repository | string | `"elasticsearch"` |  |
 | elasticsearch.elasticsearch.image.tag | string | `"8.17.10"` |  |
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
