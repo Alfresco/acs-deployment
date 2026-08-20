@@ -220,5 +220,9 @@ alfresco-audit-storage:
       memory: "256Mi"
 dtas:
   enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-deployment-test-automation-scripts
+    tag: pr-230
+    pullPolicy: Always
   additionalArgs:
     - --tb=short
