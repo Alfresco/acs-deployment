@@ -173,6 +173,29 @@ jobs:
             sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
             sudo sysctl -w net.ipv6.conf.lo.disable_ipv6=1
 
+      - name: Check Search Enterprise bootstrap indexing
+        id: search_bootstrap
+        continue-on-error: true
+        env:
+          INGRESS: ${{ steps.setup-kind.outputs.ingress-endpoint }}
+        run: |
+          for attempt in $(seq 1 30); do
+            result=$(curl --fail --silent --show-error -u admin:admin \
+              "http://${INGRESS}/alfresco/api/-default-/public/search/versions/1/search" \
+              -H 'Content-Type: application/json' \
+              -d '{"query":{"query":"name:alfresco"}}' | \
+              jq -r '.list.pagination.totalItems // 0')
+            echo "Attempt ${attempt}: Search Enterprise bootstrap results: ${result}"
+            if [ "$result" -gt 0 ]; then
+              echo "Search Enterprise bootstrap node is indexed."
+              exit 0
+            fi
+            sleep 10
+          done
+
+          echo "::error::Search Enterprise bootstrap node was not indexed after 300 seconds"
+          exit 1
+
       - name: Run Newman tests
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         id: newman
