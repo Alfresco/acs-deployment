@@ -203,7 +203,7 @@ jobs:
         if: always() && (failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled))
         uses: mxschmitt/action-tmate@v3
         with:
-          limit-access-to-actor: true
+          limit-access-to-actor: false
         timeout-minutes: 60
 
       - name: Spit pod metrics logs
