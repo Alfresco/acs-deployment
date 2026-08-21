@@ -204,7 +204,7 @@ jobs:
         uses: mxschmitt/action-tmate@v3
         with:
           limit-access-to-actor: false
-        timeout-minutes: 60
+        timeout-minutes: 120
 
       - name: Spit pod metrics logs
         if: always() && steps.metrics-init.outcome != 'skipped'
