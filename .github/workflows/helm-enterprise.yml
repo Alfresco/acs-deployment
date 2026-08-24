@@ -67,6 +67,7 @@ jobs:
       REGISTRY_SECRET_NAME: regcred
       POD_METRICS_LOG: /tmp/pod-metrics.log
       NODE_METRICS_LOG: /tmp/node-metrics.log
+      HELM_INSTALL_TIMEOUT: 15m0s
     strategy:
       fail-fast: false
       matrix:
@@ -141,6 +142,7 @@ jobs:
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
+          --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }}
 
       - name: Wait for deployments to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.24.1
