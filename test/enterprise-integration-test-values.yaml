@@ -66,6 +66,7 @@ elasticsearch:
         memory: "1Gi"
 alfresco-search-enterprise:
   reindexing:
+    hookExecution: post-install
     resources:
       requests:
         cpu: "0.01"
