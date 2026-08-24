@@ -219,5 +219,8 @@ alfresco-audit-storage:
       memory: "256Mi"
 dtas:
   enabled: true
+  config:
+    config:
+      search_timeout_seconds: 360
   additionalArgs:
     - --tb=short
