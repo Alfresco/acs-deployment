@@ -67,7 +67,7 @@ jobs:
       REGISTRY_SECRET_NAME: regcred
       POD_METRICS_LOG: /tmp/pod-metrics.log
       NODE_METRICS_LOG: /tmp/node-metrics.log
-      HELM_INSTALL_TIMEOUT: 15m0s
+      HELM_INSTALL_TIMEOUT: 10m0s
     strategy:
       fail-fast: false
       matrix:
@@ -224,12 +224,12 @@ jobs:
         with:
           release-name: acs
 
-      - name: Debug with tmate (keep environment alive over SSH)
-        if: always() && (failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled))
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: false
-        timeout-minutes: 120
+      # - name: Debug with tmate (keep environment alive over SSH)
+      #   if: always() && (failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled))
+      #   uses: mxschmitt/action-tmate@v3
+      #   with:
+      #     limit-access-to-actor: false
+      #   timeout-minutes: 120
 
       - name: Spit pod metrics logs
         if: always() && steps.metrics-init.outcome != 'skipped'
