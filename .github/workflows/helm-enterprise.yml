@@ -53,7 +53,7 @@ jobs:
 
   helm_integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 120
     needs:
       - build_vars
     name: ${{ matrix.values }} on ${{ matrix.name }}
@@ -194,7 +194,12 @@ jobs:
         uses: ./.github/actions/helm-test
         with:
           release-name: acs
-
+      - name: Debug with tmate (keep environment alive over SSH)
+        if: always() && (failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled))
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: false
+        timeout-minutes: 120
       - name: Spit pod metrics logs
         if: always() && steps.metrics-init.outcome != 'skipped'
         run: |
