@@ -13,6 +13,7 @@ on:
       - test/postman/helm/**
       - .github/workflows/helm*
       - .github/actions/charts-as-json/**
+      - .github/actions/helm-test/**
       - test/enterprise-integration-test-values.yaml
   push:
     branches:
