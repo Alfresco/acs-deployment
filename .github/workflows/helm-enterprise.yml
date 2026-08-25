@@ -193,6 +193,7 @@ jobs:
         uses: ./.github/actions/helm-test
         with:
           release-name: acs
+          ingress-endpoint: ${{ steps.setup-kind.outputs.ingress-endpoint }}
 
       - name: Spit pod metrics logs
         if: always() && steps.metrics-init.outcome != 'skipped'
