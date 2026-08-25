@@ -223,5 +223,8 @@ alfresco-audit-storage:
       memory: "256Mi"
 dtas:
   enabled: true
+  image:
+    tag: pr-230
+    pullPolicy: Always
   additionalArgs:
     - --tb=short
