@@ -149,6 +149,7 @@ messageBroker:
   # and optionally the credentials to the web console (can be the same as broker access).
   existingSecretName: null
 alfresco-repository:
+  replicaCount: 1
   nameOverride: alfresco-repository
   image:
     repository: quay.io/alfresco/alfresco-content-repository
