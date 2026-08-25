@@ -53,7 +53,7 @@ jobs:
           echo "json=$VERS" >> $GITHUB_OUTPUT
 
   helm_integration:
-    runs-on: alfrescoPub-ubuntu2404-32G-8CPU
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     needs:
       - build_vars
