@@ -136,7 +136,7 @@ jobs:
           --values helm/${{ matrix.name }}/${{ matrix.values }}
           --values test/enterprise-integration-test-values.yaml
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
-          --timeout ${{ env.HELM_INSTALL_TIMEOUT }}
+          --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }}
 
       - name: Wait for deployments to be ready
         uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.24.1
@@ -195,12 +195,12 @@ jobs:
         with:
           release-name: acs
 
-      - name: Debug with tmate (keep environment alive over SSH)
-        if: always() && (failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled))
-        uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: false
-        timeout-minutes: 120
+      # - name: Debug with tmate (keep environment alive over SSH)
+      #   if: always() && (failure() || (github.event_name == 'workflow_dispatch' && inputs.debug_enabled))
+      #   uses: mxschmitt/action-tmate@v3
+      #   with:
+      #     limit-access-to-actor: false
+      #   timeout-minutes: 120
 
       - name: Spit pod metrics logs
         if: always() && steps.metrics-init.outcome != 'skipped'
