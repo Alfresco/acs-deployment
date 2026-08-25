@@ -23,9 +23,16 @@ runs:
         kubectl describe pod
 
         echo "::group::Content indexing pipeline logs"
-        for w in $(kubectl get sts,deploy,job -o name | grep -E 'search-enterprise|transform|tika'); do
+        for w in $(kubectl get pods -o name | grep -E 'search-enterprise|transform|tika|-content-|-metadata-|-path-|activemq|elasticsearch'); do
           echo "===== $w"
           kubectl logs "$w" --all-containers=true --tail=-1 || true
+        done
+        echo "::endgroup::"
+
+        echo "::group::Repository logs (tail)"
+        for w in $(kubectl get pods -o name | grep -- '-alfresco-repository-'); do
+          echo "===== $w"
+          kubectl logs "$w" --all-containers=true --tail=500 || true
         done
         echo "::endgroup::"
 
