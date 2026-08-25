@@ -74,6 +74,9 @@ alfresco-search-enterprise:
       limits:
         cpu: "1"
         memory: "1Gi"
+  liveIndexing:
+    environment:
+      LOGGING_LEVEL_ORG_ALFRESCO: DEBUG
   resources:
     requests:
       cpu: "0.01"
