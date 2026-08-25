@@ -18,7 +18,8 @@ runs:
       if: always() && steps.helm_test.outcome != 'skipped'
       shell: bash
       run: |
-        kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
+        DTAS_LOGS=$(kubectl logs -l app.kubernetes.io/component=dtas --tail=-1)
+        echo "$DTAS_LOGS"
         kubectl get all --all-namespaces
         kubectl describe pod
 
@@ -43,6 +44,16 @@ runs:
           kubectl exec "$ES_POD" -- curl -s 'localhost:9200/alfresco/_count' || true
         else
           echo "No elasticsearch pod found"
+        fi
+        echo "::endgroup::"
+
+        echo "::group::Elasticsearch document for failing node(s)"
+        if [ -n "$ES_POD" ]; then
+          for NODE_ID in $(echo "$DTAS_LOGS" | grep -oE 'node_id=[0-9a-f-]{36}' | cut -d= -f2 | sort -u); do
+            echo "===== node $NODE_ID"
+            kubectl exec "$ES_POD" -- curl -s "localhost:9200/alfresco/_doc/$NODE_ID" || true
+            echo
+          done
         fi
         echo "::endgroup::"
 
