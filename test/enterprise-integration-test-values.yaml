@@ -77,6 +77,9 @@ alfresco-search-enterprise:
   liveIndexing:
     environment:
       LOGGING_LEVEL_ORG_ALFRESCO: DEBUG
+    mediation:
+      environment:
+        ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_REFRESHTIME: "*/15 * * * * *"
   resources:
     requests:
       cpu: "0.01"
