@@ -138,7 +138,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-repository.persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
 | alfresco-repository.persistence.baseSize | string | `"20Gi"` |  |
 | alfresco-repository.persistence.enabled | bool | `true` | Persist repository data |
-| alfresco-repository.replicaCount | int | `1` |  |
 | alfresco-search-community.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-search-community.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-search-community.enabled | bool | `false` | Elasticsearch batch indexing for ACS Community. Mutually exclusive with `alfresco-search` (Solr) and `alfresco-search-enterprise` (which defaults to enabled); enabling it alongside either fails the render. Requires `elasticsearch.enabled: true` and `alfresco-repository.configuration.search.flavor: elasticsearch`. |
@@ -262,9 +261,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | dtas.config.config.password | string | `"admin"` |  |
 | dtas.config.config.username | string | `"admin"` |  |
 | dtas.enabled | bool | `false` | Enables the deployment test suite which can run via `helm test` |
-| dtas.image.pullPolicy | string | `"Always"` |  |
+| dtas.image.pullPolicy | string | `"IfNotPresent"` |  |
 | dtas.image.repository | string | `"quay.io/alfresco/alfresco-deployment-test-automation-scripts"` |  |
-| dtas.image.tag | string | `"pr-230"` |  |
+| dtas.image.tag | string | `"v1.9.0"` |  |
 | elasticsearch.elasticsearch.image.repository | string | `"elasticsearch"` |  |
 | elasticsearch.elasticsearch.image.tag | string | `"8.17.10"` |  |
 | elasticsearch.elasticsearch.ingress.enabled | bool | `false` | toggle deploying elasticsearch-audit ingress |
