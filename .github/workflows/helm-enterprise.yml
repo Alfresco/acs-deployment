@@ -138,25 +138,6 @@ jobs:
           ${{ steps.configurable-extra-values.outputs.helm_install_params }}
           --wait --timeout ${{ env.HELM_INSTALL_TIMEOUT }}
 
-      - name: Wait for deployments to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.24.1
-        with:
-          wait-resource: "deployments"
-          wait-condition: "Available"
-
-      - name: Wait for statefulsets to be ready
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.24.1
-        with:
-          wait-resource: "sts"
-          wait-for-what: "jsonpath"
-          wait-condition: "'{.status.readyReplicas}'=1"
-
-      - name: Wait for jobs to be completed
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-wait@v18.24.1
-        with:
-          wait-resource: "jobs"
-          wait-condition: "complete"
-
       - name: Spit cluster status after Helm install
         if: always() && steps.helm_install.outcome != 'skipped'
         run: |
