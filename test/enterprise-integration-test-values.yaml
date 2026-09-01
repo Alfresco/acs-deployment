@@ -74,6 +74,12 @@ alfresco-search-enterprise:
       limits:
         cpu: "1"
         memory: "1Gi"
+  liveIndexing:
+    environment:
+      LOGGING_LEVEL_ORG_ALFRESCO: DEBUG
+    mediation:
+      environment:
+        ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_REFRESHTIME: "*/15 * * * * *"
   resources:
     requests:
       cpu: "0.01"
@@ -220,5 +226,8 @@ alfresco-audit-storage:
       memory: "256Mi"
 dtas:
   enabled: true
+  image:
+    tag: pr-230
+    pullPolicy: Always
   additionalArgs:
     - --tb=short
