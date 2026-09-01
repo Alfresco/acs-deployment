@@ -67,7 +67,7 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v18.24.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v18.26.0
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
@@ -90,7 +90,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.24.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.26.0
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -188,7 +188,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.24.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.26.0
         with:
           namespace: default
           log_retention: 7
