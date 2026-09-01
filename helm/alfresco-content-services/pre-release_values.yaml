@@ -74,7 +74,7 @@ alfresco-sync-service:
     tag: 5.3.6
 alfresco-connector-ms365:
   image:
-    tag: 2.1.4-A.4
+    tag: 2.1.4
 alfresco-connector-msteams:
   image:
     tag: 2.1.4

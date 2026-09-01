@@ -84,7 +84,7 @@ services:
       activemq:
         condition: service_healthy
   share:
-    image: docker.io/alfresco/alfresco-share:26.2.0
+    image: docker.io/alfresco/alfresco-share:26.2.2
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -166,7 +166,7 @@ services:
       retries: 5
       start_period: 30s
   batch-indexing:
-    image: docker.io/alfresco/alfresco-elasticsearch-batch-indexing:5.7.0
+    image: docker.io/alfresco/alfresco-elasticsearch-batch-indexing:5.7.1
     mem_limit: 1g
     depends_on:
       elasticsearch:
@@ -189,7 +189,7 @@ services:
       ALFRESCO_REINDEX_CONTINUOUS_MAXWINDOW: 30m
       ALFRESCO_REINDEX_CONTINUOUS_OVERLAP: 10m
   activemq:
-    image: docker.io/alfresco/alfresco-activemq:6.2.6-jre17-rockylinux8
+    image: docker.io/alfresco/alfresco-activemq:6.2.9-jre17-rockylinux8
     mem_limit: 1g
     environment:
       - ACTIVEMQ_ADMIN_LOGIN=admin
