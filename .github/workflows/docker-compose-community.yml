@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v18.24.1
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/verify-compose@v18.26.0
         with:
           compose_file_path: docker-compose/community-compose.yaml
           postman_path: test/postman/docker-compose
