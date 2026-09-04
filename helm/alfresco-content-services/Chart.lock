@@ -16,45 +16,45 @@ dependencies:
   version: 0.8.0
 - name: alfresco-repository
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 1.9.0
+  version: 1.10.0
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 4.2.0
+  version: 4.2.1
 - name: alfresco-transform-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.9.1
+  version: 2.9.2
 - name: alfresco-search-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 6.3.1
+  version: 6.3.2
 - name: alfresco-sync-service
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 7.12.1
+  version: 7.12.2
 - name: alfresco-search-enterprise
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 5.2.0
+  version: 5.3.0
 - name: alfresco-search-community
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.2.0
+  version: 0.3.0
 - name: alfresco-connector-msteams
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.8.1
+  version: 2.8.2
 - name: alfresco-share
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 2.5.0
+  version: 2.5.1
 - name: alfresco-connector-ms365
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.8.1
+  version: 3.8.2
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.8.1
+  version: 3.8.2
 - name: elastic
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 0.7.0
 - name: alfresco-audit-storage
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.11.1
+  version: 0.11.2
 - name: alfresco-connector-cic
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0-alpha.3
-digest: sha256:f9a901cc3806995da42c0af0c47bb8060f9f4ace72e705e4fba1a7bc8a2fda9a
-generated: "2026-08-13T16:06:38.513552+02:00"
+  version: 0.1.0
+digest: sha256:1a9e9bcf9a475a1221e63c89ba0dfd05c1af83849e246c5e0f34ab4edf5be078
+generated: "2026-09-04T08:52:27.560975403Z"

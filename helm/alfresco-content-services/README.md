@@ -22,22 +22,22 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.2.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-control-center(alfresco-adf-app) | 0.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-digital-workspace(alfresco-adf-app) | 0.8.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.8.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.11.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-ai-transformer | 3.8.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-audit-storage | 0.11.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-cic | 0.1.0-alpha.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.9.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-community | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 5.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.3.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.5.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.12.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.9.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-cic | 0.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-ms365 | 3.8.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-connector-msteams | 2.8.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.10.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-community | 0.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search-enterprise | 5.3.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-search(alfresco-search-service) | 6.3.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | share(alfresco-share) | 2.5.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-sync-service | 7.12.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-transform-service | 2.9.2 |
 | https://alfresco.github.io/alfresco-helm-charts/ | elasticsearch(elastic) | 0.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql(postgres) | 0.8.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | postgresql-sync(postgres) | 0.8.0 |
