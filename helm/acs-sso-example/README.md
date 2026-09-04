@@ -6,7 +6,7 @@ grand_parent: Helm
 
 # acs-sso-example
 
-![Version: 1.12.0](https://img.shields.io/badge/Version-1.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
+![Version: 1.13.0](https://img.shields.io/badge/Version-1.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
 An example Chart to demonstrate how to compose your own Alfresco platform
 with SSO on kubernetes using a third party Keycloak.
@@ -37,10 +37,10 @@ deployment is destroyed or rolled back!
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.2.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.2.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-content-app(alfresco-adf-app) | 0.8.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.9.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 2.5.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-repository | 1.10.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-share | 2.5.1 |
 | https://codecentric.github.io/helm-charts | keycloakx | 7.1.6 |
 | oci://registry-1.docker.io/bitnamicharts | repository-database(postgresql) | 13.4.0 |
 
