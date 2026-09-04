@@ -113,7 +113,7 @@ dtas:
     assertions:
       acs:
         edition: Community
-        version: 26.2.2
+        version: 26.2.0
         modules:
         - id: org.alfresco.integrations.google.docs
           version: 4.1.0
