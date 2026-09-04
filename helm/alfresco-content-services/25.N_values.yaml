@@ -91,7 +91,7 @@ dtas:
           version: 5.3.6
           installed: true
         - id: org.alfresco.integrations.google.docs
-          version: 4.1.0
+          version: 5.0.0
           installed: true
         - id: alfresco-aos-module
           version: 3.4.1
