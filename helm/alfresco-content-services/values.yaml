@@ -661,14 +661,13 @@ alfresco-connector-cic:
     image:
       repository: quay.io/alfresco/alfresco-cic-connector-nucleus-sync
       tag: 1.0.2
+    enabled: true
   repository:
     authType: basic
     existingConfigMap:
       name: *infrastructure_cmName
       keys:
         url: REPOSITORY_URL
-  nucleusSync:
-    enabled: true
   messageBroker:
     existingConfigMap:
       name: *infrastructure_cmName
