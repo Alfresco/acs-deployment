@@ -74,12 +74,18 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | alfresco-audit-storage.nameOverride | string | `"alfresco-audit-storage"` |  |
 | alfresco-connector-cic.ats.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-connector-cic.bulkIngester.enabled | bool | `false` |  |
+| alfresco-connector-cic.bulkIngester.image.repository | string | `"quay.io/alfresco/alfresco-cic-connector-bulk-ingester"` |  |
+| alfresco-connector-cic.bulkIngester.image.tag | string | `"1.0.2"` |  |
 | alfresco-connector-cic.db.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-connector-cic.db.existingSecret.name | string | `"alfresco-cs-database"` |  |
 | alfresco-connector-cic.enabled | bool | `false` | Toggle deploying Alfresco Content Connector for Intelligence Cloud (CIC). Brings up live-ingester, bulk-ingester and nucleus-sync. See https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/alfresco-connector-cic |
+| alfresco-connector-cic.liveIngester.image.repository | string | `"quay.io/alfresco/alfresco-cic-connector-live-ingester"` |  |
+| alfresco-connector-cic.liveIngester.image.tag | string | `"1.0.2"` |  |
 | alfresco-connector-cic.messageBroker.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
 | alfresco-connector-cic.messageBroker.existingSecret.name | string | `"acs-alfresco-cs-brokersecret"` |  |
 | alfresco-connector-cic.nucleusSync.enabled | bool | `true` |  |
+| alfresco-connector-cic.nucleusSync.image.repository | string | `"quay.io/alfresco/alfresco-cic-connector-nucleus-sync"` |  |
+| alfresco-connector-cic.nucleusSync.image.tag | string | `"1.0.2"` |  |
 | alfresco-connector-cic.repository.authType | string | `"basic"` |  |
 | alfresco-connector-cic.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` |  |
 | alfresco-connector-cic.repository.existingConfigMap.name | string | `"alfresco-infrastructure"` |  |
