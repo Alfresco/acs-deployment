@@ -78,6 +78,16 @@ alfresco-connector-ms365:
 alfresco-connector-msteams:
   image:
     tag: 2.1.4
+alfresco-connector-cic:
+  liveIngester:
+    image:
+      tag: 1.0.2
+  bulkIngester:
+    image:
+      tag: 1.0.2
+  nucleusSync:
+    image:
+      tag: 1.0.2
 elasticsearch:
   elasticsearch:
     image:

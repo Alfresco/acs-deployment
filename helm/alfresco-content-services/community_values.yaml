@@ -19,13 +19,13 @@ alfresco-repository:
 activemq:
   image:
     repository: docker.io/alfresco/alfresco-activemq
-    tag: 6.2.6-jre17-rockylinux8
+    tag: 6.2.9-jre17-rockylinux8
 alfresco-search-enterprise:
   enabled: false
 share:
   image:
     repository: alfresco/alfresco-share
-    tag: 26.2.0
+    tag: 26.2.2
 alfresco-search:
   enabled: false
   searchServicesImage:
@@ -34,7 +34,7 @@ alfresco-search:
 alfresco-search-community:
   enabled: true
   image:
-    tag: 5.7.0
+    tag: 5.8.0
 # Disable Enterprise only features
 alfresco-transform-service:
   enabled: true

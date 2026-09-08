@@ -75,6 +75,15 @@ matrix:
     audit-storage:
       helm_target: *helmvaluesNext
       helm_key: $.alfresco-audit-storage.image.tag
+    cic-live-ingester:
+      helm_target: *helmvaluesNext
+      helm_key: $.alfresco-connector-cic.liveIngester.image.tag
+    cic-bulk-ingester:
+      helm_target: *helmvaluesNext
+      helm_key: $.alfresco-connector-cic.bulkIngester.image.tag
+    cic-nucleus-sync:
+      helm_target: *helmvaluesNext
+      helm_key: $.alfresco-connector-cic.nucleusSync.image.tag
 
   current:
     id: current
@@ -148,6 +157,15 @@ matrix:
     audit-storage:
       helm_target: *helmvaluesCurrent
       helm_key: $.alfresco-audit-storage.image.tag
+    cic-live-ingester:
+      helm_target: *helmvaluesCurrent
+      helm_key: $.alfresco-connector-cic.liveIngester.image.tag
+    cic-bulk-ingester:
+      helm_target: *helmvaluesCurrent
+      helm_key: $.alfresco-connector-cic.bulkIngester.image.tag
+    cic-nucleus-sync:
+      helm_target: *helmvaluesCurrent
+      helm_key: $.alfresco-connector-cic.nucleusSync.image.tag
 
   25.N:
     id: 25n
