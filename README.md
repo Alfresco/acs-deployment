@@ -62,7 +62,7 @@ Start the release by opening a PR against the appropriate branch that will:
   to the version you want to release.
 * Run `pre-commit run --all-files helm-docs` to update helm docs
 * Edit [upgrades docs](docs/helm/upgrades.md) renaming the `Unreleased` section
-  to the current version and create a new `Unreleased` section for the future.
+  to the current version and creating a new `Unreleased` section for the future.
 * Run [Bump versions][1] workflow against the same newly created branch, the
   first time with `charts` option. Inspect the changes pushed on the branch,
   revert unwanted changes if necessary - all charts dependencies should not be

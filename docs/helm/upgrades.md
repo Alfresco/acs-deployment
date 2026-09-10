@@ -22,7 +22,7 @@ version in which they have been released.
 
 * The `alfresco-connector-cic` subchart has been added to the
   `alfresco-content-services` umbrella chart (disabled by default). It replaces
-  the deprecated `alfresco-knowledge-retrieval` (HXI) connector and brings up
+  the deprecated `alfresco-knowledge-retrieval` (HXI) connector. It brings up
   three services — `live-ingester`, `bulk-ingester` and `nucleus-sync` — when
   `alfresco-connector-cic.enabled: true`. See
   `docs/helm/values/with-cic_values.yaml` for a
