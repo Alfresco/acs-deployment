@@ -18,6 +18,8 @@ version in which they have been released.
 
 ## Unreleased
 
+## 10.8.0
+
 * The `alfresco-connector-cic` subchart has been added to the
   `alfresco-content-services` umbrella chart (disabled by default). It replaces
   the deprecated `alfresco-knowledge-retrieval` (HXI) connector and brings up
@@ -46,11 +48,6 @@ version in which they have been released.
   unaffected. Enterprise deployments using legacy Search Services (`solr6`)
   must now set this key explicitly, in addition to providing
   `global.search.sharedSecret`.
-* The `alfresco-knowledge-retrieval` (HXI) dependency, its values and related
-  docs have been removed from the `alfresco-content-services` chart. If you were
-  using Knowledge Retrieval / HXI features, deploy that chart independently. The
-  replacement is the new `alfresco-connector-cic` subchart, available from chart
-  version 10.8.0.
 
 ## 10.3.1
 
