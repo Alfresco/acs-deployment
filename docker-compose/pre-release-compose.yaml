@@ -302,7 +302,7 @@ services:
       elasticsearch:
         condition: service_healthy
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:8.1.0-34465594232
+    image: quay.io/alfresco/alfresco-digital-workspace:8.1.0-34956960905
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -321,7 +321,7 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:11.1.0-34579782575
+    image: quay.io/alfresco/alfresco-control-center:11.1.0-34956960905
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
