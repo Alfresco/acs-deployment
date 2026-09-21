@@ -90,7 +90,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.28.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@opsexp-4396-self-ref-canary
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
