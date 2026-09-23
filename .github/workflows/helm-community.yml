@@ -12,6 +12,7 @@ on:
       - test/k6/acs-sso-example.js
       - test/postman/helm/**
       - .github/workflows/helm*
+      - .github/actions/helm-test/**
       - test/community-integration-test-values.yaml
       - test/community-es-integration-test-values.yaml
       - test/community-solr-integration-test-values.yaml
