@@ -95,10 +95,11 @@ docs/examples/nginx/test.sh
 The checks use fixed-response mock upstreams to validate NGINX syntax, routing,
 and location precedence. They exercise all four aliases and confirmed
 `remoteadm` read operations, normalized paths and location boundaries, Solr and
-Prometheus blocks, representative Repository, REST, CMIS, AOS, and Share paths,
-and private-network routing. They do not prove application compatibility. The
-mock Repository deliberately returns a username-like value, allowing the test
-to verify that blocked responses do not disclose upstream content.
+Prometheus blocks, servlet matrix parameters, representative Repository, REST,
+CMIS, AOS, and Share paths, and private-network routing. They do not prove
+application compatibility. The mock Repository deliberately returns a
+username-like value, allowing the test to verify that blocked responses do not
+disclose upstream content.
 
 Before deploying a changed edge policy, perform a focused check with the real
 ACS and Share versions used by the environment: the `remoteadm` URLs must return

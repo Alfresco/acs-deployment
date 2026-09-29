@@ -56,10 +56,13 @@ done
 assert_response 403 Forbidden /alfresco/wcs/%72emoteadm/listall/alfresco/site-data/components
 assert_response 403 Forbidden /alfresco/wcs/ignored/../remoteadm/listall/alfresco/site-data/components
 assert_response 403 Forbidden //alfresco//wcs//remoteadm/listall/alfresco/site-data/components
+assert_response 403 Forbidden '/alfresco;v=1/s;session=x/remoteadm;x/listall/alfresco/site-data/components'
+assert_response 403 Forbidden '/alfresco%3Bv=1/s%3Bsession=x/remoteadm%3Bx/listall/alfresco/site-data/components'
 assert_response 200 'repository upstream' /alfresco/wcs/remoteadministrator/listall
 
 assert_response 403 Forbidden /share/proxy/alfresco/remoteadm/listall/alfresco/site-data/components
 assert_response 403 Forbidden /share/service/proxy/alfresco-noauth/remoteadm/listall/alfresco/site-data/components
+assert_response 403 Forbidden '/share;x/service;y/proxy;z/alfresco-noauth;a/remoteadm;b/listall/alfresco/site-data/components'
 
 for alias in service s wcservice wcs; do
     assert_response 403 Forbidden "/alfresco/${alias}/api/solr/aclchangesets"
@@ -67,6 +70,10 @@ for alias in service s wcservice wcs; do
 done
 assert_response 403 Forbidden /share/proxy/alfresco/api/solr/aclchangesets
 assert_response 403 Forbidden /share/service/proxy/alfresco/-default-/proxy/something/api/nodes
+assert_response 403 Forbidden '/alfresco;x/wcservice;y/api;z/solr;a/aclchangesets'
+assert_response 403 Forbidden '/share;x/service;y/proxy;z/alfresco-feed;a/api;b/solr;c/aclchangesets'
+assert_response 403 Forbidden '/share;x/service;y/proxy;z/alfresco;a/-default-;b/proxy;c/something/api;d/nodes'
+assert_response 403 Forbidden '/alfresco;x/wcs;y/prometheus;z'
 assert_response 200 'repository upstream' /alfresco/wcs/prometheus-exporter
 
 assert_response 200 'repository upstream' /alfresco/
