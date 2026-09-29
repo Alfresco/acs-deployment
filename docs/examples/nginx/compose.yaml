@@ -1,0 +1,32 @@
+services:
+  proxy:
+    image: nginx:1.28-alpine
+    ports:
+      - "127.0.0.1:18080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - alfresco
+      - share
+
+  alfresco:
+    image: nginx:1.28-alpine
+    volumes:
+      - ./test/mock-repository.conf:/etc/nginx/conf.d/default.conf:ro
+
+  share:
+    image: nginx:1.28-alpine
+    volumes:
+      - ./test/mock-share.conf:/etc/nginx/conf.d/default.conf:ro
+
+  internal-client:
+    image: curlimages/curl:8.16.0
+    profiles:
+      - test
+    command:
+      - --fail
+      - --silent
+      - --show-error
+      - http://alfresco:8080/alfresco/wcs/remoteadm/listall/alfresco/site-data/components
+    depends_on:
+      - alfresco

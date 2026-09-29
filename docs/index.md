@@ -98,3 +98,6 @@ file for a version with the latest charts or using the old charts.
 ## Getting Started
 
 To get started please refer to the [Docker Compose](compose.md) and [Helm Chart](helm.md) documentation.
+
+For production edge-proxy policy, see [Restrict internal Repository
+endpoints](proxy-security.md).
