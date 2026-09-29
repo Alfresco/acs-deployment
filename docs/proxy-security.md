@@ -122,7 +122,7 @@ The route policy is based on these sources:
   `/wcservice/*` and `/wcs/*`.
 * Existing ACS deployment proxy rules and Postman collections protect Solr on
   the same four aliases.
-* The Docker Compose [`base.yaml`](../docker-compose/commons/base.yaml)
+* The Docker Compose [`base.yaml`](https://github.com/Alfresco/acs-deployment/blob/master/docker-compose/commons/base.yaml)
   proxy policy restricts the Prometheus Web Script to loopback clients on the
   same four aliases.
 
@@ -146,6 +146,6 @@ example.
 The Documentation Team should incorporate the exposure policy and backend
 network restriction into official ACS security guidance and replace references
 to the archived `Alfresco/acs-ingress` image with this maintained example. The
-separate [project handoff record](../.github/ACS-12861-handoff.md) tracks the
-required DevOps coordination and Documentation Team notification; this guide
-does not claim those actions have occurred.
+separate project handoff record tracks the required DevOps coordination and
+Documentation Team notification; this guide does not claim those actions have
+occurred.
