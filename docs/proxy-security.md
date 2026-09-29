@@ -42,6 +42,11 @@ The example retains the existing protections for Repository Solr tracking APIs
 and their Share proxy forms. Those routes are internal search integration APIs,
 not public search endpoints.
 
+The Repository Prometheus Web Script is also internal and unauthenticated. The
+example blocks `/prometheus` on all four Web Script aliases. A trusted metrics
+collector should connect over the private application network instead of the
+public proxy.
+
 Do not block all anonymously accessible URLs. Login bootstrap, public links,
 and other supported features may intentionally use anonymous resources. The
 example therefore uses targeted deny rules before broader application routes:
@@ -87,12 +92,18 @@ Run the focused example checks with Docker:
 docs/examples/nginx/test.sh
 ```
 
-The checks run `nginx -t`, exercise all four aliases and confirmed read
-operations, test normalized paths and location boundaries, retain Solr blocks,
-pass representative Repository, REST, CMIS, AOS, and Share traffic, and verify
-that a private-network client can still call `remoteadm` directly. The mock
-Repository deliberately returns a username-like value, allowing the test to
-verify that blocked responses do not disclose upstream content.
+The checks use fixed-response mock upstreams to validate NGINX syntax, routing,
+and location precedence. They exercise all four aliases and confirmed
+`remoteadm` read operations, normalized paths and location boundaries, Solr and
+Prometheus blocks, representative Repository, REST, CMIS, AOS, and Share paths,
+and private-network routing. They do not prove application compatibility. The
+mock Repository deliberately returns a username-like value, allowing the test
+to verify that blocked responses do not disclose upstream content.
+
+Before deploying a changed edge policy, perform a focused check with the real
+ACS and Share versions used by the environment: the `remoteadm` URLs must return
+the deliberate `403` through NGINX while loading Share must still produce
+successful internal `remoteadm` requests from Share to Repository.
 
 ## Evidence and limitations
 
@@ -111,33 +122,30 @@ The route policy is based on these sources:
   `/wcservice/*` and `/wcs/*`.
 * Existing ACS deployment proxy rules and Postman collections protect Solr on
   the same four aliases.
+* The Docker Compose [`base.yaml`](../docker-compose/commons/base.yaml)
+  proxy policy restricts the Prometheus Web Script to loopback clients on the
+  same four aliases.
 
 This evidence confirms the `remoteadm` namespace and aliases; it does not prove
 that no other extension or internal Web Script requires an edge restriction.
 An allowlist for all Repository traffic is not included because the supported
 route set varies with ACS edition, version, modules, and custom Web Scripts.
 
-## DevOps and Documentation handoff
+## Required deployment review
 
-DevOps review must resolve these deployment-specific questions before rollout:
+DevOps must confirm these points before rollout:
 
 * Which ingress, gateway, CDN, or load balancer is the only public entry point,
   and can any DNS name or IP address bypass it to Repository port `8080`?
-* Does Share use a private Repository DNS name on every environment, including
-  failover and disaster recovery?
-* Which versions of Share, mobile clients, AOS, CMIS clients, Digital Workspace,
-  Content App, Control Center, Sync Service, API Explorer, and custom Web Scripts
-  are supported, and which public paths do they require?
-* Are third-party modules adding internal Web Scripts that need equivalent deny
-  rules? Review the Web Script index from a trusted administrative network.
-* Should blocked-route attempts be rate limited, alerted on, or retained in a
-  security audit log?
 * Are URI normalization rules equivalent if the production edge is not NGINX?
 
+Reviewing custom modules and adding rate limits, alerting, or audit retention are
+optional deployment considerations, not acceptance requirements for this
+example.
+
 The Documentation Team should incorporate the exposure policy and backend
-network restriction into the official ACS security guidance, replace references
-to the archived `Alfresco/acs-ingress` image with this maintained example, and
-cross-link the Share, AOS, mobile, ingress, and reverse-proxy deployment pages.
-Product documentation should avoid presenting the table above as an exhaustive
-endpoint allowlist until each supported client and optional module has been
-validated by its owning team.
+network restriction into official ACS security guidance and replace references
+to the archived `Alfresco/acs-ingress` image with this maintained example. The
+separate [project handoff record](../.github/ACS-12861-handoff.md) tracks the
+required DevOps coordination and Documentation Team notification; this guide
+does not claim those actions have occurred.

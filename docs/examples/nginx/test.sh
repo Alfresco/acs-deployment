@@ -63,9 +63,11 @@ assert_response 403 Forbidden /share/service/proxy/alfresco-noauth/remoteadm/lis
 
 for alias in service s wcservice wcs; do
     assert_response 403 Forbidden "/alfresco/${alias}/api/solr/aclchangesets"
+    assert_response 403 Forbidden "/alfresco/${alias}/prometheus"
 done
 assert_response 403 Forbidden /share/proxy/alfresco/api/solr/aclchangesets
 assert_response 403 Forbidden /share/service/proxy/alfresco/-default-/proxy/something/api/nodes
+assert_response 200 'repository upstream' /alfresco/wcs/prometheus-exporter
 
 assert_response 200 'repository upstream' /alfresco/
 assert_response 200 'repository upstream' /alfresco/api/-default-/public/alfresco/versions/1/nodes/-root-
