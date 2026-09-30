@@ -118,3 +118,45 @@ share:
 
 > Above values would limit the uploads to 100 MB files or 10 minutes long
 uploads in bith Alfresco repository API & Share UI.
+
+## Restrict internal Repository endpoints
+
+> This example is provided only for existing ingress-nginx deployments. The
+> controller is deprecated; use a supported ingress controller for new
+> deployments and implement the policy described in [Security](security.md).
+
+The following server snippet returns a fixed `403` for known internal routes.
+It includes matrix-parameter forms because Tomcat removes those parameters
+before servlet dispatch. Apply the annotation to one Ingress for the ACS public
+host; a server snippet affects every path on that host.
+
+```yaml
+alfresco-repository:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/server-snippet: |
+        location ~ "^/alfresco(?:;[^/]*)?/(?:service|s|wcservice|wcs)(?:;[^/]*)?/remoteadm(?:;[^/]*)?(?:/|$)" {
+          return 403 "Forbidden\n";
+        }
+        location ~ "^/share(?:;[^/]*)?/(?:service(?:;[^/]*)?/)?proxy(?:;[^/]*)?/alfresco(?:-(?:noauth|feed|api))?(?:;[^/]*)?/remoteadm(?:;[^/]*)?(?:/|$)" {
+          return 403 "Forbidden\n";
+        }
+        location ~ "^/alfresco(?:;[^/]*)?/(?:service|s|wcservice|wcs)(?:;[^/]*)?/api(?:;[^/]*)?/solr(?:;[^/]*)?(?:/|$)" {
+          return 403 "Forbidden\n";
+        }
+        location ~ "^/share(?:;[^/]*)?/(?:service(?:;[^/]*)?/)?proxy(?:;[^/]*)?/alfresco(?:-(?:noauth|feed|api))?(?:;[^/]*)?/api(?:;[^/]*)?/solr(?:;[^/]*)?(?:/|$)" {
+          return 403 "Forbidden\n";
+        }
+        location ~ "^/share(?:;[^/]*)?/(?:service(?:;[^/]*)?/)?proxy(?:;[^/]*)?/alfresco(?:;[^/]*)?/-default-(?:;[^/]*)?/proxy(?:;[^/]*)?/[^/]+/api(?:;[^/]*)?(?:/|$)" {
+          return 403 "Forbidden\n";
+        }
+        location ~ "^/alfresco(?:;[^/]*)?/(?:service|s|wcservice|wcs)(?:;[^/]*)?/prometheus(?:;[^/]*)?(?:/|$)" {
+          return 403 "Forbidden\n";
+        }
+```
+
+Snippet annotations require the controller settings shown earlier in this
+guide and should only be enabled for trusted Ingress authors. Verify the
+generated NGINX configuration and test literal and percent-encoded matrix
+parameters before rollout. If Share uses a different public host, apply the
+Share proxy restrictions to an Ingress for that host as well.
