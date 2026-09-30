@@ -91,7 +91,7 @@ Validate the deployed edge from an untrusted network and from a Share pod:
 * direct access to Repository port `8080` is unavailable publicly;
 * normal Repository and Share routes still work; and
 * loading Share still produces successful private `remoteadm` requests to
-	Repository.
+  Repository.
 
 The policy is based on the Repository
 [`remoteadm` descriptor](https://github.com/Alfresco/alfresco-community-repo/blob/master/remote-api/src/main/resources/alfresco/templates/webscripts/org/alfresco/repository/store/remoteadm.get.desc.xml),
