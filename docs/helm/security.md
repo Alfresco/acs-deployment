@@ -39,3 +39,63 @@ can be provided using existing Kubernetes Secrets:
 * [alfresco-transform-service](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-transform-service/README.md)
 * [alfresco-share](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-share/README.md)
 * [alfresco-sync-service](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-sync-service/README.md)
+
+## Restrict internal Repository endpoints
+
+The Repository service port (normally `8080`) must only be reachable from
+trusted application networks. Do not expose it through a public load balancer,
+Kubernetes `NodePort`, firewall rule, or another ingress that bypasses the
+public edge policy. Use a `ClusterIP` Service and apply NetworkPolicy, security
+group, and firewall rules appropriate to the environment.
+
+The public edge must block these internal Repository routes on all four Web
+Script aliases (`service`, `s`, `wcservice`, and `wcs`):
+
+| Internal route | Purpose |
+|---|---|
+| `/alfresco/{alias}/remoteadm` | Surf configuration used for internal Share-to-Repository communication. |
+| `/alfresco/{alias}/api/solr` | Search tracking APIs used by Search Services and indexing components. |
+| `/alfresco/{alias}/prometheus` | Metrics endpoint for trusted monitoring systems. |
+
+Also block `remoteadm` and Solr tracking routes reached through Share's
+`/proxy/alfresco` forms. Share must call Repository directly over the private
+application network so this public restriction does not interrupt Surf
+configuration loading.
+
+The `remoteadm` GET Web Script accepts `get`, `has`, `list`, `listall`,
+`listpattern`, and `lastmodified`. Its descriptor declares anonymous access,
+and list results can contain user names in Surf component filenames. Block the
+whole `remoteadm` namespace rather than individual operations.
+
+Edge matching must account for URI normalization differences. In particular,
+Tomcat removes matrix parameters such as `;x` before servlet dispatch, so a
+request such as `/alfresco/s/remoteadm;x/listall/...` must not bypass the edge
+rule. Apply the restriction before any broad Repository route and return a
+fixed local 4xx response without contacting Repository.
+
+Do not block all anonymous URLs. Login bootstrap, public links, and supported
+clients can legitimately require anonymous resources. Core REST APIs, CMIS,
+AOS, mobile clients, Share, and installed extensions must continue through the
+normal authentication layer. The route list above is a verified minimum, not a
+complete inventory for every ACS version or extension.
+
+For the deprecated ingress-nginx controller, see the
+[internal route example](ingress-nginx.md#restrict-internal-repository-endpoints).
+Other ingress controllers and gateways must implement equivalent matching and
+normalization behavior using their supported policy mechanism.
+
+Validate the deployed edge from an untrusted network and from a Share pod:
+
+* every protected alias and Share proxy form returns the deliberate public 4xx;
+* blocked responses contain no Repository response data;
+* direct access to Repository port `8080` is unavailable publicly;
+* normal Repository and Share routes still work; and
+* loading Share still produces successful private `remoteadm` requests to
+  Repository.
+
+The policy is based on the Repository
+[`remoteadm` descriptor](https://github.com/Alfresco/alfresco-community-repo/blob/master/remote-api/src/main/resources/alfresco/templates/webscripts/org/alfresco/repository/store/remoteadm.get.desc.xml),
+[`BaseRemoteStore`](https://github.com/Alfresco/alfresco-community-repo/blob/master/remote-api/src/main/java/org/alfresco/repo/web/scripts/bean/BaseRemoteStore.java),
+[`ADMRemoteStore`](https://github.com/Alfresco/alfresco-community-repo/blob/master/remote-api/src/main/java/org/alfresco/repo/web/scripts/bean/ADMRemoteStore.java),
+and the Web Script mappings in Repository
+[`web.xml`](https://github.com/Alfresco/alfresco-community-repo/blob/master/packaging/war/src/main/webapp/WEB-INF/web.xml).
