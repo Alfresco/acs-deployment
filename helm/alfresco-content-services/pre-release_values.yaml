@@ -2,7 +2,7 @@
 # latest version of the chart
 alfresco-repository:
   image:
-    tag: 26.3.0-A.17
+    tag: 26.3.0-A.19
 activemq:
   image:
     repository: quay.io/alfresco/alfresco-activemq
@@ -10,31 +10,31 @@ activemq:
 alfresco-transform-service:
   transformrouter:
     image:
-      tag: 4.4.5-A.2
+      tag: 4.4.5-A.6
   pdfrenderer:
     image:
-      tag: 5.4.5-A.2
+      tag: 5.4.5-A.6
   imagemagick:
     image:
-      tag: 5.4.5-A.2
+      tag: 5.4.5-A.6
   libreoffice:
     image:
-      tag: 5.4.5-A.2
+      tag: 5.4.5-A.6
   tika:
     image:
-      tag: 5.4.5-A.2
+      tag: 5.4.5-A.6
   transformmisc:
     image:
-      tag: 5.4.5-A.2
+      tag: 5.4.5-A.6
   filestore:
     image:
-      tag: 4.4.5-A.2
+      tag: 4.4.5-A.6
 alfresco-ai-transformer:
   image:
-    tag: 3.5.0-A.2
+    tag: 3.5.0-A.4
 share:
   image:
-    tag: 26.3.0-A.17
+    tag: 26.3.0-A.19
 alfresco-search:
   searchServicesImage:
     tag: 2.1.0-A9
@@ -44,25 +44,25 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.9.0-trashcan.2
+        tag: 5.9.0-A.13
     content:
       image:
-        tag: 5.9.0-trashcan.2
+        tag: 5.9.0-A.13
     metadata:
       image:
-        tag: 5.9.0-trashcan.2
+        tag: 5.9.0-A.13
     path:
       image:
-        tag: 5.9.0-trashcan.2
+        tag: 5.9.0-A.13
   reindexing:
     image:
-      tag: 5.9.0-trashcan.2
+      tag: 5.9.0-A.13
 alfresco-digital-workspace:
   image:
-    tag: 8.1.0-34956960905
+    tag: 8.1.0-37271011672
 alfresco-control-center:
   image:
-    tag: 11.1.0-36383779103
+    tag: 11.1.0-37271011672
 postgresql:
   image:
     tag: 16.5
@@ -71,13 +71,13 @@ postgresql-sync:
     tag: 16.5
 alfresco-sync-service:
   image:
-    tag: 5.3.6
+    tag: 5.3.7-A.1
 alfresco-connector-ms365:
   image:
-    tag: 2.1.5-A.1
+    tag: 2.1.5-A.5
 alfresco-connector-msteams:
   image:
-    tag: 2.1.5-A.1
+    tag: 2.1.5-A.4
 alfresco-connector-cic:
   liveIngester:
     image:
@@ -97,7 +97,7 @@ elasticsearch:
       tag: 8.17.1
 alfresco-audit-storage:
   image:
-    tag: 1.3.5-trashcan.1
+    tag: 1.3.5-A.2
 dtas:
   config:
     assertions:
