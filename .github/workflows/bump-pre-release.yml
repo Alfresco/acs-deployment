@@ -1,10 +1,16 @@
 ---
 name: Bump pre-release
+run-name: Bump pre-release using alfresco-updatecli/${{ inputs.alfresco-updatecli-ref || 'master' }}
 
 on:
   schedule:
     - cron: '0 6 * * 1'
   workflow_dispatch:
+    inputs:
+      alfresco-updatecli-ref:
+        description: "The version to use for alfresco/alfresco-updatecli configs"
+        type: string
+        default: master
 
 permissions:
   contents: write
@@ -29,7 +35,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           repository: alfresco/alfresco-updatecli
-          ref: master
+          ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
           path: alfresco-updatecli
 
       - name: Generate engineering read-only app token
