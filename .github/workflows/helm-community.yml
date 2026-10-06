@@ -89,7 +89,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v18.28.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.2.1
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -174,14 +174,14 @@ jobs:
 
       - name: Setup k6
         if: matrix.name == 'acs-sso-example'
-        uses: grafana/setup-k6-action@db07bd9765aac508ef18982e52ab937fe633a065 # v1.2.1
+        uses: grafana/setup-k6-action@43b9fc21641a76002687994433dd586f56e791b1 # v1.2.2
         with:
           k6-version: "1.6.1"
           browser: true
 
       - name: Run SSO example chart tests
         if: matrix.name == 'acs-sso-example'
-        uses: grafana/run-k6-action@de51a7390bdf0ac85a3bef493691bd71d4c7c158 # v1.4.0
+        uses: grafana/run-k6-action@4082a08c7e40cf6d65863911077dfb60ae0a4f04 # v1.5.0
         with:
           path: test/k6/acs-sso-example.js
           flags: -e BASE_URL=http://${{ steps.setup-kind.outputs.ingress-endpoint }}
@@ -212,7 +212,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v18.28.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v19.2.1
         with:
           namespace: default
           log_retention: 7
