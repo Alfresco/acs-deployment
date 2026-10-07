@@ -6,6 +6,13 @@ inputs:
     required: true
     description: name of the Helm release to test
     type: string
+  ingress-endpoint:
+    required: false
+    description: >-
+      host:port of the ingress controller, used to replay the failing DTAS
+      search query directly against the Search API for diagnostics
+    type: string
+    default: ""
 runs:
   using: composite
   steps:
@@ -18,9 +25,77 @@ runs:
       if: always() && steps.helm_test.outcome != 'skipped'
       shell: bash
       run: |
-        kubectl logs -l app.kubernetes.io/component=dtas --tail=-1
+        DTAS_LOGS=$(kubectl logs -l app.kubernetes.io/component=dtas --tail=-1)
+        echo "$DTAS_LOGS"
         kubectl get all --all-namespaces
         kubectl describe pod
+
+        echo "::group::Content indexing pipeline logs"
+        for w in $(kubectl get pods -o name | grep -E 'search-enterprise|transform|tika|-content-|-metadata-|-path-|activemq|elasticsearch'); do
+          echo "===== $w"
+          kubectl logs "$w" --all-containers=true --tail=-1 || true
+        done
+        echo "::endgroup::"
+
+        echo "::group::Repository logs (tail)"
+        for w in $(kubectl get pods -o name | grep -- '-alfresco-repository-'); do
+          echo "===== $w"
+          kubectl logs "$w" --all-containers=true --tail=500 || true
+        done
+        echo "::endgroup::"
+
+        echo "::group::Elasticsearch index state"
+        ES_POD=$(kubectl get pod -o name | grep -m1 elasticsearch || true)
+        if [ -n "$ES_POD" ]; then
+          kubectl exec "$ES_POD" -- curl -s 'localhost:9200/_cat/indices?v' || true
+          kubectl exec "$ES_POD" -- curl -s 'localhost:9200/alfresco/_count' || true
+        else
+          echo "No elasticsearch pod found"
+        fi
+        echo "::endgroup::"
+
+        echo "::group::Elasticsearch document for failing node(s)"
+        if [ -n "$ES_POD" ]; then
+          for NODE_ID in $(echo "$DTAS_LOGS" | grep -oE 'node_id=[0-9a-f-]{36}' | cut -d= -f2 | sort -u); do
+            echo "===== node $NODE_ID"
+            kubectl exec "$ES_POD" -- curl -s "localhost:9200/alfresco/_doc/$NODE_ID" | tee "/tmp/${NODE_ID}.json" || true
+            echo
+          done
+        fi
+        echo "::endgroup::"
+
+        echo "::group::Live search API replay for failing node(s)"
+        INGRESS="${{ inputs.ingress-endpoint }}"
+        if [ -n "$INGRESS" ]; then
+          for NODE_ID in $(echo "$DTAS_LOGS" | grep -oE 'node_id=[0-9a-f-]{36}' | cut -d= -f2 | sort -u); do
+            PARENT=$(jq -r '._source.PRIMARYPARENT // empty' "/tmp/${NODE_ID}.json" 2>/dev/null || true)
+            if [ -z "$PARENT" ]; then
+              echo "===== node $NODE_ID: no PRIMARYPARENT found, skipping replay"
+              continue
+            fi
+            echo "===== node $NODE_ID, parent $PARENT"
+            for LABEL_QUERY in \
+              "full|TEXT:'quarterly reconciliation summary' AND ANCESTOR:'workspace://SpacesStore/${PARENT}'" \
+              "text-only|TEXT:'quarterly reconciliation summary'" \
+              "ancestor-only|ANCESTOR:'workspace://SpacesStore/${PARENT}'"; do
+              LABEL="${LABEL_QUERY%%|*}"
+              QUERY="${LABEL_QUERY#*|}"
+              echo "--- $LABEL: $QUERY"
+              curl -s -u admin:admin \
+                "http://${INGRESS}/alfresco/api/-default-/public/search/versions/1/search" \
+                -H 'Content-Type: application/json' \
+                -d "$(jq -n --arg q "$QUERY" '{query:{query:$q}}')" || true
+              echo
+            done
+          done
+        else
+          echo "No ingress-endpoint provided, skipping live replay"
+        fi
+        echo "::endgroup::"
+
+        echo "::group::Container restart summary"
+        kubectl get pods -o custom-columns=NAME:.metadata.name,RESTARTS:.status.containerStatuses[*].restartCount
+        echo "::endgroup::"
 
         OOM_PODS=$(kubectl get pods -o jsonpath='{.items[?(@.status.containerStatuses[*].lastState.terminated.reason=="OOMKilled")].metadata.name}')
         if [ -n "$OOM_PODS" ]; then
