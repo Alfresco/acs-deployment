@@ -1,0 +1,46 @@
+# Test data for LDAP/AD "missing name attribute" scenarios.
+# Seeded once (on first container init) into the osixia/openldap test directory
+# so Alfresco's LDAP synchronization subsystem can be exercised against users that
+# have: only a first name, only a last name, and both.
+#
+# NOTE: sn (surname) is a MANDATORY attribute in the standard LDAP "person" schema
+# (which inetOrgPerson extends), so it can never be truly absent here the way it
+# can be in real Microsoft Active Directory. To faithfully emulate an AD user whose
+# admin left "Last Name" blank, the "jonly" entry below sets sn to a single SPACE
+# character (base64 "IA==" - required because LDIF values starting with a space
+# must be base64-encoded). Alfresco's companion onCreateNode behaviour
+# (derive-names-onCreateNode.js) treats whitespace-only values the same as blank.
+
+dn: ou=users,dc=example,dc=org
+objectClass: organizationalUnit
+ou: users
+
+# Scenario 1: ONLY FIRST NAME (givenName present, sn effectively blank - single space)
+dn: uid=jonly,ou=users,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jonly
+cn: Jon
+givenName: Jon
+sn:: IA==
+mail: jonly@example.org
+userPassword: password123
+
+# Scenario 2: ONLY LAST NAME (sn present, no givenName attribute at all)
+dn: uid=smithonly,ou=users,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: smithonly
+cn: Smith
+sn: Smith
+mail: smithonly@example.org
+userPassword: password123
+
+# Scenario 3: BOTH first and last name present
+dn: uid=jdoe,ou=users,dc=example,dc=org
+objectClass: inetOrgPerson
+uid: jdoe
+cn: Jane Doe
+givenName: Jane
+sn: Doe
+mail: jdoe@example.org
+userPassword: password123
+

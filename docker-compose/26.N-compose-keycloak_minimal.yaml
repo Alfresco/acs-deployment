@@ -1,11 +1,11 @@
 # This Docker Compose file will spin up an ACS cluster on a local host.
 # It requires a minimum of 13GB Memory to distribute among containers.
 #
-# For performance tuning, adjust the mem_limit for each container based on available
-# system resources, then use -XX:MinRAMPercentage and -XX:MaxRAMPercentage to control
-# the JVM heap allocation. For example, setting mem_limit: 2000m and
-# -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 will allocate between 1000m and 1600m
-# of heap to the JVM.
+# For performance tuning, assign the container memory and give a percentage of
+# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
+# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
+# More details here:
+# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
 # Note: The Docker Compose file from github.com is a limited trial that goes
 # into read-only mode after 2 days. Get the latest compose.yaml file with
@@ -14,10 +14,28 @@
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
 services:
-  alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:26.2.0
-    mem_limit: 1900m
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.5.0
     environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DB=dev-file
+    command: [ "start-dev", "--import-realm", "--http-relative-path=/auth", "--hostname=192.168.0.102", "--http-enabled=true" ]
+    volumes:
+      - ./realms/alfresco-realm.json:/opt/keycloak/data/import/alfresco-realm.json
+    ports:
+      - "8999:8080"
+
+  alfresco:
+    image: quay.io/alfresco/alfresco-governance-repository-enterprise:26.1.0-A.10
+    mem_limit: 1900m
+    ports:
+      - 8000:8000
+    environment:
+      CATALINA_OPTS: "
+                      -agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n
+                      "
       JAVA_TOOL_OPTIONS: >-
         -Dencryption.keystore.type=JCEKS
         -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
@@ -43,8 +61,6 @@ services:
         -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Dmessaging.broker.username=admin
-        -Dmessaging.broker.password=admin
         -Ddeployment.method=DOCKER_COMPOSE
         -Dtransform.service.enabled=true
         -Dtransform.service.url=http://transform-router:8095
@@ -53,6 +69,12 @@ services:
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -Didentity-service.auth-server-url=http://192.168.0.102:8999/auth
+        -Dauthentication.chain=identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
+        -Didentity-service.authentication.enabled=true
+        -Didentity-service.enable-basic-auth=true
+        -Didentity-service.realm=alfresco
+        -Didentity-service.resource=alfresco
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
       interval: 30s
@@ -61,23 +83,30 @@ services:
       start_period: 1m
     volumes:
       - /usr/local/tomcat/alf_data
+    #      - C:\Users\sabhattacharya\Alfresco\git-sayan\nuxeo-scim2-compliance-test-suite\components\org.wso2.scim2.testsuite.endpoint\target\org.wso2.scim2.testsuite.endpoint:/usr/local/tomcat/webapps/org.wso2.scim2.testsuite.endpoint
+    #      - C:/Users/sabhattacharya/Alfresco/jira/jswebscript.get.desc.xml:/usr/local/tomcat/webapps/alfresco/WEB-INF/classes/alfresco/extension/templates/webscripts/jswebscript.get.desc.xml
+    #      - C:/Users/sabhattacharya/Alfresco/jira/jswebscript.get.html.ftl:/usr/local/tomcat/webapps/alfresco/WEB-INF/classes/alfresco/extension/templates/webscripts/jswebscript.get.html.ftl
+    #      - C:/Users/sabhattacharya/Alfresco/jira/jswebscript.get.js:/usr/local/tomcat/webapps/alfresco/WEB-INF/classes/alfresco/extension/templates/webscripts/jswebscript.get.js
     extends:
       file: commons/base.yaml
       service: alfresco
   transform-router:
+
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.4.3
+    image: quay.io/alfresco/alfresco-transform-router:latest
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006
       ACTIVEMQ_URL: nio://activemq:61616
-      ACTIVEMQ_USER: admin
-      ACTIVEMQ_PASSWORD: admin
       CORE_AIO_URL: http://transform-core-aio:8090
+      TRANSFORMER_URL_XML: "http://transform-xml:8090"
+      TRANSFORMER_QUEUE_XML: "xml-engine-queue"
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
+      - "5006:5006" # Debug port
       - "8095:8095"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8095/actuator/health"]
@@ -91,18 +120,19 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.4.3
+
+    image: quay.io/alfresco/alfresco-transform-core-aio:5.2.0
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
       ACTIVEMQ_URL: nio://activemq:61616
-      ACTIVEMQ_USER: admin
-      ACTIVEMQ_PASSWORD: admin
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
+      - "5005:5005" # Debug port
       - "8090:8090"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090/ready"]
@@ -115,8 +145,20 @@ services:
         condition: service_healthy
       shared-file-store:
         condition: service_healthy
+
+  #  transform-xml:
+  #    networks:
+  #      - alfresco_network
+  #    image: alfresco-tengine-xml:latest
+  #    environment:
+  #      ACTIVEMQ_URL: "nio://activemq:61616"
+  #      FILE_STORE_URL: >-
+  #        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
+
+
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.4.3
+
+    image: alfresco/alfresco-shared-file-store:latest
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
@@ -134,8 +176,43 @@ services:
       start_period: 10s
     volumes:
       - /tmp/Alfresco
+#  share:
+#    image: quay.io/alfresco/alfresco-governance-repository-enterprise:26.1.0-A.10
+#    mem_limit: 1g
+#    ports:
+#      - 5007:5007 # Debug port
+#    environment:
+#      CSRF_FILTER_ORIGIN: http://localhost:8080
+#      CSRF_FILTER_REFERER: http://localhost:8080/share/.*
+#      REPO_HOST: "alfresco"
+#      REPO_PORT: "8080"
+#      JAVA_OPTS: >-
+#        -XX:MinRAMPercentage=50
+#        -XX:MaxRAMPercentage=80
+#        -Dalfresco.host=localhost
+#        -Dalfresco.port=8080
+#        -Dalfresco.context=alfresco
+#        -Dalfresco.protocol=http
+#        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007
+#        -Daims.enabled=true
+#        -Daims.realm=alfresco
+#        -Daims.resource=alfresco
+#        -Daims.authServerUrl=http://192.168.0.105:8999/auth
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:8080/share"]
+#      interval: 20s
+#      timeout: 2s
+#      retries: 3
+#      start_period: 15s
+#    depends_on:
+#      alfresco:
+#        condition: service_healthy
+#    extends:
+#      file: commons/base.yaml
+#      service: share
+
   share:
-    image: quay.io/alfresco/alfresco-share:26.2.0
+    image: quay.io/alfresco/alfresco-governance-share-enterprise:26.1.0-A.10
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -149,8 +226,13 @@ services:
         -Dalfresco.port=8080
         -Dalfresco.context=alfresco
         -Dalfresco.protocol=http
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007
+        -Daims.enabled=true
+        -Daims.realm=alfresco
+        -Daims.resource=alfresco
+        -Daims.authServerUrl=http://192.168.0.102:8999/auth
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/share"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/share" ]
       interval: 20s
       timeout: 2s
       retries: 3
@@ -161,8 +243,9 @@ services:
     extends:
       file: commons/base.yaml
       service: share
+
   postgres:
-    image: postgres:17.9
+    image: postgres:16.5
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
@@ -178,7 +261,8 @@ services:
       retries: 3
       start_period: 5s
   elasticsearch:
-    image: elasticsearch:8.17.10
+
+    image: elasticsearch:8.17.3
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -201,7 +285,8 @@ services:
       retries: 5
       start_period: 30s
   kibana:
-    image: kibana:8.17.10
+
+    image: kibana:7.17.26
     mem_limit: 1g
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
@@ -217,7 +302,8 @@ services:
       retries: 5
       start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.7.0
+
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.0.0
     mem_limit: 1g
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
@@ -225,8 +311,6 @@ services:
       ALFRESCO_SHAREDFILESTORE_BASEURL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
       SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
@@ -242,15 +326,14 @@ services:
       shared-file-store:
         condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.7.0
+
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.0.0
     mem_limit: 1g
     restart: on-failure:5
     environment:
       ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
         http://transform-core-aio:8090/transform/config
       SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
       SPRING_DATASOURCE_USERNAME: alfresco
       SPRING_DATASOURCE_PASSWORD: alfresco
@@ -263,11 +346,9 @@ services:
       alfresco:
         condition: service_healthy
   activemq:
-    image: quay.io/alfresco/alfresco-activemq:6.2.6-jre17-rockylinux8
+
+    image: quay.io/alfresco/alfresco-activemq:5.18-jre17-rockylinux8
     mem_limit: 1g
-    environment:
-      ACTIVEMQ_ADMIN_LOGIN: admin
-      ACTIVEMQ_ADMIN_PASSWORD: admin
     ports:
       - "8161:8161" # Web Console
       - "5672:5672" # AMQP
@@ -280,16 +361,15 @@ services:
       retries: 5
       start_period: 5s
   audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:1.3.3
+
+    image: quay.io/alfresco/alfresco-audit-storage:1.1.0
     mem_limit: 512m
     environment:
-      SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
+      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
       AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
-      SPRING_PROFILES_ACTIVE: "durable-subscriptions"
+      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
       interval: 60s
@@ -302,7 +382,7 @@ services:
       elasticsearch:
         condition: service_healthy
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:8.0.0
+    image: quay.io/alfresco/alfresco-digital-workspace:7.2.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -321,7 +401,8 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:11.0.0
+
+    image: quay.io/alfresco/alfresco-control-center:9.4.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -337,11 +418,12 @@ services:
       file: commons/base.yaml
       service: control-center
   proxy:
+
     extends:
       file: commons/base.yaml
       service: proxy
   sync-service:
-    image: quay.io/alfresco/service-sync:5.3.5
+    image: quay.io/alfresco/service-sync:5.2.0
     mem_limit: 1g
     environment:
       JAVA_OPTS: >-
@@ -350,16 +432,14 @@ services:
         -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
         -Dsql.db.username=alfresco
         -Dsql.db.password=alfresco
-        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Dmessaging.username=admin
-        -Dmessaging.password=admin
+        -Dmessaging.broker.host=activemq
         -Drepo.hostname=alfresco
         -Drepo.port=8080
         -Ddw.server.applicationConnectors[0].type=http
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
     ports:
-      - "9091:9090"
+      - "9090:9090"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
       interval: 30s
@@ -375,3 +455,34 @@ services:
       file: commons/base.yaml
       service: sync-service
 
+#
+#  ollama:
+#    image: ollama/ollama:latest
+#    container_name: ollama
+#    ports:
+#      - "11435:11434"
+#    volumes:
+#      - ./ollama_data:/root/.ollama
+#      - ./start.sh:/start.sh
+#    entrypoint: [ "sh", "/start.sh" ]
+#    restart: unless-stopped
+#
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              count: all
+#              capabilities: [ gpu ]
+#
+#  alfresco-llm-ai:
+#    image: ghcr.io/kushal-banik-hyland/alfresco-llm-ai:latest
+#    container_name: alfresco-llm-ai
+#    ports:
+#      - "5000:5000"
+#    restart: unless-stopped
+
+
+networks:
+  alfresco_network:
+    driver: bridge

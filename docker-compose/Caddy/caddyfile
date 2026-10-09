@@ -1,0 +1,17 @@
+{
+	auto_https disable_redirects
+}
+
+https://alfresco.localhost:8444 {
+	handle /auth/* {
+		reverse_proxy :8999
+	}
+
+	handle /share* {
+		reverse_proxy :8081
+	}
+
+	handle /* {
+		reverse_proxy :8080
+	}
+}

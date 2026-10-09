@@ -1,0 +1,6 @@
+{
+  "schemas": ["urn:ietf:params:scim:api:messages:2.0:Error"],
+  "status": "403",
+  "scimType": "Forbidden",
+  "detail": "You do not have sufficient privileges to access this resource."
+}

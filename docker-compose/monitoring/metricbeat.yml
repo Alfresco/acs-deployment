@@ -1,0 +1,64 @@
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+metricbeat.modules:
+  # ---------- Docker container metrics ----------
+  - module: docker
+    period: 10s
+    hosts: ["unix:///var/run/docker.sock"]
+    metricsets:
+      - container
+      - cpu
+      - diskio
+      - healthcheck
+      - info
+      - memory
+      - network
+
+  # ---------- MySQL latency / throughput ----------
+  - module: mysql
+    period: 10s
+    hosts: ["tcp(mysql:3306)/"]
+    username: alfresco
+    password: alfresco
+    metricsets:
+      - status
+
+  # ---------- Elasticsearch X-Pack monitoring (feeds Kibana Stack Monitoring UI) ----------
+  - module: elasticsearch
+    xpack.enabled: true
+    period: 10s
+    hosts: ["http://elasticsearch:9200"]
+
+  # ---------- Kibana X-Pack monitoring ----------
+  - module: kibana
+    xpack.enabled: true
+    period: 10s
+    hosts: ["http://kibana:5601"]
+
+  # ---------- HTTP latency probes ----------
+  - module: http
+    period: 10s
+    metricsets: ["json"]
+    namespace: "alfresco_probes"
+    hosts:
+      - "http://alfresco:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"
+      - "http://share:8080/share"
+      - "http://transform-router:8095/actuator/health"
+      - "http://transform-core-aio:8090/ready"
+      - "http://shared-file-store:8099/ready"
+      - "http://search:8080/actuator/health"
+      - "http://audit-storage:8081/actuator/health/readiness"
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+setup.kibana:
+  host: "http://kibana:5601"
+
+setup.dashboards.enabled: true
+setup.template.enabled: true
+
+logging.level: info
+logging.to_files: false

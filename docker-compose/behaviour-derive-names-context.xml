@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+
+    <!-- LDAP sync "derive missing name from other field" fix-up.
+
+         cm:firstName is declared <mandatory>true</mandatory> in contentModel.xml but WITHOUT
+         enforced="true", so it is only a *soft* (UI/forms) constraint - NodeService (and
+         therefore LDAP synchronization, which bypasses forms) will happily create a cm:person
+         with a blank firstName or lastName. There is no ldap.synchronization.* property that
+         supplies a default/fallback value for a missing directory attribute.
+
+         This JavaScript behaviour fires immediately after a new cm:person node is created
+         (including by LDAP import) and, whenever one of firstName/lastName is blank while the
+         other is populated, copies the populated value into the blank one so no synced user
+         ends up with a completely empty name field in Share. -->
+    <bean id="onCreatePerson_deriveNames" class="org.alfresco.repo.policy.registration.ClassPolicyRegistration" parent="policyRegistration">
+        <property name="policyName">
+            <value>{http://www.alfresco.org}onCreateNode</value>
+        </property>
+        <property name="className">
+            <value>{http://www.alfresco.org/model/content/1.0}person</value>
+        </property>
+        <property name="behaviour">
+            <bean class="org.alfresco.repo.jscript.ScriptBehaviour" parent="scriptBehaviour">
+                <property name="location">
+                    <bean class="org.alfresco.repo.jscript.ClasspathScriptLocation">
+                        <constructor-arg>
+                            <value>alfresco/extension/scripts/derive-names-onCreateNode.js</value>
+                        </constructor-arg>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+</beans>
+

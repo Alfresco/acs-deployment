@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ImageMagick, ExifTool &amp; LibreOffice — Setup Guide for Alfresco Transform Core (AIO)</title>
+<style>
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; color: #222; line-height: 1.5; margin: 2cm; }
+  h1 { font-size: 22pt; color: #1a3a5c; border-bottom: 2px solid #1a3a5c; padding-bottom: 6px; }
+  h2 { font-size: 16pt; color: #1a3a5c; margin-top: 28px; border-bottom: 1px solid #ccc; padding-bottom: 3px; }
+  h3 { font-size: 13pt; color: #2c5282; margin-top: 18px; }
+  p { margin: 6px 0; }
+  code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-family: Consolas, monospace; font-size: 10pt; color: #a4004c; }
+  pre { background: #2d2d2d; color: #e6e6e6; padding: 10px 14px; border-radius: 5px; font-family: Consolas, monospace; font-size: 9.5pt; overflow-x: auto; white-space: pre-wrap; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px 0; }
+  th, td { border: 1px solid #bbb; padding: 6px 10px; text-align: left; font-size: 10pt; }
+  th { background: #1a3a5c; color: white; }
+  tr:nth-child(even) { background: #f5f7fa; }
+  .note { background: #fff8e1; border-left: 4px solid #f5a623; padding: 8px 12px; margin: 10px 0; font-size: 10pt; }
+  .fix { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 8px 12px; margin: 10px 0; font-size: 10pt; }
+  ul, ol { margin: 4px 0; padding-left: 24px; }
+  .cover { text-align: center; margin-top: 4cm; }
+  .cover h1 { border: none; font-size: 26pt; }
+  .cover p { color: #555; font-size: 12pt; }
+  .pagebreak { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>ImageMagick, ExifTool &amp; LibreOffice</h1>
+  <p>Setup guide for the Alfresco Transform Core "All-In-One" (AIO) engine<br>
+  on a local, non-Docker (zip-based) Windows install of Alfresco Content Services</p>
+  <p>Covers: why these tools are needed, how to install them, and how to point the transform engine at them.</p>
+</div>
+
+<div class="pagebreak"></div>
+
+<h1>1. Why these tools are needed</h1>
+
+<p>The Alfresco Transform Core AIO engine (<code>alfresco-transform-core-aio-*.jar</code>) generates thumbnails, previews,
+and extracted metadata for uploaded content. Three of its transformers shell out to <b>external native binaries</b>
+rather than doing the work in pure Java:</p>
+
+<table>
+<tr><th>Tool</th><th>Used by</th><th>Purpose</th></tr>
+<tr><td>ImageMagick</td><td><code>ImageMagickContentTransformer</code></td>
+    <td>Resizing / format-converting images for thumbnails and previews</td></tr>
+<tr><td>ExifTool</td><td>Tika-based metadata transformer (<code>AbstractTikaTransformer</code>)</td>
+    <td>Extracting EXIF / image metadata for the repository's metadata extraction pipeline</td></tr>
+<tr><td>LibreOffice</td><td><code>LibreOfficeTransformer</code> (via JODConverter)</td>
+    <td>Converting Office documents (docx, xlsx, pptx, odt, …) to PDF/other formats for previews</td></tr>
+</table>
+
+<div class="note">
+<b>Docker vs. bare JAR:</b> The official Alfresco Docker image for this T-Engine bundles these binaries
+inside the container filesystem (installed via the image's Dockerfile). When you instead run the engine as a
+bare <code>java -jar</code> process on Windows, none of that comes with it — the JAR only contains Java code.
+Without the binaries installed and referenced correctly, transforms fail with errors such as:
+<code>Cannot run program "/usr/bin/convert": CreateProcess error=2</code> (a hardcoded Linux path that doesn't exist on Windows).
+</div>
+
+<h1>2. Installing the tools (Windows, via <code>winget</code>)</h1>
+
+<h2>2.1 ImageMagick</h2>
+<pre>winget install ImageMagick.ImageMagick --silent --force</pre>
+<div class="note">The first attempt without <code>--force</code> can fail with
+<code>"You cancelled the installation... exit code: 2"</code> even with <code>--silent</code>, due to an unhandled
+elevation/UAC prompt. Re-running with <code>--force</code> resolves it.</div>
+<p>ImageMagick 7 installs as <code>magick.exe</code> (the legacy <code>convert.exe</code> binary is gone), but it
+retains full compatibility with classic <code>convert</code>-style positional arguments, e.g.:</p>
+<pre>magick.exe input.jpg -resize 100x100 output.jpg</pre>
+
+<h2>2.2 ExifTool</h2>
+<div class="note">The package ID <code>PhilHarvey.ExifTool</code> does not exist in the winget registry
+(<code>"No package found matching input criteria"</code>). Find the correct ID first:</div>
+<pre>winget search exiftool</pre>
+<p>The correct package is published as <code>OliverBetz.ExifTool</code>:</p>
+<pre>winget install OliverBetz.ExifTool</pre>
+
+<h2>2.3 LibreOffice</h2>
+<pre>winget install TheDocumentFoundation.LibreOffice</pre>
+<p>LibreOffice is required because the T-Engine's <code>LibreOfficeTransformer</code> drives it headlessly through
+JODConverter to convert Office documents — the tool needs LibreOffice's <code>program\soffice.exe</code> to exist under
+a normal install root.</p>
+
+<h1>3. Locating the installed binaries</h1>
+
+<p>Winget install locations can vary (system-wide under <code>Program Files</code>, or per-user under
+<code>AppData\Local\Programs</code>). Confirm the paths after installing, e.g.:</p>
+<pre>winget list --id OliverBetz.ExifTool
+find "C:/" -iname "exiftool.exe" 2&gt;/dev/null
+find "C:/Program Files" -iname "magick.exe" 2&gt;/dev/null</pre>
+
+<p>Typical results on Windows 11:</p>
+<table>
+<tr><th>Tool</th><th>Example install path</th></tr>
+<tr><td>ImageMagick</td><td><code>C:\Program Files\ImageMagick-7.1.2-Q16-HDRI\magick.exe</code></td></tr>
+<tr><td>ExifTool</td><td><code>C:\Users\&lt;you&gt;\AppData\Local\Programs\ExifTool\ExifTool.exe</code></td></tr>
+<tr><td>LibreOffice</td><td><code>C:\Program Files\LibreOffice\program\soffice.exe</code></td></tr>
+</table>
+
+<h1>4. Verifying each install works standalone</h1>
+<pre>"C:\Program Files\ImageMagick-7.1.2-Q16-HDRI\magick.exe" input.jpg -resize 100x100 resized.jpg
+"C:\Users\&lt;you&gt;\AppData\Local\Programs\ExifTool\ExifTool.exe" -ver
+"C:\Program Files\LibreOffice\program\soffice.exe" --version</pre>
+
+<h1>5. Configuring the Transform Engine to use them</h1>
+
+<p>The T-Engine's <code>application-default.yaml</code> exposes each tool's location as an overridable Spring
+property (<code>${ENV_VAR:default}</code> syntax), read from an environment variable at JVM startup:</p>
+
+<table>
+<tr><th>Spring property</th><th>Environment variable</th><th>Notes</th></tr>
+<tr><td><code>transform.core.imagemagick.exe</code></td><td><code>IMAGEMAGICK_EXE</code></td><td>Full path to <code>magick.exe</code></td></tr>
+<tr><td><code>transform.core.imagemagick.root</code></td><td><code>IMAGEMAGICK_ROOT</code></td><td>ImageMagick install root</td></tr>
+<tr><td><code>transform.core.imagemagick.dyn</code></td><td><code>IMAGEMAGICK_DYN</code></td><td>ImageMagick shared-library folder</td></tr>
+<tr><td><code>transform.core.libreoffice.path</code></td><td><code>LIBREOFFICE_HOME</code></td><td>LibreOffice install <b>root</b> (the folder containing <code>program\soffice.exe</code>, not the exe itself)</td></tr>
+</table>
+
+<div class="note">
+<b>ExifTool is the exception.</b> Its Windows command
+(<code>transform.core.tika.exifTool.windowsOS</code> in <code>AbstractTikaTransformer</code>) is a
+<b>hardcoded literal string</b> in the JAR, not an <code>${ENV_VAR:default}</code> placeholder — it cannot be
+overridden with an environment variable. The only way to satisfy it is to make the plain command
+<code>exiftool</code> resolvable, i.e. add ExifTool's install folder to the system/process <code>PATH</code>.
+</div>
+
+<h1>6. Relaunching the T-Engine with everything wired up</h1>
+
+<pre>set IMAGEMAGICK_EXE=C:\Program Files\ImageMagick-7.1.2-Q16-HDRI\magick.exe
+set IMAGEMAGICK_ROOT=C:\Program Files\ImageMagick-7.1.2-Q16-HDRI
+set IMAGEMAGICK_DYN=C:\Program Files\ImageMagick-7.1.2-Q16-HDRI
+set LIBREOFFICE_HOME=C:\Program Files\LibreOffice
+set PATH=%PATH%;C:\Users\&lt;you&gt;\AppData\Local\Programs\ExifTool
+
+java -jar "C:\AlfrescoWork\alfresco_install_location\supporting_jar_files\alfresco-transform-core-aio-5.4.5-A.1.jar" --server.port=8090</pre>
+
+<div class="fix">
+Only the T-Engine JVM process needs restarting to pick these up. Tomcat/Alfresco (a separate JVM) talks to the
+T-Engine purely over stateless HTTP calls to <code>http://localhost:8090/transform</code> for every request — there's
+no persistent connection or cached binary state, so it does <b>not</b> need to be restarted.
+</div>
+
+<h1>7. Verifying end-to-end</h1>
+<ol>
+<li>Confirm the T-Engine starts cleanly with no ImageMagick/ExifTool/LibreOffice errors in its console output.</li>
+<li>Upload a new image into Alfresco Share and open its detail page — a thumbnail should render without the
+    previous <code>imagemagick returned a 400 status</code> error.</li>
+<li>Upload a new Office document (e.g. .docx) and confirm a PDF-style preview renders.</li>
+</ol>
+<div class="note">
+Documents/images uploaded <i>before</i> this fix will already be marked as failed renditions and generally won't
+retry automatically — re-upload them, or trigger the rendition again, to see the fix apply.
+</div>
+
+</body>
+</html>

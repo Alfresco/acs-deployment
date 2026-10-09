@@ -1,0 +1,1 @@
+{"query":{"query":"=@\\{http://www.alfresco.org/model/imap/1.0\\}messageId:\"test123\"","language":"lucene"}}

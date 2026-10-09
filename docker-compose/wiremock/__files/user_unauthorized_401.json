@@ -1,0 +1,6 @@
+{
+  "schemas": ["urn:ietf:params:scim:api:messages:2.0:Error"],
+  "status": "401",
+  "scimType": "Unauthorized",
+  "detail": "You do not have permission to access this resource, use a valid username and password to access this resource."
+}

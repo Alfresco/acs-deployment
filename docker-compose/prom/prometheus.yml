@@ -1,0 +1,22 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: alfresco
+    metrics_path: /alfresco/s/prometheus
+    static_configs:
+      - targets:
+          - alfresco:8080
+
+  - job_name: live-indexing
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+          - search:8080
+
+  - job_name: re-indexing
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+          - search-reindexing:9191

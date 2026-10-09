@@ -1,0 +1,116 @@
+{
+  "id": null,
+  "uid": "alfresco-overview",
+  "title": "Alfresco Search & Reindexing Overview",
+  "tags": ["alfresco", "elasticsearch", "reindexing"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "10s",
+  "time": { "from": "now-6h", "to": "now" },
+  "templating": { "list": [] },
+  "panels": [
+    { "type": "row", "title": "Live Indexing", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 }, "id": 100, "collapsed": false, "panels": [] },
+    {
+      "id": 1, "type": "timeseries", "title": "Live Indexing Lag (s)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "s", "custom": {} }, "overrides": [] },
+      "targets": [
+        { "expr": "alfresco_live_indexing_lag_seconds", "legendFormat": "lag", "datasource": { "type": "prometheus", "uid": "prometheus" } },
+        { "expr": "alfresco_live_indexing_reception_lag_seconds", "legendFormat": "reception lag", "datasource": { "type": "prometheus", "uid": "prometheus" } }
+      ]
+    },
+    {
+      "id": 2, "type": "timeseries", "title": "Live Indexing Events Rate",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 1 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "ops", "custom": {} }, "overrides": [] },
+      "targets": [
+        { "expr": "rate(alfresco_live_indexing_events_total[5m])", "legendFormat": "events/s", "datasource": { "type": "prometheus", "uid": "prometheus" } },
+        { "expr": "rate(alfresco_live_indexing_received_total[5m])", "legendFormat": "received/s", "datasource": { "type": "prometheus", "uid": "prometheus" } }
+      ]
+    },
+    {
+      "id": 3, "type": "timeseries", "title": "Live Indexing Retries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 9 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "custom": {} }, "overrides": [] },
+      "targets": [
+        { "expr": "alfresco_live_indexing_retries_sum", "legendFormat": "retries (sum)", "datasource": { "type": "prometheus", "uid": "prometheus" } },
+        { "expr": "alfresco_live_indexing_retries_max", "legendFormat": "retries (max)", "datasource": { "type": "prometheus", "uid": "prometheus" } }
+      ]
+    },
+    {
+      "id": 4, "type": "timeseries", "title": "Content Extraction Duration (avg, s)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 9 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "s", "custom": {} }, "overrides": [] },
+      "targets": [
+        { "expr": "alfresco_indexing_content_extraction_seconds_sum / alfresco_indexing_content_extraction_seconds_count", "legendFormat": "extraction", "datasource": { "type": "prometheus", "uid": "prometheus" } },
+        { "expr": "alfresco_indexing_content_extraction_transform_seconds_sum / alfresco_indexing_content_extraction_transform_seconds_count", "legendFormat": "transform", "datasource": { "type": "prometheus", "uid": "prometheus" } }
+      ]
+    },
+
+    { "type": "row", "title": "Reindex Job", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 17 }, "id": 101, "collapsed": false, "panels": [] },
+    {
+      "id": 5, "type": "stat", "title": "Last Reindex Job Status (1=running)",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 18 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } }, "overrides": [] },
+      "targets": [ { "expr": "alfresco_reindex_job_status", "legendFormat": "status", "datasource": { "type": "prometheus", "uid": "prometheus" } } ]
+    },
+    {
+      "id": 6, "type": "stat", "title": "Last Reindex Job Duration (s)",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 18 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "s", "mappings": [], "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] } }, "overrides": [] },
+      "targets": [ { "expr": "alfresco_reindex_job_end_time - alfresco_reindex_job_start_time", "legendFormat": "duration", "datasource": { "type": "prometheus", "uid": "prometheus" } } ]
+    },
+    {
+      "id": 7, "type": "timeseries", "title": "Reindex Nodes Read / Written / Filtered",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 18 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "custom": {} }, "overrides": [] },
+      "targets": [
+        { "expr": "alfresco_reindex_read_total", "legendFormat": "read", "datasource": { "type": "prometheus", "uid": "prometheus" } },
+        { "expr": "alfresco_reindex_write_total", "legendFormat": "written", "datasource": { "type": "prometheus", "uid": "prometheus" } },
+        { "expr": "alfresco_reindex_filtered_total", "legendFormat": "filtered", "datasource": { "type": "prometheus", "uid": "prometheus" } }
+      ]
+    },
+    {
+      "id": 8, "type": "timeseries", "title": "Reindex Retries / Namespace Unresolved",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "custom": {} }, "overrides": [] },
+      "targets": [
+        { "expr": "alfresco_reindex_retries_total", "legendFormat": "retries", "datasource": { "type": "prometheus", "uid": "prometheus" } },
+        { "expr": "alfresco_reindex_namespace_unresolved_total", "legendFormat": "namespace unresolved", "datasource": { "type": "prometheus", "uid": "prometheus" } }
+      ]
+    },
+    {
+      "id": 9, "type": "timeseries", "title": "Reindex Chunk Write Duration (avg, s)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 26 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "s", "custom": {} }, "overrides": [] },
+      "targets": [ { "expr": "alfresco_reindex_chunk_write_duration_seconds_sum / alfresco_reindex_chunk_write_duration_seconds_count", "legendFormat": "avg chunk write", "datasource": { "type": "prometheus", "uid": "prometheus" } } ]
+    },
+
+    { "type": "row", "title": "JVM & System", "gridPos": { "h": 1, "w": 24, "x": 0, "y": 34 }, "id": 102, "collapsed": false, "panels": [] },
+    {
+      "id": 10, "type": "timeseries", "title": "JVM Heap Used by Job",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 35 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "bytes", "custom": {} }, "overrides": [] },
+      "targets": [ { "expr": "jvm_memory_used_bytes{area=\"heap\"}", "legendFormat": "{{job}} - {{id}}", "datasource": { "type": "prometheus", "uid": "prometheus" } } ]
+    },
+    {
+      "id": 11, "type": "timeseries", "title": "Process CPU Usage",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 35 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "percentunit", "custom": {} }, "overrides": [] },
+      "targets": [ { "expr": "process_cpu_usage", "legendFormat": "{{job}}", "datasource": { "type": "prometheus", "uid": "prometheus" } } ]
+    }
+  ]
+}
+

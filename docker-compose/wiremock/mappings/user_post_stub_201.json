@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "urlPath": "/v2/Users/",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$.username" },
+      { "matchesJsonPath": "$.role" },
+      { "matchesJsonPath": "$.firstname" },
+      { "matchesJsonPath": "$.lastname" },
+      { "matchesJsonPath": "$.email" }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "jsonBody": {
+      "id": "{{randomValue length=6 type='NUMERIC'}}",
+      "username": "{{jsonPath request.body '$.username'}}",
+      "role": "{{jsonPath request.body '$.role'}}",
+      "firstname": "{{jsonPath request.body '$.firstname'}}",
+      "lastname": "{{jsonPath request.body '$.lastname'}}",
+      "email": "{{jsonPath request.body '$.email'}}"
+    },
+    "transformers": ["response-template"]
+  }
+}

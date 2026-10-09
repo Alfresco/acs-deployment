@@ -1,0 +1,173 @@
+Outlook / Governance Stack: Two Startup Errors
+ Explained
+ transform-outlook port mismatch (fixed) & imap:messageId exact-term search
+ failure (vendor-side)
+Based on: docker-compose/26.N-compose-governance_outlook.yaml,
+docker-compose/repo_amps_to_install/alfresco-outlook-repository-3.1.1.2.amp
+Location: C:\AlfrescoWork\acs-deployment\docker-compose
+While running the governance + Outlook docker-compose stack (ACS 26.3.0-A.20, native Elasticsearch
+search subsystem), two unrelated errors appeared in the Alfresco repository log. This document records
+both: what they are, why they happen, what was fixed, and what remains open and why.
+#
+Issue
+Status
+1
+transform-outlook T-Engine unreachable on port 8091
+Fixed (compose config)
+2
+imap:messageId exact-term search rejected by native Elasticsearch connector
+Open (vendor AMP issue)
+
+Issue 1 — transform-outlook: Failed to connect to T-Engine
+Symptom
+2026-10-09T14:44:00,012 [] ERROR [content.transform.LocalTransformServiceRegistry]
+[QuartzScheduler_Worker-2] 09091301 Failed to connect or to read the response
+from T-Engine on http://transform-outlook:8091//transform/config?configVersion=2
+Root cause
+The transform-outlook service's ports: mapping (8091:8091) only affects access from the host
+machine. Container-to-container traffic on the Compose network (Alfresco →
+transform-outlook:8091) bypasses that mapping entirely and connects directly to whatever port the
+application inside the container is actually listening on. Inspecting the container logs showed Spring
+Boot/Tomcat bound to its default port, 8090, not 8091 — so any request to port 8091 from another
+container was refused at the TCP level, independent of container readiness or startup timing.
+o.s.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8090 (http)
+...
+o.s.boot.tomcat.TomcatWebServer : Tomcat started on port 8090 (http) with context path '/'
+Fix applied
+Added SERVER_PORT: "8091" to the service's environment so the Spring Boot application itself binds to
+8091, matching the ports: mapping and the URL Alfresco is configured with
+(-DlocalTransform.transform-outlook.url=http://transform-outlook:8091/). A matching
+healthcheck and depends_on (activemq, shared-file-store) were also added, aligned with the pattern
+already used for transform-core-aio and transform-router.
+transform-outlook:
+  image: quay.io/alfresco/transform-outlook:latest
+  mem_limit: 2g
+  environment:
+    JAVA_OPTS: " -Xms256m -Xmx512m"
+    SERVER_PORT: "8091"
+    ACTIVEMQ_URL: "nio://activemq:61616"
+    ACTIVEMQ_USER: "admin"
+    ACTIVEMQ_PASSWORD: "admin"
+    FILE_STORE_URL: "http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file"
+  ports:
+    - "8091:8091"
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:8091/live"]
+    interval: 20s
+    timeout: 2s
+    retries: 3
+    start_period: 20s
+  depends_on:
+    activemq:
+      condition: service_healthy
+    shared-file-store:
+      condition: service_healthy
+A second wrinkle: the /ready probe
+The healthcheck was first pointed at /ready, which this image implements as a self-test: it transforms a
+bundled sample .eml file to PDF and checks the output size falls within a hardcoded byte range. On this
+image build the check failed:
+HTTP/1.1 500
+Ready Probe: Target File "/tmp/Alfresco/probe_target_...quick.eml" was the
+wrong size (37130). Needed to be between 113928 and 119048
+Real transforms worked fine (confirmed via live log output: "Document opened. Total pages are 1" and a
+successful "GET Transform Config version: 2"), so this looks like a calibration quirk in the bundled test
+
+fixture for the :latest tag, unrelated to networking. The healthcheck was switched to the simpler /live
+liveness endpoint instead, which returned a clean 200 Success - No transform. After both changes
+the container was recreated and verified healthy:
+docker-compose-transform-outlook-1   Up 49 seconds (healthy)   0.0.0.0:8091->8091/tcp
+
+Issue 2 — Exact Term Search Not Supported for imap:messageId
+Symptom
+ERROR [extensions.webscripts.AbstractRuntime] Exception from executeScript:
+09090024 Wrapped Exception (with status template): Exact term search is not
+supported for property: {http://www.alfresco.org/model/imap/1.0}messageId
+Caused by: java.lang.UnsupportedOperationException: Exact term search is not
+supported for property: {http://www.alfresco.org/model/imap/1.0}messageId
+    at ...LuceneQueryParser.validateExactTermSearch(LuceneQueryParser.java:973)
+    at ...AFTSQueryBuilder.getQuery(AFTSQueryBuilder.java:103)
+    at ...ElasticsearchQueryExecutor.executeQuery(ElasticsearchQueryExecutor.java:85)
+    at ...DbOrIndexSwitchingQueryLanguage.executeQuery(DbOrIndexSwitchingQueryLanguage.java:250)
+    at ...ElasticsearchSearchService.query(ElasticsearchSearchService.java:126)
+    ...
+    at com.itnovum.alfresco.mail.integration.check.impl.MailCheckServiceImpl.search(...)
+    at com.itnovum.alfresco.mail.integration.check.impl.MailCheckServiceImpl.getExistMails(...)
+    at com.itnovum.alfresco.mail.integration.CheckMailDuplicationScript.executeImplIntr(...)
+Where this comes from
+This is not core Alfresco code failing — the top of the stack trace is the native Elasticsearch search
+subsystem rejecting a query; the bottom of the stack trace shows who issued it: the "duplicate mail check"
+REST webscript belonging to a third-party, commercially licensed AMP found in this repository at:
+docker-compose/repo_amps_to_install/alfresco-outlook-repository-3.1.1.2.amp
+Inspecting the AMP's packaging metadata (not its compiled bytecode logic) confirms:
+Field
+Value
+module.id
+com.westernacher.wps.AlfrescoMailIntegrationRepository
+module.version
+3.1.1-HOTFIX2
+module.repo.version.min
+23.1.0
+module.repo.version.max
+(unset &mdash; never certified against a ceiling)
+License
+it-novum GmbH, all rights reserved (OEM via Westernacher); license4j-protected
+Implementing jar
+lib/alfresco-emailclient-repository-3.1.1-HOTFIX2.jar (compiled, closed-source)
+Root cause
+MailCheckServiceImpl.search() issues an exact-term (not full-text) Lucene-language query against
+imap:messageId to detect already-imported emails. imap:messageId is declared in the core
+imapModel.xml as a tokenised d:text property, not a keyword/non-tokenised field.
+
+Under the old Solr-based search engine (what this module was built/certified against, min ACS
+23.1.0): Solr indexes extra cross-locale/string companion fields for essentially every property, so an
+exact-term query against a tokenised text property is tolerated.
+
+Under the native Elasticsearch connector (this stack:
+-Dindex.subsystem.name=elasticsearch):
+LuceneQueryParser.validateExactTermSearch() explicitly checks whether a property supports
+exact-term matching before building the query, and rejects tokenised d:text fields like
+imap:messageId outright — raising UnsupportedOperationException instead of silently
+returning results, which surfaces as this webscript's HTTP 500.
+
+Lucene-language queries are always executed directly against whichever index backend is configured
+(never routed through the DB-query fallback path visible as DbOrIndexSwitchingQueryLanguage in
+the trace), so there is no automatic fallback once the index backend rejects the query.
+
+This is a narrow, specific incompatibility — not a sign that Elasticsearch search is broken in general.
+Full-text search, type/aspect lookups, and exact-term queries against properties that are configured for
+exact matching (identifiers, numbers, dates, noderefs, categories, or text fields explicitly marked
+non-tokenised) all continue to work normally under the native ES connector.
+Why this will not be patched directly
+The implementing class lives inside a compiled, license-protected jar
+(alfresco-emailclient-repository-3.1.1-HOTFIX2.jar), bundled with a license4j runtime
+and an explicit "all rights reserved" notice from it-novum GmbH. Decompiling and altering that compiled logic
+would violate the vendor's license and copyright, so it is out of scope for an in-house fix.
+Recommended next steps
+
+Escalate to it-novum / Westernacher support with the exact stack trace above, noting that
+module.repo.version.max is unset in module.properties. Ask for a build certified against ACS
+26.x's native Elasticsearch search subsystem — the fix is theirs to make, e.g. querying via FTS instead
+of exact-term match, or forcing transactional/DB query consistency for this lookup.
+
+Operational workaround to validate the hypothesis: stand up a Solr6-based variant of this compose
+stack (a reference already exists at docker-compose/23.N-compose-solr6.yaml) and re-run the
+duplicate-check webscript against it. This has not yet been executed in this environment — the
+Solr-tolerant behaviour above is a well-founded inference from how Alfresco's Solr integration has
+historically indexed cross-locale fields, not an empirically reproduced result here.
+
+Until a vendor fix or Solr fallback is in place, expect this specific webscript
+(CheckMailDuplicationScript / duplicate mail detection) to return HTTP 500 whenever it is
+invoked against this native-Elasticsearch-backed stack; this does not indicate any other part of the
+repository, Outlook transform pipeline, or search subsystem is unhealthy.
+
+Summary
+Issue
+Cause
+Resolution
+transform-outlook unreachable on :8091
+App listens on Spring Boot default port 8090; the host ports: mapping does not apply to container-to-container traffic.
+Added SERVER_PORT=8091 env var + matching healthcheck/depends_on in 26.N-compose-governance_outlook.yaml. Verified healthy.
+imap:messageId exact-term search 500 error
+Third-party it-novum "Alfresco Mail Integration" AMP issues a Lucene-language exact-term query against a tokenised property; the native Elasticsearch connector validates and rejects this, unlike the Solr engine the AMP was built against (min ACS 23.1.0, no certified max).
+Cannot be patched locally (compiled, license-protected vendor jar). Escalate to vendor; optionally verify against a Solr6 stack as a diagnostic, not a production fix.
+

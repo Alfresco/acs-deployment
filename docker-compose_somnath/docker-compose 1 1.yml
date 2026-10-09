@@ -1,0 +1,510 @@
+# This Docker Compose file will spin up an ACS cluster on a local host.
+# It requires a minimum of 13GB Memory to distribute among containers.
+#
+# For performance tuning, assign the container memory and give a percentage of
+# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
+# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
+# More details here:
+# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
+#
+# Note: The Docker Compose file from github.com is a limited trial that goes
+# into read-only mode after 2 days. Get the latest compose.yaml file with
+# a 30-day trial license by accessing the Alfresco Content Services trial
+# download page at:
+# https://www.alfresco.com/platform/content-services-ecm/trial/download
+#
+services:
+  alfresco:
+    image: ${REGISTRY}alfresco/alfresco-content-repository-sfdc:latest
+    mem_limit: 1900m
+    environment:
+      CATALINA_OPTS: >-
+        -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
+      JAVA_TOOL_OPTIONS: >-
+        -Dencryption.keystore.type=JCEKS
+        -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+        -Dencryption.keyAlgorithm=DESede
+        -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+        -Dmetadata-keystore.password=mp6yc0UD9e
+        -Dmetadata-keystore.aliases=metadata
+        -Dmetadata-keystore.metadata.password=oKIWzVdEdA
+        -Dmetadata-keystore.metadata.algorithm=DESede
+      JAVA_OPTS: >-
+        -Ddb.driver=org.postgresql.Driver
+        -Ddb.username=alfresco
+        -Ddb.password=alfresco
+        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dindex.subsystem.name=elasticsearch
+        -Delasticsearch.createIndexIfNotExists=true
+        -Delasticsearch.host=elasticsearch
+        -Delasticsearch.port=9200
+        -Dshare.host=localhost
+        -Dshare.port=8080
+        -Dalfresco.host=localhost
+        -Dalfresco.port=8080
+        -Dcsrf.filter.enabled=false
+        -Daos.baseUrlOverwrite=https://localhost/alfresco/aos
+        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+        -Ddeployment.method=DOCKER_COMPOSE
+        -Dtransform.service.enabled=true
+        -Dtransform.service.url=http://transform-router:8095
+        -Dsfs.url=http://shared-file-store:8099/
+        -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
+        -Ddsync.service.uris=http://localhost:9090/alfresco
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+        -Didentity-service.auth-server-url=https://keycloak.local:8443/auth
+        -Dauthentication.chain=identity-service1:identity-service,alfrescoNtlm1:alfrescoNtlm
+        -Didentity-service.authentication.enabled=true
+        -Didentity-service.enable-basic-auth=true
+        -Didentity-service.realm=alfresco
+        -Didentity-service.resource=alfresco
+        -Dcom.sun.net.ssl.checkRevocation=false
+        -Djavax.net.ssl.trustStore=/opt/alfresco/alfresco-truststore.jks
+        -Djavax.net.ssl.trustStorePassword=changeit
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 1m
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.alfresco.rule=PathPrefix(`/`)"
+      - "traefik.http.services.alfresco.loadbalancer.server.port=8080"
+      - "traefik.http.routers.alfresco.entrypoints=websecure"
+      - "traefik.http.routers.alfresco.tls=true"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
+      - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.regex=^https?://[^/]+/([^/.]+)$$"
+      - "traefik.http.middlewares.alfresco-root-redirect.redirectregex.replacement=$$0/"
+      - "traefik.http.middlewares.alfresco-chain.chain.middlewares=alfresco-root-redirect@docker,limit@docker"
+      - "traefik.http.routers.alfresco.middlewares=alfresco-chain@docker"
+      - "traefik.http.routers.solrapideny.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/api/solr/.*$$`)"
+      - "traefik.http.middlewares.acsfakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.solrapideny.middlewares=acsfakeauth@docker"
+      - "traefik.http.routers.alfrescomicrometer.rule=PathRegexp(`^/alfresco/(wc)?s(ervice)?/prometheus`)"
+      - "traefik.http.middlewares.prometheusipfilter.ipallowlist.sourcerange=127.0.0.0/8"
+      - "traefik.http.routers.alfrescomicrometer.middlewares=prometheusipfilter@docker"
+    ports:
+      - "5005:5005"
+    volumes:
+      - alfresco-volume:/usr/local/tomcat/alf_data
+      - ./certs/alfresco-truststore.jks:/opt/alfresco/truststore.jks
+  transform-router:
+    mem_limit: 512m
+    image: quay.io/alfresco/alfresco-transform-router:4.1.7
+    environment:
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+      ACTIVEMQ_URL: nio://activemq:61616
+      CORE_AIO_URL: http://transform-core-aio:8090
+      FILE_STORE_URL: >-
+        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
+    ports:
+      - "8095:8095"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8095/actuator/health"]
+      interval: 10s
+      timeout: 2s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      activemq:
+        condition: service_healthy
+      shared-file-store:
+        condition: service_healthy
+  transform-core-aio:
+    image: alfresco/alfresco-transform-core-aio:5.1.7
+    mem_limit: 1536m
+    environment:
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+      ACTIVEMQ_URL: nio://activemq:61616
+      FILE_STORE_URL: >-
+        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/ready"]
+      interval: 20s
+      timeout: 2s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      activemq:
+        condition: service_healthy
+      shared-file-store:
+        condition: service_healthy
+  shared-file-store:
+    image: quay.io/alfresco/alfresco-shared-file-store:4.1.7
+    mem_limit: 512m
+    environment:
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+      scheduler.content.age.millis: 86400000
+      scheduler.cleanup.interval: 86400000
+    ports:
+      - "8099:8099"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8099/ready"]
+      interval: 20s
+      timeout: 2s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - shared-file-store-volume:/tmp/Alfresco/sfs
+  share:
+    image: ${REGISTRY}alfresco/alfresco-share-sfdc:latest
+    mem_limit: 1g
+    environment:
+      REPO_HOST: "alfresco"
+      REPO_PORT: "8080"
+      CATALINA_OPTS: >-
+        -Dproxy.host=${HOST}
+        -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n
+      JAVA_OPTS: >-
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+        -Dalfresco.host=localhost
+        -Dalfresco.port=8080
+        -Dalfresco.context=alfresco
+        -Dalfresco.protocol=http
+        -Dcsrf.filter.enabled=false
+        -Dhttp.secured.session=true
+        -Dcookies.sameSite=None
+        -Daims.enabled=true
+        -Daims.realm=alfresco
+        -Daims.resource=alfresco
+        -Daims.authServerUrl=https://keycloak.local:8443/auth
+        -Daims.publicClient=true
+        -Dsfdc.config.trustedOrigin=https://localhost
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/share"]
+      interval: 20s
+      timeout: 2s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      alfresco:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.share.rule=(Host(`localhost`) || Host(`172.30.160.1`) || Host(`keycloak.local`)) && PathPrefix(`/share`)"
+      - "traefik.http.services.share.loadbalancer.server.port=8080"
+      - "traefik.http.routers.share.entrypoints=websecure"
+      - "traefik.http.routers.share.tls=true"
+      - "traefik.http.middlewares.limit.buffering.maxRequestBodyBytes=5368709120"
+      - "traefik.http.middlewares.share-root-redirect.redirectregex.regex=/share$$"
+      - "traefik.http.middlewares.share-root-redirect.redirectregex.replacement=/share/"
+      - "traefik.http.middlewares.share-chain.chain.middlewares=share-root-redirect@docker,limit@docker"
+      - "traefik.http.routers.share.middlewares=share-chain@docker"
+      - "traefik.http.routers.proxiedsolrapideny.rule=PathRegexp(`^/share/proxy/alfresco(-(noauth|feed|api))?/api/solr/`)"
+      - "traefik.http.middlewares.sharefakeauth.basicauth.users=fake:"
+      - "traefik.http.routers.proxiedsolrapideny.middlewares=sharefakeauth@docker"
+    ports:
+      - "5006:5005"
+  postgres:
+    image: postgres:16.5
+    mem_limit: 512m
+    environment:
+      - POSTGRES_PASSWORD=alfresco
+      - POSTGRES_USER=alfresco
+      - POSTGRES_DB=alfresco
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+  elasticsearch:
+    image: elasticsearch:7.17.26
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - 9200:9200
+      - 9300:9300
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  kibana:
+    image: kibana:7.17.26
+    mem_limit: 1g
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status"]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+      start_period: 30s
+  search:
+    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.1.0
+    mem_limit: 1g
+    environment:
+      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
+        http://transform-core-aio:8090/transform/config
+      ALFRESCO_SHAREDFILESTORE_BASEURL: >-
+        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
+      SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
+      SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 20s
+      timeout: 2s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      transform-core-aio:
+        condition: service_healthy
+      shared-file-store:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=false"
+  search-reindexing:
+    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.1.0
+    mem_limit: 1g
+    restart: on-failure:5
+    environment:
+      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
+        http://transform-core-aio:8090/transform/config
+      SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
+      SPRING_DATASOURCE_USERNAME: alfresco
+      SPRING_DATASOURCE_PASSWORD: alfresco
+      SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
+    depends_on:
+      postgres:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      alfresco:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=false"
+  activemq:
+    image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
+    mem_limit: 1g
+    ports:
+      - "8161:8161" # Web Console
+      - "5672:5672" # AMQP
+      - "61616:61616" # OpenWire
+      - "61613:61613" # STOMP
+    healthcheck:
+      test: ["CMD", "/opt/activemq/bin/activemq", "query", "--objname", "type=Broker,brokerName=*,service=Health", "|", "grep", "Good"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+  audit-storage:
+    image: quay.io/alfresco/alfresco-audit-storage:1.1.0
+    mem_limit: 512m
+    environment:
+      SPRING_ACTIVEMQ_BROKERURL: failover:(nio://activemq:61616)?timeout=3000
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
+      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
+      AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
+      interval: 60s
+      timeout: 2s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      activemq:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=false"
+  digital-workspace:
+    image: quay.io/alfresco/alfresco-digital-workspace:5.3.0
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
+      APP_CONFIG_PLUGIN_PROCESS_SERVICE: "false"
+      APP_CONFIG_PLUGIN_MICROSOFT_ONLINE: "false"
+      APP_BASE_SHARE_URL: "http://localhost:8080/workspace/#/preview/s"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 10s
+      timeout: 1s
+      retries: 3
+      start_period: 1s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adw.rule=PathPrefix(`/workspace`)"
+      - "traefik.http.services.digital-workspace.loadbalancer.server.port=8080"
+      - "traefik.http.routers.adw.entrypoints=websecure"
+      - "traefik.http.routers.adw.tls=true"
+      - "traefik.http.middlewares.adwforceslash.redirectregex.regex=^(.*/workspace)$$"
+      - "traefik.http.middlewares.adwforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.adwroot.stripprefix.prefixes=/workspace"
+      - "traefik.http.middlewares.adwchain.chain.middlewares=adwforceslash,adwroot"
+      - "traefik.http.routers.adw.middlewares=adwchain@docker"
+  control-center:
+    image: quay.io/alfresco/alfresco-control-center:9.4.0
+    mem_limit: 128m
+    environment:
+      APP_CONFIG_PROVIDER: "ECM"
+      APP_CONFIG_AUTH_TYPE: "BASIC"
+      BASE_PATH: ./
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 10s
+      timeout: 1s
+      retries: 3
+      start_period: 1s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.acc.rule=PathPrefix(`/control-center`) || PathPrefix(`/admin`)"
+      - "traefik.http.services.control-center.loadbalancer.server.port=8080"
+      - "traefik.http.routers.acc.entrypoints=websecure"
+      - "traefik.http.routers.acc.tls=true"
+      - "traefik.http.middlewares.accroot.stripprefix.prefixes=/admin,/control-center"
+      - "traefik.http.middlewares.accforceslash.redirectregex.regex=^(.*/(admin|control-center))$$"
+      - "traefik.http.middlewares.accforceslash.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.accchain.chain.middlewares=accforceslash,accroot"
+      - "traefik.http.routers.acc.middlewares=accchain@docker"
+  proxy:
+    image: traefik:3.3
+    mem_limit: 128m
+    command:
+      - "--api.insecure=true"
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.file.directory=/etc/traefik"
+      - "--providers.file.watch=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--ping.entrypoint=web"
+      - "--ping=true"
+    ports:
+      - "8080:8080"
+      - "8888:8888"
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    security_opt:
+      - label=disable # Required for accessing the Docker socket on Selinux enabled systems
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./alfresco-content-connector-for-salesforce-reverse-proxy/certificates:/certs:ro
+      - ./alfresco-content-connector-for-salesforce-reverse-proxy/config/traefik.yml:/etc/traefik/traefik.yml:ro
+    labels:
+      - "traefik.enable=true"
+      # Explicitly define a router for the dashboard and API
+      - "traefik.http.routers.traefik.rule=(Host(`localhost`) ) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.service=api@internal"
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1.0
+    container_name: keycloak
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DB=dev-file
+      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/tls.cer
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/tls.key
+      - KC_HTTPS_PORT=8443
+      - KC_HTTP_ENABLED=false
+
+      - KC_HOSTNAME=keycloak.local
+      - KC_HOSTNAME_STRICT=false
+      - KC_PROXY=edge
+    command: [ "start-dev", "--import-realm", "--http-relative-path=/auth", "--hostname=keycloak.local" ]
+    volumes:
+      - ./realms/alfresco-realm.json:/opt/keycloak/data/import/alfresco-realm.json
+      - ./certs:/opt/keycloak/conf
+      - ./certs/tls.cer:/opt/keycloak/conf/tls.cer
+      - ./certs/tls.key:/opt/keycloak/conf/tls.key
+
+    ports:
+      - 8443:8443
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.keycloak.rule=PathPrefix(`/auth`)"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8443"
+      - "traefik.http.routers.keycloak.entrypoints=websecure"
+      - "traefik.http.routers.keycloak.tls=true"
+      - "traefik.http.middlewares.keycloak.replacepathregex.regex=^/auth/(.*)"
+      - "traefik.http.middlewares.keycloak.replacepathregex.replacement=/auth/$$1"
+      - "traefik.http.routers.keycloak.middlewares=keycloak@docker"
+  sync-service:
+    image: quay.io/alfresco/service-sync:5.2.0
+    mem_limit: 1g
+    environment:
+      JAVA_OPTS: >-
+        -Dsync.cluster.enabled=false
+        -Dsql.db.driver=org.postgresql.Driver
+        -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dsql.db.username=alfresco
+        -Dsql.db.password=alfresco
+        -Dmessaging.broker.host=activemq
+        -Drepo.hostname=alfresco
+        -Drepo.port=8080
+        -Ddw.server.applicationConnectors[0].type=http
+        -XX:MinRAMPercentage=50
+        -XX:MaxRAMPercentage=80
+    ports:
+      - "9090:9090"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
+      interval: 30s
+      timeout: 2s
+      retries: 3
+      start_period: 20s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      alfresco:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.syncservice.rule=PathPrefix(`/syncservice`)"
+      - "traefik.http.services.sync-service.loadbalancer.server.port=9090"
+      - "traefik.http.middlewares.syncservice.replacepathregex.regex=^/syncservice/(.*)"
+      - "traefik.http.middlewares.syncservice.replacepathregex.replacement=/alfresco/$$1"
+      - "traefik.http.routers.syncservice.middlewares=syncservice@docker"
+volumes:
+  traefik_certs: # Persist the generated certificates
+  alfresco-volume:
+    external: false
+  db-volume:
+    external: false
+  shared-file-store-volume:
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+

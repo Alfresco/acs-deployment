@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPattern": "/v2/Users/forbidden/"
+  },
+  "response": {
+    "bodyFileName": "user_forbidden_403.json",
+    "status": 401,
+    "headers": {
+      "Content-Type": "application/scim+json",
+      "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJ0ZXN0Lmkyc2NpbS5pbyIsImF1ZCI6ImF1ZC50ZXN0Lmkyc2NpbS5pbyIsInN1YiI6ImFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiIsImNsaWVudGlkIjoidGVzdC5jbGllbnQuaTJzY2ltLmlvIiwic2NvcGUiOiJmdWxsIG1hbmFnZXIiLCJpYXQiOjE3NDI5MTU5NzYsImV4cCI6MjM1ODA4Mzk3NiwianRpIjoiYWUyNTM5MTktODFhMi00MWJkLWI4ZmItYWFlMjY0ZjkxZmNhIn0.dDDtHJROt-WYBERxW4qQyNdmJAwE2iv2WIAG7Ax4e3VYMTchE9ZottbNc8wYcadxqUmUuc8p17JLUMys9Mnf2LdHQF_iG6JEhyOFy1sFfqmEXznTaJowN6sAs7NPoO2hTXww8gw9K6dKk5tI8LJrWstfNWxjLud8CWduAP14G43gq9YTl7n4-vQbRCJX4-T8_y4zC8VM0Uk-oLKRZUwe5ZCQnZr9305q3qvSkbWpjOxLG1aZHYRiiGsHOcgAKKRnE2B_f8DORDhM13wbeyYPJVSyOsQuVocbILMcUlIUHTCoMumEs5J9OD4kivFKE4-1FdALtHfKX_Fitrjfbs2kVdB9SveJ7aLdLS6LF2qQvoOv2BvJiSqnDtKST_zgzOjREi2CUsVtlJb2Nv3An_IZjKh5sLfBLOaExXJfrIUuYqmGFSNwkpsbuQlcuTG2VEjF0um9HVwMUa2NYoZA1T-X-KhvJfxVmB_tDKbHK4yaafALBOtC_VWTtfSBtVcG0baV"
+    },
+    "transformers": ["response-template"]
+  }
+}

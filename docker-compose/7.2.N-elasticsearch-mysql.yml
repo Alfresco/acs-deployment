@@ -1,11 +1,11 @@
 # This Docker Compose file will spin up an ACS cluster on a local host.
 # It requires a minimum of 13GB Memory to distribute among containers.
 #
-# For performance tuning, adjust the mem_limit for each container based on available
-# system resources, then use -XX:MinRAMPercentage and -XX:MaxRAMPercentage to control
-# the JVM heap allocation. For example, setting mem_limit: 2000m and
-# -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80 will allocate between 1000m and 1600m
-# of heap to the JVM.
+# For performance tuning, assign the container memory and give a percentage of
+# it to the JVM. Use either the -Xms,-Xmx flags or the newly added flags in
+# java 10+: -XX:MaxRAMPercentage and -XX:MinRAMPercentage.
+# More details here:
+# https://www.oracle.com/technetwork/java/javase/10-relnote-issues-4108729.html
 #
 # Note: The Docker Compose file from github.com is a limited trial that goes
 # into read-only mode after 2 days. Get the latest compose.yaml file with
@@ -13,9 +13,12 @@
 # download page at:
 # https://www.alfresco.com/platform/content-services-ecm/trial/download
 #
+# Java processes requires setting -XX:MaxRAM= due to cgroupv2 changes in recent Linux kernels
+# https://hub.alfresco.com/t5/alfresco-content-services-blog/acs-containers-and-cgroup-v2-in-acs-up-to-7-2/ba-p/318039
+#
 services:
   alfresco:
-    image: quay.io/alfresco/alfresco-content-repository:26.2.0
+    image: quay.io/alfresco/alfresco-governance-repository-enterprise:7.2.2.7
     mem_limit: 1900m
     environment:
       JAVA_TOOL_OPTIONS: >-
@@ -28,10 +31,12 @@ services:
         -Dmetadata-keystore.metadata.password=oKIWzVdEdA
         -Dmetadata-keystore.metadata.algorithm=DESede
       JAVA_OPTS: >-
-        -Ddb.driver=org.postgresql.Driver
+        -Dnodes.bulkLoad.batchSize=256
+        -Dnodes.bulkLoad.forceBatching=false
+        -Ddb.driver=com.mysql.jdbc.Driver
         -Ddb.username=alfresco
         -Ddb.password=alfresco
-        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Ddb.url="jdbc:mysql://host.docker.internal:3307/alfresco?connectTimeout=5000&socketTimeout=1800000"
         -Dindex.subsystem.name=elasticsearch
         -Delasticsearch.createIndexIfNotExists=true
         -Delasticsearch.host=elasticsearch
@@ -40,19 +45,18 @@ services:
         -Dshare.port=8080
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
-        -Dcsrf.filter.enabled=false
         -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
         -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Dmessaging.broker.username=admin
-        -Dmessaging.broker.password=admin
         -Ddeployment.method=DOCKER_COMPOSE
         -Dtransform.service.enabled=true
         -Dtransform.service.url=http://transform-router:8095
         -Dsfs.url=http://shared-file-store:8099/
         -DlocalTransform.core-aio.url=http://transform-core-aio:8090/
+        -Dcsrf.filter.enabled=false
         -Ddsync.service.uris=http://localhost:9090/alfresco
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=1900m
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"]
       interval: 30s
@@ -61,19 +65,19 @@ services:
       start_period: 1m
     volumes:
       - /usr/local/tomcat/alf_data
+      - ./mysql-connector-java-8.0.28.jar:/usr/local/tomcat/lib/mysql-connector-java-8.0.28.jar
     extends:
       file: commons/base.yaml
       service: alfresco
   transform-router:
     mem_limit: 512m
-    image: quay.io/alfresco/alfresco-transform-router:4.4.3
+    image: quay.io/alfresco/alfresco-transform-router:2.1.1
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=512m
       ACTIVEMQ_URL: nio://activemq:61616
-      ACTIVEMQ_USER: admin
-      ACTIVEMQ_PASSWORD: admin
       CORE_AIO_URL: http://transform-core-aio:8090
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
@@ -91,15 +95,14 @@ services:
       shared-file-store:
         condition: service_healthy
   transform-core-aio:
-    image: quay.io/alfresco/alfresco-transform-core-aio:5.4.3
+    image: quay.io/alfresco/alfresco-transform-core-aio:3.1.1
     mem_limit: 1536m
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=1536m
       ACTIVEMQ_URL: nio://activemq:61616
-      ACTIVEMQ_USER: admin
-      ACTIVEMQ_PASSWORD: admin
       FILE_STORE_URL: >-
         http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file
     ports:
@@ -116,12 +119,13 @@ services:
       shared-file-store:
         condition: service_healthy
   shared-file-store:
-    image: quay.io/alfresco/alfresco-shared-file-store:4.4.3
+    image: quay.io/alfresco/alfresco-shared-file-store:2.1.1
     mem_limit: 512m
     environment:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=512m
       scheduler.content.age.millis: 86400000
       scheduler.cleanup.interval: 86400000
     ports:
@@ -135,7 +139,7 @@ services:
     volumes:
       - /tmp/Alfresco
   share:
-    image: quay.io/alfresco/alfresco-share:26.2.0
+    image: quay.io/alfresco/alfresco-governance-share-enterprise:7.2.2.7
     mem_limit: 1g
     environment:
       CSRF_FILTER_ORIGIN: http://localhost:8080
@@ -145,6 +149,7 @@ services:
       JAVA_OPTS: >-
         -XX:MinRAMPercentage=50
         -XX:MaxRAMPercentage=80
+        -XX:MaxRAM=1g
         -Dalfresco.host=localhost
         -Dalfresco.port=8080
         -Dalfresco.context=alfresco
@@ -161,113 +166,107 @@ services:
     extends:
       file: commons/base.yaml
       service: share
-  postgres:
-    image: postgres:17.9
-    mem_limit: 512m
+  mysql:
+    image: mysql:8.0.29
+    mem_limit: 6g
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     environment:
-      - POSTGRES_PASSWORD=alfresco
-      - POSTGRES_USER=alfresco
-      - POSTGRES_DB=alfresco
-    command: postgres -c max_connections=300 -c log_min_messages=LOG
+      - MYSQL_ROOT_PASSWORD=alfresco
+      - MYSQL_USER=alfresco
+      - MYSQL_DATABASE=alfresco
+      - MYSQL_PASSWORD=alfresco
+    command: --transaction-isolation='READ-COMMITTED' --log_error=/var/lib/mysql/mysql_error.log --general_log=1
     ports:
-      - "5432:5432"
+      - "3307:3306"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u $$MYSQL_USER -p$$MYSQL_PASSWORD"]
       interval: 10s
       timeout: 3s
       retries: 3
       start_period: 5s
   elasticsearch:
-    image: elasticsearch:8.17.10
-    environment:
-      - xpack.security.enabled=false
-      - discovery.type=single-node
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    cap_add:
-      - IPC_LOCK
-    ports:
-      - 9200:9200
-      - 9300:9300
-    healthcheck:
-      test: ["CMD-SHELL", "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
+      image: elasticsearch:7.17.26
+      environment:
+          - xpack.security.enabled=false
+          - discovery.type=single-node
+      ulimits:
+          memlock:
+              soft: -1
+              hard: -1
+          nofile:
+              soft: 65536
+              hard: 65536
+      cap_add:
+          - IPC_LOCK
+      ports:
+          - 9200:9200
+          - 9300:9300
+      healthcheck:
+          test: ["CMD-SHELL", "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"]
+          interval: 10s
+          timeout: 10s
+          retries: 5
+          start_period: 30s
   kibana:
-    image: kibana:8.17.10
-    mem_limit: 1g
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    ports:
-      - "5601:5601"
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status"]
-      interval: 10s
-      timeout: 2s
-      retries: 5
-      start_period: 30s
+      image: kibana:7.17.26
+      mem_limit: 1g
+      environment:
+          - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      ports:
+          - "5601:5601"
+      depends_on:
+          elasticsearch:
+              condition: service_healthy
+      healthcheck:
+          test: ["CMD", "curl", "-f", "-o", "/dev/null", "http://localhost:5601/status"]
+          interval: 10s
+          timeout: 2s
+          retries: 5
+          start_period: 30s
   search:
-    image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:5.7.0
-    mem_limit: 1g
-    environment:
-      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
-        http://transform-core-aio:8090/transform/config
-      ALFRESCO_SHAREDFILESTORE_BASEURL: >-
-        http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
-      SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
-      SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 20s
-      timeout: 2s
-      retries: 3
-      start_period: 20s
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-      transform-core-aio:
-        condition: service_healthy
-      shared-file-store:
-        condition: service_healthy
+      image: quay.io/alfresco/alfresco-elasticsearch-live-indexing:3.1.0.1
+      mem_limit: 1g
+      environment:
+          ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
+              http://transform-core-aio:8090/transform/config
+          ALFRESCO_SHAREDFILESTORE_BASEURL: >-
+              http://shared-file-store:8099/alfresco/api/-default-/private/sfs/versions/1/file/
+          SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
+          SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
+      healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+          interval: 20s
+          timeout: 2s
+          retries: 3
+          start_period: 20s
+      depends_on:
+          elasticsearch:
+              condition: service_healthy
+          transform-core-aio:
+              condition: service_healthy
+          shared-file-store:
+              condition: service_healthy
   search-reindexing:
-    image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.7.0
-    mem_limit: 1g
-    restart: on-failure:5
-    environment:
-      ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
-        http://transform-core-aio:8090/transform/config
-      SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
-      SPRING_DATASOURCE_USERNAME: alfresco
-      SPRING_DATASOURCE_PASSWORD: alfresco
-      SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
-    depends_on:
-      postgres:
-        condition: service_healthy
-      elasticsearch:
-        condition: service_healthy
-      alfresco:
-        condition: service_healthy
+      image: quay.io/alfresco/alfresco-elasticsearch-reindexing:5.0.0
+      mem_limit: 1g
+      restart: on-failure:5
+      environment:
+          ALFRESCO_ACCEPTED_CONTENT_MEDIA_TYPES_CACHE_BASE_URL: >-
+              http://transform-core-aio:8090/transform/config
+          SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
+          SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/alfresco
+          SPRING_DATASOURCE_USERNAME: alfresco
+          SPRING_DATASOURCE_PASSWORD: alfresco
+          SPRING_ELASTICSEARCH_REST_URIS: http://elasticsearch:9200
+      depends_on:
+          elasticsearch:
+              condition: service_healthy
+          alfresco:
+              condition: service_healthy
   activemq:
-    image: quay.io/alfresco/alfresco-activemq:6.2.6-jre17-rockylinux8
+    image: quay.io/alfresco/alfresco-activemq:5.17-jre17-rockylinux8
     mem_limit: 1g
-    environment:
-      ACTIVEMQ_ADMIN_LOGIN: admin
-      ACTIVEMQ_ADMIN_PASSWORD: admin
     ports:
       - "8161:8161" # Web Console
       - "5672:5672" # AMQP
@@ -279,30 +278,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
-  audit-storage:
-    image: quay.io/alfresco/alfresco-audit-storage:1.3.3
-    mem_limit: 512m
-    environment:
-      SPRING_ACTIVEMQ_BROKERURL: nio://activemq:61616
-      SPRING_ACTIVEMQ_USER: admin
-      SPRING_ACTIVEMQ_PASSWORD: admin
-      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI: http://elasticsearch:9200
-      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME: admin
-      AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD: admin
-      SPRING_PROFILES_ACTIVE: "durable-subscriptions"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health/readiness"]
-      interval: 60s
-      timeout: 2s
-      retries: 3
-      start_period: 15s
-    depends_on:
-      activemq:
-        condition: service_healthy
-      elasticsearch:
-        condition: service_healthy
   digital-workspace:
-    image: quay.io/alfresco/alfresco-digital-workspace:8.0.0
+    image: quay.io/alfresco/alfresco-digital-workspace:4.4.1
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -321,7 +298,7 @@ services:
       file: commons/base.yaml
       service: digital-workspace
   control-center:
-    image: quay.io/alfresco/alfresco-control-center:11.0.0
+    image: quay.io/alfresco/alfresco-control-center:7.9.0
     mem_limit: 128m
     environment:
       APP_CONFIG_PROVIDER: "ECM"
@@ -340,38 +317,35 @@ services:
     extends:
       file: commons/base.yaml
       service: proxy
-  sync-service:
-    image: quay.io/alfresco/service-sync:5.3.5
-    mem_limit: 1g
-    environment:
-      JAVA_OPTS: >-
-        -Dsync.cluster.enabled=false
-        -Dsql.db.driver=org.postgresql.Driver
-        -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
-        -Dsql.db.username=alfresco
-        -Dsql.db.password=alfresco
-        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
-        -Dmessaging.username=admin
-        -Dmessaging.password=admin
-        -Drepo.hostname=alfresco
-        -Drepo.port=8080
-        -Ddw.server.applicationConnectors[0].type=http
-        -XX:MinRAMPercentage=50
-        -XX:MaxRAMPercentage=80
-    ports:
-      - "9091:9090"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
-      interval: 30s
-      timeout: 2s
-      retries: 3
-      start_period: 20s
-    depends_on:
-      postgres:
-        condition: service_healthy
-      alfresco:
-        condition: service_healthy
-    extends:
-      file: commons/base.yaml
-      service: sync-service
-
+#  sync-service:
+#    image: quay.io/alfresco/service-sync:3.11.3
+#    mem_limit: 1g
+#    environment:
+#      JAVA_OPTS: >-
+#        -Dsql.db.driver=org.postgresql.Driver
+#        -Dsql.db.url=jdbc:postgresql://postgres:5432/alfresco
+#        -Dsql.db.username=alfresco
+#        -Dsql.db.password=alfresco
+#        -Dmessaging.broker.host=activemq
+#        -Drepo.hostname=alfresco
+#        -Drepo.port=8080
+#        -Ddw.server.applicationConnectors[0].type=http
+#        -XX:MinRAMPercentage=50
+#        -XX:MaxRAMPercentage=80
+#        -XX:MaxRAM=1g
+#    ports:
+#      - "9090:9090"
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost:9090/alfresco/healthcheck"]
+#      interval: 30s
+#      timeout: 2s
+#      retries: 3
+#      start_period: 20s
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#      alfresco:
+#        condition: service_healthy
+#    extends:
+#      file: commons/base.yaml
+#      service: sync-service
