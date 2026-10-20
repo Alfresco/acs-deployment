@@ -25,8 +25,9 @@ jobs:
   build_vars:
     runs-on: ubuntu-slim
     if: >-
+      !github.event.pull_request.head.repo.fork && (
       (github.event.review.state == 'approved' && github.event.pull_request.user.login == 'dependabot[bot]') ||
-      (github.actor != 'dependabot[bot]' && github.event_name != 'pull_request_review')
+      (github.actor != 'dependabot[bot]' && github.event_name != 'pull_request_review'))
     outputs:
       ver_json: ${{ steps.app_versions.outputs.json }}
     steps:

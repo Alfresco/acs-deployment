@@ -18,6 +18,14 @@ version in which they have been released.
 
 ## Unreleased
 
+* The default deployment strategy for the `alfresco-repository`, `share`
+  (`alfresco-share`) and `alfresco-sync-service` subcharts is now `Recreate`
+  instead of `RollingUpdate`. Hazelcast Community only lets cluster members on
+  the same minor version join, so a rolling upgrade (including a bugfix,
+  security or small sanity bump) can leave the cluster unable to join and fail
+  the upgrade. Available from `alfresco-repository-2.0.0`,
+  `alfresco-share-3.0.0` and `alfresco-sync-service-8.0.0`.
+
 ## 10.8.0
 
 * The `alfresco-connector-cic` subchart has been added to the
