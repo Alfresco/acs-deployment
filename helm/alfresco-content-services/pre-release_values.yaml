@@ -44,25 +44,25 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.9.0
+        tag: 5.10.0-A.2
     content:
       image:
-        tag: 5.9.0
+        tag: 5.10.0-A.2
     metadata:
       image:
-        tag: 5.9.0
+        tag: 5.10.0-A.2
     path:
       image:
-        tag: 5.9.0
+        tag: 5.10.0-A.2
   reindexing:
     image:
-      tag: 5.9.0
+      tag: 5.10.0-A.2
 alfresco-digital-workspace:
   image:
-    tag: 8.1.0-38715485577
+    tag: 8.1.0-39256290958
 alfresco-control-center:
   image:
-    tag: 11.1.0-38867874976
+    tag: 11.1.0-39434322978
 postgresql:
   image:
     tag: 16.5
