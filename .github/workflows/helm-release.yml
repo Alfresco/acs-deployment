@@ -18,11 +18,21 @@ jobs:
         run: |
           ! grep -e "-alpha" -e "-SNAPSHOT" helm/alfresco-content-services/Chart.yaml
 
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510  # v3.3.0
+        with:
+          client-id: ${{ vars.GH_APP_ENGINEERING_CONTRIB_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_ENGINEERING_CONTRIB_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: charts
+          permission-contents: write
+
       - name: Publish chart
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v19.5.0
         with:
           chart_name: alfresco-content-services
-          github_token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          github_token: ${{ steps.app-token.outputs.token }}
           github_username: ${{ secrets.BOT_GITHUB_USERNAME }}
           github_email: ${{ secrets.BOT_GITHUB_EMAIL }}
