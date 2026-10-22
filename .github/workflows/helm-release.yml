@@ -28,20 +28,11 @@ jobs:
           repositories: charts
           permission-contents: write
 
-      - name: Get GitHub App bot identity
-        id: app-bot
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          BOT_LOGIN: ${{ steps.app-token.outputs.app-slug }}[bot]
-        run: |
-          echo "name=${BOT_LOGIN}" >> "$GITHUB_OUTPUT"
-          echo "email=$(gh api "/users/${BOT_LOGIN}" --jq .id)+${BOT_LOGIN}@users.noreply.github.com" >> "$GITHUB_OUTPUT"
-
       - name: Publish chart
         uses: >-
           Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v19.5.0
         with:
           chart_name: alfresco-content-services
           github_token: ${{ steps.app-token.outputs.token }}
-          github_username: ${{ steps.app-bot.outputs.name }}
-          github_email: ${{ steps.app-bot.outputs.email }}
+          github_username: ${{ steps.app-token.outputs.app-slug }}[bot]
+          github_email: ${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com
