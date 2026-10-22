@@ -18,6 +18,8 @@ version in which they have been released.
 
 ## Unreleased
 
+## 10.9.0
+
 * The default deployment strategy for the `alfresco-repository`, `share`
   (`alfresco-share`) and `alfresco-sync-service` subcharts is now `Recreate`
   instead of `RollingUpdate`. Hazelcast Community only lets cluster members on
