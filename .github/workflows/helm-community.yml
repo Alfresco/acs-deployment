@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@setup-helm
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.0
         with:
           version-file: .tool-versions
 
