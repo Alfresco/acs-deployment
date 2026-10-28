@@ -1,0 +1,11 @@
+---
+extends: default
+
+rules:
+  line-length: disable
+  indentation: disable
+  trailing-spaces: disable
+  # Helm 4 renders templates with a trailing blank line
+  empty-lines:
+    max: 2
+    max-end: 1
