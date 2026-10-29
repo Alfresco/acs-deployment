@@ -1,0 +1,2 @@
+# Keep helm in sync with .tool-versions in Alfresco/alfresco-helm-charts
+helm 4.2.3

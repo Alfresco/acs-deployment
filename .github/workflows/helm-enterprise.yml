@@ -12,6 +12,7 @@ on:
       - helm/**
       - test/postman/helm/**
       - .github/workflows/helm*
+      - .tool-versions
       - .github/actions/charts-as-json/**
       - test/enterprise-integration-test-values.yaml
   push:
@@ -68,13 +69,13 @@ jobs:
       matrix:
         include: ${{ fromJSON(needs.build_vars.outputs.ver_json) }}
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v19.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/free-hosted-runner-disk-space@v19.9.1
 
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
-      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
         with:
-          version: "3.14.3"
+          version-file: .tool-versions
 
       - name: Login to Docker Hub
         uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
@@ -91,7 +92,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.9.1
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -142,8 +143,8 @@ jobs:
       - name: Spit cluster status after Helm install
         if: always() && steps.helm_install.outcome != 'skipped'
         run: |
-          helm ls --all-namespaces --all
-          helm status acs --show-resources
+          helm ls --all-namespaces
+          helm status acs
 
       - name: Disable IPv6 to avoid connection refused when connecting to traefik on localhost
         run: |
@@ -189,7 +190,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v19.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v19.9.1
         with:
           namespace: default
           log_retention: 7
