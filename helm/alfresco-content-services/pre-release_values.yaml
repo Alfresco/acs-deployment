@@ -13,19 +13,19 @@ alfresco-transform-service:
       tag: 4.5.0-A.2
   pdfrenderer:
     image:
-      tag: 5.5.0-A.3
+      tag: 5.5.0-A.4
   imagemagick:
     image:
-      tag: 5.5.0-A.3
+      tag: 5.5.0-A.4
   libreoffice:
     image:
-      tag: 5.5.0-A.3
+      tag: 5.5.0-A.4
   tika:
     image:
-      tag: 5.5.0-A.3
+      tag: 5.5.0-A.4
   transformmisc:
     image:
-      tag: 5.5.0-A.3
+      tag: 5.5.0-A.4
   filestore:
     image:
       tag: 4.5.0-A.2
@@ -44,25 +44,25 @@ alfresco-search-enterprise:
   liveIndexing:
     mediation:
       image:
-        tag: 5.10.0-A.3
+        tag: 5.10.0-A.4
     content:
       image:
-        tag: 5.10.0-A.3
+        tag: 5.10.0-A.4
     metadata:
       image:
-        tag: 5.10.0-A.3
+        tag: 5.10.0-A.4
     path:
       image:
-        tag: 5.10.0-A.3
+        tag: 5.10.0-A.4
   reindexing:
     image:
-      tag: 5.10.0-A.3
+      tag: 5.10.0-A.4
 alfresco-digital-workspace:
   image:
-    tag: 8.1.0-39940356230
+    tag: 8.1.0-40477807883
 alfresco-control-center:
   image:
-    tag: 11.1.0-39940356230
+    tag: 11.1.0-40477807883
 postgresql:
   image:
     tag: 16.5
