@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
         with:
           version-file: .tool-versions
 
@@ -89,7 +89,7 @@ jobs:
 
       - name: Setup cluster
         id: setup-kind
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.9.1
         with:
           traefik-enabled: true
           cloud-provider-kind-enabled: true
@@ -212,7 +212,7 @@ jobs:
 
       - name: Upload pods logs
         if: always() && steps.helm_install.outcome != 'skipped'
-        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v19.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/kubectl-keep-nslogs@v19.9.1
         with:
           namespace: default
           log_retention: 7
