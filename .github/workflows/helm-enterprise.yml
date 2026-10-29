@@ -12,6 +12,7 @@ on:
       - helm/**
       - test/postman/helm/**
       - .github/workflows/helm*
+      - .tool-versions
       - .github/actions/charts-as-json/**
       - test/enterprise-integration-test-values.yaml
   push:

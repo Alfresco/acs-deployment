@@ -10,6 +10,8 @@ on:
       - helm/**
       - test/postman/helm/**
       - .github/workflows/helm*
+      - .github/helm-template-yamllint.yml
+      - .tool-versions
   push:
     branches:
       - master
