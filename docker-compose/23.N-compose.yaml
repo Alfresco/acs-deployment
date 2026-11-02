@@ -69,7 +69,7 @@ services:
     ports:
       - 4000:4000
   data-population:
-    image: quay.io/alfresco/alfresco-perf-populate:latest
+    image: quay.io/alfresco/alfresco-perf-populate:slim
     platform: linux/amd64
     deploy:
       replicas: 0

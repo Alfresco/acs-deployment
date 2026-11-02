@@ -19,11 +19,11 @@
   },
   "folder_config": {
     "existing_folder_name": "app:company_home",
-    "number_of_folders": 1000,
-    "max_folder_depth": 100
+    "number_of_folders": 10,
+    "max_folder_depth": 1
   },
   "content_config": {
-    "number_of_content_nodes": 500000,
+    "number_of_content_nodes": 100000,
     "content_source_path": "/usr/data/all.utf8",
     "namespace_mapping": {
       "http://www.alfresco.org/model/perftest/1.0": "perf"
