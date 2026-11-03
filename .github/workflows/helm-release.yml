@@ -30,7 +30,7 @@ jobs:
 
       - name: Publish chart
         uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v19.9.1
+          Alfresco/alfresco-build-tools/.github/actions/dbp-charts/publish-chart@v19.11.0
         with:
           chart_name: alfresco-content-services
           github_token: ${{ steps.app-token.outputs.token }}

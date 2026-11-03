@@ -41,11 +41,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.11.0
         with:
           version-file: .tool-versions
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v19.9.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v19.11.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - name: Install helm-unittest plugin
@@ -68,15 +68,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.11.0
         with:
           version-file: .tool-versions
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v19.9.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-build-chart@v19.11.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v19.9.1
+          Alfresco/alfresco-build-tools/.github/actions/helm-template-yamllint@v19.11.0
         with:
           chart-dir: helm/${{ matrix.charts.name }}
           yamllint-config-path: .github/helm-template-yamllint.yml
