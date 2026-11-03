@@ -1,0 +1,121 @@
+# Dedicated lean compose file for Alfresco Performance Benchmark (PerfLens)
+# Retains only the core repository, datastore, messaging, and data population services.
+services:
+  alfresco:
+    image: ${ALFRESCO_IMAGE:-quay.io/alfresco/alfresco-content-repository:23.3.17}
+    user: root
+    command: ['bash', '-c', "sed -i -e 's/deployXML=\"false\"/deployXML=\"true\"/g' conf/server.xml && catalina.sh run"]
+    environment:
+      JAVA_TOOL_OPTIONS: >-
+        -Dencryption.keystore.type=JCEKS
+        -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+        -Dencryption.keyAlgorithm=DESede
+        -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+        -Dmetadata-keystore.password=mp6yc0UD9e
+        -Dmetadata-keystore.aliases=metadata
+        -Dmetadata-keystore.metadata.password=oKIWzVdEdA
+        -Dmetadata-keystore.metadata.algorithm=DESede
+      JAVA_OPTS: >-
+        -javaagent:/usr/local/glowroot/glowroot.jar
+        -Dsystem.preferred.password.encoding=sha256
+        -Ddb.driver=org.postgresql.Driver
+        -Ddb.username=alfresco
+        -Ddb.password=alfresco
+        -Ddb.url=jdbc:postgresql://postgres:5432/alfresco
+        -Dindex.subsystem.name=elasticsearch
+        -Delasticsearch.createIndexIfNotExists=true
+        -Delasticsearch.host=elasticsearch
+        -Delasticsearch.port=9200
+        -Dshare.host=localhost
+        -Dshare.port=8080
+        -Dalfresco.host=localhost
+        -Dalfresco.port=8080
+        -Dcsrf.filter.enabled=false
+        -Daos.baseUrlOverwrite=http://localhost:8080/alfresco/aos
+        -Dmessaging.broker.url="failover:(nio://activemq:61616)?timeout=3000&jms.useCompression=true"
+        -Ddeployment.method=DOCKER_COMPOSE
+        -Dtransform.service.enabled=false
+        -Ddsync.service.uris=http://localhost:9090/alfresco
+        -Xmx4g
+    healthcheck:
+      test: ["CMD-SHELL", "exit 0"]
+    volumes:
+      - ./alf_data:/usr/local/tomcat/alf_data
+      - ./glowroot:/usr/local/glowroot
+      - ./perf-model-1.0-SNAPSHOT.jar:/usr/local/tomcat/webapps/alfresco/WEB-INF/lib/perf.jar
+    extends:
+      file: commons/base.yaml
+      service: alfresco
+    ports:
+      - "4000:4000"
+
+  data-population:
+    image: quay.io/alfresco/alfresco-perf-populate:slim
+    platform: linux/amd64
+    deploy:
+      replicas: 0
+    restart: never
+    volumes:
+      - ./config.json:/opt/app/config.json
+
+  postgres:
+    image: postgres:14.4
+    environment:
+      - POSTGRES_PASSWORD=alfresco
+      - POSTGRES_USER=alfresco
+      - POSTGRES_DB=alfresco
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+    ports:
+      - "5432:5432"
+    shm_size: 4gb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  elasticsearch:
+    image: elasticsearch:7.17.26
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"]
+      interval: 10s
+      timeout: 10s
+      retries: 25
+      start_period: 60s
+
+  activemq:
+    image: quay.io/alfresco/alfresco-activemq:5.18-jre17-rockylinux8
+    mem_limit: 1g
+    ports:
+      - "8161:8161"
+      - "5672:5672"
+      - "61616:61616"
+      - "61613:61613"
+    healthcheck:
+      test: ["CMD", "/opt/activemq/bin/activemq", "query", "--objname", "type=Broker,brokerName=*,service=Health", "|", "grep", "Good"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  proxy:
+    extends:
+      file: commons/base.yaml
+      service: proxy
