@@ -47,9 +47,9 @@ jobs:
         id: base
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v19.9.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v19.12.1
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v19.9.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/configure-git-author@v19.12.1
         with:
           username: ${{ vars.BOT_GITHUB_USERNAME }}
           email: ${{ vars.BOT_GITHUB_EMAIL }}
@@ -120,7 +120,7 @@ jobs:
 
       - name: Create draft PR
         id: pr
-        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        uses: peter-evans/create-pull-request@15733dbdfeedb4f7fdb73d13c6f5ac83b710fab8 # v8.1.2
         with:
           base: master
           branch: ${{ steps.commit.outputs.branch }}
