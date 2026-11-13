@@ -7,13 +7,6 @@ on:
       - master
       - release/**
       - next/**
-    paths:
-      - helm/**
-      - test/postman/helm/**
-      - .github/workflows/pre-commit-helm.yml
-      - "**.md"
-      - .pre-commit-config.yaml
-      - .tool-versions
   push:
     branches:
       - master
