@@ -1,5 +1,5 @@
 ---
-name: Pre-commit (Helm)
+name: Pre-commit
 
 on:
   pull_request:
@@ -11,10 +11,6 @@ on:
     branches:
       - master
       - release/**
-
-env:
-  # https://pre-commit.com/#temporarily-disabling-hooks
-  SKIP: docker-compose-check
 
 jobs:
   pre_commit:

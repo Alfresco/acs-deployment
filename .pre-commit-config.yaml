@@ -15,7 +15,7 @@ repos:
       - id: end-of-file-fixer
         exclude: README.md
       - id: trailing-whitespace
-  # Helm hooks section (excluded in pre-commit-compose workflow)
+  # Helm hooks section
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.14.2
     hooks:
@@ -38,7 +38,7 @@ repos:
           - --compact
           - --config-file
           - .checkov.yaml
-  # Docker Compose hooks section (excluded in pre-commit-helm workflow)
+  # Docker Compose hooks section
   - repo: https://github.com/IamTheFij/docker-pre-commit
     rev: v3.0.1
     hooks:
