@@ -7,9 +7,6 @@ on:
       - master
       - release/**
       - next/**
-    paths:
-      - docker-compose/**
-      - .pre-commit-config.yaml
   push:
     branches:
       - master
