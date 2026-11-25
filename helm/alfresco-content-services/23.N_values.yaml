@@ -54,9 +54,9 @@ alfresco-search-enterprise:
 alfresco-search:
   enabled: false
   searchServicesImage:
-    tag: 2.0.23
+    tag: 2.0.24
   insightEngineImage:
-    tag: 2.0.23
+    tag: 2.0.24
 alfresco-digital-workspace:
   image:
     tag: 8.0.0
