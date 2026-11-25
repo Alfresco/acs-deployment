@@ -1,0 +1,32 @@
+name: setup-kind
+description: >-
+  Create the KinD cluster used by the Helm tests. The alfresco-build-tools
+  version is pinned here rather than in the workflows, so the bump-setup-kind
+  job can update it without permission to edit workflow files.
+inputs:
+  traefik-enabled:
+    description: Install Traefik instead of ingress-nginx
+    default: "false"
+  cloud-provider-kind-enabled:
+    description: Run cloud-provider-kind for LoadBalancer support
+    default: "false"
+  metrics:
+    description: Install metrics-server
+    default: "false"
+  import-docker-credentials-secret-name:
+    description: Name of the secret to create from the local Docker credentials
+    default: ""
+outputs:
+  ingress-endpoint:
+    description: Endpoint of the cluster ingress
+    value: ${{ steps.setup-kind.outputs.ingress-endpoint }}
+runs:
+  using: composite
+  steps:
+    - id: setup-kind
+      uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.15.0
+      with:
+        traefik-enabled: ${{ inputs.traefik-enabled }}
+        cloud-provider-kind-enabled: ${{ inputs.cloud-provider-kind-enabled }}
+        metrics: ${{ inputs.metrics }}
+        import-docker-credentials-secret-name: ${{ inputs.import-docker-credentials-secret-name }}
