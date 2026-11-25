@@ -12,6 +12,8 @@ on:
       - '**'
     tags-ignore:
       - '**'
+  schedule:
+    - cron: '0 6 * * 1'
   workflow_dispatch:
     inputs:
       update-type:
@@ -21,6 +23,7 @@ on:
         - charts
         - values
         - all
+        - setup-kind
       alfresco-updatecli-ref:
         description: "The version to use for alfresco/alfresco-updatecli configs (only for values update-type)"
         type: string
@@ -155,3 +158,45 @@ jobs:
           if-no-commit: info
           message: |
             🛠 Updatecli pipeline values bump
+
+  bump-setup-kind:
+    runs-on: ubuntu-slim
+    name: setup-kind node image
+    if: (inputs.update-type == 'setup-kind' || github.event_name == 'schedule') && github.actor != 'dependabot[bot]'
+    permissions:
+      contents: write
+      pull-requests: write
+    concurrency:
+      group: bump-setup-kind
+      cancel-in-progress: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Install Updatecli
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v19.15.0
+
+      - name: Run Updatecli
+        run: updatecli pipeline apply -c .github/updatecli/setup-kind.yaml
+        env:
+          UPDATECLI_GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1  # v8.1.3
+        with:
+          base: master
+          branch: updatecli-setup-kind
+          sign-commits: true
+          add-paths: |
+            .github/actions/setup-kind/action.yml
+            README.md
+            docs/index.md
+            docs/helm/kind-deployment.md
+            docs/helm/eks-deployment.md
+          commit-message: |
+            🛠 Updatecli pipeline setup-kind bump
+          title: "chore: bump setup-kind to the latest KinD node image"
+          body: >-
+            Automated bump of the alfresco-build-tools `setup-kind` action to the
+            latest release whose default KinD node image differs from the pinned
+            one, with the tested Kubernetes and EKS versions in the docs.

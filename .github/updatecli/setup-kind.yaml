@@ -1,0 +1,112 @@
+name: Bump setup-kind to the latest KinD node image
+
+sources:
+  latestRelease:
+    name: Latest alfresco-build-tools release
+    kind: githubrelease
+    spec:
+      owner: Alfresco
+      repository: alfresco-build-tools
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      versionfilter:
+        kind: semver
+  latestImage:
+    name: Default KinD node image of setup-kind in the latest release
+    kind: http
+    dependson:
+      - latestRelease
+    spec:
+      url: 'https://raw.githubusercontent.com/Alfresco/alfresco-build-tools/{{ source "latestRelease" }}/.github/actions/setup-kind/action.yml'
+    transformers:
+      - findsubmatch:
+          pattern: 'default: (kindest/node:v\d+\.\d+\.\d+@sha256:[a-f0-9]{64})'
+          captureindex: 1
+  kubernetesVersion:
+    name: Kubernetes minor version of the latest node image
+    kind: http
+    dependson:
+      - latestRelease
+    spec:
+      url: 'https://raw.githubusercontent.com/Alfresco/alfresco-build-tools/{{ source "latestRelease" }}/.github/actions/setup-kind/action.yml'
+    transformers:
+      - findsubmatch:
+          pattern: 'default: kindest/node:v(\d+\.\d+)\.\d+@sha256:'
+          captureindex: 1
+  pinnedRelease:
+    name: alfresco-build-tools release pinned by the setup-kind wrapper
+    kind: file
+    spec:
+      file: .github/actions/setup-kind/action.yml
+    transformers:
+      - findsubmatch:
+          pattern: 'Alfresco/alfresco-build-tools/\.github/actions/setup-kind@(v\d+\.\d+\.\d+)'
+          captureindex: 1
+  pinnedImage:
+    name: Default KinD node image of setup-kind in the pinned release
+    kind: http
+    dependson:
+      - pinnedRelease
+    spec:
+      url: 'https://raw.githubusercontent.com/Alfresco/alfresco-build-tools/{{ source "pinnedRelease" }}/.github/actions/setup-kind/action.yml'
+    transformers:
+      - findsubmatch:
+          pattern: 'default: (kindest/node:v\d+\.\d+\.\d+@sha256:[a-f0-9]{64})'
+          captureindex: 1
+
+# Other alfresco-build-tools releases come through Dependabot; only a new node image is bumped here.
+# The docs targets skip this condition, so they still catch up when Dependabot bumped the pin first.
+conditions:
+  nodeImageChanged:
+    name: Latest release changes the default KinD node image
+    kind: shell
+    disablesourceinput: true
+    spec:
+      command: 'test -n "{{ source "latestImage" }}" && test -n "{{ source "pinnedImage" }}" && test "{{ source "latestImage" }}" != "{{ source "pinnedImage" }}"'
+
+targets:
+  setupKindRef:
+    name: Bump setup-kind to the latest release
+    kind: file
+    disablesourceinput: true
+    spec:
+      file: .github/actions/setup-kind/action.yml
+      matchpattern: '(Alfresco/alfresco-build-tools/\.github/actions/setup-kind@)v\d+\.\d+\.\d+'
+      replacepattern: '${1}{{ source "latestRelease" }}'
+  docsBadge:
+    name: Update the tested Kubernetes version badge
+    disableconditions: true
+    kind: file
+    disablesourceinput: true
+    spec:
+      files:
+        - README.md
+        - docs/index.md
+      matchpattern: 'k8s%20version-v\d+\.\d+-blue'
+      replacepattern: 'k8s%20version-v{{ source "kubernetesVersion" }}-blue'
+  docsTestedVersions:
+    name: Update the KinD and EKS versions the charts are tested on
+    disableconditions: true
+    kind: file
+    disablesourceinput: true
+    spec:
+      file: docs/index.md
+      matchpattern: 'KinD cluster v\d+\.\d+ and EKS v\d+\.\d+'
+      replacepattern: 'KinD cluster v{{ source "kubernetesVersion" }} and EKS v{{ source "kubernetesVersion" }}'
+  docsKindImage:
+    name: Update the node image in the KinD deployment guide
+    disableconditions: true
+    kind: file
+    disablesourceinput: true
+    spec:
+      file: docs/helm/kind-deployment.md
+      matchpattern: 'kindest/node:v\d+\.\d+\.\d+@sha256:[a-f0-9]{64}'
+      replacepattern: '{{ source "latestImage" }}'
+  docsEksVersion:
+    name: Update the EKS version in the EKS deployment guide
+    disableconditions: true
+    kind: file
+    disablesourceinput: true
+    spec:
+      file: docs/helm/eks-deployment.md
+      matchpattern: 'eksctl create cluster --name \$EKS_CLUSTER_NAME --version \d+\.\d+'
+      replacepattern: 'eksctl create cluster --name $$EKS_CLUSTER_NAME --version {{ source "kubernetesVersion" }}'
